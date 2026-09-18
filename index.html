@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Sổ tay hai chuyến nghỉ dưỡng: Đà Lạt và Tam Đảo. Lịch theo độ dài, danh sách Ăn và Chơi, tích vào từng nơi đã ghé.">
+<meta name="description" content="Chuyến 3–11/10: đón Ngọc ở Nội Bài, hai ngày một đêm Tam Đảo, rồi sáu đêm Đà Lạt. Lịch theo ngày, danh sách Ăn và Chơi, tích vào từng nơi đã ghé.">
 <meta name="theme-color" content="#EFF2ED" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0C1310" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Đà Lạt & Tam Đảo">
-<meta property="og:description" content="Sổ tay hai chuyến nghỉ dưỡng — chọn điểm đến, chọn độ dài, tích vào nơi đã đi.">
+<meta property="og:title" content="Tam Đảo & Đà Lạt · 3–11/10">
+<meta property="og:description" content="Chín ngày, hai chặng: Tam Đảo 2N1Đ rồi Đà Lạt 6 đêm. Tích vào từng nơi đã đi.">
 <style>
   :root{color-scheme:light dark}
   body{margin:0}
   img{max-width:100%}
   [hidden]{display:none!important}
 </style>
-<title>Đà Lạt & Tam Đảo</title>
+<title>Tam Đảo & Đà Lạt · 3–11/10</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..600&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -239,6 +239,11 @@
     color:var(--ink-2);margin:13px 0 6px;max-width:74ch;
     padding-left:16px;border-left:2px solid var(--line);
   }
+  .rhythm em{
+    font-family:var(--sans);font-style:normal;font-size:10.5px;font-weight:600;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--fog);
+    display:block;margin-bottom:4px;
+  }
   .day .checks{margin-top:10px}
 
   .stay{
@@ -263,92 +268,133 @@
   }
   .reset:hover{border-color:var(--amber);color:var(--amber)}
 
-  /* ---------- chooser ---------- */
-  .chooser{padding:72px 0 84px}
-  .chooser .kicker{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fog)}
-  .chooser h1{font-size:clamp(38px,6.6vw,64px);font-weight:600;margin:16px 0 0;letter-spacing:-.025em}
-  .chooser h1 em{color:var(--moss);font-weight:500}
-  .chooser .sub{max-width:56ch;color:var(--ink-2);font-size:17px;margin-top:16px;line-height:1.72}
-  .dests{display:grid;grid-template-columns:1fr;gap:18px;margin-top:40px}
-  @media(min-width:780px){.dests{grid-template-columns:1fr 1fr}}
-  .dest-card{
-    appearance:none;text-align:left;font-family:inherit;color:inherit;cursor:pointer;
-    background:var(--surface);border:1px solid var(--line);border-radius:16px;
-    padding:28px 30px 26px;display:flex;flex-direction:column;gap:0;
-    transition:border-color .2s,box-shadow .2s,transform .2s;
-  }
-  .dest-card:hover{border-color:var(--moss);box-shadow:var(--sh-2);transform:translateY(-3px)}
-  .dest-card .place{font-family:var(--serif);font-size:32px;font-weight:600;letter-spacing:-.022em;line-height:1.1}
-  .dest-card .tagline{font-size:14.5px;color:var(--ink-2);margin-top:10px;line-height:1.65;min-height:3.3em}
-  .dest-facts{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft)}
-  .dest-facts div{min-width:64px}
-  .dest-facts .k{font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--fog)}
-  .dest-facts .v{font-family:var(--num);font-size:14px;margin-top:3px;font-variant-numeric:tabular-nums}
-  .dest-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:20px}
-  .dest-foot .done{font-size:12.5px;color:var(--fog)}
-  .dest-foot .done b{color:var(--moss);font-weight:600}
-  .dest-foot .go{font-size:13.5px;font-weight:600;color:var(--moss);white-space:nowrap}
-  .dest-card:hover .go{text-decoration:underline;text-underline-offset:3px}
-  .chooser .foot{font-size:13px;color:var(--fog);margin-top:34px;max-width:70ch;line-height:1.7}
 
-  .back{
-    appearance:none;font-family:inherit;font-size:13px;color:var(--ink-2);background:none;
-    border:1px solid var(--line);border-radius:99px;padding:5px 14px;cursor:pointer;white-space:nowrap;
-    transition:border-color .18s,color .18s;flex:none;
+  /* ---------- trip header ---------- */
+  .trip-facts{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;
+    margin-top:30px;border:1px solid var(--line);border-radius:var(--r);
+    background:var(--line-soft);overflow:hidden;
   }
-  .back:hover{border-color:var(--moss);color:var(--moss)}
+  .trip-facts > div{background:var(--raise);padding:15px 18px}
+  .trip-facts .k{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fog)}
+  .trip-facts .v{font-family:var(--num);font-size:15px;margin-top:5px;font-variant-numeric:tabular-nums}
+  .trip-facts .s{font-size:12.5px;color:var(--fog);margin-top:3px;line-height:1.5}
+
+  /* ---------- 9-day strip ---------- */
+  .strip{display:flex;gap:6px;margin-top:26px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+  .strip a{
+    flex:1 0 auto;min-width:86px;text-decoration:none;color:inherit;
+    border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);
+    padding:10px 12px 12px;transition:border-color .18s,background .18s,transform .18s;
+  }
+  .strip a:hover{border-color:var(--moss);transform:translateY(-2px)}
+  .strip a{display:flex;flex-direction:column}
+  .strip .d{font-family:var(--num);font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
+  .strip .w{font-size:10.5px;color:var(--fog);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+  .strip .p{font-size:11.5px;font-weight:600;margin-top:7px}
+  .strip a[data-leg="tamdao"]{border-left:3px solid var(--moss)}
+  .strip a[data-leg="tamdao"] .p{color:var(--moss)}
+  .strip a[data-leg="move"]{border-left:3px solid var(--moss);border-right:3px solid var(--amber)}
+  .strip a[data-leg="move"] .p{color:var(--ink-2)}
+  .strip a[data-leg="dalat"]{border-left:3px solid var(--amber)}
+  .strip a[data-leg="dalat"] .p{color:var(--amber)}
+
+  /* ---------- legs ---------- */
+  .leg{margin-top:44px}
+  .leg:first-of-type{margin-top:0}
+  .leg-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .leg-head .n{
+    font-family:var(--num);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--moss);background:var(--moss-soft);padding:5px 12px;border-radius:99px;flex:none;
+  }
+  .leg-head h3{font-size:clamp(23px,3.2vw,30px);font-weight:600;letter-spacing:-.02em}
+  .leg-head .dates{font-family:var(--num);font-size:14px;color:var(--fog);font-variant-numeric:tabular-nums}
+  .leg-head .rule{min-width:20px}
+  .leg-note{font-size:14.5px;color:var(--ink-2);max-width:72ch;margin:-4px 0 18px;line-height:1.7}
+
+  .day{scroll-margin-top:66px}
+  .day-date{
+    font-family:var(--num);font-size:11px;font-weight:500;letter-spacing:.08em;
+    color:var(--ink-2);background:var(--surface-2);padding:4px 11px;border-radius:99px;flex:none;
+    font-variant-numeric:tabular-nums;
+  }
+  .day-tail{margin-left:auto;font-size:12px;color:var(--fog);font-family:var(--num);font-variant-numeric:tabular-nums;flex:none}
+  .move{
+    display:flex;gap:12px;align-items:flex-start;margin:13px 0 2px;
+    background:var(--surface-2);border-radius:var(--r-sm);padding:12px 15px;
+    font-size:13.5px;color:var(--ink-2);line-height:1.62;
+  }
+  .move .ico{font-size:14px;flex:none;line-height:1.4}
+  .move b{color:var(--ink);font-weight:600}
+  .day.free{border-style:dashed}
+
+  /* ---------- catalog blocks ---------- */
+  .cat-block{margin-top:52px}
+  .cat-block:first-of-type{margin-top:0}
+  .cat-title{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+  .cat-title h3{font-size:clamp(24px,3.4vw,32px);font-weight:600;letter-spacing:-.02em}
+  .cat-title .meta{font-size:12.5px;color:var(--fog)}
+  .cat-block section{padding:34px 0 0}
+  .cat-block section:first-of-type{padding-top:0}
+  .cat-block .wrap{max-width:none;padding:0}
+  .cat-block .sec-head h2{font-size:21px}
+
+  .back-top{
+    display:inline-block;margin-top:26px;font-size:13px;color:var(--ink-2);text-decoration:none;
+    border:1px solid var(--line);border-radius:99px;padding:6px 16px;transition:border-color .18s,color .18s;
+  }
+  .back-top:hover{border-color:var(--moss);color:var(--moss)}
+  .strip a.full{background:var(--moss-soft);border-color:var(--moss)}
+  .strip a.full .d::after{content:" ✓";color:var(--moss);font-size:12px}
 </style>
 
 </head>
 <body>
-<section class="chooser" id="chooser">
-  <div class="wrap">
-    <div class="kicker">Sổ tay chuyến đi · hai điểm đến</div>
-    <h1>Bạn đi <em>đâu</em>?</h1>
-    <p class="sub">Hai chuyến nghỉ dưỡng, cùng một cách dựng: một quán cà phê làm điểm neo, danh sách Ăn và Chơi tách riêng, và mọi nơi đều tích được khi bạn đã ghé. Chọn một để bắt đầu — đổi lại lúc nào cũng được.</p>
-    <div class="dests">
-      <button type="button" class="dest-card" data-goto="dalat">
-        <span class="place">Đà Lạt</span>
-        <span class="tagline">Cao nguyên 1.500 m, thông và sương. Neo vào Tiệm cà phê Dốc Thị lúc hoàng hôn, dài ra tới biển Cam Ranh nếu bạn có bảy ngày.</span>
-        <span class="dest-facts">
-          <span><span class="k">Từ Hà Nội</span><span class="v">bay 1h50</span></span>
-          <span><span class="k">Độ cao</span><span class="v">1.500 m</span></span>
-          <span><span class="k">Lịch</span><span class="v">3N2Đ · 5N4Đ · 7N6Đ</span></span>
-        </span>
-        <span class="dest-foot">
-          <span class="done">Đã tích <b data-chooser="dalat-done">0</b> / <span data-chooser="dalat-all">0</span> nơi</span>
-          <span class="go">Mở sổ Đà Lạt →</span>
-        </span>
-      </button>
-      <button type="button" class="dest-card" data-goto="tamdao">
-        <span class="place">Tam Đảo</span>
-        <span class="tagline">Thị trấn 900 m cách Hà Nội 80 km, nhỏ đến mức đi bộ hết trong một buổi. Neo vào Quán Gió, nơi mây dâng lên tận lan can.</span>
-        <span class="dest-facts">
-          <span><span class="k">Từ Hà Nội</span><span class="v">xe 1h30</span></span>
-          <span><span class="k">Độ cao</span><span class="v">900 m</span></span>
-          <span><span class="k">Lịch</span><span class="v">2N1Đ · 3N2Đ · 5N4Đ</span></span>
-        </span>
-        <span class="dest-foot">
-          <span class="done">Đã tích <b data-chooser="tamdao-done">0</b> / <span data-chooser="tamdao-all">0</span> nơi</span>
-          <span class="go">Mở sổ Tam Đảo →</span>
-        </span>
-      </button>
-    </div>
-    <p class="foot">Tam Đảo để 2N1Đ / 3N2Đ / 5N4Đ chứ không phải 3/5/7 như Đà Lạt — thị trấn nhỏ, hai ngày là hết phần cốt lõi, và bản 5 ngày đã phải mở rộng xuống hồ Xạ Hương với Đại Lải mới đủ chỗ đi.</p>
-  </div>
-</section>
-
-<div class="dest" data-dest="dalat" hidden>
 <header class="masthead">
   <div class="wrap">
-    <div class="label">Đà Lạt · nghỉ dưỡng · chọn 3 · 5 · 7 ngày</div>
-    <h1>Đà Lạt <em>Đã Đi Qua</em></h1>
-    <p class="lede">Bản nghỉ dưỡng: ô tô riêng, một điểm chính mỗi ngày, không báo thức trước 7 giờ. Mọi địa điểm chia làm hai nhóm — <b>Ăn</b> và <b>Chơi</b> — và trục của chuyến vẫn là <b>Tiệm cà phê Dốc Thị</b>. Chọn độ dài chuyến, rồi tích vào ô bên trái mỗi nơi khi đã ghé.</p>
+    <div class="label">Chuyến 3 – 11 tháng 10 · Nội Bài → Tam Đảo → Đà Lạt → Hà Nội</div>
+    <h1>Ngọc <em>về</em></h1>
+    <p class="lede">Chín ngày, hai chặng, không có ngày chết ở giữa. Ngọc đáp <b>Nội Bài sáng 3/10</b> — sân bay nằm sẵn trên đường lên núi nên đi thẳng Tam Đảo, <b>hai ngày một đêm</b> trong mây. Trưa 4/10 xuống núi ra thẳng Nội Bài, <b>bay chiều vào Đà Lạt</b> và ngủ luôn ở đó, <b>bảy đêm</b> tới khi <b>11/10 bay về Hà Nội</b>. Tích vào ô bên trái mỗi nơi khi đã ghé.</p>
+
+    <div class="trip-facts">
+      <div>
+        <div class="k">Đón</div>
+        <div class="v">T7 · 03/10</div>
+        <div class="s">Nội Bài → Tam Đảo, 60 km</div>
+      </div>
+      <div>
+        <div class="k">Tam Đảo</div>
+        <div class="v">03 – 04/10</div>
+        <div class="s">2 ngày 1 đêm, trưa 4/10 xuống núi</div>
+      </div>
+      <div>
+        <div class="k">Đà Lạt</div>
+        <div class="v">04 – 11/10</div>
+        <div class="s">7 đêm: trung tâm + Cầu Đất</div>
+      </div>
+      <div>
+        <div class="k">Về</div>
+        <div class="v">CN · 11/10</div>
+        <div class="s">DLI → HAN, bay chiều</div>
+      </div>
+    </div>
+
+    <nav class="strip" aria-label="Chín ngày của chuyến">
+      <a href="#d03" data-leg="tamdao"><span class="d">03/10</span><span class="w">Thứ Bảy</span><span class="p">Tam Đảo</span></a>
+      <a href="#d04" data-leg="move"><span class="d">04/10</span><span class="w">Chủ nhật</span><span class="p">TĐ → ĐL</span></a>
+      <a href="#d05" data-leg="dalat"><span class="d">05/10</span><span class="w">Thứ Hai</span><span class="p">Đà Lạt</span></a>
+      <a href="#d06" data-leg="dalat"><span class="d">06/10</span><span class="w">Thứ Ba</span><span class="p">Đà Lạt</span></a>
+      <a href="#d07" data-leg="dalat"><span class="d">07/10</span><span class="w">Thứ Tư</span><span class="p">Đà Lạt</span></a>
+      <a href="#d08" data-leg="dalat"><span class="d">08/10</span><span class="w">Thứ Năm</span><span class="p">Cầu Đất</span></a>
+      <a href="#d09" data-leg="dalat"><span class="d">09/10</span><span class="w">Thứ Sáu</span><span class="p">Cầu Đất</span></a>
+      <a href="#d10" data-leg="dalat"><span class="d">10/10</span><span class="w">Thứ Bảy</span><span class="p">Đà Lạt</span></a>
+      <a href="#d11" data-leg="dalat"><span class="d">11/10</span><span class="w">Chủ nhật</span><span class="p">Về HN</span></a>
+    </nav>
 
     <div class="prog">
       <div>
         <div class="prog-n"><span data-role="pDone">0</span> <span class="of">/ <span data-role="pAll">0</span></span></div>
-        <div class="prog-label">nơi đã tích trong lịch <b><span data-role="pLen">3</span> ngày</b></div>
+        <div class="prog-label">nơi đã tích trong <b>lịch chín ngày</b><span data-role="extra"></span></div>
         <div class="bar"><i data-role="pFill"></i></div>
       </div>
       <div class="meters">
@@ -369,24 +415,386 @@
 <nav class="nav">
   <div class="wrap">
     <span class="brand" data-role="navProg">0 / 0</span>
-    <button type="button" class="back" data-back>← Đổi điểm đến</button>
-    <a href="#dalat-anchor">Dốc Thị</a>
-    <a href="#dalat-an">Ăn</a>
-    <a href="#dalat-choi">Chơi</a>
-    <span class="switch nav-switch" role="tablist" aria-label="Chọn độ dài chuyến">
-      <button type="button" role="tab" data-len="3" data-scroll aria-selected="true">3 ngày</button>
-      <button type="button" role="tab" data-len="5" data-scroll aria-selected="false">5 ngày</button>
-      <button type="button" role="tab" data-len="7" data-scroll aria-selected="false">7 ngày</button>
-    </span>
-    <a href="#dalat-note">Ghi chú</a>
+    <a href="#lich">Lịch trình</a>
+    <a href="#tamdao">Tam Đảo</a>
+    <a href="#dalat">Đà Lạt</a>
+    <a href="#ghichu">Ghi chú</a>
   </div>
 </nav>
 
+<section id="lich">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Lịch trình</h2>
+      <div class="rule"></div>
+      <span class="label">9 ngày · 8 đêm · tích khi đã ghé</span>
+    </div>
+    <p class="sec-intro">Thứ tự đã cố định: Tam Đảo trước vì nó nằm ngay cạnh Nội Bài — đi thẳng từ sân bay, không phải vào Hà Nội rồi vòng ra. Đà Lạt để sau vì đó là phần dài, và đi rồi thì về thẳng Hà Nội là hết chuyến. Chi tiết từng quán và từng điểm nằm ở hai mục <a href="#tamdao">Tam Đảo</a> và <a href="#dalat">Đà Lạt</a> bên dưới; ở đây chỉ là nhịp của mỗi ngày.</p>
+
+    <div class="leg">
+      <div class="leg-head">
+        <span class="n">Chặng 1</span>
+        <h3>Tam Đảo</h3>
+        <span class="dates">03 – 04/10 · 2 ngày 1 đêm</span>
+        <div class="rule"></div>
+        <span class="dates" data-leg-count>0 / 0 nơi</span>
+      </div>
+      <p class="leg-note">Thị trấn ở 900 m, nhỏ đến mức đi bộ hết trong một buổi — nên hai ngày là vừa đủ phần cốt lõi, không cần xe khi đã lên tới nơi. Trục của chặng này là <b>Quán Gió</b> lúc mây dâng.</p>
+      <div class="days">
+
+        <div class="day" id="d03">
+          <div class="day-top">
+            <span class="day-n">Ngày 1</span>
+            <span class="day-date">T7 · 03/10</span>
+            <h4>Đáp Nội Bài rồi lên thẳng núi</h4>
+            <span class="day-tail">ngủ: Tam Đảo</span>
+          </div>
+          <div class="move">
+            <span class="ico">✈</span>
+            <span><b>Nội Bài → Tam Đảo · 60 km · ~1 giờ 15.</b> Không cần vào Hà Nội — sân bay đã nằm trên hướng lên, chỉ chạy cao tốc Nội Bài – Lào Cai rồi 13 km đường đèo cuối. Đặt xe đón sẵn ở sảnh đến, 700k–1 triệu một chiều cho xe 4 chỗ.</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Nhận phòng trước trưa, ăn ngay tại thị trấn rồi để Ngọc chợp mắt — vừa bay xuống là đừng nhét việc. Đầu giờ chiều đi bộ nhà thờ đá lên Cổng Trời, kết bằng Quán Gió đúng lúc mây tràn qua lan can. Tối chợ đêm và một nồi gà đồi.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="nhathoda" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ đá Tam Đảo</b><span class="note">Ngay trung tâm, ghé đầu giờ chiều</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="congtroi" data-cat="choi"><span class="box"></span><span class="txt"><b>Cổng Trời</b><span class="note">Nhìn xuống thị trấn nằm dưới mây</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="quangio" data-cat="an"><span class="box"></span><span class="txt"><b>Quán Gió</b><span class="note">Chiều muộn — điểm neo của cả chặng</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="chotamdao" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Tam Đảo</b><span class="note">Đi dạo sau bữa tối</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="phomay" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Phố Mây</b><span class="note">Gà đồi hấp lá chanh và ngọn su su xào tỏi — gọi bàn trước ở 0976 087 416</span></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+        </div>
+
+        <div class="day" id="d04">
+          <div class="day-top">
+            <span class="day-n">Ngày 2</span>
+            <span class="day-date">CN · 04/10</span>
+            <h4>Thác Bạc, rồi bay thẳng vào Đà Lạt</h4>
+            <span class="day-tail">ngủ: Đà Lạt</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Ngày dài nhất chuyến, nên dậy 6 giờ là bắt buộc chứ không phải để săn mây cho vui. Cà phê sớm ở Lưng Chừng, xuống Thác Bạc khi bậc đá chưa đông, ghé đền Bà Chúa. Ăn trưa sớm trên thị trấn, trả phòng trước 12 giờ rồi đi thẳng ra sân bay.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="lungchung" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe Lưng Chừng</b><span class="note">Mở từ 6 giờ — đúng lúc bạn cần</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="thacbac" data-cat="choi"><span class="box"></span><span class="txt"><b>Thác Bạc</b><span class="note">Đi sớm khi bậc đá chưa trơn và chưa đông</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="denbachua" data-cat="choi"><span class="box"></span><span class="txt"><b>Đền Bà Chúa Thượng Ngàn</b><span class="note">Trên đường ra khỏi thị trấn</span></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+          <div class="move">
+            <span class="ico">✈</span>
+            <span><b>Tam Đảo → Nội Bài 60 km, ~1 giờ 15 · bay HAN → DLI chiều muộn (khung 17–19 giờ), 1h50 · Liên Khương → trung tâm 30 km, ~50 phút.</b> Không vào Hà Nội — sân bay nằm ngay trên đường xuống núi. Rời thị trấn 12 giờ là dư giờ làm thủ tục. Tới khách sạn Đà Lạt khoảng 21–22 giờ, nhận phòng rồi ngủ; đừng xếp gì thêm cho tối này.</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="stay"><b>Ở đâu:</b> khách sạn hoặc homestay ngay thị trấn, 500k–2 triệu/đêm — chọn phòng hướng thung lũng. <b>Đi lại:</b> xe riêng Nội Bài → Tam Đảo và Tam Đảo → Nội Bài, 700k–1 triệu mỗi chiều; trên thị trấn đi bộ hết. <b>Ước tính chặng này:</b> 1,5–2,5 triệu/người.</div>
+    </div>
+
+    <div class="leg">
+      <div class="leg-head">
+        <span class="n">Chặng 2</span>
+        <h3>Đà Lạt</h3>
+        <span class="dates">04 – 11/10 · 7 đêm</span>
+        <div class="rule"></div>
+        <span class="dates" data-leg-count>0 / 0 nơi</span>
+      </div>
+      <p class="leg-note">Đêm đầu là <b>đêm 4/10</b> — tới nơi muộn, chỉ để ngủ, nên lịch thật sự bắt đầu từ sáng 5/10. Năm đêm ở trung tâm, hai đêm trên farmstay giữa đồi chè Cầu Đất. Ngủ ngay trên đồi nghĩa là xem được biển mây mà không phải dậy lúc 4 rưỡi. Trục của chặng này là <b>Tiệm cà phê Dốc Thị</b> lúc hoàng hôn.</p>
+      <div class="days">
+
+        <div class="day" id="d05">
+          <div class="day-top">
+            <span class="day-n">Ngày 3</span>
+            <span class="day-date">T2 · 05/10</span>
+            <h4>Ngủ bù, rồi hoàng hôn Dốc Thị</h4>
+            <span class="day-tail">ngủ: trung tâm</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Sau ngày hôm qua thì buổi sáng này để trống là cố ý — ngủ tới lúc nào dậy thì dậy, ăn sáng muộn quanh khách sạn. Chiều lên Dốc Thị lúc 16:00 và ngồi đến khi tắt nắng; quán quay mặt hướng tây, đi taxi lên để khỏi phải chạy xe xuống dốc lúc trời tối. Tối bún bò rồi đi bộ một vòng hồ Xuân Hương.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="docthi" data-cat="an"><span class="box"></span><span class="txt"><b>Tiệm cà phê Dốc Thị</b><span class="note">Đến trước 16:30 để chắc chỗ ngoài rìa đồi</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="bunbo" data-cat="an"><span class="box"></span><span class="txt"><b>Bún bò Ấp Ánh Sáng</b><span class="note">Bữa tối đầu tiên, ngay cạnh hồ</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="hoxuanhuong" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Xuân Hương</b><span class="note">Đi bộ một đoạn sau bữa tối</span></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+        </div>
+
+        <div class="day" id="d06">
+          <div class="day-top">
+            <span class="day-n">Ngày 4</span>
+            <span class="day-date">T3 · 06/10</span>
+            <h4>Hồ Tuyền Lâm, spa và một nồi lẩu</h4>
+            <span class="day-tail">ngủ: trung tâm</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Ăn sáng muộn. Sáng đi Trúc Lâm và hồ Tuyền Lâm — lên bằng cáp treo từ đồi Robin nếu muốn ngắm rừng thông từ trên. Chiều để trống cho massage. Tối lẩu gà lá é, món địa phương đúng nghĩa; trời lạnh thì không gì hợp hơn.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="truclam" data-cat="choi"><span class="box"></span><span class="txt"><b>Thiền viện Trúc Lâm</b><span class="note">Cáp treo từ đồi Robin</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="tuyenlam" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Tuyền Lâm</b><span class="note">Đi bộ ven hồ hoặc thuê thuyền</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="tung" data-cat="an"><span class="box"></span><span class="txt"><b>Cà phê Tùng</b><span class="note">Chiều muộn, trên đường về trung tâm</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="taongo" data-cat="an"><span class="box"></span><span class="txt"><b>Lẩu gà lá é Tao Ngộ</b><span class="note">Tới trước 18:30 cho chắc bàn</span></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+        </div>
+
+        <div class="day" id="d07">
+          <div class="day-top">
+            <span class="day-n">Ngày 5</span>
+            <span class="day-date">T4 · 07/10</span>
+            <h4>Langbiang bằng xe jeep</h4>
+            <span class="day-tail">ngủ: trung tâm</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Lên đỉnh bằng xe jeep của khu du lịch, không phải leo. Chiều vòng qua hồ Đankia – Suối Vàng, đường thông đẹp nhất quanh Đà Lạt. Mê Linh chỉ ghé nếu trời còn quang — chiều Tà Nung hay mù. Tối lẩu bò Ba Toa.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="langbiang" data-cat="choi"><span class="box"></span><span class="txt"><b>Đỉnh Langbiang</b><span class="note">2.167 m — điểm cao nhất cả chuyến</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="suoivang" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Đankia – Suối Vàng</b></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="culan" data-cat="choi"><span class="box"></span><span class="txt"><b>Làng Cù Lần</b><span class="note">Bỏ qua được nếu muốn về sớm</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="melinh" data-cat="an"><span class="box"></span><span class="txt"><b>Mê Linh Coffee Garden</b><span class="note">Chỉ ghé nếu trời quang</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="baotoa" data-cat="an"><span class="box"></span><span class="txt"><b>Lẩu bò Ba Toa</b></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+        </div>
+
+        <div class="day" id="d08">
+          <div class="day-top">
+            <span class="day-n">Ngày 6</span>
+            <span class="day-date">T5 · 08/10</span>
+            <h4>Dời lên đồi chè</h4>
+            <span class="day-tail">ngủ: Cầu Đất</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Sáng cà phê ở An rồi trả phòng muộn — phần lớn khách sạn cho tới 12 giờ. Chiều xe riêng đưa 23 km lên Trại Mát – Cầu Đất, ghé chùa Ve Chai ngay trên đường. Nhận farmstay, tối ăn tại farm; trên này lạnh hơn trung tâm 3–4 °C.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="ancafe" data-cat="an"><span class="box"></span><span class="txt"><b>An Cafe</b><span class="note">63 Ba Tháng Hai — ghé buổi sáng trước khi rời trung tâm</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="linhphuoc" data-cat="choi"><span class="box"></span><span class="txt"><b>Chùa Linh Phước</b><span class="note">Chùa Ve Chai ở Trại Mát, ngay trên đường lên</span></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+          <div class="move">
+            <span class="ico">🚗</span>
+            <span><b>Trung tâm → Cầu Đất · 23 km · ~45 phút.</b> Giữ xe riêng cho cả hai ngày trên đồi — trên đó gọi xe rất khó.</span>
+          </div>
+        </div>
+
+        <div class="day" id="d09">
+          <div class="day-top">
+            <span class="day-n">Ngày 7</span>
+            <span class="day-date">T6 · 09/10</span>
+            <h4>Biển mây ngay ngoài cửa phòng</h4>
+            <span class="day-tail">ngủ: Cầu Đất</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Dậy 6:30, bước ra là thấy mây nằm dưới thung lũng — người đi trong ngày phải rời Đà Lạt từ 4:30 mới kịp khung này. Ăn sáng và uống Arabica rang tại chỗ ở Cầu Đất Farm. Chiều xuống D'ran, thị trấn hồng: vườn hồng ăn trái, mái nhà dốc.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="caudat" data-cat="choi"><span class="box"></span><span class="txt"><b>Đồi chè Cầu Đất</b><span class="note">6:30 – 7:30, mây còn dày dưới thung</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="caudatfarm" data-cat="an"><span class="box"></span><span class="txt"><b>Cầu Đất Farm</b><span class="note">Ăn sáng ngay trên đồi</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="dran" data-cat="choi"><span class="box"></span><span class="txt"><b>Thị trấn D'ran</b><span class="note">Vườn hồng ăn trái, mái nhà dốc</span></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+        </div>
+
+        <div class="day" id="d10">
+          <div class="day-top">
+            <span class="day-n">Ngày 8</span>
+            <span class="day-date">T7 · 10/10</span>
+            <h4>Về lại phố, và mua quà</h4>
+            <span class="day-tail">ngủ: trung tâm</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Sáng trên farm không đặt gì — ngủ nướng, ngồi không, đó là buổi có giá nhất của cả chuyến. Trưa về lại trung tâm nhận phòng đêm cuối. Chiều đi chợ và Là Việt mua đồ mang về, ghé nhà thờ Con Gà mươi phút. Tối lẩu bò Nhà Gỗ.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="chodalat" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Đà Lạt</b><span class="note">Hồng treo gió, atiso, mứt, dâu</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="laviet" data-cat="an"><span class="box"></span><span class="txt"><b>Là Việt Coffee</b><span class="note">Xem xưởng rang trước khi mua cà phê mang về</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="nhatho" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ Con Gà</b><span class="note">Ghé 15 phút, ngay trung tâm</span></span><span class="tick">Đã đi</span></label></li>
+            <li><label class="chk"><input type="checkbox" data-place="nhago" data-cat="an"><span class="box"></span><span class="txt"><b>Lẩu bò Nhà Gỗ</b><span class="note">Bữa tối cuối cùng ở Đà Lạt</span></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+        </div>
+
+        <div class="day" id="d11">
+          <div class="day-top">
+            <span class="day-n">Ngày 9</span>
+            <span class="day-date">CN · 11/10</span>
+            <h4>Bữa sáng cuối rồi về Hà Nội</h4>
+            <span class="day-tail">hết chuyến</span>
+          </div>
+          <p class="rhythm"><em>Nhịp</em>Bánh mì xíu mại lúc còn sớm — đi muộn là bán hết. Trả phòng trước 12:30 là dư dả, trưa ra Liên Khương, chiều đã ở Hà Nội.</p>
+          <ul class="checks">
+            <li><label class="chk"><input type="checkbox" data-place="xiumai" data-cat="an"><span class="box"></span><span class="txt"><b>Bánh mì xíu mại Cô Hồng</b><span class="note">Đi sớm — bán hết là nghỉ</span></span><span class="tick">Đã đi</span></label></li>
+          </ul>
+          <div class="move">
+            <span class="ico">✈</span>
+            <span><b>Trung tâm → Liên Khương 30 km, ~50 phút · DLI → HAN bay 1h50.</b> Rời khách sạn trước 12:30 cho chuyến chiều là thong thả.</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="stay"><b>Ở đâu:</b> 5 đêm trung tâm quanh Hồ Xuân Hương hoặc khu hồ Tuyền Lâm (1,5–4 triệu/đêm) + 2 đêm farmstay Cầu Đất (800k–2 triệu/đêm). Đêm 4/10 nhớ báo khách sạn là tới muộn. <b>Xe:</b> ô tô riêng có tài 1,2–1,8 triệu/ngày. <b>Vé bay:</b> khứ hồi HAN ⇄ DLI. <b>Ước tính chặng này:</b> 9–13 triệu/người, chưa vé bay.</div>
+    </div>
+  </div>
+</section>
+
+<section id="tamdao">
+  <div class="wrap">
+    <div class="cat-title">
+      <h3>Tam Đảo · chi tiết</h3>
+      <span class="meta">8 chỗ ăn · 11 nơi chơi · chặng 03 – 04/10</span>
+    </div>
+    <div class="cat-block">
+<section id="tamdao-anchor">
+  <div class="wrap">
+    <div class="anchor">
+      <div>
+        <div class="tag">Điểm neo · chiều 03/10</div>
+        <h3>Quán Gió</h3>
+        <p>Người ta gọi nó là quán cà phê trên mây, và cái tên đó đúng theo nghĩa đen: quán nằm ở rìa thị trấn nhìn thẳng ra thung lũng, mây dâng lên tận bàn vào những chiều ẩm. Từ đây nhìn được tòa lâu đài Tam Đảo lấp ló bên kia sườn núi — khung ảnh mà gần như ai lên Tam Đảo cũng chụp.</p>
+        <p>Thị trấn nhỏ nên đi bộ từ nhà thờ đá tới đây chỉ mất mươi phút, toàn dốc. Chiều muộn hay mù đặc — mù chính là thứ bạn tới xem, nhưng nhớ mang áo khoác vì có mây thì có gió.</p>
+        <ul class="checks">
+          <li><label class="chk"><input type="checkbox" data-place="quangio" data-cat="an"><span class="box"></span><span class="txt"><b>Đã ngồi Quán Gió trong mây</b><span class="note">Chiều muộn là lúc mây tràn qua lan can</span></span><span class="tick">Đã đi</span></label></li>
+        </ul>
+      </div>
+      <dl class="dl">
+        <dt>Địa chỉ</dt><dd>Thôn 1, thị trấn Tam Đảo, huyện Tam Đảo, Vĩnh Phúc</dd>
+        <dt>Giờ mở</dt><dd class="num">08:00 – 20:30 hằng ngày</dd>
+        <dt>Từ nhà thờ đá</dt><dd class="num">≈ 10 phút đi bộ</dd>
+        <dt>Khung đẹp</dt><dd>Chiều muộn, hoặc sáng sớm khi mây còn nằm dưới thung</dd>
+        <dt>Gọi gì</dt><dd>Cà phê nóng — trên này 900 m, đồ lạnh mau nguội tay</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="tamdao-an" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>Ăn</h2><div class="rule"></div><span class="label">8 chỗ · tích khi đã ghé</span></div>
+    <p class="sec-intro">Bốn quán cà phê và bốn nhà hàng. Món phải gọi ở bất kỳ quán nào là <b>ngọn su su xào tỏi</b> — su su Tam Đảo trồng ngay trên sườn núi quanh thị trấn, giòn và ngọt hơn hẳn dưới xuôi. Sau đó là gà đồi, lợn mán và cá suối; đó gần như là toàn bộ thực đơn của thị trấn này, chỉ khác nhau ở cách nấu.</p>
+
+    <div class="subhead"><span>Cà phê</span></div>
+    <div class="cards">
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="quangio" data-cat="an"><span class="box"></span><span class="txt"><b>Quán Gió</b><span class="note">Quán cà phê trên mây, nhìn ra lâu đài Tam Đảo — điểm neo của chuyến</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta">
+          <dt>Địa chỉ</dt><dd>Thôn 1, TT. Tam Đảo</dd>
+          <dt>Giờ</dt><dd class="num">08:00 – 20:30</dd>
+          <dt>Gọi gì</dt><dd>Cà phê nóng, ngồi sát lan can hướng thung lũng</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="lungchung" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe Lưng Chừng</b><span class="note">Đúng như tên — nằm lưng chừng núi, mở gần như cả ngày lẫn đêm</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta">
+          <dt>Địa chỉ</dt><dd>Thôn 2, đường Triệu Thái, TT. Tam Đảo</dd>
+          <dt>Giờ</dt><dd class="num">06:00 – 24:00</dd>
+          <dt>Gọi gì</dt><dd>Chỗ hợp nhất để dậy sớm săn mây mà không phải leo đâu xa</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="cafe1904" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe 1904</b><span class="note">Quán mới, mở dịp Tết 2024, nhanh chóng thành chỗ săn mây quen</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta">
+          <dt>Địa chỉ</dt><dd>Đường Trần Quốc Tuấn, TT. Tam Đảo</dd>
+          <dt>Gọi gì</dt><dd>Ghé buổi sáng, ít khách hơn Quán Gió</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="cola" data-cat="an"><span class="box"></span><span class="txt"><b>Tiệm Cafe Cỏ Lạ</b><span class="note">Nằm trên đồi, nhìn xuống trọn một góc thị trấn</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta">
+          <dt>Địa chỉ</dt><dd>Lưng chừng đồi, TT. Tam Đảo</dd>
+          <dt>Gọi gì</dt><dd>Chỗ ngồi nhìn mái nhà thị trấn khi mây tan</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="subhead"><span>Nhà hàng · gà đồi và cá suối</span></div>
+    <div class="cards">
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="phomay" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Phố Mây</b><span class="note">Thực đơn rộng nhất thị trấn — dúi, nhím, cá tầm, cá hồi, lợn bản, gà đồi</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta">
+          <dt>Địa chỉ</dt><dd>Biệt thự B2, đối diện nhà thờ đá, khu biệt thự Tam Đảo</dd>
+          <dt>Gọi</dt><dd class="num">0976 087 416</dd>
+          <dt>Gọi gì</dt><dd>Gà đồi hấp lá chanh, ngọn su su xào tỏi, cá tầm nướng</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="kumochan" data-cat="an"><span class="box"></span><span class="txt"><b>Kumo Chan</b><span class="note">Set nướng BBQ, bàn nhìn ra thung lũng mây</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta">
+          <dt>Địa chỉ</dt><dd>TT. Tam Đảo</dd>
+          <dt>Gọi gì</dt><dd>Set nướng cho hai người, thêm lợn rừng và cá suối</dd>
+          <dt>Lưu ý</dt><dd>Bàn view thung lũng ít, cuối tuần nên đặt trước</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="huongrung" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Hương Rừng</b><span class="note">Quán bình dân dưới Tây Thiên, giá dễ chịu</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta">
+          <dt>Địa chỉ</dt><dd>Khu Tây Thiên, huyện Tam Đảo</dd>
+          <dt>Gọi gì</dt><dd>Gà đồi, ếch, lươn, cá suối</dd>
+          <dt>Ăn khi</dt><dd>Bữa trưa trong ngày đi Tây Thiên</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="longthanh" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Long Thành</b><span class="note">Chuyên ba ba và cá — quán lâu năm của vùng Tam Đảo – Vĩnh Phúc</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta">
+          <dt>Địa chỉ</dt><dd>Vĩnh Phúc, dưới chân núi</dd>
+          <dt>Gọi gì</dt><dd>Ba ba, cá tươi</dd>
+          <dt>Ăn khi</dt><dd>Bữa trên đường lên hoặc đường về Hà Nội</dd>
+        </dl>
+      </div>
+    </div>
+    <p class="fineprint">Địa chỉ và giờ tra từ các trang du lịch Vĩnh Phúc, không phải gọi kiểm chứng từng nơi. Thị trấn Tam Đảo nhỏ và quán đổi tên khá thường — địa chỉ ở đây ghi tới cấp thôn hoặc mốc dễ nhận (nhà thờ đá) vì phần lớn quán không có số nhà. <b>Cuối tuần nên đặt bàn trước</b>, nhất là các quán có bàn nhìn ra thung lũng.</p>
+  </div>
+</section>
+
+<section id="tamdao-choi">
+  <div class="wrap">
+    <div class="sec-head"><h2>Chơi</h2><div class="rule"></div><span class="label">11 nơi · tích khi đã đi</span></div>
+    <p class="sec-intro">Sáu nơi đầu nằm gọn trong thị trấn, đi bộ hết — đó chính là phần nằm trong lịch hai ngày. Năm nơi còn lại ở chân núi, mỗi nơi ngốn nửa ngày đến trọn ngày ô tô, nên lần này không kịp; để đây làm chỗ đổi nếu trời mù đặc và không muốn ở lì trên thị trấn.</p>
+    <div class="cards">
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="nhathoda" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ đá Tam Đảo</b><span class="note">Khởi công 1906, cải tạo theo lối Gothic năm 1937 — biểu tượng của thị trấn</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Trung tâm thị trấn · đi bộ</dd><dt>Vé</dt><dd>Miễn phí</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="thacbac" data-cat="choi"><span class="box"></span><span class="txt"><b>Thác Bạc</b><span class="note">Xuống chừng trăm bậc đá là tới chân thác — mùa hè nước đổ trắng xóa</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Cuối thị trấn · đi bộ</dd><dt>Lưu ý</dt><dd>Bậc trơn sau mưa, đi giày có bám</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="congtroi" data-cat="choi"><span class="box"></span><span class="txt"><b>Cổng Trời</b><span class="note">Ở ngã ba đường, chỗ nhìn bao quát cả thị trấn nằm dưới mây</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Ngã ba đường huyện Tam Đảo</dd><dt>Vé</dt><dd>Miễn phí</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="thiennhi" data-cat="choi"><span class="box"></span><span class="txt"><b>Đỉnh Thiên Nhị</b><span class="note">Leo bậc thang lên tháp truyền hình — dốc thật, nhưng là điểm cao nhất đi bộ tới được</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Trên thị trấn · leo 1–1,5 giờ</dd><dt>Đi khi</dt><dd>Sáng sớm, trước khi mù kéo lên</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="denbachua" data-cat="choi"><span class="box"></span><span class="txt"><b>Đền Bà Chúa Thượng Ngàn</b><span class="note">Nằm trong quần thể Chùa Vàng, ngay trong thị trấn</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Thị trấn Tam Đảo · đi bộ</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="chotamdao" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Tam Đảo</b><span class="note">Su su, măng, thuốc nam, đồ nướng buổi tối — chợ họp ngay giữa thị trấn</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Trung tâm · đông nhất buổi tối</dd><dt>Mua gì</dt><dd>Ngọn su su mang về, măng khô</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="taythien" data-cat="choi"><span class="box"></span><span class="txt"><b>Thiền viện Trúc Lâm Tây Thiên</b><span class="note">Một trong ba thiền viện lớn nhất Việt Nam, dựng cạnh khu Tây Thiên Cổ Tự</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Chân núi phía Đại Đình · ~25 km, đi ô tô vòng xuống</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="captreo" data-cat="choi"><span class="box"></span><span class="txt"><b>Cáp treo Tây Thiên</b><span class="note">Lên đền Thượng bằng cáp thay vì leo — cả quãng đường rừng nhìn từ trên cao</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Khu danh thắng Tây Thiên</dd><dt>Đi khi</dt><dd>Buổi sáng, chiều hay đông và hay mưa</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="xahuong" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Xạ Hương</b><span class="note">Hồ giữa rừng dưới chân núi — câu cá, cắm trại, gần như không có khách du lịch</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Xã Minh Quang · ~15 km xuống núi</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="dailai" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Đại Lải</b><span class="note">Hồ lớn, có resort và chỗ chèo thuyền — đổi không khí sau mấy ngày trên núi</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Phúc Yên · ~40 km, trên đường về Hà Nội</dd></dl>
+      </div>
+      <div class="card">
+        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="vqg" data-cat="choi"><span class="box"></span><span class="txt"><b>Vườn quốc gia Tam Đảo</b><span class="note">Đường mòn xuyên rừng nguyên sinh — nửa ngày đi bộ, nên thuê người dẫn</span></span><span class="tick">Đã đi</span></label></li></ul>
+        <dl class="meta"><dt>Ở</dt><dd>Bao quanh thị trấn</dd><dt>Lưu ý</dt><dd>Vắt sau mưa — mang tất cao và muối</dd></dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+    </div>
+    <a class="back-top" href="#lich">↑ Về lịch trình</a>
+  </div>
+</section>
+
+<section id="dalat">
+  <div class="wrap">
+    <div class="cat-title">
+      <h3>Đà Lạt · chi tiết</h3>
+      <span class="meta">13 chỗ ăn · 11 nơi chơi · chặng 05 – 11/10</span>
+    </div>
+    <div class="cat-block">
 <section id="dalat-anchor">
   <div class="wrap">
     <div class="anchor">
       <div>
-        <div class="tag">Điểm neo · chiều ngày 1 của cả ba lịch</div>
+        <div class="tag">Điểm neo · chiều 05/10</div>
         <h3>Tiệm cà phê Dốc Thị</h3>
         <p>Quán nằm trên sườn đồi ở Phường 11, quay mặt hướng tây nên khung đẹp nhất là lúc mặt trời xuống sau dãy đồi. Bản nghỉ dưỡng đi taxi lên đây — khoảng 80–100k mỗi chiều — nên bạn ngồi được đến hết hoàng hôn mà không phải tính chuyện chạy xe xuống dốc trong lúc trời tối hoặc vừa mưa.</p>
         <p>Đường lên: từ Hồ Xuân Hương theo Trần Quốc Toản → Hồ Tùng Mậu → Hùng Vương, thẳng 5,5 km, quán trong hẻm 108 cạnh Ford Đà Lạt.</p>
@@ -537,8 +945,8 @@
 
 <section id="dalat-choi">
   <div class="wrap">
-    <div class="sec-head"><h2>Chơi</h2><div class="rule"></div><span class="label">15 nơi · tích khi đã đi</span></div>
-    <p class="sec-intro">Từ hồ trong phố ra tới biển Cam Ranh. Bốn nơi cuối chỉ có trong lịch 7 ngày; đồi chè Cầu Đất và D'ran chỉ có trong lịch 5 ngày.</p>
+    <div class="sec-head"><h2>Chơi</h2><div class="rule"></div><span class="label">11 nơi · tích khi đã đi</span></div>
+    <p class="sec-intro">Sáu nơi đầu nằm trong bán kính 8 km quanh trung tâm. Cầu Đất và D'ran ở phía đông, 23–40 km, và là lý do chuyến này ngủ hai đêm trên đồi. Langbiang – Suối Vàng – Cù Lần nằm cùng một hướng bắc nên gom vào một ngày.</p>
     <div class="cards">
       <div class="card">
         <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="hoxuanhuong" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Xuân Hương</b><span class="note">Vòng hồ 5 km ngay giữa phố — đi bộ đoạn ngắn sau bữa tối</span></span><span class="tick">Đã đi</span></label></li></ul>
@@ -584,825 +992,231 @@
         <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="culan" data-cat="choi"><span class="box"></span><span class="txt"><b>Làng Cù Lần</b><span class="note">Bỏ qua được nếu muốn về sớm</span></span><span class="tick">Đã đi</span></label></li></ul>
         <dl class="meta"><dt>Ở</dt><dd>Lạc Dương · 20 km</dd></dl>
       </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="khanhle" data-cat="choi"><span class="box"></span><span class="txt"><b>Đèo Khánh Lê</b><span class="note">33 km liên tục — con đèo dài nhất Việt Nam, đỉnh gần 1.700 m</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>QL27C, trên đường ra Nha Trang</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="baidai" data-cat="choi"><span class="box"></span><span class="txt"><b>Bãi Dài, Cam Ranh</b><span class="note">Bãi cát dài, resort nằm dọc bờ, cách sân bay 15 phút</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Cam Ranh · cuối lịch 7 ngày</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="honmun" data-cat="choi"><span class="box"></span><span class="txt"><b>Hòn Mun</b><span class="note">Lặn ngắm san hô — nửa ngày là đủ, khỏi cần tour bốn đảo</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Vịnh Nha Trang · đi tàu từ bến</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="ponagar" data-cat="choi"><span class="box"></span><span class="txt"><b>Tháp Bà Ponagar</b><span class="note">Tháp Chăm thế kỷ 8, ghé chiều muộn rồi tắm bùn khoáng gần đó</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Nha Trang · bờ bắc sông Cái</dd></dl>
-      </div>
     </div>
   </div>
 </section>
 
-<section id="dalat-plans">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2>Lịch nghỉ dưỡng</h2>
-      <div class="rule"></div>
-      <span class="switch" role="tablist" aria-label="Chọn độ dài chuyến">
-        <button type="button" role="tab" data-len="3" aria-selected="true">3 ngày</button>
-        <button type="button" role="tab" data-len="5" aria-selected="false">5 ngày</button>
-        <button type="button" role="tab" data-len="7" aria-selected="false">7 ngày</button>
-      </span>
     </div>
-
-    <!-- 3 NGÀY -->
-    <div class="plan" data-plan data-plan-len="3">
-      <div class="plan-head">
-        <div class="plan-num">3<small>ngày</small></div>
-        <div class="plan-title">
-          <h3>Trung tâm & hồ Tuyền Lâm</h3>
-          <p>Một resort duy nhất, không đổi phòng, không đi quá 10 km. Ba quán cà phê, ba bữa đáng nhớ, một hồ, một buổi spa.</p>
-        </div>
-        <div class="plan-prog">
-          <div class="label">Trong lịch này</div><div class="v" data-plan-count>0 / 0 nơi</div>
-          <div class="k2">2 đêm · 4–7 triệu/người</div>
-        </div>
-      </div>
-      <div class="days">
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 1</span><h4>Đến và chậm lại</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Bay chuyến 8–9 giờ, xe đón sân bay đặt trước (350–450k / xe 4 chỗ, 50 phút). Nhận phòng, ăn trưa nhẹ, chợp mắt. Chiều lên Dốc Thị, tối ăn bún bò rồi đi bộ quanh hồ.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="docthi" data-cat="an"><span class="box"></span><span class="txt"><b>Tiệm cà phê Dốc Thị</b><span class="note">16:00 — ngồi đến khi tắt nắng</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="bunbo" data-cat="an"><span class="box"></span><span class="txt"><b>Bún bò Ấp Ánh Sáng</b><span class="note">Bữa tối đầu tiên, ngay cạnh hồ</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="hoxuanhuong" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Xuân Hương</b><span class="note">Đi bộ một đoạn sau bữa tối</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 2</span><h4>Hồ Tuyền Lâm, spa và một nồi lẩu</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Ăn sáng muộn tại resort. Sáng đi Trúc Lâm và hồ. Chiều để trống cho massage. Tối lẩu gà lá é — món địa phương đúng nghĩa, và trời lạnh thì không gì hợp hơn.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="truclam" data-cat="choi"><span class="box"></span><span class="txt"><b>Thiền viện Trúc Lâm</b><span class="note">Đi cáp treo từ đồi Robin nếu muốn ngắm rừng thông từ trên</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="tuyenlam" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Tuyền Lâm</b><span class="note">Đi bộ ven hồ hoặc thuê thuyền</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="tung" data-cat="an"><span class="box"></span><span class="txt"><b>Cà phê Tùng</b><span class="note">Chiều muộn, trên đường về trung tâm</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="taongo" data-cat="an"><span class="box"></span><span class="txt"><b>Lẩu gà lá é Tao Ngộ</b><span class="note">Tới trước 18:30 nếu là cuối tuần</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 3</span><h4>Bữa sáng cuối rồi về</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Bánh mì xíu mại lúc còn sớm, cà phê, mua quà, trưa ra Liên Khương, bay 15:00. Rời khách sạn trước 12:30 là dư dả.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="xiumai" data-cat="an"><span class="box"></span><span class="txt"><b>Bánh mì xíu mại Cô Hồng</b><span class="note">Đi sớm — bán hết là nghỉ</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="laviet" data-cat="an"><span class="box"></span><span class="txt"><b>Là Việt Coffee</b><span class="note">Xem xưởng rang trước khi mua cà phê mang về</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="chodalat" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Đà Lạt</b><span class="note">Hồng treo gió, atiso, mứt, dâu</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="nhatho" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ Con Gà</b><span class="note">Ghé 15 phút nếu còn thời gian</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-      </div>
-      <div class="stay"><b>Ở đâu:</b> resort khu hồ Tuyền Lâm nếu muốn yên tĩnh tuyệt đối, hoặc khách sạn quanh Hồ Xuân Hương nếu muốn đi bộ ra phố. 1,5–4 triệu/đêm. <b>Ước tính:</b> 4–7 triệu/người, chưa vé bay.</div>
-    </div>
-
-    <!-- 5 NGÀY -->
-    <div class="plan" data-plan data-plan-len="5" hidden>
-      <div class="plan-head">
-        <div class="plan-num">5<small>ngày</small></div>
-        <div class="plan-title">
-          <h3>Hai chốn: phố rồi đồi chè</h3>
-          <p>Hai đêm ở trung tâm, hai đêm ở farmstay giữa đồi chè Cầu Đất. Ngủ ngay trên đồi nghĩa là xem được biển mây mà không phải dậy lúc 4 rưỡi.</p>
-        </div>
-        <div class="plan-prog">
-          <div class="label">Trong lịch này</div><div class="v" data-plan-count>0 / 0 nơi</div>
-          <div class="k2">4 đêm · 7–11 triệu/người</div>
-        </div>
-      </div>
-      <div class="days">
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 1–2</span><h4>Y hệt lịch 3 ngày</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Đến, nhận phòng, Dốc Thị lúc 16:00, tối bún bò. Hôm sau Trúc Lâm và hồ Tuyền Lâm buổi sáng, spa buổi chiều, tối lẩu gà lá é. Đừng nhét thêm điểm chỉ vì còn dư ngày.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="docthi" data-cat="an"><span class="box"></span><span class="txt"><b>Tiệm cà phê Dốc Thị</b><span class="note">Chiều ngày 1</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="bunbo" data-cat="an"><span class="box"></span><span class="txt"><b>Bún bò Ấp Ánh Sáng</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="hoxuanhuong" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Xuân Hương</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="truclam" data-cat="choi"><span class="box"></span><span class="txt"><b>Thiền viện Trúc Lâm</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="tuyenlam" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Tuyền Lâm</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="tung" data-cat="an"><span class="box"></span><span class="txt"><b>Cà phê Tùng</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="taongo" data-cat="an"><span class="box"></span><span class="txt"><b>Lẩu gà lá é Tao Ngộ</b></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 3</span><h4>Dời lên đồi chè</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Sáng cà phê ở An rồi trả phòng muộn — phần lớn resort cho tới 12 giờ. Chiều xe riêng đưa 23 km lên Trại Mát – Cầu Đất, nhận farmstay. Tối ăn tại farm; trên này lạnh hơn trung tâm 3–4 °C.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="ancafe" data-cat="an"><span class="box"></span><span class="txt"><b>An Cafe</b><span class="note">63 Ba Tháng Hai — ghé buổi sáng trước khi rời trung tâm</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="linhphuoc" data-cat="choi"><span class="box"></span><span class="txt"><b>Chùa Linh Phước</b><span class="note">Chùa Ve Chai ở Trại Mát, ngay trên đường lên</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 4</span><h4>Biển mây ngay ngoài cửa phòng</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Dậy 6:30, bước ra là thấy mây nằm dưới thung lũng — người đi trong ngày phải rời Đà Lạt từ 4:30 mới kịp. Chiều thăm nông trại và vườn hồng, tối về lại trung tâm ăn lẩu bò.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="caudat" data-cat="choi"><span class="box"></span><span class="txt"><b>Đồi chè Cầu Đất</b><span class="note">6:30 – 7:30, mây còn dày dưới thung</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="caudatfarm" data-cat="an"><span class="box"></span><span class="txt"><b>Cầu Đất Farm</b><span class="note">Ăn sáng và uống Arabica rang tại chỗ</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="dran" data-cat="choi"><span class="box"></span><span class="txt"><b>Thị trấn D'ran</b><span class="note">Thị trấn hồng — vườn hồng ăn trái, mái nhà dốc</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="nhago" data-cat="an"><span class="box"></span><span class="txt"><b>Lẩu bò Nhà Gỗ</b><span class="note">Bữa tối khi đã về lại trung tâm</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 5</span><h4>Bữa sáng cuối rồi về</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Giống ngày cuối của lịch 3 ngày: bánh mì xíu mại, cà phê, chợ, sân bay.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="xiumai" data-cat="an"><span class="box"></span><span class="txt"><b>Bánh mì xíu mại Cô Hồng</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="laviet" data-cat="an"><span class="box"></span><span class="txt"><b>Là Việt Coffee</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="chodalat" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Đà Lạt</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="nhatho" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ Con Gà</b></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-      </div>
-      <div class="stay"><b>Ở đâu:</b> 2 đêm trung tâm (1,5–4 tr/đêm) + 2 đêm farmstay Cầu Đất (800k–2 tr/đêm). <b>Xe:</b> ô tô riêng có tài 1,2–1,8 triệu/ngày. <b>Ước tính:</b> 7–11 triệu/người, chưa vé bay.</div>
-    </div>
-
-    <!-- 7 NGÀY -->
-    <div class="plan" data-plan data-plan-len="7" hidden>
-      <div class="plan-head">
-        <div class="plan-num">7<small>ngày</small></div>
-        <div class="plan-title">
-          <h3>Cao nguyên rồi ra biển</h3>
-          <p>Ba đêm Đà Lạt, rồi vượt đèo Khánh Lê bằng ô tô ra resort biển Bãi Dài. Bay về thẳng từ Cam Ranh, không quay ngược lên núi.</p>
-        </div>
-        <div class="plan-prog">
-          <div class="label">Trong lịch này</div><div class="v" data-plan-count>0 / 0 nơi</div>
-          <div class="k2">6 đêm · 11–17 triệu/người</div>
-        </div>
-      </div>
-      <div class="days">
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 1–2</span><h4>Đà Lạt, nhịp chậm</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Đến, Dốc Thị chiều ngày 1, tối bún bò. Hôm sau Trúc Lâm, hồ Tuyền Lâm, spa buổi chiều, cà phê Tùng lúc muộn, tối lẩu gà lá é.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="docthi" data-cat="an"><span class="box"></span><span class="txt"><b>Tiệm cà phê Dốc Thị</b><span class="note">Chiều ngày 1</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="bunbo" data-cat="an"><span class="box"></span><span class="txt"><b>Bún bò Ấp Ánh Sáng</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="hoxuanhuong" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Xuân Hương</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="truclam" data-cat="choi"><span class="box"></span><span class="txt"><b>Thiền viện Trúc Lâm</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="tuyenlam" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Tuyền Lâm</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="tung" data-cat="an"><span class="box"></span><span class="txt"><b>Cà phê Tùng</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="taongo" data-cat="an"><span class="box"></span><span class="txt"><b>Lẩu gà lá é Tao Ngộ</b></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 3</span><h4>Langbiang bằng xe jeep</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Lên đỉnh bằng xe jeep của khu du lịch, không phải leo. Chiều vòng qua hồ Đankia – Suối Vàng, ghé Mê Linh trên đường về nếu trời còn quang. Tối lẩu bò Ba Toa.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="langbiang" data-cat="choi"><span class="box"></span><span class="txt"><b>Đỉnh Langbiang</b><span class="note">2.167 m — điểm cao nhất cả chuyến</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="suoivang" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Đankia – Suối Vàng</b><span class="note">Đường thông đẹp nhất quanh Đà Lạt</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="culan" data-cat="choi"><span class="box"></span><span class="txt"><b>Làng Cù Lần</b><span class="note">Bỏ qua được nếu muốn về sớm</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="melinh" data-cat="an"><span class="box"></span><span class="txt"><b>Mê Linh Coffee Garden</b><span class="note">Chỉ ghé nếu trời quang — chiều Tà Nung hay mù</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="baotoa" data-cat="an"><span class="box"></span><span class="txt"><b>Lẩu bò Ba Toa</b><span class="note">Bữa tối cuối cùng ở Đà Lạt</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 4</span><h4>Vượt đèo Khánh Lê từ ghế sau</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Xe riêng Đà Lạt → Nha Trang: 135 km, 3,5–4 giờ, khoảng 2,2–2,8 triệu một xe. Dừng chụp ảnh đỉnh đèo mà không phải cầm lái trong sương. Chiều nhận phòng biển — nhiệt độ vừa nhảy từ 18 lên 31 °C.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="khanhle" data-cat="choi"><span class="box"></span><span class="txt"><b>Đèo Khánh Lê</b><span class="note">33 km liên tục, con đèo dài nhất Việt Nam</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="baidai" data-cat="choi"><span class="box"></span><span class="txt"><b>Bãi Dài, Cam Ranh</b><span class="note">Nhận phòng resort, chiều tắm biển</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 5</span><h4>Ngày cố ý để trống</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Không có điểm nào để tích. Bơi, ăn sáng muộn, spa, nằm dài. Sau bốn ngày di chuyển thì đây là ngày có giá trị nhất — đừng lấp nó.</p>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 6</span><h4>Một buổi ra khơi</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Nửa ngày trên biển là đủ, không cần tour trọn ngày bốn đảo. Chiều vào bờ, tối đi phố biển mua quà: yến, nem nướng, mực rim.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="honmun" data-cat="choi"><span class="box"></span><span class="txt"><b>Hòn Mun</b><span class="note">Lặn ngắm san hô hoặc tour đảo nửa ngày</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="ponagar" data-cat="choi"><span class="box"></span><span class="txt"><b>Tháp Bà Ponagar</b><span class="note">Chiều muộn, rồi tắm bùn khoáng gần đó</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 7</span><h4>Bay thẳng từ Cam Ranh</h4></div>
-          <p class="rhythm"><em>Nhịp</em>Buổi sáng cuối ở biển, trả phòng 12 giờ. Sân bay Cam Ranh chỉ cách Bãi Dài 15 phút — đặt vé open-jaw ngay từ đầu: HAN → DLI chiều đi, CXR → HAN chiều về.</p>
-        </div>
-      </div>
-      <div class="stay"><b>Ở đâu:</b> 3 đêm Đà Lạt + 3 đêm resort Bãi Dài (2–5 tr/đêm). <b>Vé bay:</b> open-jaw HAN→DLI / CXR→HAN. <b>Ước tính:</b> 11–17 triệu/người, chưa vé bay.</div>
-    </div>
+    <a class="back-top" href="#lich">↑ Về lịch trình</a>
   </div>
 </section>
 
-<section id="dalat-note">
+<section id="ghichu">
   <div class="wrap">
-    <div class="sec-head"><h2>Bốn ghi chú</h2><div class="rule"></div></div>
+    <div class="sec-head"><h2>Ghi chú</h2><div class="rule"></div><span class="label">Đọc trước khi đặt</span></div>
     <div class="notes">
       <div>
-        <h3>Xe riêng thay vì tự lái</h3>
-        <p>Ô tô có tài xế 1,2–1,8 triệu/ngày trong nội tỉnh; chặng Đà Lạt – Nha Trang qua đèo Khánh Lê khoảng <b>2,2–2,8 triệu một xe</b>. Đặt qua khách sạn thường rẻ và chắc chắn hơn gọi ngoài.</p>
+        <h3>Nội Bài nằm sẵn trên đường lên Tam Đảo</h3>
+        <p>Đây là lý do Tam Đảo đi trước, và cũng là lý do ngày 4/10 không cần ghé Hà Nội. Sân bay cách thị trấn <b>60 km, một tiếng mười lăm</b>, nằm đúng trên đường xuống núi. Đặt xe hai chiều cùng một nhà — 700k–1 triệu mỗi chiều — vì taxi ở sân bay ít ai nhận chạy đèo.</p>
       </div>
       <div>
-        <h3>Ăn tối sớm hơn bạn nghĩ</h3>
-        <p>Quán lẩu ở Đà Lạt kín bàn từ khoảng 18:30, nhất là cuối tuần. Bữa sáng thì ngược lại: <b>bánh mì xíu mại bán hết là nghỉ</b>, thường trước 10 giờ. Muốn ăn khuya thì Xích Lô Quán mở tới 3 giờ sáng.</p>
+        <h3>Vé Đà Lạt: chọn chuyến chiều muộn 4/10</h3>
+        <p><b>HAN → DLI khung 17–19 giờ</b> và <b>DLI → HAN chiều 11/10</b>, đặt khứ hồi một lần. Đừng lấy chuyến sớm hơn 16 giờ: xuống núi rồi làm thủ tục cần đủ giờ đệm, mà đường đèo mưa thì không có đường vòng. Liên Khương cách trung tâm 30 km, xe đón 350–450k.</p>
       </div>
       <div>
-        <h3>Tháng 9 mưa chiều</h3>
-        <p>Giữa mùa mưa Tây Nguyên: sáng trong, mưa rào từ khoảng 14–15 giờ. Mọi điểm ngoài trời trong lịch đều xếp buổi sáng. <b>Dốc Thị là ngoại lệ có tính toán</b> — đi taxi nên mưa cũng không sao.</p>
+        <h3>Đường lên Tam Đảo chỉ có một</h3>
+        <p>13 km cuối là đèo một chiều lên, một chiều xuống, nhiều khúc cua gấp. Đi ban ngày, và nếu mưa to thì chấp nhận chậm lại — không có đường vòng. 3/10 là thứ Bảy nên <b>đặt phòng và đặt bàn trước</b>; Phố Mây gọi ở 0976 087 416.</p>
       </div>
       <div>
-        <h3>Dấu tích được lưu ở đâu</h3>
-        <p>Trang nhớ cả những ô bạn đã tích lẫn độ dài chuyến đang chọn. Mở lại bằng chính đường link này trên máy khác vẫn thấy nguyên — trừ khi ô trạng thái phía trên báo <b>lưu trên trình duyệt này</b>, khi đó dấu tích chỉ nằm ở máy hiện tại.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <p>Giờ giấc là khung tham khảo cho nhịp đi chậm, không phải lịch cố định. Giá phòng, giá xe và giờ mở cửa thay đổi theo mùa — gọi trước khi đi xa là thói quen đáng giữ, nhất là với Dốc Thị (0908 077 044) vào ngày mưa và Mê Linh (0919 619 888) trước khi chạy 20 km qua Tà Nung.</p>
-    <button class="reset" data-role="reset" type="button">Xóa hết dấu tích Đà Lạt</button>
-  </div>
-</footer>
-
-</div>
-
-<div class="dest" data-dest="tamdao" hidden>
-<header class="masthead">
-  <div class="wrap">
-    <div class="label">Tam Đảo · Vĩnh Phúc · 2N1Đ · 3N2Đ · 5N4Đ</div>
-    <h1>Tam Đảo <em>Đã Đi Qua</em></h1>
-    <p class="lede">Cách Hà Nội 80 km, một tiếng rưỡi ô tô qua cao tốc Nội Bài – Lào Cai. Thị trấn nằm ở 900 m, nhỏ đến mức đi bộ hết trong một buổi — nên chuyến này là để <b>ngồi trong mây</b> chứ không phải để chạy. Trục của nó là <b>Quán Gió</b>. Chọn độ dài, rồi tích vào ô mỗi nơi khi đã ghé.</p>
-
-    <div class="prog">
-      <div>
-        <div class="prog-n"><span data-role="pDone">0</span> <span class="of">/ <span data-role="pAll">0</span></span></div>
-        <div class="prog-label">nơi đã tích trong lịch <b><span data-role="pLen">2</span> ngày</b></div>
-        <div class="bar"><i data-role="pFill"></i></div>
-      </div>
-      <div class="meters">
-        <div class="meter an">
-          <div class="meter-top"><span class="meter-name">Ăn</span><span class="val"><span data-role="anDone">0</span> / <span data-role="anAll">0</span></span></div>
-          <div class="track"><i data-role="anFill"></i></div>
-        </div>
-        <div class="meter choi">
-          <div class="meter-top"><span class="meter-name">Chơi</span><span class="val"><span data-role="choiDone">0</span> / <span data-role="choiAll">0</span></span></div>
-          <div class="track"><i data-role="choiFill"></i></div>
-        </div>
-        <div class="sync" data-role="sync"><span class="dot"></span><span data-role="syncTxt">Đang kết nối…</span></div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<nav class="nav">
-  <div class="wrap">
-    <span class="brand" data-role="navProg">0 / 0</span>
-    <button type="button" class="back" data-back>← Đổi điểm đến</button>
-    <a href="#tamdao-anchor">Quán Gió</a>
-    <a href="#tamdao-an">Ăn</a>
-    <a href="#tamdao-choi">Chơi</a>
-    <span class="switch nav-switch" role="tablist" aria-label="Chọn độ dài chuyến">
-      <button type="button" role="tab" data-len="2" data-scroll aria-selected="true">2N1Đ</button>
-      <button type="button" role="tab" data-len="3" data-scroll aria-selected="false">3N2Đ</button>
-      <button type="button" role="tab" data-len="5" data-scroll aria-selected="false">5N4Đ</button>
-    </span>
-    <a href="#tamdao-note">Ghi chú</a>
-  </div>
-</nav>
-
-<section id="tamdao-anchor">
-  <div class="wrap">
-    <div class="anchor">
-      <div>
-        <div class="tag">Điểm neo · chiều ngày 1 của cả ba lịch</div>
-        <h3>Quán Gió</h3>
-        <p>Người ta gọi nó là quán cà phê trên mây, và cái tên đó đúng theo nghĩa đen: quán nằm ở rìa thị trấn nhìn thẳng ra thung lũng, mây dâng lên tận bàn vào những chiều ẩm. Từ đây nhìn được tòa lâu đài Tam Đảo lấp ló bên kia sườn núi — khung ảnh mà gần như ai lên Tam Đảo cũng chụp.</p>
-        <p>Thị trấn nhỏ nên đi bộ từ nhà thờ đá tới đây chỉ mất mươi phút, toàn dốc. Chiều muộn hay mù đặc — mù chính là thứ bạn tới xem, nhưng nhớ mang áo khoác vì có mây thì có gió.</p>
-        <ul class="checks">
-          <li><label class="chk"><input type="checkbox" data-place="quangio" data-cat="an"><span class="box"></span><span class="txt"><b>Đã ngồi Quán Gió trong mây</b><span class="note">Chiều muộn là lúc mây tràn qua lan can</span></span><span class="tick">Đã đi</span></label></li>
-        </ul>
-      </div>
-      <dl class="dl">
-        <dt>Địa chỉ</dt><dd>Thôn 1, thị trấn Tam Đảo, huyện Tam Đảo, Vĩnh Phúc</dd>
-        <dt>Giờ mở</dt><dd class="num">08:00 – 20:30 hằng ngày</dd>
-        <dt>Từ nhà thờ đá</dt><dd class="num">≈ 10 phút đi bộ</dd>
-        <dt>Khung đẹp</dt><dd>Chiều muộn, hoặc sáng sớm khi mây còn nằm dưới thung</dd>
-        <dt>Gọi gì</dt><dd>Cà phê nóng — trên này 900 m, đồ lạnh mau nguội tay</dd>
-      </dl>
-    </div>
-  </div>
-</section>
-
-<section id="tamdao-an" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><h2>Ăn</h2><div class="rule"></div><span class="label">8 chỗ · tích khi đã ghé</span></div>
-    <p class="sec-intro">Bốn quán cà phê và bốn nhà hàng. Món phải gọi ở bất kỳ quán nào là <b>ngọn su su xào tỏi</b> — su su Tam Đảo trồng ngay trên sườn núi quanh thị trấn, giòn và ngọt hơn hẳn dưới xuôi. Sau đó là gà đồi, lợn mán và cá suối; đó gần như là toàn bộ thực đơn của thị trấn này, chỉ khác nhau ở cách nấu.</p>
-
-    <div class="subhead"><span>Cà phê</span></div>
-    <div class="cards">
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="quangio" data-cat="an"><span class="box"></span><span class="txt"><b>Quán Gió</b><span class="note">Quán cà phê trên mây, nhìn ra lâu đài Tam Đảo — điểm neo của chuyến</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta">
-          <dt>Địa chỉ</dt><dd>Thôn 1, TT. Tam Đảo</dd>
-          <dt>Giờ</dt><dd class="num">08:00 – 20:30</dd>
-          <dt>Gọi gì</dt><dd>Cà phê nóng, ngồi sát lan can hướng thung lũng</dd>
-        </dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="lungchung" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe Lưng Chừng</b><span class="note">Đúng như tên — nằm lưng chừng núi, mở gần như cả ngày lẫn đêm</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta">
-          <dt>Địa chỉ</dt><dd>Thôn 2, đường Triệu Thái, TT. Tam Đảo</dd>
-          <dt>Giờ</dt><dd class="num">06:00 – 24:00</dd>
-          <dt>Gọi gì</dt><dd>Chỗ hợp nhất để dậy sớm săn mây mà không phải leo đâu xa</dd>
-        </dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="cafe1904" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe 1904</b><span class="note">Quán mới, mở dịp Tết 2024, nhanh chóng thành chỗ săn mây quen</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta">
-          <dt>Địa chỉ</dt><dd>Đường Trần Quốc Tuấn, TT. Tam Đảo</dd>
-          <dt>Gọi gì</dt><dd>Ghé buổi sáng, ít khách hơn Quán Gió</dd>
-        </dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="cola" data-cat="an"><span class="box"></span><span class="txt"><b>Tiệm Cafe Cỏ Lạ</b><span class="note">Nằm trên đồi, nhìn xuống trọn một góc thị trấn</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta">
-          <dt>Địa chỉ</dt><dd>Lưng chừng đồi, TT. Tam Đảo</dd>
-          <dt>Gọi gì</dt><dd>Chỗ ngồi nhìn mái nhà thị trấn khi mây tan</dd>
-        </dl>
-      </div>
-    </div>
-
-    <div class="subhead"><span>Nhà hàng · gà đồi và cá suối</span></div>
-    <div class="cards">
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="phomay" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Phố Mây</b><span class="note">Thực đơn rộng nhất thị trấn — dúi, nhím, cá tầm, cá hồi, lợn bản, gà đồi</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta">
-          <dt>Địa chỉ</dt><dd>Biệt thự B2, đối diện nhà thờ đá, khu biệt thự Tam Đảo</dd>
-          <dt>Gọi</dt><dd class="num">0976 087 416</dd>
-          <dt>Gọi gì</dt><dd>Gà đồi hấp lá chanh, ngọn su su xào tỏi, cá tầm nướng</dd>
-        </dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="kumochan" data-cat="an"><span class="box"></span><span class="txt"><b>Kumo Chan</b><span class="note">Set nướng BBQ, bàn nhìn ra thung lũng mây</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta">
-          <dt>Địa chỉ</dt><dd>TT. Tam Đảo</dd>
-          <dt>Gọi gì</dt><dd>Set nướng cho hai người, thêm lợn rừng và cá suối</dd>
-          <dt>Lưu ý</dt><dd>Bàn view thung lũng ít, cuối tuần nên đặt trước</dd>
-        </dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="huongrung" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Hương Rừng</b><span class="note">Quán bình dân dưới Tây Thiên, giá dễ chịu</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta">
-          <dt>Địa chỉ</dt><dd>Khu Tây Thiên, huyện Tam Đảo</dd>
-          <dt>Gọi gì</dt><dd>Gà đồi, ếch, lươn, cá suối</dd>
-          <dt>Ăn khi</dt><dd>Bữa trưa trong ngày đi Tây Thiên</dd>
-        </dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="longthanh" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Long Thành</b><span class="note">Chuyên ba ba và cá — quán lâu năm của vùng Tam Đảo – Vĩnh Phúc</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta">
-          <dt>Địa chỉ</dt><dd>Vĩnh Phúc, dưới chân núi</dd>
-          <dt>Gọi gì</dt><dd>Ba ba, cá tươi</dd>
-          <dt>Ăn khi</dt><dd>Bữa trên đường lên hoặc đường về Hà Nội</dd>
-        </dl>
-      </div>
-    </div>
-    <p class="fineprint">Địa chỉ và giờ tra từ các trang du lịch Vĩnh Phúc, không phải gọi kiểm chứng từng nơi. Thị trấn Tam Đảo nhỏ và quán đổi tên khá thường — địa chỉ ở đây ghi tới cấp thôn hoặc mốc dễ nhận (nhà thờ đá) vì phần lớn quán không có số nhà. <b>Cuối tuần nên đặt bàn trước</b>, nhất là các quán có bàn nhìn ra thung lũng.</p>
-  </div>
-</section>
-
-<section id="tamdao-choi">
-  <div class="wrap">
-    <div class="sec-head"><h2>Chơi</h2><div class="rule"></div><span class="label">11 nơi · tích khi đã đi</span></div>
-    <p class="sec-intro">Sáu nơi đầu nằm gọn trong thị trấn, đi bộ hết. Tây Thiên ở chân núi phía bên kia, phải đi ô tô vòng xuống — nên nó chiếm trọn một ngày. Ba nơi cuối chỉ có trong lịch 5 ngày.</p>
-    <div class="cards">
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="nhathoda" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ đá Tam Đảo</b><span class="note">Khởi công 1906, cải tạo theo lối Gothic năm 1937 — biểu tượng của thị trấn</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Trung tâm thị trấn · đi bộ</dd><dt>Vé</dt><dd>Miễn phí</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="thacbac" data-cat="choi"><span class="box"></span><span class="txt"><b>Thác Bạc</b><span class="note">Xuống chừng trăm bậc đá là tới chân thác — mùa hè nước đổ trắng xóa</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Cuối thị trấn · đi bộ</dd><dt>Lưu ý</dt><dd>Bậc trơn sau mưa, đi giày có bám</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="congtroi" data-cat="choi"><span class="box"></span><span class="txt"><b>Cổng Trời</b><span class="note">Ở ngã ba đường, chỗ nhìn bao quát cả thị trấn nằm dưới mây</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Ngã ba đường huyện Tam Đảo</dd><dt>Vé</dt><dd>Miễn phí</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="thiennhi" data-cat="choi"><span class="box"></span><span class="txt"><b>Đỉnh Thiên Nhị</b><span class="note">Leo bậc thang lên tháp truyền hình — dốc thật, nhưng là điểm cao nhất đi bộ tới được</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Trên thị trấn · leo 1–1,5 giờ</dd><dt>Đi khi</dt><dd>Sáng sớm, trước khi mù kéo lên</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="denbachua" data-cat="choi"><span class="box"></span><span class="txt"><b>Đền Bà Chúa Thượng Ngàn</b><span class="note">Nằm trong quần thể Chùa Vàng, ngay trong thị trấn</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Thị trấn Tam Đảo · đi bộ</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="chotamdao" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Tam Đảo</b><span class="note">Su su, măng, thuốc nam, đồ nướng buổi tối — chợ họp ngay giữa thị trấn</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Trung tâm · đông nhất buổi tối</dd><dt>Mua gì</dt><dd>Ngọn su su mang về, măng khô</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="taythien" data-cat="choi"><span class="box"></span><span class="txt"><b>Thiền viện Trúc Lâm Tây Thiên</b><span class="note">Một trong ba thiền viện lớn nhất Việt Nam, dựng cạnh khu Tây Thiên Cổ Tự</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Chân núi phía Đại Đình · ~25 km, đi ô tô vòng xuống</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="captreo" data-cat="choi"><span class="box"></span><span class="txt"><b>Cáp treo Tây Thiên</b><span class="note">Lên đền Thượng bằng cáp thay vì leo — cả quãng đường rừng nhìn từ trên cao</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Khu danh thắng Tây Thiên</dd><dt>Đi khi</dt><dd>Buổi sáng, chiều hay đông và hay mưa</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="xahuong" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Xạ Hương</b><span class="note">Hồ giữa rừng dưới chân núi — câu cá, cắm trại, gần như không có khách du lịch</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Xã Minh Quang · ~15 km xuống núi</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="dailai" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Đại Lải</b><span class="note">Hồ lớn, có resort và chỗ chèo thuyền — đổi không khí sau mấy ngày trên núi</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Phúc Yên · ~40 km, trên đường về Hà Nội</dd></dl>
-      </div>
-      <div class="card">
-        <ul class="checks"><li><label class="chk"><input type="checkbox" data-place="vqg" data-cat="choi"><span class="box"></span><span class="txt"><b>Vườn quốc gia Tam Đảo</b><span class="note">Đường mòn xuyên rừng nguyên sinh — nửa ngày đi bộ, nên thuê người dẫn</span></span><span class="tick">Đã đi</span></label></li></ul>
-        <dl class="meta"><dt>Ở</dt><dd>Bao quanh thị trấn</dd><dt>Lưu ý</dt><dd>Vắt sau mưa — mang tất cao và muối</dd></dl>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="tamdao-plans">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2>Lịch nghỉ dưỡng</h2>
-      <div class="rule"></div>
-      <span class="switch" role="tablist" aria-label="Chọn độ dài chuyến">
-        <button type="button" role="tab" data-len="2" aria-selected="true">2 ngày 1 đêm</button>
-        <button type="button" role="tab" data-len="3" aria-selected="false">3 ngày 2 đêm</button>
-        <button type="button" role="tab" data-len="5" aria-selected="false">5 ngày 4 đêm</button>
-      </span>
-    </div>
-    <p class="sec-intro">Tam Đảo là thị trấn nhỏ — đi hết trong hai ngày là xong phần cốt lõi, nên ở đây là <b>2 ngày 1 đêm, 3 ngày 2 đêm và 5 ngày 4 đêm</b> chứ không phải 3/5/7 như Đà Lạt. Bản 5 ngày phải mở rộng xuống hồ Xạ Hương và Đại Lải mới đủ chỗ mà đi.</p>
-
-    <div class="plan" data-plan data-plan-len="2">
-      <div class="plan-head">
-        <div class="plan-num">2<small>ngày · 1 đêm</small></div>
-        <div class="plan-title">
-          <h3>Hai ngày một đêm trong mây</h3>
-          <p>Cuối tuần kinh điển từ Hà Nội: sáng thứ Bảy lên, ngủ một đêm trên thị trấn, trưa Chủ nhật về. Đi bộ hết, không cần xe.</p>
-        </div>
-        <div class="plan-prog">
-          <div class="label">Trong lịch này</div><div class="v" data-plan-count>0 / 0 nơi</div>
-          <div class="k2">1 đêm · 1,5–2,5 triệu/người</div>
-        </div>
-      </div>
-      <div class="days">
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 1</span><h4>Lên núi, vào mây</h4></div>
-          <p class="rhythm">Rời Hà Nội khoảng 9 giờ, 80 km qua cao tốc Nội Bài – Lào Cai rồi 13 km đường đèo cuối cùng. Nhận phòng trước trưa, ăn ngay tại thị trấn. Chiều đi bộ nhà thờ đá rồi lên Cổng Trời, kết bằng Quán Gió lúc mây dâng. Tối chợ đêm và một nồi gà đồi.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="nhathoda" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ đá Tam Đảo</b><span class="note">Ngay trung tâm, ghé đầu giờ chiều</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="congtroi" data-cat="choi"><span class="box"></span><span class="txt"><b>Cổng Trời</b><span class="note">Nhìn xuống thị trấn nằm dưới mây</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="quangio" data-cat="an"><span class="box"></span><span class="txt"><b>Quán Gió</b><span class="note">Chiều muộn — mây tràn qua lan can</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="chotamdao" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Tam Đảo</b><span class="note">Đi dạo sau bữa tối</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="phomay" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Phố Mây</b><span class="note">Gà đồi hấp lá chanh và ngọn su su xào tỏi</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 2</span><h4>Thác Bạc rồi xuống núi</h4></div>
-          <p class="rhythm">Dậy 6 giờ — đây là khung duy nhất mây còn nằm dưới thung và trời chưa mù. Cà phê sớm ở Lưng Chừng, xuống Thác Bạc, ghé đền Bà Chúa. Ăn trưa rồi về, chiều đã tới Hà Nội.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="lungchung" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe Lưng Chừng</b><span class="note">Mở từ 6 giờ — đúng lúc bạn cần</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="thacbac" data-cat="choi"><span class="box"></span><span class="txt"><b>Thác Bạc</b><span class="note">Đi sớm khi bậc đá chưa đông người</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="denbachua" data-cat="choi"><span class="box"></span><span class="txt"><b>Đền Bà Chúa Thượng Ngàn</b></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-      </div>
-      <div class="stay"><b>Ở đâu:</b> khách sạn hoặc homestay ngay thị trấn, 500k–2 triệu/đêm — chọn phòng hướng thung lũng. <b>Đi lại:</b> limousine Hà Nội – Tam Đảo 150–200k/người, hoặc ô tô riêng 1,2–1,8 triệu một chiều. <b>Ước tính:</b> 1,5–2,5 triệu/người.</div>
-    </div>
-
-    <div class="plan" data-plan data-plan-len="3" hidden>
-      <div class="plan-head">
-        <div class="plan-num">3<small>ngày · 2 đêm</small></div>
-        <div class="plan-title">
-          <h3>Thêm một ngày Tây Thiên</h3>
-          <p>Giữ nguyên hai ngày trên, chèn vào giữa một ngày xuống chân núi đi Tây Thiên — phần tâm linh của vùng này, và cũng là ngày duy nhất cần ô tô.</p>
-        </div>
-        <div class="plan-prog">
-          <div class="label">Trong lịch này</div><div class="v" data-plan-count>0 / 0 nơi</div>
-          <div class="k2">2 đêm · 2,5–4 triệu/người</div>
-        </div>
-      </div>
-      <div class="days">
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 1</span><h4>Lên núi, vào mây</h4></div>
-          <p class="rhythm">Y hệt ngày 1 của lịch 2 ngày: nhận phòng, nhà thờ đá, Cổng Trời, Quán Gió lúc chiều muộn, tối chợ và gà đồi.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="nhathoda" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ đá Tam Đảo</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="congtroi" data-cat="choi"><span class="box"></span><span class="txt"><b>Cổng Trời</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="quangio" data-cat="an"><span class="box"></span><span class="txt"><b>Quán Gió</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="chotamdao" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Tam Đảo</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="phomay" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Phố Mây</b></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 2</span><h4>Xuống Tây Thiên</h4></div>
-          <p class="rhythm">Xuống núi rồi vòng sang phía Đại Đình, khoảng 25 km. Đi cáp treo lên đền Thượng buổi sáng cho vắng, xuống thăm thiền viện, ăn trưa ở Hương Rừng. Chiều lên lại thị trấn, nghỉ sớm.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="captreo" data-cat="choi"><span class="box"></span><span class="txt"><b>Cáp treo Tây Thiên</b><span class="note">Đi sáng — chiều đông và hay mưa</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="taythien" data-cat="choi"><span class="box"></span><span class="txt"><b>Thiền viện Trúc Lâm Tây Thiên</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="huongrung" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Hương Rừng</b><span class="note">Bữa trưa ngay dưới Tây Thiên</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="cafe1904" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe 1904</b><span class="note">Về tới thị trấn thì ghé, ít khách hơn Quán Gió</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 3</span><h4>Thác Bạc rồi xuống núi</h4></div>
-          <p class="rhythm">Dậy 6 giờ săn mây, cà phê Lưng Chừng, Thác Bạc, đền Bà Chúa. Ai còn sức thì leo Thiên Nhị trước bữa trưa. Chiều về Hà Nội.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="lungchung" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe Lưng Chừng</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="thacbac" data-cat="choi"><span class="box"></span><span class="txt"><b>Thác Bạc</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="denbachua" data-cat="choi"><span class="box"></span><span class="txt"><b>Đền Bà Chúa Thượng Ngàn</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="thiennhi" data-cat="choi"><span class="box"></span><span class="txt"><b>Đỉnh Thiên Nhị</b><span class="note">Tùy sức — leo 1–1,5 giờ</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-      </div>
-      <div class="stay"><b>Ở đâu:</b> 2 đêm ngay thị trấn, 500k–2 triệu/đêm. <b>Đi lại:</b> ngày 2 cần ô tô — thuê xe theo ngày khoảng 900k–1,3 triệu, hoặc đi taxi hai chiều. <b>Ước tính:</b> 2,5–4 triệu/người.</div>
-    </div>
-
-    <div class="plan" data-plan data-plan-len="5" hidden>
-      <div class="plan-head">
-        <div class="plan-num">5<small>ngày · 4 đêm</small></div>
-        <div class="plan-title">
-          <h3>Xuống chân núi và ra hồ</h3>
-          <p>Ba ngày trên thị trấn rồi hai ngày dưới chân núi: hồ Xạ Hương vắng người, một buổi trong rừng nguyên sinh, và Đại Lải trên đường về.</p>
-        </div>
-        <div class="plan-prog">
-          <div class="label">Trong lịch này</div><div class="v" data-plan-count>0 / 0 nơi</div>
-          <div class="k2">4 đêm · 4,5–7 triệu/người</div>
-        </div>
-      </div>
-      <div class="days">
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 1–3</span><h4>Y hệt lịch 3 ngày</h4></div>
-          <p class="rhythm">Thị trấn, Tây Thiên, Thác Bạc — nhưng đừng dồn. Có năm ngày thì ngày nào cũng nên có một buổi ngồi không.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="nhathoda" data-cat="choi"><span class="box"></span><span class="txt"><b>Nhà thờ đá Tam Đảo</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="congtroi" data-cat="choi"><span class="box"></span><span class="txt"><b>Cổng Trời</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="quangio" data-cat="an"><span class="box"></span><span class="txt"><b>Quán Gió</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="chotamdao" data-cat="choi"><span class="box"></span><span class="txt"><b>Chợ Tam Đảo</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="phomay" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Phố Mây</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="captreo" data-cat="choi"><span class="box"></span><span class="txt"><b>Cáp treo Tây Thiên</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="taythien" data-cat="choi"><span class="box"></span><span class="txt"><b>Thiền viện Trúc Lâm Tây Thiên</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="huongrung" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Hương Rừng</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="lungchung" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe Lưng Chừng</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="thacbac" data-cat="choi"><span class="box"></span><span class="txt"><b>Thác Bạc</b></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="denbachua" data-cat="choi"><span class="box"></span><span class="txt"><b>Đền Bà Chúa Thượng Ngàn</b></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 4</span><h4>Rừng nguyên sinh và một cái hồ vắng</h4></div>
-          <p class="rhythm">Sáng đi đường mòn trong vườn quốc gia — nửa ngày là đủ, nên thuê người dẫn vì đường rẽ nhiều. Chiều xuống hồ Xạ Hương, đổi sang ở dưới chân núi cho ấm. Tối cá suối nướng bên hồ.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="vqg" data-cat="choi"><span class="box"></span><span class="txt"><b>Vườn quốc gia Tam Đảo</b><span class="note">Mang tất cao — sau mưa có vắt</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="xahuong" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Xạ Hương</b><span class="note">Câu cá, cắm trại, gần như không có khách du lịch</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="kumochan" data-cat="an"><span class="box"></span><span class="txt"><b>Kumo Chan</b><span class="note">Nếu vẫn ở trên thị trấn — set nướng nhìn ra thung lũng</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-        <div class="day">
-          <div class="day-top"><span class="day-n">Ngày 5</span><h4>Đại Lải trên đường về</h4></div>
-          <p class="rhythm">Rời chân núi, ghé hồ Đại Lải — hồ rộng, chèo thuyền được, và nằm ngay trên đường về Hà Nội nên không mất thêm quãng nào. Ăn trưa ở Long Thành rồi về, chiều đã tới nhà.</p>
-          <ul class="checks">
-            <li><label class="chk"><input type="checkbox" data-place="dailai" data-cat="choi"><span class="box"></span><span class="txt"><b>Hồ Đại Lải</b><span class="note">Phúc Yên, ~40 km — tiện đường về</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="longthanh" data-cat="an"><span class="box"></span><span class="txt"><b>Nhà hàng Long Thành</b><span class="note">Ba ba và cá tươi, bữa cuối trước khi về</span></span><span class="tick">Đã đi</span></label></li>
-            <li><label class="chk"><input type="checkbox" data-place="cola" data-cat="an"><span class="box"></span><span class="txt"><b>Tiệm Cafe Cỏ Lạ</b><span class="note">Cà phê cuối trên thị trấn trước khi xuống núi</span></span><span class="tick">Đã đi</span></label></li>
-          </ul>
-        </div>
-      </div>
-      <div class="stay"><b>Ở đâu:</b> 3 đêm thị trấn + 1–2 đêm dưới chân núi hoặc resort Đại Lải (800k–3 triệu/đêm). <b>Đi lại:</b> nên thuê ô tô cả chuyến. <b>Ước tính:</b> 4,5–7 triệu/người.</div>
-    </div>
-  </div>
-</section>
-
-<section id="tamdao-note">
-  <div class="wrap">
-    <div class="sec-head"><h2>Bốn ghi chú</h2><div class="rule"></div></div>
-    <div class="notes">
-      <div>
-        <h3>Đường lên chỉ có một</h3>
-        <p>13 km đèo cuối cùng là đường độc đạo, nhiều cua gấp và không có đường tránh. <b>Chiều Chủ nhật thường tắc</b> vì cả thị trấn xuống núi cùng lúc — về sớm hoặc về muộn, đừng đi đúng 15–17 giờ.</p>
+        <h3>Ngày 4/10 là ngày căng nhất</h3>
+        <p>Dậy 6 giờ ở Tam Đảo, đi Thác Bạc, trả phòng 12 giờ, chạy đèo, bay 1h50, tới khách sạn Đà Lạt lúc 21–22 giờ. Làm được, nhưng đừng xếp thêm gì cho tối hôm đó — và sáng 5/10 đã để trống sẵn cho ngủ bù.</p>
       </div>
       <div>
         <h3>Mù là đặc sản, không phải sự cố</h3>
-        <p>Tam Đảo mù quanh năm, tháng 9 lại đang mùa mưa. Khung nhìn xa nhất là <b>6–8 giờ sáng</b>; quá trưa thì mây kéo lên và tầm nhìn còn vài chục mét. Xếp mọi điểm cần nhìn xa vào buổi sáng.</p>
+        <p>Tam Đảo tháng 10 chiều nào cũng có mây tràn qua thị trấn — đó chính là thứ đi xem. Nhưng có mây thì có gió, và 900 m thì lạnh hơn Hà Nội 5–6 °C. Mang áo khoác ngay trong vali xách tay.</p>
       </div>
       <div>
-        <h3>Ngọn su su là món phải gọi</h3>
-        <p>Su su trồng ngay trên sườn núi quanh thị trấn, hái buổi sáng bán buổi trưa. Gọi <b>ngọn su su xào tỏi</b> ở bất kỳ quán nào, và mua một bó mang về — dưới xuôi không có thứ giòn như vậy.</p>
+        <h3>Tháng 10 Đà Lạt vẫn còn mưa chiều</h3>
+        <p>Cuối mùa mưa: sáng quang, chiều có thể đổ một trận ngắn. Vì thế mọi điểm ngoài trời trong lịch đều xếp buổi sáng, chiều để cho quán và spa. Đêm 15–17 °C, cần áo ấm thật chứ không phải áo khoác mỏng.</p>
+      </div>
+      <div>
+        <h3>Xe riêng thay vì tự lái</h3>
+        <p>Ở Đà Lạt, ô tô có tài <b>1,2–1,8 triệu/ngày</b> trong nội tỉnh; hai ngày trên Cầu Đất nên giữ luôn xe vì trên đồi gần như không gọi được xe. Đặt qua khách sạn thường rẻ và chắc hơn gọi ngoài.</p>
+      </div>
+      <div>
+        <h3>Ăn tối sớm hơn bạn nghĩ</h3>
+        <p>Cả hai nơi đều đóng cửa sớm. Trên Tam Đảo phần lớn nhà hàng ngừng nhận khách quanh 21:00; Đà Lạt thì <b>bánh mì xíu mại và bánh căn bán hết là nghỉ</b>, đừng để tới trưa. Lẩu cuối tuần nên tới trước 18:30.</p>
       </div>
       <div>
         <h3>Dấu tích được lưu ở đâu</h3>
-        <p>Mỗi điểm đến có bảng đếm riêng: tích ở Tam Đảo không ảnh hưởng tới Đà Lạt. Trang nhớ cả độ dài chuyến bạn đang chọn — trừ khi ô trạng thái báo <b>lưu trên trình duyệt này</b>, khi đó dấu tích chỉ nằm ở máy hiện tại.</p>
+        <p>Tích vào ô là lưu ngay. Bản chạy trên Claude Artifact đồng bộ qua server nên mở máy nào cũng thấy; bản tĩnh thì lưu trong <b>localStorage</b> của chính trình duyệt đó — sang máy khác là một danh sách trắng. Ô trạng thái ở đầu trang cho biết đang ở chế độ nào.</p>
       </div>
     </div>
+    <p class="fineprint">Giờ giấc ở đây là khung tham khảo, không phải lịch cố định. Địa chỉ, giờ mở cửa và số điện thoại tra từ các trang du lịch và ẩm thực Đà Lạt và Vĩnh Phúc, <b>không gọi kiểm chứng từng nơi</b> — nên xác nhận lại những chỗ phải chạy xa trước khi đi.</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p>Giờ giấc là khung tham khảo, không phải lịch cố định. Thị trấn Tam Đảo nhỏ và phần lớn quán không có số nhà — địa chỉ ở đây ghi tới cấp thôn hoặc mốc dễ nhận. Cuối tuần và mùa hè rất đông, nên đặt phòng và đặt bàn trước; Phố Mây gọi được ở số 0976 087 416.</p>
-    <button class="reset" data-role="reset" type="button">Xóa hết dấu tích Tam Đảo</button>
+    <p>Chín ngày, hai chặng, một lần đón ở Nội Bài và một lần bay về — không có đêm nào nằm chờ ở giữa. Nếu đổi ý muốn ở Tam Đảo thêm một ngày để đi Tây Thiên, cắt vào ngày 10/10: đó là ngày nhẹ nhất trong lịch Đà Lạt, bỏ đi chỉ mất buổi mua quà.</p>
+    <button class="reset" data-role="reset" type="button">Xóa hết dấu tích</button>
   </div>
 </footer>
-</div>
 
 <script>
 (function(){
-  var LS_DEST = 'dadiqua-dest';
-  var CONF = {
-    dalat:  { doc:'trip/dalat',  lsTicks:'dadiqua-dalat',  lsLen:'dadiqua-dalat-len',  def:'3' },
-    tamdao: { doc:'trip/tamdao', lsTicks:'dadiqua-tamdao', lsLen:'dadiqua-tamdao-len', def:'2' }
-  };
-  var chooser = document.getElementById('chooser');
-  var roots = {};
-  Array.prototype.forEach.call(document.querySelectorAll('.dest'), function(el){
-    roots[el.getAttribute('data-dest')] = el;
+  var LS_TICKS = 'dadiqua-trip';
+  var LS_LEGACY = ['dadiqua-dalat','dadiqua-tamdao'];
+  var DOC = 'trip/2026-10';
+
+  var state = {}, docRef = null, saveTimer = null, remoteDead = false;
+
+  function q(role){ return document.querySelector('[data-role="' + role + '"]'); }
+  var el = {};
+  ['pDone','pAll','pFill','extra','anDone','anAll','anFill','choiDone','choiAll','choiFill',
+   'navProg','sync','syncTxt','reset'].forEach(function(r){ el[r] = q(r); });
+
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('input[data-place]'));
+  var legs  = Array.prototype.slice.call(document.querySelectorAll('.leg'));
+  var plan  = document.getElementById('lich');
+
+  var catOf = {};
+  boxes.forEach(function(b){
+    var id = b.getAttribute('data-place');
+    if(!catOf[id]) catOf[id] = b.getAttribute('data-cat') === 'an' ? 'an' : 'choi';
   });
-  var ctrls = {};
+
+  function uniqueIn(node){
+    var seen = {}, out = [];
+    Array.prototype.forEach.call(node.querySelectorAll('input[data-place]'), function(b){
+      var id = b.getAttribute('data-place');
+      if(!seen[id]){ seen[id] = 1; out.push(id); }
+    });
+    return out;
+  }
+
+  var allIds  = uniqueIn(document);
+  var planIds = uniqueIn(plan);
+  var anIds   = planIds.filter(function(id){ return catOf[id] === 'an'; });
+  var choiIds = planIds.filter(function(id){ return catOf[id] !== 'an'; });
+  var offIds  = allIds.filter(function(id){ return planIds.indexOf(id) < 0; });
+  var legIds  = legs.map(function(l){ return uniqueIn(l); });
+
+  Array.prototype.forEach.call(plan.querySelectorAll('.chk'), function(chk){
+    var input = chk.querySelector('input[data-place]');
+    if(!input) return;
+    var cat = input.getAttribute('data-cat') === 'an' ? 'an' : 'choi';
+    var chip = document.createElement('span');
+    chip.className = 'cat ' + cat;
+    chip.textContent = cat === 'an' ? 'Ăn' : 'Chơi';
+    chk.insertBefore(chip, chk.querySelector('.tick'));
+  });
 
   function pct(done, total){ return (total ? Math.round(done / total * 100) : 0) + '%'; }
+  function doneIn(ids){ return ids.filter(function(id){ return state[id]; }).length; }
 
-  function makeCtrl(key, root){
-    var conf = CONF[key];
-    var state = {}, curLen = conf.def, docRef = null, saveTimer = null, remoteDead = false;
-
-    function q(role){ return root.querySelector('[data-role="' + role + '"]'); }
-    var el = {};
-    ['pDone','pAll','pLen','pFill','anDone','anAll','anFill','choiDone','choiAll','choiFill',
-     'navProg','sync','syncTxt','reset'].forEach(function(r){ el[r] = q(r); });
-
-    var boxes = Array.prototype.slice.call(root.querySelectorAll('input[data-place]'));
-    var plans = Array.prototype.slice.call(root.querySelectorAll('[data-plan]'));
-    var tabs  = Array.prototype.slice.call(root.querySelectorAll('[data-len]'));
-
-    var catOf = {};
+  function render(){
     boxes.forEach(function(b){
+      var on = !!state[b.getAttribute('data-place')];
+      b.checked = on;
+      var li = b.closest('li');
+      if(li) li.classList.toggle('done', on);
+    });
+
+    var done = doneIn(planIds);
+    el.pDone.textContent = done;
+    el.pAll.textContent = planIds.length;
+    el.pFill.style.width = pct(done, planIds.length);
+    el.navProg.textContent = done + ' / ' + planIds.length + ' nơi';
+
+    var off = doneIn(offIds);
+    el.extra.textContent = off ? ' · thêm ' + off + ' nơi ngoài lịch' : '';
+
+    var a = doneIn(anIds), c = doneIn(choiIds);
+    el.anDone.textContent = a; el.anAll.textContent = anIds.length;
+    el.anFill.style.width = pct(a, anIds.length);
+    el.choiDone.textContent = c; el.choiAll.textContent = choiIds.length;
+    el.choiFill.style.width = pct(c, choiIds.length);
+
+    legs.forEach(function(leg, i){
+      var out = leg.querySelector('[data-leg-count]');
+      if(out) out.textContent = doneIn(legIds[i]) + ' / ' + legIds[i].length + ' nơi';
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('.strip a'), function(a2){
+      var day = document.querySelector(a2.getAttribute('href'));
+      if(!day) return;
+      var ids = uniqueIn(day);
+      a2.classList.toggle('full', ids.length > 0 && doneIn(ids) === ids.length);
+    });
+  }
+
+  function writeLocal(){
+    try { localStorage.setItem(LS_TICKS, JSON.stringify(state)); } catch(e){}
+  }
+  function status(cls, txt){
+    el.sync.className = 'sync ' + cls;
+    el.syncTxt.textContent = txt;
+  }
+  function pushRemote(){
+    if(!docRef || remoteDead) return;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){
+      docRef.set({ ids: state, updatedAt: Date.now() }).then(function(){
+        status('ok', 'Đã đồng bộ');
+      }).catch(function(){
+        remoteDead = true;
+        status('local', 'Lưu trên trình duyệt này');
+      });
+    }, 700);
+  }
+
+  boxes.forEach(function(b){
+    b.addEventListener('change', function(){
       var id = b.getAttribute('data-place');
-      if(!catOf[id]) catOf[id] = b.getAttribute('data-cat') === 'an' ? 'an' : 'choi';
+      if(b.checked) state[id] = true; else delete state[id];
+      render(); writeLocal(); pushRemote();
     });
-
-    function uniqueIn(node){
-      var seen = {}, out = [];
-      Array.prototype.forEach.call(node.querySelectorAll('input[data-place]'), function(b){
-        var id = b.getAttribute('data-place');
-        if(!seen[id]){ seen[id] = 1; out.push(id); }
-      });
-      return out;
-    }
-    var allIds  = uniqueIn(root);
-    var anIds   = allIds.filter(function(id){ return catOf[id] === 'an'; });
-    var choiIds = allIds.filter(function(id){ return catOf[id] !== 'an'; });
-    var planIds = {};
-    plans.forEach(function(p){ planIds[p.getAttribute('data-plan-len')] = uniqueIn(p); });
-
-    Array.prototype.forEach.call(root.querySelectorAll('.day .chk'), function(chk){
-      var input = chk.querySelector('input[data-place]');
-      if(!input) return;
-      var cat = input.getAttribute('data-cat') === 'an' ? 'an' : 'choi';
-      var chip = document.createElement('span');
-      chip.className = 'cat ' + cat;
-      chip.textContent = cat === 'an' ? 'Ăn' : 'Chơi';
-      chk.insertBefore(chip, chk.querySelector('.tick'));
-    });
-
-    function doneIn(ids){ return ids.filter(function(id){ return state[id]; }).length; }
-
-    function render(){
-      boxes.forEach(function(b){
-        var on = !!state[b.getAttribute('data-place')];
-        b.checked = on;
-        var li = b.closest('li');
-        if(li) li.classList.toggle('done', on);
-      });
-      var ids = planIds[curLen] || [];
-      var done = doneIn(ids);
-      el.pDone.textContent = done;
-      el.pAll.textContent = ids.length;
-      el.pLen.textContent = curLen;
-      el.pFill.style.width = pct(done, ids.length);
-      el.navProg.textContent = done + ' / ' + ids.length + ' nơi';
-
-      var a = doneIn(anIds), c = doneIn(choiIds);
-      el.anDone.textContent = a; el.anAll.textContent = anIds.length;
-      el.anFill.style.width = pct(a, anIds.length);
-      el.choiDone.textContent = c; el.choiAll.textContent = choiIds.length;
-      el.choiFill.style.width = pct(c, choiIds.length);
-
-      plans.forEach(function(p){
-        var pid = planIds[p.getAttribute('data-plan-len')] || [];
-        p.querySelector('[data-plan-count]').textContent = doneIn(pid) + ' / ' + pid.length + ' nơi';
-      });
-
-      var cd = document.querySelector('[data-chooser="' + key + '-done"]');
-      var ca = document.querySelector('[data-chooser="' + key + '-all"]');
-      if(cd) cd.textContent = doneIn(allIds);
-      if(ca) ca.textContent = allIds.length;
-    }
-
-    function selectLen(len, opts){
-      opts = opts || {};
-      if(!planIds[len]) len = conf.def;
-      curLen = len;
-      plans.forEach(function(p){ p.hidden = p.getAttribute('data-plan-len') !== len; });
-      tabs.forEach(function(t){ t.setAttribute('aria-selected', t.getAttribute('data-len') === len ? 'true' : 'false'); });
-      try { localStorage.setItem(conf.lsLen, len); } catch(e){}
-      render();
-      var sec = root.querySelector('[id$="-plans"]');
-      if(opts.scroll && sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
-    }
-
-    tabs.forEach(function(t){
-      t.addEventListener('click', function(){
-        selectLen(t.getAttribute('data-len'), {scroll: t.hasAttribute('data-scroll')});
-      });
-    });
-
-    function writeLocal(){
-      try { localStorage.setItem(conf.lsTicks, JSON.stringify(state)); } catch(e){}
-    }
-    function status(cls, txt){
-      el.sync.className = 'sync ' + cls;
-      el.syncTxt.textContent = txt;
-    }
-    function pushRemote(){
-      if(!docRef || remoteDead) return;
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(function(){
-        docRef.set({ ids: state, updatedAt: Date.now() }).then(function(){
-          status('ok', 'Đã đồng bộ');
-        }).catch(function(){
-          remoteDead = true;
-          status('local', 'Lưu trên trình duyệt này');
-        });
-      }, 700);
-    }
-
-    boxes.forEach(function(b){
-      b.addEventListener('change', function(){
-        var id = b.getAttribute('data-place');
-        if(b.checked) state[id] = true; else delete state[id];
-        render(); writeLocal(); pushRemote();
-      });
-    });
-
-    el.reset.addEventListener('click', function(){
-      if(!confirm('Xóa toàn bộ dấu tích của điểm đến này?')) return;
-      state = {}; render(); writeLocal(); pushRemote();
-    });
-
-    try { state = JSON.parse(localStorage.getItem(conf.lsTicks) || '{}') || {}; } catch(e){ state = {}; }
-    var savedLen = null;
-    try { savedLen = localStorage.getItem(conf.lsLen); } catch(e){}
-    selectLen(savedLen || conf.def);
-    status('local', 'Lưu trên trình duyệt này');
-
-    return {
-      attachDb: function(db){
-        status('', 'Đang kết nối…');
-        docRef = db.doc(conf.doc);
-        docRef.onSnapshot(function(snap){
-          if(snap.metadata && snap.metadata.hasPendingWrites) return;
-          if(snap.exists){
-            var data = snap.data() || {};
-            state = (data.ids && typeof data.ids === 'object') ? Object.assign({}, data.ids) : {};
-            render(); writeLocal(); status('ok', 'Đã đồng bộ');
-          } else {
-            status('ok', 'Đã đồng bộ');
-            if(Object.keys(state).length) pushRemote();
-          }
-        }, function(){
-          remoteDead = true;
-          status('local', 'Lưu trên trình duyệt này');
-        });
-      }
-    };
-  }
-
-  Object.keys(roots).forEach(function(k){ ctrls[k] = makeCtrl(k, roots[k]); });
-
-  function show(dest){
-    chooser.hidden = !!dest;
-    Object.keys(roots).forEach(function(k){ roots[k].hidden = (k !== dest); });
-    if(dest){ try { localStorage.setItem(LS_DEST, dest); } catch(e){} }
-    else { try { localStorage.removeItem(LS_DEST); } catch(e){} }
-    window.scrollTo(0, 0);
-  }
-
-  Array.prototype.forEach.call(document.querySelectorAll('[data-goto]'), function(b){
-    b.addEventListener('click', function(){ show(b.getAttribute('data-goto')); });
-  });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-back]'), function(b){
-    b.addEventListener('click', function(){ show(null); });
   });
 
-  var saved = null;
-  try { saved = localStorage.getItem(LS_DEST); } catch(e){}
-  show(roots[saved] ? saved : null);
+  el.reset.addEventListener('click', function(){
+    if(!confirm('Xóa toàn bộ dấu tích của chuyến này?')) return;
+    state = {}; render(); writeLocal(); pushRemote();
+  });
+
+  function load(){
+    var raw = null;
+    try { raw = localStorage.getItem(LS_TICKS); } catch(e){}
+    if(raw){
+      try { return JSON.parse(raw) || {}; } catch(e){ return {}; }
+    }
+    var merged = {};
+    LS_LEGACY.forEach(function(k){
+      try {
+        var old = JSON.parse(localStorage.getItem(k) || '{}') || {};
+        Object.keys(old).forEach(function(id){ if(old[id]) merged[id] = true; });
+      } catch(e){}
+    });
+    return merged;
+  }
+
+  state = load();
+  render();
+  writeLocal();
+  status('local', 'Lưu trên trình duyệt này');
 
   if(window.claude && typeof window.claude.use === 'function'){
+    status('', 'Đang kết nối…');
     window.claude.use('db').then(function(db){
       if(!db) return;
-      Object.keys(ctrls).forEach(function(k){ ctrls[k].attachDb(db); });
-    }).catch(function(){});
+      docRef = db.doc(DOC);
+      docRef.onSnapshot(function(snap){
+        if(snap.metadata && snap.metadata.hasPendingWrites) return;
+        if(snap.exists){
+          var data = snap.data() || {};
+          state = (data.ids && typeof data.ids === 'object') ? Object.assign({}, data.ids) : {};
+          render(); writeLocal(); status('ok', 'Đã đồng bộ');
+        } else {
+          status('ok', 'Đã đồng bộ');
+          if(Object.keys(state).length) pushRemote();
+        }
+      }, function(){
+        remoteDead = true;
+        status('local', 'Lưu trên trình duyệt này');
+      });
+    }).catch(function(){
+      status('local', 'Lưu trên trình duyệt này');
+    });
   }
 })();
 </script>
