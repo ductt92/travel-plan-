@@ -239,6 +239,11 @@
     color:var(--ink-2);margin:13px 0 6px;max-width:74ch;
     padding-left:16px;border-left:2px solid var(--line);
   }
+  .rhythm em{
+    font-family:var(--sans);font-style:normal;font-size:10.5px;font-weight:600;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--fog);
+    display:block;margin-bottom:4px;
+  }
   .day .checks{margin-top:10px}
 
   .stay{
@@ -289,8 +294,8 @@
   .strip .p{font-size:11.5px;font-weight:600;margin-top:7px}
   .strip a[data-leg="tamdao"]{border-left:3px solid var(--moss)}
   .strip a[data-leg="tamdao"] .p{color:var(--moss)}
-  .strip a[data-leg="hanoi"]{border-left:3px solid var(--fog)}
-  .strip a[data-leg="hanoi"] .p{color:var(--fog)}
+  .strip a[data-leg="move"]{border-left:3px solid var(--moss);border-right:3px solid var(--amber)}
+  .strip a[data-leg="move"] .p{color:var(--ink-2)}
   .strip a[data-leg="dalat"]{border-left:3px solid var(--amber)}
   .strip a[data-leg="dalat"] .p{color:var(--amber)}
 
@@ -349,7 +354,7 @@
   <div class="wrap">
     <div class="label">Chuyến 3 – 11 tháng 10 · Nội Bài → Tam Đảo → Đà Lạt → Hà Nội</div>
     <h1>Ngọc <em>về</em></h1>
-    <p class="lede">Chín ngày, hai chặng. Ngọc đáp <b>Nội Bài sáng 3/10</b> — sân bay nằm sẵn trên đường lên núi nên đi thẳng Tam Đảo, <b>hai ngày một đêm</b> trong mây. Chiều 4/10 xuống Hà Nội ngủ một đêm, sáng 5/10 bay vào <b>Đà Lạt sáu đêm</b>, và <b>11/10 bay về Hà Nội</b>. Tích vào ô bên trái mỗi nơi khi đã ghé.</p>
+    <p class="lede">Chín ngày, hai chặng, không có ngày chết ở giữa. Ngọc đáp <b>Nội Bài sáng 3/10</b> — sân bay nằm sẵn trên đường lên núi nên đi thẳng Tam Đảo, <b>hai ngày một đêm</b> trong mây. Trưa 4/10 xuống núi ra thẳng Nội Bài, <b>bay chiều vào Đà Lạt</b> và ngủ luôn ở đó, <b>bảy đêm</b> tới khi <b>11/10 bay về Hà Nội</b>. Tích vào ô bên trái mỗi nơi khi đã ghé.</p>
 
     <div class="trip-facts">
       <div>
@@ -360,12 +365,12 @@
       <div>
         <div class="k">Tam Đảo</div>
         <div class="v">03 – 04/10</div>
-        <div class="s">2 ngày 1 đêm, ở thị trấn</div>
+        <div class="s">2 ngày 1 đêm, trưa 4/10 xuống núi</div>
       </div>
       <div>
         <div class="k">Đà Lạt</div>
-        <div class="v">05 – 11/10</div>
-        <div class="s">6 đêm: trung tâm + Cầu Đất</div>
+        <div class="v">04 – 11/10</div>
+        <div class="s">7 đêm: trung tâm + Cầu Đất</div>
       </div>
       <div>
         <div class="k">Về</div>
@@ -376,7 +381,7 @@
 
     <nav class="strip" aria-label="Chín ngày của chuyến">
       <a href="#d03" data-leg="tamdao"><span class="d">03/10</span><span class="w">Thứ Bảy</span><span class="p">Tam Đảo</span></a>
-      <a href="#d04" data-leg="tamdao"><span class="d">04/10</span><span class="w">Chủ nhật</span><span class="p">Tam Đảo</span></a>
+      <a href="#d04" data-leg="move"><span class="d">04/10</span><span class="w">Chủ nhật</span><span class="p">TĐ → ĐL</span></a>
       <a href="#d05" data-leg="dalat"><span class="d">05/10</span><span class="w">Thứ Hai</span><span class="p">Đà Lạt</span></a>
       <a href="#d06" data-leg="dalat"><span class="d">06/10</span><span class="w">Thứ Ba</span><span class="p">Đà Lạt</span></a>
       <a href="#d07" data-leg="dalat"><span class="d">07/10</span><span class="w">Thứ Tư</span><span class="p">Đà Lạt</span></a>
@@ -462,73 +467,44 @@
           <div class="day-top">
             <span class="day-n">Ngày 2</span>
             <span class="day-date">CN · 04/10</span>
-            <h4>Thác Bạc, rồi xuống Hà Nội</h4>
-            <span class="day-tail">ngủ: Hà Nội</span>
+            <h4>Thác Bạc, rồi bay thẳng vào Đà Lạt</h4>
+            <span class="day-tail">ngủ: Đà Lạt</span>
           </div>
-          <p class="rhythm"><em>Nhịp</em>Dậy 6 giờ — đây là khung duy nhất mây còn nằm dưới thung và trời chưa mù. Cà phê sớm ở Lưng Chừng, xuống Thác Bạc khi bậc đá chưa đông, ghé đền Bà Chúa. Ăn trưa trên thị trấn rồi trả phòng.</p>
+          <p class="rhythm"><em>Nhịp</em>Ngày dài nhất chuyến, nên dậy 6 giờ là bắt buộc chứ không phải để săn mây cho vui. Cà phê sớm ở Lưng Chừng, xuống Thác Bạc khi bậc đá chưa đông, ghé đền Bà Chúa. Ăn trưa sớm trên thị trấn, trả phòng trước 12 giờ rồi đi thẳng ra sân bay.</p>
           <ul class="checks">
             <li><label class="chk"><input type="checkbox" data-place="lungchung" data-cat="an"><span class="box"></span><span class="txt"><b>Cafe Lưng Chừng</b><span class="note">Mở từ 6 giờ — đúng lúc bạn cần</span></span><span class="tick">Đã đi</span></label></li>
             <li><label class="chk"><input type="checkbox" data-place="thacbac" data-cat="choi"><span class="box"></span><span class="txt"><b>Thác Bạc</b><span class="note">Đi sớm khi bậc đá chưa trơn và chưa đông</span></span><span class="tick">Đã đi</span></label></li>
             <li><label class="chk"><input type="checkbox" data-place="denbachua" data-cat="choi"><span class="box"></span><span class="txt"><b>Đền Bà Chúa Thượng Ngàn</b><span class="note">Trên đường ra khỏi thị trấn</span></span><span class="tick">Đã đi</span></label></li>
           </ul>
           <div class="move">
-            <span class="ico">🚗</span>
-            <span><b>Tam Đảo → Hà Nội · 80 km · ~1 giờ 30.</b> Rời thị trấn đầu giờ chiều là tối đã ở Hà Nội. Ngủ một đêm ở nội thành để sáng mai ra sân bay gọn — và để có một buổi tối không phải đi đâu cả.</span>
-          </div>
-        </div>
-
-      </div>
-      <div class="stay"><b>Ở đâu:</b> khách sạn hoặc homestay ngay thị trấn, 500k–2 triệu/đêm — chọn phòng hướng thung lũng. <b>Đi lại:</b> xe riêng Nội Bài → Tam Đảo 700k–1 triệu; trên thị trấn đi bộ hết. <b>Ước tính chặng này:</b> 1,5–2,5 triệu/người.</div>
-    </div>
-
-    <div class="leg">
-      <div class="leg-head">
-        <span class="n">Chuyển chặng</span>
-        <h3>Một đêm Hà Nội</h3>
-        <span class="dates">04 → 05/10</span>
-        <div class="rule"></div>
-      </div>
-      <p class="leg-note">Không phải ngày chết: đó là khoảng đệm giữa hai chuyến bay, và là cách duy nhất để sáng 5/10 ra sân bay mà không phải chạy đèo từ 4 giờ sáng.</p>
-      <div class="days">
-        <div class="day free">
-          <div class="day-top">
-            <span class="day-n">Đêm đệm</span>
-            <span class="day-date">CN · 04/10</span>
-            <h4>Tối Hà Nội, không lịch</h4>
-            <span class="day-tail">ngủ: Hà Nội</span>
-          </div>
-          <p class="rhythm"><em>Nhịp</em>Ăn tối ở nhà hoặc đâu đó gần chỗ ngủ, dọn lại vali cho chặng Đà Lạt — đồ lạnh vẫn cần, Đà Lạt tháng 10 đêm còn 15–17 °C. Không tích gì ở đây; ngày mai mới là ngày dài.</p>
-          <div class="move">
             <span class="ico">✈</span>
-            <span><b>Đặt chuyến HAN → DLI sáng 5/10, khoảng 8–9 giờ.</b> Bay 1h50. Đặt cùng lúc luôn chiều về <b>DLI → HAN chiều 11/10</b> — khứ hồi rẻ hơn và không lo hết chỗ cuối tuần.</span>
+            <span><b>Tam Đảo → Nội Bài 60 km, ~1 giờ 15 · bay HAN → DLI chiều muộn (khung 17–19 giờ), 1h50 · Liên Khương → trung tâm 30 km, ~50 phút.</b> Không vào Hà Nội — sân bay nằm ngay trên đường xuống núi. Rời thị trấn 12 giờ là dư giờ làm thủ tục. Tới khách sạn Đà Lạt khoảng 21–22 giờ, nhận phòng rồi ngủ; đừng xếp gì thêm cho tối này.</span>
           </div>
         </div>
+
       </div>
+      <div class="stay"><b>Ở đâu:</b> khách sạn hoặc homestay ngay thị trấn, 500k–2 triệu/đêm — chọn phòng hướng thung lũng. <b>Đi lại:</b> xe riêng Nội Bài → Tam Đảo và Tam Đảo → Nội Bài, 700k–1 triệu mỗi chiều; trên thị trấn đi bộ hết. <b>Ước tính chặng này:</b> 1,5–2,5 triệu/người.</div>
     </div>
 
     <div class="leg">
       <div class="leg-head">
         <span class="n">Chặng 2</span>
         <h3>Đà Lạt</h3>
-        <span class="dates">05 – 11/10 · 7 ngày 6 đêm</span>
+        <span class="dates">04 – 11/10 · 7 đêm</span>
         <div class="rule"></div>
         <span class="dates" data-leg-count>0 / 0 nơi</span>
       </div>
-      <p class="leg-note">Bốn đêm ở trung tâm, hai đêm trên farmstay giữa đồi chè Cầu Đất rồi về lại trung tâm cho đêm cuối. Ngủ ngay trên đồi nghĩa là xem được biển mây mà không phải dậy lúc 4 rưỡi. Trục của chặng này là <b>Tiệm cà phê Dốc Thị</b> lúc hoàng hôn.</p>
+      <p class="leg-note">Đêm đầu là <b>đêm 4/10</b> — tới nơi muộn, chỉ để ngủ, nên lịch thật sự bắt đầu từ sáng 5/10. Năm đêm ở trung tâm, hai đêm trên farmstay giữa đồi chè Cầu Đất. Ngủ ngay trên đồi nghĩa là xem được biển mây mà không phải dậy lúc 4 rưỡi. Trục của chặng này là <b>Tiệm cà phê Dốc Thị</b> lúc hoàng hôn.</p>
       <div class="days">
 
         <div class="day" id="d05">
           <div class="day-top">
             <span class="day-n">Ngày 3</span>
             <span class="day-date">T2 · 05/10</span>
-            <h4>Bay vào, rồi chậm lại</h4>
+            <h4>Ngủ bù, rồi hoàng hôn Dốc Thị</h4>
             <span class="day-tail">ngủ: trung tâm</span>
           </div>
-          <div class="move">
-            <span class="ico">✈</span>
-            <span><b>HAN → DLI, bay 1h50 · Liên Khương → trung tâm 30 km, ~50 phút.</b> Đặt xe đón sân bay trước, 350–450k xe 4 chỗ — rẻ và chắc hơn bắt ngoài.</span>
-          </div>
-          <p class="rhythm"><em>Nhịp</em>Nhận phòng, ăn trưa nhẹ, chợp mắt. Chiều lên Dốc Thị lúc 16:00 và ngồi đến khi tắt nắng — quán quay mặt hướng tây, đi taxi lên để khỏi phải chạy xe xuống dốc lúc trời tối. Tối bún bò rồi đi bộ một vòng hồ Xuân Hương.</p>
+          <p class="rhythm"><em>Nhịp</em>Sau ngày hôm qua thì buổi sáng này để trống là cố ý — ngủ tới lúc nào dậy thì dậy, ăn sáng muộn quanh khách sạn. Chiều lên Dốc Thị lúc 16:00 và ngồi đến khi tắt nắng; quán quay mặt hướng tây, đi taxi lên để khỏi phải chạy xe xuống dốc lúc trời tối. Tối bún bò rồi đi bộ một vòng hồ Xuân Hương.</p>
           <ul class="checks">
             <li><label class="chk"><input type="checkbox" data-place="docthi" data-cat="an"><span class="box"></span><span class="txt"><b>Tiệm cà phê Dốc Thị</b><span class="note">Đến trước 16:30 để chắc chỗ ngoài rìa đồi</span></span><span class="tick">Đã đi</span></label></li>
             <li><label class="chk"><input type="checkbox" data-place="bunbo" data-cat="an"><span class="box"></span><span class="txt"><b>Bún bò Ấp Ánh Sáng</b><span class="note">Bữa tối đầu tiên, ngay cạnh hồ</span></span><span class="tick">Đã đi</span></label></li>
@@ -636,7 +612,7 @@
         </div>
 
       </div>
-      <div class="stay"><b>Ở đâu:</b> 4 đêm trung tâm quanh Hồ Xuân Hương hoặc khu hồ Tuyền Lâm (1,5–4 triệu/đêm) + 2 đêm farmstay Cầu Đất (800k–2 triệu/đêm). <b>Xe:</b> ô tô riêng có tài 1,2–1,8 triệu/ngày. <b>Vé bay:</b> khứ hồi HAN ⇄ DLI. <b>Ước tính chặng này:</b> 9–13 triệu/người, chưa vé bay.</div>
+      <div class="stay"><b>Ở đâu:</b> 5 đêm trung tâm quanh Hồ Xuân Hương hoặc khu hồ Tuyền Lâm (1,5–4 triệu/đêm) + 2 đêm farmstay Cầu Đất (800k–2 triệu/đêm). Đêm 4/10 nhớ báo khách sạn là tới muộn. <b>Xe:</b> ô tô riêng có tài 1,2–1,8 triệu/ngày. <b>Vé bay:</b> khứ hồi HAN ⇄ DLI. <b>Ước tính chặng này:</b> 9–13 triệu/người, chưa vé bay.</div>
     </div>
   </div>
 </section>
@@ -1031,15 +1007,19 @@
     <div class="notes">
       <div>
         <h3>Nội Bài nằm sẵn trên đường lên Tam Đảo</h3>
-        <p>Đây là lý do Tam Đảo đi trước. Từ sảnh đến ra thẳng cao tốc Nội Bài – Lào Cai là <b>60 km, một tiếng mười lăm</b>, không phải vào nội thành rồi vòng ra. Đặt xe đón sẵn — 700k–1 triệu một chiều — vì taxi ở sân bay ít ai nhận chạy đèo.</p>
+        <p>Đây là lý do Tam Đảo đi trước, và cũng là lý do ngày 4/10 không cần ghé Hà Nội. Sân bay cách thị trấn <b>60 km, một tiếng mười lăm</b>, nằm đúng trên đường xuống núi. Đặt xe hai chiều cùng một nhà — 700k–1 triệu mỗi chiều — vì taxi ở sân bay ít ai nhận chạy đèo.</p>
       </div>
       <div>
-        <h3>Đặt vé Đà Lạt ngay cùng lúc</h3>
-        <p><b>HAN → DLI sáng 5/10</b> và <b>DLI → HAN chiều 11/10</b>. Đặt khứ hồi một lần: rẻ hơn, và 11/10 là Chủ nhật nên chuyến chiều hết chỗ sớm. Liên Khương cách trung tâm 30 km, xe đón 350–450k.</p>
+        <h3>Vé Đà Lạt: chọn chuyến chiều muộn 4/10</h3>
+        <p><b>HAN → DLI khung 17–19 giờ</b> và <b>DLI → HAN chiều 11/10</b>, đặt khứ hồi một lần. Đừng lấy chuyến sớm hơn 16 giờ: xuống núi rồi làm thủ tục cần đủ giờ đệm, mà đường đèo mưa thì không có đường vòng. Liên Khương cách trung tâm 30 km, xe đón 350–450k.</p>
       </div>
       <div>
         <h3>Đường lên Tam Đảo chỉ có một</h3>
         <p>13 km cuối là đèo một chiều lên, một chiều xuống, nhiều khúc cua gấp. Đi ban ngày, và nếu mưa to thì chấp nhận chậm lại — không có đường vòng. 3/10 là thứ Bảy nên <b>đặt phòng và đặt bàn trước</b>; Phố Mây gọi ở 0976 087 416.</p>
+      </div>
+      <div>
+        <h3>Ngày 4/10 là ngày căng nhất</h3>
+        <p>Dậy 6 giờ ở Tam Đảo, đi Thác Bạc, trả phòng 12 giờ, chạy đèo, bay 1h50, tới khách sạn Đà Lạt lúc 21–22 giờ. Làm được, nhưng đừng xếp thêm gì cho tối hôm đó — và sáng 5/10 đã để trống sẵn cho ngủ bù.</p>
       </div>
       <div>
         <h3>Mù là đặc sản, không phải sự cố</h3>
@@ -1068,7 +1048,7 @@
 
 <footer>
   <div class="wrap">
-    <p>Chín ngày, hai chặng, một lần đón ở Nội Bài và một lần bay về. Nếu đổi ý muốn ở Tam Đảo thêm một ngày để đi Tây Thiên, cắt vào ngày 10/10 — đó là ngày duy nhất trong lịch Đà Lạt không có điểm nào bắt buộc.</p>
+    <p>Chín ngày, hai chặng, một lần đón ở Nội Bài và một lần bay về — không có đêm nào nằm chờ ở giữa. Nếu đổi ý muốn ở Tam Đảo thêm một ngày để đi Tây Thiên, cắt vào ngày 10/10: đó là ngày nhẹ nhất trong lịch Đà Lạt, bỏ đi chỉ mất buổi mua quà.</p>
     <button class="reset" data-role="reset" type="button">Xóa hết dấu tích</button>
   </div>
 </footer>

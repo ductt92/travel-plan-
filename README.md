@@ -5,8 +5,8 @@ Sổ tay một chuyến chín ngày, hai chặng:
 | Ngày | Ở đâu |
 |---|---|
 | T7 03/10 | Ngọc đáp Nội Bài → đi thẳng Tam Đảo (60 km) |
-| CN 04/10 | Thác Bạc buổi sáng → xuống Hà Nội, ngủ một đêm |
-| T2 05/10 | Bay HAN → DLI, vào Đà Lạt |
+| CN 04/10 | Thác Bạc buổi sáng → ra thẳng Nội Bài, bay chiều vào Đà Lạt |
+| T2 05/10 | Ngủ bù, chiều Dốc Thị |
 | T3–T4 06–07/10 | Trung tâm: Tuyền Lâm, Langbiang |
 | T5–T6 08–09/10 | Farmstay đồi chè Cầu Đất |
 | T7 10/10 | Về lại trung tâm, mua quà |
