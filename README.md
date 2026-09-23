@@ -4,13 +4,23 @@ Sổ tay một chuyến chín ngày, hai chặng:
 
 | Ngày | Ở đâu |
 |---|---|
-| T7 03/10 | Ngọc đáp Nội Bài → đi thẳng Tam Đảo (60 km) |
-| CN 04/10 | Thác Bạc buổi sáng → ra thẳng Nội Bài, bay chiều vào Đà Lạt |
+| T7 03/10 | Ngọc đáp Nội Bài **17:45** → đi thẳng Tam Đảo (60 km), tới nơi đã tối |
+| CN 04/10 | Cả Tam Đảo trong một buổi sáng → ra thẳng Nội Bài, bay chiều vào Đà Lạt |
 | T2 05/10 | Ngủ bù, chiều Dốc Thị |
 | T3–T4 06–07/10 | Trung tâm: Tuyền Lâm, Langbiang |
-| T5–T6 08–09/10 | Farmstay đồi chè Cầu Đất |
-| T7 10/10 | Về lại trung tâm, mua quà |
+| T5 08/10 | Trại Mát + chùa Ve Chai, chiều để trống |
+| T6 09/10 | Dậy 4:30 đi Cầu Đất – D'ran, tối về lại phố |
+| T7 10/10 | Ngủ nướng, chiều mua quà |
 | CN 11/10 | Bay DLI → HAN |
+
+Đầu trang có **đồng hồ đếm ngược** tới lúc Ngọc đáp Nội Bài (17:45 ngày 3/10);
+sau mốc đó nó tự chuyển sang đếm ngày thứ mấy của chuyến, và sau 11/10 thì dừng.
+Mốc nằm trong `index.html` dưới dạng `Date.parse('2026-10-03T17:45:00+07:00')` —
+đổi giờ bay thì đổi đúng chỗ đó.
+
+Sau 11/10 ô đó đổi thành **"Đã đi cùng nhau"** và hiện tấm ảnh chụp chung. Ảnh
+đọc từ `anh/da-di-cung-nhau.jpg`; chưa có file thì nó hiện một khung gạch đứt
+nhắc bỏ ảnh vào, chứ không vỡ layout.
 
 Mở ra là lịch trình theo ngày; hai mục **Tam Đảo** và **Đà Lạt** bên dưới là danh
 sách chi tiết từng quán và từng điểm, tích vào ô khi đã ghé. Dấu tích dùng chung
