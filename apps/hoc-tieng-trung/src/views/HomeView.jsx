@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, Icon, Pill, ProgressBar, Row, Stack, StatTile, useToast } from '@trang/ui';
 import { LEVELS, STAGES, LESSONS, WMAP, NPARTS, prevOf, hasContent } from '../core/data.js';
 import { fmtN } from '../core/pinyin.js';
+import { SyncButton } from '@trang/sync';
 import { useStore, nextLesson, dueCards, lessonDoneCount, lessonDone, levelStats, levelStatus, streak, resetAll } from '../core/store.js';
 import './HomeView.css';
 
@@ -104,9 +105,12 @@ export function HomeView() {
           <span className="ui-muted" style={{ fontSize: 13, textTransform: 'capitalize' }}>{dateStr}</span>
           <h1 style={{ fontSize: 30 }}>{nl && nl.kind === 'lesson' ? `Chào bạn, hôm nay học tiếp Cấp ${nl.l.lv} nhé` : 'Chào bạn, bắt đầu con đường Hán ngữ'}</h1>
         </Stack>
-        <Pill tone="grey" style={{ fontSize: 14, padding: '6px 12px' }}>
-          <Icon name="flame" size={18} style={{ color: 'var(--seal)' }} />{streak()} ngày liên tiếp
-        </Pill>
+        <Row gap={8}>
+          <Pill tone="grey" style={{ fontSize: 14, padding: '6px 12px' }}>
+            <Icon name="flame" size={18} style={{ color: 'var(--seal)' }} />{streak()} ngày liên tiếp
+          </Pill>
+          <SyncButton />
+        </Row>
       </header>
 
       <section className="ui-row" style={{ alignItems: 'stretch', gap: 20, flexWrap: 'wrap' }} aria-label="Hôm nay">

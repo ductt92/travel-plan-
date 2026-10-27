@@ -11,6 +11,10 @@
     "dev:zh": "npm -w apps/hoc-tieng-trung run dev",
     "dev:map": "npm -w apps/ban-do run dev",
     "build": "node scripts/build.mjs",
+    "dev:api": "node scripts/dev-api.mjs",
     "preview": "npx --yes serve@14.2.4 dist -l 4173"
+  },
+  "dependencies": {
+    "pg": "8.13.1"
   }
 }

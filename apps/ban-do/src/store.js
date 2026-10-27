@@ -1,6 +1,8 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { changed, track } from '@trang/sync'
 
 const KEY = 'da-di-qua-v1'
+track(KEY) // đồng bộ giữa máy của Ngọc và Đức khi đã nhập mã
 
 /** Trạng thái mỗi tỉnh: 'none' | 'visited' (đã đi) | 'wish' (muốn đi) */
 export const STATUSES = [
@@ -28,6 +30,17 @@ export function useProvinceNotes() {
   const [entries, setEntries] = useState(read)
   const live = useRef(entries)
 
+  // máy kia sửa (qua đồng bộ) hoặc tab khác sửa thì nạp lại
+  useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key !== KEY) return
+      live.current = read()
+      setEntries(live.current)
+    }
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [])
+
   const write = useCallback((next) => {
     live.current = next
     setEntries(next)
@@ -36,6 +49,7 @@ export function useProvinceNotes() {
     } catch {
       /* hết chỗ hoặc trình duyệt chặn: app vẫn chạy hết phiên này */
     }
+    changed(KEY)
   }, [])
 
   const get = useCallback((code) => entries[code] || empty, [entries])
