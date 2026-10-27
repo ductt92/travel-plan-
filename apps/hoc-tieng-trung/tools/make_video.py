@@ -73,8 +73,9 @@ def build(lid):
                 return subprocess.run((CHROME, '--headless=new', '--disable-gpu', f'--user-data-dir={TMP}/prof-{i % N}', '--hide-scrollbars', '--window-size=1920,1080',
             '--virtual-time-budget=5000', f'--screenshot={work}/frames/f_{i:03d}.png', f'{BASE}#/render/{lid}/{i}'),
                                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60)
-            except subprocess.TimeoutExpired:
+            except (subprocess.TimeoutExpired, subprocess.CalledProcessError):
                 if t == 2: raise
+                time.sleep(2)
 
     with ThreadPoolExecutor(N) as ex:
         durs = list(ex.map(step_audio, range(len(steps))))
