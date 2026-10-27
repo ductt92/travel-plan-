@@ -1,30 +1,110 @@
 /* Nút nổi: trên điện thoại nằm trên thanh tab dưới đáy */
-.pyfab{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:24px;z-index:30;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 18px 0 8px;border:0;border-radius:999px;background:var(--jade);color:#FFF;font:inherit;font-weight:700;font-size:15px;box-shadow:0 12px 28px -12px rgba(0,0,0,.45);cursor:pointer;transition:transform .2s}
-.pyfab:hover{transform:translateY(-2px)}
+.pyfab{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:24px;z-index:30;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 18px 0 7px;border:0;border-radius:999px;background:linear-gradient(135deg,var(--jade),var(--jade-ink));color:#FFF;font:inherit;font-weight:700;font-size:15px;box-shadow:0 14px 30px -12px rgba(23,79,63,.6),0 0 0 4px rgba(255,255,255,.6);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.pyfab:hover{transform:translateY(-2px) scale(1.02)}
 .pyfab:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-.pyfab__hz{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);font:600 20px/1 var(--f-hz)}
+.pyfab__hz{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--seal);font:600 19px/1 var(--f-hz);box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
 @media (max-width:900px){
-  .pyfab{bottom:calc(74px + env(safe-area-inset-bottom));min-height:48px;padding:0 6px}
+  .pyfab{bottom:calc(76px + env(safe-area-inset-bottom));min-height:50px;padding:0 6px}
   .pyfab__txt{display:none}
-  .pyfab__hz{width:36px;height:36px}
 }
 
-/* Khung bảng: giữa màn hình trên máy tính, trượt từ dưới lên trên điện thoại */
-.pysheet{width:min(1040px,calc(100vw - 48px));max-height:calc(100vh - 48px);padding:0;border:1px solid var(--line);border-radius:24px;background:var(--bg,var(--surface));color:var(--ink);box-shadow:0 30px 80px -30px rgba(0,0,0,.5)}
-.pysheet::backdrop{background:rgba(20,16,12,.45)}
-.pysheet__in{display:flex;flex-direction:column;gap:14px;padding:20px 24px 24px}
-.pysheet__head{display:flex;align-items:center;gap:12px}
-.pysheet__head > div{flex:1;min-width:0}
-.pysheet__head h2{font-size:24px;margin:2px 0 0}
-.pysheet__x{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
-.pysheet__hint{margin:-6px 0 0;font-size:14px}
+/* ===== Khung bảng pinyin ===== */
+.pysheet{width:min(980px,calc(100vw - 48px));max-height:min(860px,calc(100vh - 48px));padding:0;border:0;border-radius:28px;background:var(--surface);color:var(--ink);box-shadow:0 40px 90px -30px rgba(10,20,16,.55);overflow:hidden;display:flex;flex-direction:column}
+.pysheet:not([open]){display:none}
+.pysheet::backdrop{background:rgba(14,22,19,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.pysheet__grip{display:none}
+
+/* Đầu khung: nền giấy ngả xanh ngọc, con dấu đỏ */
+.pysheet__head{position:relative;display:flex;align-items:center;gap:16px;padding:22px 24px 20px;background:radial-gradient(120% 140% at 0% 0%,var(--jade-soft),transparent 60%),linear-gradient(180deg,var(--surface-3),var(--surface));border-bottom:1px solid var(--line)}
+.pysheet__seal{flex:none;display:grid;place-items:center;width:54px;height:54px;border-radius:12px;background:var(--seal);color:#FFF4EE;font:700 17px/1.05 var(--f-hz);text-align:center;transform:rotate(-4deg);box-shadow:0 8px 18px -10px rgba(180,35,24,.8),inset 0 0 0 2px rgba(255,255,255,.18)}
+.pysheet__title{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pysheet__eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--jade)}
+.pysheet__title h2{margin:0;font:600 28px/1.15 var(--f-serif)}
+.pysheet__x{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:background .15s,transform .15s}
+.pysheet__x:hover{background:var(--surface-2);transform:rotate(90deg)}
+
+.pysheet__body{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:16px;padding:18px 24px 22px;overscroll-behavior:contain}
+.pysheet__body > *{flex-shrink:0} /* để khối cuộn là cả thân khung, không bóp từng phần */
+
+/* Chú thích 4 thanh */
+.pysheet__legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pysheet__legend li{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:14px;background:var(--surface-3);border:1px solid var(--line);color:var(--ink)}
+.pysheet__legend b{font:600 26px/1 var(--f-py);color:currentColor}
+.pysheet__legend li.t1 b{color:var(--t1)} .pysheet__legend li.t2 b{color:var(--t2)} .pysheet__legend li.t3 b{color:var(--t3)} .pysheet__legend li.t4 b{color:var(--t4)}
+.pysheet__legend li{color:var(--ink)}
+.pysheet__legend span{display:flex;flex-direction:column;font-size:13px;line-height:1.3}
+.pysheet__legend strong{font-weight:700}
+.pysheet__legend small{color:var(--muted);font-size:12px}
+
+/* Thẻ âm tiết đang chọn */
+.pyf{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:18px;padding:14px 18px;border-radius:20px;background:linear-gradient(135deg,var(--jade-soft),var(--surface-3));border:1px solid var(--line)}
+.pyf--empty{grid-template-columns:auto 1fr;color:var(--muted)}
+.pyf--empty b{color:var(--ink)}
+.pyf--empty p{margin:2px 0 0;font-size:14px}
+.pyf__ghost{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;border:2px dashed var(--line-2);font:400 30px/1 var(--f-hz);color:var(--line-2)}
+.pyf__hz{position:relative;display:grid;place-items:center;width:72px;height:72px;border-radius:50%;border:0;background:var(--surface);box-shadow:0 10px 24px -14px rgba(23,79,63,.7),inset 0 0 0 2px var(--jade-soft);color:var(--ink);font:500 40px/1 var(--f-hz);cursor:pointer;transition:transform .15s}
+.pyf__hz:hover{transform:scale(1.05)}
+.pyf__hz svg{position:absolute;right:-2px;bottom:-2px;width:26px;height:26px;padding:5px;border-radius:50%;background:var(--jade);color:var(--on-jade)}
+.pyf__main{display:flex;flex-direction:column;min-width:0}
+.pyf__label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pyf__sp{font:600 34px/1.1 var(--f-py)}
+.pyf__ex{font-size:14px;color:var(--muted)}
+.pyf__ex .t1,.pyf__ex .t2,.pyf__ex .t3,.pyf__ex .t4{font-family:var(--f-py);font-weight:600}
+.pyf__tones{display:flex;gap:6px}
+.pyf__tone{min-width:52px;padding:8px 10px;border-radius:12px;background:var(--surface);text-align:center;font:600 22px/1.1 var(--f-py);box-shadow:0 1px 0 var(--line)}
+.pyf__write{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+
+/* Tab nhóm vần */
+.pysheet__tabs{display:flex;gap:6px;padding:4px;border-radius:16px;background:var(--surface-2);overflow-x:auto;scrollbar-width:none}
+.pysheet__tabs::-webkit-scrollbar{display:none}
+.pysheet__tabs button{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;min-height:48px;padding:6px 14px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:inherit;cursor:pointer;transition:background .15s,color .15s}
+.pysheet__tabs b{font:600 17px/1.2 var(--f-py);color:var(--ink)}
+.pysheet__tabs small{font-size:11.5px}
+.pysheet__tabs button:hover{background:rgba(255,255,255,.5)}
+.pysheet__tabs button.is-on{background:var(--surface);box-shadow:0 4px 12px -6px rgba(0,0,0,.25);color:var(--jade)}
+.pysheet__tabs button.is-on b{color:var(--jade)}
+
+/* Bảng trong khung: ô bo tròn như phím bấm */
+.pysheet__table{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
 .pysheet .pyc-wrap{max-height:none}
+.pysheet .pyc-t{width:100%}
+.pysheet .pyc-t th,.pysheet .pyc-t td{border-bottom:0;padding:3px}
+.pysheet .pyc-t tbody tr:nth-child(even) td,.pysheet .pyc-t tbody tr:nth-child(even) th.pyc-f{background:var(--surface-3)}
+.pysheet .pyc-t .pyc-h{background:var(--surface);border-bottom:1px solid var(--line);color:var(--jade);font-family:var(--f-py)}
+.pysheet .pyc-t .pyc-f{color:var(--seal);font-family:var(--f-py)}
+.pysheet .pyc-t .pyc-corner{font:600 11px/1.3 var(--f-ui);color:var(--muted);min-width:64px;white-space:nowrap}
+.pysheet .pyc{width:100%;min-width:48px;min-height:38px;border-radius:10px;font-weight:500;transition:background .12s,transform .12s}
+.pysheet .pyc:hover{background:var(--jade-soft);transform:translateY(-1px)}
+.pysheet .pyc.is-on{background:var(--jade);color:var(--on-jade);box-shadow:0 6px 14px -8px var(--jade)}
+
+.pysheet__foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0;font-size:13.5px;color:var(--muted)}
+
+/* Điện thoại: trượt từ dưới lên, có thanh kéo */
 @media (max-width:900px){
-  .pysheet{width:100vw;max-width:100vw;max-height:88vh;margin:auto 0 0;border-radius:22px 22px 0 0;border-bottom:0}
-  .pysheet__in{padding:16px 16px calc(20px + env(safe-area-inset-bottom))}
-  .pysheet__more{display:none}
+  .pysheet{width:100vw;max-width:100vw;max-height:90vh;margin:auto 0 0;border-radius:26px 26px 0 0}
+  .pysheet__grip{display:block;width:44px;height:5px;border-radius:9px;background:var(--line-2);margin:10px auto -6px;position:relative;z-index:1}
+  .pysheet__head{padding:16px 16px 14px;gap:12px}
+  .pysheet__seal{width:46px;height:46px;font-size:15px}
+  .pysheet__title h2{font-size:23px}
+  .pysheet__body{padding:14px 16px calc(18px + env(safe-area-inset-bottom));gap:14px}
+  .pysheet__legend{gap:6px}
+  .pysheet__legend li{flex-direction:column;gap:2px;padding:8px 4px;text-align:center}
+  .pysheet__legend b{font-size:22px}
+  .pysheet__legend span{font-size:12px;align-items:center}
+  .pysheet__legend small{display:none}
+  .pysheet__legend span{font-size:0} .pysheet__legend strong{font-size:12px} /* chỉ giữ "Thanh n" */
+  .pyf{grid-template-columns:auto 1fr auto;gap:12px 14px;padding:12px 14px}
+  .pyf__hz{width:60px;height:60px;font-size:32px}
+  .pyf__sp{font-size:28px}
+  .pyf__tones{grid-column:1/-1;order:3}
+  .pyf__tone{flex:1;min-width:0}
+  .pyf__write{grid-column:3;grid-row:1;padding:0 12px}
+  .pysheet__tabs button{flex:0 0 auto;padding:6px 12px}
 }
 @media (prefers-reduced-motion:no-preference){
-  .pysheet[open]{animation:pysheet-in .25s cubic-bezier(.2,.8,.2,1)}
-  @keyframes pysheet-in{from{transform:translateY(24px);opacity:0}}
+  .pysheet[open]{animation:pysheet-in .32s cubic-bezier(.2,.9,.25,1)}
+  .pysheet[open]::backdrop{animation:pysheet-fade .25s ease}
+  @keyframes pysheet-in{from{transform:translateY(32px) scale(.98);opacity:0}}
+  @keyframes pysheet-fade{from{opacity:0}}
+  @media (max-width:900px){@keyframes pysheet-in{from{transform:translateY(100%)}}}
 }

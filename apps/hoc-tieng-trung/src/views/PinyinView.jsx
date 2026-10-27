@@ -57,8 +57,49 @@ function Detail({ sp, v }) {
   );
 }
 
-/** Khung chi tiết + bảng âm tiết; dùng ở trang Pinyin và trong khung nổi (PinyinFab) */
-export function PinyinChart() {
+export const PY_GROUP_NAMES = PY_GROUPS;
+
+/** Bảng thanh mẫu × vận mẫu. group: chỉ số nhóm vần (bỏ trống = tất cả); sel: [cách viết, khóa] đang chọn */
+export function PinyinTable({ group = null, sel, onPick }) {
+  const groups = group == null ? PY_FINALS.map((g, i) => [g, i]) : [[PY_FINALS[group], group]];
+  // chỉ giữ các cột phụ âm có ít nhất một âm tiết trong nhóm đang xem
+  const inits = PY_INITS.filter(i => groups.some(([g]) => g.some(f => { const r = spell(i, f); return r && PINYIN[r[1]]; })));
+  return (
+    <div className="pyc-wrap">
+      <table className="pyc-t">
+        <thead>
+          <tr>
+            <th scope="col" className="pyc-h pyc-corner">Vần \ Phụ âm</th>
+            {inits.map(i => <th key={i || '0'} scope="col" className="pyc-h">{i || <span className="ui-muted">—</span>}</th>)}
+          </tr>
+        </thead>
+        {groups.map(([grp, gi]) => (
+          <tbody key={gi}>
+            {group == null && <tr><th colSpan={inits.length + 1} className="pyc-g">{PY_GROUPS[gi]}</th></tr>}
+            {grp.map(f => (
+              <tr key={f}>
+                <th scope="row" className="pyc-f">{f}</th>
+                {inits.map(i => {
+                  const r = spell(i, f);
+                  if (!r || !PINYIN[r[1]]) return <td key={i || '0'} />;
+                  const on = sel && sel[1] === r[1];
+                  return (
+                    <td key={i || '0'}>
+                      <button type="button" className={`pyc${on ? ' is-on' : ''}`} aria-pressed={on} onClick={() => onPick(r)}>{r[0]}</button>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        ))}
+      </table>
+    </div>
+  );
+}
+
+/** Trang Pinyin: khung chi tiết + bảng đầy đủ */
+function PinyinChart() {
   const [sel, setSel] = useState(null); // [cách viết, khóa]
   const box = useRef(null);
   useEffect(() => { if (sel) box.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [sel]);
@@ -71,39 +112,7 @@ export function PinyinChart() {
   return (
     <>
       <div ref={box} style={{ scrollMarginTop: 16 }}>{sel && <Detail sp={sel[0]} v={PINYIN[sel[1]]} />}</div>
-
-      <Card pad={false} style={{ overflow: 'hidden' }}>
-        <div className="pyc-wrap">
-          <table className="pyc-t">
-            <thead>
-              <tr>
-                <th scope="col" className="pyc-h pyc-corner">Vần \ Phụ âm</th>
-                {PY_INITS.map(i => <th key={i || '0'} scope="col" className="pyc-h">{i || <span className="ui-muted">—</span>}</th>)}
-              </tr>
-            </thead>
-            {PY_FINALS.map((grp, gi) => (
-              <tbody key={gi}>
-                <tr><th colSpan={PY_INITS.length + 1} className="pyc-g">{PY_GROUPS[gi]}</th></tr>
-                {grp.map(f => (
-                  <tr key={f}>
-                    <th scope="row" className="pyc-f">{f}</th>
-                    {PY_INITS.map(i => {
-                      const r = spell(i, f);
-                      if (!r || !PINYIN[r[1]]) return <td key={i || '0'} />;
-                      const on = sel && sel[1] === r[1];
-                      return (
-                        <td key={i || '0'}>
-                          <button type="button" className={`pyc${on ? ' is-on' : ''}`} aria-pressed={on} onClick={() => pick(r)}>{r[0]}</button>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            ))}
-          </table>
-        </div>
-      </Card>
+      <Card pad={false} style={{ overflow: 'hidden' }}><PinyinTable sel={sel} onPick={pick} /></Card>
     </>
   );
 }
