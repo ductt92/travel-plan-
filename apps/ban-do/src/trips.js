@@ -2,6 +2,7 @@
 // danh sách địa điểm lấy từ src/data/trip-2026-10.json (trích từ travel/index.html).
 import { useCallback, useEffect, useState } from 'react'
 import places from './data/trip-2026-10.json'
+import { changed, track } from '@trang/sync'
 
 export const TRIPS = [
   {
@@ -29,6 +30,7 @@ export function tripProvinces() {
 
 /** Dấu tích "đã ghé" dùng chung với trang Travel plan (cùng tên miền nên chung localStorage khóa dadiqua-trip) */
 const TICKS = 'dadiqua-trip'
+track(TICKS)
 function readTicks() {
   try { return JSON.parse(localStorage.getItem(TICKS) || '{}') || {} } catch { return {} }
 }
@@ -45,6 +47,7 @@ export function useTripTicks() {
       const next = { ...prev }
       if (next[id]) delete next[id]; else next[id] = true
       try { localStorage.setItem(TICKS, JSON.stringify(next)) } catch { /* bỏ qua */ }
+      changed(TICKS)
       return next
     })
   }, [])

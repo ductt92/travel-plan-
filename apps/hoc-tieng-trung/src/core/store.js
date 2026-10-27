@@ -1,6 +1,7 @@
 // Tiến độ học lưu trong localStorage (khóa hanlo-v2, giống bản HTML cũ nên không mất tiến độ).
 // Đọc trong component: const S = useStore(); ghi: update(s => { ... }).
 import { useSyncExternalStore } from 'react';
+import { changed, track } from '@trang/sync';
 import { LESSONS, LEVELS, WMAP, NPARTS, lessonsOf, hasContent } from './data.js';
 
 const KEY = 'hanlo-v2';
@@ -17,7 +18,17 @@ let S = (() => {
 const subs = new Set();
 let version = 0;
 function emit() { version++; subs.forEach(f => f()); }
-function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* bỏ qua */ } }
+function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* bỏ qua */ } changed(KEY); }
+
+// Đồng bộ tiến độ giữa các máy (khi đã nhập mã). Khóa API Gemini riêng không đưa lên server.
+track(KEY, {
+  strip: d => { if (!d) return d; const { ai, ...rest } = d; return { ...rest, ai: { model: ai?.model || DEF.ai.model } }; },
+  keep: (next, local) => ({ ...next, ai: { ...DEF.ai, ...(local?.ai || {}) } })
+});
+window.addEventListener('storage', e => {
+  if (e.key !== KEY) return;
+  try { const d = JSON.parse(localStorage.getItem(KEY)); if (d) { S = { ...clone(DEF), ...d, ai: { ...DEF.ai, ...(d.ai || {}) } }; emit(); } } catch (err) { /* bỏ qua */ }
+});
 
 /** Sửa trạng thái tại chỗ rồi lưu và báo cho component vẽ lại */
 export function update(fn) { fn(S); persist(); emit(); }

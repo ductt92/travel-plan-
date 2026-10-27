@@ -7,7 +7,10 @@ packages/ui/            @trang/ui — component dùng chung (Button, Card, Tabs,
 apps/home/              trang chủ: hai thẻ chọn Travel plan / App học tiếng Trung   → /
 apps/hoc-tieng-trung/   app Hán Lộ học tiếng Trung (HashRouter)                     → /hoc-tieng-trung/
 apps/ban-do/            bản đồ 34 tỉnh: đánh dấu đã đi / muốn đi và ghi chú          → /ban-do/
+packages/sync/          @trang/sync — đồng bộ localStorage lên API, nút "Đồng bộ" chọn Node.js / Go
 travel/                 sổ tay chuyến Tam Đảo – Đà Lạt, HTML tĩnh (sẽ chuyển React sau) → /travel/
+backend/go/, backend/node/   cùng một API viết bằng Go và Node.js (xem backend/README.md)
+api/go/, api/node/      lối vào Vercel Functions                                     → /api/go/…, /api/node/…
 scripts/build.mjs       build cả site vào dist/
 ```
 
@@ -21,12 +24,21 @@ npm install
 npm run dev:home        # trang chủ ở http://localhost:5173
 npm run dev:zh          # app học ở http://localhost:5174/hoc-tieng-trung/
 npm run dev:map         # bản đồ ở http://localhost:5175/ban-do/
-npm run dev:map         # bản đồ ở http://localhost:5175/ban-do/
+npm run dev:api         # API Node + Go ở http://localhost:3001 (vite dev tự chuyển /api sang đây)
 npm run build           # build cả site vào dist/
 npm run preview         # xem bản build ở http://localhost:4173
 ```
 
-Deploy Vercel: `vercel.json` đã đặt build `npm run build`, thư mục xuất `dist`.
+Deploy Vercel: `vercel.json` đã đặt build `npm run build`, thư mục xuất `dist`. Thư mục `api/` tự thành
+Vercel Functions (Go và Node). Cần ba biến môi trường: `DATABASE_URL` (tự có khi gắn Neon ở mục Storage),
+`APP_SECRET` (mã đồng bộ chung) và `GEMINI_API_KEY`. Mẫu ở `.env.example`.
+
+## Backend: một API, hai ngôn ngữ
+
+Xem [backend/README.md](backend/README.md). Tóm tắt: `/api/<node|go>/sync` lưu dữ liệu localStorage của
+các app vào Postgres (bảng `docs`), `/api/<node|go>/ai` gọi Gemini bằng khóa giấu trên server. Hai bản
+giống hệt nhau về đường dẫn, dữ liệu vào/ra và bảng, nên trên giao diện (nút "Đồng bộ") đổi qua lại
+Node.js ↔ Go bất cứ lúc nào mà không mất gì. Chưa nhập mã đồng bộ thì app chạy như cũ, chỉ lưu trong máy.
 
 ## Thư viện component `@trang/ui`
 

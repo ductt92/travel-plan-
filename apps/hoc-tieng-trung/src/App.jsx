@@ -15,6 +15,7 @@ import { DictView } from './views/DictView.jsx';
 import { AiView } from './views/AiView.jsx';
 import { VideosView } from './views/VideosView.jsx';
 import { RenderView, StepsView, AllTextsView } from './views/ToolViews.jsx';
+import { PinyinFab } from './components/PinyinFab.jsx';
 
 const NAV = [
   { to: '/', label: 'Lộ trình', short: 'Lộ trình', icon: 'path', match: p => p === '/' || /^\/(level|lesson|l0)/.test(p) },
@@ -57,6 +58,7 @@ function Shell({ children }) {
       brand={<Brand LinkComponent={Link} href="/" mark="汉路" title="Hán Lộ" sub="Tiếng Trung theo HSK 3.0" />}
       footer={<Goal />}>
       {children}
+      <PinyinFab />
     </AppShell>
   );
 }

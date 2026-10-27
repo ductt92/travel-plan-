@@ -5,6 +5,7 @@ import { useProvinceNotes } from './store.js'
 import meta from './data/provinces.meta.json'
 import { TRIPS, tripProvinces, useTripTicks } from './trips.js'
 import { TripCard, StopPanel } from './TripPanels.jsx'
+import { SyncButton } from '@trang/sync'
 
 const REGIONS = [
   { id: 'bac', label: 'Miền Bắc' },
@@ -87,7 +88,10 @@ export default function App() {
   return (
     <div className="app">
       <header className="top">
-        <a className="home-link" href="../">← Trang chủ</a>
+        <div className="top-bar">
+          <a className="home-link" href="../">← Trang chủ</a>
+          <SyncButton />
+        </div>
         <div className="hero">
           <p className="eyebrow">Ngọc <span className="heart" aria-hidden="true">♥</span> Đức · 34 tỉnh thành Việt Nam</p>
           <h1>Bản đồ du lịch của <em>Ngọc và Đức</em></h1>
