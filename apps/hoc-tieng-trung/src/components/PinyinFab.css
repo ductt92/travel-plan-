@@ -26,57 +26,6 @@
 .pysheet__body{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:16px;padding:18px 24px 22px;overscroll-behavior:contain}
 .pysheet__body > *{flex-shrink:0} /* để khối cuộn là cả thân khung, không bóp từng phần */
 
-/* Chú thích 4 thanh */
-.pysheet__legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.pysheet__legend li{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:14px;background:var(--surface-3);border:1px solid var(--line);color:var(--ink)}
-.pysheet__legend b{font:600 26px/1 var(--f-py);color:currentColor}
-.pysheet__legend li.t1 b{color:var(--t1)} .pysheet__legend li.t2 b{color:var(--t2)} .pysheet__legend li.t3 b{color:var(--t3)} .pysheet__legend li.t4 b{color:var(--t4)}
-.pysheet__legend li{color:var(--ink)}
-.pysheet__legend span{display:flex;flex-direction:column;font-size:13px;line-height:1.3}
-.pysheet__legend strong{font-weight:700}
-.pysheet__legend small{color:var(--muted);font-size:12px}
-
-/* Thẻ âm tiết đang chọn */
-.pyf{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:18px;padding:14px 18px;border-radius:20px;background:linear-gradient(135deg,var(--jade-soft),var(--surface-3));border:1px solid var(--line)}
-.pyf--empty{grid-template-columns:auto 1fr;color:var(--muted)}
-.pyf--empty b{color:var(--ink)}
-.pyf--empty p{margin:2px 0 0;font-size:14px}
-.pyf__ghost{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;border:2px dashed var(--line-2);font:400 30px/1 var(--f-hz);color:var(--line-2)}
-.pyf__hz{position:relative;display:grid;place-items:center;width:72px;height:72px;border-radius:50%;border:0;background:var(--surface);box-shadow:0 10px 24px -14px rgba(23,79,63,.7),inset 0 0 0 2px var(--jade-soft);color:var(--ink);font:500 40px/1 var(--f-hz);cursor:pointer;transition:transform .15s}
-.pyf__hz:hover{transform:scale(1.05)}
-.pyf__hz svg{position:absolute;right:-2px;bottom:-2px;width:26px;height:26px;padding:5px;border-radius:50%;background:var(--jade);color:var(--on-jade)}
-.pyf__main{display:flex;flex-direction:column;min-width:0}
-.pyf__label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.pyf__sp{font:600 34px/1.1 var(--f-py)}
-.pyf__ex{font-size:14px;color:var(--muted)}
-.pyf__ex .t1,.pyf__ex .t2,.pyf__ex .t3,.pyf__ex .t4{font-family:var(--f-py);font-weight:600}
-.pyf__tones{display:flex;gap:6px}
-.pyf__tone{min-width:52px;padding:8px 10px;border-radius:12px;background:var(--surface);text-align:center;font:600 22px/1.1 var(--f-py);box-shadow:0 1px 0 var(--line)}
-.pyf__write{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
-
-/* Tab nhóm vần */
-.pysheet__tabs{display:flex;gap:6px;padding:4px;border-radius:16px;background:var(--surface-2);overflow-x:auto;scrollbar-width:none}
-.pysheet__tabs::-webkit-scrollbar{display:none}
-.pysheet__tabs button{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;min-height:48px;padding:6px 14px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:inherit;cursor:pointer;transition:background .15s,color .15s}
-.pysheet__tabs b{font:600 17px/1.2 var(--f-py);color:var(--ink)}
-.pysheet__tabs small{font-size:11.5px}
-.pysheet__tabs button:hover{background:rgba(255,255,255,.5)}
-.pysheet__tabs button.is-on{background:var(--surface);box-shadow:0 4px 12px -6px rgba(0,0,0,.25);color:var(--jade)}
-.pysheet__tabs button.is-on b{color:var(--jade)}
-
-/* Bảng trong khung: ô bo tròn như phím bấm */
-.pysheet__table{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
-.pysheet .pyc-wrap{max-height:none}
-.pysheet .pyc-t{width:100%}
-.pysheet .pyc-t th,.pysheet .pyc-t td{border-bottom:0;padding:3px}
-.pysheet .pyc-t tbody tr:nth-child(even) td,.pysheet .pyc-t tbody tr:nth-child(even) th.pyc-f{background:var(--surface-3)}
-.pysheet .pyc-t .pyc-h{background:var(--surface);border-bottom:1px solid var(--line);color:var(--jade);font-family:var(--f-py)}
-.pysheet .pyc-t .pyc-f{color:var(--seal);font-family:var(--f-py)}
-.pysheet .pyc-t .pyc-corner{font:600 11px/1.3 var(--f-ui);color:var(--muted);min-width:64px;white-space:nowrap}
-.pysheet .pyc{width:100%;min-width:48px;min-height:38px;border-radius:10px;font-weight:500;transition:background .12s,transform .12s}
-.pysheet .pyc:hover{background:var(--jade-soft);transform:translateY(-1px)}
-.pysheet .pyc.is-on{background:var(--jade);color:var(--on-jade);box-shadow:0 6px 14px -8px var(--jade)}
-
 .pysheet__foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0;font-size:13.5px;color:var(--muted)}
 
 /* Điện thoại: trượt từ dưới lên, có thanh kéo */
@@ -87,19 +36,6 @@
   .pysheet__seal{width:46px;height:46px;font-size:15px}
   .pysheet__title h2{font-size:23px}
   .pysheet__body{padding:14px 16px calc(18px + env(safe-area-inset-bottom));gap:14px}
-  .pysheet__legend{gap:6px}
-  .pysheet__legend li{flex-direction:column;gap:2px;padding:8px 4px;text-align:center}
-  .pysheet__legend b{font-size:22px}
-  .pysheet__legend span{font-size:12px;align-items:center}
-  .pysheet__legend small{display:none}
-  .pysheet__legend span{font-size:0} .pysheet__legend strong{font-size:12px} /* chỉ giữ "Thanh n" */
-  .pyf{grid-template-columns:auto 1fr auto;gap:12px 14px;padding:12px 14px}
-  .pyf__hz{width:60px;height:60px;font-size:32px}
-  .pyf__sp{font-size:28px}
-  .pyf__tones{grid-column:1/-1;order:3}
-  .pyf__tone{flex:1;min-width:0}
-  .pyf__write{grid-column:3;grid-row:1;padding:0 12px}
-  .pysheet__tabs button{flex:0 0 auto;padding:6px 12px}
 }
 @media (prefers-reduced-motion:no-preference){
   .pysheet[open]{animation:pysheet-in .32s cubic-bezier(.2,.9,.25,1)}

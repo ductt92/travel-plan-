@@ -1,0 +1,81 @@
+/* Mảnh dùng chung của bảng pinyin (trang Pinyin + khung nổi) */
+
+/* Chú thích 4 thanh */
+.pk-legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pk-legend li{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:14px;background:var(--surface-3);border:1px solid var(--line);color:var(--ink)}
+.pk-legend b{font:600 26px/1 var(--f-py)}
+.pk-legend li.t1 b{color:var(--t1)} .pk-legend li.t2 b{color:var(--t2)} .pk-legend li.t3 b{color:var(--t3)} .pk-legend li.t4 b{color:var(--t4)}
+.pk-legend span{display:flex;flex-direction:column;font-size:13px;line-height:1.3}
+.pk-legend strong{font-weight:700}
+.pk-legend small{color:var(--muted);font-size:12px}
+/* bản lớn có đường cao độ (trang Pinyin) */
+.pk-legend--big{gap:12px}
+.pk-legend--big li{position:relative;flex-direction:column;align-items:flex-start;gap:8px;padding:16px 16px 14px;border-radius:18px;background:var(--surface);overflow:hidden}
+.pk-legend--big li::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:currentColor;opacity:.9}
+.pk-legend--big li.t1{color:var(--t1)} .pk-legend--big li.t2{color:var(--t2)} .pk-legend--big li.t3{color:var(--t3)} .pk-legend--big li.t4{color:var(--t4)}
+.pk-legend--big b{font-size:40px}
+.pk-legend--big span{color:var(--ink);font-size:14px}
+.pk-contour{position:absolute;right:12px;top:18px;width:64px;height:42px}
+.pk-contour line{stroke:var(--line);stroke-width:.6}
+.pk-contour polyline{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
+/* Thẻ âm tiết đang chọn */
+.pyf{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:18px;padding:14px 18px;border-radius:20px;background:linear-gradient(135deg,var(--jade-soft),var(--surface-3));border:1px solid var(--line)}
+.pyf--empty{grid-template-columns:auto 1fr;color:var(--muted)}
+.pyf--empty b{color:var(--ink)}
+.pyf--empty p{margin:2px 0 0;font-size:14px}
+.pyf__ghost{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;border:2px dashed var(--line-2);font:400 30px/1 var(--f-hz);color:var(--line-2)}
+.pyf__hz{position:relative;display:grid;place-items:center;width:72px;height:72px;border-radius:50%;border:0;background:var(--surface);box-shadow:0 10px 24px -14px rgba(23,79,63,.7),inset 0 0 0 2px var(--jade-soft);color:var(--ink);font:500 40px/1 var(--f-hz);cursor:pointer;transition:transform .15s}
+.pyf__hz:hover{transform:scale(1.05)}
+.pyf__hz svg{position:absolute;right:-2px;bottom:-2px;width:26px;height:26px;padding:5px;border-radius:50%;background:var(--jade);color:var(--on-jade)}
+.pyf__main{display:flex;flex-direction:column;min-width:0}
+.pyf__label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pyf__sp{font:600 34px/1.1 var(--f-py)}
+.pyf__ex{font-size:14px;color:var(--muted)}
+.pyf__ex [class^="t"]{font-family:var(--f-py);font-weight:600}
+.pyf__tones{display:flex;gap:6px}
+.pyf__tone{min-width:52px;padding:8px 10px;border-radius:12px;background:var(--surface);text-align:center;font:600 22px/1.1 var(--f-py);box-shadow:0 1px 0 var(--line)}
+.pyf__write{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+
+/* Tab nhóm vần */
+.pk-tabs{display:flex;gap:6px;padding:4px;border-radius:16px;background:var(--surface-2);overflow-x:auto;scrollbar-width:none}
+.pk-tabs::-webkit-scrollbar{display:none}
+.pk-tabs button{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;min-height:48px;padding:6px 14px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:inherit;cursor:pointer;transition:background .15s,color .15s}
+.pk-tabs b{font:600 17px/1.2 var(--f-py);color:var(--ink)}
+.pk-tabs small{font-size:11.5px}
+.pk-tabs button:hover{background:rgba(255,255,255,.5)}
+.pk-tabs button.is-on{background:var(--surface);box-shadow:0 4px 12px -6px rgba(0,0,0,.25);color:var(--jade)}
+.pk-tabs button.is-on b{color:var(--jade)}
+
+/* Bảng: ô bo tròn như phím bấm, tiêu đề cột và cột vần dính khi cuộn */
+.pk-table{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+.pyc-wrap{overflow:auto}
+.pyc-t{width:100%;border-collapse:separate;border-spacing:0;font-family:var(--f-py);font-size:14px}
+.pyc-t th,.pyc-t td{padding:3px;text-align:center}
+.pyc-t tbody tr:nth-child(even) td,.pyc-t tbody tr:nth-child(even) th.pyc-f{background:var(--surface-3)}
+.pyc-t .pyc-h{position:sticky;top:0;z-index:2;background:var(--surface);border-bottom:1px solid var(--line);padding:10px 4px;font-weight:600;color:var(--jade);min-width:48px}
+.pyc-t .pyc-corner{left:0;z-index:3;border-right:1px solid var(--line);font:600 11px/1.3 var(--f-ui);color:var(--muted);min-width:64px;white-space:nowrap}
+.pyc-t .pyc-f{position:sticky;left:0;z-index:1;background:var(--surface);padding:6px 12px;font-weight:600;text-align:left;color:var(--seal);border-right:1px solid var(--line)}
+.pyc-t .pyc-g{background:var(--surface-2);text-align:left;padding:8px 12px;font:600 12px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pk-none{color:var(--muted)}
+.pyc{width:100%;min-width:48px;min-height:38px;border:0;border-radius:10px;background:transparent;font:500 14px var(--f-py);color:var(--ink);cursor:pointer;transition:background .12s,transform .12s}
+.pyc:hover{background:var(--jade-soft);transform:translateY(-1px)}
+.pyc.is-on{background:var(--jade);color:var(--on-jade);box-shadow:0 6px 14px -8px var(--jade)}
+
+@media (max-width:900px){
+  .pk-legend{gap:6px}
+  .pk-legend:not(.pk-legend--big) li{flex-direction:column;gap:2px;padding:8px 4px;text-align:center}
+  .pk-legend:not(.pk-legend--big) span{font-size:0;align-items:center}
+  .pk-legend:not(.pk-legend--big) strong{font-size:12px}
+  .pk-legend b{font-size:22px}
+  .pk-legend--big{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pk-legend--big b{font-size:32px}
+  .pk-contour{width:52px;height:34px}
+  .pyf{grid-template-columns:auto 1fr auto;gap:12px 14px;padding:12px 14px}
+  .pyf__hz{width:60px;height:60px;font-size:32px}
+  .pyf__sp{font-size:28px}
+  .pyf__tones{grid-column:1/-1;order:3}
+  .pyf__tone{flex:1;min-width:0}
+  .pyf__write{grid-column:3;grid-row:1;padding:0 12px}
+  .pk-tabs button{flex:0 0 auto;padding:6px 12px}
+}
