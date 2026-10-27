@@ -40,7 +40,6 @@ func db(ctx context.Context) (*pgxpool.Pool, error) {
 			return
 		}
 		cfg.MaxConns = 4
-		cfg.ConnConfig.RuntimeParams["timezone"] = "UTC" // trả giờ dạng UTC giống bản Node
 		if pool, poolErr = pgxpool.NewWithConfig(ctx, cfg); poolErr != nil {
 			return
 		}

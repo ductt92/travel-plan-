@@ -93,7 +93,17 @@ func load(ctx context.Context, p *pgxpool.Pool, key string) (doc, error) {
 	if errors.Is(err, pgx.ErrNoRows) {
 		return d, nil
 	}
+	d.UpdatedAt = utc(d.UpdatedAt)
 	return d, err
+}
+
+// Trả giờ dạng UTC giống bản Node (pooler của Neon bỏ qua tham số timezone khi kết nối)
+func utc(t *time.Time) *time.Time {
+	if t == nil {
+		return nil
+	}
+	u := t.UTC()
+	return &u
 }
 
 // Ghi khi phiên bản trên DB vẫn bằng base; ok=false nghĩa là xung đột và d là bản hiện tại
@@ -111,5 +121,6 @@ func save(ctx context.Context, p *pgxpool.Pool, key string, data json.RawMessage
 		cur, err := load(ctx, p, key)
 		return cur, false, err
 	}
+	d.UpdatedAt = utc(d.UpdatedAt)
 	return d, err == nil, err
 }
