@@ -22,8 +22,8 @@ const NAV = [
   { to: '/practice', label: 'Luyện tập', short: 'Luyện', icon: 'quiz' },
   { to: '/write', label: 'Tập viết', short: 'Viết', icon: 'brush' },
   { to: '/dict', label: 'Tra từ', short: 'Tra từ', icon: 'search' },
-  { to: '/pinyin', label: 'Bảng pinyin', icon: 'grid', desktopOnly: true },
-  { to: '/videos', label: 'Video bài giảng', icon: 'video', desktopOnly: true },
+  { to: '/pinyin', label: 'Bảng pinyin', short: 'Pinyin', icon: 'grid' },
+  { to: '/videos', label: 'Video bài giảng', short: 'Video', icon: 'video' },
   { to: '/ai', label: 'Hỏi AI', short: 'Hỏi AI', icon: 'ai' }
 ];
 
