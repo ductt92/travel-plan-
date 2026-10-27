@@ -45,5 +45,7 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 /* Thẻ "Ngọc học tiếng Trung": cùng tím mận + cam với slide trong video bài giảng HSK 6 */
 .choice--hsk6 .choice__body{background:linear-gradient(to top,rgba(52,20,66,.82),rgba(52,20,66,0))}
 .choice--hsk6 .choice__go{color:#5B2A6E}
-.choice__callig--hsk6{color:rgba(91,42,110,.32)}
-.choice__stamp--hsk6{background:#DE7028;color:#FFF3E8}
+/* ảnh Ngọc (đã tách nền) đứng bên phải thẻ, nhô lên nhẹ khi rê chuột */
+.choice__photo{position:absolute;right:-6px;top:14px;z-index:-1;height:68%;max-width:56%;object-fit:contain;object-position:right top;
+  -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent);mask-image:linear-gradient(to bottom,#000 72%,transparent);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.choice:hover .choice__photo{transform:translateY(-6px) scale(1.02)}

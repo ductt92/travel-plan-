@@ -1,4 +1,5 @@
-// Tranh minh họa nền cho hai thẻ trên trang chủ (SVG, các lớp far/mid/near/sun dịch nhẹ khi rê chuột)
+// Tranh minh họa nền cho các thẻ trên trang chủ (SVG, các lớp far/mid/near/sun dịch nhẹ khi rê chuột)
+import ngocPhoto from './ngoc.webp';
 
 export function MapArt() {
   // tấm bản đồ giấy gấp ba nằm trên mặt biển, đường bay nét đứt nối các trái tim
@@ -85,7 +86,6 @@ export function Hsk6Art() {
           <rect x="70" y="106" width="330" height="4" fill="#DE7028" />
           <g fill="#5B2A6E" opacity=".85"><rect x="96" y="132" width="120" height="12" rx="6" /></g>
           <g fill="#2A2230" opacity=".25"><rect x="96" y="160" width="250" height="8" rx="4" /><rect x="96" y="180" width="210" height="8" rx="4" /><rect x="96" y="200" width="230" height="8" rx="4" /></g>
-          <text x="96" y="252" fontSize="30" fill="#DE7028" fontFamily="'Noto Serif SC','Songti SC',serif">wèilái</text>
         </g>
         <g className="near">
           <circle cx="352" cy="262" r="34" fill="#5B2A6E" />
@@ -93,8 +93,7 @@ export function Hsk6Art() {
           <path d="M342 246 L368 262 L342 278Z" fill="#FFFFFF" />
         </g>
       </svg>
-      <span className="choice__callig choice__callig--hsk6" aria-hidden="true">未来</span>
-      <span className="choice__stamp choice__stamp--hsk6" aria-hidden="true">六</span>
+      <img className="choice__photo" src={ngocPhoto} alt="" aria-hidden="true" />
     </>
   );
 }
