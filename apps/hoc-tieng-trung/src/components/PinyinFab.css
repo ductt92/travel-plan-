@@ -1,0 +1,30 @@
+/* Nút nổi: trên điện thoại nằm trên thanh tab dưới đáy */
+.pyfab{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:24px;z-index:30;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 18px 0 8px;border:0;border-radius:999px;background:var(--jade);color:#FFF;font:inherit;font-weight:700;font-size:15px;box-shadow:0 12px 28px -12px rgba(0,0,0,.45);cursor:pointer;transition:transform .2s}
+.pyfab:hover{transform:translateY(-2px)}
+.pyfab:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.pyfab__hz{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);font:600 20px/1 var(--f-hz)}
+@media (max-width:900px){
+  .pyfab{bottom:calc(74px + env(safe-area-inset-bottom));min-height:48px;padding:0 6px}
+  .pyfab__txt{display:none}
+  .pyfab__hz{width:36px;height:36px}
+}
+
+/* Khung bảng: giữa màn hình trên máy tính, trượt từ dưới lên trên điện thoại */
+.pysheet{width:min(1040px,calc(100vw - 48px));max-height:calc(100vh - 48px);padding:0;border:1px solid var(--line);border-radius:24px;background:var(--bg,var(--surface));color:var(--ink);box-shadow:0 30px 80px -30px rgba(0,0,0,.5)}
+.pysheet::backdrop{background:rgba(20,16,12,.45)}
+.pysheet__in{display:flex;flex-direction:column;gap:14px;padding:20px 24px 24px}
+.pysheet__head{display:flex;align-items:center;gap:12px}
+.pysheet__head > div{flex:1;min-width:0}
+.pysheet__head h2{font-size:24px;margin:2px 0 0}
+.pysheet__x{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.pysheet__hint{margin:-6px 0 0;font-size:14px}
+.pysheet .pyc-wrap{max-height:none}
+@media (max-width:900px){
+  .pysheet{width:100vw;max-width:100vw;max-height:88vh;margin:auto 0 0;border-radius:22px 22px 0 0;border-bottom:0}
+  .pysheet__in{padding:16px 16px calc(20px + env(safe-area-inset-bottom))}
+  .pysheet__more{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .pysheet[open]{animation:pysheet-in .25s cubic-bezier(.2,.8,.2,1)}
+  @keyframes pysheet-in{from{transform:translateY(24px);opacity:0}}
+}

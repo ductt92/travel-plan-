@@ -57,7 +57,8 @@ function Detail({ sp, v }) {
   );
 }
 
-export function PinyinView() {
+/** Khung chi tiết + bảng âm tiết; dùng ở trang Pinyin và trong khung nổi (PinyinFab) */
+export function PinyinChart() {
   const [sel, setSel] = useState(null); // [cách viết, khóa]
   const box = useRef(null);
   useEffect(() => { if (sel) box.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [sel]);
@@ -69,12 +70,6 @@ export function PinyinView() {
 
   return (
     <>
-      <Stack as="header" gap={6}>
-        <span className="ui-eyebrow">Bảng chữ cái tiếng Trung · 拼音表</span>
-        <h1 style={{ fontSize: 30 }}>Bảng pinyin</h1>
-        <p className="ui-muted" style={{ maxWidth: '68ch' }}>Tiếng Trung không có bảng chữ cái như tiếng Việt. Người học dùng pinyin: 21 thanh mẫu (phụ âm đầu) ghép với các vận mẫu (phần vần), cộng 4 thanh điệu. Bấm vào một âm tiết để nghe chữ mẫu và xem cách đánh dấu 4 thanh.</p>
-      </Stack>
-
       <div ref={box} style={{ scrollMarginTop: 16 }}>{sel && <Detail sp={sel[0]} v={PINYIN[sel[1]]} />}</div>
 
       <Card pad={false} style={{ overflow: 'hidden' }}>
@@ -109,6 +104,20 @@ export function PinyinView() {
           </table>
         </div>
       </Card>
+    </>
+  );
+}
+
+export function PinyinView() {
+  return (
+    <>
+      <Stack as="header" gap={6}>
+        <span className="ui-eyebrow">Bảng chữ cái tiếng Trung · 拼音表</span>
+        <h1 style={{ fontSize: 30 }}>Bảng pinyin</h1>
+        <p className="ui-muted" style={{ maxWidth: '68ch' }}>Tiếng Trung không có bảng chữ cái như tiếng Việt. Người học dùng pinyin: 21 thanh mẫu (phụ âm đầu) ghép với các vận mẫu (phần vần), cộng 4 thanh điệu. Bấm vào một âm tiết để nghe chữ mẫu và xem cách đánh dấu 4 thanh.</p>
+      </Stack>
+
+      <PinyinChart />
 
       <section className="pyc-rules">
         <Card className="ui-stack" style={{ gap: 6 }}><b>Quy tắc viết y, w</b><p className="ui-muted" style={{ fontSize: 14 }}>Vần bắt đầu bằng i, u, ü mà đứng một mình thì viết lại: i → yi, ia → ya; u → wu, uo → wo; ü → yu, üe → yue.</p></Card>
