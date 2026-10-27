@@ -1,7 +1,7 @@
 import { Icon } from '@trang/ui';
-import { MapArt, ZhArt } from './Art.jsx';
+import { MapArt, ZhArt, Hsk6Art } from './Art.jsx';
 
-// Hai lối vào của site. Thêm app mới: thêm một phần tử vào đây và một tranh trong Art.jsx.
+// Các lối vào của site. Thêm app mới: thêm một phần tử vào đây và một tranh trong Art.jsx.
 const CHOICES = [
   {
     id: 'map', href: 'ban-do/', tag: 'Ngọc ♥ Đức', title: 'Bản đồ du lịch', cta: 'Mở bản đồ',
@@ -12,6 +12,11 @@ const CHOICES = [
     id: 'zh', href: 'hoc-tieng-trung/', tag: 'Hán Lộ · HSK 3.0', title: 'App học tiếng Trung', cta: 'Mở app học',
     text: '30 bài theo 新HSK教程 1–2 với bài giảng video, bảng pinyin, thẻ ôn tập và luyện viết chữ Hán.',
     chips: ['30 bài', '512 từ', '30 video'], Art: ZhArt
+  },
+  {
+    id: 'hsk6', href: 'hsk6/', tag: 'Ngọc · HSK 6', title: 'Ngọc học tiếng Trung', cta: 'Vào học',
+    text: 'Bài giảng video theo Giáo trình chuẩn HSK 6, slide chạy theo lời giảng, từ vựng có đọc mẫu, bài khóa và luyện tập.',
+    chips: ['Bài 21 · 未来商店', '54 từ', '51 phút video'], Art: Hsk6Art
   }
 ];
 

@@ -12,12 +12,13 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 .home__hello{display:flex;flex-direction:column;gap:8px}
 .home__hello h1{font:600 clamp(28px,4.4vw,44px)/1.15 var(--f-serif)}
 .home__hello em{font-style:italic;background:linear-gradient(90deg,#E0702F,#C2335B 55%,#2F7D5B);-webkit-background-clip:text;background-clip:text;color:transparent}
-.home__choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px}
+.home__choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:24px}
 .home__foot{position:relative;z-index:1;text-align:center;font-size:13px;color:var(--muted);padding:0 16px 32px}
 
 .choice{position:relative;display:flex;flex-direction:column;min-height:460px;border-radius:28px;text-decoration:none;color:#FFFFFF;overflow:hidden;isolation:isolate;
   box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 24px 50px -28px rgba(40,20,10,.55);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
 .choice:nth-child(2){animation-delay:.12s}
+.choice:nth-child(3){animation-delay:.24s}
 @keyframes rise{from{transform:translateY(18px)}to{transform:none}}
 .choice:hover{color:#FFFFFF;transform:translateY(-6px) rotate(-.3deg);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 36px 60px -26px rgba(40,20,10,.6)}
 .choice:focus-visible{outline:3px solid var(--ink);outline-offset:5px}
@@ -41,3 +42,8 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 .choice__callig{position:absolute;right:26px;top:22px;z-index:0;font:400 150px/1 var(--f-brush);color:rgba(20,16,12,.82);writing-mode:vertical-rl;letter-spacing:-6px;pointer-events:none}
 .choice__stamp{position:absolute;right:30px;top:340px;z-index:0;width:58px;height:58px;border-radius:8px;background:#C8281E;color:#FCE9DC;display:grid;place-items:center;font:900 22px/1 var(--f-hz);transform:rotate(-6deg);letter-spacing:-1px}
 @media (max-width:560px){.choice{min-height:420px}.choice__callig{font-size:118px}.choice__stamp{top:300px}}
+/* Thẻ "Ngọc học tiếng Trung": cùng tím mận + cam với slide trong video bài giảng HSK 6 */
+.choice--hsk6 .choice__body{background:linear-gradient(to top,rgba(52,20,66,.82),rgba(52,20,66,0))}
+.choice--hsk6 .choice__go{color:#5B2A6E}
+.choice__callig--hsk6{color:rgba(91,42,110,.32)}
+.choice__stamp--hsk6{background:#DE7028;color:#FFF3E8}
