@@ -1,0 +1,1070 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ngọc học tiếng Trung</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+/* Bố cục: một cột đọc rộng; đầu trang là "bìa bài học", dưới là thanh tab dính và 5 khu học.
+   Màu lấy đúng từ slide của video (tím mận + cam, nền kem) để trang và bài giảng là một bộ. */
+:root {
+  --bg: #fbf8f3;
+  --surface: #ffffff;
+  --sunken: #f3eef2;
+  --fg: #2a2230;
+  --muted: #6c6274;
+  --line: #e4dbe6;
+  --accent: #5b2a6e;
+  --accent-soft: #efe4f3;
+  --on-accent: #ffffff;
+  --mark: #de7028;
+  --mark-soft: #fcebdc;
+  --good: #2e7d4f;
+  --good-soft: #e1f2e7;
+  --bad: #b3372f;
+  --bad-soft: #f8e1df;
+  --grid: #d9b9a0;
+  --shadow: 40 15 50;
+  --f-body: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-hz: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #18141c; --surface: #221c27; --sunken: #1d1822; --fg: #eee7f1; --muted: #a99db1;
+    --line: #3a3141; --accent: #c99be0; --accent-soft: #34263d; --on-accent: #1b1320;
+    --mark: #f2984f; --mark-soft: #3b2a1f; --good: #6fcf97; --good-soft: #1f3328;
+    --bad: #f08a80; --bad-soft: #3d2422; --grid: #6a4f3e; --shadow: 0 0 0; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #18141c; --surface: #221c27; --sunken: #1d1822; --fg: #eee7f1; --muted: #a99db1;
+  --line: #3a3141; --accent: #c99be0; --accent-soft: #34263d; --on-accent: #1b1320;
+  --mark: #f2984f; --mark-soft: #3b2a1f; --good: #6fcf97; --good-soft: #1f3328;
+  --bad: #f08a80; --bad-soft: #3d2422; --grid: #6a4f3e; --shadow: 0 0 0; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.zh, .hz { font-family: var(--f-hz); font-weight: 500; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.25; margin: 0; }
+.muted { color: var(--muted); }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- Đầu trang ---------- */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 18px 6px; flex-wrap: wrap; }
+/* Đầu trang: ảnh của Ngọc (đủ cả ảnh, bo góc) cạnh tên trang; bấm vào là về danh sách bài học */
+.brand { display: flex; align-items: center; gap: 12px; border: 0; background: none; padding: 0; text-align: left; font-weight: 700; font-size: 18px; color: var(--fg); }
+.brand-name { display: grid; line-height: 1.25; }
+.brand-name small { font-size: 13px; font-weight: 500; color: var(--muted); }
+.me { display: block; height: 78px; aspect-ratio: 420 / 720; border-radius: 14px; overflow: hidden; flex: none;
+  background: linear-gradient(165deg, var(--mark-soft), var(--accent-soft)); border: 1px solid var(--line); }
+.me img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; display: block; }
+.brand:hover .me { border-color: var(--mark); }
+
+.cover { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "title stats" "resume resume";
+  gap: 18px 40px; align-items: end; padding-block: 22px 28px; border-bottom: 1px solid var(--line); }
+.cover-title { grid-area: title; min-width: 0; }
+.back { border: 0; background: none; padding: 0; color: var(--muted); font-size: 14px; font-weight: 600; margin-bottom: 10px; display: inline-flex; gap: 6px; align-items: center; }
+.back:hover { color: var(--accent); }
+.cover .stats { grid-area: stats; }
+.cover .resume { grid-area: resume; }
+.cover .title-zh { font-family: var(--f-hz); font-weight: 700; font-size: clamp(44px, 8vw, 76px); line-height: 1.05; color: var(--accent); letter-spacing: .04em; margin-top: 8px; }
+.cover .title-py { font-size: 18px; color: var(--mark); font-weight: 500; margin-top: 6px; }
+.cover .title-vi { font-size: clamp(20px, 3vw, 26px); font-weight: 600; margin-top: 2px; }
+.stats { display: grid; grid-template-columns: repeat(3, auto); gap: 6px 22px; align-items: end; }
+.stat .num { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stat .num small { font-size: 15px; color: var(--muted); font-weight: 500; }
+.stat .lbl { font-size: 13px; color: var(--muted); }
+.bar { height: 4px; border-radius: 2px; background: var(--line); margin-top: 6px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .4s; }
+.resume { grid-column: 1 / -1; justify-self: start; }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-weight: 600; font-size: 15px; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.small { padding: 5px 12px; font-size: 14px; }
+.btn[disabled] { opacity: .45; cursor: default; }
+.icon { width: 16px; height: 16px; flex: none; fill: currentColor; }
+
+/* ---------- Tab ---------- */
+.tabs-band { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: none; border: 0; background: none; padding: 14px 14px 12px; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; }
+.tab .hz { font-size: 14px; margin-left: 4px; opacity: .8; }
+.tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--mark); }
+main { padding-block: 24px 60px; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.panel-head h2 { font-size: 22px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--surface); }
+.seg button { border: 0; background: none; padding: 5px 13px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
+
+/* ---------- Video ---------- */
+.video-grid { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 22px; align-items: start; }
+.player { background: #000; border-radius: var(--r); overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; }
+.player video { width: 100%; height: 100%; display: block; }
+/* Video và slide đang giảng đặt cạnh nhau; slide là bản đầy đủ (có sẵn đáp án) để đọc kỹ */
+/* Slide nổi: nút tròn ở góc dưới bên phải mở một khung slide nhỏ, khung này bám theo video khi cuộn trang */
+.fab { position: fixed; right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 30;
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px 12px 18px; border: 0; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 15px;
+  box-shadow: 0 8px 24px rgb(var(--shadow) / .28); transition: transform .2s cubic-bezier(.34, 1.56, .64, 1), box-shadow .2s; }
+.fab:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgb(var(--shadow) / .34); }
+.fab:active { transform: scale(.94); }
+.fab .icon { width: 18px; height: 18px; }
+.fab-no { min-width: 26px; padding: 1px 7px; border-radius: 999px; background: var(--mark); color: #fff; font-size: 13px; text-align: center; font-variant-numeric: tabular-nums; }
+.fab-no.bump { animation: bump .45s cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.sync { position: fixed; right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(84px + env(safe-area-inset-bottom, 0px)); z-index: 30;
+  width: min(460px, calc(100vw - 40px)); margin: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden;
+  box-shadow: 0 18px 50px rgb(var(--shadow) / .3); transform-origin: bottom right;
+  opacity: 0; visibility: hidden; transform: translateY(12px) scale(.9);
+  transition: opacity .2s ease, transform .3s cubic-bezier(.34, 1.4, .64, 1), visibility 0s .3s; }
+.sync.open { opacity: 1; visibility: visible; transform: none; transition: opacity .2s ease, transform .3s cubic-bezier(.34, 1.4, .64, 1), visibility 0s; }
+.sync-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 8px 8px 14px; font-size: 14px; border-bottom: 1px solid var(--line); }
+.sync-head strong { font-variant-numeric: tabular-nums; }
+.sync-x { width: 30px; height: 30px; border: 0; border-radius: 50%; background: none; display: grid; place-items: center; color: var(--muted); }
+.sync-x:hover { background: var(--sunken); color: var(--fg); }
+.sync-img { aspect-ratio: 16 / 9; max-width: 100%; background: var(--sunken); }
+.sync-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+/* Hàng nút dưới slide: ‹ ▶ › ở chính giữa, "Theo video" bên trái, "Xem tất cả" bên phải */
+.sync-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 8px; padding: 8px 10px; border-top: 1px solid var(--line); font-size: 14px; }
+.sync-bar #syncFollow { grid-column: 1; justify-self: start; }
+.sync-nav { grid-column: 2; display: flex; align-items: center; gap: 10px; }
+.sync-nav .play { width: 40px; height: 40px; }
+.sync-nav .play .icon { width: 16px; height: 16px; }
+.sync-bar #syncBig { grid-column: 3; justify-self: end; }
+
+/* ---------- Danh sách bài học ---------- */
+.home { padding-block: 18px 60px; }
+.hello { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: center; padding: 22px 24px; border-radius: 16px;
+  background: linear-gradient(120deg, var(--accent-soft), var(--mark-soft)); margin-bottom: 30px; }
+.hello h1 { font-size: clamp(24px, 4vw, 32px); }
+.hello p { margin: 4px 0 0; color: var(--muted); }
+.unit + .unit { margin-top: 28px; }
+.unit h3 { font-size: 15px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-bottom: 12px; }
+.unit h3 .zh { color: var(--muted); font-size: 14px; font-weight: 500; }
+.lessons { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.lcard { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 12px; align-items: start; text-align: left; padding: 14px 16px;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--fg); }
+.lcard .num { grid-row: span 3; width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; font-weight: 700; font-size: 15px;
+  background: var(--sunken); color: var(--muted); font-variant-numeric: tabular-nums; }
+.lcard .lzh { font-family: var(--f-hz); font-size: 19px; font-weight: 500; line-height: 1.35; }
+.lcard .lvi { font-size: 14px; color: var(--muted); line-height: 1.4; }
+.lcard .lst { font-size: 12px; font-weight: 600; margin-top: 6px; display: flex; align-items: center; gap: 8px; }
+.lcard .lst .bar { flex: 1; margin: 0; }
+.lcard.ready { cursor: pointer; border-color: var(--accent); transition: transform .15s ease, box-shadow .2s ease; }
+.lcard.ready:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgb(var(--shadow) / .12); }
+.lcard.ready .num { background: var(--accent); color: var(--on-accent); }
+.lcard.ready .lzh { color: var(--accent); }
+.lcard.ready .lst { color: var(--good); }
+.lcard.soon { opacity: .72; }
+.lcard.soon .lst { color: var(--muted); }
+main { padding-bottom: 90px; }
+.live { font-size: 12px; font-weight: 600; color: var(--mark); background: var(--mark-soft); padding: 1px 8px; border-radius: 999px; }
+.live.off { color: var(--muted); background: var(--sunken); }
+.now { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-block: 14px 18px; }
+.now h3 { font-size: 19px; }
+.ctrls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.chapters { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.chapters li + li { border-top: 1px solid var(--line); }
+.chapters button { width: 100%; display: grid; grid-template-columns: 26px minmax(0, 1fr) auto 24px; gap: 10px; align-items: center; text-align: left; border: 0; background: none; padding: 10px 14px; }
+.chapters button:hover { background: var(--sunken); }
+.chapters .n { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+.chapters .done .n { background: var(--good); border-color: var(--good); color: var(--surface); }
+.chapters .cur { background: var(--accent-soft); }
+.chapters .cur .t { color: var(--accent); font-weight: 600; }
+.chapters .d { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.chapters button:hover .play { border-color: var(--accent); }
+.chapters .play.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.transcript-box { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.transcript-box header { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.transcript { max-height: 340px; overflow-y: auto; padding: 6px 0; position: relative; }
+.line { display: grid; grid-template-columns: 40px minmax(0, 1fr) 24px; gap: 10px; align-items: start; padding: 8px 14px; font-size: 15px; line-height: 1.55; cursor: pointer; }
+.line:hover { background: var(--sunken); }
+.line .play { align-self: center; }
+.line:hover .play { border-color: var(--accent); }
+.line .ts { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 3px; }
+.line.on { background: var(--mark-soft); }
+.line.on .ts { color: var(--mark); font-weight: 700; }
+.line .zh { font-size: 1.08em; }
+label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; color: var(--muted); }
+
+/* ---------- Slide ---------- */
+.slide-stage { position: relative; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: var(--surface); aspect-ratio: 16 / 9; max-width: 100%; }
+.slide-stage img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.slide-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 10px; }
+.slide-count { font-variant-numeric: tabular-nums; font-weight: 600; }
+.thumbs { display: flex; gap: 8px; overflow-x: auto; padding-block: 14px 6px; }
+.thumbs button { flex: none; width: 128px; aspect-ratio: 16 / 9; padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; background: var(--sunken); }
+.thumbs button[aria-current="true"] { border-color: var(--mark); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------- Từ vựng ---------- */
+.vtools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.search { flex: 1 1 220px; min-width: 0; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; }
+.words { display: grid; gap: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.word { display: grid; grid-template-columns: 34px 170px minmax(0, 1fr) auto; gap: 14px; align-items: start; padding: 14px 16px; }
+.word + .word { border-top: 1px solid var(--line); }
+.word .idx { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 8px; }
+.word .w-hz { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.word .w-hz .hz { font-size: 28px; line-height: 1.2; color: var(--accent); }
+.word .py { font-weight: 600; color: var(--mark); }
+.word .hv { font-style: italic; color: var(--muted); }
+.tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 999px; background: var(--sunken); color: var(--muted); border: 1px solid var(--line); }
+.word .vi { font-weight: 500; }
+.word .ex { margin-top: 6px; font-size: 15px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.word .ex .zh { font-size: 17px; }
+.word .ex .exvi { color: var(--muted); }
+.word.known { background: var(--good-soft); }
+.play { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: inline-grid; place-items: center; flex: none; color: var(--accent); padding: 0; }
+.play:hover { border-color: var(--accent); }
+.play.sm { width: 24px; height: 24px; }
+.play.sm .icon { width: 11px; height: 11px; }
+.play.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+/* Nút ▶/⏸ đổi qua lại có hiệu ứng: hai biểu tượng chồng lên nhau, xoay và mờ dần sang nhau;
+   khi đang phát, nút có vòng sáng lan nhẹ như nhịp thở */
+.play { transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .15s ease; }
+.play:active { transform: scale(.88); }
+.play.tog .icon { grid-area: 1 / 1; transition: opacity .22s ease, transform .35s cubic-bezier(.34, 1.56, .64, 1); }
+.play.tog .i-pause { opacity: 0; transform: scale(.3) rotate(-90deg); }
+.play.tog.on .i-play { opacity: 0; transform: scale(.3) rotate(90deg); }
+.play.tog.on .i-pause { opacity: 1; transform: none; }
+.play.tog.on { animation: breathe 1.8s ease-out infinite; }
+@keyframes breathe {
+  0% { box-shadow: 0 0 0 0 var(--accent-soft); }
+  70% { box-shadow: 0 0 0 7px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.knowbtn { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.knowbtn[aria-pressed="true"] { background: var(--good); border-color: var(--good); color: var(--surface); }
+.empty { padding: 30px; text-align: center; color: var(--muted); }
+
+/* Thẻ ghi nhớ: chữ viết trong ô điền tự cách (田字格) như vở tập viết */
+.flash { max-width: 620px; margin: 0 auto; }
+.card { width: 100%; min-height: 330px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); padding: 28px 22px; display: grid; place-items: center; text-align: center; gap: 14px; }
+.cells { display: flex; gap: 0; justify-content: center; flex-wrap: wrap; }
+.cell { position: relative; width: clamp(64px, 18vw, 112px); aspect-ratio: 1; border: 1.5px solid var(--grid); display: grid; place-items: center; font-family: var(--f-hz); font-weight: 500; font-size: clamp(44px, 12vw, 76px); color: var(--fg); line-height: 1; }
+.cell + .cell { border-left: 0; }
+.cell::before, .cell::after { content: ""; position: absolute; pointer-events: none; }
+.cell::before { left: 50%; top: 0; bottom: 0; border-left: 1px dashed var(--grid); }
+.cell::after { top: 50%; left: 0; right: 0; border-top: 1px dashed var(--grid); }
+.cell span { position: relative; z-index: 1; }
+.card .hint { font-size: 14px; color: var(--muted); }
+.card .b-py { font-size: 28px; font-weight: 700; color: var(--mark); }
+.card .b-vi { font-size: 20px; font-weight: 600; }
+.card .b-ex { color: var(--muted); font-size: 15px; }
+.card .b-ex .zh { color: var(--fg); font-size: 18px; }
+.flash-ctrl { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.flash-meta { text-align: center; margin-top: 10px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ---------- Bài khóa ---------- */
+.passage { display: grid; gap: 14px; max-width: 860px; }
+.para { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); padding: 16px 18px; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; }
+.para.playing { border-color: var(--mark); }
+.para .pn { font-size: 13px; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; display: grid; gap: 8px; justify-items: center; }
+.para .zh { font-size: 21px; line-height: 2; text-indent: 2em; }
+.para .vi { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); color: var(--fg); }
+.para .acts { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.para .notes { margin-top: 10px; padding: 10px 14px; border-radius: 8px; background: var(--accent-soft); font-size: 15px; }
+.para .notes p { margin: 0; }
+.para .notes p + p { margin-top: 6px; }
+.vw { border: 0; padding: 0; background: none; font: inherit; color: inherit; border-bottom: 2px solid var(--mark); border-radius: 0; line-height: inherit; text-indent: 0; }
+.vw:hover { background: var(--mark-soft); }
+.pop { position: absolute; z-index: 20; width: min(300px, calc(100vw - 32px)); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 30px rgb(0 0 0 / .18); padding: 14px 16px; }
+.pop .hz { font-size: 30px; color: var(--accent); }
+.pop .row { display: flex; align-items: center; gap: 10px; }
+
+/* ---------- Luyện tập ---------- */
+.prac { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.box { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); padding: 20px; }
+.box h3 { font-size: 18px; margin-bottom: 4px; }
+.qhead { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; margin-block: 14px 6px; }
+.qtext { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.qbig { font-family: var(--f-hz); font-size: 44px; color: var(--accent); text-align: center; padding-block: 8px; }
+.qbig.vi { font-family: var(--f-body); font-size: 22px; font-weight: 600; color: var(--fg); }
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.opt { border: 1.5px solid var(--line); background: var(--surface); border-radius: 10px; padding: 12px; text-align: left; font-size: 15px; min-height: 52px; }
+.opt.zh { font-size: 22px; text-align: center; }
+.opt:hover:not([disabled]) { border-color: var(--accent); }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt[disabled] { cursor: default; }
+.feedback { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: var(--sunken); font-size: 15px; }
+.score { font-size: 54px; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1; }
+.exgroup + .exgroup { margin-top: 22px; }
+.exgroup h4 { margin: 0 0 8px; font-size: 16px; color: var(--accent); }
+.exitem { padding: 10px 0; border-top: 1px dashed var(--line); }
+.exitem .q { font-size: 16px; }
+.exitem .q .zh { font-size: 18px; }
+.exitem textarea { width: 100%; margin-top: 8px; min-height: 44px; border-radius: 8px; border: 1px solid var(--line); background: var(--sunken); color: var(--fg); padding: 8px 10px; font: inherit; font-size: 15px; resize: vertical; }
+.exitem .ans { margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--good); background: var(--good-soft); border-radius: 0 8px 8px 0; }
+.exitem .ans .zh { font-size: 18px; }
+footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size: 14px; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .video-grid, .prac { grid-template-columns: minmax(0, 1fr); }
+  .cover { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "stats" "resume"; }
+}
+@media (max-width: 640px) {
+  .me { height: 64px; border-radius: 12px; }
+  .brand { font-size: 16px; }
+  .word { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; }
+  .word .idx { display: none; }
+  .word .w-main { grid-column: 1 / -1; }
+  .word .knowbtn { grid-row: 1; grid-column: 2; }
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; }
+  .stat .num { font-size: 22px; }
+  .opts { grid-template-columns: minmax(0, 1fr); }
+  .para { grid-template-columns: minmax(0, 1fr); }
+  .para .pn { display: flex; align-items: center; justify-items: start; }
+  .para .zh { font-size: 19px; }
+  .thumbs button { width: 104px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <button class="brand" id="brand" aria-label="Về danh sách bài học">
+      <span class="me"><img src="img/ngoc.webp" alt=""></span>
+      <span class="brand-name">Ngọc học tiếng Trung<small>Góc học tiếng Trung của Ngọc</small></span>
+    </button>
+    <button class="btn small" id="toHome" hidden><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h2v2H2zm4 0h8v2H6zM2 7h2v2H2zm4 0h8v2H6zm-4 4h2v2H2zm4 0h8v2H6z"/></svg> Danh sách bài học</button>
+  </div>
+</div>
+
+<!-- DANH SÁCH BÀI HỌC -->
+<main class="wrap home" id="home" hidden>
+  <section class="hello" id="hello"></section>
+  <div class="panel-head">
+    <h2>Danh sách bài học</h2>
+    <div class="seg" id="bookSeg" aria-label="Chọn giáo trình"></div>
+  </div>
+  <div id="units"></div>
+</main>
+
+<div class="wrap lesson-view">
+  <section class="cover" id="cover"></section>
+</div>
+
+<div class="tabs-band lesson-view">
+  <nav class="wrap tabs" role="tablist" aria-label="Phần học">
+    <button class="tab" role="tab" id="t-video" data-tab="video">Video bài giảng</button>
+    <button class="tab" role="tab" id="t-slide" data-tab="slide">Slide</button>
+    <button class="tab" role="tab" id="t-tuvung" data-tab="tuvung">Từ vựng<span class="hz">生词</span></button>
+    <button class="tab" role="tab" id="t-baikhoa" data-tab="baikhoa">Bài khóa<span class="hz">课文</span></button>
+    <button class="tab" role="tab" id="t-luyentap" data-tab="luyentap">Luyện tập<span class="hz">练习</span></button>
+  </nav>
+</div>
+
+<main class="wrap lesson-view" id="lessonMain">
+  <!-- VIDEO -->
+  <section id="p-video" role="tabpanel" aria-labelledby="t-video" hidden>
+    <div class="player"><video id="vid" controls playsinline preload="metadata"></video></div>
+    <!-- Slide nổi: bấm nút tròn góc dưới để mở/đóng; slide tự đổi theo câu đang giảng -->
+    <figure class="sync" id="sync" aria-hidden="true">
+      <div class="sync-head">
+        <span><strong id="syncNo"></strong> <span class="live" id="syncLive">đang giảng</span></span>
+        <button class="sync-x" id="syncClose" aria-label="Đóng slide"><svg class="icon" viewBox="0 0 16 16"><path d="M3.5 2.4L8 6.9l4.5-4.5 1.1 1.1L9.1 8l4.5 4.5-1.1 1.1L8 9.1l-4.5 4.5-1.1-1.1L6.9 8 2.4 3.5z"/></svg></button>
+      </div>
+      <div class="sync-img"><img id="syncImg" alt=""></div>
+      <figcaption class="sync-bar">
+        <button class="btn small" id="syncFollow" hidden>Theo video</button>
+        <span class="sync-nav">
+          <button class="btn small" id="syncPrev" aria-label="Slide trước"><svg class="icon" viewBox="0 0 16 16"><path d="M11 2L5 8l6 6V2z"/></svg></button>
+          <button class="play tog" id="syncPlay" aria-label="Nghe đoạn giảng slide này"><svg class="icon i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2l10 6-10 6V2z"/></svg><svg class="icon i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2h3v12h-3zM9.5 2h3v12h-3z"/></svg></button>
+          <button class="btn small" id="syncNext" aria-label="Slide sau"><svg class="icon" viewBox="0 0 16 16"><path d="M5 2l6 6-6 6V2z"/></svg></button>
+        </span>
+        <button class="btn small" id="syncBig">Xem tất cả</button>
+      </figcaption>
+    </figure>
+    <button class="fab" id="fab" aria-expanded="false" aria-controls="sync">
+      <svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 2h13v9h-13zM3 3.5v6h10v-6zM7.25 11h1.5v2h3v1.5h-7.5V13h3z"/></svg>
+      <span>Slide</span><span class="fab-no" id="fabNo">1</span>
+    </button>
+    <div class="now">
+      <div><div class="eyebrow" id="chapNo"></div><h3 id="chapTitle"></h3></div>
+      <div class="ctrls">
+        <div class="seg" id="speed" aria-label="Tốc độ phát"></div>
+        <button class="btn small" id="nextChap">Phần tiếp <svg class="icon" viewBox="0 0 16 16"><path d="M5 2l6 6-6 6V2z"/></svg></button>
+      </div>
+    </div>
+    <div class="video-grid">
+      <div>
+        <div class="transcript-box">
+          <header>
+            <strong>Lời giảng</strong>
+            <label class="chk"><input type="checkbox" id="follow" checked> Tự chạy theo video</label>
+          </header>
+          <div class="transcript" id="transcript"></div>
+        </div>
+      </div>
+      <aside>
+        <div class="eyebrow" style="margin-bottom:8px">Các phần của bài giảng</div>
+        <ol class="chapters" id="chapters"></ol>
+        <p class="muted" style="font-size:14px;margin-top:10px">Phần nào xem gần hết sẽ được đánh dấu xanh. Bấm vào một câu trong lời giảng để nghe lại đúng chỗ đó.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SLIDE -->
+  <section id="p-slide" role="tabpanel" aria-labelledby="t-slide" hidden>
+    <div class="slide-stage"><img id="slideImg" alt=""></div>
+    <div class="slide-nav">
+      <button class="btn" id="slidePrev"><svg class="icon" viewBox="0 0 16 16"><path d="M11 2L5 8l6 6V2z"/></svg> Trước</button>
+      <span class="ctrls"><span class="slide-count" id="slideCount"></span><button class="btn small" id="slideHear"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l10 6-10 6V2z"/></svg> Nghe giảng slide này</button></span>
+      <button class="btn" id="slideNext">Sau <svg class="icon" viewBox="0 0 16 16"><path d="M5 2l6 6-6 6V2z"/></svg></button>
+    </div>
+    <div class="thumbs" id="thumbs"></div>
+    <p class="muted" style="font-size:14px">Dùng phím ← → để chuyển slide. Slide có sẵn đáp án, nên tự làm bài trước rồi mới xem.</p>
+  </section>
+
+  <!-- TỪ VỰNG -->
+  <section id="p-tuvung" role="tabpanel" aria-labelledby="t-tuvung" hidden>
+    <div class="panel-head">
+      <h2 id="vocabHead">Từ vựng</h2>
+      <div class="seg" id="vmode">
+        <button data-mode="list" aria-pressed="true">Danh sách</button>
+        <button data-mode="flash" aria-pressed="false">Thẻ ghi nhớ</button>
+      </div>
+    </div>
+    <div class="vtools">
+      <input class="search" id="vsearch" type="search" placeholder="Tìm chữ Hán, pinyin, Hán Việt hoặc nghĩa…" aria-label="Tìm từ">
+      <div class="seg" id="vfilter">
+        <button data-f="all" aria-pressed="true">Tất cả</button>
+        <button data-f="new" aria-pressed="false">Chưa thuộc</button>
+        <button data-f="known" aria-pressed="false">Đã thuộc</button>
+      </div>
+    </div>
+    <div id="vlist" class="words"></div>
+    <div id="vflash" class="flash" hidden></div>
+  </section>
+
+  <!-- BÀI KHÓA -->
+  <section id="p-baikhoa" role="tabpanel" aria-labelledby="t-baikhoa" hidden>
+    <div class="panel-head">
+      <h2 id="passHead">Bài khóa</h2>
+      <div class="ctrls">
+        <button class="btn small" id="playAll"><svg class="icon" viewBox="0 0 16 16"><path d="M4 2l10 6-10 6V2z"/></svg> Nghe cả bài</button>
+        <button class="btn small" id="allVi" aria-pressed="false">Hiện tất cả bản dịch</button>
+      </div>
+    </div>
+    <p class="muted" style="margin:-6px 0 16px;font-size:15px">Đọc to theo từng đoạn. Từ gạch chân cam là từ mới, bấm vào để xem nghĩa.</p>
+    <div class="passage" id="passage"></div>
+  </section>
+
+  <!-- LUYỆN TẬP -->
+  <section id="p-luyentap" role="tabpanel" aria-labelledby="t-luyentap" hidden>
+    <div class="prac">
+      <div class="box" id="quiz"></div>
+      <div class="box">
+        <h3>Bài tập trong bài giảng</h3>
+        <p class="muted" style="margin:0 0 12px;font-size:15px">Viết câu trả lời của mình trước, rồi bấm xem đáp án để so.</p>
+        <div id="exercises"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  Bài giảng soạn theo Giáo trình chuẩn HSK 6 và giáo trình 顶石中文. Giọng đọc trong video và phần nghe là giọng máy, nên một vài chữ có thể đọc chưa chuẩn. Tiến độ học được lưu ngay trên trình duyệt này.
+</footer>
+
+<script>
+const LESSONS = [{"id":"bai21","num":21,"zh":"未来商店","py":"Wèilái shāngdiàn","vi":"Bài 21: Cửa hàng tương lai","tag":"HSK 6 (Hạ) · Bài 21 · 未来商店","chapters":[{"title":"Mở đầu","file":"vid/c01.mp4","dur":79.8,"lines":[[0.0,"Xin chào các bạn! Chào mừng các bạn đến với bài giảng Giáo trình chuẩn HSK 6, quyển Hạ.",0],[8.03,"Hôm nay chúng ta học bài hai mươi mốt: 未来商店。 Nghĩa là: Cửa hàng tương lai.",0],[15.57,"Đây là bài mở đầu của Đơn vị sáu, chủ đề Thế giới thú vị. Bài khóa nói về việc cửa hàng của tương lai sẽ hoạt động như thế nào, khi mua sắm trên mạng ngày càng phổ biến.",0],[28.74,"Bài học hôm nay có năm mục tiêu.",1],[32.8,"Thứ nhất, hiểu nội dung bài khóa, xem cửa hàng của tương lai sẽ hoạt động ra sao.",1],[39.63,"Thứ hai, nắm vững năm mươi tư từ mới. Với mỗi từ, thầy sẽ đọc mẫu, cho các bạn âm Hán Việt để dễ nhớ, giải thích nghĩa và đưa ví dụ.",1],[50.92,"Thứ ba, học hai điểm ngữ pháp: liên từ 以免, và động từ 嫌.",1],[58.19,"Thứ tư, phân biệt hai phó từ rất dễ nhầm: 不免 và 未免.",1],[65.12,"Thứ năm, một kỹ năng viết rất hữu ích: tỉnh lược chủ ngữ, tiếng Trung gọi là 省略.",1],[72.45,"Các bạn hãy chuẩn bị giấy bút, và đừng ngại tạm dừng video để ghi chép hoặc đọc theo nhé.",1]]},{"title":"Khởi động","file":"vid/c02.mp4","dur":228.2,"lines":[[0.0,"Chúng ta bắt đầu bằng phần khởi động. Sách đưa ra mấy câu hỏi sau.",2],[6.19,"你喜欢网络购物吗？ Bạn có thích mua sắm trên mạng không? 网络购物 là mua sắm qua mạng.",2],[15.07,"你觉得未来商店会是什么样子的？ Bạn nghĩ cửa hàng tương lai sẽ trông như thế nào?",2],[22.76,"实体商店还会存在吗？ Cửa hàng thực thể còn tồn tại không? 实体商店 là cửa hàng có địa điểm thật, mình phải đến tận nơi để mua, ngược lại với cửa hàng trên mạng.",2],[37.33,"请谈一谈你的设想。 Hãy nói về hình dung của bạn. 设想 là sự hình dung, ý tưởng về tương lai.",2],[46.98,"Các bạn hãy tạm dừng video, thử trả lời những câu hỏi này bằng tiếng Trung, rồi mới xem tiếp nhé.",2],[55.1,"Phần khởi động thứ hai yêu cầu: hãy nghĩ xem các từ sau có liên hệ gì với nhau. Đây là cách học từ theo yếu tố cấu tạo. Cách này rất có lợi cho người Việt, vì hầu hết các chữ đều có âm Hán Việt quen thuộc.",3],[71.54,"Nhóm thứ nhất có chữ 体, Hán Việt là thể, nghĩa là thân, khối, hoặc một chỉnh thể.",3],[79.51,"实体，本体，客体，个体，集体，全体。 Tức là: thực thể, bản thể, khách thể, cá thể, tập thể, toàn thể.",3],[91.71,"球体，群体，团体，物体，整体，主体，总体，具体。 Tức là: khối cầu, quần thể, đoàn thể, vật thể, chỉnh thể, chủ thể, tổng thể và cụ thể. Trong bài khóa các bạn sẽ gặp 实体商店, cửa hàng thực thể.",3],[112.97,"Nhóm thứ hai có chữ 奔, Hán Việt là bôn, nghĩa là chạy, như trong từ bôn ba của tiếng Việt.",3],[121.31,"奔走，奔跑，奔驰，奔忙，奔波。 Tức là: chạy vạy, chạy, phi nhanh, tất bật, bôn ba.",3],[130.95,"奔腾，飞奔，狂奔，疲于奔命。 Tức là: cuồn cuộn, chạy như bay, chạy thục mạng, và 疲于奔命, mệt nhoài vì phải chạy ngược chạy xuôi. Bài khóa có cụm 在人群中奔走, chạy ngược xuôi giữa dòng người.",3],[150.07,"Nhóm thứ ba có chữ 屏, Hán Việt là bình, nghĩa gốc là tấm bình phong, tấm chắn, ngày nay hay dùng với nghĩa màn hình.",4],[161.07,"触摸屏，荧屏，显示屏，宽屏，窄屏，屏幕。 Tức là: màn hình cảm ứng, màn ảnh nhỏ tức tivi, màn hiển thị, màn rộng, màn hẹp và màn hình. Từ 触摸屏 có trong bài khóa hôm nay.",4],[180.05,"Nhóm cuối cùng có chữ 能, Hán Việt là năng, nghĩa là khả năng, công năng.",4],[187.12,"性能，功能，智能，职能，本能，才能，机能。 Tức là: tính năng, công năng, thông minh, chức năng, bản năng, tài năng, cơ năng. Ví dụ 智能手机 là điện thoại thông minh.",4],[204.87,"技能，效能，全能，万能，无能，低能。 Tức là: kỹ năng, hiệu năng, toàn năng, vạn năng, bất tài, và kém năng lực.",4],[217.25,"Các bạn thấy không, chỉ cần nắm nghĩa của một chữ gốc, ta có thể đoán được nghĩa của cả một nhóm từ. Hãy áp dụng cách này khi học từ mới nhé.",4]]},{"title":"Từ mới (54 từ)","file":"vid/c03.mp4","dur":979.0,"lines":[[0.0,"Bây giờ chúng ta sang phần một: từ mới. Bài này có năm mươi tư từ, thầy chia thành mười tám nhóm nhỏ, mỗi nhóm ba từ.",5],[10.57,"Với mỗi từ, các bạn sẽ nghe đọc mẫu hai lần, sau đó là âm Hán Việt, nghĩa, và một ví dụ.",5],[19.03,"Hãy đọc to theo sau mỗi lần nghe, vì đọc thành tiếng giúp nhớ từ lâu hơn rất nhiều.",5],[25.5,"Một số từ có âm đọc đặc biệt, thầy sẽ nhắc khi gặp. Chúng ta bắt đầu nhé.",5],[31.82,"Từ số 1: 急剧。 急剧。 Hán Việt là cấp kịch.",6],[38.03,"Tính từ, nghĩa là nhanh chóng, đột ngột, thường dùng khi nói về sự tăng hay giảm rất mạnh. Ví dụ: 人口急剧增加。 Dân số tăng lên nhanh chóng.",6],[50.26,"Từ số 2: 川流不息。 川流不息。 Hán Việt là xuyên lưu bất tức.",6],[57.54,"Thành ngữ. Nghĩa đen là dòng sông chảy mãi không ngừng; nghĩa bóng là người hoặc xe cộ qua lại tấp nập, không ngớt. Ví dụ: 街上的车辆川流不息。 Xe cộ trên đường qua lại không ngớt.",6],[72.31,"Từ số 3: 登录。 登录。 Hán Việt là đăng lục.",6],[77.62,"Động từ, nghĩa là đăng nhập, ví dụ đăng nhập trang web hay tài khoản. Ví dụ: 登录网站， Đăng nhập trang web.",6],[87.25,"Từ số 4: 指令。 指令。 Hán Việt là chỉ lệnh.",7],[93.75,"Danh từ, nghĩa là mệnh lệnh, lệnh. Lượng từ đi kèm thường là 道, động từ đi kèm là 下, ví dụ 下几道指令, ra vài lệnh. Ví dụ: 下几道指令， Ra vài lệnh.",7],[110.81,"Từ số 5: 根深蒂固。 根深蒂固。 Hán Việt là căn thâm đế cố.",7],[117.64,"Thành ngữ, gần giống thành ngữ thâm căn cố đế của tiếng Việt, nghĩa là ăn sâu bén rễ, rất khó thay đổi. Ví dụ: 根深蒂固的购物习惯， Thói quen mua sắm đã ăn sâu bén rễ.",7],[132.04,"Từ số 6: 不免。 不免。 Hán Việt là bất miễn.",7],[137.72,"Phó từ, nghĩa là khó tránh khỏi, không khỏi. Lát nữa chúng ta sẽ so sánh kỹ từ này với từ 未免. Ví dụ: 我们不免要问…… Chúng ta không khỏi muốn hỏi….",7],[152.92,"Từ số 7: 预言。 预言。 Hán Việt là dự ngôn.",8],[159.45,"Động từ, nghĩa là dự đoán, tiên đoán điều sẽ xảy ra trong tương lai. Ví dụ: 有人这样预言…… Có người dự đoán thế này….",8],[171.4,"Từ số 8: 革命。 革命。 Hán Việt là cách mạng.",8],[177.1,"Nghĩa là cách mạng, tức là thay đổi tận gốc rễ, hoàn toàn khác trước. Ví dụ: 进行根本性的革命， Tiến hành một cuộc cách mạng căn bản.",8],[188.56,"Từ số 9: 改良。 改良。 Hán Việt là cải lương.",8],[194.51,"Động từ, nghĩa là cải tiến, làm cho tốt hơn nhưng chỉ sửa đổi từng phần. Chú ý: trong bài, 改良 đối lập với 革命, tức sửa chữa nhỏ đối lập với thay đổi tận gốc. Ví dụ: 改良品种， Cải tạo giống.",8],[212.99,"Từ số 10: 欣欣向荣。 欣欣向荣。 Hán Việt là hân hân hướng vinh.",9],[221.47,"Thành ngữ, vốn tả cây cỏ tươi tốt, nay dùng để chỉ sự phát triển phồn thịnh, thịnh vượng. Ví dụ: 昔日的欣欣向荣， Sự phồn thịnh ngày xưa.",9],[233.58,"Từ số 11: 仓库。 仓库。 Hán Việt là thương khố.",9],[239.58,"Danh từ, nghĩa là nhà kho. Ví dụ: 仓库里堆满了货物。 Trong kho chất đầy hàng hóa.",9],[248.1,"Từ số 12: 储备。 储备。 Hán Việt là trữ bị.",9],[253.97,"Động từ, nghĩa là dự trữ, cất giữ để dùng về sau. Ví dụ: 储备粮食， Dự trữ lương thực.",9],[262.87,"Từ số 13: 结算。 结算。 Hán Việt là kết toán.",10],[269.87,"Động từ, nghĩa là thanh toán, quyết toán sổ sách. Ví dụ: 销售结算， Thanh toán bán hàng.",10],[278.47,"Từ số 14: 模式。 模式。 Hán Việt là mô thức.",10],[284.26,"Danh từ, nghĩa là mô hình, kiểu mẫu. 商业模式 là mô hình kinh doanh, một cụm từ rất hay gặp. Ví dụ: 商业模式， Mô hình kinh doanh.",10],[297.45,"Từ số 15: 把手。 把手。 Hán Việt là bả thủ.",10],[303.43,"Danh từ, nghĩa là tay cầm, tay nắm, ví dụ tay nắm cửa, tay cầm xe đẩy. Ví dụ: 购物车把手， Tay cầm xe đẩy mua hàng.",10],[315.13,"Từ số 16: 装卸。 装卸。 Hán Việt là trang tá.",11],[322.02,"Động từ, có hai nghĩa: lắp vào và tháo ra; hoặc bốc dỡ hàng hóa. Ví dụ: 可随意装卸的工具， Dụng cụ có thể tháo lắp tùy ý.",11],[333.93,"Từ số 17: 屏幕。 屏幕。 Hán Việt là bình mạc.",11],[339.72,"Danh từ, nghĩa là màn hình. Ví dụ: 小屏幕上显示位置， Màn hình nhỏ hiển thị vị trí.",11],[348.7,"Từ số 18: 相应。 相应。 Hán Việt là tương ứng.",11],[354.94,"Nghĩa là tương ứng, phù hợp với nhau. Ví dụ: 走到相应的货架， Đi đến kệ hàng tương ứng.",11],[363.69,"Từ số 19: 仪器。 仪器。 Hán Việt là nghi khí.",12],[370.5,"Danh từ, nghĩa là máy móc, thiết bị kỹ thuật hoặc thiết bị đo đạc. Ví dụ: 仪器会发出提示音。 Thiết bị sẽ phát ra âm báo.",12],[381.88,"Từ số 20: 以免。 以免。 Hán Việt là dĩ miễn.",12],[387.83,"Liên từ, nghĩa là để tránh, để khỏi, kẻo. Đây là điểm ngữ pháp trọng tâm, ta sẽ học kỹ ở phần sau. Ví dụ: 以免消费者错过商品， Để người mua khỏi bỏ lỡ hàng.",12],[402.95,"Từ số 21: 嫌。 嫌。 Hán Việt là hiềm.",12],[408.71,"Động từ, nghĩa là chê, không thích, ngại. Đây cũng là điểm ngữ pháp trọng tâm. Ví dụ: 又嫌腥， Nhưng lại ngại tanh.",12],[419.09,"Từ số 22: 腥。 腥。 Hán Việt là tinh.",13],[425.73,"Tính từ, nghĩa là tanh, mùi của cá và hải sản. Ví dụ: 这条鱼很腥。 Con cá này rất tanh.",13],[434.91,"Từ số 23: 清理。 清理。 Hán Việt là thanh lý.",13],[441.12,"Động từ, nghĩa là dọn dẹp, làm sạch. Cẩn thận: thanh lý trong tiếng Việt là bán bớt đồ, còn 清理 trong tiếng Trung là dọn dẹp, làm sạch. Ví dụ: 把鱼清理好， Làm sạch cá.",13],[456.99,"Từ số 24: 等候。 等候。 Hán Việt là đẳng hậu.",13],[463.2,"Động từ, nghĩa là chờ đợi, trang trọng hơn 等. Ví dụ: 排队等候， Xếp hàng chờ đợi.",13],[472.19,"Từ số 25: 性能。 性能。 Hán Việt là tính năng.",14],[479.41,"Danh từ, nghĩa là tính năng, hiệu suất của máy móc, thiết bị. Ví dụ: 性能更好， Tính năng tốt hơn.",14],[488.78,"Từ số 26: 便利。 便利。 Hán Việt là tiện lợi.",14],[494.89,"Tính từ, nghĩa là tiện lợi. 便利店 chính là cửa hàng tiện lợi. Ví dụ: 便利店， Cửa hàng tiện lợi.",14],[504.96,"Từ số 27: 把关。 把关。 Hán Việt là bả quan.",14],[511.39,"Động từ. Nghĩa đen là canh giữ cửa ải; nghĩa bóng là kiểm soát, kiểm tra kỹ lưỡng giúp ai đó. Ví dụ: 电子便利站会为你把关。 Trạm tiện ích điện tử sẽ kiểm tra giúp bạn.",14],[526.22,"Từ số 28: 人工。 人工。 Hán Việt là nhân công.",15],[533.39,"Nghĩa là sức người, làm thủ công. Ngoài ra còn có nghĩa là nhân tạo, ví dụ 人工智能, trí tuệ nhân tạo. Ví dụ: 人工过秤， Cân hàng thủ công.",15],[547.06,"Từ số 29: 秤。 秤。 Hán Việt là xứng.",15],[552.72,"Danh từ, nghĩa là cái cân. 过秤 là đặt lên cân, cân hàng. Ví dụ: 过秤， Cân (hàng).",15],[562.54,"Từ số 30: 运算。 运算。 Hán Việt là vận toán.",15],[568.69,"Động từ, nghĩa là tính toán theo phép toán. Ví dụ: 迅速运算， Tính toán nhanh chóng.",15],[576.82,"Từ số 31: 总和。 总和。 Hán Việt là tổng hòa.",16],[583.99,"Danh từ, nghĩa là tổng số, tổng cộng. Ví dụ: 钱数的总和， Tổng số tiền.",16],[591.75,"Từ số 32: 着重。 着重。 Hán Việt là trước trọng.",16],[597.97,"Động từ, nghĩa là chú trọng, nhấn mạnh. Chú ý: chữ 着 ở đây đọc là zhuó, thanh hai. Ví dụ: 着重推荐， Đặc biệt giới thiệu.",16],[610.59,"Từ số 33: 虚拟。 虚拟。 Hán Việt là hư nghĩ.",16],[616.69,"Tính từ, nghĩa là ảo. Ví dụ 虚拟现实 là thực tế ảo. Ví dụ: 虚拟设计室， Phòng thiết kế ảo.",16],[627.6,"Từ số 34: 投票。 投票。 Hán Việt là đầu phiếu.",17],[634.91,"Động từ, nghĩa là bỏ phiếu, bình chọn. Ví dụ: 进行投票， Tiến hành bỏ phiếu.",17],[642.88,"Từ số 35: 保管。 保管。 Hán Việt là bảo quản.",17],[649.27,"Động từ. Nghĩa thường gặp là bảo quản, giữ gìn. Nhưng trong bài, 保管 mang nghĩa khẩu ngữ là đảm bảo, chắc chắn. Ví dụ: 保管你满意， Đảm bảo bạn hài lòng.",17],[664.07,"Từ số 36: 新颖。 新颖。 Hán Việt là tân dĩnh.",17],[670.52,"Tính từ, nghĩa là mới lạ, độc đáo. Ví dụ: 样式新颖， Kiểu dáng mới lạ.",17],[678.16,"Từ số 37: 羽绒服。 羽绒服。 Hán Việt là vũ nhung phục.",18],[685.95,"Danh từ, nghĩa là áo lông vũ, áo phao mặc mùa đông. Ví dụ: 一件羽绒服， Một chiếc áo lông vũ.",18],[695.36,"Từ số 38: 旗袍。 旗袍。 Hán Việt là kỳ bào.",18],[701.96,"Danh từ, nghĩa là sườn xám, trang phục truyền thống của phụ nữ Trung Quốc, cổ cao, ôm sát người. Ví dụ: 穿旗袍， Mặc sườn xám.",18],[713.74,"Từ số 39: 中意。 中意。 Hán Việt là trúng ý.",18],[719.9,"Động từ, nghĩa là vừa ý, ưng ý. Chú ý: chữ 中 ở đây đọc là zhòng, thanh bốn. Ví dụ: 你中意的音响， Dàn âm thanh bạn ưng ý.",18],[733.53,"Từ số 40: 音响。 音响。 Hán Việt là âm hưởng.",19],[740.37,"Danh từ, nghĩa là dàn âm thanh, loa. Ví dụ: 一套音响， Một bộ dàn âm thanh.",19],[748.44,"Từ số 41: 收音机。 收音机。 Hán Việt là thu âm cơ.",19],[755.39,"Danh từ, nghĩa là cái đài, radio. Ví dụ: 听收音机， Nghe đài.",19],[763.18,"Từ số 42: 水龙头。 水龙头。 Hán Việt là thủy long đầu.",19],[770.48,"Danh từ, nghĩa là vòi nước. Ví dụ: 关水龙头， Khóa vòi nước.",19],[777.18,"Từ số 43: 枚。 枚。 Hán Việt là mai.",20],[783.57,"Lượng từ, dùng cho những vật nhỏ, tròn, dẹt như cúc áo, đồng xu, huy chương. Ví dụ: 几枚纽扣儿、一枚硬币， Vài chiếc cúc, một đồng xu.",20],[796.78,"Từ số 44: 纽扣儿。 纽扣儿。 Hán Việt là nữu khấu.",20],[803.36,"Danh từ, nghĩa là cúc áo, khuy áo. Ví dụ: 掉了一枚纽扣儿， Rơi mất một chiếc cúc.",20],[811.87,"Từ số 45: 插座。 插座。 Hán Việt là sáp tọa.",20],[818.14,"Danh từ, nghĩa là ổ cắm điện. Ví dụ: 一个插座， Một cái ổ cắm.",20],[825.06,"Từ số 46: 勘探。 勘探。 Hán Việt là khám thám.",21],[832.42,"Động từ, nghĩa là thăm dò, khảo sát địa chất để tìm khoáng sản. Ví dụ: 勘探石油， Thăm dò dầu mỏ.",21],[842.14,"Từ số 47: 矿产。 矿产。 Hán Việt là khoáng sản.",21],[848.64,"Danh từ, nghĩa là khoáng sản, âm Hán Việt giống hệt tiếng Việt. Ví dụ: 矿产资源， Tài nguyên khoáng sản.",21],[857.93,"Từ số 48: 反馈。 反馈。 Hán Việt là phản quỹ.",21],[864.43,"Nghĩa là phản hồi, vừa là động từ vừa là danh từ. Ví dụ: 得到反馈， Nhận được phản hồi.",21],[872.96,"Từ số 49: 款式。 款式。 Hán Việt là khoản thức.",22],[880.1,"Danh từ, nghĩa là kiểu dáng, mẫu mã. Ví dụ: 多种款式， Nhiều mẫu mã.",22],[887.79,"Từ số 50: 关怀。 关怀。 Hán Việt là quan hoài.",22],[894.28,"Động từ, nghĩa là quan tâm, chăm sóc ân cần, sắc thái trang trọng hơn 关心. Ví dụ: 对消费者的关怀， Sự quan tâm tới người tiêu dùng.",22],[907.22,"Từ số 51: 无微不至。 无微不至。 Hán Việt là vô vi bất chí.",22],[914.42,"Thành ngữ, nghĩa là không có chỗ nhỏ nhặt nào là không quan tâm tới, tức chu đáo từng li từng tí. Ví dụ: 关怀得无微不至， Quan tâm chu đáo từng li từng tí.",22],[927.62,"Từ số 52: 需求。 需求。 Hán Việt là nhu cầu.",23],[934.98,"Danh từ, nghĩa là nhu cầu. Ví dụ: 把握消费者的需求， Nắm bắt nhu cầu người tiêu dùng.",23],[943.71,"Từ số 53: 主导。 主导。 Hán Việt là chủ đạo.",23],[949.8,"Danh từ, nghĩa là vai trò chủ đạo, dẫn dắt. Ví dụ: 以消费者为主导， Lấy người tiêu dùng làm chủ đạo.",23],[959.51,"Từ số 54: 兴隆。 兴隆。 Hán Việt là hưng long.",23],[965.95,"Tính từ, nghĩa là thịnh vượng. 生意兴隆 là buôn bán phát đạt, câu chúc rất hay gặp ở các cửa hàng. Ví dụ: 生意兴隆， Buôn bán phát đạt.",23]]},{"title":"Bài khóa","file":"vid/c04.mp4","dur":795.3,"lines":[[0.0,"Tiếp theo là phần hai: bài khóa 未来商店, dài tám trăm chín mươi bảy chữ.",24],[8.2,"Thầy chia bài thành từng đoạn ngắn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học.",24],[17.18,"Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng.",24],[24.16,"Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.",24],[30.9,"如今喜欢网络购物的人急剧增加，买东西不用在川流不息的人群中奔走，仅需登录网站，动几下手指，下几道指令就可以把东西买回家，人类根深蒂固的购物习惯正在改变。",25],[51.15,"Dịch nghĩa: Ngày nay, số người thích mua sắm trên mạng tăng lên nhanh chóng. Mua đồ không cần phải chạy ngược xuôi giữa dòng người tấp nập, chỉ cần đăng nhập trang web, động vài ngón tay, ra vài lệnh là có thể mua hàng về tận nhà. Thói quen mua sắm đã ăn sâu bén rễ của con người đang thay đổi.",25],[71.87,"Chú ý cấu trúc: 不用……，仅需……就可以……, nghĩa là: không cần…, chỉ cần… là có thể…",25],[81.21,"仅需 là cách nói văn viết của 只需要, chỉ cần. Còn 道 là lượng từ cho mệnh lệnh: 下几道指令, ra vài lệnh.",25],[93.75,"我们不免要问：网上购物如此方便，未来实体商店还会存在吗？有人这样预言：实体商店若想存在，必须进行根本性的革命，而不是改良，否则实体店昔日的欣欣向荣终将一去不复还。",26],[116.14,"Dịch nghĩa: Chúng ta không khỏi đặt câu hỏi: mua sắm trên mạng tiện lợi như vậy, trong tương lai cửa hàng thực thể có còn tồn tại không? Có người dự đoán rằng: cửa hàng thực thể nếu muốn tồn tại thì phải tiến hành một cuộc cách mạng mang tính căn bản, chứ không phải chỉ cải tiến; nếu không, sự phồn thịnh ngày xưa của cửa hàng thực thể rồi sẽ một đi không trở lại.",26],[141.91,"若 nghĩa là nếu, là cách nói văn viết của 如果. 而不是 nghĩa là chứ không phải. 否则 nghĩa là nếu không thì.",26],[153.79,"昔日 là ngày xưa. 终将 là cuối cùng sẽ. Và 一去不复还 nghĩa là một đi không trở lại.",26],[164.27,"有人这样描述未来商店：那里的仓库货物储备管理、销售结算、客户关系管理等，全部实现电子化。在那儿几乎见不到工作人员，顾客可以自己动手完成整个购物过程。未来商店实行的将是一种全新的商业模式。",27],[188.93,"Dịch nghĩa: Có người mô tả cửa hàng tương lai như sau: ở đó, việc quản lý dự trữ hàng trong kho, thanh toán bán hàng, quản lý quan hệ khách hàng… tất cả đều được điện tử hóa. Ở đó hầu như không thấy nhân viên, khách hàng có thể tự mình hoàn thành toàn bộ quá trình mua sắm. Cửa hàng tương lai sẽ áp dụng một mô hình kinh doanh hoàn toàn mới.",27],[214.41,"Hậu tố 化 giống chữ hóa trong tiếng Việt: 电子化 là điện tử hóa, 现代化 là hiện đại hóa.",27],[224.85,"自己动手 là tự tay làm. 全新 là hoàn toàn mới.",27],[231.36,"未来商店的购物车把手上装有购物助手——一个可随意装卸的无线电脑工具。消费者想买哪种商品，小屏幕上就会显示商品所在的位置，当消费者走到相应货架时，仪器会发出提示音，以免消费者错过商品。",28],[256.01,"Dịch nghĩa: Trên tay cầm xe đẩy của cửa hàng tương lai có gắn một “trợ lý mua sắm” – một thiết bị máy tính không dây có thể tháo lắp tùy ý. Người tiêu dùng muốn mua món hàng nào, màn hình nhỏ sẽ hiển thị vị trí của món hàng đó; khi người tiêu dùng đi đến kệ hàng tương ứng, thiết bị sẽ phát ra âm báo, để người tiêu dùng khỏi bỏ lỡ món hàng.",28],[280.76,"装有 nghĩa là có lắp, có gắn. Dấu gạch ngang dài dùng để giải thích thêm cho cụm từ phía trước.",28],[288.9,"想买哪种商品，就会显示…… : muốn mua loại nào thì hiển thị loại đó. Đại từ nghi vấn 哪 ở đây không dùng để hỏi mà mang nghĩa bất kỳ. Còn 以免 ta sẽ học kỹ ở phần ngữ pháp.",28],[306.39,"如果你想吃鲜鱼，又嫌腥，不愿自己加工，可以在触摸屏上留言，等店员把鱼清理好后，再去领取，不必排队等候。",29],[321.58,"Dịch nghĩa: Nếu bạn muốn ăn cá tươi nhưng lại ngại tanh, không muốn tự mình sơ chế, bạn có thể để lại lời nhắn trên màn hình cảm ứng, đợi nhân viên làm sạch cá xong rồi đến lấy, không cần xếp hàng chờ đợi.",29],[336.94,"又 ở đây nghĩa là nhưng lại: muốn ăn cá tươi nhưng lại ngại tanh. 加工 ở đây là sơ chế. 等……后，再…… nghĩa là đợi… xong rồi mới….",29],[350.39,"Các bạn để ý: cả câu dài này chỉ có một chủ ngữ 你 ở đầu, các vế sau đều lược bỏ chủ ngữ. Đây chính là hiện tượng tỉnh lược mà ta học ở cuối bài.",29],[363.59,"如果想买手机，又不了解哪一款性能更适合自己，也无须烦恼，电子便利站会为你把关，在那儿一系列选择题会为你提供决策支持和购买建议。",30],[380.85,"Dịch nghĩa: Nếu muốn mua điện thoại mà lại không biết mẫu nào có tính năng phù hợp với mình hơn, bạn cũng không cần phiền não, “trạm tiện ích điện tử” sẽ kiểm tra giúp bạn; ở đó, một loạt câu hỏi lựa chọn sẽ hỗ trợ bạn ra quyết định và đưa ra gợi ý mua hàng.",30],[399.92,"无须 nghĩa là không cần, là cách nói văn viết của 不必. 一系列 là một loạt.",30],[408.22,"为你提供…… là cung cấp… cho bạn. 决策 là ra quyết định, quyết sách.",30],[415.46,"购物完毕，该结账了，未来商店无须人工过秤，带有摄像头的结账系统可以识别商品的重量和体积，迅速运算，之后给出消费钱数的总和，自动收款机则可接受现金和刷卡支付。",31],[436.93,"Dịch nghĩa: Mua sắm xong, đến lúc tính tiền. Cửa hàng tương lai không cần người cân hàng thủ công; hệ thống thanh toán có gắn camera có thể nhận diện trọng lượng và thể tích hàng hóa, tính toán nhanh chóng, rồi đưa ra tổng số tiền phải trả; còn máy thu tiền tự động thì chấp nhận cả tiền mặt lẫn quẹt thẻ.",31],[458.85,"完毕 nghĩa là xong, văn viết. 该……了 nghĩa là đến lúc phải… rồi: 该结账了, đến lúc tính tiền rồi.",31],[469.67,"摄像头 là camera. 刷卡 là quẹt thẻ. 则 ở đây nghĩa là còn, thì, dùng để chuyển sang nói về một đối tượng khác.",31],[482.05,"消费者加入设计队伍，是未来商店着重推荐的服务，譬如，你想买衣服，可是你觉得市场上的几款都不太满意，那就参与设计吧。",32],[497.66,"Dịch nghĩa: Cho người tiêu dùng tham gia vào đội ngũ thiết kế là dịch vụ mà cửa hàng tương lai đặc biệt giới thiệu. Ví dụ, bạn muốn mua quần áo, nhưng thấy mấy mẫu trên thị trường đều không ưng lắm, vậy thì hãy tham gia thiết kế!",32],[514.32,"譬如 nghĩa là ví dụ như, giống 比如 nhưng trang trọng hơn. 那就……吧 nghĩa là vậy thì hãy….",32],[524.61,"你登录到虚拟设计室，进入设计过程，对颜色、外观等设计内容进行投票，这样设计出来的衣服保管你满意。",33],[538.15,"Dịch nghĩa: Bạn đăng nhập vào phòng thiết kế ảo, tham gia quá trình thiết kế, bỏ phiếu cho các nội dung thiết kế như màu sắc, kiểu dáng bên ngoài…; quần áo được thiết kế ra như vậy đảm bảo bạn sẽ hài lòng.",33],[553.31,"Cấu trúc 对 cộng đối tượng cộng 进行 cộng động từ hai âm tiết rất phổ biến trong văn viết: 对设计内容进行投票, tiến hành bỏ phiếu cho nội dung thiết kế.",33],[567.46,"保管你满意 nghĩa là đảm bảo bạn hài lòng, đúng như nghĩa khẩu ngữ của từ 保管 mà ta vừa học.",33],[576.96,"在未来商店，商家和消费者的互动非常活跃。不管你是想买样式新颖的羽绒服、旗袍，还是想买你中意的音响、收音机、水龙头或者只是几枚纽扣儿、一个插座，再或者是勘探矿产的工具，你只要把照片发送到专门的网站，就能得到反馈：",34],[604.75,"Dịch nghĩa: Ở cửa hàng tương lai, sự tương tác giữa người bán và người mua rất sôi nổi. Dù bạn muốn mua áo lông vũ, sườn xám kiểu dáng mới lạ, hay muốn mua dàn âm thanh, radio, vòi nước mà bạn ưng ý, hoặc chỉ là vài chiếc cúc áo, một cái ổ cắm, hay thậm chí là dụng cụ thăm dò khoáng sản, bạn chỉ cần gửi ảnh đến trang web chuyên dụng là sẽ nhận được phản hồi:",34],[632.61,"Đây là cấu trúc kết hợp: 不管……还是……，只要……就……, nghĩa là: bất kể… hay…, chỉ cần… là….",34],[643.25,"Tác giả liệt kê rất nhiều món hàng, từ áo lông vũ đến dụng cụ thăm dò khoáng sản, để nhấn mạnh rằng món gì cũng tìm được.",34],[652.48,"“您查询的商品在某某店有售，那里有多种款式供您选购。”这样的互动方便了顾客，也为商家带来了生意。",35],[665.57,"Dịch nghĩa: “Món hàng quý khách tìm có bán tại cửa hàng X, ở đó có nhiều mẫu mã để quý khách lựa chọn.” Sự tương tác như vậy vừa tạo thuận tiện cho khách hàng, vừa mang lại việc làm ăn cho người bán.",35],[680.26,"有售 nghĩa là có bán. 供您选购 nghĩa là để quý khách chọn mua; 供 là cung cấp cho.",35],[689.66,"方便 ở đây là động từ, nghĩa là tạo thuận tiện cho: 方便了顾客.",35],[696.61,"未来商店对消费者的关怀可谓无微不至，他们根据消费者的个人生活习惯，把握消费者的需求，将商店变为以消费者为主导的店铺。努力使整个购物过程轻松、快捷、便利，是未来商店每一项设计的宗旨。",36],[720.17,"Dịch nghĩa: Sự quan tâm của cửa hàng tương lai dành cho người tiêu dùng có thể nói là chu đáo từng li từng tí. Họ dựa vào thói quen sinh hoạt cá nhân của người tiêu dùng để nắm bắt nhu cầu, biến cửa hàng thành nơi lấy người tiêu dùng làm chủ đạo. Cố gắng làm cho toàn bộ quá trình mua sắm nhẹ nhàng, nhanh chóng, tiện lợi chính là tôn chỉ của mọi thiết kế trong cửa hàng tương lai.",36],[746.74,"可谓 nghĩa là có thể nói là. 将 ở đây bằng 把 trong văn viết: 将商店变为…… cũng giống 把商店变成…….",36],[759.38,"以……为…… nghĩa là lấy… làm…: 以消费者为主导, lấy người tiêu dùng làm chủ đạo. 宗旨 là tôn chỉ, mục đích.",36],[771.14,"试想，这样的商店怎么能不生意兴隆呢！",37],[776.75,"Dịch nghĩa: Thử nghĩ xem, một cửa hàng như vậy làm sao mà không buôn bán phát đạt cho được!",37],[783.81,"怎么能不……呢 là câu hỏi tu từ, nghĩa là làm sao có thể không…, tức là chắc chắn sẽ…. Đây là cách kết bài rất mạnh mẽ và tự nhiên.",37]]},{"title":"Tóm tắt nội dung","file":"vid/c05.mp4","dur":61.4,"lines":[[0.0,"Chúng ta cùng nhìn lại bố cục của cả bài khóa.",38],[4.85,"Mở bài: mua sắm trên mạng tăng mạnh, nên cửa hàng thực thể muốn tồn tại thì phải làm một cuộc cách mạng, chứ không chỉ cải tiến.",38],[14.55,"Thân bài nêu năm đặc điểm của cửa hàng tương lai. Một: mọi khâu đều được điện tử hóa, khách hàng tự phục vụ.",38],[23.14,"Hai: có trợ lý mua sắm trên xe đẩy, có thể đặt nhân viên sơ chế cá, có trạm điện tử tư vấn mua điện thoại.",38],[32.23,"Ba: thanh toán tự động, camera nhận diện hàng, máy thu tiền tự động.",38],[38.25,"Bốn: khách hàng được tham gia thiết kế sản phẩm trong phòng thiết kế ảo.",38],[43.88,"Năm: người bán và người mua tương tác qua ảnh và trang web.",38],[48.7,"Kết bài: cửa hàng quan tâm chu đáo đến khách hàng như vậy thì chắc chắn sẽ buôn bán phát đạt. Bố cục này rất có ích khi các bạn làm bài tập viết tóm tắt ở cuối bài.",38]]},{"title":"Ngữ pháp: 以免","file":"vid/c06.mp4","dur":167.1,"lines":[[0.0,"Bây giờ chúng ta sang phần ngữ pháp. Điểm thứ nhất là liên từ 以免.",39],[6.89,"以免 biểu thị việc tránh để xảy ra một tình huống không mong muốn. Tiếng Việt dịch là: để tránh, để khỏi, hoặc kẻo.",39],[16.55,"Cấu trúc: vế thứ nhất nêu việc nên làm, sau đó là 以免, rồi đến vế thứ hai nêu điều không mong muốn.",39],[25.63,"以免 thường đứng ở đầu vế sau, và hay dùng trong văn viết. Trong khẩu ngữ, người ta hay dùng 免得 với nghĩa tương tự.",39],[36.29,"Ví dụ một: 重要的是，要学会从失败中吸取教训，以免今后再发生类似的问题。 Điều quan trọng là phải học cách rút ra bài học từ thất bại, để tránh sau này lại xảy ra vấn đề tương tự.",39],[53.79,"Ví dụ hai: 感冒时应尽量少去公共场所，必须去的话，最好戴上口罩，以免传染别人。 Khi bị cảm nên hạn chế đến nơi công cộng, nếu phải đi thì tốt nhất đeo khẩu trang, kẻo lây cho người khác.",39],[72.35,"Ví dụ ba, lấy từ bài khóa: 当消费者走到相应货架时，仪器会发出提示音，以免消费者错过商品。 Khi người tiêu dùng đến kệ hàng tương ứng, thiết bị sẽ phát âm báo để họ khỏi bỏ lỡ món hàng.",39],[91.18,"Luyện tập. Câu một: 机动车和非机动车应该各行其道，以免…… Xe cơ giới và xe thô sơ nên đi đúng làn đường của mình, để tránh điều gì? Các bạn hãy tạm dừng và thử hoàn thành câu.",40],[109.08,"Đáp án gợi ý: 以免发生交通事故。 Để tránh xảy ra tai nạn giao thông.",40],[116.54,"Câu hai: 使用电脑工作时，不要忘了经常保存你的文件，以免…… Khi làm việc bằng máy tính, đừng quên thường xuyên lưu tài liệu, để tránh điều gì?",40],[131.44,"Đáp án gợi ý: 以免突然断电时文件丢失。 Để tránh mất tài liệu khi đột ngột mất điện.",40],[140.15,"Câu ba: 我们必须不断地看书、学习、充实自己，以免…… Chúng ta phải không ngừng đọc sách, học tập, làm phong phú bản thân, để tránh điều gì?",40],[154.47,"Đáp án gợi ý: 以免被社会淘汰。 Để khỏi bị xã hội đào thải. Các bạn có thể có đáp án khác, miễn là vế sau là một điều không mong muốn.",40]]},{"title":"Ngữ pháp: 嫌","file":"vid/c07.mp4","dur":142.2,"lines":[[0.0,"Điểm ngữ pháp thứ hai là động từ 嫌.",41],[4.88,"嫌 biểu thị sự không thích, không hài lòng. Tiếng Việt dịch là chê, ngại, hoặc không ưa.",41],[12.68,"Cấu trúc thường gặp: 嫌 cộng danh từ, hoặc tính từ, hoặc cả một mệnh đề.",41],[19.69,"Ví dụ: 我从来没嫌你，也没嫌过孩子哭。 Tôi chưa bao giờ chê anh, cũng chưa bao giờ ngại chuyện con khóc.",41],[29.88,"Ví dụ trong bài khóa: 如果你想吃鲜鱼，又嫌腥。 Nếu bạn muốn ăn cá tươi nhưng lại ngại tanh.",41],[39.23,"Ví dụ ba: 大家都嫌这个旅行计划不够合理，几个最值得去的地方都不在计划之内。 Mọi người đều chê kế hoạch du lịch này không hợp lý, mấy nơi đáng đi nhất đều không có trong kế hoạch.",41],[55.84,"Mẫu rất hay gặp là 嫌 cộng người cộng tính từ, ví dụ 我嫌他太吵, tôi thấy anh ta ồn quá. Và các cụm 嫌麻烦，嫌贵，嫌远: ngại phiền, chê đắt, chê xa.",41],[73.17,"Luyện tập. Câu một: 她喜欢为大家做事，从不嫌…… Cô ấy thích làm việc giúp mọi người, chưa bao giờ ngại điều gì? Các bạn tạm dừng và thử trả lời nhé.",42],[88.67,"Đáp án gợi ý: 从不嫌麻烦, hoặc 从不嫌累. Chưa bao giờ ngại phiền, hay ngại mệt.",42],[97.94,"Câu hai: 他嫌……，衣服送来以后就放在那儿，一次都没穿过。 Anh ấy chê điều gì đó, nên quần áo gửi đến rồi để nguyên đó, chưa mặc lần nào.",42],[111.72,"Đáp án gợi ý: 他嫌这件衣服的颜色太艳。 Anh ấy chê màu chiếc áo quá sặc sỡ.",42],[120.09,"Câu ba: 她嫌……，决定搬出学校，和朋友一块儿在外面合租房子。 Cô ấy chê điều gì đó, nên quyết định chuyển ra khỏi trường, thuê nhà chung với bạn ở bên ngoài.",42],[135.18,"Đáp án gợi ý: 她嫌宿舍太吵。 Cô ấy chê ký túc xá quá ồn.",42]]},{"title":"Phân biệt 不免 – 未免","file":"vid/c08.mp4","dur":221.5,"lines":[[0.0,"Tiếp theo là phần phân biệt từ: 不免 và 未免. Hai từ này trông rất giống nhau, nên học sinh hay nhầm.",43],[10.69,"Điểm giống nhau: cả hai đều là phó từ, đều có nghĩa khó tránh khỏi. Ví dụ: 这样教学，不免误人子弟, hoặc 未免误人子弟, đều đúng. Dạy học như vậy khó tránh khỏi làm hại học trò.",43],[27.86,"Điểm khác thứ nhất. 不免 mang tính khách quan: vì có một nguyên nhân, nên tự nhiên dẫn đến một kết quả. Vì vậy phía trước phải nêu nguyên nhân.",43],[39.61,"Ví dụ: 他不免会犯错误 là sai, vì không có nguyên nhân. Phải nói: 他刚参加工作，不免会犯错误。 Anh ấy mới đi làm, khó tránh khỏi mắc sai sót.",43],[54.96,"Còn 未免 mang tính chủ quan, là lời đánh giá, phê bình, có nghĩa là không thể không nói là, hoặc thật là hơi. Không cần nêu nguyên nhân. Ví dụ: 你这么做，未免太过分。 Anh làm vậy thì thật là quá đáng.",43],[73.55,"Điểm khác thứ hai. Sau 不免 chỉ dùng dạng khẳng định. 人家不免会生气 là đúng, nhưng 人家不免不高兴 là sai.",43],[86.64,"Còn sau 未免 dùng được cả khẳng định lẫn phủ định. 你现在才来，未免太晚了。 Giờ anh mới đến, thật là muộn quá. Và 他这样对待客人，未免不礼貌。 Anh ta đối xử với khách như vậy thật là bất lịch sự.",43],[106.67,"Mẹo nhớ: 不免 là kết quả tự nhiên, khó tránh khỏi; 未免 là lời phê bình, thường đi với 太, 过于, 有点儿, mang nghĩa thật là hơi quá.",43],[121.25,"Bây giờ chúng ta làm thử. Câu một: 旧地重游，感慨万千，让人不免想起往事。 Thăm lại chốn cũ, bao cảm xúc dâng trào, khiến người ta không khỏi nhớ lại chuyện xưa. Đúng hay sai? Các bạn suy nghĩ nhé.",44],[140.25,"Đáp án: đúng. Có nguyên nhân là thăm lại chốn cũ, và kết quả tự nhiên là nhớ chuyện xưa, nên dùng 不免 là hợp lý.",44],[151.02,"Câu hai: 真是的，他未免太不会关心人了，干脆分手算了。 Thật là, anh ta thật quá không biết quan tâm người khác, thôi chia tay cho xong.",44],[164.02,"Đáp án: đúng. Đây là lời phê bình, đánh giá, lại đi với chữ 太, nên dùng 未免 là chuẩn.",44],[174.2,"Câu ba: 星期天，我不免有些闷闷不乐。 Chủ nhật, tôi không khỏi có chút buồn bực.",44],[182.47,"Đáp án: sai. Chủ nhật không phải là nguyên nhân gây buồn, câu thiếu nguyên nhân. Có thể sửa: 星期天一个人在家，我不免有些闷闷不乐。 Chủ nhật ở nhà một mình, tôi không khỏi thấy buồn bực.",44],[198.85,"Câu bốn: 听到老师表扬他，他未免高兴起来，手舞足蹈的。 Nghe thầy khen, cậu ấy vui vẻ hẳn lên, khoa tay múa chân.",44],[211.09,"Đáp án: sai. Được khen nên vui là kết quả tự nhiên, không phải lời phê bình. Phải sửa thành 他不免高兴起来.",44]]},{"title":"Kỹ năng viết: tỉnh lược","file":"vid/c09.mp4","dur":150.3,"lines":[[0.0,"Phần cuối cùng về lý thuyết là kỹ năng viết: tỉnh lược, tiếng Trung gọi là 省略.",45],[7.88,"Quy tắc: khi các vế câu trước và sau có cùng chủ ngữ, vì vế đầu đã nêu chủ ngữ rồi, nên các vế sau thường lược bỏ chủ ngữ.",45],[18.09,"Ví dụ một, lấy từ bài khóa: cả câu chỉ có một chữ 你 ở đầu. Tất cả các chữ 你 trong ngoặc đều được lược bỏ.",45],[29.48,"Ví dụ hai: 你登录到虚拟设计室, sau đó các vế 进入设计过程 và 对颜色、外观等设计内容进行投票 đều không cần nhắc lại chủ ngữ 你.",45],[46.12,"Ví dụ ba: 他们先从学校去了车站，然后坐了六个小时的火车到了林县。 Chủ ngữ 他们 chỉ cần nói một lần.",45],[58.69,"Nếu lặp lại chủ ngữ ở mọi vế, câu văn sẽ nặng nề và thiếu tự nhiên. Tỉnh lược giúp đoạn văn gọn gàng, mạch lạc hơn.",45],[68.02,"Luyện tập: chỉ ra lỗi trong câu và sửa lại. Câu một: cụm 全家人 xuất hiện hai lần liền nhau. Các bạn thử sửa nhé.",46],[79.51,"Đáp án: bỏ 全家人 thứ hai: 全家人又打扫卫生，又擦玻璃，还买来了花瓶，插上了鲜花。 Cả nhà vừa dọn dẹp, vừa lau kính, còn mua bình hoa, cắm hoa tươi.",46],[97.25,"Câu hai: chữ 他 xuất hiện ba lần trong một câu.",46],[102.6,"Đáp án: chỉ giữ 他 ở đầu câu: 他八岁起就喜欢上了足球，天天在球场上一直泡到天黑，后来终于进了国家队。 Từ năm tám tuổi cậu đã mê bóng đá, ngày nào cũng ở lì sân bóng đến tối, sau này cuối cùng đã vào đội tuyển quốc gia.",46],[125.5,"Câu ba: đoạn văn tả chú mèo nhỏ, chữ 它 bị lặp lại quá nhiều.",46],[132.26,"Đáp án: 它在后面跟着，两只大眼睛看着我，眼中充满无知、天真、信任和快乐。 Nó đi theo phía sau, hai mắt to tròn nhìn tôi, trong mắt đầy vẻ ngây thơ, tin tưởng và vui sướng.",46]]},{"title":"Luyện tập","file":"vid/c10.mp4","dur":162.2,"lines":[[0.0,"Phần luyện tập. Bài tập một: dựa vào chữ đầu tiên của từ, hãy viết thêm các từ khác.",47],[7.89,"Ví dụ mẫu: 预言, có 预测，预防，预报，预计. Tức là dự đoán, dự phòng, dự báo, và dự tính.",47],[19.69,"改良, có thể mở rộng thành 改善，改进，改革，改变. Tức là cải thiện, cải tiến, cải cách, thay đổi.",47],[30.96,"储备, có 储存，储蓄，储藏，储量. Tức là tích trữ, tiết kiệm, cất giữ, và trữ lượng.",47],[41.19,"结算, có 结账，结果，结束，结论. Tức là tính tiền, kết quả, kết thúc, kết luận.",47],[51.09,"装卸, có 装修，装备，装饰，装载. Tức là trang trí nội thất, trang bị, trang sức hay trang trí, và chất hàng lên xe.",47],[63.47,"Bài tập hai: viết lại câu bằng từ cho sẵn. Câu một, dùng từ 急剧: 最近几十年，世界人口快速增加，给地球造成了巨大压力。",48],[78.15,"Đáp án: thay 快速 bằng 急剧: 世界人口急剧增加. Mấy chục năm gần đây dân số thế giới tăng nhanh chóng, gây áp lực rất lớn cho trái đất.",48],[92.02,"Câu hai, dùng 以免: 为了不耽误第二天的考试，他前一天晚上定好了闹钟。",48],[101.3,"Đáp án: đảo lại, việc nên làm đặt trước, điều không mong muốn đặt sau 以免: 他前一天晚上定好了闹钟，以免耽误第二天的考试。 Tối hôm trước anh ấy đã đặt sẵn báo thức, để khỏi lỡ kỳ thi hôm sau.",48],[119.93,"Câu ba, dùng 嫌: 我觉得食堂的饭菜太油腻，所以自己动手做饭。",48],[128.32,"Đáp án: thay 觉得 bằng 嫌: 我嫌食堂的饭菜太油腻。 Tôi chê đồ ăn ở căng tin nhiều dầu mỡ quá, nên tự nấu.",48],[140.73,"Câu bốn, dùng 着重: 今天的会议上，总经理重点强调了以下几个问题。",48],[149.56,"Đáp án: thay 重点 bằng 着重: 总经理着重强调了以下几个问题。 Tổng giám đốc đặc biệt nhấn mạnh mấy vấn đề sau.",48]]},{"title":"Tổng kết & bài tập về nhà","file":"vid/c11.mp4","dur":88.9,"lines":[[0.0,"Chúng ta cùng tổng kết bài hai mươi mốt.",49],[4.2,"Về từ vựng, các bạn cần đặc biệt nhớ: 急剧，根深蒂固，以免，嫌，着重，保管，无微不至，兴隆.",49],[15.72,"Về ngữ pháp: 以免 nghĩa là để tránh, kẻo, đứng đầu vế sau. 嫌 nghĩa là chê, ngại.",49],[25.01,"Về phân biệt từ: 不免 là kết quả tự nhiên, khách quan, cần nêu nguyên nhân. 未免 là lời đánh giá, phê bình chủ quan.",49],[36.6,"Về kỹ năng viết: khi các vế câu có cùng chủ ngữ, hãy tỉnh lược để câu văn gọn gàng.",49],[43.79,"Bài tập về nhà: các bạn hãy tóm tắt bài khóa thành một đoạn văn khoảng ba trăm năm mươi chữ. Hãy dùng bố cục năm đặc điểm mà thầy đã tổng kết, và áp dụng cách tỉnh lược chủ ngữ.",49],[57.01,"Cảm ơn các bạn đã theo dõi bài giảng. Hẹn gặp lại các bạn ở bài hai mươi hai: 二零五零年的汽车什么样, Ô tô năm hai không năm mươi sẽ như thế nào. Chúc các bạn học tốt!",49]]}],"slides":["slides/s-01.jpg","slides/s-02.jpg","slides/s-03.jpg","slides/s-04.jpg","slides/s-05.jpg","slides/s-06.jpg","slides/s-07.jpg","slides/s-08.jpg","slides/s-09.jpg","slides/s-10.jpg","slides/s-11.jpg","slides/s-12.jpg","slides/s-13.jpg","slides/s-14.jpg","slides/s-15.jpg","slides/s-16.jpg","slides/s-17.jpg","slides/s-18.jpg","slides/s-19.jpg","slides/s-20.jpg","slides/s-21.jpg","slides/s-22.jpg","slides/s-23.jpg","slides/s-24.jpg","slides/s-25.jpg","slides/s-26.jpg","slides/s-27.jpg","slides/s-28.jpg","slides/s-29.jpg","slides/s-30.jpg","slides/s-31.jpg","slides/s-32.jpg","slides/s-33.jpg","slides/s-34.jpg","slides/s-35.jpg","slides/s-36.jpg","slides/s-37.jpg","slides/s-38.jpg","slides/s-39.jpg","slides/s-40.jpg","slides/s-41.jpg","slides/s-42.jpg","slides/s-43.jpg","slides/s-44.jpg","slides/s-45.jpg","slides/s-46.jpg","slides/s-47.jpg","slides/s-48.jpg","slides/s-49.jpg","slides/s-50.jpg"],"vocab":[{"zh":"急剧","py":"jíjù","hv":"cấp kịch","type":"tính từ","vi":"nhanh chóng, đột ngột (tăng/giảm mạnh)","ex":"人口急剧增加。","exvi":"Dân số tăng lên nhanh chóng.","audio":"audio/w01.mp3","exaudio":"audio/e01.mp3"},{"zh":"川流不息","py":"chuānliú-bùxī","hv":"xuyên lưu bất tức","type":"thành ngữ","vi":"(người, xe) qua lại nối tiếp không ngớt","ex":"街上的车辆川流不息。","exvi":"Xe cộ trên đường qua lại không ngớt.","audio":"audio/w02.mp3","exaudio":"audio/e02.mp3"},{"zh":"登录","py":"dēnglù","hv":"đăng lục","type":"động từ","vi":"đăng nhập (trang web, tài khoản)","ex":"登录网站","exvi":"đăng nhập trang web","audio":"audio/w03.mp3","exaudio":"audio/e03.mp3"},{"zh":"指令","py":"zhǐlìng","hv":"chỉ lệnh","type":"danh từ","vi":"mệnh lệnh, lệnh (cho máy móc)","ex":"下几道指令","exvi":"ra vài lệnh","audio":"audio/w04.mp3","exaudio":"audio/e04.mp3"},{"zh":"根深蒂固","py":"gēnshēn-dìgù","hv":"căn thâm đế cố","type":"thành ngữ","vi":"ăn sâu bén rễ, khó thay đổi","ex":"根深蒂固的购物习惯","exvi":"thói quen mua sắm đã ăn sâu bén rễ","audio":"audio/w05.mp3","exaudio":"audio/e05.mp3"},{"zh":"不免","py":"bùmiǎn","hv":"bất miễn","type":"phó từ","vi":"khó tránh khỏi, không khỏi","ex":"我们不免要问……","exvi":"Chúng ta không khỏi muốn hỏi…","audio":"audio/w06.mp3","exaudio":"audio/e06.mp3"},{"zh":"预言","py":"yùyán","hv":"dự ngôn","type":"động từ","vi":"dự đoán, tiên đoán","ex":"有人这样预言……","exvi":"Có người dự đoán thế này…","audio":"audio/w07.mp3","exaudio":"audio/e07.mp3"},{"zh":"革命","py":"gémìng","hv":"cách mạng","type":"động từ","vi":"cách mạng; thay đổi tận gốc","ex":"进行根本性的革命","exvi":"tiến hành một cuộc cách mạng căn bản","audio":"audio/w08.mp3","exaudio":"audio/e08.mp3"},{"zh":"改良","py":"gǎiliáng","hv":"cải lương","type":"động từ","vi":"cải tiến, cải thiện (sửa đổi từng phần)","ex":"改良品种","exvi":"cải tạo giống","audio":"audio/w09.mp3","exaudio":"audio/e09.mp3"},{"zh":"欣欣向荣","py":"xīnxīn-xiàngróng","hv":"hân hân hướng vinh","type":"thành ngữ","vi":"phát triển phồn thịnh, thịnh vượng","ex":"昔日的欣欣向荣","exvi":"sự phồn thịnh ngày xưa","audio":"audio/w10.mp3","exaudio":"audio/e10.mp3"},{"zh":"仓库","py":"cāngkù","hv":"thương khố","type":"danh từ","vi":"nhà kho","ex":"仓库里堆满了货物。","exvi":"Trong kho chất đầy hàng hóa.","audio":"audio/w11.mp3","exaudio":"audio/e11.mp3"},{"zh":"储备","py":"chǔbèi","hv":"trữ bị","type":"động từ","vi":"dự trữ (để dùng sau)","ex":"储备粮食","exvi":"dự trữ lương thực","audio":"audio/w12.mp3","exaudio":"audio/e12.mp3"},{"zh":"结算","py":"jiésuàn","hv":"kết toán","type":"động từ","vi":"thanh toán, quyết toán","ex":"销售结算","exvi":"thanh toán bán hàng","audio":"audio/w13.mp3","exaudio":"audio/e13.mp3"},{"zh":"模式","py":"móshì","hv":"mô thức","type":"danh từ","vi":"mô hình, kiểu mẫu","ex":"商业模式","exvi":"mô hình kinh doanh","audio":"audio/w14.mp3","exaudio":"audio/e14.mp3"},{"zh":"把手","py":"bǎshou","hv":"bả thủ","type":"danh từ","vi":"tay cầm, tay nắm","ex":"购物车把手","exvi":"tay cầm xe đẩy mua hàng","audio":"audio/w15.mp3","exaudio":"audio/e15.mp3"},{"zh":"装卸","py":"zhuāngxiè","hv":"trang tá","type":"động từ","vi":"lắp và tháo; bốc dỡ (hàng)","ex":"可随意装卸的工具","exvi":"dụng cụ có thể tháo lắp tùy ý","audio":"audio/w16.mp3","exaudio":"audio/e16.mp3"},{"zh":"屏幕","py":"píngmù","hv":"bình mạc","type":"danh từ","vi":"màn hình","ex":"小屏幕上显示位置","exvi":"màn hình nhỏ hiển thị vị trí","audio":"audio/w17.mp3","exaudio":"audio/e17.mp3"},{"zh":"相应","py":"xiāngyìng","hv":"tương ứng","type":"động từ","vi":"tương ứng, phù hợp với","ex":"走到相应的货架","exvi":"đi đến kệ hàng tương ứng","audio":"audio/w18.mp3","exaudio":"audio/e18.mp3"},{"zh":"仪器","py":"yíqì","hv":"nghi khí","type":"danh từ","vi":"máy móc, thiết bị (kỹ thuật, đo đạc)","ex":"仪器会发出提示音。","exvi":"Thiết bị sẽ phát ra âm báo.","audio":"audio/w19.mp3","exaudio":"audio/e19.mp3"},{"zh":"以免","py":"yǐmiǎn","hv":"dĩ miễn","type":"liên từ","vi":"để tránh, để khỏi, kẻo","ex":"以免消费者错过商品","exvi":"để người mua khỏi bỏ lỡ hàng","audio":"audio/w20.mp3","exaudio":"audio/e20.mp3"},{"zh":"嫌","py":"xián","hv":"hiềm","type":"động từ","vi":"chê, không thích, ngại","ex":"又嫌腥","exvi":"nhưng lại ngại tanh","audio":"audio/w21.mp3","exaudio":"audio/e21.mp3"},{"zh":"腥","py":"xīng","hv":"tinh","type":"tính từ","vi":"tanh (mùi cá, hải sản)","ex":"这条鱼很腥。","exvi":"Con cá này rất tanh.","audio":"audio/w22.mp3","exaudio":"audio/e22.mp3"},{"zh":"清理","py":"qīnglǐ","hv":"thanh lý","type":"động từ","vi":"dọn dẹp, làm sạch","ex":"把鱼清理好","exvi":"làm sạch cá","audio":"audio/w23.mp3","exaudio":"audio/e23.mp3"},{"zh":"等候","py":"děnghòu","hv":"đẳng hậu","type":"động từ","vi":"chờ đợi","ex":"排队等候","exvi":"xếp hàng chờ đợi","audio":"audio/w24.mp3","exaudio":"audio/e24.mp3"},{"zh":"性能","py":"xìngnéng","hv":"tính năng","type":"danh từ","vi":"tính năng, hiệu suất (máy móc)","ex":"性能更好","exvi":"tính năng tốt hơn","audio":"audio/w25.mp3","exaudio":"audio/e25.mp3"},{"zh":"便利","py":"biànlì","hv":"tiện lợi","type":"tính từ","vi":"tiện lợi, thuận tiện","ex":"便利店","exvi":"cửa hàng tiện lợi","audio":"audio/w26.mp3","exaudio":"audio/e26.mp3"},{"zh":"把关","py":"bǎ guān","hv":"bả quan","type":"động từ","vi":"kiểm soát, kiểm tra kỹ (giữ cửa ải)","ex":"电子便利站会为你把关。","exvi":"Trạm tiện ích điện tử sẽ kiểm tra giúp bạn.","audio":"audio/w27.mp3","exaudio":"audio/e27.mp3"},{"zh":"人工","py":"réngōng","hv":"nhân công","type":"danh từ","vi":"sức người, thủ công; nhân tạo","ex":"人工过秤","exvi":"cân hàng thủ công","audio":"audio/w28.mp3","exaudio":"audio/e28.mp3"},{"zh":"秤","py":"chèng","hv":"xứng","type":"danh từ","vi":"cái cân","ex":"过秤","exvi":"cân (hàng)","audio":"audio/w29.mp3","exaudio":"audio/e29.mp3"},{"zh":"运算","py":"yùnsuàn","hv":"vận toán","type":"động từ","vi":"tính toán (theo phép toán)","ex":"迅速运算","exvi":"tính toán nhanh chóng","audio":"audio/w30.mp3","exaudio":"audio/e30.mp3"},{"zh":"总和","py":"zǒnghé","hv":"tổng hòa","type":"danh từ","vi":"tổng số, tổng cộng","ex":"钱数的总和","exvi":"tổng số tiền","audio":"audio/w31.mp3","exaudio":"audio/e31.mp3"},{"zh":"着重","py":"zhuózhòng","hv":"trước trọng","type":"động từ","vi":"chú trọng, nhấn mạnh","ex":"着重推荐","exvi":"đặc biệt giới thiệu","audio":"audio/w32.mp3","exaudio":"audio/e32.mp3"},{"zh":"虚拟","py":"xūnǐ","hv":"hư nghĩ","type":"tính từ","vi":"ảo (không có thật)","ex":"虚拟设计室","exvi":"phòng thiết kế ảo","audio":"audio/w33.mp3","exaudio":"audio/e33.mp3"},{"zh":"投票","py":"tóu piào","hv":"đầu phiếu","type":"động từ","vi":"bỏ phiếu, bình chọn","ex":"进行投票","exvi":"tiến hành bỏ phiếu","audio":"audio/w34.mp3","exaudio":"audio/e34.mp3"},{"zh":"保管","py":"bǎoguǎn","hv":"bảo quản","type":"động từ","vi":"đảm bảo, chắc chắn; bảo quản","ex":"保管你满意","exvi":"đảm bảo bạn hài lòng","audio":"audio/w35.mp3","exaudio":"audio/e35.mp3"},{"zh":"新颖","py":"xīnyǐng","hv":"tân dĩnh","type":"tính từ","vi":"mới lạ, độc đáo","ex":"样式新颖","exvi":"kiểu dáng mới lạ","audio":"audio/w36.mp3","exaudio":"audio/e36.mp3"},{"zh":"羽绒服","py":"yǔróngfú","hv":"vũ nhung phục","type":"danh từ","vi":"áo lông vũ","ex":"一件羽绒服","exvi":"một chiếc áo lông vũ","audio":"audio/w37.mp3","exaudio":"audio/e37.mp3"},{"zh":"旗袍","py":"qípáo","hv":"kỳ bào","type":"danh từ","vi":"sườn xám","ex":"穿旗袍","exvi":"mặc sườn xám","audio":"audio/w38.mp3","exaudio":"audio/e38.mp3"},{"zh":"中意","py":"zhòng yì","hv":"trúng ý","type":"động từ","vi":"vừa ý, ưng ý","ex":"你中意的音响","exvi":"dàn âm thanh bạn ưng ý","audio":"audio/w39.mp3","exaudio":"audio/e39.mp3"},{"zh":"音响","py":"yīnxiǎng","hv":"âm hưởng","type":"danh từ","vi":"dàn âm thanh, loa","ex":"一套音响","exvi":"một bộ dàn âm thanh","audio":"audio/w40.mp3","exaudio":"audio/e40.mp3"},{"zh":"收音机","py":"shōuyīnjī","hv":"thu âm cơ","type":"danh từ","vi":"đài, radio","ex":"听收音机","exvi":"nghe đài","audio":"audio/w41.mp3","exaudio":"audio/e41.mp3"},{"zh":"水龙头","py":"shuǐlóngtóu","hv":"thủy long đầu","type":"danh từ","vi":"vòi nước","ex":"关水龙头","exvi":"khóa vòi nước","audio":"audio/w42.mp3","exaudio":"audio/e42.mp3"},{"zh":"枚","py":"méi","hv":"mai","type":"lượng từ","vi":"chiếc, cái (vật nhỏ, tròn dẹt)","ex":"几枚纽扣儿、一枚硬币","exvi":"vài chiếc cúc, một đồng xu","audio":"audio/w43.mp3","exaudio":"audio/e43.mp3"},{"zh":"纽扣儿","py":"niǔkòur","hv":"nữu khấu","type":"danh từ","vi":"cúc áo, khuy áo","ex":"掉了一枚纽扣儿","exvi":"rơi mất một chiếc cúc","audio":"audio/w44.mp3","exaudio":"audio/e44.mp3"},{"zh":"插座","py":"chāzuò","hv":"sáp tọa","type":"danh từ","vi":"ổ cắm điện","ex":"一个插座","exvi":"một cái ổ cắm","audio":"audio/w45.mp3","exaudio":"audio/e45.mp3"},{"zh":"勘探","py":"kāntàn","hv":"khám thám","type":"động từ","vi":"thăm dò (khoáng sản)","ex":"勘探石油","exvi":"thăm dò dầu mỏ","audio":"audio/w46.mp3","exaudio":"audio/e46.mp3"},{"zh":"矿产","py":"kuàngchǎn","hv":"khoáng sản","type":"danh từ","vi":"khoáng sản","ex":"矿产资源","exvi":"tài nguyên khoáng sản","audio":"audio/w47.mp3","exaudio":"audio/e47.mp3"},{"zh":"反馈","py":"fǎnkuì","hv":"phản quỹ","type":"động từ","vi":"phản hồi","ex":"得到反馈","exvi":"nhận được phản hồi","audio":"audio/w48.mp3","exaudio":"audio/e48.mp3"},{"zh":"款式","py":"kuǎnshì","hv":"khoản thức","type":"danh từ","vi":"kiểu dáng, mẫu mã","ex":"多种款式","exvi":"nhiều mẫu mã","audio":"audio/w49.mp3","exaudio":"audio/e49.mp3"},{"zh":"关怀","py":"guānhuái","hv":"quan hoài","type":"động từ","vi":"quan tâm, chăm sóc ân cần","ex":"对消费者的关怀","exvi":"sự quan tâm tới người tiêu dùng","audio":"audio/w50.mp3","exaudio":"audio/e50.mp3"},{"zh":"无微不至","py":"wúwēi-búzhì","hv":"vô vi bất chí","type":"thành ngữ","vi":"chu đáo từng li từng tí","ex":"关怀得无微不至","exvi":"quan tâm chu đáo từng li từng tí","audio":"audio/w51.mp3","exaudio":"audio/e51.mp3"},{"zh":"需求","py":"xūqiú","hv":"nhu cầu","type":"danh từ","vi":"nhu cầu","ex":"把握消费者的需求","exvi":"nắm bắt nhu cầu người tiêu dùng","audio":"audio/w52.mp3","exaudio":"audio/e52.mp3"},{"zh":"主导","py":"zhǔdǎo","hv":"chủ đạo","type":"danh từ","vi":"vai trò chủ đạo","ex":"以消费者为主导","exvi":"lấy người tiêu dùng làm chủ đạo","audio":"audio/w53.mp3","exaudio":"audio/e53.mp3"},{"zh":"兴隆","py":"xīnglóng","hv":"hưng long","type":"tính từ","vi":"thịnh vượng, (buôn bán) phát đạt","ex":"生意兴隆","exvi":"buôn bán phát đạt","audio":"audio/w54.mp3","exaudio":"audio/e54.mp3"}],"passage":[{"zh":"如今喜欢网络购物的人急剧增加，买东西不用在川流不息的人群中奔走，仅需登录网站，动几下手指，下几道指令就可以把东西买回家，人类根深蒂固的购物习惯正在改变。","vi":"Ngày nay, số người thích mua sắm trên mạng tăng lên nhanh chóng. Mua đồ không cần phải chạy ngược xuôi giữa dòng người tấp nập, chỉ cần đăng nhập trang web, động vài ngón tay, ra vài lệnh là có thể mua hàng về tận nhà. Thói quen mua sắm đã ăn sâu bén rễ của con người đang thay đổi.","notes":["Chú ý cấu trúc: 不用……，仅需……就可以……, nghĩa là: không cần…, chỉ cần… là có thể…","仅需 là cách nói văn viết của 只需要, chỉ cần. Còn 道 là lượng từ cho mệnh lệnh: 下几道指令, ra vài lệnh."],"audio":"audio/p01.mp3"},{"zh":"我们不免要问：网上购物如此方便，未来实体商店还会存在吗？有人这样预言：实体商店若想存在，必须进行根本性的革命，而不是改良，否则实体店昔日的欣欣向荣终将一去不复还。","vi":"Chúng ta không khỏi đặt câu hỏi: mua sắm trên mạng tiện lợi như vậy, trong tương lai cửa hàng thực thể có còn tồn tại không? Có người dự đoán rằng: cửa hàng thực thể nếu muốn tồn tại thì phải tiến hành một cuộc cách mạng mang tính căn bản, chứ không phải chỉ cải tiến; nếu không, sự phồn thịnh ngày xưa của cửa hàng thực thể rồi sẽ một đi không trở lại.","notes":["若 nghĩa là nếu, là cách nói văn viết của 如果. 而不是 nghĩa là chứ không phải. 否则 nghĩa là nếu không thì.","昔日 là ngày xưa. 终将 là cuối cùng sẽ. Và 一去不复还 nghĩa là một đi không trở lại."],"audio":"audio/p02.mp3"},{"zh":"有人这样描述未来商店：那里的仓库货物储备管理、销售结算、客户关系管理等，全部实现电子化。在那儿几乎见不到工作人员，顾客可以自己动手完成整个购物过程。未来商店实行的将是一种全新的商业模式。","vi":"Có người mô tả cửa hàng tương lai như sau: ở đó, việc quản lý dự trữ hàng trong kho, thanh toán bán hàng, quản lý quan hệ khách hàng… tất cả đều được điện tử hóa. Ở đó hầu như không thấy nhân viên, khách hàng có thể tự mình hoàn thành toàn bộ quá trình mua sắm. Cửa hàng tương lai sẽ áp dụng một mô hình kinh doanh hoàn toàn mới.","notes":["Hậu tố 化 giống chữ hóa trong tiếng Việt: 电子化 là điện tử hóa, 现代化 là hiện đại hóa.","自己动手 là tự tay làm. 全新 là hoàn toàn mới."],"audio":"audio/p03.mp3"},{"zh":"未来商店的购物车把手上装有购物助手——一个可随意装卸的无线电脑工具。消费者想买哪种商品，小屏幕上就会显示商品所在的位置，当消费者走到相应货架时，仪器会发出提示音，以免消费者错过商品。","vi":"Trên tay cầm xe đẩy của cửa hàng tương lai có gắn một “trợ lý mua sắm” – một thiết bị máy tính không dây có thể tháo lắp tùy ý. Người tiêu dùng muốn mua món hàng nào, màn hình nhỏ sẽ hiển thị vị trí của món hàng đó; khi người tiêu dùng đi đến kệ hàng tương ứng, thiết bị sẽ phát ra âm báo, để người tiêu dùng khỏi bỏ lỡ món hàng.","notes":["装有 nghĩa là có lắp, có gắn. Dấu gạch ngang dài dùng để giải thích thêm cho cụm từ phía trước.","想买哪种商品，就会显示…… : muốn mua loại nào thì hiển thị loại đó. Đại từ nghi vấn 哪 ở đây không dùng để hỏi mà mang nghĩa bất kỳ. Còn 以免 ta sẽ học kỹ ở phần ngữ pháp."],"audio":"audio/p04.mp3"},{"zh":"如果你想吃鲜鱼，又嫌腥，不愿自己加工，可以在触摸屏上留言，等店员把鱼清理好后，再去领取，不必排队等候。","vi":"Nếu bạn muốn ăn cá tươi nhưng lại ngại tanh, không muốn tự mình sơ chế, bạn có thể để lại lời nhắn trên màn hình cảm ứng, đợi nhân viên làm sạch cá xong rồi đến lấy, không cần xếp hàng chờ đợi.","notes":["又 ở đây nghĩa là nhưng lại: muốn ăn cá tươi nhưng lại ngại tanh. 加工 ở đây là sơ chế. 等……后，再…… nghĩa là đợi… xong rồi mới….","Các bạn để ý: cả câu dài này chỉ có một chủ ngữ 你 ở đầu, các vế sau đều lược bỏ chủ ngữ. Đây chính là hiện tượng tỉnh lược mà ta học ở cuối bài."],"audio":"audio/p05.mp3"},{"zh":"如果想买手机，又不了解哪一款性能更适合自己，也无须烦恼，电子便利站会为你把关，在那儿一系列选择题会为你提供决策支持和购买建议。","vi":"Nếu muốn mua điện thoại mà lại không biết mẫu nào có tính năng phù hợp với mình hơn, bạn cũng không cần phiền não, “trạm tiện ích điện tử” sẽ kiểm tra giúp bạn; ở đó, một loạt câu hỏi lựa chọn sẽ hỗ trợ bạn ra quyết định và đưa ra gợi ý mua hàng.","notes":["无须 nghĩa là không cần, là cách nói văn viết của 不必. 一系列 là một loạt.","为你提供…… là cung cấp… cho bạn. 决策 là ra quyết định, quyết sách."],"audio":"audio/p06.mp3"},{"zh":"购物完毕，该结账了，未来商店无须人工过秤，带有摄像头的结账系统可以识别商品的重量和体积，迅速运算，之后给出消费钱数的总和，自动收款机则可接受现金和刷卡支付。","vi":"Mua sắm xong, đến lúc tính tiền. Cửa hàng tương lai không cần người cân hàng thủ công; hệ thống thanh toán có gắn camera có thể nhận diện trọng lượng và thể tích hàng hóa, tính toán nhanh chóng, rồi đưa ra tổng số tiền phải trả; còn máy thu tiền tự động thì chấp nhận cả tiền mặt lẫn quẹt thẻ.","notes":["完毕 nghĩa là xong, văn viết. 该……了 nghĩa là đến lúc phải… rồi: 该结账了, đến lúc tính tiền rồi.","摄像头 là camera. 刷卡 là quẹt thẻ. 则 ở đây nghĩa là còn, thì, dùng để chuyển sang nói về một đối tượng khác."],"audio":"audio/p07.mp3"},{"zh":"消费者加入设计队伍，是未来商店着重推荐的服务，譬如，你想买衣服，可是你觉得市场上的几款都不太满意，那就参与设计吧。","vi":"Cho người tiêu dùng tham gia vào đội ngũ thiết kế là dịch vụ mà cửa hàng tương lai đặc biệt giới thiệu. Ví dụ, bạn muốn mua quần áo, nhưng thấy mấy mẫu trên thị trường đều không ưng lắm, vậy thì hãy tham gia thiết kế!","notes":["譬如 nghĩa là ví dụ như, giống 比如 nhưng trang trọng hơn. 那就……吧 nghĩa là vậy thì hãy…."],"audio":"audio/p08.mp3"},{"zh":"你登录到虚拟设计室，进入设计过程，对颜色、外观等设计内容进行投票，这样设计出来的衣服保管你满意。","vi":"Bạn đăng nhập vào phòng thiết kế ảo, tham gia quá trình thiết kế, bỏ phiếu cho các nội dung thiết kế như màu sắc, kiểu dáng bên ngoài…; quần áo được thiết kế ra như vậy đảm bảo bạn sẽ hài lòng.","notes":["Cấu trúc 对 cộng đối tượng cộng 进行 cộng động từ hai âm tiết rất phổ biến trong văn viết: 对设计内容进行投票, tiến hành bỏ phiếu cho nội dung thiết kế.","保管你满意 nghĩa là đảm bảo bạn hài lòng, đúng như nghĩa khẩu ngữ của từ 保管 mà ta vừa học."],"audio":"audio/p09.mp3"},{"zh":"在未来商店，商家和消费者的互动非常活跃。不管你是想买样式新颖的羽绒服、旗袍，还是想买你中意的音响、收音机、水龙头或者只是几枚纽扣儿、一个插座，再或者是勘探矿产的工具，你只要把照片发送到专门的网站，就能得到反馈：","vi":"Ở cửa hàng tương lai, sự tương tác giữa người bán và người mua rất sôi nổi. Dù bạn muốn mua áo lông vũ, sườn xám kiểu dáng mới lạ, hay muốn mua dàn âm thanh, radio, vòi nước mà bạn ưng ý, hoặc chỉ là vài chiếc cúc áo, một cái ổ cắm, hay thậm chí là dụng cụ thăm dò khoáng sản, bạn chỉ cần gửi ảnh đến trang web chuyên dụng là sẽ nhận được phản hồi:","notes":["Đây là cấu trúc kết hợp: 不管……还是……，只要……就……, nghĩa là: bất kể… hay…, chỉ cần… là….","Tác giả liệt kê rất nhiều món hàng, từ áo lông vũ đến dụng cụ thăm dò khoáng sản, để nhấn mạnh rằng món gì cũng tìm được."],"audio":"audio/p10.mp3"},{"zh":"“您查询的商品在某某店有售，那里有多种款式供您选购。”这样的互动方便了顾客，也为商家带来了生意。","vi":"“Món hàng quý khách tìm có bán tại cửa hàng X, ở đó có nhiều mẫu mã để quý khách lựa chọn.” Sự tương tác như vậy vừa tạo thuận tiện cho khách hàng, vừa mang lại việc làm ăn cho người bán.","notes":["有售 nghĩa là có bán. 供您选购 nghĩa là để quý khách chọn mua; 供 là cung cấp cho.","方便 ở đây là động từ, nghĩa là tạo thuận tiện cho: 方便了顾客."],"audio":"audio/p11.mp3"},{"zh":"未来商店对消费者的关怀可谓无微不至，他们根据消费者的个人生活习惯，把握消费者的需求，将商店变为以消费者为主导的店铺。努力使整个购物过程轻松、快捷、便利，是未来商店每一项设计的宗旨。","vi":"Sự quan tâm của cửa hàng tương lai dành cho người tiêu dùng có thể nói là chu đáo từng li từng tí. Họ dựa vào thói quen sinh hoạt cá nhân của người tiêu dùng để nắm bắt nhu cầu, biến cửa hàng thành nơi lấy người tiêu dùng làm chủ đạo. Cố gắng làm cho toàn bộ quá trình mua sắm nhẹ nhàng, nhanh chóng, tiện lợi chính là tôn chỉ của mọi thiết kế trong cửa hàng tương lai.","notes":["可谓 nghĩa là có thể nói là. 将 ở đây bằng 把 trong văn viết: 将商店变为…… cũng giống 把商店变成…….","以……为…… nghĩa là lấy… làm…: 以消费者为主导, lấy người tiêu dùng làm chủ đạo. 宗旨 là tôn chỉ, mục đích."],"audio":"audio/p12.mp3"},{"zh":"试想，这样的商店怎么能不生意兴隆呢！","vi":"Thử nghĩ xem, một cửa hàng như vậy làm sao mà không buôn bán phát đạt cho được!","notes":["怎么能不……呢 là câu hỏi tu từ, nghĩa là làm sao có thể không…, tức là chắc chắn sẽ…. Đây là cách kết bài rất mạnh mẽ và tự nhiên."],"audio":"audio/p13.mp3"}],"exercises":[{"title":"Luyện tập: dùng 以免 hoàn thành câu","items":[{"q":"(1) 机动车和非机动车应该各行其道，以免……","a":"……以免发生交通事故。"},{"q":"(2) 使用电脑工作时，不要忘了经常保存你的文件，以免……","a":"……以免突然断电时文件丢失。"},{"q":"(3) 我们必须不断地看书、学习、充实自己，以免……","a":"……以免被社会淘汰。"}]},{"title":"Luyện tập: hoàn thành câu với 嫌","items":[{"q":"(1) 她喜欢为大家做事，从不嫌……","a":"……从不嫌麻烦 / 从不嫌累。"},{"q":"(2) 他嫌……，衣服送来以后就放在那儿，一次都没穿过。","a":"他嫌这件衣服的颜色太艳……"},{"q":"(3) 她嫌……，决定搬出学校，和朋友一块儿在外面合租房子。","a":"她嫌宿舍太吵……"}]},{"title":"Làm thử: Đúng hay sai?","items":[{"q":"(1) 旧地重游，感慨万千，让人不免想起往事。","a":"ĐÚNG – có nguyên nhân (thăm lại chốn cũ), kết quả tự nhiên."},{"q":"(2) 真是的，他未免太不会关心人了，干脆分手算了。","a":"ĐÚNG – đây là lời phê bình, đánh giá."},{"q":"(3) 星期天，我不免有些闷闷不乐。","a":"SAI – thiếu nguyên nhân. Sửa: 星期天一个人在家，我不免有些闷闷不乐。"},{"q":"(4) 听到老师表扬他，他未免高兴起来，手舞足蹈的。","a":"SAI – là kết quả tự nhiên, không phải phê bình. Sửa: 他不免高兴起来。"}]},{"title":"Luyện tập: chỉ ra lỗi và sửa lại","items":[{"q":"(1) 新年的临近给全家带来了节日的气氛，全家人又打扫卫生，全家人又擦玻璃，还买来了花瓶，插上了鲜花。","a":"……全家人又打扫卫生，又擦玻璃，还买来了花瓶，插上了鲜花。"},{"q":"(2) 他八岁起就喜欢上了足球，他天天在球场上一直泡到天黑，后来他终于进了国家队。","a":"他八岁起就喜欢上了足球，天天在球场上一直泡到天黑，后来终于进了国家队。"},{"q":"(3) ……我在前面走，它在后面跟着，它两只大眼睛看着我，它眼中充满无知、天真、信任和快乐。","a":"……它在后面跟着，两只大眼睛看着我，眼中充满无知、天真、信任和快乐。"}]},{"title":"Bài tập 2: Viết lại câu bằng từ cho sẵn","items":[{"q":"(1) 最近几十年，世界人口快速增加，给地球造成了巨大压力。（急剧）","a":"最近几十年，世界人口急剧增加，给地球造成了巨大压力。"},{"q":"(2) 为了不耽误第二天的考试，他前一天晚上定好了闹钟。（以免）","a":"他前一天晚上定好了闹钟，以免耽误第二天的考试。"},{"q":"(3) 我觉得食堂的饭菜太油腻，所以自己动手做饭。（嫌）","a":"我嫌食堂的饭菜太油腻，所以自己动手做饭。"},{"q":"(4) 今天的会议上，总经理重点强调了以下几个问题。（着重）","a":"今天的会议上，总经理着重强调了以下几个问题。"}]}]}];
+const CATALOG = {"books":[{"id":"hsk6-ha","short":"HSK 6 · Quyển Hạ","name":"Giáo trình chuẩn HSK 6 – Quyển Hạ","zh":"标准教程 HSK 6 下","units":[{"zh":"第六单元 趣味世界","vi":"Đơn vị 6 · Thế giới thú vị","lessons":[{"n":21,"id":"bai21","zh":"未来商店","vi":"Cửa hàng tương lai"},{"n":22,"id":"bai22","zh":"2050年的汽车什么样","vi":"Ô tô năm 2050 sẽ như thế nào?"},{"n":23,"id":"bai23","zh":"大数据时代","vi":"Thời đại dữ liệu lớn"},{"n":24,"id":"bai24","zh":"体育明星们的离奇遭遇","vi":"Những chuyện lạ của các ngôi sao thể thao"}]},{"zh":"第七单元 经典阅读","vi":"Đơn vị 7 · Đọc tác phẩm kinh điển","lessons":[{"n":25,"id":"bai25","zh":"草船借箭","vi":"Thuyền cỏ mượn tên"},{"n":26,"id":"bai26","zh":"奇异的灯光","vi":"Ánh đèn kỳ lạ"},{"n":27,"id":"bai27","zh":"完璧归赵","vi":"Hoàn bích quy Triệu"},{"n":28,"id":"bai28","zh":"高山流水遇知音","vi":"Cao sơn lưu thủy gặp tri âm"}]},{"zh":"第八单元 人体探秘","vi":"Đơn vị 8 · Khám phá cơ thể người","lessons":[{"n":29,"id":"bai29","zh":"“笑”的备忘录","vi":"Bản ghi nhớ về “tiếng cười”"},{"n":30,"id":"bai30","zh":"你睡好了吗","vi":"Bạn ngủ có ngon không?"},{"n":31,"id":"bai31","zh":"运动的学问","vi":"Kiến thức về vận động"},{"n":32,"id":"bai32","zh":"有时，不妨悲伤","vi":"Đôi khi, cứ buồn cũng được"}]},{"zh":"第九单元 古今博览","vi":"Đơn vị 9 · Xưa và nay","lessons":[{"n":33,"id":"bai33","zh":"怀念慢生活","vi":"Nhớ về cuộc sống chậm"},{"n":34,"id":"bai34","zh":"为文物而生的人","vi":"Người sinh ra vì cổ vật"},{"n":35,"id":"bai35","zh":"走近木版年画","vi":"Tìm hiểu tranh Tết khắc gỗ"},{"n":36,"id":"bai36","zh":"中国古代书院","vi":"Học viện cổ đại Trung Quốc"}]},{"zh":"第十单元 热点追踪","vi":"Đơn vị 10 · Theo dấu điểm nóng","lessons":[{"n":37,"id":"bai37","zh":"警察的故事","vi":"Câu chuyện của những người cảnh sát"},{"n":38,"id":"bai38","zh":"慧眼捕捉商机","vi":"Mắt tinh nắm bắt cơ hội kinh doanh"},{"n":39,"id":"bai39","zh":"互联网时代的生活","vi":"Cuộc sống thời Internet"},{"n":40,"id":"bai40","zh":"人类超能力会改变世界纪录吗","vi":"Siêu năng lực của con người có thay đổi kỷ lục thế giới?"}]}]},{"id":"hsk6-thuong","short":"HSK 6 · Quyển Thượng","name":"Giáo trình chuẩn HSK 6 – Quyển Thượng","zh":"标准教程 HSK 6 上","units":[{"zh":"第一单元 生活点滴","vi":"Chủ đề 1 · Những việc nhỏ nhặt trong cuộc sống","lessons":[{"n":1,"id":"bai01","zh":"孩子给我们的启示","vi":"Điều con trẻ dạy chúng ta"},{"n":2,"id":"bai02","zh":"父母之爱","vi":"Tình yêu của ba mẹ"},{"n":3,"id":"bai03","zh":"一盒月饼","vi":"Một hộp bánh Trung thu"},{"n":4,"id":"bai04","zh":"完美的胜利","vi":"Chiến thắng hoàn hảo"}]},{"zh":"第二单元 不甘平庸","vi":"Chủ đề 2 · Không cam chịu tầm thường","lessons":[{"n":5,"id":"bai05","zh":"学一门外语需要理由吗？","vi":"Học ngoại ngữ cần lý do ư?"},{"n":6,"id":"bai06","zh":"当好职场插班生","vi":"Hãy là học sinh giỏi tại nơi làm việc"},{"n":7,"id":"bai07","zh":"我的人生我做主","vi":"Tôi làm chủ cuộc đời tôi"},{"n":8,"id":"bai08","zh":"遇见原来的我","vi":"Gặp lại tôi của ngày xưa"}]},{"zh":"第三单元 多彩社会","vi":"Chủ đề 3 · Xã hội nhiều màu sắc","lessons":[{"n":9,"id":"bai09","zh":"不用手机的日子","vi":"Một ngày không sử dụng điện thoại di động"},{"n":10,"id":"bai10","zh":"全球化视野中的中国饮食","vi":"Thức ăn Trung Quốc trong xu thế toàn cầu hóa"},{"n":11,"id":"bai11","zh":"我不在时，猫在干什么？","vi":"Các chú mèo làm gì khi tôi đi vắng?"},{"n":12,"id":"bai12","zh":"我们都爱白噪音","vi":"Chúng ta đều yêu tiếng ồn trắng"}]},{"zh":"第四单元 走遍天下","vi":"Chủ đề 4 · Đi khắp thế giới","lessons":[{"n":13,"id":"bai13","zh":"从旅游指南看世事变迁","vi":"Nhìn thế sự đổi thay qua sách cẩm nang du lịch"},{"n":14,"id":"bai14","zh":"背着电饭锅拍北极","vi":"Vác nồi cơm điện đi chụp ảnh Bắc Cực"},{"n":15,"id":"bai15","zh":"山脉上的雕刻","vi":"Các tác phẩm điêu khắc trên dãy núi"},{"n":16,"id":"bai16","zh":"徐健和他的野生动物摄影师们","vi":"Từ Kiện và các nhà nhiếp ảnh động vật hoang dã"}]},{"zh":"第五单元 美丽家园","vi":"Chủ đề 5 · Quê hương xinh đẹp","lessons":[{"n":17,"id":"bai17","zh":"小动物眼中的慢世界","vi":"Thế giới chậm trong mắt động vật nhỏ"},{"n":18,"id":"bai18","zh":"神奇的丝瓜","vi":"Quả mướp thần kỳ"},{"n":19,"id":"bai19","zh":"无阳光的深海世界","vi":"Thế giới biển sâu không ánh mặt trời"},{"n":20,"id":"bai20","zh":"金鸡窝","vi":"Ổ gà vàng"}]}]},{"id":"dingshi","short":"顶石中文","name":"顶石中文 – Đỉnh cao tiếng Trung","zh":"顶石中文","units":[{"zh":"第1单元 教育篇","vi":"Đơn vị 1 · Giáo dục","lessons":[{"n":"1.1","id":"ds11","zh":"没有高考，你怎么拼得过富二代？","vi":"Không có thi đại học, sao bạn đua lại được “phú nhị đại”?"},{"n":"1.2","id":"ds12","zh":"学区房情结怎么破？","vi":"Phá bỏ nỗi ám ảnh “nhà gần trường” thế nào?"},{"n":"1.3","id":"ds13","zh":"“高考移民”动了谁的奶酪？","vi":"“Di dân thi đại học” đụng đến miếng phô mai của ai?"}]},{"zh":"第2单元 时代篇","vi":"Đơn vị 2 · Thời đại","lessons":[{"n":"2.1","id":"ds21","zh":"融不进的城市，回不去的农村","vi":"Thành phố không hòa nhập được, nông thôn không về được"},{"n":"2.2","id":"ds22","zh":"信息化社会：“一个都不能少”","vi":"Xã hội thông tin: “Không ai bị bỏ lại”"},{"n":"2.3","id":"ds23","zh":"群体性孤独：网络社交正在扼杀深度关系","vi":"Cô đơn tập thể: mạng xã hội đang bóp chết những mối quan hệ sâu sắc"}]},{"zh":"第3单元 环保篇","vi":"Đơn vị 3 · Bảo vệ môi trường","lessons":[{"n":"3.1","id":"ds31","zh":"碳排放的“蛋糕”怎么切？","vi":"Chia “chiếc bánh” phát thải carbon thế nào?"},{"n":"3.2","id":"ds32","zh":"“随手扔”还是“随手分”，你“拎得清”吗？","vi":"“Tiện tay vứt” hay “tiện tay phân loại”, bạn có rõ không?"},{"n":"3.3","id":"ds33","zh":"“塑战”能否速决？","vi":"“Cuộc chiến nhựa” có thể thắng nhanh không?"}]},{"zh":"第4单元 科技篇","vi":"Đơn vị 4 · Khoa học công nghệ","lessons":[{"n":"4.1","id":"ds41","zh":"真的，你的隐私只值一分钱！","vi":"Thật đấy, quyền riêng tư của bạn chỉ đáng một xu!"},{"n":"4.2","id":"ds42","zh":"机器人医生，简直神了！","vi":"Bác sĩ robot, quả là thần kỳ!"},{"n":"4.3","id":"ds43","zh":"算法时代：谁是你的菜？","vi":"Thời đại thuật toán: ai là “gu” của bạn?"}]},{"zh":"第5单元 家庭篇","vi":"Đơn vị 5 · Gia đình","lessons":[{"n":"5.1","id":"ds51","zh":"对家暴必须“零容忍”","vi":"Phải “không khoan nhượng” với bạo lực gia đình"},{"n":"5.2","id":"ds52","zh":"“养儿防老”变“养子啃老”？","vi":"“Nuôi con phòng già” thành “nuôi con ăn bám”?"},{"n":"5.3","id":"ds53","zh":"相亲鄙视链：爱情被黑得惨不忍睹","vi":"Chuỗi khinh miệt khi xem mắt: tình yêu bị bôi đen thảm hại"}]},{"zh":"第6单元 职场篇","vi":"Đơn vị 6 · Nơi làm việc","lessons":[{"n":"6.1","id":"ds61","zh":"职场 996","vi":"Văn hóa làm việc “996”"},{"n":"6.2","id":"ds62","zh":"谁能站在新职业风口？","vi":"Ai đứng được ở đầu ngọn gió nghề nghiệp mới?"},{"n":"6.3","id":"ds63","zh":"30 岁的职场姐姐如何乘风破浪？","vi":"Các chị 30 tuổi nơi công sở vượt sóng thế nào?"}]},{"zh":"第7单元 经济篇","vi":"Đơn vị 7 · Kinh tế","lessons":[{"n":"7.1","id":"ds71","zh":"闲置经济是真正的共享经济","vi":"Kinh tế đồ cũ mới là kinh tế chia sẻ thực sự"},{"n":"7.2","id":"ds72","zh":"天下没有永远免费的午餐","vi":"Trên đời không có bữa trưa nào miễn phí mãi"},{"n":"7.3","id":"ds73","zh":"中国扶贫的道路选择","vi":"Con đường xóa đói giảm nghèo của Trung Quốc"}]},{"zh":"第8单元 法律篇","vi":"Đơn vị 8 · Pháp luật","lessons":[{"n":"8.1","id":"ds81","zh":"“大头条”对簿“小油条”","vi":"“Đại Đầu Điều” ra tòa với “Tiểu Du Điều”"},{"n":"8.2","id":"ds82","zh":"高通：打官司打出的“江山”","vi":"Qualcomm: “giang sơn” dựng nên từ kiện tụng"},{"n":"8.3","id":"ds83","zh":"善终也是一种权利","vi":"Ra đi thanh thản cũng là một quyền"}]}]}]};
+
+/* ---------- Tiện ích ---------- */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const CJK = /([㐀-鿿　-〿＀-￯…—]+)/g;
+const zhWrap = s => esc(s).replace(CJK, '<span class="zh" lang="zh">$1</span>');
+const fmt = t => { t = Math.max(0, Math.floor(t)); return Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0"); };
+const ICON_PLAY = '<svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l10 6-10 6V2z"/></svg>';
+const ICON_SOUND = '<svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2V6zm9.5-1.5a5 5 0 010 7l-1-1a3.6 3.6 0 000-5l1-1z"/></svg>';
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+/* Tiến độ chỉ lưu trên trình duyệt của người học */
+const KEY = "ngoc-hoc-tieng-trung";
+let S = {};
+try { S = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+for (const k of ["watched", "pos", "known", "best"]) S[k] = S[k] || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+
+let L = LESSONS.find(l => l.id === S.lesson) || LESSONS[0];
+const url = f => L.id + "/" + f;
+const watched = () => (S.watched[L.id] = S.watched[L.id] || {});
+const known = () => new Set(S.known[L.id] || []);
+const setKnown = (i, on) => { const k = known(); on ? k.add(i) : k.delete(i); S.known[L.id] = [...k]; save(); renderStats(); };
+
+/* Một máy phát chung cho phát âm từ, câu ví dụ, đoạn bài khóa */
+const audio = new Audio();
+let audioBtn = null, audioDone = null;
+function playAudio(src, btn, onEnd) {
+  if (audioBtn) audioBtn.classList.remove("on");
+  if (audioBtn === btn && !audio.paused) { audio.pause(); audioBtn = null; return; }
+  vid.pause();
+  audio.src = url(src);
+  audioBtn = btn || null; audioDone = onEnd || null;
+  if (btn) btn.classList.add("on");
+  audio.play().catch(() => {});
+}
+audio.addEventListener("ended", () => {
+  if (audioBtn) audioBtn.classList.remove("on");
+  audioBtn = null;
+  const f = audioDone; audioDone = null; if (f) f();
+});
+
+/* ---------- Bìa bài học + tiến độ ---------- */
+function renderCover() {
+  $("#cover").innerHTML = `
+    <div class="cover-title">
+      <button class="back" id="back"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 2L5 8l6 6V2z"/></svg> Tất cả bài học</button>
+      <div class="eyebrow">${esc(L.tag.split("·").slice(0, 2).join("·"))}</div>
+      <div class="title-zh">${esc(L.zh)}</div>
+      <div class="title-py">${esc(L.py)}</div>
+      <div class="title-vi">${esc(L.vi)}</div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <button class="btn primary resume" id="resume">${ICON_PLAY}<span id="resumeLbl"></span></button>`;
+  $("#back").onclick = () => { showView("home"); window.scrollTo(0, 0); };
+  $("#resume").onclick = () => {
+    const p = S.pos[L.id];
+    activate("video");
+    loadChapter(p ? p.ch : firstUnwatched(), p ? p.t : 0, true);
+    $(".tabs-band").scrollIntoView({ behavior: "smooth" });
+  };
+  renderStats();
+}
+const firstUnwatched = () => { const w = watched(); const i = L.chapters.findIndex((_, k) => !w[k]); return i < 0 ? 0 : i; };
+function renderStats() {
+  const nW = Object.keys(watched()).length, nC = L.chapters.length;
+  const nK = known().size, nV = L.vocab.length;
+  const best = S.best[L.id];
+  const stat = (num, tot, lbl, pct) => `<div class="stat"><div class="num">${num}${tot != null ? `<small> / ${tot}</small>` : ""}</div><div class="lbl">${lbl}</div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+  $("#stats").innerHTML =
+    stat(nW, nC, "phần video đã xem", 100 * nW / nC) +
+    stat(nK, nV, "từ đã thuộc", 100 * nK / nV) +
+    stat(best != null ? best : "–", best != null ? 10 : null, "điểm trắc nghiệm cao nhất", best != null ? best * 10 : 0);
+  const p = S.pos[L.id];
+  $("#resumeLbl").textContent = p ? `Học tiếp: phần ${p.ch + 1} · ${L.chapters[p.ch].title} (${fmt(p.t)})` : "Bắt đầu học từ phần 1";
+}
+/* ---------- Danh sách bài học (trang chủ) ---------- */
+const byId = Object.fromEntries(LESSONS.map(l => [l.id, l]));
+let view = "home", book = CATALOG.books.some(b => b.id === S.book) ? S.book : (CATALOG.books[0] || {}).id;
+function showView(v) {
+  view = v;
+  $("#home").hidden = v !== "home";
+  document.querySelectorAll(".lesson-view").forEach(el => el.hidden = v !== "lesson");
+  $("#toHome").hidden = v !== "lesson";
+  if (v === "home") {
+    vid.pause(); audio.pause();
+    renderHome();
+    try { history.replaceState(null, "", "#baihoc"); } catch (e) {}
+  }
+}
+function openLesson(id, t) {
+  L = byId[id]; S.lesson = id; save();
+  renderAll(); showView("lesson"); activate(t || "video");
+  window.scrollTo(0, 0);
+}
+function lessonCard(x) {
+  const l = byId[x.id];
+  const head = `<span class="num">${esc(x.n)}</span><span class="lzh" lang="zh">${esc(x.zh)}</span><span class="lvi">${esc(x.vi)}</span>`;
+  if (!l) return `<div class="lcard soon">${head}<span class="lst">Sắp có bài giảng</span></div>`;
+  const w = Object.keys(S.watched[l.id] || {}).length, n = l.chapters.length;
+  return `<button class="lcard ready" data-id="${l.id}">${head}
+    <span class="lst">${w ? `Đã xem ${w}/${n} phần` : "Có bài giảng · bắt đầu học"}<span class="bar"><i style="width:${100 * w / n}%"></i></span></span></button>`;
+}
+function renderHome() {
+  const cont = byId[S.lesson] || LESSONS[0];
+  const nKnown = LESSONS.reduce((s, l) => s + (S.known[l.id] || []).length, 0);
+  $("#hello").innerHTML = `
+    <div><h1>Chào Ngọc!</h1>
+      <p>Đã có ${LESSONS.length} bài giảng · Ngọc đã thuộc ${nKnown} từ. Chọn một bài bên dưới để học nhé.</p></div>
+    ${cont ? `<button class="btn primary" id="homeResume">${ICON_PLAY} Học tiếp Bài ${esc(cont.num)} · <span class="zh" lang="zh">${esc(cont.zh)}</span></button>` : ""}`;
+  if (cont) $("#homeResume").onclick = () => openLesson(cont.id);
+  $("#bookSeg").innerHTML = CATALOG.books.map(b => `<button data-b="${b.id}" aria-pressed="${b.id === book}">${esc(b.short)}</button>`).join("");
+  $("#bookSeg").querySelectorAll("button").forEach(b => b.onclick = () => { book = b.dataset.b; S.book = book; save(); renderHome(); });
+  const B = CATALOG.books.find(b => b.id === book);
+  if (!B) { $("#units").innerHTML = ""; return; }
+  $("#units").innerHTML = `<p class="muted" style="margin:-4px 0 20px">${esc(B.name)}</p>` + B.units.map(u => `
+    <section class="unit"><h3>${esc(u.vi)} <span class="zh" lang="zh">${esc(u.zh)}</span></h3>
+      <div class="lessons">${u.lessons.map(lessonCard).join("")}</div></section>`).join("");
+  $("#units").querySelectorAll(".lcard.ready").forEach(c => c.onclick = () => openLesson(c.dataset.id));
+}
+$("#brand").onclick = () => { showView("home"); window.scrollTo(0, 0); };
+$("#toHome").onclick = () => { showView("home"); window.scrollTo(0, 0); };
+
+/* ---------- Tab ---------- */
+const TABS = ["video", "slide", "tuvung", "baikhoa", "luyentap"];
+let tab = "video";
+function activate(t) {
+  if (!TABS.includes(t)) t = "video";
+  tab = t;
+  for (const x of TABS) {
+    $("#p-" + x).hidden = x !== t;
+    $("#t-" + x).setAttribute("aria-selected", x === t);
+  }
+  if (t !== "video") vid.pause();
+  S.tab = t; save();
+  try { history.replaceState(null, "", "#" + t); } catch (e) {}
+}
+document.querySelectorAll(".tab").forEach(b => b.onclick = () => activate(b.dataset.tab));
+
+/* ---------- Video ---------- */
+const vid = $("#vid");
+let cur = 0, lineEls = [], lastLine = -1, lastSave = 0;
+function renderChapters() {
+  const w = watched();
+  $("#chapters").innerHTML = L.chapters.map((c, i) => `
+    <li class="${w[i] ? "done" : ""} ${i === cur ? "cur" : ""}">
+      <button data-i="${i}"><span class="n">${w[i] ? "✓" : i + 1}</span><span class="t">${zhWrap(c.title)}</span><span class="d">${fmt(c.dur)}</span><span class="play sm tog" aria-hidden="true">${ICON_TOGGLE}</span></button>
+    </li>`).join("");
+  $("#chapters").querySelectorAll("button").forEach(b => b.onclick = () => {
+    const i = +b.dataset.i;
+    if (i !== cur) return loadChapter(i, 0, true);
+    if (vid.paused || vid.ended) vid.play().catch(() => {}); else vid.pause();
+  });
+  updatePlayIcons();
+}
+function loadChapter(i, t = 0, play = false) {
+  cur = i;
+  const c = L.chapters[i];
+  vid.src = url(c.file);
+  vid.playbackRate = S.rate || 1;
+  vid.addEventListener("loadedmetadata", () => {
+    if (t) vid.currentTime = t;
+    vid.playbackRate = S.rate || 1;
+    if (play) vid.play().catch(() => {});
+  }, { once: true });
+  $("#chapNo").textContent = `Phần ${i + 1} / ${L.chapters.length}`;
+  $("#chapTitle").innerHTML = zhWrap(c.title);
+  $("#nextChap").disabled = i >= L.chapters.length - 1;
+  $("#transcript").innerHTML = c.lines.map(([s, txt], k) => `<div class="line" data-k="${k}"><span class="ts">${fmt(s)}</span><span>${zhWrap(txt)}</span><button class="play sm tog" aria-label="Nghe riêng câu này">${ICON_TOGGLE}</button></div>`).join("");
+  lineEls = [...$("#transcript").children];
+  lineEls.forEach(el => {
+    const k = +el.dataset.k;
+    el.querySelector(".play").onclick = e => { e.stopPropagation(); lineButton(k); };
+    el.onclick = () => playLine(k, false);
+  });
+  stopAt = null;
+  lastLine = -1;
+  $("#transcript").scrollTop = 0;
+  syncFollow = true;
+  if (c.lines.length) showSync(c.lines[0][2]);
+  renderChapters();
+}
+/* Nút ở mỗi câu: phát đúng câu đó rồi dừng (để nghe lại, đọc theo).
+   Câu đang phát thì nút thành ⏸ để tạm dừng. Bấm vào chữ của câu: phát từ câu đó trở đi. */
+let stopAt = null;
+const lineEnd = k => { const n = L.chapters[cur].lines[k + 1]; return n ? n[0] - 0.2 : null; };
+function playLine(k, once) {
+  stopAt = once ? lineEnd(k) : null;
+  vid.currentTime = L.chapters[cur].lines[k][0];
+  vid.play().catch(() => {});
+  if (stopAt != null) requestAnimationFrame(watchStop);
+}
+function lineButton(k) {
+  if (k !== lastLine) return playLine(k, true);
+  if (!vid.paused) return vid.pause();
+  const end = lineEnd(k);
+  if (end != null && vid.currentTime >= end - 0.3) return playLine(k, true);   // nghe xong câu rồi: nghe lại từ đầu câu
+  vid.play().catch(() => {});                                                  // đang dừng giữa câu: phát tiếp
+}
+function watchStop() {
+  if (stopAt == null) return;
+  if (vid.currentTime >= stopAt) { vid.pause(); stopAt = null; return; }
+  requestAnimationFrame(watchStop);
+}
+vid.addEventListener("pause", () => { if (stopAt != null && vid.currentTime < stopAt - 0.3) stopAt = null; });
+/* Nút ▶/⏸ của câu và của phần đang phát luôn theo trạng thái video */
+const ICON_TOGGLE = '<svg class="icon i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l10 6-10 6V2z"/></svg>'
+  + '<svg class="icon i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2h3v12h-3zM9.5 2h3v12h-3z"/></svg>';
+function setPlayIcon(b, on, lblOn, lblOff) {
+  if (!b || b.dataset.on === String(on)) return;
+  b.dataset.on = on;
+  b.classList.toggle("on", on);
+  if (lblOn) b.setAttribute("aria-label", on ? lblOn : lblOff);
+}
+function updatePlayIcons() {
+  const playing = !vid.paused && !vid.ended;
+  lineEls.forEach((el, k) => setPlayIcon(el.querySelector(".play"), playing && k === lastLine, "Tạm dừng", "Nghe riêng câu này"));
+  $("#chapters").querySelectorAll(".play").forEach((p, i) => setPlayIcon(p, playing && i === cur));
+  const line = L.chapters[cur].lines[lastLine];
+  setPlayIcon($("#syncPlay"), playing && !!line && line[2] === syncIdx, "Tạm dừng", "Nghe đoạn giảng slide này");
+}
+for (const ev of ["play", "playing", "pause", "ended"]) vid.addEventListener(ev, updatePlayIcons);
+vid.addEventListener("timeupdate", () => {
+  const t = vid.currentTime, c = L.chapters[cur];
+  let k = -1;
+  for (let j = 0; j < c.lines.length && c.lines[j][0] <= t + 0.15; j++) k = j;
+  if (k !== lastLine) {
+    if (lastLine >= 0 && lineEls[lastLine]) lineEls[lastLine].classList.remove("on");
+    if (k >= 0) {
+      const el = lineEls[k]; el.classList.add("on");
+      if ($("#follow").checked) { const box = $("#transcript"); box.scrollTop = el.offsetTop - box.clientHeight / 3; }
+      if (syncFollow) showSync(c.lines[k][2]);
+    }
+    lastLine = k;
+    updatePlayIcons();
+  }
+  if (vid.duration && t / vid.duration > 0.9 && !watched()[cur]) { watched()[cur] = true; save(); renderChapters(); renderStats(); }
+  if (Math.abs(t - lastSave) > 4) { lastSave = t; S.pos[L.id] = { ch: cur, t: Math.floor(t) }; save(); renderStats(); }
+});
+vid.addEventListener("play", () => { audio.pause(); });
+vid.addEventListener("ended", () => {
+  watched()[cur] = true;
+  const next = cur + 1 < L.chapters.length ? cur + 1 : cur;
+  S.pos[L.id] = { ch: next, t: 0 }; save(); renderStats();
+  if (next !== cur) loadChapter(next, 0, true); else renderChapters();
+});
+$("#nextChap").onclick = () => loadChapter(Math.min(cur + 1, L.chapters.length - 1), 0, true);
+
+/* Slide đi kèm video: tự đổi theo câu đang giảng; lật tay thì tạm dừng theo dõi */
+let syncIdx = -1, syncFollow = true;
+function showSync(i, manual) {
+  i = Math.max(0, Math.min(L.slides.length - 1, i));
+  if (manual) syncFollow = false;
+  $("#syncFollow").hidden = syncFollow;
+  $("#syncLive").textContent = syncFollow ? "đang giảng" : "đang xem lại";
+  $("#syncLive").classList.toggle("off", !syncFollow);
+  if (i === syncIdx) return;
+  syncIdx = i;
+  if (lineEls.length) updatePlayIcons();
+  $("#syncImg").src = url(L.slides[i]);
+  $("#syncImg").alt = `Slide ${i + 1}`;
+  $("#syncNo").textContent = `Slide ${i + 1} / ${L.slides.length}`;
+  const no = $("#fabNo");
+  no.textContent = i + 1;
+  no.classList.remove("bump"); void no.offsetWidth; no.classList.add("bump");
+  $("#syncPrev").disabled = i === 0;
+  $("#syncNext").disabled = i === L.slides.length - 1;
+  if (L.slides[i + 1]) new Image().src = url(L.slides[i + 1]);
+}
+/* Nút ▶/⏸ trong khung slide: phát đúng đoạn giảng của slide đang hiện rồi dừng */
+function slideRange(i) {
+  for (let c = 0; c < L.chapters.length; c++) {
+    const lines = L.chapters[c].lines, a = lines.findIndex(x => x[2] === i);
+    if (a < 0) continue;
+    let b = a;
+    while (b + 1 < lines.length && lines[b + 1][2] === i) b++;
+    // slide cuối của phần thì dừng ngay trước khi hết phần (không tự sang phần sau)
+    return { c, start: lines[a][0], end: lines[b + 1] ? lines[b + 1][0] - 0.2 : L.chapters[c].dur - 0.3 };
+  }
+  return null;
+}
+$("#syncPlay").onclick = () => {
+  const r = slideRange(syncIdx);
+  if (!r) return;
+  const line = L.chapters[cur].lines[lastLine];
+  if (!vid.paused && line && line[2] === syncIdx) return vid.pause();
+  syncFollow = true; showSync(syncIdx);
+  const arm = () => { stopAt = r.end; if (stopAt != null) requestAnimationFrame(watchStop); };
+  const t = vid.currentTime;
+  if (r.c === cur && t >= r.start && (r.end == null || t < r.end - 0.3)) { vid.play().catch(() => {}); return arm(); }  // dừng giữa đoạn: phát tiếp
+  if (r.c !== cur) { loadChapter(r.c, r.start, true); vid.addEventListener("playing", arm, { once: true }); return; }
+  vid.currentTime = r.start; vid.play().catch(() => {}); arm();
+};
+$("#syncPrev").onclick = () => showSync(syncIdx - 1, true);
+$("#syncNext").onclick = () => showSync(syncIdx + 1, true);
+$("#syncFollow").onclick = () => { syncFollow = true; const l = L.chapters[cur].lines[Math.max(0, lastLine)]; showSync(l ? l[2] : syncIdx); };
+$("#syncBig").onclick = () => { vid.pause(); activate("slide"); showSlide(syncIdx); };
+function openSync(on) {
+  $("#sync").classList.toggle("open", on);
+  $("#sync").setAttribute("aria-hidden", !on);
+  $("#fab").setAttribute("aria-expanded", on);
+  S.syncOpen = on; save();
+}
+$("#fab").onclick = () => openSync(!$("#sync").classList.contains("open"));
+$("#syncClose").onclick = () => openSync(false);
+/* Từ tab Slide nhảy về đúng đoạn giảng của slide đó */
+function playSlide(i) {
+  for (let c = 0; c < L.chapters.length; c++) {
+    const l = L.chapters[c].lines.find(x => x[2] === i);
+    if (l) { activate("video"); loadChapter(c, l[0], true); showSync(i); return; }
+  }
+}
+function renderSpeed() {
+  $("#speed").innerHTML = [0.75, 1, 1.25, 1.5].map(r => `<button data-r="${r}" aria-pressed="${(S.rate || 1) === r}">${String(r).replace(".", ",")}×</button>`).join("");
+  $("#speed").querySelectorAll("button").forEach(b => b.onclick = () => { S.rate = +b.dataset.r; vid.playbackRate = S.rate; save(); renderSpeed(); });
+}
+
+/* ---------- Slide ---------- */
+let si = 0;
+function showSlide(i) {
+  si = Math.max(0, Math.min(L.slides.length - 1, i));
+  $("#slideImg").src = url(L.slides[si]);
+  $("#slideImg").alt = `Slide ${si + 1}`;
+  $("#slideCount").textContent = `${si + 1} / ${L.slides.length}`;
+  $("#slidePrev").disabled = si === 0;
+  $("#slideNext").disabled = si === L.slides.length - 1;
+  $("#thumbs").querySelectorAll("button").forEach((b, k) => b.setAttribute("aria-current", k === si));
+  const th = $("#thumbs").children[si];
+  if (th) $("#thumbs").scrollLeft = th.offsetLeft - $("#thumbs").clientWidth / 2 + th.clientWidth / 2;
+  if (L.slides[si + 1]) new Image().src = url(L.slides[si + 1]);
+}
+function renderSlides() {
+  $("#thumbs").innerHTML = L.slides.map((s, i) => `<button aria-label="Slide ${i + 1}"><img loading="lazy" src="${url(s)}" alt=""></button>`).join("");
+  $("#thumbs").querySelectorAll("button").forEach((b, i) => b.onclick = () => showSlide(i));
+  showSlide(0);
+}
+$("#slidePrev").onclick = () => showSlide(si - 1);
+$("#slideNext").onclick = () => showSlide(si + 1);
+$("#slideHear").onclick = () => { playSlide(si); $(".tabs-band").scrollIntoView({ behavior: "smooth" }); };
+
+/* ---------- Từ vựng ---------- */
+let vmode = "list", vfilter = "all";
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").toLowerCase();
+function vocabIdx() {
+  const q = norm($("#vsearch").value.trim()), k = known();
+  return L.vocab.map((_, i) => i).filter(i => {
+    const v = L.vocab[i];
+    if (vfilter === "new" && k.has(i)) return false;
+    if (vfilter === "known" && !k.has(i)) return false;
+    return !q || norm([v.zh, v.py, v.hv, v.vi].join(" ")).includes(q) || v.zh.includes($("#vsearch").value.trim());
+  });
+}
+function renderVocab() {
+  const k = known();
+  $("#vocabHead").textContent = `Từ vựng · ${L.vocab.length} từ`;
+  $("#vlist").hidden = vmode !== "list";
+  $("#vflash").hidden = vmode !== "flash";
+  if (vmode === "flash") return renderFlash(true);
+  const idx = vocabIdx();
+  $("#vlist").innerHTML = idx.length ? idx.map(i => {
+    const v = L.vocab[i];
+    return `<article class="word ${k.has(i) ? "known" : ""}">
+      <div class="idx">${i + 1}</div>
+      <div class="w-hz"><span class="hz" lang="zh">${esc(v.zh)}</span><button class="play" data-a="${v.audio}" aria-label="Nghe ${esc(v.zh)}">${ICON_SOUND}</button></div>
+      <div class="w-main">
+        <div><span class="py">${esc(v.py)}</span> · <span class="hv">${esc(v.hv)}</span> <span class="tag">${esc(v.type)}</span></div>
+        <div class="vi">${esc(v.vi)}</div>
+        <div class="ex"><button class="play sm" data-a="${v.exaudio}" aria-label="Nghe câu ví dụ">${ICON_PLAY}</button><span class="zh" lang="zh">${esc(v.ex)}</span><span class="exvi">${esc(v.exvi)}</span></div>
+      </div>
+      <button class="knowbtn" data-i="${i}" aria-pressed="${k.has(i)}">${k.has(i) ? "✓ Đã thuộc" : "Đánh dấu đã thuộc"}</button>
+    </article>`;
+  }).join("") : `<div class="empty">Không có từ nào khớp.</div>`;
+  $("#vlist").querySelectorAll(".play").forEach(b => b.onclick = () => playAudio(b.dataset.a, b));
+  $("#vlist").querySelectorAll(".knowbtn").forEach(b => b.onclick = () => { setKnown(+b.dataset.i, b.getAttribute("aria-pressed") !== "true"); renderVocab(); });
+}
+let deck = [], di = 0, flipped = false;
+function renderFlash(rebuild) {
+  if (rebuild) { deck = vocabIdx(); di = Math.min(di, Math.max(0, deck.length - 1)); flipped = false; }
+  const box = $("#vflash");
+  if (!deck.length) { box.innerHTML = `<div class="card"><div class="muted">${vfilter === "new" ? "Ngọc đã thuộc hết các từ rồi! Chọn “Tất cả” để ôn lại." : "Không có thẻ nào."}</div></div>`; return; }
+  const i = deck[di], v = L.vocab[i], k = known();
+  const cells = [...v.zh].map(ch => `<div class="cell"><span>${esc(ch)}</span></div>`).join("");
+  box.innerHTML = `
+    <button class="card" id="card" aria-label="Lật thẻ">
+      <div class="cells" lang="zh">${cells}</div>
+      ${flipped ? `
+        <div class="b-py">${esc(v.py)}</div>
+        <div class="muted"><em>${esc(v.hv)}</em> · ${esc(v.type)}</div>
+        <div class="b-vi">${esc(v.vi)}</div>
+        <div class="b-ex"><span class="zh" lang="zh">${esc(v.ex)}</span><br>${esc(v.exvi)}</div>`
+      : `<div class="hint">Nhớ nghĩa và cách đọc, rồi bấm vào thẻ để lật</div>`}
+    </button>
+    <div class="flash-ctrl">
+      <button class="btn small" id="fSound">${ICON_SOUND} Nghe</button>
+      <button class="btn small" id="fPrev" ${di === 0 ? "disabled" : ""}>Thẻ trước</button>
+      <button class="btn small" id="fAgain">Chưa nhớ</button>
+      <button class="btn small primary" id="fKnow">${k.has(i) ? "✓ " : ""}Nhớ rồi</button>
+      <button class="btn small" id="fShuffle">Trộn thẻ</button>
+    </div>
+    <div class="flash-meta">Thẻ ${di + 1} / ${deck.length} · phím cách để lật, ← → để chuyển</div>`;
+  $("#card").onclick = () => { flipped = !flipped; renderFlash(); if (flipped) playAudio(v.audio); };
+  $("#fSound").onclick = () => playAudio(v.audio, $("#fSound"));
+  $("#fPrev").onclick = () => { di--; flipped = false; renderFlash(); };
+  $("#fAgain").onclick = () => { setKnown(i, false); nextCard(); };
+  $("#fKnow").onclick = () => { setKnown(i, true); nextCard(); };
+  $("#fShuffle").onclick = () => { deck = shuffle(deck); di = 0; flipped = false; renderFlash(); };
+}
+function nextCard() { di = (di + 1) % deck.length; flipped = false; renderFlash(); }
+$("#vsearch").oninput = () => renderVocab();
+$("#vmode").querySelectorAll("button").forEach(b => b.onclick = () => {
+  vmode = b.dataset.mode; di = 0;
+  $("#vmode").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  renderVocab();
+});
+$("#vfilter").querySelectorAll("button").forEach(b => b.onclick = () => {
+  vfilter = b.dataset.f; di = 0;
+  $("#vfilter").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  renderVocab();
+});
+
+/* ---------- Bài khóa ---------- */
+let showAllVi = false, chain = false;
+function markVocab(text) {
+  const words = L.vocab.map((v, i) => [v.zh, i]).sort((a, b) => b[0].length - a[0].length);
+  const re = new RegExp(words.map(w => w[0].replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
+  const map = Object.fromEntries(words);
+  return esc(text).replace(re, m => `<button class="vw" data-i="${map[m]}">${m}</button>`);
+}
+function renderPassage() {
+  $("#passHead").textContent = `Bài khóa · ${L.passage.length} đoạn`;
+  $("#passage").innerHTML = L.passage.map((p, i) => `
+    <article class="para" id="para${i}">
+      <div class="pn"><span>${i + 1}</span><button class="play" data-p="${i}" aria-label="Nghe đoạn ${i + 1}">${ICON_PLAY}</button></div>
+      <div>
+        <div class="zh" lang="zh">${markVocab(p.zh)}</div>
+        <div class="vi" ${showAllVi ? "" : "hidden"}>${esc(p.vi)}</div>
+        <div class="notes" hidden>${p.notes.map(n => `<p>${zhWrap(n)}</p>`).join("")}</div>
+        <div class="acts">
+          <button class="btn small" data-act="vi">${showAllVi ? "Ẩn bản dịch" : "Xem bản dịch"}</button>
+          ${p.notes.length ? `<button class="btn small" data-act="notes">Xem lời giảng</button>` : ""}
+        </div>
+      </div>
+    </article>`).join("");
+  $("#passage").querySelectorAll(".play").forEach(b => b.onclick = () => { chain = false; playPara(+b.dataset.p); });
+  $("#passage").querySelectorAll("[data-act]").forEach(b => b.onclick = () => {
+    const box = b.closest(".para").querySelector("." + b.dataset.act);
+    box.hidden = !box.hidden;
+    b.textContent = b.dataset.act === "vi" ? (box.hidden ? "Xem bản dịch" : "Ẩn bản dịch") : (box.hidden ? "Xem lời giảng" : "Ẩn lời giảng");
+  });
+  $("#passage").querySelectorAll(".vw").forEach(b => b.onclick = e => { e.stopPropagation(); showPop(b, +b.dataset.i); });
+}
+function playPara(i) {
+  document.querySelectorAll(".para.playing").forEach(p => p.classList.remove("playing"));
+  const el = $("#para" + i);
+  el.classList.add("playing");
+  playAudio(L.passage[i].audio, el.querySelector(".play"), () => {
+    el.classList.remove("playing");
+    if (chain && i + 1 < L.passage.length) { playPara(i + 1); $("#para" + (i + 1)).scrollIntoView({ behavior: "smooth", block: "center" }); }
+    else chain = false;
+  });
+}
+$("#playAll").onclick = () => { chain = true; playPara(0); };
+$("#allVi").onclick = () => { showAllVi = !showAllVi; $("#allVi").textContent = showAllVi ? "Ẩn tất cả bản dịch" : "Hiện tất cả bản dịch"; renderPassage(); };
+let pop = null;
+function showPop(anchor, i) {
+  closePop();
+  const v = L.vocab[i];
+  pop = document.createElement("div");
+  pop.className = "pop";
+  pop.innerHTML = `<div class="row"><span class="hz" lang="zh">${esc(v.zh)}</span><button class="play" aria-label="Nghe">${ICON_SOUND}</button></div>
+    <div><strong style="color:var(--mark)">${esc(v.py)}</strong> · <em class="muted">${esc(v.hv)}</em></div>
+    <div style="margin-top:4px">${esc(v.vi)}</div>`;
+  document.body.appendChild(pop);
+  pop.querySelector(".play").onclick = e => { e.stopPropagation(); playAudio(v.audio, e.currentTarget); };
+  pop.onclick = e => e.stopPropagation();
+  const r = anchor.getBoundingClientRect();
+  const left = Math.min(Math.max(16, r.left + window.scrollX), window.scrollX + document.documentElement.clientWidth - pop.offsetWidth - 16);
+  pop.style.left = left + "px";
+  pop.style.top = (r.bottom + window.scrollY + 8) + "px";
+}
+function closePop() { if (pop) { pop.remove(); pop = null; } }
+document.addEventListener("click", closePop);
+
+/* ---------- Luyện tập: trắc nghiệm từ vựng ---------- */
+let Q = null;
+function quizIntro() {
+  const best = S.best[L.id];
+  $("#quiz").innerHTML = `
+    <h3>Trắc nghiệm từ vựng</h3>
+    <p class="muted" style="margin:0 0 14px;font-size:15px">10 câu ngẫu nhiên gồm 3 dạng: nhìn chữ chọn nghĩa, đọc nghĩa chọn chữ, và nghe chọn chữ.${best != null ? ` Điểm cao nhất của Ngọc: <strong>${best}/10</strong>.` : ""}</p>
+    <button class="btn primary" id="qStart">${ICON_PLAY} Bắt đầu</button>`;
+  $("#qStart").onclick = startQuiz;
+}
+function startQuiz() {
+  const pool = shuffle(L.vocab.map((_, i) => i)).slice(0, 10);
+  Q = { items: pool.map(i => ({ i, kind: ["read", "mean", "listen"][Math.floor(Math.random() * 3)], opts: shuffle([i, ...shuffle(L.vocab.map((_, j) => j).filter(j => j !== i)).slice(0, 3)]) })), n: 0, score: 0, wrong: [] };
+  renderQ();
+}
+function renderQ() {
+  const it = Q.items[Q.n], v = L.vocab[it.i];
+  const prompt = {
+    read: [`Từ này nghĩa là gì?`, `<div class="qbig" lang="zh">${esc(v.zh)}</div>`],
+    mean: [`Chọn chữ Hán đúng với nghĩa:`, `<div class="qbig vi">${esc(v.vi)}</div>`],
+    listen: [`Nghe và chọn từ vừa đọc:`, `<div style="text-align:center;padding-block:10px"><button class="btn" id="qListen">${ICON_SOUND} Nghe lại</button></div>`],
+  }[it.kind];
+  const zhOpts = it.kind !== "read";
+  $("#quiz").innerHTML = `
+    <h3>Trắc nghiệm từ vựng</h3>
+    <div class="qhead"><span>Câu ${Q.n + 1} / ${Q.items.length}</span><span>Đúng: ${Q.score}</span></div>
+    <div class="bar" style="margin:0 0 14px"><i style="width:${100 * Q.n / Q.items.length}%"></i></div>
+    <div class="qtext">${prompt[0]}</div>${prompt[1]}
+    <div class="opts">${it.opts.map(j => `<button class="opt ${zhOpts ? "zh" : ""}" data-j="${j}" ${zhOpts ? 'lang="zh"' : ""}>${esc(zhOpts ? L.vocab[j].zh : L.vocab[j].vi)}</button>`).join("")}</div>
+    <div id="qFb"></div>`;
+  if (it.kind === "listen") { playAudio(v.audio); $("#qListen").onclick = () => playAudio(v.audio, $("#qListen")); }
+  $("#quiz").querySelectorAll(".opt").forEach(b => b.onclick = () => answer(+b.dataset.j));
+}
+function answer(j) {
+  const it = Q.items[Q.n], v = L.vocab[it.i], ok = j === it.i;
+  if (ok) Q.score++; else Q.wrong.push(it.i);
+  $("#quiz").querySelectorAll(".opt").forEach(b => {
+    b.disabled = true;
+    if (+b.dataset.j === it.i) b.classList.add("right");
+    else if (+b.dataset.j === j) b.classList.add("wrong");
+  });
+  const last = Q.n + 1 >= Q.items.length;
+  $("#qFb").innerHTML = `<div class="feedback"><strong style="color:var(${ok ? "--good" : "--bad"})">${ok ? "Đúng rồi!" : "Chưa đúng."}</strong>
+    <span class="zh" lang="zh">${esc(v.zh)}</span> <strong>${esc(v.py)}</strong> (${esc(v.hv)}): ${esc(v.vi)}</div>
+    <div style="margin-top:12px"><button class="btn primary" id="qNext">${last ? "Xem kết quả" : "Câu tiếp"}</button></div>`;
+  if (it.kind !== "listen") playAudio(v.audio);
+  $("#qNext").onclick = () => { Q.n++; last ? quizEnd() : renderQ(); };
+  $("#qNext").focus();
+}
+function quizEnd() {
+  const best = S.best[L.id];
+  if (best == null || Q.score > best) { S.best[L.id] = Q.score; save(); renderStats(); }
+  const msg = Q.score === 10 ? "Tuyệt vời, đúng hết!" : Q.score >= 8 ? "Rất tốt!" : Q.score >= 5 ? "Khá ổn, ôn thêm vài từ nhé." : "Cần ôn lại phần từ mới.";
+  $("#quiz").innerHTML = `
+    <h3>Kết quả</h3>
+    <div style="display:flex;align-items:baseline;gap:10px;margin-block:12px"><span class="score">${Q.score}</span><span class="muted">/ 10 · ${msg}</span></div>
+    ${Q.wrong.length ? `<div class="eyebrow" style="margin-bottom:6px">Các từ cần ôn</div>
+      <div class="words">${Q.wrong.map(i => { const v = L.vocab[i]; return `<div class="word" style="grid-template-columns:auto minmax(0,1fr)"><button class="play" data-a="${v.audio}" aria-label="Nghe">${ICON_SOUND}</button><div><span class="zh" lang="zh" style="font-size:20px">${esc(v.zh)}</span> <span class="py" style="color:var(--mark);font-weight:600">${esc(v.py)}</span><div>${esc(v.vi)}</div></div></div>`; }).join("")}</div>` : ""}
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="qAgain">Làm lại 10 câu khác</button></div>`;
+  $("#quiz").querySelectorAll(".play").forEach(b => b.onclick = () => playAudio(b.dataset.a, b));
+  $("#qAgain").onclick = startQuiz;
+}
+
+/* ---------- Luyện tập: bài tập trong bài giảng ---------- */
+function renderExercises() {
+  $("#exercises").innerHTML = L.exercises.map((g, gi) => `
+    <div class="exgroup"><h4>${zhWrap(g.title)}</h4>
+      ${g.items.map((it, k) => `<div class="exitem">
+        <div class="q">${zhWrap(it.q)}</div>
+        <textarea id="ex-${L.id}-${gi}-${k}" aria-label="Câu trả lời" placeholder="Câu trả lời của Ngọc…"></textarea>
+        <button class="btn small" data-show>Xem đáp án</button>
+        <div class="ans" hidden>${zhWrap(it.a)}</div>
+      </div>`).join("")}
+    </div>`).join("");
+  $("#exercises").querySelectorAll("[data-show]").forEach(b => b.onclick = () => {
+    const a = b.nextElementSibling; a.hidden = !a.hidden; b.textContent = a.hidden ? "Xem đáp án" : "Ẩn đáp án";
+  });
+}
+
+/* ---------- Phím tắt ---------- */
+document.addEventListener("keydown", e => {
+  if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  if (tab === "slide" && (e.key === "ArrowLeft" || e.key === "ArrowRight")) { showSlide(si + (e.key === "ArrowRight" ? 1 : -1)); e.preventDefault(); }
+  if (tab === "tuvung" && vmode === "flash" && deck.length) {
+    if (e.key === " ") { e.preventDefault(); $("#card").click(); }
+    if (e.key === "ArrowRight") { nextCard(); }
+    if (e.key === "ArrowLeft" && di > 0) { di--; flipped = false; renderFlash(); }
+  }
+});
+
+function renderAll() {
+  const p = S.pos[L.id];
+  renderCover(); renderSpeed();
+  openSync(!!S.syncOpen);
+  syncIdx = -1;
+  loadChapter(p ? p.ch : 0, p ? p.t : 0, false);
+  renderSlides(); renderVocab(); renderPassage(); quizIntro(); renderExercises();
+}
+/* Mở trang: link có #video, #slide… thì vào thẳng bài đang học; còn lại hiện danh sách bài học */
+const startTab = location.hash.slice(1);
+if (L) renderAll();
+if (L && TABS.includes(startTab)) { showView("lesson"); activate(startTab); }
+else showView("home");
+</script>

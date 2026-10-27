@@ -68,3 +68,33 @@ export function ZhArt() {
     </>
   );
 }
+
+export function Hsk6Art() {
+  // một tấm slide bài giảng (thanh tím, gạch cam như slide trong video) với nút phát, trên nền kem – tím nhạt
+  return (
+    <>
+      <svg className="choice__art" viewBox="0 0 600 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="h6-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FBF8F3" /><stop offset=".55" stopColor="#EFE4F3" /><stop offset="1" stopColor="#D9C2E4" /></linearGradient>
+        </defs>
+        <rect width="600" height="460" fill="url(#h6-bg)" />
+        <g className="far" fill="#5B2A6E" opacity=".08"><circle cx="90" cy="90" r="70" /><circle cx="520" cy="380" r="110" /></g>
+        <g className="mid" transform="rotate(-5 260 190)">
+          <rect x="70" y="70" width="330" height="210" rx="14" fill="#FFFFFF" />
+          <path d="M70 84a14 14 0 0 1 14-14h302a14 14 0 0 1 14 14v22H70Z" fill="#5B2A6E" />
+          <rect x="70" y="106" width="330" height="4" fill="#DE7028" />
+          <g fill="#5B2A6E" opacity=".85"><rect x="96" y="132" width="120" height="12" rx="6" /></g>
+          <g fill="#2A2230" opacity=".25"><rect x="96" y="160" width="250" height="8" rx="4" /><rect x="96" y="180" width="210" height="8" rx="4" /><rect x="96" y="200" width="230" height="8" rx="4" /></g>
+          <text x="96" y="252" fontSize="30" fill="#DE7028" fontFamily="'Noto Serif SC','Songti SC',serif">wèilái</text>
+        </g>
+        <g className="near">
+          <circle cx="352" cy="262" r="34" fill="#5B2A6E" />
+          <circle cx="352" cy="262" r="44" fill="none" stroke="#5B2A6E" strokeWidth="2" opacity=".25" />
+          <path d="M342 246 L368 262 L342 278Z" fill="#FFFFFF" />
+        </g>
+      </svg>
+      <span className="choice__callig choice__callig--hsk6" aria-hidden="true">未来</span>
+      <span className="choice__stamp choice__stamp--hsk6" aria-hidden="true">六</span>
+    </>
+  );
+}
