@@ -1,0 +1,60 @@
+import { useCallback, useRef, useState } from 'react'
+
+const KEY = 'da-di-qua-v1'
+
+/** Trạng thái mỗi tỉnh: 'none' | 'visited' (đã đi) | 'wish' (muốn đi) */
+export const STATUSES = [
+  { id: 'visited', label: 'Đã đi', color: 'var(--visited)' },
+  { id: 'wish', label: 'Muốn đi', color: 'var(--wish)' },
+  { id: 'none', label: 'Chưa đánh dấu', color: 'var(--blank)' },
+]
+
+const empty = { status: 'none', note: '', updatedAt: null }
+
+function read() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(KEY) || '{}')
+    return parsed && typeof parsed === 'object' ? parsed : {}
+  } catch {
+    return {}
+  }
+}
+
+/**
+ * Ghi chú + trạng thái từng tỉnh. Ghi thẳng localStorage ngay trong lúc sửa (không
+ * chờ effect) để đóng tab giữa chừng vẫn không mất chữ.
+ */
+export function useProvinceNotes() {
+  const [entries, setEntries] = useState(read)
+  const live = useRef(entries)
+
+  const write = useCallback((next) => {
+    live.current = next
+    setEntries(next)
+    try {
+      localStorage.setItem(KEY, JSON.stringify(next))
+    } catch {
+      /* hết chỗ hoặc trình duyệt chặn: app vẫn chạy hết phiên này */
+    }
+  }, [])
+
+  const get = useCallback((code) => entries[code] || empty, [entries])
+
+  const patch = useCallback(
+    (code, changes) => {
+      const prev = live.current
+      const merged = { ...(prev[code] || empty), ...changes, updatedAt: Date.now() }
+      if (merged.status === 'none' && !merged.note.trim()) {
+        const { [code]: _drop, ...rest } = prev
+        write(rest)
+      } else {
+        write({ ...prev, [code]: merged })
+      }
+    },
+    [write],
+  )
+
+  return { entries, get, patch, replaceAll: write }
+}
+
+export { KEY as STORAGE_KEY, empty as emptyEntry }

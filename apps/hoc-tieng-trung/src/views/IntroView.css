@@ -1,0 +1,33 @@
+/* Cấp 0 · Nhập môn */
+.l0-tones{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.l0-tone{display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);cursor:pointer;text-align:left}
+.l0-tone:hover{border-color:var(--jade)}
+.l0-tone svg{width:72px;height:48px}
+
+/* Trò luyện tai */
+.l0-play{display:grid;place-items:center;width:96px;height:96px;border-radius:26px;border:0;background:var(--jade);color:var(--on-jade);box-shadow:0 4px 0 var(--jade-ink);cursor:pointer;margin:0 auto}
+.l0-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.l0-opt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px;padding:12px;border-radius:14px;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 3px 0 var(--line-2);cursor:pointer;text-align:center;font-size:16px;font-weight:500}
+.l0-opt:hover:not(:disabled){border-color:var(--jade)}
+.l0-opt:disabled{cursor:default}
+.l0-opt.is-right{background:var(--jade-soft);border:2px solid var(--jade);box-shadow:0 3px 0 var(--jade)}
+.l0-opt.is-wrong{background:var(--seal-soft);border:2px solid var(--seal);box-shadow:0 3px 0 var(--seal)}
+.l0-fb{padding:18px 20px;border-radius:16px;display:flex;flex-direction:column;gap:10px}
+.l0-fb h3{font-size:18px}
+.l0-fb.is-ok{background:var(--jade-soft);border:1px solid var(--jade)} .l0-fb.is-ok h3{color:var(--jade-ink)}
+.l0-fb.is-no{background:var(--seal-soft);border:1px solid var(--seal)} .l0-fb.is-no h3{color:var(--seal-ink)}
+
+.l0-rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+
+/* Thanh mẫu, vận mẫu, nét */
+.l0-inits{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.l0-ini{padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.l0-keys{display:flex;flex-wrap:wrap;gap:6px}
+.l0-keys button{min-width:52px;min-height:44px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface-3);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;padding:4px 8px}
+.l0-keys button b{font:600 16px var(--f-py)}
+.l0-keys button span{font:500 13px var(--f-hz);color:var(--muted)}
+.l0-finals{display:flex;flex-wrap:wrap;gap:6px}
+.l0-finals span{font:500 15px var(--f-py);padding:4px 10px;border-radius:8px;background:var(--surface-2)}
+.l0-strokes{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.l0-stroke{display:flex;flex-direction:column;gap:4px;padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.l0-stroke .ui-hz:first-child{font-size:34px;line-height:1.1}

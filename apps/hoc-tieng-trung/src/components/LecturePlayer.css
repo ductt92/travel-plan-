@@ -1,0 +1,62 @@
+/* Bài giảng: màn chiếu kiểu bảng lớp học, cố ý giữ một tông tối ở cả hai giao diện.
+   Cỡ chữ theo container query (cqw) để co giãn đúng tỉ lệ 16:9. */
+.lec{display:flex;flex-direction:column;gap:0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.stage{position:relative;aspect-ratio:16/9;width:100%;max-width:100%;background:radial-gradient(120% 90% at 20% 0%,#1C3A2F 0%,#122720 55%,#0D1D17 100%);color:#EEF3EF;container-type:inline-size;overflow:hidden}
+.sl{position:absolute;inset:0;padding:5cqw 6cqw 9cqw;display:flex;flex-direction:column;gap:1.6cqw}
+.s-eye{font-size:1.5cqw;letter-spacing:.12em;text-transform:uppercase;color:#9FC9B6;font-weight:600}
+.s-h{font-size:3.6cqw;font-weight:700;line-height:1.2}
+.s-hz{font-family:var(--f-hz)}
+.s-xl{font-size:8cqw;line-height:1.1;color:#FFFFFF}
+.s-huge{font-size:16cqw;line-height:1;color:#FFFFFF}
+.sl-title{justify-content:center}
+.s-goals{margin:1cqw 0 0;padding-left:2.4cqw;font-size:2cqw;line-height:1.5;color:#D3E3DA}
+.s-wrow{display:flex;align-items:center;gap:5cqw;flex:1;min-height:0}
+.s-wmeta{display:flex;flex-direction:column;gap:.8cqw}
+.s-py{font-size:4.6cqw;font-weight:500}
+.s-py .t1{color:#FFB37A}.s-py .t2{color:#7BE3A0}.s-py .t3{color:#9CC0FF}.s-py .t4{color:#D7AEFF}.s-py .t5{color:#B9C6BF}
+.s-hv{font-size:1.9cqw;letter-spacing:.12em;text-transform:uppercase;color:#C9D8CF}
+.s-vi{font-size:3.6cqw;font-weight:600}
+.s-ex,.s-gex{display:flex;flex-direction:column;gap:.3cqw;padding:1.4cqw 2cqw;border-radius:1.2cqw;background:rgba(255,255,255,.07);font-size:1.9cqw;color:#D3E3DA}
+.s-ex .s-hz,.s-gex .s-hz{font-size:3cqw;color:#FFFFFF}
+.stage .py{font-family:var(--f-py)}
+.s-ex .py,.s-gex .py{color:#A9C4B7}
+.sl-tip{justify-content:center}
+.s-tip{margin:0;font-size:3.2cqw;line-height:1.5;max-width:70ch;color:#F2F7F4}
+.s-formula{display:flex;flex-wrap:wrap;gap:1cqw}
+.s-formula span{padding:1cqw 1.6cqw;border-radius:1cqw;background:rgba(255,255,255,.1);font-size:2.4cqw}
+.s-formula span.k{background:#2E9C78;color:#FFFFFF;font-family:var(--f-hz);font-weight:700}
+.s-exs{display:grid;grid-template-columns:repeat(auto-fit,minmax(28cqw,1fr));gap:1.2cqw}
+.s-note{margin:0;font-size:2cqw;line-height:1.55;color:#C9D8CF;max-width:80ch}
+.s-lines{display:flex;flex-direction:column;gap:1.2cqw}
+.s-line{display:grid;grid-template-columns:4.4cqw 1fr;gap:1.6cqw;align-items:start;font-size:1.8cqw;color:#C9D8CF}
+.s-line>div{display:flex;flex-direction:column;gap:.2cqw}
+.s-line .s-hz{font-size:2.9cqw;color:#FFFFFF}
+.s-line .py{color:#A9C4B7}
+.s-who{display:grid;place-items:center;width:4.4cqw;height:4.4cqw;border-radius:999px;font-family:var(--f-hz);font-size:2cqw;font-weight:700;background:#2E9C78;color:#FFFFFF}
+.s-who.b{background:#C9783A}
+.s-chips{display:flex;flex-wrap:wrap;gap:1cqw;font-size:1.8cqw}
+.s-chips span{padding:.6cqw 1.2cqw;border-radius:999px;background:rgba(255,255,255,.08);color:#D3E3DA}
+.s-chips b{font-size:2.3cqw;color:#FFFFFF;font-weight:500}
+.s-sub{position:absolute;left:50%;bottom:2.6cqw;transform:translateX(-50%);max-width:86%;padding:.9cqw 2cqw;border-radius:1cqw;background:rgba(0,0,0,.62);color:#FFFFFF;font-size:2.1cqw;line-height:1.45;text-align:center}
+.s-sub.zh{font-family:var(--f-hz);font-size:2.6cqw;color:#FFE7A3}
+.s-cover{position:absolute;inset:0;border:0;background:rgba(6,14,11,.35);display:grid;place-items:center;cursor:pointer}
+.s-cover span{display:grid;place-items:center;width:10cqw;height:10cqw;border-radius:999px;background:#F4F6F3;color:#13231D;box-shadow:0 1cqw 3cqw rgba(0,0,0,.4)}
+.s-cover svg{width:4.4cqw;height:4.4cqw}
+.fade{animation:lecFadeUp .45s ease both}
+@keyframes lecFadeUp{from{opacity:0;transform:translateY(1cqw)}to{opacity:1;transform:none}}
+
+.lec-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;border-top:1px solid var(--line)}
+.lec-main{background:var(--jade);color:var(--on-jade);border-color:var(--jade)}
+.lec-main:hover{background:var(--jade-ink)}
+.lec-prog{display:flex;align-items:center;gap:10px;flex:1 1 180px;min-width:150px}
+select.lec-rate{appearance:auto;padding:0 10px}
+.lec:fullscreen{background:#000;display:grid;place-items:center;align-content:center;border-radius:0;border:0}
+.lec:fullscreen .stage{width:min(100vw,177.78vh)}
+.lec:fullscreen .lec-bar{width:min(100vw,177.78vh);background:var(--surface)}
+@media (max-width:600px){.s-sub{font-size:3cqw}.s-sub.zh{font-size:3.6cqw}.lec-bar .ui-chip{min-height:34px;padding:0 10px;font-size:13px}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+
+/* Chế độ dựng video: chiếm toàn khung nhìn, không animation */
+.lec--render{border:0;border-radius:0;background:#000}
+.lec--render .stage{width:100vw;height:100vh;aspect-ratio:auto}
+.lec--render .fade{animation:none}

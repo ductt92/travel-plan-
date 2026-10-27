@@ -1,0 +1,14 @@
+/* Màn hình Lộ trình */
+.home-next{display:flex;flex-wrap:wrap;gap:24px;align-items:center;flex:2 1 520px;min-width:0}
+.home-next__big{font:700 84px/1 var(--f-hz);color:var(--jade)}
+.home-stage{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.home-stage .ui-hz{font-size:18px;font-weight:700}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.home-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.home-lvl{display:flex;flex-direction:column;gap:10px;padding:18px 20px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);min-height:150px}
+.home-lvl:hover{border-color:var(--line-2);color:var(--ink)}
+.home-lvl__n{font:500 40px/1 var(--f-hz);color:var(--muted)}
+.home-lvl.is-active{border:2px solid var(--jade)}
+.home-lvl.is-active .home-lvl__n{color:var(--jade);font-weight:700}
+.home-lvl.is-soon{background:var(--surface-2);border-style:dashed;border-color:var(--line-2);color:var(--ink-2)}
+.home-lvl.is-soon .home-lvl__n{color:var(--line-2)}

@@ -1,0 +1,315 @@
+[
+ {
+  "code": "bac-ninh",
+  "name": "Bắc Ninh",
+  "region": "bac",
+  "isCity": false,
+  "merged": [
+   "Bắc Ninh",
+   "Bắc Giang"
+  ]
+ },
+ {
+  "code": "cao-bang",
+  "name": "Cao Bằng",
+  "region": "bac",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "ha-noi",
+  "name": "Hà Nội",
+  "region": "bac",
+  "isCity": true,
+  "merged": []
+ },
+ {
+  "code": "hung-yen",
+  "name": "Hưng Yên",
+  "region": "bac",
+  "isCity": false,
+  "merged": [
+   "Hưng Yên",
+   "Thái Bình"
+  ]
+ },
+ {
+  "code": "hai-phong",
+  "name": "Hải Phòng",
+  "region": "bac",
+  "isCity": true,
+  "merged": [
+   "Hải Dương",
+   "Hải Phòng"
+  ]
+ },
+ {
+  "code": "lai-chau",
+  "name": "Lai Châu",
+  "region": "bac",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "lao-cai",
+  "name": "Lào Cai",
+  "region": "bac",
+  "isCity": false,
+  "merged": [
+   "Lào Cai",
+   "Yên Bái"
+  ]
+ },
+ {
+  "code": "lang-son",
+  "name": "Lạng Sơn",
+  "region": "bac",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "ninh-binh",
+  "name": "Ninh Bình",
+  "region": "bac",
+  "isCity": false,
+  "merged": [
+   "Hà Nam",
+   "Nam Định",
+   "Ninh Bình"
+  ]
+ },
+ {
+  "code": "phu-tho",
+  "name": "Phú Thọ",
+  "region": "bac",
+  "isCity": false,
+  "merged": [
+   "Vĩnh Phúc",
+   "Phú Thọ",
+   "Hòa Bình"
+  ]
+ },
+ {
+  "code": "quang-ninh",
+  "name": "Quảng Ninh",
+  "region": "bac",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "son-la",
+  "name": "Sơn La",
+  "region": "bac",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "thai-nguyen",
+  "name": "Thái Nguyên",
+  "region": "bac",
+  "isCity": false,
+  "merged": [
+   "Bắc Kạn",
+   "Thái Nguyên"
+  ]
+ },
+ {
+  "code": "tuyen-quang",
+  "name": "Tuyên Quang",
+  "region": "bac",
+  "isCity": false,
+  "merged": [
+   "Hà Giang",
+   "Tuyên Quang"
+  ]
+ },
+ {
+  "code": "dien-bien",
+  "name": "Điện Biên",
+  "region": "bac",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "gia-lai",
+  "name": "Gia Lai",
+  "region": "trung",
+  "isCity": false,
+  "merged": [
+   "Bình Định",
+   "Gia Lai"
+  ]
+ },
+ {
+  "code": "hue",
+  "name": "Huế",
+  "region": "trung",
+  "isCity": true,
+  "merged": []
+ },
+ {
+  "code": "ha-tinh",
+  "name": "Hà Tĩnh",
+  "region": "trung",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "khanh-hoa",
+  "name": "Khánh Hòa",
+  "region": "trung",
+  "isCity": false,
+  "merged": [
+   "Ninh Thuận",
+   "Khánh Hòa"
+  ]
+ },
+ {
+  "code": "lam-dong",
+  "name": "Lâm Đồng",
+  "region": "trung",
+  "isCity": false,
+  "merged": [
+   "Đắk Nông",
+   "Bình Thuận",
+   "Lâm Đồng"
+  ]
+ },
+ {
+  "code": "nghe-an",
+  "name": "Nghệ An",
+  "region": "trung",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "quang-ngai",
+  "name": "Quảng Ngãi",
+  "region": "trung",
+  "isCity": false,
+  "merged": [
+   "Kon Tum",
+   "Quảng Ngãi"
+  ]
+ },
+ {
+  "code": "quang-tri",
+  "name": "Quảng Trị",
+  "region": "trung",
+  "isCity": false,
+  "merged": [
+   "Quảng Bình",
+   "Quảng Trị"
+  ]
+ },
+ {
+  "code": "thanh-hoa",
+  "name": "Thanh Hóa",
+  "region": "trung",
+  "isCity": false,
+  "merged": []
+ },
+ {
+  "code": "da-nang",
+  "name": "Đà Nẵng",
+  "region": "trung",
+  "isCity": true,
+  "merged": [
+   "Quảng Nam",
+   "Đà Nẵng"
+  ]
+ },
+ {
+  "code": "dak-lak",
+  "name": "Đắk Lắk",
+  "region": "trung",
+  "isCity": false,
+  "merged": [
+   "Phú Yên",
+   "Đắk Lắk"
+  ]
+ },
+ {
+  "code": "an-giang",
+  "name": "An Giang",
+  "region": "nam",
+  "isCity": false,
+  "merged": [
+   "Kiên Giang",
+   "An Giang"
+  ]
+ },
+ {
+  "code": "ca-mau",
+  "name": "Cà Mau",
+  "region": "nam",
+  "isCity": false,
+  "merged": [
+   "Bạc Liêu",
+   "Cà Mau"
+  ]
+ },
+ {
+  "code": "can-tho",
+  "name": "Cần Thơ",
+  "region": "nam",
+  "isCity": true,
+  "merged": [
+   "Sóc Trăng",
+   "Hậu Giang",
+   "Cần Thơ"
+  ]
+ },
+ {
+  "code": "tp-ho-chi-minh",
+  "name": "TP. Hồ Chí Minh",
+  "region": "nam",
+  "isCity": true,
+  "merged": [
+   "Bà Rịa - Vũng Tàu",
+   "Bình Dương",
+   "TP. Hồ Chí Minh"
+  ]
+ },
+ {
+  "code": "tay-ninh",
+  "name": "Tây Ninh",
+  "region": "nam",
+  "isCity": false,
+  "merged": [
+   "Long An",
+   "Tây Ninh"
+  ]
+ },
+ {
+  "code": "vinh-long",
+  "name": "Vĩnh Long",
+  "region": "nam",
+  "isCity": false,
+  "merged": [
+   "Bến Tre",
+   "Trà Vinh",
+   "Vĩnh Long"
+  ]
+ },
+ {
+  "code": "dong-nai",
+  "name": "Đồng Nai",
+  "region": "nam",
+  "isCity": false,
+  "merged": [
+   "Bình Phước",
+   "Đồng Nai"
+  ]
+ },
+ {
+  "code": "dong-thap",
+  "name": "Đồng Tháp",
+  "region": "nam",
+  "isCity": false,
+  "merged": [
+   "Tiền Giang",
+   "Đồng Tháp"
+  ]
+ }
+]

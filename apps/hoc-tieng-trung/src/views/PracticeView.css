@@ -1,0 +1,32 @@
+/* Luyện tập: câu hỏi trắc nghiệm, sắp xếp câu */
+.qz{max-width:760px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+.segs{display:grid;gap:4px}
+.segs i{height:6px;border-radius:3px;background:var(--line)}
+.segs i.ok{background:var(--jade)}.segs i.no{background:var(--seal)}.segs i.cur{background:var(--jade-soft);outline:1px solid var(--jade)}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.opts.wide{grid-template-columns:1fr}}
+.opt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px;padding:12px;border-radius:14px;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 3px 0 var(--line-2);cursor:pointer;text-align:center;font-size:16px;font-weight:500;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--jade)}
+.opt .ui-hz{font-size:36px;line-height:1.15}
+.opt .ui-py{font-size:19px}
+.opt.right{background:var(--jade-soft);border:2px solid var(--jade);box-shadow:0 3px 0 var(--jade)}
+.opt.wrong{background:var(--seal-soft);border:2px solid var(--seal);box-shadow:0 3px 0 var(--seal)}
+.opt:disabled{cursor:default}
+.slot{min-height:104px;padding:16px;border-radius:16px;background:var(--surface);border:2px dashed var(--line-2);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:72px}
+.tok{display:inline-flex;align-items:center;justify-content:center;min-width:64px;min-height:60px;padding:6px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 3px 0 var(--line-2);font:500 26px var(--f-hz);cursor:pointer;color:var(--ink)}
+.tok.used{visibility:hidden}
+.tok:disabled{cursor:default}
+.fb{padding:18px 20px;border-radius:16px;display:flex;flex-direction:column;gap:10px}
+.fb.ok{background:var(--jade-soft);border:1px solid var(--jade)}
+.fb.no{background:var(--seal-soft);border:1px solid var(--seal)}
+.fb h3{font-size:18px}
+.fb.ok h3{color:var(--jade-ink)}.fb.no h3{color:var(--seal-ink)}
+.prompt-hz{font:500 76px/1.15 var(--f-hz);text-align:center}
+.playbig{display:grid;place-items:center;width:96px;height:96px;border-radius:26px;border:0;background:var(--jade);color:var(--on-jade);box-shadow:0 4px 0 var(--jade-ink);cursor:pointer}
+.slowbtn{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;border:1px solid var(--line-2);background:var(--surface);color:var(--jade);font-weight:600;font-size:13px;cursor:pointer}
+.slowbtn:hover{background:var(--jade-soft)}
+.choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.choice{display:flex;flex-direction:column;gap:6px;padding:18px 20px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);cursor:pointer;text-align:left}
+.choice:hover{border-color:var(--jade);color:var(--ink)}
+.choice[aria-disabled="true"]{opacity:.6;pointer-events:none}

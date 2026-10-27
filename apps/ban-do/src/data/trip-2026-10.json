@@ -1,0 +1,443 @@
+[
+ {
+  "id": "chotamdao",
+  "cat": "choi",
+  "name": "Chợ Tam Đảo",
+  "note": "Đi dạo sau bữa tối, nếu chưa quá muộn",
+  "day": 3,
+  "inPlan": true,
+  "stop": "tamdao"
+ },
+ {
+  "id": "phomay",
+  "cat": "an",
+  "name": "Nhà hàng Phố Mây",
+  "note": "Gà đồi hấp lá chanh và ngọn su su xào tỏi — gọi bàn trước ở 0976 087 416",
+  "day": 3,
+  "inPlan": true,
+  "stop": "tamdao"
+ },
+ {
+  "id": "lungchung",
+  "cat": "an",
+  "name": "Cafe Lưng Chừng",
+  "note": "Mở từ 6 giờ — đúng lúc bạn cần",
+  "day": 4,
+  "inPlan": true,
+  "stop": "tamdao"
+ },
+ {
+  "id": "thacbac",
+  "cat": "choi",
+  "name": "Thác Bạc",
+  "note": "Đi sớm khi bậc đá chưa trơn và chưa đông",
+  "day": 4,
+  "inPlan": true,
+  "stop": "tamdao"
+ },
+ {
+  "id": "nhathoda",
+  "cat": "choi",
+  "name": "Nhà thờ đá Tam Đảo",
+  "note": "Ngay trung tâm, đi bộ lúc hơn 8 giờ",
+  "day": 4,
+  "inPlan": true,
+  "stop": "tamdao"
+ },
+ {
+  "id": "congtroi",
+  "cat": "choi",
+  "name": "Cổng Trời",
+  "note": "Nhìn xuống thị trấn nằm dưới mây",
+  "day": 4,
+  "inPlan": true,
+  "stop": "tamdao"
+ },
+ {
+  "id": "quangio",
+  "cat": "an",
+  "name": "Quán Gió",
+  "note": "Mở 8 giờ — điểm neo của cả chặng",
+  "day": 4,
+  "inPlan": true,
+  "stop": "tamdao"
+ },
+ {
+  "id": "denbachua",
+  "cat": "choi",
+  "name": "Đền Bà Chúa Thượng Ngàn",
+  "note": "Trên đường ra khỏi thị trấn",
+  "day": 4,
+  "inPlan": true,
+  "stop": "tamdao"
+ },
+ {
+  "id": "lienhoa",
+  "cat": "an",
+  "name": "Bánh mì Liên Hoa",
+  "note": "Bữa sáng muộn — 15–19 Ba Tháng Hai, mở từ 06:00",
+  "day": 5,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "docthi",
+  "cat": "an",
+  "name": "Tiệm cà phê Dốc Thị",
+  "note": "Đến trước 16:30 để chắc chỗ ngoài rìa đồi",
+  "day": 5,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "bunbo",
+  "cat": "an",
+  "name": "Bún bò Ấp Ánh Sáng",
+  "note": "Bữa tối đầu tiên, ngay cạnh hồ",
+  "day": 5,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "hoxuanhuong",
+  "cat": "choi",
+  "name": "Hồ Xuân Hương",
+  "note": "Đi bộ một đoạn sau bữa tối",
+  "day": 5,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "nuongdem",
+  "cat": "an",
+  "name": "Đồ nướng chợ đêm",
+  "note": "Ăn đêm bên lò than — xiên nướng, ngô, sữa đậu nành nóng",
+  "day": 5,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "truclam",
+  "cat": "choi",
+  "name": "Thiền viện Trúc Lâm",
+  "note": "Cáp treo từ đồi Robin",
+  "day": 6,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "tuyenlam",
+  "cat": "choi",
+  "name": "Hồ Tuyền Lâm",
+  "note": "Đi bộ ven hồ hoặc thuê thuyền",
+  "day": 6,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "bahung",
+  "cat": "an",
+  "name": "Nem nướng Bà Hùng",
+  "note": "Bữa trưa — 328 Phan Đình Phùng, trên đường Tuyền Lâm về",
+  "day": 6,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "tung",
+  "cat": "an",
+  "name": "Cà phê Tùng",
+  "note": "Chiều muộn, trên đường về trung tâm",
+  "day": 6,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "taongo",
+  "cat": "an",
+  "name": "Lẩu gà lá é Tao Ngộ",
+  "note": "Tới trước 18:30 cho chắc bàn",
+  "day": 6,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "langbiang",
+  "cat": "choi",
+  "name": "Đỉnh Langbiang",
+  "note": "2.167 m — điểm cao nhất cả chuyến",
+  "day": 7,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "suoivang",
+  "cat": "choi",
+  "name": "Hồ Đankia – Suối Vàng",
+  "note": "",
+  "day": 7,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "culan",
+  "cat": "choi",
+  "name": "Làng Cù Lần",
+  "note": "Bỏ qua được nếu muốn về sớm",
+  "day": 7,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "melinh",
+  "cat": "an",
+  "name": "Mê Linh Coffee Garden",
+  "note": "Chỉ ghé nếu trời quang",
+  "day": 7,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "baotoa",
+  "cat": "an",
+  "name": "Lẩu bò Ba Toa",
+  "note": "",
+  "day": 7,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "ancafe",
+  "cat": "an",
+  "name": "An Cafe",
+  "note": "63 Ba Tháng Hai — ghé buổi sáng trước khi rời trung tâm",
+  "day": 8,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "linhphuoc",
+  "cat": "choi",
+  "name": "Chùa Linh Phước",
+  "note": "Chùa Ve Chai ở Trại Mát, ngay trên đường lên",
+  "day": 8,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "caudat",
+  "cat": "choi",
+  "name": "Đồi chè Cầu Đất",
+  "note": "6:30 – 7:30, mây còn dày dưới thung",
+  "day": 9,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "caudatfarm",
+  "cat": "an",
+  "name": "Cầu Đất Farm",
+  "note": "Ăn sáng ngay trên đồi",
+  "day": 9,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "dran",
+  "cat": "choi",
+  "name": "Thị trấn D'ran",
+  "note": "Vườn hồng ăn trái, mái nhà dốc",
+  "day": 9,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "fujiya",
+  "cat": "an",
+  "name": "Fujiya Sushi",
+  "note": "Bữa trưa — Lô 34 KQH Nguyễn Công Trứ, cạnh Là Việt",
+  "day": 10,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "chodalat",
+  "cat": "choi",
+  "name": "Chợ Đà Lạt",
+  "note": "Hồng treo gió, atiso, mứt, dâu",
+  "day": 10,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "laviet",
+  "cat": "an",
+  "name": "Là Việt Coffee",
+  "note": "Xem xưởng rang trước khi mua cà phê mang về",
+  "day": 10,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "nhatho",
+  "cat": "choi",
+  "name": "Nhà thờ Con Gà",
+  "note": "Ghé 15 phút, ngay trung tâm",
+  "day": 10,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "nhago",
+  "cat": "an",
+  "name": "Lẩu bò Nhà Gỗ",
+  "note": "Bữa tối cuối cùng ở Đà Lạt",
+  "day": 10,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "xiumai",
+  "cat": "an",
+  "name": "Bánh mì xíu mại Cô Hồng",
+  "note": "Đi sớm — bán hết là nghỉ",
+  "day": 11,
+  "inPlan": true,
+  "stop": "dalat"
+ },
+ {
+  "id": "cafe1904",
+  "cat": "an",
+  "name": "Cafe 1904",
+  "note": "Quán mới, mở dịp Tết 2024, nhanh chóng thành chỗ săn mây quen",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "cola",
+  "cat": "an",
+  "name": "Tiệm Cafe Cỏ Lạ",
+  "note": "Nằm trên đồi, nhìn xuống trọn một góc thị trấn",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "kumochan",
+  "cat": "an",
+  "name": "Kumo Chan",
+  "note": "Set nướng BBQ, bàn nhìn ra thung lũng mây",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "huongrung",
+  "cat": "an",
+  "name": "Nhà hàng Hương Rừng",
+  "note": "Quán bình dân dưới Tây Thiên, giá dễ chịu",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "longthanh",
+  "cat": "an",
+  "name": "Nhà hàng Long Thành",
+  "note": "Chuyên ba ba và cá — quán lâu năm của vùng Tam Đảo – Vĩnh Phúc",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "thiennhi",
+  "cat": "choi",
+  "name": "Đỉnh Thiên Nhị",
+  "note": "Leo bậc thang lên tháp truyền hình — dốc thật, nhưng là điểm cao nhất đi bộ tới được",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "taythien",
+  "cat": "choi",
+  "name": "Thiền viện Trúc Lâm Tây Thiên",
+  "note": "Một trong ba thiền viện lớn nhất Việt Nam, dựng cạnh khu Tây Thiên Cổ Tự",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "captreo",
+  "cat": "choi",
+  "name": "Cáp treo Tây Thiên",
+  "note": "Lên đền Thượng bằng cáp thay vì leo — cả quãng đường rừng nhìn từ trên cao",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "xahuong",
+  "cat": "choi",
+  "name": "Hồ Xạ Hương",
+  "note": "Hồ giữa rừng dưới chân núi — câu cá, cắm trại, gần như không có khách du lịch",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "dailai",
+  "cat": "choi",
+  "name": "Hồ Đại Lải",
+  "note": "Hồ lớn, có resort và chỗ chèo thuyền — đổi không khí sau mấy ngày trên núi",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "vqg",
+  "cat": "choi",
+  "name": "Vườn quốc gia Tam Đảo",
+  "note": "Đường mòn xuyên rừng nguyên sinh — nửa ngày đi bộ, nên thuê người dẫn",
+  "day": null,
+  "inPlan": false,
+  "stop": "tamdao"
+ },
+ {
+  "id": "marriedbeans",
+  "cat": "an",
+  "name": "The Married Beans",
+  "note": "Specialty, rang nhạt, dân cà phê hay ghé",
+  "day": null,
+  "inPlan": false,
+  "stop": "dalat"
+ },
+ {
+  "id": "xichlo",
+  "cat": "an",
+  "name": "Xích Lô Quán",
+  "note": "Chỗ ăn khuya, mở tới rạng sáng",
+  "day": null,
+  "inPlan": false,
+  "stop": "dalat"
+ },
+ {
+  "id": "manwah",
+  "cat": "an",
+  "name": "Manwah — Taiwanese Hotpot",
+  "note": "Buffet lẩu Đài Loan của Golden Gate, ngay phố đi bộ",
+  "day": null,
+  "inPlan": false,
+  "stop": "dalat"
+ },
+ {
+  "id": "bbqgarden",
+  "cat": "an",
+  "name": "BBQ Garden",
+  "note": "Buffet nướng ngồi bàn — không nằm trong lịch",
+  "day": null,
+  "inPlan": false,
+  "stop": "dalat"
+ }
+]
