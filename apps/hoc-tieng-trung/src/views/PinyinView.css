@@ -1,0 +1,13 @@
+/* Bảng pinyin: cuộn trong khung, tiêu đề cột và cột vần dính */
+.pyc-wrap{overflow:auto;max-height:70vh}
+.pyc-t{border-collapse:separate;border-spacing:0;font-family:var(--f-py);font-size:14px}
+.pyc-t th,.pyc-t td{padding:2px;border-bottom:1px solid var(--line);text-align:center}
+.pyc-t .pyc-h{position:sticky;top:0;z-index:2;background:var(--surface);padding:10px 6px;font-weight:600;min-width:52px}
+.pyc-t .pyc-corner{left:0;z-index:3;border-right:1px solid var(--line)}
+.pyc-t .pyc-f{position:sticky;left:0;z-index:1;background:var(--surface);padding:6px 12px;font-weight:600;text-align:left;border-right:1px solid var(--line)}
+.pyc-t .pyc-g{background:var(--surface-2);text-align:left;padding:8px 12px;font:600 12px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pyc{min-width:52px;min-height:36px;border:0;border-radius:8px;background:transparent;font:500 14px var(--f-py);color:var(--ink);cursor:pointer}
+.pyc:hover{background:var(--jade-soft)}
+.pyc.is-on{background:var(--jade);color:var(--on-jade)}
+.pyd-tone{font-size:26px;padding:6px 12px;border-radius:10px;background:var(--surface-2)}
+.pyc-rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}

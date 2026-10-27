@@ -1,0 +1,16 @@
+{
+  "name": "trang-ca-nhan",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:home": "npm -w apps/home run dev",
+    "dev:zh": "npm -w apps/hoc-tieng-trung run dev",
+    "dev:map": "npm -w apps/ban-do run dev",
+    "build": "node scripts/build.mjs",
+    "preview": "npx --yes serve@14.2.4 dist -l 4173"
+  }
+}

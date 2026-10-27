@@ -1,0 +1,50 @@
+import { Icon } from '@trang/ui';
+import { MapArt, ZhArt } from './Art.jsx';
+
+// Hai lối vào của site. Thêm app mới: thêm một phần tử vào đây và một tranh trong Art.jsx.
+const CHOICES = [
+  {
+    id: 'map', href: 'ban-do/', tag: 'Ngọc ♥ Đức', title: 'Bản đồ du lịch', cta: 'Mở bản đồ',
+    text: 'Những nơi hai người đã đến cùng nhau: trái tim trên bản đồ, đường bay, và từng quán ăn, điểm chơi đã ghé trong mỗi chuyến.',
+    chips: ['Tam Đảo', 'Đà Lạt', '49 địa điểm'], Art: MapArt
+  },
+  {
+    id: 'zh', href: 'hoc-tieng-trung/', tag: 'Hán Lộ · HSK 3.0', title: 'App học tiếng Trung', cta: 'Mở app học',
+    text: '30 bài theo 新HSK教程 1–2 với bài giảng video, bảng pinyin, thẻ ôn tập và luyện viết chữ Hán.',
+    chips: ['30 bài', '512 từ', '30 video'], Art: ZhArt
+  }
+];
+
+function greeting(h) { return h < 11 ? 'Chào buổi sáng' : h < 18 ? 'Chào buổi chiều' : 'Chào buổi tối'; }
+
+function ChoiceCard({ c }) {
+  const { Art } = c;
+  return (
+    <a className={`choice choice--${c.id}`} href={c.href}>
+      <Art />
+      <div className="choice__body">
+        <span className="choice__tag">{c.tag}</span>
+        <b>{c.title}</b>
+        <p>{c.text}</p>
+        <div className="choice__chips">{c.chips.map(t => <span key={t}>{t}</span>)}</div>
+        <span className="choice__go">{c.cta} <Icon name="arrow" size={18} strokeWidth="2.2" /></span>
+      </div>
+    </a>
+  );
+}
+
+export function App() {
+  const d = new Date();
+  return (
+    <>
+      <main className="home">
+        <header className="home__hello">
+          <span className="ui-eyebrow">{d.toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' })}</span>
+          <h1>{greeting(d.getHours())}, hôm nay mở <em>trang nào</em>?</h1>
+        </header>
+        <div className="home__choices">{CHOICES.map(c => <ChoiceCard key={c.id} c={c} />)}</div>
+      </main>
+      <footer className="home__foot">Sổ tay chuyến Tam Đảo – Đà Lạt vẫn mở được từ trong bản đồ, hoặc ở <a href="travel/">travel/</a>.</footer>
+    </>
+  );
+}

@@ -1,87 +1,75 @@
-# Ngọc về · 3 – 11/10
+# Trang cá nhân: bản đồ du lịch + học tiếng Trung
 
-Sổ tay một chuyến chín ngày, hai chặng:
+Monorepo React (Vite + npm workspaces), chia thành các app độc lập dùng chung một thư viện component.
 
-| Ngày | Ở đâu |
-|---|---|
-| T7 03/10 | Ngọc đáp Nội Bài **17:45** → đi thẳng Tam Đảo (60 km), tới nơi đã tối |
-| CN 04/10 | Cả Tam Đảo trong một buổi sáng → ra thẳng Nội Bài, bay chiều vào Đà Lạt |
-| T2 05/10 | Ngủ bù, chiều Dốc Thị |
-| T3–T4 06–07/10 | Trung tâm: Tuyền Lâm, Langbiang |
-| T5 08/10 | Trại Mát + chùa Ve Chai, chiều để trống |
-| T6 09/10 | Dậy 4:30 đi Cầu Đất – D'ran, tối về lại phố |
-| T7 10/10 | Ngủ nướng, chiều mua quà |
-| CN 11/10 | Bay DLI → HAN |
+```
+packages/ui/            @trang/ui — component dùng chung (Button, Card, Tabs, AppShell, Icon, …) và tokens.css
+apps/home/              trang chủ: hai thẻ chọn Travel plan / App học tiếng Trung   → /
+apps/hoc-tieng-trung/   app Hán Lộ học tiếng Trung (HashRouter)                     → /hoc-tieng-trung/
+apps/ban-do/            bản đồ 34 tỉnh: đánh dấu đã đi / muốn đi và ghi chú          → /ban-do/
+travel/                 sổ tay chuyến Tam Đảo – Đà Lạt, HTML tĩnh (sẽ chuyển React sau) → /travel/
+scripts/build.mjs       build cả site vào dist/
+```
 
-Đầu trang có **đồng hồ đếm ngược** tới lúc Ngọc đáp Nội Bài (17:45 ngày 3/10);
-sau mốc đó nó tự chuyển sang đếm ngày thứ mấy của chuyến, và sau 11/10 thì dừng.
-Mốc nằm trong `index.html` dưới dạng `Date.parse('2026-10-03T17:45:00+07:00')` —
-đổi giờ bay thì đổi đúng chỗ đó.
+Mỗi app build riêng (`npm -w apps/<tên> run build`); `npm run build` gộp tất cả vào `dist/` theo đúng
+đường dẫn trên. Các app liên kết với nhau bằng đường dẫn thường, không nạp nhau lúc chạy.
 
-Sau 11/10 ô đó đổi thành **"Đã đi cùng nhau"** và hiện tấm ảnh chụp chung. Ảnh
-đọc từ `anh/da-di-cung-nhau.jpg`; chưa có file thì nó hiện một khung gạch đứt
-nhắc bỏ ảnh vào, chứ không vỡ layout.
-
-Mở ra là lịch trình theo ngày; hai mục **Tam Đảo** và **Đà Lạt** bên dưới là danh
-sách chi tiết từng quán và từng điểm, tích vào ô khi đã ghé. Dấu tích dùng chung
-một mã `data-place`, nên tích ở lịch trình là ăn sang danh sách chi tiết và ngược lại.
-
-Toàn bộ là **một file `index.html` tĩnh** — không build, không dependency, không
-backend. Font lấy từ Google Fonts qua CDN; ngoài ra không gọi mạng.
-
-## Chạy tại chỗ
-
-Mở thẳng `index.html` bằng trình duyệt là xong. Hoặc chạy một server tĩnh:
+## Lệnh
 
 ```bash
-python3 -m http.server 8000
+npm install
+npm run dev:home        # trang chủ ở http://localhost:5173
+npm run dev:zh          # app học ở http://localhost:5174/hoc-tieng-trung/
+npm run dev:map         # bản đồ ở http://localhost:5175/ban-do/
+npm run dev:map         # bản đồ ở http://localhost:5175/ban-do/
+npm run build           # build cả site vào dist/
+npm run preview         # xem bản build ở http://localhost:4173
 ```
 
-## Deploy lên Vercel
+Deploy Vercel: `vercel.json` đã đặt build `npm run build`, thư mục xuất `dist`.
 
-Zero-config, không cần `vercel.json`:
+## Thư viện component `@trang/ui`
+
+`import '@trang/ui/tokens.css'` một lần ở điểm vào của app (màu, font, giao diện sáng/tối), rồi
+`import { Button, Card, AppShell, … } from '@trang/ui'`. Component nhận `as` để dùng với `Link` của router.
+Màu chỉ lấy từ token trong `tokens.css`; thêm biểu tượng thì thêm vào `Icon.jsx`.
+
+## Bản đồ "Đã đi qua" (`apps/ban-do/`)
+
+Bản đồ SVG 34 tỉnh thành (sau sáp nhập 1/7/2025) vẽ bằng `d3-geo`; chọn một tỉnh để đánh dấu đã đi /
+muốn đi và viết ghi chú, lưu localStorage khóa `da-di-qua-v1`, có xuất/nhập JSON.
+Ranh giới nằm sẵn trong `src/data/provinces.json` — xem [apps/ban-do/README.md](apps/ban-do/README.md)
+để biết nguồn dữ liệu và lưu ý về chiều cuộn polygon của d3-geo.
+
+## Bản đồ du lịch (`apps/ban-do/`)
+
+Xem `apps/ban-do/README.md`. Các chuyến đi khai báo trong `apps/ban-do/src/trips.js` (điểm dừng, tọa độ,
+đường đi); danh sách địa điểm của chuyến 3–11/10 nằm ở `src/data/trip-2026-10.json`, trích từ
+`travel/index.html`. Dấu tích "đã ghé" dùng chung khóa localStorage `dadiqua-trip` với sổ tay, nên tích
+ở bản đồ hay ở sổ tay đều thấy ở cả hai (cùng trình duyệt).
+
+## App học tiếng Trung (`apps/hoc-tieng-trung/`)
+
+- `src/core/` — dữ liệu (`data.js`), tiến độ trong localStorage khóa `hanlo-v2` (`store.js`), giọng đọc
+  (`speech.js`), dựng bài giảng (`lecture.js`), tiện ích pinyin (`pinyin.js`).
+- `src/views/` — mỗi màn hình một file + css riêng; `src/components/` — LecturePlayer, Hanzi.
+- `src/data/lessons.json` — 30 bài (512 từ) bám chủ đề, từ vựng, ngữ pháp của 新HSK教程 1–2; câu ví dụ,
+  hội thoại và lời giảng là nội dung tự soạn. `src/data/pinyin.json` — 400 âm tiết cho bảng pinyin.
+- `public/audio/` — giọng đọc tạo sẵn (tiếng Việt: giọng Linh của macOS; tiếng Trung: giọng neural Xiaoxiao) (`<khóa>.mp3`, khóa băm của `ngôn ngữ|câu`, danh sách ở
+  `index.json`); câu thiếu file thì đọc bằng giọng trình duyệt.
+- `public/video/` — MP4 bài giảng 1280×720, danh sách ở `index.json`.
+- Route riêng cho công cụ: `#/render/:id/:bước`, `#/steps/:id`, `#/alltexts`.
+
+### Tạo lại giọng đọc và video
+
+Cần macOS (lệnh `say`), Google Chrome, ffmpeg (`brew install ffmpeg`), Python có `edge-tts`, và bản build đang chạy (`npm run preview`):
 
 ```bash
-npx vercel deploy --prod
+python3 apps/hoc-tieng-trung/tools/gen_audio.py
+npm run build   # để public/audio mới vào dist
+python3 apps/hoc-tieng-trung/tools/make_video.py /tmp/hanlo apps/hoc-tieng-trung/public/video all
 ```
 
-Lần đầu Vercel sẽ hỏi đăng nhập và tên project. Hoặc push repo này lên GitHub rồi
-Import vào Vercel — nó tự nhận đây là static site.
+`gen_audio.py --lang vi|zh --force` tạo lại một ngôn ngữ (dùng khi đổi giọng).
 
-## Dấu tích được lưu ở đâu
-
-Trang lưu vào `localStorage` dưới khóa `dadiqua-trip`. Lần mở đầu tiên, nếu chưa có
-khóa đó, nó gộp dấu tích cũ từ `dadiqua-dalat` và `dadiqua-tamdao` của bản hai-điểm-đến
-trước đây, nên không mất gì.
-
-Nghĩa là **dấu tích không đồng bộ giữa các máy** — mở trên điện thoại sẽ là một
-danh sách trắng. Bản chạy trên Claude Artifact có đồng bộ qua server (doc `trip/2026-10`);
-bản tĩnh này thì không. Muốn đồng bộ thì cần thêm một backend (Vercel KV, Upstash,
-Supabase) và một API route đọc/ghi.
-
-Code đã viết sẵn nhánh cho cả hai: nếu `window.claude` tồn tại thì dùng server,
-không thì tự lùi về `localStorage`. Ô trạng thái ở đầu trang cho biết đang ở chế độ nào.
-
-## Sửa nội dung
-
-Địa điểm nằm rải trong `index.html` dưới dạng:
-
-```html
-<input type="checkbox" data-place="docthi" data-cat="an">
-```
-
-- `data-place` — mã định danh, **trùng mã thì tích một chỗ là ăn sang mọi chỗ khác**
-- `data-cat` — `an` hoặc `choi`, quyết định nhãn màu và bảng đếm
-
-Các con số trên đầu trang đều tự đếm từ DOM, không hardcode:
-
-- ô lớn và thanh tiến độ đếm những nơi **nằm trong lịch trình** (`#lich`)
-- nơi đã tích nhưng không có trong lịch hiện ra thành "thêm N nơi ngoài lịch"
-- mỗi `<div class="leg">` tự đếm phần của chặng đó
-- ô ngày trên dải chín ngày sáng lên khi mọi nơi của ngày đó đã tích — dải này nối
-  với ngày qua `href="#d03"` và `id="d03"`, đổi ngày thì đổi cả hai
-
-## Nguồn dữ liệu
-
-Địa chỉ, giờ mở cửa và số điện thoại tra từ các trang du lịch / ẩm thực Đà Lạt và
-Vĩnh Phúc, **không gọi kiểm chứng từng nơi**. Nên xác nhận lại trước khi đi xa.
+Pinyin và âm Hán Việt nên được người biết tiếng Trung soát lại trước khi dùng để dạy.

@@ -1,0 +1,11 @@
+/* Tra từ: ô tìm, danh sách kết quả, khung chi tiết */
+.search{display:flex;align-items:center;gap:10px;padding:0 16px;min-height:56px;border-radius:14px;background:var(--surface);border:2px solid var(--jade)}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:500 18px var(--f-ui);color:var(--ink)}
+.res{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 18px;border:0;border-bottom:1px solid var(--line);background:none;width:100%;text-align:left;cursor:pointer;color:var(--ink)}
+.res:last-child{border-bottom:0}
+.res:hover{background:var(--surface-3)}
+.res.on{background:var(--jade-soft)}
+.res .ui-hz{font-size:28px}
+.parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.part{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:var(--surface-2);text-decoration:none;color:var(--ink)}
+.part .ui-hz{font-size:36px}

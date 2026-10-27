@@ -1,0 +1,17 @@
+/* Kiểu dùng chung trong app học (component chung nằm ở @trang/ui; mỗi màn hình có file css riêng trong views/) */
+.hv{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+
+/* Khung: hộp mục tiêu ngày và nút về trang chủ ở cuối thanh bên */
+.side-goal{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+.side-home{display:flex;align-items:center;gap:10px;min-height:40px;padding:0 12px;border-radius:9px;color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500}
+.side-home:hover{background:var(--surface-2);color:var(--ink)}
+.side-goal__box{padding:14px;border-radius:12px;background:var(--surface-2);display:flex;flex-direction:column;gap:6px}
+
+/* Thẻ từ và câu ví dụ */
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.word{display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.word__top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.word__hz{font-size:34px;line-height:1.15}
+.word__act{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.ex{padding:10px 12px;border-radius:10px;background:var(--surface-3);border:1px solid var(--line);display:flex;flex-direction:column;gap:1px;font-size:14px}
+.ex__py{font-size:13px;color:var(--muted)}
