@@ -4,7 +4,7 @@ package gobackend
 //
 // Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/). Mỗi lần ghi là một phiên bản (dòng term_upload kèm bản sao
 // cả danh sách); danh sách đang dùng (bảng term) luôn là bản mới nhất ĐANG BẬT, tắt/bật lại từng bản không mất dữ liệu.
-// GET ai cũng đọc được (nội dung học, không bí mật); ?versions là lịch sử phiên bản, ?version=N là bản sao của bản N.
+// GET ai cũng đọc được (nội dung học, không bí mật); ?versions[&limit&offset] là lịch sử theo trang, ?version=N là bản sao của bản N.
 // ?check kiểm tra mật khẩu. PUT, PATCH cần mật khẩu (APP_SECRET hoặc HSK6_PASS).
 // PUT ghi cả danh sách gửi lên thành bản mới (trang tự gộp khi chọn "thêm vào"), trong một transaction.
 // PATCH ?version=N {active} tắt hoặc bật lại bản N, rồi dựng lại danh sách đang dùng từ bản mới nhất còn bật.
@@ -60,7 +60,7 @@ const termCols = `x(key text, zh text, pinyin text, vi text, "group" text, major
 const (
 	maxTerms     = 5000
 	maxTermsBody = 4 << 20 // ~1.500 thuật ngữ chỉ khoảng 500 KB
-	maxVersions  = 100
+	pageMax      = 100     // ?versions trả theo trang: &limit= (mặc định 20, tối đa 100) &offset=
 )
 
 // replace: ghi đè bằng file; add: trang đã gộp file vào danh sách cũ; restore: khôi phục một bản cũ
@@ -171,12 +171,20 @@ func Terms(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == http.MethodGet && r.URL.Query().Has("versions") {
-		list, err := termVersions(ctx, p)
+		num := func(k string, def, max int) int {
+			n, err := strconv.Atoi(r.URL.Query().Get(k))
+			if err != nil || n <= 0 {
+				return def
+			}
+			return min(n, max)
+		}
+		limit, offset := num("limit", 20, pageMax), num("offset", 0, 1e9)
+		list, total, active, err := termVersions(ctx, p, limit, offset)
 		if err != nil {
 			fail(w, http.StatusInternalServerError, "lỗi đọc dữ liệu")
 			return
 		}
-		writeJSON(w, http.StatusOK, map[string]any{"versions": list})
+		writeJSON(w, http.StatusOK, map[string]any{"versions": list, "total": total, "active": active, "limit": limit, "offset": offset})
 		return
 	}
 	if r.Method == http.MethodGet && r.URL.Query().Has("version") {
@@ -339,23 +347,27 @@ func loadTerms(ctx context.Context, p *pgxpool.Pool) (termList, error) {
 	return l, rows.Err()
 }
 
-func termVersions(ctx context.Context, p *pgxpool.Pool) ([]termVersion, error) {
-	rows, err := p.Query(ctx, fmt.Sprintf(`SELECT id, file_name, mode, count, created_at, terms IS NOT NULL, active
-		FROM term_upload ORDER BY id DESC LIMIT %d`, maxVersions))
+func termVersions(ctx context.Context, p *pgxpool.Pool, limit, offset int) ([]termVersion, int64, int64, error) {
+	var total, active int64
+	if err := p.QueryRow(ctx, `SELECT count(*), count(*) FILTER (WHERE active) FROM term_upload`).Scan(&total, &active); err != nil {
+		return nil, 0, 0, err
+	}
+	rows, err := p.Query(ctx, `SELECT id, file_name, mode, count, created_at, terms IS NOT NULL, active
+		FROM term_upload ORDER BY id DESC LIMIT $1 OFFSET $2`, limit, offset)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, err
 	}
 	defer rows.Close()
 	list := []termVersion{}
 	for rows.Next() {
 		var v termVersion
 		if err := rows.Scan(&v.Version, &v.FileName, &v.Mode, &v.Count, &v.CreatedAt, &v.Saved, &v.Active); err != nil {
-			return nil, err
+			return nil, 0, 0, err
 		}
 		v.CreatedAt = utc(v.CreatedAt)
 		list = append(list, v)
 	}
-	return list, rows.Err()
+	return list, total, active, rows.Err()
 }
 
 // Bản sao của một phiên bản; nil nếu không có bản đó hoặc bản đó ghi từ trước khi có lịch sử

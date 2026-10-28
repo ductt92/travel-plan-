@@ -2,7 +2,7 @@
 //
 // Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/). Mỗi lần ghi là một phiên bản (dòng term_upload kèm bản sao
 // cả danh sách); danh sách đang dùng (bảng term) luôn là bản mới nhất ĐANG BẬT, tắt/bật lại từng bản không mất dữ liệu.
-// GET ai cũng đọc được (nội dung học, không bí mật); ?versions là lịch sử phiên bản, ?version=N là bản sao của bản N.
+// GET ai cũng đọc được (nội dung học, không bí mật); ?versions[&limit&offset] là lịch sử theo trang, ?version=N là bản sao của bản N.
 // ?check kiểm tra mật khẩu. PUT, PATCH cần mật khẩu (APP_SECRET hoặc HSK6_PASS).
 // PUT ghi cả danh sách gửi lên thành bản mới (trang tự gộp khi chọn "thêm vào"), trong một transaction.
 // PATCH ?version=N {active} tắt hoặc bật lại bản N, rồi dựng lại danh sách đang dùng từ bản mới nhất còn bật.
@@ -46,7 +46,7 @@ const int = v => Number.isInteger(v) && v >= 0 && v < 2 ** 31;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 // replace: ghi đè bằng file; add: trang đã gộp file vào danh sách cũ; restore: khôi phục một bản cũ
 const MODES = ['replace', 'add', 'restore'];
-const MAX_VERSIONS = 100;
+const PAGE_MAX = 100; // ?versions trả theo trang: &limit= (mặc định 20, tối đa 100) &offset=
 
 // sao lưu bản đang dùng: bản mới nhất đang bật mà ghi từ trước khi có lịch sử (chưa có bản sao) thì chép bảng term vào
 const BACKUP = `UPDATE term_upload SET terms = (SELECT COALESCE(jsonb_agg(jsonb_build_object('key', key, 'zh', zh, 'pinyin', pinyin,
@@ -94,10 +94,14 @@ async function load(p) {
   };
 }
 
-async function versions(p) {
+async function versions(p, limit, offset) {
   const { rows } = await p.query(`SELECT id, file_name, mode, count, created_at, terms IS NOT NULL AS saved, active
-    FROM term_upload ORDER BY id DESC LIMIT ${MAX_VERSIONS}`);
-  return { versions: rows.map(r => ({ version: Number(r.id), fileName: r.file_name, mode: r.mode, count: r.count, createdAt: r.created_at, saved: r.saved, active: r.active })) };
+    FROM term_upload ORDER BY id DESC LIMIT $1 OFFSET $2`, [limit, offset]);
+  const n = (await p.query('SELECT count(*) AS total, count(*) FILTER (WHERE active) AS active FROM term_upload')).rows[0];
+  return {
+    total: Number(n.total), active: Number(n.active), limit, offset,
+    versions: rows.map(r => ({ version: Number(r.id), fileName: r.file_name, mode: r.mode, count: r.count, createdAt: r.created_at, saved: r.saved, active: r.active })),
+  };
 }
 
 async function snapshot(p, id) {
@@ -172,7 +176,10 @@ export default async function terms(req, res) {
   if (req.method === 'GET') {
     const q = new URL(req.url, 'http://localhost').searchParams;
     try {
-      if (q.has('versions')) return send(res, 200, await versions(p));
+      if (q.has('versions')) {
+        const num = (k, d, max) => Math.min(Math.max(Number.parseInt(q.get(k) ?? '', 10) || d, 0), max);
+        return send(res, 200, await versions(p, num('limit', 20, PAGE_MAX) || 20, num('offset', 0, 1e9)));
+      }
       if (q.has('version')) {
         const id = Number(q.get('version'));
         const snap = Number.isInteger(id) && id > 0 ? await snapshot(p, id) : null;
