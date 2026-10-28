@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lớp học trực tiếp</title>
+<style>
+:root {
+  --bg: #f4f2ee; --panel: #ffffff; --ink: #1f1d1a; --muted: #6b665e; --line: #e2ddd4;
+  --accent: #b5452f; --accent-ink: #fff; --ok: #2f7d4f; --warn: #b7791f; --tile: #2a2724;
+  --radius: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #171614; --panel: #22201d; --ink: #f1ede6; --muted: #a39d93; --line: #36322d; --tile: #0f0e0d; }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 7px 14px; }
+button:hover { border-color: var(--muted); }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button.off { background: #c0392b; color: #fff; border-color: #c0392b; }
+button.on { background: var(--ok); color: #fff; border-color: var(--ok); }
+button:disabled { opacity: .45; cursor: default; }
+input, select { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 9px 11px; width: 100%; }
+.hidden { display: none !important; }
+
+/* Màn hình vào lớp */
+#join { min-height: 100%; display: grid; place-items: center; padding: 16px; }
+#join form { width: min(380px, 100%); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: grid; gap: 12px; }
+#join h1 { margin: 0 0 4px; font-size: 22px; }
+#join label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+#join .roles { display: flex; gap: 8px; }
+#join .roles label { flex: 1; display: flex; gap: 6px; align-items: center; color: var(--ink); font-size: 15px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; cursor: pointer; }
+#join .roles input { width: auto; }
+#join .err { color: #c0392b; font-size: 14px; min-height: 1em; }
+#join .hint { color: var(--muted); font-size: 13px; margin: 0; }
+
+/* Lớp học */
+#app { height: 100%; display: grid; grid-template-rows: auto 1fr auto; }
+header { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid var(--line); background: var(--panel); }
+header .room { font-weight: 600; }
+header .grow { flex: 1; }
+header .net { font-size: 13px; color: var(--muted); }
+main { min-height: 0; display: grid; grid-template-columns: 1fr 320px; gap: 12px; padding: 12px; }
+.left { min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 8px; }
+.view { flex: 1; min-height: 0; position: relative; display: grid; }
+.view > * { grid-area: 1 / 1; min-height: 0; }
+.stage-wrap { display: grid; place-items: center; }
+/* Phóng to giáo viên: camera giáo viên chiếm chỗ chính, bảng thu nhỏ ở góc nhưng vẫn chạy và vẽ được */
+.focus { display: none; position: relative; background: var(--tile); border-radius: 8px; overflow: hidden; }
+.focus video { width: 100%; height: 100%; object-fit: contain; display: block; }
+.focus.me video { transform: scaleX(-1); }
+.focus .avatar { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: 64px; font-weight: 600; }
+.focus .label { position: absolute; left: 10px; bottom: 10px; color: #fff; font-size: 14px; background: rgba(0,0,0,.55); border-radius: 6px; padding: 2px 8px; }
+.mini-btn { display: none; position: absolute; top: 6px; left: 6px; z-index: 3; padding: 3px 10px; font-size: 12px; background: rgba(0,0,0,.6); color: #fff; border: 0; }
+.focus-on .focus { display: block; }
+.focus-on .stage-wrap { position: absolute; right: 12px; bottom: 12px; width: min(32%, 360px); aspect-ratio: 16 / 9; z-index: 2;
+  border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,.35); }
+.focus-on .mini-btn { display: block; }
+.tile.teacher { cursor: zoom-in; }
+/* đang phóng to thì ô giáo viên bên phải về cỡ thường, khỏi lặp hình lớn hai lần */
+.focusing .tile.teacher { grid-column: auto; aspect-ratio: 4 / 3; cursor: zoom-out; }
+.short { display: none; }
+header .room, header button { white-space: nowrap; }
+.stage { position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 100%; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); }
+.stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.stage canvas.drawing { cursor: crosshair; touch-action: none; }
+.stage .blank { position: absolute; inset: 0; display: grid; place-items: center; color: #b9b2a6; font-size: 14px; pointer-events: none; }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.tools select { width: auto; padding: 6px 8px; }
+.tools .page { color: var(--muted); font-size: 14px; min-width: 64px; text-align: center; }
+.tools .sep { width: 1px; align-self: stretch; background: var(--line); margin: 0 4px; }
+.swatch { width: 28px; height: 28px; padding: 0; border-radius: 50%; border: 2px solid transparent; }
+.swatch.sel { border-color: var(--ink); }
+.tools button.sel { border-color: var(--ink); font-weight: 600; }
+
+.side { min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.videos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.tile { position: relative; aspect-ratio: 4 / 3; background: var(--tile); border-radius: 8px; overflow: hidden; }
+.tile.teacher { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+.tile video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tile.me video { transform: scaleX(-1); }
+.tile .avatar { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 600; background: var(--tile); }
+.tile .label { position: absolute; left: 6px; bottom: 6px; right: 6px; display: flex; gap: 4px; align-items: center; font-size: 12px; color: #fff; }
+.tile .label span { background: rgba(0,0,0,.55); border-radius: 6px; padding: 1px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tile .state { position: absolute; top: 6px; left: 6px; font-size: 11px; color: #fff; background: rgba(0,0,0,.55); border-radius: 6px; padding: 1px 6px; }
+
+.panel { flex: 1; min-height: 220px; display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.tabs { display: flex; border-bottom: 1px solid var(--line); }
+.tabs button { flex: 1; border: 0; border-radius: 0; background: none; padding: 9px; color: var(--muted); }
+.tabs button.sel { color: var(--ink); box-shadow: inset 0 -2px var(--accent); }
+.badge { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: #fff; font-size: 11px; }
+.list { flex: 1; overflow: auto; padding: 8px 10px; }
+.person { display: flex; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.person .name { flex: 1; min-width: 100px; }
+.person .role { font-size: 11px; color: var(--muted); }
+.person button { padding: 3px 9px; font-size: 12px; }
+.msg { margin: 0 0 8px; }
+.msg b { font-size: 13px; }
+.msg b.t { color: var(--accent); }
+.msg time { color: var(--muted); font-size: 11px; margin-left: 4px; }
+.msg div { white-space: pre-wrap; word-break: break-word; }
+.chat-form { display: flex; gap: 6px; padding: 8px; border-top: 1px solid var(--line); }
+
+footer { display: flex; justify-content: center; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; }
+#toast { position: fixed; left: 50%; top: 60px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 8px; font-size: 14px; z-index: 10; max-width: calc(100% - 32px); }
+
+@media (max-width: 820px) {
+  #app { height: auto; min-height: 100%; }
+  main { grid-template-columns: 1fr; padding: 8px; }
+  .view { display: block; }
+  .stage-wrap { display: block; }
+  .focus-on .focus { aspect-ratio: 4 / 3; }
+  .focus-on .stage-wrap { right: 8px; bottom: 8px; width: 46%; }
+  .focusing .tile.teacher { grid-column: auto; }
+  header { gap: 6px; padding: 8px; }
+  header button { padding: 6px 10px; }
+  .long { display: none; }
+  .short { display: inline; }
+  .videos { grid-template-columns: repeat(3, 1fr); }
+  .tile.teacher { grid-column: span 3; }
+  .panel { min-height: 300px; }
+  footer { position: sticky; bottom: 0; }
+  footer button { padding: 7px 11px; }
+}
+</style>
+</head>
+<body>
+
+<section id="join">
+  <form>
+    <h1>Lớp học trực tiếp</h1>
+    <p class="hint">Bản thử: video, bảng vẽ trên slide, chat. Tối đa 6 người một phòng.</p>
+    <label>Tên của bạn <input name="name" required maxlength="30" autocomplete="nickname"></label>
+    <label>Mã phòng <input name="room" required maxlength="32" value="hsk"></label>
+    <div class="roles">
+      <label><input type="radio" name="role" value="student" checked> Học sinh</label>
+      <label><input type="radio" name="role" value="teacher"> Giáo viên</label>
+    </div>
+    <label class="pass hidden">Mật khẩu giáo viên <input name="pass" type="password" autocomplete="current-password"></label>
+    <div class="err"></div>
+    <button class="primary" type="submit">Vào lớp</button>
+  </form>
+</section>
+
+<section id="app" class="hidden">
+  <header>
+    <span class="room"></span>
+    <button id="copy" type="button"><span class="long">Sao chép link mời</span><span class="short">Link mời</span></button>
+    <button id="focusBtn" type="button" class="hidden">⛶ Phóng to giáo viên</button>
+    <span class="grow"></span>
+    <span class="net"></span>
+  </header>
+  <main>
+    <div class="left">
+      <div class="view" id="view">
+        <div class="focus" id="focus">
+          <video autoplay playsinline muted></video>
+          <div class="avatar hidden"></div>
+          <div class="label"></div>
+        </div>
+        <div class="stage-wrap">
+          <div class="stage" id="stage">
+            <div class="blank">Bảng trắng</div>
+            <img id="slide" alt="" class="hidden">
+            <canvas id="board"></canvas>
+            <button class="mini-btn" id="boardBig" type="button">⤢ Phóng to bảng</button>
+          </div>
+        </div>
+      </div>
+      <div class="tools">
+        <span class="teacher-only tools">
+          <select id="lesson"><option value="">Bảng trắng</option></select>
+          <button id="prev" type="button" title="Slide trước (←)">‹</button>
+          <span class="page" id="page"></span>
+          <button id="next" type="button" title="Slide sau (→)">›</button>
+          <span class="sep"></span>
+        </span>
+        <span class="draw-only tools">
+          <span id="swatches" class="tools"></span>
+          <button id="eraser" type="button">Tẩy</button>
+          <select id="size" title="Độ dày nét">
+            <option value="2">Mảnh</option><option value="4" selected>Vừa</option><option value="8">Dày</option>
+          </select>
+          <button id="undo" type="button">Hoàn tác</button>
+          <button id="clear" type="button" class="teacher-only">Xóa trang</button>
+        </span>
+        <span class="page student-only" id="spage"></span>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="videos" id="videos"></div>
+      <div class="panel">
+        <div class="tabs">
+          <button type="button" data-tab="people" class="sel">Người học (<span id="count">1</span>)</button>
+          <button type="button" data-tab="chat">Chat <span class="badge hidden" id="unread"></span></button>
+        </div>
+        <div class="list" id="people"></div>
+        <div class="list hidden" id="chat"></div>
+        <form class="chat-form hidden" id="chatForm">
+          <input name="text" maxlength="500" placeholder="Nhắn cho cả lớp…" autocomplete="off">
+          <button type="submit">Gửi</button>
+        </form>
+      </div>
+    </aside>
+  </main>
+  <footer>
+    <button id="mic" type="button">🎤 Mic</button>
+    <button id="cam" type="button">📷 Camera</button>
+    <button id="flip" type="button" class="hidden">🔄 Đổi camera</button>
+    <button id="hand" type="button" class="student-only">✋ Giơ tay</button>
+    <button id="leave" type="button" class="off">Rời lớp</button>
+  </footer>
+</section>
+
+<div id="toast" class="hidden"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const params = new URLSearchParams(location.search);
+const FAKE = params.has('fake'); // ?fake=1: camera giả để thử nhiều tab trên một máy
+const ICE = [{ urls: 'stun:stun.l.google.com:19302' }];
+const COLORS = ['#1f1d1a', '#c0392b', '#1e6fd9', '#2f7d4f', '#d68910'];
+
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+};
+
+let socket, me, people = new Map(), lessons = [];
+let local = new MediaStream(), facing = 'user';
+const peers = new Map(); // id → { pc, stream, queue: [] }
+const state = { lesson: null, slide: 0, strokes: [], mic: true, cam: true, hand: false };
+
+function toast(text, ms = 2500) {
+  const t = $('#toast');
+  t.textContent = text;
+  t.classList.remove('hidden');
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => t.classList.add('hidden'), ms);
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const isTeacher = () => me?.role === 'teacher';
+const canDraw = () => isTeacher() || people.get(me?.id)?.draw;
+
+/* ---------- Vào lớp ---------- */
+const form = $('#join form');
+form.name.value = store.get('lop-name') || '';
+if (params.get('room')) form.room.value = params.get('room');
+form.addEventListener('change', () => $('.pass').classList.toggle('hidden', form.role.value !== 'teacher'));
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = form.querySelector('button');
+  btn.disabled = true;
+  $('#join .err').textContent = '';
+  store.set('lop-name', form.name.value.trim());
+  await startMedia();
+  socket = io({ transports: ['websocket'] });
+  socket.emit('join', { room: form.room.value, name: form.name.value, role: form.role.value, pass: form.pass.value }, res => {
+    btn.disabled = false;
+    if (res.error) { $('#join .err').textContent = res.error; socket.disconnect(); return; }
+    enter(res);
+  });
+});
+
+/* ---------- Camera / mic ---------- */
+function fakeStream(label) {
+  const c = Object.assign(document.createElement('canvas'), { width: 480, height: 360 });
+  const g = c.getContext('2d');
+  const hue = Math.floor(Math.random() * 360);
+  (function frame() {
+    g.fillStyle = `hsl(${hue} 45% 35%)`; g.fillRect(0, 0, 480, 360);
+    g.fillStyle = '#fff'; g.font = '32px system-ui'; g.textAlign = 'center';
+    g.fillText(label, 240, 170); g.font = '20px system-ui';
+    g.fillText(new Date().toLocaleTimeString('vi-VN'), 240, 210);
+    setTimeout(frame, 200);
+  })();
+  const ac = new AudioContext();
+  const dest = ac.createMediaStreamDestination();
+  const osc = ac.createOscillator(), gain = ac.createGain();
+  gain.gain.value = 0; osc.connect(gain).connect(dest); osc.start();
+  return new MediaStream([...c.captureStream(10).getVideoTracks(), ...dest.stream.getAudioTracks()]);
+}
+
+async function startMedia() {
+  if (FAKE) { local = fakeStream(form.name.value || 'Thử'); return; }
+  try {
+    local = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true },
+      video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { max: 20 }, facingMode: facing }
+    });
+  } catch (err) {
+    // không có camera hoặc bị từ chối: thử chỉ mic, rồi tới không có gì (vẫn xem và nghe được)
+    try { local = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+    catch { local = new MediaStream(); }
+    toast('Không mở được camera' + (local.getAudioTracks().length ? '' : ' và mic') + ' — vẫn vào lớp để xem và nghe được', 4000);
+  }
+  state.cam = !!local.getVideoTracks().length;
+  state.mic = !!local.getAudioTracks().length;
+}
+const track = kind => (kind === 'audio' ? local.getAudioTracks() : local.getVideoTracks())[0] || null;
+
+// Gắn track mới (bật camera lần đầu, đổi camera trước/sau) cho mọi kết nối mà không cần thương lượng lại
+function replaceEverywhere(kind, t) {
+  for (const { pc } of peers.values())
+    for (const tr of pc.getTransceivers())
+      if (tr.receiver.track.kind === kind) tr.sender.replaceTrack(t);
+}
+
+async function toggle(kind) {
+  let t = track(kind);
+  const key = kind === 'audio' ? 'mic' : 'cam';
+  if (!t && !FAKE) {
+    try {
+      const s = await navigator.mediaDevices.getUserMedia(kind === 'audio' ? { audio: true } : { video: { facingMode: facing, width: { ideal: 640 } } });
+      t = s.getTracks()[0];
+      local.addTrack(t);
+      replaceEverywhere(kind, t);
+      state[key] = true;
+      return refreshMe({ [key]: true });
+    } catch { return toast(kind === 'audio' ? 'Không mở được mic' : 'Không mở được camera'); }
+  }
+  if (!t) return;
+  t.enabled = !t.enabled;
+  state[key] = t.enabled;
+  refreshMe({ [key]: t.enabled });
+}
+
+async function flip() {
+  facing = facing === 'user' ? 'environment' : 'user';
+  try {
+    const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: facing, width: { ideal: 640 } } });
+    const old = track('video');
+    const t = s.getVideoTracks()[0];
+    if (old) { local.removeTrack(old); old.stop(); }
+    local.addTrack(t);
+    replaceEverywhere('video', t);
+    state.cam = true;
+    refreshMe({ cam: true });
+  } catch { toast('Không đổi được camera'); }
+}
+
+function paintButtons() {
+  $('#mic').classList.toggle('off', !state.mic);
+  $('#mic').textContent = state.mic ? '🎤 Mic' : '🔇 Mic tắt';
+  $('#cam').classList.toggle('off', !state.cam);
+  $('#cam').textContent = state.cam ? '📷 Camera' : '🚫 Camera tắt';
+  $('#hand').classList.toggle('on', state.hand);
+  $('#hand').textContent = state.hand ? '✋ Đang giơ tay' : '✋ Giơ tay';
+}
+// chỉ gửi trường vừa đổi: gửi cả cục thì có thể ghi đè việc giáo viên vừa hạ tay giúp mình
+function refreshMe(changed) {
+  paintButtons();
+  if (changed) socket?.emit('status', changed);
+  renderTile(me.id);
+}
+
+/* ---------- WebRTC: mỗi người nối thẳng với từng người khác ---------- */
+function peer(id) {
+  if (peers.has(id)) return peers.get(id);
+  const pc = new RTCPeerConnection({ iceServers: ICE });
+  const p = { pc, stream: new MediaStream(), queue: [] };
+  peers.set(id, p);
+  pc.onicecandidate = e => e.candidate && socket.emit('signal', { to: id, data: { candidate: e.candidate } });
+  pc.ontrack = e => { p.stream.addTrack(e.track); renderTile(id); };
+  pc.onconnectionstatechange = () => {
+    renderTile(id);
+    if (pc.connectionState === 'failed') pc.restartIce?.();
+  };
+  return p;
+}
+
+// Người mới vào gọi tới người đã có trong phòng
+async function call(id) {
+  const { pc } = peer(id);
+  for (const kind of ['audio', 'video']) {
+    const tr = pc.addTransceiver(kind, { direction: 'sendrecv' });
+    await tr.sender.replaceTrack(track(kind));
+  }
+  await pc.setLocalDescription(await pc.createOffer());
+  socket.emit('signal', { to: id, data: { sdp: pc.localDescription } });
+}
+
+async function onSignal({ from, data }) {
+  const p = peer(from), pc = p.pc;
+  if (data.sdp) {
+    await pc.setRemoteDescription(data.sdp);
+    if (data.sdp.type === 'offer') {
+      for (const tr of pc.getTransceivers()) {
+        tr.direction = 'sendrecv';
+        await tr.sender.replaceTrack(track(tr.receiver.track.kind));
+      }
+      await pc.setLocalDescription(await pc.createAnswer());
+      socket.emit('signal', { to: from, data: { sdp: pc.localDescription } });
+    }
+    for (const c of p.queue.splice(0)) await pc.addIceCandidate(c).catch(() => {});
+  } else if (data.candidate) {
+    if (pc.remoteDescription) await pc.addIceCandidate(data.candidate).catch(() => {});
+    else p.queue.push(data.candidate);
+  }
+}
+
+function drop(id) {
+  peers.get(id)?.pc.close();
+  peers.delete(id);
+  document.getElementById('tile-' + id)?.remove();
+}
+
+/* ---------- Ô video ---------- */
+function renderTile(id) {
+  const person = people.get(id) || (id === me.id ? me : null);
+  if (!person) return;
+  let el = document.getElementById('tile-' + id);
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'tile-' + id;
+    el.className = 'tile';
+    el.innerHTML = '<video autoplay playsinline></video><div class="avatar"></div><div class="state hidden"></div><div class="label"></div>';
+    const v = el.querySelector('video');
+    if (id === me.id) { el.classList.add('me'); v.muted = true; v.srcObject = local; }
+    else v.srcObject = peers.get(id)?.stream || null;
+    $('#videos').append(el);
+  }
+  const v = el.querySelector('video');
+  if (id !== me.id && peers.get(id) && v.srcObject !== peers.get(id).stream) v.srcObject = peers.get(id).stream;
+  if (id === me.id && v.srcObject !== local) v.srcObject = local;
+  v.play?.().catch(() => {});
+  el.classList.toggle('teacher', person.role === 'teacher');
+  const camOn = id === me.id ? state.cam && !!track('video') : person.cam !== false;
+  el.querySelector('.avatar').classList.toggle('hidden', camOn);
+  el.querySelector('.avatar').textContent = person.name.trim().split(/\s+/).pop().slice(0, 1).toUpperCase();
+  const micOn = id === me.id ? state.mic : person.mic !== false;
+  const hand = id === me.id ? state.hand : person.hand;
+  el.querySelector('.label').innerHTML =
+    `<span>${esc(person.name)}${id === me.id ? ' (bạn)' : ''}${person.role === 'teacher' ? ' · GV' : ''}</span>` +
+    (micOn ? '' : '<span>🔇</span>') + (hand ? '<span>✋</span>' : '');
+  const st = el.querySelector('.state');
+  const cs = peers.get(id)?.pc.connectionState;
+  st.classList.toggle('hidden', id === me.id || !cs || cs === 'connected');
+  st.textContent = { new: 'đang nối…', connecting: 'đang nối…', disconnected: 'chập chờn…', failed: 'không nối được', closed: 'đã đóng' }[cs] || cs || '';
+  // giáo viên lên đầu
+  if (person.role === 'teacher' && $('#videos').firstChild !== el) $('#videos').prepend(el);
+  if (person.role === 'teacher') renderFocus();
+}
+
+/* ---------- Phóng to giáo viên (mỗi người tự chọn, không ảnh hưởng người khác) ---------- */
+let focusOn = store.get('lop-focus') === '1';
+const teacher = () => [...people.values()].find(p => p.role === 'teacher');
+function renderFocus() {
+  const t = teacher();
+  $('#focusBtn').classList.toggle('hidden', !t);
+  const on = focusOn && !!t;
+  $('#view').classList.toggle('focus-on', on);
+  $('#app').classList.toggle('focusing', on);
+  $('#focusBtn').innerHTML = on ? '⊟ Thu nhỏ <span class="long">giáo viên</span><span class="short">GV</span>'
+    : '⛶ Phóng to <span class="long">giáo viên</span><span class="short">GV</span>';
+  if (!on) return;
+  const box = $('#focus'), v = box.querySelector('video');
+  const mine = t.id === me.id;
+  // video này luôn tắt tiếng: tiếng giáo viên đã phát ở ô nhỏ bên phải
+  const stream = mine ? local : peers.get(t.id)?.stream || null;
+  if (v.srcObject !== stream) v.srcObject = stream;
+  v.play?.().catch(() => {});
+  box.classList.toggle('me', mine);
+  const camOn = mine ? state.cam && !!track('video') : t.cam !== false;
+  box.querySelector('.avatar').classList.toggle('hidden', camOn);
+  box.querySelector('.avatar').textContent = t.name.trim().split(/\s+/).pop().slice(0, 1).toUpperCase();
+  box.querySelector('.label').textContent = t.name + (mine ? ' (bạn)' : '') + (t.mic === false ? ' · 🔇' : '');
+}
+function setFocus(on) {
+  focusOn = on;
+  store.set('lop-focus', on ? '1' : '0');
+  renderFocus();
+}
+$('#focusBtn').addEventListener('click', () => setFocus(!focusOn));
+$('#boardBig').addEventListener('click', () => setFocus(false));
+$('#videos').addEventListener('dblclick', e => { if (e.target.closest('.tile.teacher')) setFocus(!focusOn); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && focusOn) setFocus(false); });
+
+/* ---------- Danh sách người học ---------- */
+function renderPeople() {
+  $('#count').textContent = people.size;
+  $('#people').innerHTML = [...people.values()]
+    .sort((a, b) => (b.role === 'teacher') - (a.role === 'teacher') || b.hand - a.hand)
+    .map(p => `<div class="person">
+      <span class="name">${p.hand ? '✋ ' : ''}${esc(p.name)}${p.id === me.id ? ' (bạn)' : ''}
+        <span class="role">${p.role === 'teacher' ? 'Giáo viên' : 'Học sinh'}${p.draw ? ' · được vẽ' : ''}</span></span>
+      ${isTeacher() && p.role !== 'teacher' ? `
+        <button data-act="draw" data-id="${p.id}">${p.draw ? 'Thu bút' : 'Cho vẽ'}</button>
+        <button data-act="mute" data-id="${p.id}" ${p.mic === false ? 'disabled' : ''}>Tắt mic</button>
+        ${p.hand ? `<button data-act="hand" data-id="${p.id}">Hạ tay</button>` : ''}` : ''}
+    </div>`).join('');
+  for (const id of people.keys()) renderTile(id);
+  renderFocus();
+  applyRole();
+}
+$('#people').addEventListener('click', e => {
+  const b = e.target.closest('button[data-act]');
+  if (!b) return;
+  const id = b.dataset.id, p = people.get(id);
+  if (b.dataset.act === 'draw') socket.emit('allow-draw', { id, on: !p.draw });
+  if (b.dataset.act === 'mute') socket.emit('mute', { id });
+  if (b.dataset.act === 'hand') socket.emit('lower-hand', { id });
+});
+
+function applyRole() {
+  document.querySelectorAll('.teacher-only').forEach(el => el.classList.toggle('hidden', !isTeacher()));
+  document.querySelectorAll('.student-only').forEach(el => el.classList.toggle('hidden', isTeacher()));
+  document.querySelectorAll('.draw-only').forEach(el => el.classList.toggle('hidden', !canDraw()));
+  board.classList.toggle('drawing', !!canDraw());
+  board.style.pointerEvents = canDraw() ? 'auto' : 'none';
+  // học sinh được giao bút thì lời nhắc chỉ hiện một lần
+  const drawNow = !!canDraw();
+  if (!isTeacher() && applyRole.last === false && drawNow) toast('Giáo viên cho bạn vẽ lên bảng');
+  applyRole.last = drawNow;
+}
+
+/* ---------- Chat ---------- */
+let tab = 'people', unread = 0;
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  tab = b.dataset.tab;
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('sel', x === b));
+  $('#people').classList.toggle('hidden', tab !== 'people');
+  $('#chat').classList.toggle('hidden', tab !== 'chat');
+  $('#chatForm').classList.toggle('hidden', tab !== 'chat');
+  if (tab === 'chat') { unread = 0; $('#unread').classList.add('hidden'); $('#chatForm').text.focus(); }
+}));
+function addMsg(m, quiet) {
+  const box = $('#chat');
+  const near = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
+  box.insertAdjacentHTML('beforeend', `<p class="msg"><b class="${m.role === 'teacher' ? 't' : ''}">${esc(m.name)}</b>` +
+    `<time>${new Date(m.at).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</time><div>${esc(m.text)}</div></p>`);
+  if (near || quiet) box.scrollTop = box.scrollHeight;
+  if (!quiet && tab !== 'chat') { unread++; $('#unread').textContent = unread; $('#unread').classList.remove('hidden'); }
+}
+$('#chatForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const t = e.target.text;
+  if (t.value.trim()) socket.emit('chat', t.value);
+  t.value = '';
+});
+
+/* ---------- Slide + bảng vẽ ---------- */
+const stage = $('#stage'), board = $('#board'), ctx = board.getContext('2d');
+let color = COLORS[1], erasing = false;
+const strokeMap = new Map(); // id → stroke
+
+function fitStage() {
+  // giữ khung 16:9 vừa cả bề rộng lẫn bề cao chỗ trống
+  const wrap = stage.parentElement;
+  if (innerWidth > 820) {
+    const w = Math.min(wrap.clientWidth, wrap.clientHeight * 16 / 9);
+    stage.style.width = w + 'px';
+  } else stage.style.width = '100%';
+  const dpr = devicePixelRatio || 1;
+  board.width = Math.round(stage.clientWidth * dpr);
+  board.height = Math.round(stage.clientHeight * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  redraw();
+}
+new ResizeObserver(fitStage).observe(stage.parentElement);
+
+function seg(s, from) {
+  const W = stage.clientWidth, H = stage.clientHeight, pts = s.points;
+  if (!pts.length) return;
+  ctx.save();
+  ctx.globalCompositeOperation = s.color === 'erase' ? 'destination-out' : 'source-over';
+  ctx.strokeStyle = ctx.fillStyle = s.color === 'erase' ? '#000' : s.color;
+  ctx.lineWidth = s.width * W / 1000;
+  ctx.lineCap = ctx.lineJoin = 'round';
+  if (pts.length === 1) {
+    ctx.beginPath(); ctx.arc(pts[0][0] * W, pts[0][1] * H, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fill();
+  } else {
+    ctx.beginPath();
+    const a = Math.max(0, from - 1);
+    ctx.moveTo(pts[a][0] * W, pts[a][1] * H);
+    for (let i = a + 1; i < pts.length; i++) ctx.lineTo(pts[i][0] * W, pts[i][1] * H);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function redraw() {
+  ctx.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
+  for (const s of strokeMap.values()) seg(s, 0);
+}
+function setStrokes(list) {
+  strokeMap.clear();
+  for (const s of list) strokeMap.set(s.id, s);
+  redraw();
+}
+
+function showPage({ lesson, slide, strokes }) {
+  state.lesson = lesson; state.slide = slide;
+  const L = lessons.find(l => l.id === lesson);
+  const img = $('#slide');
+  img.classList.toggle('hidden', !L);
+  stage.querySelector('.blank').classList.toggle('hidden', !!L);
+  if (L) img.src = L.slides[Math.min(slide, L.slides.length - 1)];
+  const label = L ? `${slide + 1} / ${L.slides.length}` : 'Bảng trắng';
+  $('#page').textContent = label;
+  $('#spage').textContent = L ? `${L.id.replace('bai', 'Bài ')} · slide ${label}` : 'Bảng trắng';
+  $('#lesson').value = lesson || '';
+  $('#prev').disabled = !L || slide <= 0;
+  $('#next').disabled = !L || slide >= L.slides.length - 1;
+  setStrokes(strokes || []);
+}
+function go(lesson, slide) { socket.emit('goto', { lesson, slide }); }
+$('#lesson').addEventListener('change', e => go(e.target.value || null, 0));
+$('#prev').addEventListener('click', () => go(state.lesson, state.slide - 1));
+$('#next').addEventListener('click', () => go(state.lesson, state.slide + 1));
+addEventListener('keydown', e => {
+  if (!isTeacher() || e.target.closest('input, select, textarea')) return;
+  if (e.key === 'ArrowLeft' && !$('#prev').disabled) go(state.lesson, state.slide - 1);
+  if (e.key === 'ArrowRight' && !$('#next').disabled) go(state.lesson, state.slide + 1);
+});
+
+// Vẽ: gửi điểm theo lô ~25 lần/giây để mạng nhẹ mà người xem vẫn thấy nét chạy
+let drawing = null, pending = [], seq = 0, flushTimer = null;
+const pos = e => {
+  const r = stage.getBoundingClientRect();
+  return [+((e.clientX - r.left) / r.width).toFixed(4), +((e.clientY - r.top) / r.height).toFixed(4)];
+};
+function flush() {
+  flushTimer = null;
+  if (drawing && pending.length) socket.emit('stroke:points', { id: drawing.id, points: pending.splice(0) });
+}
+board.addEventListener('pointerdown', e => {
+  if (!canDraw() || (e.pointerType === 'mouse' && e.button !== 0)) return;
+  try { board.setPointerCapture(e.pointerId); } catch {}
+  drawing = { id: `${me.id}-${++seq}`, by: me.id, color: erasing ? 'erase' : color,
+    width: erasing ? 30 : Number($('#size').value), points: [pos(e)] };
+  strokeMap.set(drawing.id, drawing);
+  seg(drawing, 0);
+  socket.emit('stroke:start', drawing);
+});
+board.addEventListener('pointermove', e => {
+  if (!drawing) return;
+  const co = e.getCoalescedEvents?.() || [];
+  const evs = co.length ? co : [e];
+  const from = drawing.points.length;
+  for (const ev of evs) { const p = pos(ev); drawing.points.push(p); pending.push(p); }
+  seg(drawing, from);
+  flushTimer ||= setTimeout(flush, 40);
+});
+const endStroke = () => { if (!drawing) return; clearTimeout(flushTimer); flush(); drawing = null; };
+board.addEventListener('pointerup', endStroke);
+board.addEventListener('pointercancel', endStroke);
+
+$('#swatches').innerHTML = COLORS.map(c => `<button type="button" class="swatch" data-c="${c}" style="background:${c}" title="Bút màu"></button>`).join('');
+function pickTool() {
+  document.querySelectorAll('.swatch').forEach(b => b.classList.toggle('sel', !erasing && b.dataset.c === color));
+  $('#eraser').classList.toggle('sel', erasing);
+}
+$('#swatches').addEventListener('click', e => { const b = e.target.closest('.swatch'); if (b) { color = b.dataset.c; erasing = false; pickTool(); } });
+$('#eraser').addEventListener('click', () => { erasing = !erasing; pickTool(); });
+$('#undo').addEventListener('click', () => socket.emit('undo'));
+$('#clear').addEventListener('click', () => confirm('Xóa hết nét vẽ trên trang này?') && socket.emit('clear'));
+pickTool();
+
+/* ---------- Vào phòng ---------- */
+async function enter(res) {
+  me = res.me;
+  $('#join').classList.add('hidden');
+  $('#app').classList.remove('hidden');
+  $('.room').textContent = 'Phòng ' + form.room.value.trim().toLowerCase();
+  $('#flip').classList.toggle('hidden', FAKE || !/Android|iPhone|iPad/i.test(navigator.userAgent));
+  lessons = await fetch('/api/lessons').then(r => r.json()).catch(() => []);
+  $('#lesson').insertAdjacentHTML('beforeend', lessons.map(l => `<option value="${l.id}">${l.id.replace('bai', 'Bài ')}</option>`).join(''));
+  people = new Map([[me.id, me], ...res.others.map(p => [p.id, p])]);
+  refreshMe({ mic: state.mic, cam: state.cam });
+  fitStage();
+  showPage(res);
+  res.chat.forEach(m => addMsg(m, true));
+  renderPeople();
+
+  socket.on('people', list => {
+    people = new Map(list.map(p => [p.id, p]));
+    // giáo viên có thể hạ tay giúp mình
+    if (people.get(me.id)) { state.hand = !!people.get(me.id).hand; paintButtons(); }
+    renderPeople();
+  });
+  socket.on('joined', p => toast(`${p.name} vừa vào lớp`));
+  socket.on('left', id => { const p = people.get(id); drop(id); if (p) toast(`${p.name} đã rời lớp`); });
+  socket.on('signal', m => onSignal(m).catch(err => console.warn('signal', err)));
+  socket.on('goto', showPage);
+  socket.on('stroke:start', s => { strokeMap.set(s.id, s); seg(s, 0); });
+  socket.on('stroke:points', ({ id, points }) => {
+    const s = strokeMap.get(id);
+    if (!s) return;
+    const from = s.points.length;
+    s.points.push(...points);
+    seg(s, from);
+  });
+  socket.on('remove', id => { strokeMap.delete(id); redraw(); });
+  socket.on('clear', () => setStrokes([]));
+  socket.on('chat', m => addMsg(m));
+  socket.on('muted', () => {
+    const t = track('audio');
+    if (t) t.enabled = false;
+    state.mic = false;
+    refreshMe({ mic: false });
+    toast('Giáo viên đã tắt mic của bạn');
+  });
+  socket.on('disconnect', () => { $('.net').textContent = '⚠️ Mất kết nối server — đang thử lại…'; });
+  // id Socket.IO đổi sau khi mất kết nối nên cách chắc nhất là vào lại
+  socket.io.on('reconnect', () => { toast('Đã nối lại, đang vào lại lớp…'); setTimeout(() => location.reload(), 800); });
+  $('.net').textContent = FAKE ? 'camera giả' : '';
+
+  for (const p of res.others) call(p.id).catch(err => console.warn('call', err));
+}
+
+$('#mic').addEventListener('click', () => toggle('audio'));
+$('#cam').addEventListener('click', () => toggle('video'));
+$('#flip').addEventListener('click', flip);
+$('#hand').addEventListener('click', () => { state.hand = !state.hand; refreshMe({ hand: state.hand }); });
+$('#leave').addEventListener('click', () => {
+  for (const id of [...peers.keys()]) drop(id);
+  local.getTracks().forEach(t => t.stop());
+  socket.disconnect();
+  location.reload();
+});
+$('#copy').addEventListener('click', async () => {
+  const link = `${location.origin}${location.pathname}?room=${encodeURIComponent(form.room.value.trim().toLowerCase())}`;
+  try { await navigator.clipboard.writeText(link); toast('Đã chép link: ' + link); }
+  catch { prompt('Chép link này gửi học sinh:', link); }
+});
+</script>
+</body>
+</html>
