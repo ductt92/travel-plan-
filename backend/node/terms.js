@@ -44,8 +44,8 @@ const MAX_TERMS = 5000;
 const str = (v, max, required) => typeof v === 'string' && v.length <= max && (!required || v.trim() !== '');
 const int = v => Number.isInteger(v) && v >= 0 && v < 2 ** 31;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
-// replace: ghi đè bằng file; add: trang đã gộp file vào danh sách cũ; restore: khôi phục một bản cũ
-const MODES = ['replace', 'add', 'restore'];
+// replace: ghi đè bằng file; add: trang đã gộp file vào danh sách cũ; edit: sửa tay trên danh sách; restore: khôi phục bản cũ
+const MODES = ['replace', 'add', 'edit', 'restore'];
 const PAGE_MAX = 100; // ?versions trả theo trang: &limit= (mặc định 20, tối đa 100) &offset=
 
 // sao lưu bản đang dùng: bản mới nhất đang bật mà ghi từ trước khi có lịch sử (chưa có bản sao) thì chép bảng term vào

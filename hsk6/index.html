@@ -297,21 +297,45 @@ label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 14px
 .thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ---------- Thuật ngữ: chọn Tổng hợp hoặc một chuyên ngành (như các sheet Excel), tìm, nhập file mới để so sánh ---------- */
-.terms { padding-block: 18px 60px; }
+.terms { padding-block: 18px 0; }
+body.v-terms > footer { display: none; }
 .terms h2 .zh { font-size: .8em; color: var(--muted); margin-left: 6px; }
 .term-src { margin: 4px 0 0; font-size: 14px; }
 .terms .vtools .note-filter { flex: 0 1 auto; min-width: 0; max-width: 100%; }
 .terms .vtools .search { flex: 1 1 260px; }
 .term-sheet { font-weight: 600; border-color: var(--accent); }
-.term-count { margin: -4px 0 10px; font-size: 14px; }
+.term-count { font-size: 14px; white-space: nowrap; }
 /* hai ô kéo thả tách riêng: biên bản (thêm thuật ngữ) và Excel (ghi đè); đang kéo file thì cả hai sáng viền, ô dưới con trỏ sáng nền */
-.term-drops { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
-.term-drop { padding: 10px 16px; grid-template-columns: auto minmax(0, 1fr); justify-items: start; text-align: left; column-gap: 12px; row-gap: 0; }
-.term-drop .dz-icon { grid-row: span 2; width: 26px; height: 26px; }
-.term-drop b { font-size: 15px; }
-.term-drop span { font-size: 12.5px; }
+.term-drops { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.term-drop { padding: 8px 14px; display: flex; align-items: center; gap: 10px; text-align: left; border-width: 1.5px; }
+.term-drop .dz-icon { flex: none; width: 22px; height: 22px; }
+.term-drop b { font-size: 14px; white-space: nowrap; }
+.term-drop span { font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* danh sách chiếm phần lớn trang: thanh chọn sheet, nhóm, tìm dính trên cùng khi cuộn */
-.terms .vtools { position: sticky; top: 0; z-index: 5; background: var(--bg); padding-block: 10px; margin-bottom: 4px; }
+.terms .vtools { margin-bottom: 10px; }
+/* danh sách cuộn trong khung riêng, cao tới đáy màn hình (sizeTermScroll), trang không cuộn theo */
+.term-scroll { overflow: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); min-height: 240px; }
+.term-scroll .words { border: 0; border-radius: 0; }
+/* sửa tay: nút ✎ mỗi dòng, dòng đang sửa thành ô nhập, thanh "chưa lưu" phía trên danh sách */
+.word.term { grid-template-columns: 34px 170px minmax(0, 1fr) auto 34px; }
+.t-edit { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid transparent; border-radius: 50%; background: none; color: var(--muted); }
+.t-edit:hover { border-color: var(--line); color: var(--accent); }
+.t-edit svg { width: 15px; height: 15px; fill: currentColor; }
+.word.term.edited { background: var(--accent-soft); }
+.word.term.deleted { background: var(--bad-soft); }
+.word.term.deleted .w-hz, .word.term.deleted .w-main { text-decoration: line-through; opacity: .6; }
+.t-flag { font-size: 12px; font-weight: 700; color: var(--accent); }
+.word.term.deleted .t-flag { color: var(--bad); }
+.te-form { grid-column: 2 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
+.te-form label { display: grid; gap: 3px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.te-form label.wide { grid-column: 1 / -1; }
+.te-form input { font: inherit; font-size: 15px; font-weight: 400; color: var(--fg); padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.te-form input[lang="zh"] { font-size: 19px; }
+.te-btns { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.te-btns .err { color: var(--bad); font-size: 14px; flex: 1 1 100%; }
+.te-btns .del { margin-left: auto; color: var(--bad); }
+.edit-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 14px; margin-bottom: 10px; border-radius: 12px; background: var(--accent-soft); font-size: 15px; }
+.edit-bar span { flex: 1 1 220px; }
 /* cửa sổ lịch sử chỉnh sửa: nền mờ, khung giữa màn hình, danh sách cuộn bên trong */
 .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgb(0 0 0 / .45); }
 .modal[hidden] { display: none; }
@@ -518,6 +542,9 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
   .word .w-main { grid-column: 1 / -1; }
   .word .knowbtn { grid-row: 1; grid-column: 2; }
   .word.term .t-tags { grid-column: 1 / -1; justify-content: flex-start; max-width: none; }
+  .word.term { grid-template-columns: minmax(0, 1fr) auto auto; }
+  .word.term .t-edit { grid-row: 1; grid-column: 3; }
+  .te-form { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr); }
   .terms .vtools > * { flex: 1 1 100%; width: 100%; }
   .imp-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ti-cfl { grid-template-columns: minmax(0, 1fr); }
@@ -609,15 +636,15 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
     </div>
   </div>
   <div class="term-drops" id="termDrops">
-    <label class="dropzone term-drop" id="termDocDrop" for="termDocFile" tabindex="0" data-kind="doc">
+    <label class="dropzone term-drop" id="termDocDrop" for="termDocFile" tabindex="0" data-kind="doc"
+      title="Kéo thả file .docx, .txt vào đây hoặc bấm để chọn · lọc ra thuật ngữ mới để thêm vào danh sách, thuật ngữ cũ giữ nguyên">
       <svg class="dz-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2h9.5L19 6.5V22H5zm2 2v16h10V7.3h-3.3V4zm2 8h6v1.8H9zm0 3.4h6v1.8H9z"/></svg>
-      <b>Biên bản bài giảng</b>
-      <span>Kéo thả file .docx, .txt vào đây hoặc bấm để chọn · lọc ra thuật ngữ mới để thêm vào danh sách, thuật ngữ cũ giữ nguyên</span>
+      <b>Biên bản bài giảng</b><span>.docx, .txt · lọc thuật ngữ mới</span>
     </label>
-    <label class="dropzone term-drop" id="termDrop" for="termFile" tabindex="0" data-kind="xlsx">
+    <label class="dropzone term-drop" id="termDrop" for="termFile" tabindex="0" data-kind="xlsx"
+      title="Kéo thả file .xlsx vào đây hoặc bấm để chọn · xem trước rồi chọn thêm vào hoặc ghi đè danh sách">
       <svg class="dz-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 5h-3.5v6h-3V8H7zM4 15h2.5v3.5h11V15H20v6H4z"/></svg>
-      <b>File Excel thuật ngữ</b>
-      <span>Kéo thả file .xlsx vào đây hoặc bấm để chọn · ghi đè toàn bộ danh sách trên máy chủ</span>
+      <b>File Excel thuật ngữ</b><span>.xlsx · thêm vào hoặc ghi đè</span>
     </label>
   </div>
   <div class="note-warn" id="termWarn" hidden></div>
@@ -629,10 +656,14 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
     <select class="note-filter term-sheet" id="termSheet" aria-label="Chọn sheet: Tổng hợp hoặc chuyên ngành"></select>
     <select class="note-filter" id="termGroup" aria-label="Lọc theo nhóm"></select>
     <input class="search" id="termSearch" type="search" placeholder="Tìm chữ Hán, pinyin (không cần dấu) hoặc nghĩa…" aria-label="Tìm thuật ngữ">
+    <span class="muted term-count" id="termCount"></span>
   </div>
-  <p class="muted term-count" id="termCount"></p>
-  <div class="words" id="termList"></div>
-  <div class="term-more" id="termMore"></div>
+  <div class="edit-bar" id="termEditBar" hidden></div>
+  <div class="term-scroll" id="termScroll">
+    <div class="words" id="termList"></div>
+    <datalist id="termGroupList"></datalist>
+    <div class="term-more" id="termMore"></div>
+  </div>
 </main>
 
 <main class="wrap home" id="home" hidden>
@@ -858,6 +889,7 @@ function showView(v) {
   $("#home").hidden = v !== "home";
   $("#notesView").hidden = v !== "notes";
   $("#termsView").hidden = v !== "terms";
+  document.body.classList.toggle("v-terms", v === "terms");
   document.querySelectorAll(".lesson-view").forEach(el => el.hidden = v !== "lesson");
   $("#toHome").hidden = v === "home";
   $("#toNotes").hidden = v === "notes";
@@ -1336,9 +1368,12 @@ let TL = null, tErr = "", tSheet = S.termSheet || "", tGroup = "", tShow = TERM_
 let tIn = null, tPv = null, tRes = {}, tShowC = 8, tAskSecret = false, tSaving = false, tDoc = null;
 let tMode = "replace", tPvSheet = "", tPvRows = 40, tVer = null;
 
+// thông báo thành công tự ẩn sau 8 giây để danh sách lấy lại chỗ; thông báo lỗi giữ tới khi có thông báo khác
 function termWarn(msg, ok) {
   const w = $("#termWarn"); w.hidden = !msg; w.textContent = msg || "";
   w.style.background = ok ? "var(--good-soft)" : "";
+  clearTimeout(termWarn.t);
+  if (ok) termWarn.t = setTimeout(() => { if (w.textContent === msg) termWarn(""); }, 8000);
 }
 // file thả vào lúc danh sách đang tải thì chờ tải xong rồi mới so khớp (termReady)
 let tLoading = null;
@@ -1354,10 +1389,18 @@ let termsReady = false;
 function openTerms() {
   if (!termsReady) {
     termsReady = true;
-    $("#termSheet").onchange = () => { tSheet = $("#termSheet").value; S.termSheet = tSheet; save(); tGroup = ""; tShow = TERM_PAGE; renderTerms(); };
-    $("#termGroup").onchange = () => { tGroup = $("#termGroup").value; tShow = TERM_PAGE; renderTerms(); };
-    $("#termSearch").oninput = () => { tShow = TERM_PAGE; renderTerms(); };
-    new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) termMoreCheck(); }, { rootMargin: "600px 0px" }).observe($("#termMore"));
+    const top = () => { tShow = TERM_PAGE; $("#termScroll").scrollTop = 0; };
+    $("#termSheet").onchange = () => { tSheet = $("#termSheet").value; S.termSheet = tSheet; save(); tGroup = ""; top(); renderTerms(); };
+    $("#termGroup").onchange = () => { tGroup = $("#termGroup").value; top(); renderTerms(); };
+    $("#termSearch").oninput = () => { top(); renderTerms(); };
+    new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) termMoreCheck(); },
+      { root: $("#termScroll"), rootMargin: "0px 0px 600px 0px" }).observe($("#termMore"));
+    $("#termScroll").addEventListener("scroll", termMoreCheck, { passive: true });
+    // khung danh sách cao tới đáy màn hình; phần phía trên đổi cao (khung nhập, thông báo) thì tính lại
+    addEventListener("resize", sizeTermScroll);
+    const ro = new ResizeObserver(sizeTermScroll);
+    ["#termImp", "#termWarn", "#termDrops", "#termEditBar"].forEach(id => ro.observe($(id)));
+    termListEvents();
     $("#termImport").onclick = () => $("#termFile").click();
     $("#termDocImport").onclick = () => $("#termDocFile").click();
     $("#termVersions").onclick = openVersions;
@@ -1371,7 +1414,7 @@ function openTerms() {
 }
 
 function renderTerms() {
-  const live = TL ? TL.terms : [];
+  const live = (TL ? TL.terms : []).map(t => { const e = tEdits.get(t.key); return e && !e.del ? applyEdit(t, e) : t; });
   $("#termSrc").textContent = !TL || !TL.version ? "Chưa có thuật ngữ nào. Thả biên bản hoặc file Excel vào để bắt đầu."
     : `Bản ${TL.version} · file ${TL.fileName} · cập nhật ${new Date(TL.updatedAt).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" })}`;
   if (!$("#termWarn").style.background) termWarn(tErr ? `Chưa kết nối được máy chủ (${tErr}).` : "");
@@ -1400,24 +1443,153 @@ function renderTerms() {
     && (!raw || t.zh.includes(raw) || (qp && pyFind(t.pinyin).includes(qp)) || deaccent(t.vi).includes(q)));
   $("#termCount").textContent = live.length ? `${nf(rows.length)} thuật ngữ` + (rows.length !== inSheet.length ? ` / ${nf(inSheet.length)}` : "") : "";
   $("#termList").hidden = !live.length;
-  $("#termList").innerHTML = rows.length ? rows.slice(0, tShow).map(([t, stt]) => `<article class="word term">
-      <div class="idx">${stt}</div>
-      <div class="w-hz"><span class="hz" lang="zh">${esc(t.zh)}</span><button class="play" data-say="${esc(t.zh)}" aria-label="Nghe ${esc(t.zh)}">${ICON_SOUND}</button></div>
-      <div class="w-main"><div class="py">${esc(t.pinyin)}</div><div class="vi">${esc(t.vi)}</div><div class="t-meta">${esc(grpOf(t))}</div></div>
-      <div class="t-tags">${tSheet ? "" : t.majors.map(m => `<span class="tag maj">${esc(m.name)}</span>`).join("")}${t.sessions.map(d => `<span class="tag" title="Buổi học">${dm(d)}</span>`).join("")}</div>
-    </article>`).join("") : `<div class="empty">Không có thuật ngữ nào khớp.</div>`;
-  $("#termList").querySelectorAll("[data-say]").forEach(b => b.onclick = () => sayZh(b.dataset.say));
+  $("#termList").innerHTML = rows.length ? rows.slice(0, tShow).map(([t, stt]) => termRow(t, stt, grpOf(t))).join("")
+    : `<div class="empty">Không có thuật ngữ nào khớp.</div>`;
+  $("#termGroupList").innerHTML = [...new Set(live.flatMap(t => [t.group, ...t.majors.map(m => m.group)]).filter(Boolean))].map(g => `<option value="${esc(g)}">`).join("");
+  const form = $("#termList .te-form");
+  if (form && !form.contains(document.activeElement)) form.querySelector("input").focus({ preventScroll: true });
   // cuộn tới đâu tải tới đó: ô cuối danh sách gần lọt vào màn hình thì hiện thêm (termMoreCheck)
   renderTerms.more = rows.length > tShow;
   $("#termMore").innerHTML = renderTerms.more ? `<span class="muted">Đang tải thêm… còn ${nf(rows.length - tShow)}</span>`
     : rows.length > 40 ? `<span class="muted">Hết danh sách · ${nf(rows.length)} thuật ngữ</span>` : "";
   if (renderTerms.more) requestAnimationFrame(termMoreCheck);
+  sizeTermScroll();
 }
 function termMoreCheck() {
-  const m = $("#termMore");
-  if (!renderTerms.more || view !== "terms" || m.getBoundingClientRect().top > innerHeight + 600) return;
+  const m = $("#termMore"), box = $("#termScroll");
+  if (!renderTerms.more || view !== "terms" || m.getBoundingClientRect().top - box.getBoundingClientRect().bottom > 600) return;
   tShow += TERM_PAGE; renderTerms();
 }
+function sizeTermScroll() {
+  const box = $("#termScroll");
+  if (view !== "terms" || !box.offsetParent) return;
+  box.style.height = Math.max(240, innerHeight - (box.getBoundingClientRect().top + scrollY) - 16) + "px";
+}
+
+/* ---------- Sửa tay trên danh sách ----------
+   Bấm ✎ ở một dòng để sửa chữ Hán, pinyin, nghĩa, nhóm, buổi học hoặc xóa từ đó. Thay đổi giữ trong tEdits
+   (theo khóa thuật ngữ) và hiện ngay trên danh sách; "Lưu thành bản mới" áp chúng lên bản mới nhất trên máy chủ
+   rồi ghi thành một bản "Sửa tay" (tắt bản đó trong Lịch sử chỉnh sửa là quay lại như cũ). */
+const ICON_PEN = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.3 1.6a1.5 1.5 0 0 1 2.1 0l1 1a1.5 1.5 0 0 1 0 2.1L5.8 13.3 2 14l.7-3.8zM3.9 11l-.3 1.4 1.4-.3 7.6-7.6-1.1-1.1z"/></svg>';
+const tEdits = new Map();
+let tEditing = "";
+// nhóm: ở Tổng hợp sửa nhóm chung, ở một sheet chuyên ngành sửa nhóm trong chuyên ngành đó (mgroups)
+const applyEdit = (t, e) => ({ ...t, zh: e.zh ?? t.zh, pinyin: e.pinyin ?? t.pinyin, vi: e.vi ?? t.vi, group: e.group ?? t.group,
+  sessions: e.sessions ?? t.sessions, majors: t.majors.map(m => e.mgroups?.[m.name] ? { ...m, group: e.mgroups[m.name] } : m) });
+const termSig = t => JSON.stringify([t.zh, t.pinyin, t.vi, t.group, t.sessions, t.majors.map(m => m.group)]);
+const sesText = t => t.sessions.map(d => `${d.slice(8, 10)}.${d.slice(5, 7)}.${d.slice(0, 4)}`).join(", ");
+function parseSessions(text, old) {
+  const year = old[0]?.slice(0, 4) || String(new Date().getFullYear()), out = new Set();
+  for (const s of String(text).split(/[\s,;，、]+/).filter(Boolean)) {
+    const m = /^(\d{1,2})[./-](\d{1,2})(?:[./-](\d{4}))?$/.exec(s);
+    const iso = m && `${m[3] || year}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+    if (!iso || isNaN(new Date(iso))) return { error: `Buổi học "${s}" không đúng dạng dd.mm.yyyy` };
+    out.add(iso);
+  }
+  return { list: [...out].sort() };
+}
+function termRow(t, stt, grp) {
+  const e = tEdits.get(t.key), tags = (tSheet ? "" : t.majors.map(m => `<span class="tag maj">${esc(m.name)}</span>`).join(""))
+    + t.sessions.map(d => `<span class="tag" title="Buổi học">${dm(d)}</span>`).join("");
+  if (tEditing === t.key) return `<article class="word term editing" data-key="${esc(t.key)}">
+      <div class="idx">${stt}</div>
+      <form class="te-form" data-form="${esc(t.key)}">
+        <label>Chữ Hán <input name="zh" lang="zh" value="${esc(t.zh)}" maxlength="200" required></label>
+        <label>Pinyin <input name="pinyin" value="${esc(t.pinyin)}" maxlength="300"></label>
+        <label class="wide">Nghĩa tiếng Việt <input name="vi" value="${esc(t.vi)}" maxlength="1000"></label>
+        <label>Nhóm${tSheet ? ` trong “${esc(tSheet)}”` : ""} <input name="group" value="${esc(grp)}" list="termGroupList" maxlength="200"></label>
+        <label>Buổi học (dd.mm.yyyy, cách nhau dấu phẩy) <input name="sessions" value="${esc(sesText(t))}"></label>
+        <div class="te-btns"><button class="btn small primary" type="submit">Xong</button><button class="btn small" type="button" data-cancel>Thôi</button>
+          ${e ? `<button class="btn small" type="button" data-undo>Bỏ thay đổi</button>` : ""}
+          <button class="btn small del" type="button" data-del>Xóa từ này</button><span class="err" hidden></span></div>
+      </form>
+    </article>`;
+  return `<article class="word term ${e ? (e.del ? "deleted" : "edited") : ""}" data-key="${esc(t.key)}">
+      <div class="idx">${stt}</div>
+      <div class="w-hz"><span class="hz" lang="zh">${esc(t.zh)}</span><button class="play" data-say="${esc(t.zh)}" aria-label="Nghe ${esc(t.zh)}">${ICON_SOUND}</button></div>
+      <div class="w-main"><div class="py">${esc(t.pinyin)}</div><div class="vi">${esc(t.vi)}</div><div class="t-meta">${esc(grp)}</div>
+        ${e ? `<div class="t-flag">${e.del ? "Sẽ xóa khi lưu" : "Đã sửa, chưa lưu"}</div>` : ""}</div>
+      <div class="t-tags">${tags}</div>
+      <button class="t-edit" data-edit aria-label="Sửa ${esc(t.zh)}" title="Sửa">${ICON_PEN}</button>
+    </article>`;
+}
+function termListEvents() {
+  const list = $("#termList"), keyOf = el => el.closest("[data-key]").dataset.key;
+  const done = () => { tEditing = ""; renderTerms(); renderEditBar(); };
+  list.onclick = e => {
+    const b = e.target.closest("[data-say],[data-edit],[data-cancel],[data-undo],[data-del]");
+    if (!b) return;
+    if (b.dataset.say !== undefined) return sayZh(b.dataset.say);
+    const key = keyOf(b);
+    if (b.hasAttribute("data-edit")) { tEditing = key; renderTerms(); }
+    if (b.hasAttribute("data-cancel")) done();
+    if (b.hasAttribute("data-undo")) { tEdits.delete(key); done(); }
+    if (b.hasAttribute("data-del")) { tEdits.set(key, { del: true }); done(); }
+  };
+  list.onkeydown = e => { if (e.key === "Escape" && tEditing) { e.stopPropagation(); done(); } };
+  list.onsubmit = e => {
+    e.preventDefault();
+    const form = e.target, key = form.dataset.form, base = TL.terms.find(t => t.key === key), f = Object.fromEntries(new FormData(form));
+    const err = msg => { const el = form.querySelector(".err"); el.textContent = msg; el.hidden = false; };
+    const zh = clip(f.zh, 200), nk = TERM_BE.keyOf(zh);
+    if (!zh) return err("Thiếu chữ Hán.");
+    if (nk !== key && (TL.terms.some(t => t.key === nk) || [...tEdits].some(([k, x]) => k !== key && x.zh && TERM_BE.keyOf(x.zh) === nk)))
+      return err(`“${zh}” đã có trong danh sách.`);
+    const ses = parseSessions(f.sessions, base.sessions);
+    if (ses.error) return err(ses.error);
+    const prev = tEdits.get(key), next = { ...(prev && !prev.del ? prev : {}), zh, pinyin: clip(f.pinyin, 300), vi: clip(f.vi, 1000), sessions: ses.list };
+    const grp = clip(f.group, 200);
+    if (tSheet) next.mgroups = { ...next.mgroups, [tSheet]: grp || base.majors.find(m => m.name === tSheet)?.group || "" };
+    else next.group = grp || base.group;
+    // sửa xong mà giống hệt bản đang có thì coi như không sửa
+    if (termSig(applyEdit(base, next)) === termSig(base)) tEdits.delete(key); else tEdits.set(key, next);
+    done();
+  };
+}
+function renderEditBar() {
+  const bar = $("#termEditBar"), n = tEdits.size, del = [...tEdits.values()].filter(e => e.del).length;
+  bar.hidden = !n;
+  bar.innerHTML = !n ? "" : `<span>Đã sửa <b>${nf(n - del)}</b> từ${del ? `, xóa <b>${nf(del)}</b> từ` : ""}, chưa lưu.</span>
+    <button class="btn small" data-act="discard" ${tSaving ? "disabled" : ""}>Hủy hết</button>
+    <button class="btn small primary" data-act="saveEdits" ${tSaving ? "disabled" : ""}>${tSaving ? "Đang lưu…" : "Lưu thành bản mới"}</button>`;
+  if (!n) return;
+  bar.querySelector('[data-act="discard"]').onclick = () => { tEdits.clear(); tEditing = ""; renderTerms(); renderEditBar(); };
+  bar.querySelector('[data-act="saveEdits"]').onclick = termEditSave;
+}
+async function termEditSave() {
+  const secret = passGet();
+  if (!secret) return gateOpen();
+  tSaving = true; renderEditBar();
+  try {
+    // áp lên bản mới nhất trên máy chủ (máy khác có thể vừa ghi), theo khóa thuật ngữ
+    const base = await termApi("GET"), byKey = new Map(base.terms.map(t => [t.key, t]));
+    let edited = 0, removed = 0, missing = 0;
+    for (const [k, e] of tEdits) {
+      const t = byKey.get(k);
+      if (!t) { missing++; continue; }
+      byKey.delete(k);
+      if (e.del) { removed++; continue; }
+      const nt = applyEdit(t, e);
+      nt.key = TERM_BE.keyOf(nt.zh);
+      if (byKey.has(nt.key)) throw new Error(`“${nt.zh}” trùng với một thuật ngữ đã có`);
+      byKey.set(nt.key, nt); edited++;
+    }
+    if (!byKey.size) throw new Error("danh sách sẽ trống");
+    const what = `sửa ${nf(edited)} từ${removed ? `, xóa ${nf(removed)} từ` : ""}`;
+    const r = await termApi("PUT", { fileName: `Sửa tay: ${what}`, summaryName: base.summaryName || "Tổng hợp", sheets: base.sheets || [],
+      terms: [...byKey.values()], mode: "edit" }, secret);
+    tEdits.clear(); tEditing = ""; tSaving = false;
+    renderEditBar(); termWarn("");
+    await loadTerms();
+    termWarn(`Đã lưu bản ${r.version}: ${what}${missing ? ` (${nf(missing)} từ không còn trong bản mới nhất nên bỏ qua)` : ""}. Muốn quay lại thì tắt bản này trong Lịch sử chỉnh sửa.`, true);
+  } catch (e) {
+    tSaving = false; renderEditBar();
+    if (e.status === 401) { lsSet(PASS_KEY, ""); gateOpen(); termWarn("Mật khẩu không còn đúng, đăng nhập lại rồi bấm lưu nhé."); }
+    else termWarn("Chưa lưu được: " + e.message + ". Các thay đổi vẫn giữ trên trang.");
+  }
+}
+// còn thay đổi chưa lưu thì hỏi trước khi rời trang
+addEventListener("beforeunload", e => { if (tEdits.size) { e.preventDefault(); e.returnValue = ""; } });
 function sayZh(text) {
   if (!("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
@@ -1622,7 +1794,7 @@ async function termSave() {
    Mỗi lần ghi (thêm vào, ghi đè) là một bản, máy chủ giữ bản sao cả danh sách của từng bản. Danh sách trên trang
    là bản mới nhất đang bật; tắt một bản thì nó bị ẩn, bật lại thì hiện lại, không mất dữ liệu (PATCH /terms?version=N).
    Tải Excel: dựng lại các sheet từ bản sao. */
-const MODE_LABEL = { replace: "Ghi đè", add: "Thêm vào", restore: "Khôi phục" };
+const MODE_LABEL = { replace: "Ghi đè", add: "Thêm vào", restore: "Khôi phục", edit: "Sửa tay" };
 async function openVersions() {
   tVer = { list: null, err: "", busy: 0, page: 0, total: 0, on: 0 };
   tAskSecret = !passGet();
