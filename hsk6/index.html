@@ -306,7 +306,21 @@ label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 14px
 .term-count { margin: -4px 0 10px; font-size: 14px; }
 /* hai ô kéo thả tách riêng: biên bản (thêm thuật ngữ) và Excel (ghi đè); đang kéo file thì cả hai sáng viền, ô dưới con trỏ sáng nền */
 .term-drops { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
-.term-drop { padding: 16px 18px; }
+.term-drop { padding: 10px 16px; grid-template-columns: auto minmax(0, 1fr); justify-items: start; text-align: left; column-gap: 12px; row-gap: 0; }
+.term-drop .dz-icon { grid-row: span 2; width: 26px; height: 26px; }
+.term-drop b { font-size: 15px; }
+.term-drop span { font-size: 12.5px; }
+/* danh sách chiếm phần lớn trang: thanh chọn sheet, nhóm, tìm dính trên cùng khi cuộn */
+.terms .vtools { position: sticky; top: 0; z-index: 5; background: var(--bg); padding-block: 10px; margin-bottom: 4px; }
+/* cửa sổ lịch sử chỉnh sửa: nền mờ, khung giữa màn hình, danh sách cuộn bên trong */
+.modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgb(0 0 0 / .45); }
+.modal[hidden] { display: none; }
+.modal-card { width: min(780px, 100%); max-height: min(86vh, 900px); display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+  border-radius: 18px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 20px 60px rgb(0 0 0 / .25); overflow: hidden; }
+.modal-head { padding: 16px 18px 12px; border-bottom: 1px solid var(--line); }
+.modal-body { overflow: auto; padding: 6px 18px 16px; }
+.modal-foot { padding: 12px 18px; border-top: 1px solid var(--line); }
+.modal-foot .note-warn { margin: 0; }
 .term-drops.dragging .dropzone { border-color: var(--accent); }
 .word.term .w-hz .hz { font-size: 21px; line-height: 1.3; }
 .word.term .py { font-size: 14px; }
@@ -602,6 +616,9 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
   </div>
   <div class="note-warn" id="termWarn" hidden></div>
   <div class="term-imp" id="termImp" hidden></div>
+  <div class="modal" id="verModal" hidden>
+    <div class="modal-card" id="verCard" role="dialog" aria-modal="true" aria-labelledby="verTitle"></div>
+  </div>
   <div class="vtools">
     <select class="note-filter term-sheet" id="termSheet" aria-label="Chọn sheet: Tổng hợp hoặc chuyên ngành"></select>
     <select class="note-filter" id="termGroup" aria-label="Lọc theo nhóm"></select>
@@ -1333,6 +1350,7 @@ function openTerms() {
     $("#termSheet").onchange = () => { tSheet = $("#termSheet").value; S.termSheet = tSheet; save(); tGroup = ""; tShow = 80; renderTerms(); };
     $("#termGroup").onchange = () => { tGroup = $("#termGroup").value; tShow = 80; renderTerms(); };
     $("#termSearch").oninput = () => { tShow = 80; renderTerms(); };
+    new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) termMoreCheck(); }, { rootMargin: "600px 0px" }).observe($("#termMore"));
     $("#termImport").onclick = () => $("#termFile").click();
     $("#termDocImport").onclick = () => $("#termDocFile").click();
     $("#termVersions").onclick = openVersions;
@@ -1382,8 +1400,16 @@ function renderTerms() {
       <div class="t-tags">${tSheet ? "" : t.majors.map(m => `<span class="tag maj">${esc(m.name)}</span>`).join("")}${t.sessions.map(d => `<span class="tag" title="Buổi học">${dm(d)}</span>`).join("")}</div>
     </article>`).join("") : `<div class="empty">Không có thuật ngữ nào khớp.</div>`;
   $("#termList").querySelectorAll("[data-say]").forEach(b => b.onclick = () => sayZh(b.dataset.say));
-  $("#termMore").innerHTML = rows.length > tShow ? `<button class="btn small">Xem thêm (còn ${nf(rows.length - tShow)})</button>` : "";
-  const mb = $("#termMore button"); if (mb) mb.onclick = () => { tShow += 200; renderTerms(); };
+  // cuộn tới đâu tải tới đó: ô cuối danh sách gần lọt vào màn hình thì hiện thêm (termMoreCheck)
+  renderTerms.more = rows.length > tShow;
+  $("#termMore").innerHTML = renderTerms.more ? `<span class="muted">Đang tải thêm… còn ${nf(rows.length - tShow)}</span>`
+    : rows.length > 40 ? `<span class="muted">Hết danh sách · ${nf(rows.length)} thuật ngữ</span>` : "";
+  if (renderTerms.more) requestAnimationFrame(termMoreCheck);
+}
+function termMoreCheck() {
+  const m = $("#termMore");
+  if (!renderTerms.more || view !== "terms" || m.getBoundingClientRect().top > innerHeight + 600) return;
+  tShow += 150; renderTerms();
 }
 function sayZh(text) {
   if (!("speechSynthesis" in window)) return;
@@ -1419,7 +1445,7 @@ function termPreview(input, mode) {
   $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 function termParse() { tPv = TERM_BE.parse(tIn, tRes); renderImp(); }
-function closeImp() { tPv = null; tIn = null; tDoc = null; tVer = null; $("#termImp").hidden = true; $("#termImp").innerHTML = ""; }
+function closeImp() { tPv = null; tIn = null; tDoc = null; $("#termImp").hidden = true; $("#termImp").innerHTML = ""; }
 
 /* Danh sách thuật ngữ → các sheet giống file Excel gốc: Tổng hợp (có cột Chuyên ngành) rồi mỗi chuyên ngành một sheet.
    Đọc lại bằng TERM_BE.parse ra đúng danh sách, nên file tải về sửa trong Excel rồi nhập lại được. */
@@ -1591,31 +1617,34 @@ async function termSave() {
    Tải Excel: dựng lại các sheet từ bản sao. */
 const MODE_LABEL = { replace: "Ghi đè", add: "Thêm vào", restore: "Khôi phục" };
 async function openVersions() {
-  closeImp(); termWarn("");
   tVer = { list: null, err: "", busy: 0 };
   tAskSecret = !passGet();
+  $("#verModal").hidden = false;
   renderVersions();
-  $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
   await verReload();
+  $("#verCard [data-act=close]")?.focus();
 }
+function closeVersions() { tVer = null; $("#verModal").hidden = true; $("#verCard").innerHTML = ""; $("#termVersions").focus(); }
+$("#verModal").onclick = e => { if (e.target === e.currentTarget) closeVersions(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape" && tVer) closeVersions(); });
 async function verReload() {
   try { tVer.list = (await termApi("GET", null, null, "terms?versions")).versions; tVer.err = ""; } catch (e) { tVer.err = e.message; }
   renderVersions();
 }
-function renderVersions(msg) {
-  const v = tVer, box = $("#termImp"), cur = TL ? TL.version : 0;
+function renderVersions(msg, ok) {
+  const v = tVer, card = $("#verCard"), cur = TL ? TL.version : 0;
   if (!v) return;
-  box.hidden = false;
-  const secretVal = $("#impSecret")?.value || "";
+  const secretVal = $("#verSecret")?.value || "";
   const when = s => new Date(s).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" });
   const on = v.list ? v.list.filter(x => x.active).length : 0;
-  box.innerHTML = `
-    <div class="imp-head">
-      <div><h3>Lịch sử chỉnh sửa</h3>
+  card.innerHTML = `
+    <div class="modal-head imp-head">
+      <div><h3 id="verTitle">Lịch sử chỉnh sửa</h3>
         <p class="muted">Mỗi lần thêm vào hay ghi đè là một bản. Danh sách trên trang là bản mới nhất đang bật;
           tắt một bản thì trang hiện bản đang bật ngay trước nó, bật lại lúc nào cũng được, không mất dữ liệu.</p></div>
       <button class="btn small" data-act="close">Đóng</button>
     </div>
+    <div class="modal-body">
     ${!v.list ? `<p class="muted">${v.err ? "Không tải được lịch sử: " + esc(v.err) : "Đang tải…"}</p>`
       : !v.list.length ? `<p class="muted">Chưa có bản nào. Bản đầu tiên được tạo khi bạn xác nhận thêm vào hoặc ghi đè.</p>`
       : `<p class="muted ver-sum">${nf(v.list.length)} bản · ${nf(on)} đang bật${on ? ` · trang đang hiện bản ${cur}` : " · danh sách đang trống"}</p>
@@ -1631,11 +1660,12 @@ function renderVersions(msg) {
         </div>
       </div>`).join("")}</div>`}
     ${tAskSecret ? `<label class="imp-secret">Mật khẩu của trang
-      <input class="search" id="impSecret" type="password" autocomplete="current-password" value="${esc(secretVal)}"></label>` : ""}
-    ${msg ? `<div class="note-warn">${esc(msg)}</div>` : ""}`;
-  box.querySelectorAll("[data-on]").forEach(b => b.onclick = () => verToggle(+b.dataset.v, b.dataset.on === "1"));
-  box.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => verDownload(+b.dataset.dl));
-  box.querySelectorAll("[data-act]").forEach(b => b.onclick = () => { if (b.dataset.act === "close") closeImp(); });
+      <input class="search" id="verSecret" type="password" autocomplete="current-password" value="${esc(secretVal)}"></label>` : ""}
+    </div>
+    ${msg ? `<div class="modal-foot"><div class="${ok ? "imp-note" : "note-warn"}" role="status">${esc(msg)}</div></div>` : ""}`;
+  card.querySelectorAll("[data-on]").forEach(b => b.onclick = () => verToggle(+b.dataset.v, b.dataset.on === "1"));
+  card.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => verDownload(+b.dataset.dl));
+  card.querySelector("[data-act=close]").onclick = closeVersions;
 }
 async function verDownload(n) {
   try {
@@ -1644,8 +1674,8 @@ async function verDownload(n) {
   } catch (e) { renderVersions("Chưa tải được bản " + n + ": " + e.message); }
 }
 async function verToggle(n, active) {
-  const v = tVer, secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : passGet();
-  if (!secret) { tAskSecret = true; renderVersions("Nhập mật khẩu để bật/tắt bản."); $("#impSecret")?.focus(); return; }
+  const v = tVer, secret = tAskSecret ? ($("#verSecret")?.value || "").trim() : passGet();
+  if (!secret) { tAskSecret = true; renderVersions("Nhập mật khẩu để bật/tắt bản."); $("#verSecret")?.focus(); return; }
   v.busy = n; renderVersions();
   try {
     const r = await termApi("PATCH", { active }, secret, `terms?version=${n}`);
@@ -1653,9 +1683,8 @@ async function verToggle(n, active) {
     await loadTerms();
     v.busy = 0;
     await verReload();
-    renderVersions();
-    termWarn(r.version ? `Đã ${active ? "bật lại" : "tắt"} bản ${n}. Trang đang hiện bản ${r.version} (${nf(r.count)} thuật ngữ).`
-      : `Đã tắt bản ${n}. Không còn bản nào đang bật nên danh sách trống; bật lại một bản trong lịch sử để hiện lại.`, true);
+    renderVersions(r.version ? `Đã ${active ? "bật lại" : "tắt"} bản ${n}. Trang đang hiện bản ${r.version} (${nf(r.count)} thuật ngữ).`
+      : `Đã tắt bản ${n}. Không còn bản nào đang bật nên danh sách trống; bật lại một bản để hiện lại.`, true);
   } catch (e) {
     v.busy = 0;
     if (e.status === 401) { tAskSecret = true; renderVersions("Sai mật khẩu, nhập lại nhé."); }
