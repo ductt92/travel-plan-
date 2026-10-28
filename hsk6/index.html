@@ -1809,8 +1809,9 @@ async function docRunAi(only) {
         if (tAskSecret) { lsSet(PASS_KEY, secret); tAskSecret = false; }
       } catch (e) {
         d.ai.failed.push(i); d.ai.err = e.message;
-        // sai mật khẩu, chưa có khóa AI, hay mọi AI đều hết lượt thì dừng, các đoạn còn lại để "Lọc lại" sau
-        if (e.status === 401 || e.status === 503 || e.status === 429) d.ai.stop = true;
+        // sai mật khẩu, chưa có khóa AI, mọi AI đều hết lượt (429) hay đều lỗi (502, vd model bị ngừng) thì dừng,
+        // các đoạn còn lại để "Lọc lại" sau, khỏi gửi tiếp từng đoạn rồi lỗi y hệt
+        if ([401, 429, 502, 503].includes(e.status)) d.ai.stop = true;
       }
       d.ai.done++;
       if (tDoc === d && !tIn) renderDoc();

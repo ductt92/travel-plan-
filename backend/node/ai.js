@@ -17,7 +17,7 @@ const cut = s => [...String(s ?? '')].slice(0, MAX_CHARS).join('');
 
 // Gemini: mỗi model có hạn mức miễn phí riêng nên thử lần lượt từng model. Còn lại theo chuẩn chat/completions của OpenAI.
 const PROVIDERS = {
-  gemini: { name: 'Gemini', key: 'GEMINI_API_KEY', base: 'https://generativelanguage.googleapis.com/v1beta', models: () => list(process.env.GEMINI_MODELS, 'gemini-2.5-flash,gemini-2.5-flash-lite') },
+  gemini: { name: 'Gemini', key: 'GEMINI_API_KEY', base: 'https://generativelanguage.googleapis.com/v1beta', models: () => list(process.env.GEMINI_MODELS, 'gemini-3.8-flash,gemini-3.5-flash-lite') },
   groq: { name: 'Groq', key: 'GROQ_API_KEY', base: 'https://api.groq.com/openai/v1', models: () => list(process.env.GROQ_MODELS, 'llama-3.3-70b-versatile') },
   openrouter: { name: 'OpenRouter', key: 'OPENROUTER_API_KEY', base: 'https://openrouter.ai/api/v1', models: () => list(process.env.OPENROUTER_MODELS, 'meta-llama/llama-3.3-70b-instruct:free') },
   mistral: { name: 'Mistral', key: 'MISTRAL_API_KEY', base: 'https://api.mistral.ai/v1', models: () => list(process.env.MISTRAL_MODELS, 'mistral-small-latest') },

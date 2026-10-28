@@ -49,7 +49,7 @@ type aiProvider struct {
 
 // Gemini: mỗi model có hạn mức miễn phí riêng nên thử lần lượt từng model. Còn lại theo chuẩn chat/completions của OpenAI.
 var aiProviders = map[string]aiProvider{
-	"gemini":     {"Gemini", "GEMINI_API_KEY", "https://generativelanguage.googleapis.com/v1beta", "gemini-2.5-flash,gemini-2.5-flash-lite"},
+	"gemini":     {"Gemini", "GEMINI_API_KEY", "https://generativelanguage.googleapis.com/v1beta", "gemini-3.8-flash,gemini-3.5-flash-lite"},
 	"groq":       {"Groq", "GROQ_API_KEY", "https://api.groq.com/openai/v1", "llama-3.3-70b-versatile"},
 	"openrouter": {"OpenRouter", "OPENROUTER_API_KEY", "https://openrouter.ai/api/v1", "meta-llama/llama-3.3-70b-instruct:free"},
 	"mistral":    {"Mistral", "MISTRAL_API_KEY", "https://api.mistral.ai/v1", "mistral-small-latest"},

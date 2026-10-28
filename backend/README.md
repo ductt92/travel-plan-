@@ -32,7 +32,7 @@ trang hsk6 (`HSK6_PASS`, cho Ngọc); `GET /terms?check` trả `200 {ok: true}` 
 Server chỉ nhận đúng dạng hội thoại, tối đa 16 lượt, mỗi đoạn 8000 ký tự. Gọi lần lượt các AI có khóa
 (`GEMINI_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `MISTRAL_API_KEY`, thứ tự theo `AI_ORDER`, mặc định
 gemini → groq → openrouter → mistral); với Gemini thử lần lượt các model trong `GEMINI_MODELS`
-(mặc định `gemini-2.5-flash,gemini-2.5-flash-lite`, mỗi model một hạn mức miễn phí riêng). AI nào hết lượt (429),
+(mặc định `gemini-3.8-flash,gemini-3.5-flash-lite`, mỗi model một hạn mức miễn phí riêng; Google ngừng model cũ thì đổi ở đây hoặc đặt `GEMINI_MODELS`). AI nào hết lượt (429),
 lỗi hay quá 20 s thì chuyển sang cái kế tiếp; model vừa hết lượt được bỏ qua một phút. `model` (`gemini-*`) đặt model
 Gemini thử đầu tiên, `provider` chỉ dùng một nhà cung cấp (để thử khóa). Tất cả đều hết lượt thì `429`, lỗi khác `502`,
 chưa có khóa nào thì `503`; thông báo lỗi liệt kê từng AI đã thử.
