@@ -2,10 +2,10 @@
 //
 // Trang lớp học trực tiếp (lop-hoc/) không có server riêng: nét vẽ, chat và làm mối video đi qua Ably.
 // Ở đây chỉ ký "phiếu xin token" bằng khóa Ably giấu trên server, cho vào đúng một kênh lop:<phòng>.
-// clientId "gv-…" là giáo viên (phải đúng TEACHER_PASS), "hs-…" là học sinh. Ably gắn clientId vào mọi
-// tin nhắn, nên máy khác tin được tin nào thật sự do giáo viên gửi (đổi slide, tắt mic, giao bút…).
+// clientId "gv-…" là giáo viên (mật khẩu là HSK6_PASS của Ngọc, hoặc mã chung APP_SECRET), "hs-…" là học sinh.
+// Ably gắn clientId vào mọi tin nhắn, nên máy khác tin được tin nào thật sự do giáo viên gửi (đổi slide, tắt mic, giao bút…).
 //
-// Biến môi trường: ABLY_API_KEY (dạng "appId.keyId:secret"), TEACHER_PASS
+// Biến môi trường: ABLY_API_KEY (dạng "appId.keyId:secret"), HSK6_PASS, APP_SECRET
 import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 import { fail, readJson, send } from './common.js';
 
@@ -37,8 +37,9 @@ export default async function lopHoc(req, res) {
   const room = String(body?.room ?? ''), clientId = String(body?.clientId ?? '');
   if (!ROOM_RE.test(room) || !CLIENT_RE.test(clientId)) return fail(res, 400, 'mã phòng hoặc mã người dùng không hợp lệ');
   if (clientId.startsWith('gv-')) {
-    if (!process.env.TEACHER_PASS) return fail(res, 503, 'server chưa cấu hình TEACHER_PASS');
-    if (!same(body?.pass, process.env.TEACHER_PASS)) return fail(res, 401, 'Sai mật khẩu giáo viên');
+    // giáo viên dùng chung mật khẩu với trang hsk6 (giống authorizedHsk6, nhưng mật khẩu gửi trong body)
+    const pass = body?.pass;
+    if (!same(pass, process.env.HSK6_PASS) && !same(pass, process.env.APP_SECRET)) return fail(res, 401, 'Sai mật khẩu giáo viên');
   }
   return send(res, 200, tokenRequest(key, clientId, room));
 }

@@ -2,7 +2,7 @@
 //   /lop-hoc/              trang lớp học (index.html)
 //   /lop-hoc/lessons.json  danh sách slide, tính từ hsk6/ (trên Vercel do scripts/build.mjs ghi sẵn)
 //   /hsk6/…                slide các bài
-//   /api/node/lop-hoc      ký token Ably (backend/node/lophoc.js), cần ABLY_API_KEY và TEACHER_PASS trong .env.local
+//   /api/node/lop-hoc      ký token Ably (backend/node/lophoc.js), cần ABLY_API_KEY (và HSK6_PASS hoặc APP_SECRET cho giáo viên) trong .env.local
 // Chưa có khóa Ably thì thêm ?local=1 vào link để các tab cùng máy nói chuyện với nhau mà không cần Ably.
 import { createServer } from 'node:http';
 import { existsSync, readFileSync } from 'node:fs';

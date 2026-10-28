@@ -11,13 +11,14 @@ Chạy miễn phí hoàn toàn, không có server riêng phải bật:
 ## Cài một lần trên Vercel
 
 1. Tạo tài khoản Ably (gói Free), tạo app, vào **API Keys** chép khóa dạng `appId.keyId:secret`.
-2. Vercel → Settings → Environment Variables: thêm `ABLY_API_KEY` (khóa vừa chép) và `TEACHER_PASS` (mật khẩu giáo viên).
+2. Vercel → Settings → Environment Variables: thêm `ABLY_API_KEY` (khóa vừa chép). Mật khẩu giáo viên dùng chung
+   `HSK6_PASS` (mật khẩu trang hsk6 của Ngọc), hoặc mã đồng bộ `APP_SECRET`.
 3. Deploy lại. Vào `https://<tên-miền>/lop-hoc/`, chọn **Giáo viên**, nhập mật khẩu, rồi bấm **Sao chép link mời** gửi học sinh.
 
 ## Chạy ở máy
 
 ```bash
-node lop-hoc/dev.mjs     # http://localhost:8780/lop-hoc/  (đọc ABLY_API_KEY, TEACHER_PASS từ .env.local)
+node lop-hoc/dev.mjs     # http://localhost:8780/lop-hoc/  (đọc ABLY_API_KEY, HSK6_PASS, APP_SECRET từ .env.local)
 ```
 
 Chưa có khóa Ably: thêm `?local=1` vào link, các tab cùng trình duyệt nói chuyện với nhau qua BroadcastChannel
@@ -31,7 +32,7 @@ Không có server giữ trạng thái, nên mỗi máy giữ đủ slide đang m
 Người mới vào gửi `hello`; giáo viên trả lời (không có giáo viên thì người có mã nhỏ nhất) bằng `state` và các gói
 `page` (~30 KB một gói). Giáo viên tải lại trang giữa buổi cũng lấy lại được bảng từ học sinh.
 
-Ably gắn `clientId` đã xác thực vào mọi tin. `gv-…` chỉ có được khi đúng `TEACHER_PASS`, nên lệnh đổi slide, xóa trang,
+Ably gắn `clientId` đã xác thực vào mọi tin. `gv-…` chỉ có được khi đúng `HSK6_PASS` hoặc `APP_SECRET`, nên lệnh đổi slide, xóa trang,
 giao bút, tắt mic, hạ tay chỉ được nhận khi đến từ `gv-…`; nét vẽ chỉ nhận từ giáo viên hoặc học sinh đang được giao bút.
 
 ## Đã có

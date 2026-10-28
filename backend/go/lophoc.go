@@ -3,7 +3,7 @@ package gobackend
 // POST /api/go/lop-hoc  { room, clientId, pass? } → TokenRequest của Ably (bản Node: backend/node/lophoc.js)
 //
 // Ký "phiếu xin token" bằng khóa Ably giấu trên server, cho vào đúng một kênh lop:<phòng>.
-// clientId "gv-…" là giáo viên (phải đúng TEACHER_PASS), "hs-…" là học sinh.
+// clientId "gv-…" là giáo viên (mật khẩu là HSK6_PASS của Ngọc, hoặc mã chung APP_SECRET), "hs-…" là học sinh.
 
 import (
 	"crypto/hmac"
@@ -50,6 +50,10 @@ func tokenRequest(key, clientID, room string, timestamp int64, nonce string) abl
 	return ablyTokenRequest{keyName, lopTTL, capability, clientID, timestamp, nonce, base64.StdEncoding.EncodeToString(m.Sum(nil))}
 }
 
+func samePass(got, want string) bool {
+	return want != "" && subtle.ConstantTimeCompare([]byte(got), []byte(want)) == 1
+}
+
 func LopHoc(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.Header().Set("Allow", "POST")
@@ -74,16 +78,10 @@ func LopHoc(w http.ResponseWriter, r *http.Request) {
 		fail(w, http.StatusBadRequest, "mã phòng hoặc mã người dùng không hợp lệ")
 		return
 	}
-	if strings.HasPrefix(body.ClientID, "gv-") {
-		pass := os.Getenv("TEACHER_PASS")
-		if pass == "" {
-			fail(w, http.StatusServiceUnavailable, "server chưa cấu hình TEACHER_PASS")
-			return
-		}
-		if subtle.ConstantTimeCompare([]byte(body.Pass), []byte(pass)) != 1 {
-			fail(w, http.StatusUnauthorized, "Sai mật khẩu giáo viên")
-			return
-		}
+	// giáo viên dùng chung mật khẩu với trang hsk6 (giống authorizedHsk6, nhưng mật khẩu gửi trong body)
+	if strings.HasPrefix(body.ClientID, "gv-") && !samePass(body.Pass, os.Getenv("HSK6_PASS")) && !samePass(body.Pass, os.Getenv("APP_SECRET")) {
+		fail(w, http.StatusUnauthorized, "Sai mật khẩu giáo viên")
+		return
 	}
 	nonce := make([]byte, 16)
 	rand.Read(nonce)
