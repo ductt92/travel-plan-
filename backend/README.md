@@ -42,7 +42,7 @@ mỗi thuật ngữ `{key, zh, pinyin, vi, group, majors: [{name, group, n}], se
 (`n` là số dòng trong sheet để giữ thứ tự như file Excel). Chưa có thì `version: 0, terms: []`.
 
 **`GET /api/<go|node>/terms?versions[&limit=20&offset=0]`** → `200 {total, active, limit, offset, versions: [{version, fileName, mode, count, createdAt, saved, active}]}`
-(mới nhất trước, mỗi trang mặc định 20, tối đa 100). **`GET ...?version=N`** → bản sao cả danh sách của bản N (`{version, fileName, summaryName,
+(bản đang hiện đứng đầu, còn lại mới nhất trước; mỗi trang mặc định 20, tối đa 100). **`GET ...?version=N`** → bản sao cả danh sách của bản N (`{version, fileName, summaryName,
 sheets, mode, updatedAt, terms}`), chưa có bản sao thì `404`.
 
 **`PUT /api/<go|node>/terms`** với `{fileName, summaryName, sheets, terms, mode?}` → **ghi đè toàn bộ**: xóa hết

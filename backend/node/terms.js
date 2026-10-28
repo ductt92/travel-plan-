@@ -96,7 +96,9 @@ async function load(p) {
 
 async function versions(p, limit, offset) {
   const { rows } = await p.query(`SELECT id, file_name, mode, count, created_at, terms IS NOT NULL AS saved, active
-    FROM term_upload ORDER BY id DESC LIMIT $1 OFFSET $2`, [limit, offset]);
+    FROM term_upload
+    ORDER BY id = (SELECT max(id) FROM term_upload WHERE active) DESC, id DESC -- bản đang hiện đứng đầu
+    LIMIT $1 OFFSET $2`, [limit, offset]);
   const n = (await p.query('SELECT count(*) AS total, count(*) FILTER (WHERE active) AS active FROM term_upload')).rows[0];
   return {
     total: Number(n.total), active: Number(n.active), limit, offset,
