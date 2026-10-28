@@ -4,7 +4,9 @@
   "type": "module",
   "workspaces": [
     "packages/*",
-    "apps/*"
+    "apps/home",
+    "apps/hoc-tieng-trung",
+    "apps/ban-do"
   ],
   "scripts": {
     "dev:home": "npm -w apps/home run dev",
@@ -12,7 +14,8 @@
     "dev:map": "npm -w apps/ban-do run dev",
     "build": "node scripts/build.mjs",
     "dev:api": "node scripts/dev-api.mjs",
-    "preview": "npx --yes serve@14.2.4 dist -l 4173"
+    "preview": "npx --yes serve@14.2.4 dist -l 4173",
+    "dev:map-next": "npm --prefix apps/ban-do-next run dev"
   },
   "dependencies": {
     "pg": "8.13.1"
