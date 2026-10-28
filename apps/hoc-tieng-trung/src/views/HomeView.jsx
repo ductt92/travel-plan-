@@ -62,6 +62,7 @@ function LevelCard({ n }) {
   }[st];
   const nums = n === 0 ? L.sub
     : L.book ? `+${fmtN(L.words - p.words)} từ · ${L.gram} điểm ngữ pháp · ${L.book}`
+    : L.std ? `+${fmtN(L.newWords)} từ · ${L.gram} điểm ngữ pháp · chuẩn 2021`
     : `Khoảng ${fmtN(L.words)} từ · ${fmtN(L.chars)} chữ (chuẩn 2021)`;
   let foot = null;
   if (st === 'soon') foot = <span className="ui-muted" style={{ fontSize: 12, marginTop: 'auto' }}>Nội dung đang soạn</span>;

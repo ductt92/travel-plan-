@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, EmptyState, Icon, IconButton, Row, Stack, PageHeader } from '@trang/ui';
-import { LEVELS, LESSONS, WORDS, lessonById } from '../core/data.js';
+import { LEVELS, LESSONS, WORDS, lessonById, CONTENT_LEVELS } from '../core/data.js';
 import { syls, pyText, toneOf, bareSyl, markSyl, plainHz, shuffle, pickOne } from '../core/pinyin.js';
 import { say } from '../core/speech.js';
 import { useStore, getState, update, lessonDoneCount, setLessonScore, recordAnswer } from '../core/store.js';
@@ -73,7 +73,7 @@ function PracticeHome() {
           <span className="ui-eyebrow">Từ đã học</span><b style={{ fontSize: 17 }}>Tất cả từ trong bộ ôn tập</b>
           <span className="ui-muted" style={{ fontSize: 14 }}>{learned ? `10 câu · ${learned} từ` : 'Chưa có từ nào, hãy học một bài trước'}</span>
         </Link>
-        {[1, 2].map(n => (
+        {CONTENT_LEVELS.map(n => (
           <Link key={n} className="choice" to={`/practice/level/${n}`}>
             <span className="ui-eyebrow">Kiểm tra cuối cấp</span><b style={{ fontSize: 17 }}>{LEVELS[n].name}</b>
             <span className="ui-muted" style={{ fontSize: 14 }}>20 câu · đạt 80% để hoàn thành cấp{S.passed[n] ? ` · đã đạt ${S.passed[n]}%` : ''}</span>
