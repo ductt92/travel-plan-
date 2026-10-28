@@ -9,6 +9,7 @@ apps/hoc-tieng-trung/   app Hán Lộ học tiếng Trung (HashRouter)          
 apps/ban-do/            bản đồ 34 tỉnh: đánh dấu đã đi / muốn đi và ghi chú          → /ban-do/
 packages/sync/          @trang/sync — đồng bộ localStorage lên API, nút "Đồng bộ" chọn Node.js / Go
 travel/                 sổ tay chuyến Tam Đảo – Đà Lạt, HTML tĩnh (sẽ chuyển React sau) → /travel/
+lop-hoc/                bản thử lớp học trực tiếp (video + bảng vẽ, Socket.IO) — server Node riêng, không lên Vercel
 backend/go/, backend/node/   cùng một API viết bằng Go và Node.js (xem backend/README.md)
 api/go/, api/node/      lối vào Vercel Functions                                     → /api/go/…, /api/node/…
 scripts/build.mjs       build cả site vào dist/

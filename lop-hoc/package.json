@@ -1,0 +1,12 @@
+{
+  "name": "lop-hoc-thu",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Bản thử lớp học trực tiếp: video, bảng vẽ, chat",
+  "dependencies": {
+    "socket.io": "^4.8.1"
+  },
+  "type": "module"
+}
