@@ -27,8 +27,14 @@ Mọi request cần header `X-App-Secret: <APP_SECRET>`, sai thì `401 {"error":
 - Máy khác đã ghi trước → `409` kèm bản mới nhất; client gộp ba chiều (`merge3` trong
   `packages/sync`) rồi gửi lại. Đây là khóa lạc quan: không cần khóa dòng, không mất thay đổi.
 
-**`POST /api/<go|node>/ai`** với `{model?, system?, contents: [{role, parts: [{text}]}]}` → `200 {text}`.
-Server chỉ nhận đúng dạng hội thoại, tối đa 16 lượt, mỗi đoạn 8000 ký tự, tên mô hình `gemini-*`.
+**`POST /api/<go|node>/ai`** với `{model?, provider?, system?, contents: [{role, parts: [{text}]}]}` → `200 {text, provider, model}`.
+Server chỉ nhận đúng dạng hội thoại, tối đa 16 lượt, mỗi đoạn 8000 ký tự. Gọi lần lượt các AI có khóa
+(`GEMINI_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `MISTRAL_API_KEY`, thứ tự theo `AI_ORDER`, mặc định
+gemini → groq → openrouter → mistral); với Gemini thử lần lượt các model trong `GEMINI_MODELS`
+(mặc định `gemini-2.5-flash,gemini-2.5-flash-lite`, mỗi model một hạn mức miễn phí riêng). AI nào hết lượt (429),
+lỗi hay quá 20 s thì chuyển sang cái kế tiếp; model vừa hết lượt được bỏ qua một phút. `model` (`gemini-*`) đặt model
+Gemini thử đầu tiên, `provider` chỉ dùng một nhà cung cấp (để thử khóa). Tất cả đều hết lượt thì `429`, lỗi khác `502`,
+chưa có khóa nào thì `503`; thông báo lỗi liệt kê từng AI đã thử.
 
 **`GET /api/<go|node>/terms`** (không cần mã) → `200 {version, fileName, summaryName, sheets, updatedAt, terms}`,
 mỗi thuật ngữ `{key, zh, pinyin, vi, group, majors: [{name, group, n}], sessions: ["2026-09-01"], n}`
