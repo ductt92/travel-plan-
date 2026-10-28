@@ -1,10 +1,11 @@
-// GET/PUT /api/node/terms
+// GET/PUT/PATCH /api/node/terms
 //
-// Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/), mỗi thuật ngữ một dòng trong bảng term.
+// Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/). Mỗi lần ghi là một phiên bản (dòng term_upload kèm bản sao
+// cả danh sách); danh sách đang dùng (bảng term) luôn là bản mới nhất ĐANG BẬT, tắt/bật lại từng bản không mất dữ liệu.
 // GET ai cũng đọc được (nội dung học, không bí mật); ?versions là lịch sử phiên bản, ?version=N là bản sao của bản N.
-// ?check kiểm tra mật khẩu. PUT cần mật khẩu (APP_SECRET hoặc HSK6_PASS) và GHI ĐÈ toàn bộ bằng danh sách gửi lên (trang tự gộp khi chọn "thêm vào"):
-// xóa hết thuật ngữ cũ rồi ghi danh sách mới trong một transaction, mỗi lần ghi thêm một dòng term_upload
-// kèm bản sao cả danh sách, nên bản nào cũng khôi phục được.
+// ?check kiểm tra mật khẩu. PUT, PATCH cần mật khẩu (APP_SECRET hoặc HSK6_PASS).
+// PUT ghi cả danh sách gửi lên thành bản mới (trang tự gộp khi chọn "thêm vào"), trong một transaction.
+// PATCH ?version=N {active} tắt hoặc bật lại bản N, rồi dựng lại danh sách đang dùng từ bản mới nhất còn bật.
 // Trang đọc file Excel và chuẩn hóa (TERM_BE trong BaiGiang/web/template.html), server kiểm tra lại từng trường.
 import { authorizedHsk6, db, fail, readJson, send } from './common.js';
 
@@ -28,7 +29,8 @@ CREATE TABLE IF NOT EXISTS term_upload (
   created_at   timestamptz NOT NULL DEFAULT now()
 );
 ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS mode text NOT NULL DEFAULT 'replace';
-ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS terms jsonb`;
+ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS terms jsonb;
+ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS active boolean NOT NULL DEFAULT true`;
 
 let tables = null;
 async function pool() {
@@ -45,6 +47,12 @@ const DATE = /^\d{4}-\d{2}-\d{2}$/;
 // replace: ghi đè bằng file; add: trang đã gộp file vào danh sách cũ; restore: khôi phục một bản cũ
 const MODES = ['replace', 'add', 'restore'];
 const MAX_VERSIONS = 100;
+
+// sao lưu bản đang dùng: bản mới nhất đang bật mà ghi từ trước khi có lịch sử (chưa có bản sao) thì chép bảng term vào
+const BACKUP = `UPDATE term_upload SET terms = (SELECT COALESCE(jsonb_agg(jsonb_build_object('key', key, 'zh', zh, 'pinyin', pinyin,
+    'vi', vi, 'group', grp, 'majors', majors, 'sessions', sessions, 'n', n) ORDER BY n, key), '[]') FROM term)
+  WHERE id = (SELECT max(id) FROM term_upload WHERE active) AND terms IS NULL`;
+const TERM_COLS = 'x(key text, zh text, pinyin text, vi text, "group" text, majors jsonb, sessions text[], n integer)';
 
 // Trả thông báo lỗi đầu tiên, hoặc null nếu dữ liệu đúng định dạng
 export function check(body) {
@@ -74,7 +82,7 @@ export function check(body) {
 }
 
 async function load(p) {
-  const up = (await p.query('SELECT id, file_name, summary_name, sheets, count, created_at FROM term_upload ORDER BY id DESC LIMIT 1')).rows[0];
+  const up = (await p.query('SELECT id, file_name, summary_name, sheets, count, created_at FROM term_upload WHERE active ORDER BY id DESC LIMIT 1')).rows[0];
   const { rows } = await p.query('SELECT key, zh, pinyin, vi, grp, majors, sessions, n FROM term ORDER BY n, key');
   return {
     version: up ? Number(up.id) : 0,
@@ -87,9 +95,9 @@ async function load(p) {
 }
 
 async function versions(p) {
-  const { rows } = await p.query(`SELECT id, file_name, mode, count, created_at, terms IS NOT NULL AS saved
+  const { rows } = await p.query(`SELECT id, file_name, mode, count, created_at, terms IS NOT NULL AS saved, active
     FROM term_upload ORDER BY id DESC LIMIT ${MAX_VERSIONS}`);
-  return { versions: rows.map(r => ({ version: Number(r.id), fileName: r.file_name, mode: r.mode, count: r.count, createdAt: r.created_at, saved: r.saved })) };
+  return { versions: rows.map(r => ({ version: Number(r.id), fileName: r.file_name, mode: r.mode, count: r.count, createdAt: r.created_at, saved: r.saved, active: r.active })) };
 }
 
 async function snapshot(p, id) {
@@ -103,15 +111,11 @@ async function replace(p, body) {
   const c = await p.connect();
   try {
     await c.query('BEGIN');
-    // sao lưu bản đang có: bản mới nhất ghi từ trước khi có lịch sử (chưa có bản sao) thì chép danh sách hiện tại vào
-    await c.query(`UPDATE term_upload SET terms = (SELECT COALESCE(jsonb_agg(jsonb_build_object('key', key, 'zh', zh, 'pinyin', pinyin,
-        'vi', vi, 'group', grp, 'majors', majors, 'sessions', sessions, 'n', n) ORDER BY n, key), '[]') FROM term)
-      WHERE id = (SELECT max(id) FROM term_upload) AND terms IS NULL`);
+    await c.query(BACKUP);
     await c.query('DELETE FROM term');
     await c.query(`INSERT INTO term (key, zh, pinyin, vi, grp, majors, sessions, n)
       SELECT x.key, x.zh, x.pinyin, x.vi, x."group", x.majors, x.sessions, x.n
-      FROM jsonb_to_recordset($1::jsonb) AS x(key text, zh text, pinyin text, vi text, "group" text, majors jsonb, sessions text[], n integer)`,
-      [JSON.stringify(body.terms)]);
+      FROM jsonb_to_recordset($1::jsonb) AS ${TERM_COLS}`, [JSON.stringify(body.terms)]);
     const { rows } = await c.query(`INSERT INTO term_upload (file_name, summary_name, sheets, count, mode, terms)
       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, created_at`,
       [body.fileName, body.summaryName, JSON.stringify(body.sheets), body.terms.length, body.mode || 'replace', JSON.stringify(body.terms)]);
@@ -125,15 +129,42 @@ async function replace(p, body) {
   }
 }
 
+// Tắt/bật lại bản id rồi dựng lại bảng term từ bản mới nhất còn bật (không còn bản nào thì danh sách trống).
+// Trả null nếu không có bản đó; bật lại bản không có bản sao thì báo lỗi.
+async function toggle(p, id, active) {
+  const c = await p.connect();
+  try {
+    await c.query('BEGIN');
+    await c.query(BACKUP);
+    const row = (await c.query('SELECT terms IS NOT NULL AS saved FROM term_upload WHERE id = $1 FOR UPDATE', [id])).rows[0];
+    if (!row) { await c.query('ROLLBACK'); return null; }
+    if (active && !row.saved) { await c.query('ROLLBACK'); return { error: 'bản này ghi từ trước khi có lịch sử, không có bản sao để bật lại' }; }
+    await c.query('UPDATE term_upload SET active = $2 WHERE id = $1', [id, active]);
+    await c.query('DELETE FROM term');
+    await c.query(`INSERT INTO term (key, zh, pinyin, vi, grp, majors, sessions, n)
+      SELECT x.key, x.zh, x.pinyin, x.vi, x."group", x.majors, x.sessions, x.n
+      FROM term_upload u, jsonb_to_recordset(u.terms) AS ${TERM_COLS}
+      WHERE u.id = (SELECT max(id) FROM term_upload WHERE active) AND u.terms IS NOT NULL`);
+    const cur = (await c.query('SELECT (SELECT max(id) FROM term_upload WHERE active) AS id, (SELECT count(*) FROM term) AS n')).rows[0];
+    await c.query('COMMIT');
+    return { version: Number(cur.id || 0), count: Number(cur.n) };
+  } catch (e) {
+    await c.query('ROLLBACK').catch(() => {});
+    throw e;
+  } finally {
+    c.release();
+  }
+}
+
 export default async function terms(req, res) {
-  if (req.method !== 'GET' && req.method !== 'PUT') {
-    res.setHeader('Allow', 'GET, PUT');
-    return fail(res, 405, 'chỉ hỗ trợ GET và PUT');
+  if (!['GET', 'PUT', 'PATCH'].includes(req.method)) {
+    res.setHeader('Allow', 'GET, PUT, PATCH');
+    return fail(res, 405, 'chỉ hỗ trợ GET, PUT và PATCH');
   }
   // ?check: trang hsk6 kiểm tra mật khẩu lúc đăng nhập, không cần đến cơ sở dữ liệu
   if (req.method === 'GET' && new URL(req.url, 'http://localhost').searchParams.has('check'))
     return authorizedHsk6(req) ? send(res, 200, { ok: true }) : fail(res, 401, 'sai mật khẩu');
-  if (req.method === 'PUT' && !authorizedHsk6(req)) return fail(res, 401, 'sai mật khẩu');
+  if (req.method !== 'GET' && !authorizedHsk6(req)) return fail(res, 401, 'sai mật khẩu');
 
   let p;
   try { p = await pool(); } catch { return fail(res, 503, 'không kết nối được cơ sở dữ liệu'); }
@@ -152,6 +183,15 @@ export default async function terms(req, res) {
   }
   let body;
   try { body = await readJson(req, 4 << 20); } catch { return fail(res, 400, 'dữ liệu không hợp lệ hoặc quá lớn'); }
+  if (req.method === 'PATCH') {
+    const id = Number(new URL(req.url, 'http://localhost').searchParams.get('version'));
+    if (!Number.isInteger(id) || id <= 0 || typeof body?.active !== 'boolean') return fail(res, 400, 'cần ?version=N và {active: true|false}');
+    try {
+      const r = await toggle(p, id, body.active);
+      if (!r) return fail(res, 404, 'không có phiên bản này');
+      return r.error ? fail(res, 400, r.error) : send(res, 200, r);
+    } catch { return fail(res, 500, 'lỗi ghi dữ liệu'); }
+  }
   const err = check(body);
   if (err) return fail(res, 400, err);
   try { return send(res, 200, await replace(p, body)); } catch { return fail(res, 500, 'lỗi ghi dữ liệu'); }

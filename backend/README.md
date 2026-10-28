@@ -41,7 +41,7 @@ chưa có khóa nào thì `503`; thông báo lỗi liệt kê từng AI đã th�
 mỗi thuật ngữ `{key, zh, pinyin, vi, group, majors: [{name, group, n}], sessions: ["2026-09-01"], n}`
 (`n` là số dòng trong sheet để giữ thứ tự như file Excel). Chưa có thì `version: 0, terms: []`.
 
-**`GET /api/<go|node>/terms?versions`** → `200 {versions: [{version, fileName, mode, count, createdAt, saved}]}`
+**`GET /api/<go|node>/terms?versions`** → `200 {versions: [{version, fileName, mode, count, createdAt, saved, active}]}`
 (100 bản mới nhất). **`GET ...?version=N`** → bản sao cả danh sách của bản N (`{version, fileName, summaryName,
 sheets, mode, updatedAt, terms}`), chưa có bản sao thì `404`.
 
@@ -50,6 +50,10 @@ thuật ngữ cũ rồi ghi danh sách mới trong một transaction, trả `200
 `mode` chỉ để ghi vào lịch sử: `replace` (mặc định, ghi đè bằng file), `add` (trang đã gộp file vào danh sách cũ),
 `restore` (khôi phục bản cũ). Mỗi lần ghi lưu kèm bản sao cả danh sách vào `term_upload.terms`, nên bản nào cũng
 khôi phục được; bản ghi từ trước khi có lịch sử thì được sao lưu ngay trước lần ghi kế tiếp.
+
+**`PATCH /api/<go|node>/terms?version=N`** với `{active: true|false}` → tắt hoặc bật lại bản N, trả `200 {version, count}`
+(bản đang hiện sau khi đổi). Danh sách `GET /terms` luôn là bản mới nhất **đang bật**; tắt hết thì danh sách trống.
+Tắt/bật không xóa gì, bản sao vẫn ở `term_upload` (cột `active`).
 Trang hsk6 đọc file Excel và chuẩn hóa (`TERM_BE` trong `BaiGiang/web/template.html` bên repo HSK);
 server kiểm tra lại từng trường (tối đa 5.000 thuật ngữ, khóa không trùng, buổi học dạng `YYYY-MM-DD`),
 sai thì `400` kèm lý do và dữ liệu cũ giữ nguyên.
@@ -77,7 +81,8 @@ CREATE TABLE IF NOT EXISTS term (
 CREATE TABLE IF NOT EXISTS term_upload (
   id bigserial PRIMARY KEY, file_name text NOT NULL, summary_name text NOT NULL, sheets jsonb NOT NULL,
   count integer NOT NULL, created_at timestamptz NOT NULL DEFAULT now(),
-  mode text NOT NULL DEFAULT 'replace', terms jsonb   -- bản sao cả danh sách sau lần ghi này
+  mode text NOT NULL DEFAULT 'replace', terms jsonb,  -- bản sao cả danh sách sau lần ghi này
+  active boolean NOT NULL DEFAULT true                 -- tắt thì danh sách bỏ qua bản này
 );
 ```
 

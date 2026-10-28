@@ -1,12 +1,13 @@
 package gobackend
 
-// GET/PUT /api/go/terms
+// GET/PUT/PATCH /api/go/terms
 //
-// Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/), mỗi thuật ngữ một dòng trong bảng term.
+// Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/). Mỗi lần ghi là một phiên bản (dòng term_upload kèm bản sao
+// cả danh sách); danh sách đang dùng (bảng term) luôn là bản mới nhất ĐANG BẬT, tắt/bật lại từng bản không mất dữ liệu.
 // GET ai cũng đọc được (nội dung học, không bí mật); ?versions là lịch sử phiên bản, ?version=N là bản sao của bản N.
-// ?check kiểm tra mật khẩu. PUT cần mật khẩu (APP_SECRET hoặc HSK6_PASS) và GHI ĐÈ toàn bộ bằng danh sách gửi lên (trang tự gộp khi chọn "thêm vào"):
-// xóa hết thuật ngữ cũ rồi ghi danh sách mới trong một transaction, mỗi lần ghi thêm một dòng term_upload
-// kèm bản sao cả danh sách, nên bản nào cũng khôi phục được.
+// ?check kiểm tra mật khẩu. PUT, PATCH cần mật khẩu (APP_SECRET hoặc HSK6_PASS).
+// PUT ghi cả danh sách gửi lên thành bản mới (trang tự gộp khi chọn "thêm vào"), trong một transaction.
+// PATCH ?version=N {active} tắt hoặc bật lại bản N, rồi dựng lại danh sách đang dùng từ bản mới nhất còn bật.
 // Trang đọc file Excel và chuẩn hóa (TERM_BE trong BaiGiang/web/template.html), server kiểm tra lại từng trường.
 
 import (
@@ -46,7 +47,15 @@ CREATE TABLE IF NOT EXISTS term_upload (
 	created_at   timestamptz NOT NULL DEFAULT now()
 );
 ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS mode text NOT NULL DEFAULT 'replace';
-ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS terms jsonb`
+ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS terms jsonb;
+ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS active boolean NOT NULL DEFAULT true`
+
+// sao lưu bản đang dùng: bản mới nhất đang bật mà ghi từ trước khi có lịch sử (chưa có bản sao) thì chép bảng term vào
+const termBackup = `UPDATE term_upload SET terms = (SELECT COALESCE(jsonb_agg(jsonb_build_object('key', key, 'zh', zh, 'pinyin', pinyin,
+		'vi', vi, 'group', grp, 'majors', majors, 'sessions', sessions, 'n', n) ORDER BY n, key), '[]') FROM term)
+	WHERE id = (SELECT max(id) FROM term_upload WHERE active) AND terms IS NULL`
+
+const termCols = `x(key text, zh text, pinyin text, vi text, "group" text, majors jsonb, sessions text[], n integer)`
 
 const (
 	maxTerms     = 5000
@@ -95,6 +104,7 @@ type termVersion struct {
 	Count     int        `json:"count"`
 	CreatedAt *time.Time `json:"createdAt"`
 	Saved     bool       `json:"saved"`
+	Active    bool       `json:"active"`
 }
 
 type termSnapshot struct {
@@ -134,9 +144,9 @@ func termPool(ctx context.Context) (*pgxpool.Pool, error) {
 }
 
 func Terms(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet && r.Method != http.MethodPut {
-		w.Header().Set("Allow", "GET, PUT")
-		fail(w, http.StatusMethodNotAllowed, "chỉ hỗ trợ GET và PUT")
+	if r.Method != http.MethodGet && r.Method != http.MethodPut && r.Method != http.MethodPatch {
+		w.Header().Set("Allow", "GET, PUT, PATCH")
+		fail(w, http.StatusMethodNotAllowed, "chỉ hỗ trợ GET, PUT và PATCH")
 		return
 	}
 	// ?check: trang hsk6 kiểm tra mật khẩu lúc đăng nhập, không cần đến cơ sở dữ liệu
@@ -148,7 +158,7 @@ func Terms(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	if r.Method == http.MethodPut && !authorizedHsk6(r) {
+	if r.Method != http.MethodGet && !authorizedHsk6(r) {
 		fail(w, http.StatusUnauthorized, "sai mật khẩu")
 		return
 	}
@@ -192,6 +202,29 @@ func Terms(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		writeJSON(w, http.StatusOK, list)
+		return
+	}
+
+	if r.Method == http.MethodPatch {
+		var body struct {
+			Active *bool `json:"active"`
+		}
+		id, err := strconv.ParseInt(r.URL.Query().Get("version"), 10, 64)
+		if err != nil || id <= 0 || json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<10)).Decode(&body) != nil || body.Active == nil {
+			fail(w, http.StatusBadRequest, "cần ?version=N và {active: true|false}")
+			return
+		}
+		out, msg, err := toggleTerms(ctx, p, id, *body.Active)
+		switch {
+		case err != nil:
+			fail(w, http.StatusInternalServerError, "lỗi ghi dữ liệu")
+		case out == nil && msg == "":
+			fail(w, http.StatusNotFound, "không có phiên bản này")
+		case msg != "":
+			fail(w, http.StatusBadRequest, msg)
+		default:
+			writeJSON(w, http.StatusOK, out)
+		}
 		return
 	}
 
@@ -281,7 +314,7 @@ func checkTerms(b termUpload) string {
 
 func loadTerms(ctx context.Context, p *pgxpool.Pool) (termList, error) {
 	l := termList{Sheets: json.RawMessage("[]"), Terms: []term{}}
-	err := p.QueryRow(ctx, `SELECT id, file_name, summary_name, sheets, created_at FROM term_upload ORDER BY id DESC LIMIT 1`).
+	err := p.QueryRow(ctx, `SELECT id, file_name, summary_name, sheets, created_at FROM term_upload WHERE active ORDER BY id DESC LIMIT 1`).
 		Scan(&l.Version, &l.FileName, &l.SummaryName, &l.Sheets, &l.UpdatedAt)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		return l, err
@@ -307,7 +340,7 @@ func loadTerms(ctx context.Context, p *pgxpool.Pool) (termList, error) {
 }
 
 func termVersions(ctx context.Context, p *pgxpool.Pool) ([]termVersion, error) {
-	rows, err := p.Query(ctx, fmt.Sprintf(`SELECT id, file_name, mode, count, created_at, terms IS NOT NULL
+	rows, err := p.Query(ctx, fmt.Sprintf(`SELECT id, file_name, mode, count, created_at, terms IS NOT NULL, active
 		FROM term_upload ORDER BY id DESC LIMIT %d`, maxVersions))
 	if err != nil {
 		return nil, err
@@ -316,7 +349,7 @@ func termVersions(ctx context.Context, p *pgxpool.Pool) ([]termVersion, error) {
 	list := []termVersion{}
 	for rows.Next() {
 		var v termVersion
-		if err := rows.Scan(&v.Version, &v.FileName, &v.Mode, &v.Count, &v.CreatedAt, &v.Saved); err != nil {
+		if err := rows.Scan(&v.Version, &v.FileName, &v.Mode, &v.Count, &v.CreatedAt, &v.Saved, &v.Active); err != nil {
 			return nil, err
 		}
 		v.CreatedAt = utc(v.CreatedAt)
@@ -341,6 +374,55 @@ func termSnapshotOf(ctx context.Context, p *pgxpool.Pool, id int64) (*termSnapsh
 	return &s, nil
 }
 
+// Tắt/bật lại bản id rồi dựng lại bảng term từ bản mới nhất còn bật (không còn bản nào thì danh sách trống).
+// Không có bản đó: (nil, "", nil); bật lại bản không có bản sao: (nil, thông báo lỗi, nil).
+func toggleTerms(ctx context.Context, p *pgxpool.Pool, id int64, active bool) (map[string]any, string, error) {
+	tx, err := p.Begin(ctx)
+	if err != nil {
+		return nil, "", err
+	}
+	defer tx.Rollback(ctx)
+	if _, err := tx.Exec(ctx, termBackup); err != nil {
+		return nil, "", err
+	}
+	var saved bool
+	err = tx.QueryRow(ctx, `SELECT terms IS NOT NULL FROM term_upload WHERE id = $1 FOR UPDATE`, id).Scan(&saved)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return nil, "", nil
+	}
+	if err != nil {
+		return nil, "", err
+	}
+	if active && !saved {
+		return nil, "bản này ghi từ trước khi có lịch sử, không có bản sao để bật lại", nil
+	}
+	if _, err := tx.Exec(ctx, `UPDATE term_upload SET active = $2 WHERE id = $1`, id, active); err != nil {
+		return nil, "", err
+	}
+	if _, err := tx.Exec(ctx, `DELETE FROM term`); err != nil {
+		return nil, "", err
+	}
+	if _, err := tx.Exec(ctx, `INSERT INTO term (key, zh, pinyin, vi, grp, majors, sessions, n)
+		SELECT x.key, x.zh, x.pinyin, x.vi, x."group", x.majors, x.sessions, x.n
+		FROM term_upload u, jsonb_to_recordset(u.terms) AS `+termCols+`
+		WHERE u.id = (SELECT max(id) FROM term_upload WHERE active) AND u.terms IS NOT NULL`); err != nil {
+		return nil, "", err
+	}
+	var cur *int64
+	var n int64
+	if err := tx.QueryRow(ctx, `SELECT (SELECT max(id) FROM term_upload WHERE active), (SELECT count(*) FROM term)`).Scan(&cur, &n); err != nil {
+		return nil, "", err
+	}
+	if err := tx.Commit(ctx); err != nil {
+		return nil, "", err
+	}
+	version := int64(0)
+	if cur != nil {
+		version = *cur
+	}
+	return map[string]any{"version": version, "count": n}, "", nil
+}
+
 // Ghi đè trong một transaction: lỗi giữa chừng thì giữ nguyên danh sách cũ
 func replaceTerms(ctx context.Context, p *pgxpool.Pool, b termUpload) (map[string]any, error) {
 	terms, err := json.Marshal(b.Terms)
@@ -356,10 +438,7 @@ func replaceTerms(ctx context.Context, p *pgxpool.Pool, b termUpload) (map[strin
 		return nil, err
 	}
 	defer tx.Rollback(ctx)
-	// sao lưu bản đang có: bản mới nhất ghi từ trước khi có lịch sử (chưa có bản sao) thì chép danh sách hiện tại vào
-	if _, err := tx.Exec(ctx, `UPDATE term_upload SET terms = (SELECT COALESCE(jsonb_agg(jsonb_build_object('key', key, 'zh', zh, 'pinyin', pinyin,
-			'vi', vi, 'group', grp, 'majors', majors, 'sessions', sessions, 'n', n) ORDER BY n, key), '[]') FROM term)
-		WHERE id = (SELECT max(id) FROM term_upload) AND terms IS NULL`); err != nil {
+	if _, err := tx.Exec(ctx, termBackup); err != nil {
 		return nil, err
 	}
 	if _, err := tx.Exec(ctx, `DELETE FROM term`); err != nil {
@@ -367,8 +446,7 @@ func replaceTerms(ctx context.Context, p *pgxpool.Pool, b termUpload) (map[strin
 	}
 	if _, err := tx.Exec(ctx, `INSERT INTO term (key, zh, pinyin, vi, grp, majors, sessions, n)
 		SELECT x.key, x.zh, x.pinyin, x.vi, x."group", x.majors, x.sessions, x.n
-		FROM jsonb_to_recordset($1::jsonb) AS x(key text, zh text, pinyin text, vi text, "group" text, majors jsonb, sessions text[], n integer)`,
-		string(terms)); err != nil {
+		FROM jsonb_to_recordset($1::jsonb) AS `+termCols, string(terms)); err != nil {
 		return nil, err
 	}
 	var id int64
