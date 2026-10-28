@@ -67,15 +67,20 @@ def build(lid):
         run('ffmpeg', '-y', '-f', 'concat', '-safe', '0', '-i', lst, '-c', 'copy', out)
         return duration(out)
 
-    def frame(i):                           # Chrome headless đôi khi treo: giới hạn 60 giây, thử lại 3 lần
-        for t in range(3):
+    def frame(i):                           # Chrome headless đôi khi treo lúc thoát khi máy tải nặng: ảnh đã ghi ra thì coi là xong
+        png = f'{work}/frames/f_{i:03d}.png'
+        for t in range(4):
+            prof = f'{TMP}/prof-{i % N}' if t == 0 else f'{TMP}/prof-retry-{i}-{t}'
+            if os.path.exists(png): os.remove(png)
             try:
-                return subprocess.run((CHROME, '--headless=new', '--disable-gpu', f'--user-data-dir={TMP}/prof-{i % N}', '--hide-scrollbars', '--window-size=1920,1080',
-            '--virtual-time-budget=5000', f'--screenshot={work}/frames/f_{i:03d}.png', f'{BASE}#/render/{lid}/{i}'),
-                                      check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60)
-            except (subprocess.TimeoutExpired, subprocess.CalledProcessError):
-                if t == 2: raise
-                time.sleep(2)
+                subprocess.run((CHROME, '--headless=new', '--disable-gpu', f'--user-data-dir={prof}', '--hide-scrollbars', '--window-size=1920,1080',
+                                '--virtual-time-budget=5000', f'--screenshot={png}', f'{BASE}#/render/{lid}/{i}'),
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60)
+            except subprocess.TimeoutExpired:
+                pass
+            if os.path.exists(png) and os.path.getsize(png) > 0: return
+            time.sleep(3)
+        raise RuntimeError(f'không chụp được khung {i} của {lid}')
 
     with ThreadPoolExecutor(N) as ex:
         durs = list(ex.map(step_audio, range(len(steps))))

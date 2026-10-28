@@ -32,7 +32,9 @@ for f, l in LESSONS:
         if len(w) != 7 or not all(isinstance(x, str) and x.strip() for x in w): err(f, f'từ sai dạng {w[:2]}'); continue
         hz, py, hv, vi, ex, exPy, exVi = w
         n = len(CJK.findall(hz))
-        if len(py.split(' ')) != n: err(f, f'{hz}: pinyin "{py}" không khớp số chữ')
+        # 儿 hóa viết gộp như Cấp 1–2: 面条儿 miàn tiáor
+        rhot = hz.endswith('儿') and n > 1 and py.split(' ')[-1][-1] == 'r' and py.split(' ')[-1] not in ('ér', 'er')
+        if len(py.split(' ')) != n - rhot: err(f, f'{hz}: pinyin "{py}" không khớp số chữ')
         if len(hv.split(' ')) != n: err(f, f'{hz}: Hán Việt "{hv}" không khớp số chữ')
         if hz not in ex.replace('|', ''): err(f, f'{hz}: ví dụ không chứa từ')
         if len(ex.split('|')) < 3: err(f, f'{hz}: ví dụ cần ≥3 đoạn |')
