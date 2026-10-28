@@ -17,7 +17,8 @@ Mỗi phản hồi có header `X-Backend: go|node` để biết bản nào đã 
 ## Hợp đồng
 
 Mọi request cần header `X-App-Secret: <APP_SECRET>`, sai thì `401 {"error": "sai mã đồng bộ"}`
-(riêng `GET /terms` và `POST /lop-hoc` thì không cần).
+(riêng `GET /terms` và `POST /lop-hoc` thì không cần). Với `/terms` và `/ai`, header này nhận cả mật khẩu riêng của
+trang hsk6 (`HSK6_PASS`, cho Ngọc); `GET /terms?check` trả `200 {ok: true}` nếu đúng, `401` nếu sai (trang dùng lúc đăng nhập).
 
 **`GET /api/<go|node>/sync?key=<khóa>`** → `200 {key, data, version, updatedAt}`
 (chưa có thì `version: 0, data: null`). Khóa hợp lệ: `dadiqua-trip`, `da-di-qua-v1`, `hanlo-v2`.

@@ -4,6 +4,7 @@
 // Biến môi trường:
 //   DATABASE_URL    chuỗi kết nối Postgres (Neon trên Vercel, Docker ở máy)
 //   APP_SECRET      mã chung, client gửi qua header X-App-Secret
+//   HSK6_PASS       mật khẩu riêng của trang hsk6, dùng thay APP_SECRET cho /terms và /ai
 //   GEMINI_API_KEY  khóa Gemini cho /api/node/ai (dự phòng: GROQ_API_KEY, OPENROUTER_API_KEY, MISTRAL_API_KEY, xem ai.js)
 import { timingSafeEqual } from 'node:crypto';
 import pg from 'pg';
@@ -40,11 +41,14 @@ export function send(res, status, body) {
 export const fail = (res, status, error) => send(res, status, { error });
 
 // So sánh thời gian hằng để không lộ mã qua thời gian phản hồi
-export function authorized(req) {
-  const secret = Buffer.from(process.env.APP_SECRET || '');
+function matches(value, req) {
+  const secret = Buffer.from(value || '');
   const got = Buffer.from(String(req.headers['x-app-secret'] || ''));
   return secret.length > 0 && got.length === secret.length && timingSafeEqual(got, secret);
 }
+export const authorized = req => matches(process.env.APP_SECRET, req);
+// API của trang hsk6 (thuật ngữ, AI): mã chung APP_SECRET hoặc mật khẩu riêng của trang HSK6_PASS (cho Ngọc)
+export const authorizedHsk6 = req => authorized(req) || matches(process.env.HSK6_PASS, req);
 
 // Vercel đã parse sẵn req.body khi là JSON; chạy ở máy thì tự đọc luồng
 export async function readJson(req, limit = 1 << 20) {

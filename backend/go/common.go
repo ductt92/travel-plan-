@@ -68,8 +68,12 @@ func fail(w http.ResponseWriter, status int, msg string) {
 }
 
 // So sánh thời gian hằng để không lộ mã qua thời gian phản hồi
-func authorized(r *http.Request) bool {
-	secret := os.Getenv("APP_SECRET")
+func matches(r *http.Request, secret string) bool {
 	got := r.Header.Get("X-App-Secret")
 	return secret != "" && subtle.ConstantTimeCompare([]byte(got), []byte(secret)) == 1
 }
+
+func authorized(r *http.Request) bool { return matches(r, os.Getenv("APP_SECRET")) }
+
+// API của trang hsk6 (thuật ngữ, AI): mã chung APP_SECRET hoặc mật khẩu riêng của trang HSK6_PASS (cho Ngọc)
+func authorizedHsk6(r *http.Request) bool { return authorized(r) || matches(r, os.Getenv("HSK6_PASS")) }

@@ -2,11 +2,11 @@
 //
 // Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/), mỗi thuật ngữ một dòng trong bảng term.
 // GET ai cũng đọc được (nội dung học, không bí mật); ?versions là lịch sử phiên bản, ?version=N là bản sao của bản N.
-// PUT cần mã đồng bộ và GHI ĐÈ toàn bộ bằng danh sách gửi lên (trang tự gộp khi chọn "thêm vào"):
+// ?check kiểm tra mật khẩu. PUT cần mật khẩu (APP_SECRET hoặc HSK6_PASS) và GHI ĐÈ toàn bộ bằng danh sách gửi lên (trang tự gộp khi chọn "thêm vào"):
 // xóa hết thuật ngữ cũ rồi ghi danh sách mới trong một transaction, mỗi lần ghi thêm một dòng term_upload
 // kèm bản sao cả danh sách, nên bản nào cũng khôi phục được.
 // Trang đọc file Excel và chuẩn hóa (TERM_BE trong BaiGiang/web/template.html), server kiểm tra lại từng trường.
-import { authorized, db, fail, readJson, send } from './common.js';
+import { authorizedHsk6, db, fail, readJson, send } from './common.js';
 
 const TABLES = `
 CREATE TABLE IF NOT EXISTS term (
@@ -130,7 +130,10 @@ export default async function terms(req, res) {
     res.setHeader('Allow', 'GET, PUT');
     return fail(res, 405, 'chỉ hỗ trợ GET và PUT');
   }
-  if (req.method === 'PUT' && !authorized(req)) return fail(res, 401, 'sai mã đồng bộ');
+  // ?check: trang hsk6 kiểm tra mật khẩu lúc đăng nhập, không cần đến cơ sở dữ liệu
+  if (req.method === 'GET' && new URL(req.url, 'http://localhost').searchParams.has('check'))
+    return authorizedHsk6(req) ? send(res, 200, { ok: true }) : fail(res, 401, 'sai mật khẩu');
+  if (req.method === 'PUT' && !authorizedHsk6(req)) return fail(res, 401, 'sai mật khẩu');
 
   let p;
   try { p = await pool(); } catch { return fail(res, 503, 'không kết nối được cơ sở dữ liệu'); }

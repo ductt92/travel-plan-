@@ -187,6 +187,14 @@ main { padding-block: 24px 60px; }
 .dz-icon { width: 34px; height: 34px; fill: var(--accent); transition: transform .3s; }
 .dropzone.over { border-color: var(--accent); background: var(--accent-soft); transform: scale(1.015); }
 .dropzone.over .dz-icon { transform: translateY(-4px); }
+.gate { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; background: var(--bg); }
+.gate[hidden] { display: none; }
+.gate-card { width: min(380px, 100%); display: grid; justify-items: center; gap: 12px; text-align: center; padding: 28px 22px;
+  border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
+.gate-card h1 { font-size: 22px; margin: 4px 0 0; }
+.gate-card p { margin: 0; font-size: 15px; }
+.gate-card .search, .gate-card .btn { width: 100%; justify-content: center; }
+.gate-err { color: var(--bad); }
 .note-warn { padding: 10px 14px; border-radius: 10px; background: var(--mark-soft); color: var(--fg); font-size: 14px; margin-bottom: 14px; }
 .note-filter { font: inherit; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); }
 .note-list { display: grid; gap: 14px; }
@@ -506,6 +514,18 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
 </style>
+
+<!-- ĐĂNG NHẬP: trang của Ngọc, nhập mật khẩu một lần (trình duyệt nhớ), dùng luôn cho lọc thuật ngữ bằng AI và ghi danh sách -->
+<div class="gate" id="gate" hidden>
+  <form class="gate-card" id="gateForm">
+    <span class="me"><img src="img/ngoc.webp" alt=""></span>
+    <h1>Ngọc học tiếng Trung</h1>
+    <p class="muted">Nhập mật khẩu để vào trang. Mỗi máy chỉ cần nhập một lần.</p>
+    <input class="search" id="gatePass" type="password" autocomplete="current-password" placeholder="Mật khẩu" aria-label="Mật khẩu" required>
+    <p class="gate-err" id="gateErr" role="alert" hidden></p>
+    <button class="btn primary" type="submit" id="gateGo">Vào trang</button>
+  </form>
+</div>
 
 <div class="wrap">
   <div class="top">
@@ -1242,11 +1262,14 @@ const deaccent = s => String(s).normalize("NFD").replace(/\p{M}/gu, "").replace(
 const pyFind = s => { const v = deaccent(String(s).replace(/[üǖǘǚǜÜǕǗǙǛ]/g, "v")).replace(/[\s'’-]/g, ""); return v + "|" + v.replace(/v/g, "u"); };
 const TLABEL = { pinyin: "Pinyin", vi: "Nghĩa" };
 
-/* Gọi API: dùng chung lựa chọn Node/Go và mã đồng bộ với nút "Đồng bộ" của các app khác trong da-di-qua */
+/* Gọi API: dùng chung lựa chọn Node/Go với các app khác trong da-di-qua; mật khẩu gửi qua header X-App-Secret */
 const lsGet = k => { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
 const API_BACKEND = lsGet("trang-api-backend") === "go" ? "go" : "node";
 const SECRET_KEY = "trang-sync-secret";
+// mật khẩu trang (HSK6_PASS của Ngọc); chủ trang đã có mã đồng bộ của các app khác thì dùng luôn mã đó
+const PASS_KEY = "hsk6-pass";
+const passGet = () => lsGet(PASS_KEY) || lsGet(SECRET_KEY);
 async function termApi(method, body, secret, path = "terms") {
   const r = await fetch(`/api/${API_BACKEND}/${path}`, {
     method, cache: "no-store",
@@ -1257,6 +1280,30 @@ async function termApi(method, body, secret, path = "terms") {
   if (!r.ok || !data) { const e = new Error(data?.error || `máy chủ trả lỗi ${r.status}`); e.status = r.status; throw e; }
   return data;
 }
+/* Đăng nhập: chưa có mật khẩu trong trình duyệt thì che trang bằng ô mật khẩu; kiểm tra qua /terms?check
+   (máy chủ nhận HSK6_PASS của Ngọc hoặc mã đồng bộ APP_SECRET), đúng thì nhớ lại và mở trang. */
+function gateOpen() {
+  $("#gate").hidden = false;
+  $("#gatePass").focus();
+}
+$("#gateForm").onsubmit = async e => {
+  e.preventDefault();
+  const pass = $("#gatePass").value.trim(), err = $("#gateErr"), go = $("#gateGo");
+  if (!pass) return;
+  go.disabled = true; err.hidden = true;
+  try {
+    const r = await fetch(`/api/${API_BACKEND}/terms?check`, { cache: "no-store", headers: { "X-App-Secret": pass } });
+    if (r.status === 401) throw new Error("Sai mật khẩu, thử lại nhé.");
+    if (!r.ok) throw new Error(`Máy chủ trả lỗi ${r.status}, thử lại sau.`);
+    lsSet(PASS_KEY, pass);
+    $("#gate").hidden = true; $("#gatePass").value = "";
+  } catch (x) {
+    err.textContent = x.message === "Failed to fetch" ? "Chưa kết nối được máy chủ, kiểm tra mạng rồi thử lại." : x.message;
+    err.hidden = false;
+  }
+  go.disabled = false;
+};
+if (!passGet()) gateOpen();
 // bản trước lưu thuật ngữ trong localStorage; nay đã chuyển lên máy chủ nên xóa cho nhẹ trình duyệt
 try { localStorage.removeItem("ngoc-thuat-ngu"); } catch (e) {}
 
@@ -1268,7 +1315,11 @@ function termWarn(msg, ok) {
   const w = $("#termWarn"); w.hidden = !msg; w.textContent = msg || "";
   w.style.background = ok ? "var(--good-soft)" : "";
 }
-async function loadTerms() {
+// file thả vào lúc danh sách đang tải thì chờ tải xong rồi mới so khớp (termReady)
+let tLoading = null;
+const termReady = () => tLoading || Promise.resolve();
+function loadTerms() { return tLoading = loadTermsNow().finally(() => tLoading = null); }
+async function loadTermsNow() {
   $("#termSrc").textContent = "Đang tải từ máy chủ…";
   try { TL = await termApi("GET"); tErr = ""; }
   catch (e) { TL = null; tErr = e.message; }
@@ -1358,7 +1409,7 @@ const loadXlsx = () => xlsxP || (xlsxP = new Promise((res, rej) => {
 async function termOpenFile(f) {
   if (!/\.xlsx?$/i.test(f.name)) { termWarn("Chỉ nhận file Excel (.xlsx)."); return; }
   try {
-    await loadXlsx();
+    await Promise.all([loadXlsx(), termReady()]);
     const wb = XLSX.read(await f.arrayBuffer(), { type: "array" }), sheets = {};
     for (const n of wb.SheetNames) sheets[n] = XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, defval: null, raw: false });
     tDoc = null;
@@ -1368,7 +1419,7 @@ async function termOpenFile(f) {
 // mở bản xem trước cho một bộ sheet (file Excel tải lên, hoặc file tạo từ biên bản), mode mặc định: replace | add
 function termPreview(input, mode) {
   tIn = input; tRes = {}; tShowC = 8; tMode = mode; tPvSheet = Object.keys(input.sheets)[0]; tPvRows = 40;
-  tAskSecret = !lsGet(SECRET_KEY);
+  tAskSecret = !passGet();
   termParse();
   $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -1496,7 +1547,7 @@ function renderImp(msg) {
     <div class="${add ? "imp-note" : "imp-danger"}">${add
       ? `Danh sách hiện có giữ nguyên, thêm <b>${nf(pay.merge.added)}</b> thuật ngữ mới và cập nhật buổi học, chuyên ngành cho <b>${nf(pay.merge.updated)}</b> thuật ngữ đã có.${base.fallback ? ` Máy chủ chưa có thuật ngữ nên lấy bản kèm trang (${nf(base.terms.length)}) làm nền.` : ""}`
       : cur ? `Toàn bộ <b>${nf(cur)}</b> thuật ngữ đang có sẽ được thay bằng <b>${nf(p.terms.length)}</b> thuật ngữ trong file này.` : `Sẽ lưu <b>${nf(p.terms.length)}</b> thuật ngữ lên máy chủ.`}${backup}</div>
-    ${tAskSecret ? `<label class="imp-secret">Mã đồng bộ (giống nút “Đồng bộ” ở các app khác)
+    ${tAskSecret ? `<label class="imp-secret">Mật khẩu của trang
       <input class="search" id="impSecret" type="password" autocomplete="current-password" value="${esc(secretVal)}"></label>` : ""}
     ${msg ? `<div class="note-warn">${esc(msg)}</div>` : ""}
     <div class="imp-foot">
@@ -1521,15 +1572,15 @@ function renderImp(msg) {
   });
 }
 async function termSave() {
-  const secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : lsGet(SECRET_KEY);
-  if (!secret) { tAskSecret = true; renderImp("Nhập mã đồng bộ để ghi lên máy chủ."); $("#impSecret")?.focus(); return; }
+  const secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : passGet();
+  if (!secret) { tAskSecret = true; renderImp("Nhập mật khẩu để ghi lên máy chủ."); $("#impSecret")?.focus(); return; }
   const p = tPv, mode = tMode;
   tSaving = true; renderImp();
   try {
     // "thêm vào" gộp vào bản mới nhất trên máy chủ (máy khác có thể vừa ghi), không theo bản trang đang hiện
     const pay = termPayload(mode === "add" ? termBase(await termApi("GET")) : null, p, mode);
     const r = await termApi("PUT", pay.body, secret);
-    lsSet(SECRET_KEY, secret);
+    lsSet(PASS_KEY, secret);
     tSaving = false; tAskSecret = false; closeImp();
     termWarn("");
     await loadTerms();
@@ -1539,7 +1590,7 @@ async function termSave() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   } catch (e) {
     tSaving = false;
-    if (e.status === 401) { tAskSecret = true; renderImp("Sai mã đồng bộ, nhập lại nhé."); }
+    if (e.status === 401) { tAskSecret = true; renderImp("Sai mật khẩu, nhập lại nhé."); }
     else renderImp("Chưa ghi được: " + e.message + ". Danh sách trên máy chủ vẫn giữ nguyên.");
   }
 }
@@ -1551,7 +1602,7 @@ const MODE_LABEL = { replace: "Ghi đè", add: "Thêm vào", restore: "Khôi ph�
 async function openVersions() {
   closeImp(); termWarn("");
   tVer = { list: null, err: "", confirm: 0, busy: false };
-  tAskSecret = !lsGet(SECRET_KEY);
+  tAskSecret = !passGet();
   renderVersions();
   $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
   try { tVer.list = (await termApi("GET", null, null, "terms?versions")).versions; } catch (e) { tVer.err = e.message; }
@@ -1580,7 +1631,7 @@ function renderVersions(msg) {
           : `<button class="btn small" data-dl="${x.version}">Tải Excel</button>${x.version !== cur ? `<button class="btn small" data-ask="${x.version}">Khôi phục…</button>` : ""}`}</div>
       </div>`).join("")}</div>`}
     ${v.confirm ? `<div class="imp-note">Khôi phục sẽ tạo bản mới có nội dung giống bản ${v.confirm}. Danh sách đang dùng vẫn được giữ trong lịch sử.</div>` : ""}
-    ${v.confirm && tAskSecret ? `<label class="imp-secret">Mã đồng bộ (giống nút “Đồng bộ” ở các app khác)
+    ${v.confirm && tAskSecret ? `<label class="imp-secret">Mật khẩu của trang
       <input class="search" id="impSecret" type="password" autocomplete="current-password" value="${esc(secretVal)}"></label>` : ""}
     ${msg ? `<div class="note-warn">${esc(msg)}</div>` : ""}`;
   box.querySelectorAll("[data-ask]").forEach(b => b.onclick = () => { v.confirm = +b.dataset.ask; renderVersions(); });
@@ -1598,21 +1649,21 @@ async function verDownload(n) {
   } catch (e) { renderVersions("Chưa tải được bản " + n + ": " + e.message); }
 }
 async function verRestore(n) {
-  const v = tVer, secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : lsGet(SECRET_KEY);
-  if (!secret) { tAskSecret = true; renderVersions("Nhập mã đồng bộ để khôi phục."); $("#impSecret")?.focus(); return; }
+  const v = tVer, secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : passGet();
+  if (!secret) { tAskSecret = true; renderVersions("Nhập mật khẩu để khôi phục."); $("#impSecret")?.focus(); return; }
   v.busy = true; renderVersions();
   try {
     const s = await termApi("GET", null, null, `terms?version=${n}`);
     const r = await termApi("PUT", { fileName: `Khôi phục bản ${n} (${s.fileName})`.slice(0, 200), summaryName: s.summaryName || "Tổng hợp",
       sheets: s.sheets || [], terms: s.terms, mode: "restore" }, secret);
-    lsSet(SECRET_KEY, secret); tAskSecret = false;
+    lsSet(PASS_KEY, secret); tAskSecret = false;
     closeImp(); termWarn("");
     await loadTerms();
     termWarn(`Đã khôi phục bản ${n} thành bản ${r.version} (${nf(r.count)} thuật ngữ). Bản trước đó vẫn ở Lịch sử phiên bản.`, true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   } catch (e) {
     v.busy = false;
-    if (e.status === 401) { tAskSecret = true; renderVersions("Sai mã đồng bộ, nhập lại nhé."); }
+    if (e.status === 401) { tAskSecret = true; renderVersions("Sai mật khẩu, nhập lại nhé."); }
     else renderVersions("Chưa khôi phục được: " + e.message + ". Danh sách trên máy chủ vẫn giữ nguyên.");
   }
 }
@@ -1690,6 +1741,7 @@ async function docOpenFile(f) {
   let text;
   try { text = (await docText(f)).trim(); } catch (e) { termWarn("Không đọc được file: " + e.message); return; }
   if (!/\p{Script=Han}/u.test(text)) { termWarn(`${f.name} không có chữ Hán nào để lọc.`); return; }
+  await termReady();
   closeImp(); termWarn("");
   let chunks = docChunks(text), cut = 0;
   if (chunks.length > DOC_MAX_CHUNKS) { cut = chunks.slice(DOC_MAX_CHUNKS).join("").length; chunks = chunks.slice(0, DOC_MAX_CHUNKS); }
@@ -1707,10 +1759,11 @@ async function docOpenFile(f) {
   const major = Object.entries(tally).sort((a, b) => b[1] - a[1])[0]?.[0] || docMajors()[0] || "";
   tDoc = { fileName: f.name, text, chunks, cut, known, have, fresh: [], date: docDate(f.name) || docDate(text.slice(0, 600)) || new Date().toLocaleDateString("sv"),
     major, newMajor: !major, ai: null, show: 60 };
-  tAskSecret = !lsGet(SECRET_KEY);
+  tAskSecret = !passGet();
   renderDoc();
   $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
   if (!tAskSecret) docRunAi();
+  else $("#impSecret")?.focus({ preventScroll: true });
 }
 
 function docSystem() {
@@ -1739,8 +1792,8 @@ function docAdd(d, reply) {
   }
 }
 async function docRunAi(only) {
-  const d = tDoc, secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : lsGet(SECRET_KEY);
-  if (!secret) { tAskSecret = true; renderDoc("Nhập mã đồng bộ để lọc bằng AI."); $("#impSecret")?.focus(); return; }
+  const d = tDoc, secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : passGet();
+  if (!secret) { tAskSecret = true; renderDoc("Nhập mật khẩu để lọc bằng AI."); $("#impSecret")?.focus(); return; }
   const todo = only || d.chunks.map((_, i) => i), system = docSystem();
   d.ai = { run: true, done: 0, total: todo.length, failed: [], err: "", stop: false, by: d.ai?.by || {} };
   renderDoc();
@@ -1753,10 +1806,10 @@ async function docRunAi(only) {
         docAdd(d, r.text);
         const who = AI_NAME[r.provider] || r.provider || "AI";
         d.ai.by[who] = (d.ai.by[who] || 0) + 1;
-        if (tAskSecret) { lsSet(SECRET_KEY, secret); tAskSecret = false; }
+        if (tAskSecret) { lsSet(PASS_KEY, secret); tAskSecret = false; }
       } catch (e) {
         d.ai.failed.push(i); d.ai.err = e.message;
-        // sai mã, chưa có khóa AI, hay mọi AI đều hết lượt thì dừng, các đoạn còn lại để "Lọc lại" sau
+        // sai mật khẩu, chưa có khóa AI, hay mọi AI đều hết lượt thì dừng, các đoạn còn lại để "Lọc lại" sau
         if (e.status === 401 || e.status === 503 || e.status === 429) d.ai.stop = true;
       }
       d.ai.done++;
@@ -1767,7 +1820,7 @@ async function docRunAi(only) {
   d.ai.failed.push(...todo.slice(next));
   d.ai.failed.sort((a, b) => a - b);
   d.ai.run = false;
-  if (d.ai.stop && /mã đồng bộ/.test(d.ai.err)) { tAskSecret = true; lsSet(SECRET_KEY, ""); }
+  if (d.ai.stop && /mã đồng bộ|mật khẩu/.test(d.ai.err)) { tAskSecret = true; lsSet(PASS_KEY, ""); }
   if (tDoc === d && !tIn) renderDoc(d.ai.stop ? `Dừng lọc: ${d.ai.err}.` : "");
 }
 
@@ -1781,11 +1834,13 @@ function renderDoc(msg) {
   const kpi = (cls, n, lbl) => `<div class="imp-kpi ${cls}"><b>${nf(n)}</b><span>${lbl}</span></div>`;
   const nFresh = d.fresh.filter(f => f.on).length, nKnown = d.known.filter(k => k.on).length, ai = d.ai, majors = docMajors();
   const by = Object.entries(ai?.by || {}).map(([k, n]) => `${esc(k)} ${nf(n)}`).join(" · ");
-  const aiLine = (!ai ? `Biên bản chia thành ${nf(d.chunks.length)} đoạn, mỗi đoạn hỏi AI một lần.`
+  // thả file là AI tự lọc; chưa có mật khẩu thì hỏi một lần, nhập xong (Enter) là lọc luôn
+  const aiLine = (!ai ? (tAskSecret ? `AI sẽ tự lọc ${nf(d.chunks.length)} đoạn ngay khi có mật khẩu. Chỉ hỏi lần đầu, các lần sau thả file vào là tự lọc.`
+      : `Đang bắt đầu lọc ${nf(d.chunks.length)} đoạn…`)
     : ai.run ? `Đang lọc… ${nf(ai.done)}/${nf(ai.total)} đoạn`
     : `Đã lọc ${nf(ai.total - ai.failed.length)}/${nf(ai.total)} đoạn` + (ai.failed.length ? `, ${nf(ai.failed.length)} đoạn chưa lọc được (${esc(ai.err)})` : "") + ".")
     + (by ? ` <span title="Số đoạn mỗi AI đã lọc">AI đã dùng: ${by}</span>` : "");
-  const aiBtn = ai?.run ? "" : !ai ? `<button class="btn small primary" data-act="ai">Lọc bằng AI</button>`
+  const aiBtn = !ai || ai.run ? ""
     : ai.failed.length ? `<button class="btn small" data-act="retry">Lọc lại ${nf(ai.failed.length)} đoạn</button>` : "";
   const all = (list, on) => `<span class="seg"><button data-all="${list}" data-v="1" aria-pressed="${on}">Chọn hết</button><button data-all="${list}" data-v="0">Bỏ hết</button></span>`;
   const secretVal = $("#impSecret")?.value || "";
@@ -1805,8 +1860,8 @@ function renderDoc(msg) {
     <div class="imp-sec">
       <h4>Thuật ngữ mới${d.fresh.length ? all("fresh", nFresh === d.fresh.length) : ""}</h4>
       <p class="doc-ai muted">${aiLine} ${aiBtn}</p>
-      ${tAskSecret ? `<label class="imp-secret">Mã đồng bộ (giống nút “Đồng bộ” ở các app khác), cần để lọc bằng AI và ghi lên máy chủ
-        <input class="search" id="impSecret" type="password" autocomplete="current-password" value="${esc(secretVal)}"></label>` : ""}
+      ${tAskSecret ? `<label class="imp-secret">Mật khẩu của trang, nhập rồi nhấn Enter để AI lọc
+        <input class="search" id="impSecret" type="password" autocomplete="current-password" enterkeyhint="go" value="${esc(secretVal)}"></label>` : ""}
       ${d.fresh.slice(0, d.show).map((f, i) => `<div class="dt-row ${f.on ? "" : "off"}">
         <input type="checkbox" data-on="${i}" ${f.on ? "checked" : ""} aria-label="Chọn ${esc(f.zh)}">
         <div class="dt-zh"><span class="hz" lang="zh">${esc(f.zh)}</span>${f.count ? `<small>${nf(f.count)} lần</small>` : `<small class="warn">không thấy nguyên văn</small>`}</div>
@@ -1840,11 +1895,20 @@ function renderDoc(msg) {
   box.querySelectorAll("[data-act]").forEach(b => b.onclick = () => {
     const act = b.dataset.act;
     if (act === "close") closeImp();
-    if (act === "ai") docRunAi();
     if (act === "retry") docRunAi(d.ai.failed.slice());
     if (act === "moreF") { d.show += 120; renderDoc(); }
     if (act === "next") docToPreview();
   });
+  const sec = $("#impSecret");
+  if (sec) {
+    // có mã là lọc: lần đầu lọc cả biên bản, sau khi sai mã thì lọc tiếp các đoạn còn lại
+    const go = () => {
+      if (!sec.value.trim() || d.ai?.run || (d.ai && !d.ai.failed.length)) return;
+      docRunAi(d.ai ? d.ai.failed.slice() : undefined);
+    };
+    sec.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); go(); } };
+    sec.onchange = go;
+  }
   if (keep && document.getElementById(keep.id)) {
     const el = document.getElementById(keep.id); el.focus();
     try { el.setSelectionRange(keep.s, keep.e); } catch (e) {}

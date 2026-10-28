@@ -4,7 +4,7 @@ package gobackend
 //
 // Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/), mỗi thuật ngữ một dòng trong bảng term.
 // GET ai cũng đọc được (nội dung học, không bí mật); ?versions là lịch sử phiên bản, ?version=N là bản sao của bản N.
-// PUT cần mã đồng bộ và GHI ĐÈ toàn bộ bằng danh sách gửi lên (trang tự gộp khi chọn "thêm vào"):
+// ?check kiểm tra mật khẩu. PUT cần mật khẩu (APP_SECRET hoặc HSK6_PASS) và GHI ĐÈ toàn bộ bằng danh sách gửi lên (trang tự gộp khi chọn "thêm vào"):
 // xóa hết thuật ngữ cũ rồi ghi danh sách mới trong một transaction, mỗi lần ghi thêm một dòng term_upload
 // kèm bản sao cả danh sách, nên bản nào cũng khôi phục được.
 // Trang đọc file Excel và chuẩn hóa (TERM_BE trong BaiGiang/web/template.html), server kiểm tra lại từng trường.
@@ -139,8 +139,17 @@ func Terms(w http.ResponseWriter, r *http.Request) {
 		fail(w, http.StatusMethodNotAllowed, "chỉ hỗ trợ GET và PUT")
 		return
 	}
-	if r.Method == http.MethodPut && !authorized(r) {
-		fail(w, http.StatusUnauthorized, "sai mã đồng bộ")
+	// ?check: trang hsk6 kiểm tra mật khẩu lúc đăng nhập, không cần đến cơ sở dữ liệu
+	if r.Method == http.MethodGet && r.URL.Query().Has("check") {
+		if authorizedHsk6(r) {
+			writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
+		} else {
+			fail(w, http.StatusUnauthorized, "sai mật khẩu")
+		}
+		return
+	}
+	if r.Method == http.MethodPut && !authorizedHsk6(r) {
+		fail(w, http.StatusUnauthorized, "sai mật khẩu")
 		return
 	}
 	ctx, cancel := context.WithTimeout(r.Context(), 15*time.Second)
