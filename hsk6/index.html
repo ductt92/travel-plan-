@@ -309,7 +309,6 @@ label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 14px
 .imp-head p { margin: 2px 0 0; font-size: 14px; }
 .imp-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .imp-kpi { text-align: left; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); padding: 10px 12px; }
-button.imp-kpi:hover { border-color: var(--accent); }
 .imp-kpi b { display: block; font-size: 22px; line-height: 1.2; font-variant-numeric: tabular-nums; }
 .imp-kpi span { font-size: 13px; color: var(--muted); }
 .imp-kpi.new b { color: var(--good); }
@@ -321,19 +320,18 @@ button.imp-kpi:hover { border-color: var(--accent); }
 .imp-issues { margin: 0; padding-left: 20px; font-size: 14px; }
 .imp-issues .error { color: var(--bad); }
 .ti-cfl { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 4px 14px; padding: 10px 0; border-top: 1px solid var(--line); }
-.ti-cfl .hz, .ti-row .hz { display: block; font-size: 19px; color: var(--accent); line-height: 1.3; }
-.ti-cfl .py, .ti-row .py { font-size: 13px; color: var(--mark); }
+.ti-cfl .hz { display: block; font-size: 19px; color: var(--accent); line-height: 1.3; }
+.ti-cfl .py { font-size: 13px; color: var(--mark); }
 .ti-opt { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; padding: 5px 8px; border-radius: 8px; cursor: pointer; font-size: 15px; }
 .ti-opt:hover { background: var(--sunken); }
 .ti-opt.on { background: var(--accent-soft); }
-.ti-opt input, .ti-row input { margin: 5px 0 0; accent-color: var(--accent); }
+.ti-opt input { margin: 5px 0 0; accent-color: var(--accent); }
 .ti-opt small { display: block; font-size: 12px; color: var(--muted); }
-.ti-row { display: grid; grid-template-columns: 22px 160px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 15px; }
-.ti-diff { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 2px 10px; margin-top: 4px; font-size: 14px; }
-.ti-diff dt { font-size: 12px; font-weight: 600; color: var(--muted); padding-top: 2px; }
-.ti-diff dd { margin: 0; }
-.ti-diff del { color: var(--bad); background: var(--bad-soft); padding: 0 3px; border-radius: 4px; }
-.ti-diff ins { color: var(--good); background: var(--good-soft); text-decoration: none; padding: 0 3px; border-radius: 4px; }
+.imp-cfl summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--accent); padding: 4px 0; }
+.imp-cfl[open] summary { margin-bottom: 4px; }
+/* cảnh báo ghi đè: nền đỏ nhạt để không bấm nhầm */
+.imp-danger { padding: 10px 14px; border-radius: 10px; background: var(--bad-soft); font-size: 15px; }
+.imp-secret { display: grid; gap: 6px; font-size: 14px; font-weight: 600; max-width: 380px; }
 .imp-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; border-top: 1px solid var(--line); padding-top: 14px; }
 .imp-foot .sum { flex: 1 1 200px; font-size: 14px; }
 
@@ -454,8 +452,6 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
   .terms .vtools > * { flex: 1 1 100%; width: 100%; }
   .imp-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ti-cfl { grid-template-columns: minmax(0, 1fr); }
-  .ti-row { grid-template-columns: 22px minmax(0, 1fr); }
-  .ti-row > :nth-child(3) { grid-column: 2; }
   .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; }
   .stat .num { font-size: 22px; }
   .opts { grid-template-columns: minmax(0, 1fr); }
@@ -526,7 +522,7 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
   <label class="dropzone term-drop" id="termDrop" for="termFile" tabindex="0">
     <svg class="dz-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 5h-3.5v6h-3V8H7zM4 15h2.5v3.5h11V15H20v6H4z"/></svg>
     <b>Kéo thả file Excel thuật ngữ vào đây</b>
-    <span>hoặc bấm để chọn file .xlsx · trang so sánh với bản đang lưu, Ngọc xem lại rồi mới bấm Lưu</span>
+    <span>hoặc bấm để chọn file .xlsx · file sẽ ghi đè toàn bộ danh sách trên máy chủ, được xem lại trước khi ghi</span>
   </label>
   <div class="note-warn" id="termWarn" hidden></div>
   <div class="term-imp" id="termImp" hidden></div>
@@ -1051,10 +1047,11 @@ document.addEventListener("drop", e => {
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#viewer").hidden) $("#viewerClose").click(); });
 
 /* ---------- Thuật ngữ du lịch ----------
-   TERMS_FILE là file Excel kèm trang (thuat_ngu.py → web/terms.json): {fileName, sheets: {tên sheet: hàng[][]}}.
-   TERM_BE làm phần việc của BE: nhận vai trò từng sheet theo tên cột, chuẩn hóa, so chéo "Tổng hợp" với
-   sheet chuyên ngành, rồi so với bản đang lưu. Bản đang lưu (TDB) nằm ở localStorage; khi có API thì
-   preview/commit chuyển thành POST /api/<node|go>/terms/preview và /terms/commit với đúng dữ liệu này. */
+   Danh sách lưu trong Postgres qua /api/<node|go>/terms (repo da-di-qua, backend/node/terms.js và backend/go/terms.go).
+   Nhập file Excel là GHI ĐÈ toàn bộ danh sách trên máy chủ: trang đọc .xlsx bằng SheetJS, TERM_BE chuẩn hóa
+   (nhận vai trò sheet theo tên cột, gộp buổi học, chọn nghĩa khi Tổng hợp và sheet chuyên ngành lệch nhau),
+   máy chủ kiểm tra lại định dạng rồi xóa cũ, ghi mới trong một transaction.
+   TERMS_FILE (file Excel kèm trang, từ thuat_ngu.py) chỉ để hiện tạm khi máy chủ chưa có dữ liệu hoặc không gọi được. */
 const TERM_BE = (() => {
   const COLS = {
     zh: ["tiếng trung", "chữ hán", "hán tự", "中文", "术语"], pinyin: ["pinyin", "拼音"],
@@ -1066,8 +1063,6 @@ const TERM_BE = (() => {
   // pinyin chỉ khác gạch nối, khoảng trắng, nháy thì coi như giống: "wén-lǚ rónghé" = "wénlǚ rónghé"
   const pyLoose = s => nfc(s).toLowerCase().replace(/[\s\-'’·]/g, "");
   const listOf = s => nfc(s).split(/\s*[,;，、]\s*/).filter(Boolean);
-  const hash = str => { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(16).padStart(8, "0"); };
-  const termHash = t => hash(JSON.stringify([t.zh, t.pinyin, t.vi, t.group, t.majors.map(m => [m.name, m.group]), t.sessions]));
 
   function headerOf(rows) {
     for (let i = 0; i < Math.min(rows.length, 12); i++) {
@@ -1090,8 +1085,8 @@ const TERM_BE = (() => {
     return out;
   }
 
-  /** resolutions: {"<khóa>|<pinyin|vi>": chỉ số phương án}, mặc định 0 = theo Tổng hợp */
-  function preview(input, db, resolutions = {}) {
+  /** input: {fileName, sheets: {tên: hàng[][]}}; resolutions: {"<khóa>|<pinyin|vi>": chỉ số phương án}, mặc định 0 = theo Tổng hợp */
+  function parse(input, resolutions = {}) {
     const issues = [], conflicts = [];
     const issue = (level, msg, sheet, line) => issues.push({ level, msg, sheet, line });
     const sheets = Object.entries(input.sheets).map(([name, rows]) => {
@@ -1106,7 +1101,7 @@ const TERM_BE = (() => {
     }
     const isoList = (list, sheet, line) => [...new Set(list.map(s => {
       const m = /^(\d{1,2})[./-](\d{1,2})(?:[./-](\d{4}))?$/.exec(s);
-      if (!m) { issue("error", `Buổi học "${s}" không đúng dạng dd.mm`, sheet, line); return null; }
+      if (!m) { issue("error", `Buổi học "${s}" không đúng dạng dd.mm, bỏ buổi này`, sheet, line); return null; }
       const dd = m[1].padStart(2, "0"), mm = m[2].padStart(2, "0");
       return `${m[3] || years[dd + "." + mm] || year}-${mm}-${dd}`;
     }).filter(Boolean))].sort();
@@ -1119,7 +1114,8 @@ const TERM_BE = (() => {
 
     const summary = sheets.find(s => s.role === "summary"), majorSheets = sheets.filter(s => s.role === "major");
     const majorNames = majorSheets.map(s => s.name);
-    if (!summary) issue("warn", 'Không thấy sheet tổng hợp (có cột "Chuyên ngành"), dựng danh sách từ các sheet chuyên ngành.');
+    if (!summary && !majorSheets.length) issue("error", 'Không thấy sheet nào có cột "Tiếng Trung".');
+    else if (!summary) issue("warn", 'Không thấy sheet tổng hợp (có cột "Chuyên ngành"), dựng danh sách từ các sheet chuyên ngành.');
     const T = new Map();
     if (summary) for (const r of readRows(summary)) {
       if (!need(r, summary.name)) continue;
@@ -1133,7 +1129,7 @@ const TERM_BE = (() => {
       const seen = new Set();
       for (const r of readRows(sh)) {
         if (!need(r, sh.name)) continue;
-        if (seen.has(r.key)) { issue("error", `${r.zh}: lặp trong sheet`, sh.name, r.line); continue; }
+        if (seen.has(r.key)) { issue("error", `${r.zh}: lặp trong sheet, giữ dòng đầu`, sh.name, r.line); continue; }
         seen.add(r.key);
         const ses = isoList(r.sessions, sh.name, r.line);
         let t = T.get(r.key);
@@ -1176,90 +1172,60 @@ const TERM_BE = (() => {
         conflicts.push({ id, key: t.key, zh: t.zh, pinyin: t.pinyin, field: f, options, pick });
         out[f] = options[pick].value;
       }
-      out.hash = termHash(out);
       terms.push(out);
     }
-
-    const diff = { new: [], changed: [], same: [], removed: [] }, inFile = new Set();
-    const fm = x => x.map(m => m.name + (m.group ? " › " + m.group : "")).join(", ");
-    for (const t of terms) {
-      inFile.add(t.key);
-      const old = db.terms[t.key];
-      if (!old || old.hidden) { diff.new.push({ key: t.key, term: t }); continue; }
-      if (old.hash === t.hash) { diff.same.push({ key: t.key, term: t }); continue; }
-      const fields = [];
-      for (const f of ["pinyin", "vi", "group"]) if (old[f] !== t[f]) fields.push({ field: f, old: old[f], new: t[f] });
-      if (fm(old.majors) !== fm(t.majors)) fields.push({ field: "majors", old: fm(old.majors), new: fm(t.majors) });
-      const add = t.sessions.filter(d => !old.sessions.includes(d)), del = old.sessions.filter(d => !t.sessions.includes(d));
-      if (add.length || del.length) fields.push({ field: "sessions", add, del });
-      diff.changed.push({ key: t.key, term: t, fields });
-    }
-    for (const [k, old] of Object.entries(db.terms)) if (!old.hidden && !inFile.has(k)) diff.removed.push({ key: k, term: old });
-
-    return { fileName: input.fileName, fileHash: hash(JSON.stringify(input.sheets)), baseVersion: db.version,
-      summaryName: summary ? summary.name : "Tổng hợp", sheetNames: majorNames,
-      stats: { terms: terms.length, new: diff.new.length, changed: diff.changed.length, same: diff.same.length, removed: diff.removed.length,
-        conflicts: conflicts.length, errors: issues.filter(i => i.level === "error").length },
-      issues, conflicts, terms, diff };
+    return { fileName: input.fileName, summaryName: summary ? summary.name : "Tổng hợp", sheetNames: majorNames,
+      issues, conflicts, terms, errors: issues.filter(i => i.level === "error").length };
   }
-
-  /** Ghi các khóa trong apply; removed: "keep" | "hide". Bản lưu đã đổi từ lúc so sánh → 409 như /sync. */
-  function commit(pv, { apply, removed }, db) {
-    if (db.version !== pv.baseVersion) return { status: 409 };
-    const now = new Date().toISOString(), id = db.version + 1, n = { new: 0, changed: 0, hidden: 0 };
-    for (const d of [...pv.diff.new, ...pv.diff.changed]) {
-      if (!apply.has(d.key)) continue;
-      const before = db.terms[d.key];
-      before && !before.hidden ? n.changed++ : n.new++;
-      db.terms[d.key] = { ...d.term, hidden: false, createdAt: before?.createdAt || now, updatedAt: now };
-    }
-    // thứ tự dòng trong sheet đổi thì cập nhật luôn, không tính là thay đổi
-    for (const d of pv.diff.same) db.terms[d.key] = { ...db.terms[d.key], n: d.term.n, majors: d.term.majors };
-    if (removed === "hide") for (const d of pv.diff.removed) if (apply.has(d.key)) { db.terms[d.key] = { ...db.terms[d.key], hidden: true, updatedAt: now }; n.hidden++; }
-    db.version = id; db.summaryName = pv.summaryName; db.sheets = pv.sheetNames;
-    db.imports.unshift({ id, at: now, fileName: pv.fileName, fileHash: pv.fileHash, ...n });
-    db.imports.length = Math.min(db.imports.length, 30);
-    return { status: 200, version: id, applied: n };
-  }
-  return { preview, commit, hash };
+  return { parse };
 })();
 
-const TKEY = "ngoc-thuat-ngu";
 const nf = n => n.toLocaleString("vi-VN");
 const dm = iso => iso.slice(8, 10) + "." + iso.slice(5, 7);
 const deaccent = s => String(s).normalize("NFD").replace(/\p{M}/gu, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase();
 // pinyin để tìm: bỏ dấu thanh và khoảng trắng; ü gõ "v" hay "u" đều được
 const pyFind = s => { const v = deaccent(String(s).replace(/[üǖǘǚǜÜǕǗǙǛ]/g, "v")).replace(/[\s'’-]/g, ""); return v + "|" + v.replace(/v/g, "u"); };
-const TLABEL = { pinyin: "Pinyin", vi: "Nghĩa", group: "Nhóm", majors: "Chuyên ngành", sessions: "Buổi học" };
-let TDB = null, tSheet = S.termSheet || "", tGroup = "", tShow = 80;
-let tIn = null, tPv = null, tRes = {}, tApply = new Set(), tTab = "new", tRem = "keep", tShowD = 30, tShowC = 8, tPrev = new Set();
+const TLABEL = { pinyin: "Pinyin", vi: "Nghĩa" };
+
+/* Gọi API: dùng chung lựa chọn Node/Go và mã đồng bộ với nút "Đồng bộ" của các app khác trong da-di-qua */
+const lsGet = k => { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+const API_BACKEND = lsGet("trang-api-backend") === "go" ? "go" : "node";
+const SECRET_KEY = "trang-sync-secret";
+async function termApi(method, body, secret) {
+  const r = await fetch(`/api/${API_BACKEND}/terms`, {
+    method, cache: "no-store",
+    headers: body ? { "Content-Type": "application/json", "X-App-Secret": secret } : {},
+    body: body && JSON.stringify(body),
+  });
+  const data = await r.json().catch(() => null);
+  if (!r.ok || !data) { const e = new Error(data?.error || `máy chủ trả lỗi ${r.status}`); e.status = r.status; throw e; }
+  return data;
+}
+// bản trước lưu thuật ngữ trong localStorage; nay đã chuyển lên máy chủ nên xóa cho nhẹ trình duyệt
+try { localStorage.removeItem("ngoc-thuat-ngu"); } catch (e) {}
+
+let TL = null, tErr = "", tSheet = S.termSheet || "", tGroup = "", tShow = 80;
+let tIn = null, tPv = null, tRes = {}, tShowC = 8, tAskSecret = false, tSaving = false;
 
 function termWarn(msg, ok) {
   const w = $("#termWarn"); w.hidden = !msg; w.textContent = msg || "";
   w.style.background = ok ? "var(--good-soft)" : "";
 }
-function saveTdb() {
-  try { localStorage.setItem(TKEY, JSON.stringify(TDB)); return true; }
-  catch (e) { termWarn("Trình duyệt không cho lưu thêm dữ liệu, thuật ngữ chỉ giữ đến khi tải lại trang."); return false; }
-}
-function loadTdb() {
-  try { TDB = JSON.parse(localStorage.getItem(TKEY)); } catch (e) {}
-  if (!TDB || !TDB.terms) TDB = { version: 0, terms: {}, imports: [], sheets: [] };
-  if (!TERMS_FILE) return;
-  const h = TERM_BE.hash(JSON.stringify(TERMS_FILE.sheets));
-  // lần đầu, hoặc chưa tự nhập file nào mà file kèm trang đã đổi: lấy luôn file kèm trang
-  if (!TDB.version || (TDB.seed && TDB.seed !== h && TDB.imports.every(i => i.fileHash === TDB.seed))) {
-    const db = { version: 0, terms: {}, imports: [], sheets: [] };
-    const pv = TERM_BE.preview(TERMS_FILE, db);
-    TERM_BE.commit(pv, { apply: new Set(pv.terms.map(t => t.key)), removed: "keep" }, db);
-    TDB = { ...db, seed: h };
-    saveTdb();
+async function loadTerms() {
+  $("#termSrc").textContent = "Đang tải từ máy chủ…";
+  try { TL = await termApi("GET"); tErr = ""; }
+  catch (e) { TL = null; tErr = e.message; }
+  if ((!TL || !TL.terms.length) && TERMS_FILE) {
+    const p = TERM_BE.parse(TERMS_FILE);
+    TL = { version: 0, fileName: p.fileName, summaryName: p.summaryName, sheets: p.sheetNames, updatedAt: null, terms: p.terms, fallback: true };
   }
+  renderTerms();
 }
 let termsReady = false;
 function openTerms() {
   if (!termsReady) {
-    termsReady = true; loadTdb();
+    termsReady = true;
     $("#termSheet").onchange = () => { tSheet = $("#termSheet").value; S.termSheet = tSheet; save(); tGroup = ""; tShow = 80; renderTerms(); };
     $("#termGroup").onchange = () => { tGroup = $("#termGroup").value; tShow = 80; renderTerms(); };
     $("#termSearch").oninput = () => { tShow = 80; renderTerms(); };
@@ -1267,29 +1233,29 @@ function openTerms() {
     $("#termFile").onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (f) termOpenFile(f); };
     $("#termDrop").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("#termFile").click(); } };
   }
-  renderTerms();
+  loadTerms();
 }
 
 function renderTerms() {
-  const live = Object.values(TDB.terms).filter(t => !t.hidden);
-  const last = TDB.imports[0];
-  const fileNew = TERMS_FILE && TDB.seed && TERM_BE.hash(JSON.stringify(TERMS_FILE.sheets)) !== TDB.seed;
-  $("#termSrc").innerHTML = last ? `Theo file ${esc(last.fileName)} · bản ${TDB.version} · ${new Date(last.at).toLocaleDateString("vi-VN")}`
-    + (fileNew ? ` · <button class="linkbtn" id="termSeedNew">File kèm trang có bản mới, so sánh</button>` : "")
-    : "Chưa có thuật ngữ. Bấm “Nhập file Excel” để thêm.";
-  if (fileNew) $("#termSeedNew").onclick = () => termStart(TERMS_FILE);
+  const live = TL ? TL.terms : [];
+  $("#termSrc").textContent = !TL ? "Chưa có thuật ngữ."
+    : TL.fallback ? `Đang hiện bản kèm trang (${TL.fileName})`
+    : `Lưu trên máy chủ · file ${TL.fileName} · bản ${TL.version} · cập nhật ${new Date(TL.updatedAt).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" })}`;
+  if (!$("#termWarn").style.background) termWarn(tErr ? `Chưa kết nối được máy chủ (${tErr}). ${TL ? "Danh sách dưới đây là bản kèm trang." : ""}`
+    : TL?.fallback ? "Máy chủ chưa có thuật ngữ nào. Kéo file Excel vào để lưu lên máy chủ." : "");
 
   // ô chọn như các sheet trong Excel: Tổng hợp rồi từng chuyên ngành, kèm số thuật ngữ
   const counts = {};
   live.forEach(t => t.majors.forEach(m => counts[m.name] = (counts[m.name] || 0) + 1));
-  const sheets = [...(TDB.sheets || []).filter(s => counts[s]), ...Object.keys(counts).filter(s => !(TDB.sheets || []).includes(s))];
+  const known = TL?.sheets || [];
+  const sheets = [...known.filter(s => counts[s]), ...Object.keys(counts).filter(s => !known.includes(s))];
   if (tSheet && !counts[tSheet]) tSheet = "";
-  $("#termSheet").innerHTML = `<option value="">${esc(TDB.summaryName || "Tổng hợp")} (${nf(live.length)})</option>`
+  $("#termSheet").innerHTML = `<option value="">${esc(TL?.summaryName || "Tổng hợp")} (${nf(live.length)})</option>`
     + sheets.map(s => `<option value="${esc(s)}" ${s === tSheet ? "selected" : ""}>${esc(s)} (${nf(counts[s])})</option>`).join("");
 
   const majorOf = t => t.majors.find(m => m.name === tSheet);
   const grpOf = t => tSheet ? majorOf(t).group : t.group;
-  const inSheet = (tSheet ? live.filter(majorOf) : live).sort((a, b) => tSheet ? majorOf(a).n - majorOf(b).n : a.n - b.n);
+  const inSheet = (tSheet ? live.filter(majorOf) : live.slice()).sort((a, b) => tSheet ? majorOf(a).n - majorOf(b).n : a.n - b.n);
   const groups = {};
   inSheet.forEach(t => groups[grpOf(t)] = (groups[grpOf(t)] || 0) + 1);
   if (tGroup && !groups[tGroup]) tGroup = "";
@@ -1319,7 +1285,7 @@ function sayZh(text) {
   speechSynthesis.speak(u);
 }
 
-/* Nhập file: đọc .xlsx bằng SheetJS (chỉ tải thư viện khi cần), giữ nguyên hàng[][] rồi đưa cho TERM_BE */
+/* Nhập file: đọc .xlsx bằng SheetJS (chỉ tải thư viện khi cần), chuẩn hóa, hiện bản xem lại rồi mới ghi đè */
 let xlsxP = null;
 const loadXlsx = () => xlsxP || (xlsxP = new Promise((res, rej) => {
   if (window.XLSX) return res();
@@ -1334,112 +1300,79 @@ async function termOpenFile(f) {
     await loadXlsx();
     const wb = XLSX.read(await f.arrayBuffer(), { type: "array" }), sheets = {};
     for (const n of wb.SheetNames) sheets[n] = XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, defval: null, raw: false });
-    termStart({ fileName: f.name, sheets });
+    tIn = { fileName: f.name, sheets }; tRes = {}; tShowC = 8; tAskSecret = !lsGet(SECRET_KEY);
+    termWarn(""); termParse();
+    $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (e) { termWarn("Không đọc được file: " + e.message); }
 }
-function termStart(input) {
-  tIn = input; tRes = {}; tShowC = 8; tRem = "keep"; termWarn("");
-  termRun(true);
-  $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-function termRun(reset) {
-  tPv = TERM_BE.preview(tIn, TDB, tRes);
-  const keys = [...tPv.diff.new, ...tPv.diff.changed].map(d => d.key);
-  if (reset) { tApply = new Set(keys); tShowD = 30; tTab = ""; }
-  else keys.forEach(k => { if (!tPrev.has(k)) tApply.add(k); });
-  tPrev = new Set(keys);
-  if (!reset && tTab === "same" && tPv.diff.changed.length) tTab = "changed";
-  if (!tPv.diff[tTab]?.length) tTab = ["new", "changed", "removed", "same"].find(k => tPv.diff[k].length) || "new";
-  renderImp();
-}
-function renderImp() {
-  const p = tPv, s = p.stats, box = $("#termImp");
+function termParse() { tPv = TERM_BE.parse(tIn, tRes); renderImp(); }
+function closeImp() { tPv = null; tIn = null; $("#termImp").hidden = true; $("#termImp").innerHTML = ""; }
+function renderImp(msg) {
+  const p = tPv, box = $("#termImp"), cur = TL && !TL.fallback ? TL.terms.length : 0;
   box.hidden = false;
-  const kpi = (cls, n, lbl, go) => `<button class="imp-kpi ${cls}" data-go="${go}"><b>${nf(n)}</b><span>${lbl}</span></button>`;
+  const kpi = (cls, n, lbl) => `<div class="imp-kpi ${cls}"><b>${nf(n)}</b><span>${lbl}</span></div>`;
   const order = { error: 0, warn: 1, info: 2 }, iss = [...p.issues].sort((a, b) => order[a.level] - order[b.level]);
-  const TABS_D = [["new", "Mới"], ["changed", "Thay đổi"], ["removed", "Không còn trong file"], ["same", "Giữ nguyên"]];
-  const list = p.diff[tTab];
-  const body = d => {
-    const t = d.term;
-    if (tTab !== "changed") return `<div class="vi">${esc(t.vi)}</div><div class="t-meta">${t.majors.map(m => esc(m.name)).join(" · ")}${t.sessions?.length ? " · buổi " + t.sessions.map(dm).join(", ") : ""}</div>`;
-    return `<div class="vi">${esc(t.vi)}</div><dl class="ti-diff">${d.fields.map(f => f.field === "sessions"
-      ? `<dt>${TLABEL.sessions}</dt><dd>${f.add.map(x => `<ins>+${dm(x)}</ins>`).join(" ")} ${f.del.map(x => `<del>${dm(x)}</del>`).join(" ")}</dd>`
-      : `<dt>${TLABEL[f.field]}</dt><dd><del>${esc(f.old || "—")}</del> → <ins>${esc(f.new || "—")}</ins></dd>`).join("")}</dl>`;
-  };
+  const picked = p.conflicts.filter(c => c.pick > 0).length;
+  const secretVal = $("#impSecret")?.value || "";
   box.innerHTML = `
     <div class="imp-head">
-      <div><h3>So sánh ${esc(p.fileName)}</h3>
-        <p class="muted">${nf(s.terms)} thuật ngữ trong file · so với bản đang lưu (bản ${p.baseVersion}, ${nf(Object.values(TDB.terms).filter(t => !t.hidden).length)} thuật ngữ)</p></div>
+      <div><h3>Ghi đè bằng ${esc(p.fileName)}</h3>
+        <p class="muted">${p.sheetNames.length ? `${p.sheetNames.length} sheet chuyên ngành: ${p.sheetNames.map(esc).join(", ")}` : "Không có sheet chuyên ngành"}</p></div>
       <button class="btn small" data-act="close">Đóng</button>
     </div>
-    <div class="imp-kpis">${kpi("new", s.new, "mới", "new")}${kpi("chg", s.changed, "có thay đổi", "changed")}${kpi("rem", s.removed, "không còn trong file", "removed")}${kpi("cfl", s.conflicts, "chỗ lệch giữa các sheet", "cfl")}</div>
+    <div class="imp-kpis">${kpi("new", p.terms.length, "thuật ngữ trong file")}${kpi("rem", cur, "đang có trên máy chủ, sẽ bị thay")}${kpi("chg", p.errors, "dòng lỗi bị bỏ qua")}${kpi("cfl", p.conflicts.length, "chỗ nghĩa lệch giữa các sheet")}</div>
     ${iss.length ? `<div class="imp-sec"><h4>Kiểm tra file</h4><ul class="imp-issues">${iss.slice(0, 6).map(i => `<li class="${i.level}">${esc(i.msg)}${i.sheet ? ` <span class="muted">(${esc(i.sheet)}${i.line ? ", dòng " + i.line : ""})</span>` : ""}</li>`).join("")}
       ${iss.length > 6 ? `<li class="muted">… và ${nf(iss.length - 6)} mục nữa</li>` : ""}</ul></div>` : ""}
-    ${p.conflicts.length ? `<div class="imp-sec" id="impCfl">
-      <h4>Lệch giữa “${esc(p.summaryName)}” và sheet chuyên ngành (${nf(p.conflicts.length)})
-        <span class="seg"><button data-pick="0">Theo ${esc(p.summaryName)}</button><button data-pick="1">Theo sheet chuyên ngành</button></span></h4>
-      <p class="muted">Cùng một chữ Hán nhưng nghĩa hoặc pinyin khác nhau. Chọn bản sẽ lưu.</p>
+    ${p.conflicts.length ? `<div class="imp-sec">
+      <h4>Nghĩa lệch giữa “${esc(p.summaryName)}” và sheet chuyên ngành (${nf(p.conflicts.length)})
+        <span class="seg"><button data-pick="0" aria-pressed="${picked === 0}">Theo ${esc(p.summaryName)}</button><button data-pick="1" aria-pressed="${picked === p.conflicts.length}">Theo sheet chuyên ngành</button></span></h4>
+      <details class="imp-cfl"><summary>Xem và chọn từng chỗ</summary>
       ${p.conflicts.slice(0, tShowC).map(c => `<div class="ti-cfl">
         <div><span class="hz" lang="zh">${esc(c.zh)}</span><span class="py">${esc(c.pinyin)}</span><div class="t-meta">${TLABEL[c.field]}</div></div>
         <div>${c.options.map((o, i) => `<label class="ti-opt ${i === c.pick ? "on" : ""}"><input type="radio" name="${esc(c.id)}" value="${i}" ${i === c.pick ? "checked" : ""}>
           <span>${esc(o.value)}<small>${esc(o.from)} · dòng ${o.line}</small></span></label>`).join("")}</div></div>`).join("")}
       ${p.conflicts.length > tShowC ? `<div class="term-more"><button class="btn small" data-act="moreC">Xem thêm (còn ${nf(p.conflicts.length - tShowC)})</button></div>` : ""}
+      </details>
     </div>` : ""}
-    <div class="imp-sec" id="impDiff">
-      <h4>So với bản đang lưu <span class="seg">${TABS_D.map(([k, l]) => `<button data-tab="${k}" aria-pressed="${k === tTab}">${l} ${nf(p.diff[k].length)}</button>`).join("")}</span></h4>
-      ${tTab !== "same" && list.length ? `<p class="muted">Bỏ tích những dòng không muốn ghi.</p>` : ""}
-      ${list.length ? list.slice(0, tShowD).map(d => `<div class="ti-row">
-        ${tTab === "same" ? "<span></span>" : `<input type="checkbox" data-key="${esc(d.key)}" ${tApply.has(d.key) ? "checked" : ""} aria-label="Chọn ${esc(d.term.zh)}">`}
-        <div><span class="hz" lang="zh">${esc(d.term.zh)}</span><span class="py">${esc(d.term.pinyin)}</span></div><div>${body(d)}</div></div>`).join("")
-      : `<div class="empty">${{ new: "Không có thuật ngữ mới.", changed: "Không có thuật ngữ nào thay đổi.", removed: "Không thiếu thuật ngữ nào so với bản đang lưu.", same: "Chưa có thuật ngữ nào giống bản đang lưu." }[tTab]}</div>`}
-      ${list.length > tShowD ? `<div class="term-more"><button class="btn small" data-act="moreD">Xem thêm (còn ${nf(list.length - tShowD)})</button></div>` : ""}
-    </div>
+    <div class="imp-danger">${cur ? `Toàn bộ <b>${nf(cur)}</b> thuật ngữ đang có trên máy chủ sẽ bị xóa và thay bằng <b>${nf(p.terms.length)}</b> thuật ngữ trong file này.`
+      : `Sẽ lưu <b>${nf(p.terms.length)}</b> thuật ngữ lên máy chủ.`} Mọi máy mở trang đều thấy danh sách mới.</div>
+    ${tAskSecret ? `<label class="imp-secret">Mã đồng bộ (giống nút “Đồng bộ” ở các app khác)
+      <input class="search" id="impSecret" type="password" autocomplete="current-password" value="${esc(secretVal)}"></label>` : ""}
+    ${msg ? `<div class="note-warn">${esc(msg)}</div>` : ""}
     <div class="imp-foot">
-      <span class="sum" id="impSum"></span>
-      ${p.diff.removed.length ? `<select class="note-filter" id="impRem" aria-label="Thuật ngữ không còn trong file">
-        <option value="keep" ${tRem === "keep" ? "selected" : ""}>Không còn trong file: giữ lại</option>
-        <option value="hide" ${tRem === "hide" ? "selected" : ""}>Không còn trong file: ẩn đi</option></select>` : ""}
+      <span class="sum muted">Bản ${TL && !TL.fallback ? TL.version : 0} → bản mới</span>
       <button class="btn small" data-act="close">Hủy</button>
-      <button class="btn small primary" data-act="save">Lưu</button>
+      <button class="btn small primary" data-act="save" ${tSaving || !p.terms.length ? "disabled" : ""}>${tSaving ? "Đang ghi…" : "Ghi đè lên máy chủ"}</button>
     </div>`;
-  const picked = p.conflicts.filter(c => c.pick > 0).length;
-  box.querySelectorAll("[data-pick]").forEach(b => {
-    b.setAttribute("aria-pressed", String(b.dataset.pick === "0" ? picked === 0 : picked === p.conflicts.length));
-    b.onclick = () => { p.conflicts.forEach(c => tRes[c.id] = Math.min(+b.dataset.pick, c.options.length - 1)); termRun(false); };
-  });
-  box.querySelectorAll(".ti-opt input").forEach(r => r.onchange = () => { tRes[r.name] = +r.value; termRun(false); });
-  box.querySelectorAll("[data-go]").forEach(b => b.onclick = () => {
-    if (b.dataset.go === "cfl") { $("#impCfl")?.scrollIntoView({ behavior: "smooth" }); return; }
-    tTab = b.dataset.go; tShowD = 30; renderImp(); $("#impDiff").scrollIntoView({ behavior: "smooth" });
-  });
-  box.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { tTab = b.dataset.tab; tShowD = 30; renderImp(); });
-  box.querySelectorAll("input[data-key]").forEach(c => c.onchange = () => { c.checked ? tApply.add(c.dataset.key) : tApply.delete(c.dataset.key); impSum(); });
-  const rem = $("#impRem");
-  if (rem) rem.onchange = () => { tRem = rem.value; if (tRem === "hide") p.diff.removed.forEach(d => tApply.add(d.key)); renderImp(); };
+  const det = box.querySelector(".imp-cfl");
+  if (det) { det.open = !!renderImp.cflOpen; det.ontoggle = () => renderImp.cflOpen = det.open; }
+  box.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => { p.conflicts.forEach(c => tRes[c.id] = Math.min(+b.dataset.pick, c.options.length - 1)); termParse(); });
+  box.querySelectorAll(".ti-opt input").forEach(r => r.onchange = () => { tRes[r.name] = +r.value; termParse(); });
   box.querySelectorAll("[data-act]").forEach(b => b.onclick = () => {
     const a = b.dataset.act;
-    if (a === "close") { tPv = null; box.hidden = true; box.innerHTML = ""; }
+    if (a === "close") closeImp();
     if (a === "moreC") { tShowC += 24; renderImp(); }
-    if (a === "moreD") { tShowD += 100; renderImp(); }
     if (a === "save") termSave();
   });
-  impSum();
 }
-function impSum() {
-  const p = tPv, on = d => tApply.has(d.key);
-  const n = p.diff.new.filter(on).length, c = p.diff.changed.filter(on).length, h = tRem === "hide" ? p.diff.removed.filter(on).length : 0;
-  $("#impSum").innerHTML = `Sẽ lưu <b>${nf(n)}</b> mới · <b>${nf(c)}</b> sửa${h ? ` · ẩn <b>${nf(h)}</b>` : ""}`
-    + (p.stats.errors ? ` · <span style="color:var(--bad)">${p.stats.errors} dòng lỗi bị bỏ qua</span>` : "");
-  $("#termImp [data-act=save]").disabled = !(n + c + h);
-}
-function termSave() {
-  const r = TERM_BE.commit(tPv, { apply: tApply, removed: tRem }, TDB);
-  if (r.status === 409) { termWarn("Bản đang lưu vừa đổi, đã so sánh lại."); termRun(true); return; }
-  saveTdb();
-  tPv = null; $("#termImp").hidden = true; $("#termImp").innerHTML = "";
-  renderTerms();
-  termWarn(`Đã lưu bản ${r.version}: ${nf(r.applied.new)} mới, ${nf(r.applied.changed)} sửa${r.applied.hidden ? `, ẩn ${nf(r.applied.hidden)}` : ""}.`, true);
-  window.scrollTo({ top: 0, behavior: "smooth" });
+async function termSave() {
+  const secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : lsGet(SECRET_KEY);
+  if (!secret) { tAskSecret = true; renderImp("Nhập mã đồng bộ để ghi lên máy chủ."); $("#impSecret")?.focus(); return; }
+  const p = tPv;
+  tSaving = true; renderImp();
+  try {
+    const r = await termApi("PUT", { fileName: p.fileName, summaryName: p.summaryName, sheets: p.sheetNames, terms: p.terms }, secret);
+    lsSet(SECRET_KEY, secret);
+    tSaving = false; tAskSecret = false; closeImp();
+    termWarn("");
+    await loadTerms();
+    termWarn(`Đã ghi đè trên máy chủ: ${nf(r.count)} thuật ngữ từ ${p.fileName} (bản ${r.version}).`, true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (e) {
+    tSaving = false;
+    if (e.status === 401) { tAskSecret = true; renderImp("Sai mã đồng bộ, nhập lại nhé."); }
+    else renderImp("Chưa ghi được: " + e.message + ". Danh sách trên máy chủ vẫn giữ nguyên.");
+  }
 }
 $("#toTerms").onclick = () => { showView("terms"); window.scrollTo(0, 0); };
 /* kéo thả file Excel: thả vào ô kéo thả hoặc bất cứ đâu trên trang thuật ngữ; đang kéo thì ô sáng lên */
@@ -1453,7 +1386,7 @@ document.addEventListener("drop", e => {
   if (view !== "terms") return;
   e.preventDefault(); termDrag = 0; termDragOn(false);
   const fs = [...(e.dataTransfer?.files || [])];
-  if (fs.length) termOpenFile(fs[0]).then(() => { if (fs.length > 1 && tPv) termWarn("Mỗi lần chỉ nhập một file Excel, đang so sánh file đầu tiên."); });
+  if (fs.length) termOpenFile(fs[0]).then(() => { if (fs.length > 1 && tPv) termWarn("Mỗi lần chỉ nhập một file Excel, đang dùng file đầu tiên."); });
 });
 
 /* ---------- Tab ---------- */
