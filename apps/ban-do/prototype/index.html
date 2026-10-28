@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Đức &amp; Ngọc — Câu chuyện của chúng mình</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,400;1,500&display=swap">
+<style>
+:root{
+  --bg:#FBF6EE; --card:#FFFCF7; --sunk:#F5EFE4;
+  --ink:#1C1A17; --muted:#6B645A; --faint:#938A7D; --line:#E7DDCD;
+  --blank:#E9DFCE; --blank-hi:#DFD1B7;
+  --v1:#8CC6A6; --v2:#55A37E; --v3:#2F7D5B;
+  --wish:#E0702F; --accent:#C2335B; --star:#DFA12B;
+  --glow-1:#FFD9B8; --glow-2:#CBE7DA; --glow-3:#F6C9D2;
+  --f-ui:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-serif:'Lora',Georgia,serif;
+  --sh-1:0 1px 2px rgba(28,26,23,.04),0 2px 8px rgba(28,26,23,.04);
+  --sh-2:0 1px 2px rgba(28,26,23,.05),0 10px 30px rgba(28,26,23,.07);
+  --sh-3:0 20px 64px rgba(28,26,23,.22),0 2px 8px rgba(28,26,23,.1);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#12100E; --card:#1C1917; --sunk:#171412;
+    --ink:#F3EEE6; --muted:#A79E92; --faint:#857C70; --line:#302A23;
+    --blank:#2B2620; --blank-hi:#3C342B;
+    --v1:#2B5C45; --v2:#3E8C65; --v3:#59B98A;
+    --wish:#F08A4D; --accent:#E36A8C; --star:#E8BC63;
+    --glow-1:#4A2A16; --glow-2:#143327; --glow-3:#3D1A24;
+    --sh-1:0 1px 2px rgba(0,0,0,.3); --sh-2:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.4);
+    --sh-3:0 20px 64px rgba(0,0,0,.65),0 2px 8px rgba(0,0,0,.4);
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}  /* display của class đè mất thuộc tính hidden */
+html,body{min-height:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.55 var(--f-ui);-webkit-font-smoothing:antialiased;
+  position:relative;overflow-x:hidden
+}
+/* đốm màu mờ phía sau, cùng tông với các trang khác của site */
+body::before,body::after{content:"";position:fixed;z-index:0;border-radius:50%;filter:blur(80px);opacity:.75;pointer-events:none}
+body::before{width:560px;height:560px;left:-200px;top:-180px;background:radial-gradient(circle,var(--glow-1),transparent 70%)}
+body::after{width:600px;height:600px;right:-220px;bottom:-240px;background:radial-gradient(circle,var(--glow-2),transparent 70%)}
+h1,h2,h3,h4{margin:0}
+button,input,textarea{font:inherit;color:inherit}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:30px max(18px,env(safe-area-inset-left)) 72px}
+
+.note-bar{
+  display:flex;gap:10px;align-items:baseline;margin:0 0 24px;padding:10px 16px;border-radius:14px;
+  background:color-mix(in srgb,var(--accent) 7%,var(--card));
+  border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);
+  font-size:13px;color:var(--muted);box-shadow:var(--sh-1)
+}
+.note-bar b{color:var(--accent);font-weight:600}
+
+/* ---------- đầu trang ---------- */
+.top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:13px;margin-bottom:20px}
+h1{
+  display:flex;align-items:center;justify-content:center;gap:.26em;flex-wrap:wrap;
+  font:600 clamp(30px,4.6vw,46px)/1.12 var(--f-serif);letter-spacing:-.01em
+}
+/* tên anh xanh, tên em hồng — dễ đọc hơn là đổ gradient qua cả dòng */
+h1 .he{color:var(--v3)}
+h1 .she{color:var(--accent)}
+h1 em{font-style:italic;font-weight:400;color:var(--faint);font-size:.82em}
+h1 .ic{font-size:.7em;line-height:1}
+h1 .heart{color:var(--accent);font-size:.78em;animation:beat 2.8s ease-in-out infinite;transform-origin:center;display:inline-block}
+@keyframes beat{0%,86%,100%{transform:scale(1)}90%{transform:scale(1.18)}95%{transform:scale(1.07)}}
+@media (prefers-reduced-motion:reduce){h1 .heart{animation:none}}
+.motto{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px;margin:-4px 0 0;
+  font-size:12.5px;color:var(--faint);letter-spacing:.01em
+}
+.motto>span{display:inline-flex;align-items:center;gap:6px}
+.motto>span+span::before{content:'·';margin-right:10px;color:var(--blank-hi)}
+.motto .ic{font-size:13px}
+/* xuống dòng thì dấu chấm rơi về đầu dòng, màn hẹp bỏ hẳn cho gọn */
+@media (max-width:560px){.motto{gap:4px 14px}.motto>span+span::before{display:none}}
+h1 .heart{animation:beat 2.6s ease-in-out infinite;transform-origin:center}
+@keyframes beat{0%,88%,100%{transform:scale(1)}92%{transform:scale(1.16)}96%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){h1 .heart{animation:none}}
+.tagline{display:flex;align-items:center;gap:7px;margin:-8px 0 0;font:italic 400 15.5px/1.5 var(--f-serif);color:var(--muted)}
+.tagline .ic{font-size:13px}
+
+.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.stat{
+  min-width:106px;padding:12px 16px 13px;border-radius:16px;background:var(--card);
+  border:1px solid var(--line);box-shadow:var(--sh-1)
+}
+.stat .n{display:block;font:600 27px/1 var(--f-serif);letter-spacing:-.02em}
+.stat .n small{font-size:14px;color:var(--faint);font-weight:400}
+.stat .n.sm{font-size:21px;line-height:1.28}
+.stat .k{display:block;margin-top:4px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.stat.v .n{color:var(--v3)} .stat.w .n{color:var(--wish)}
+.bar{height:4px;border-radius:99px;background:var(--blank);margin-top:9px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--v1),var(--v3));transition:width .4s ease}
+
+.toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  width:100%;max-width:900px;margin-top:2px
+}
+.toolbar .when{margin:0}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.tool{
+  display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:13px;
+  border:1px solid var(--line);background:var(--card);box-shadow:var(--sh-1);
+  cursor:pointer;font:600 13.5px var(--f-ui);color:var(--muted);transition:color .15s,border-color .15s
+}
+.tool:hover{color:var(--ink);border-color:var(--blank-hi)}
+.tool svg{color:var(--faint)}
+.tool:hover svg{color:var(--accent)}
+.tool .count{padding:1px 7px;border-radius:999px;background:var(--sunk);font-size:11.5px;color:var(--faint)}
+@media (max-width:620px){.toolbar{justify-content:center}.stats{width:100%;justify-content:center}}
+
+/* ---------- bản đồ ---------- */
+.map-card{
+  position:relative;max-width:900px;margin:0 auto;border-radius:24px;padding:16px 12px 8px;overflow:hidden;
+  background:
+    radial-gradient(120% 70% at 50% -10%, color-mix(in srgb,var(--glow-2) 40%,transparent), transparent 60%),
+    var(--card);
+  border:1px solid var(--line);box-shadow:var(--sh-2)
+}
+.when{display:flex;align-items:center;gap:6px}
+.when-btn{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:13px;
+  border:1px solid var(--line);background:var(--card);box-shadow:var(--sh-1);
+  cursor:pointer;font:600 13.5px var(--f-ui);color:var(--ink);transition:color .15s,border-color .15s
+}
+.when-btn:hover{border-color:var(--blank-hi)}
+.when-btn svg{color:var(--faint)}
+.when-btn:hover svg{color:var(--accent)}
+.when-btn.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.when-btn.on svg,.when-btn.on:hover svg{color:var(--bg)}
+.when-clear{
+  flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
+  background:var(--card);cursor:pointer;color:var(--faint);font-size:12px;line-height:1
+}
+.when-clear:hover{color:var(--accent);border-color:var(--blank-hi)}
+
+/* bộ chọn tháng/năm trong popup */
+.ym{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px}
+.ym b{font:600 23px/1 var(--f-serif);letter-spacing:-.01em}
+.ym button{
+  width:36px;height:36px;border-radius:12px;border:1px solid var(--line);background:var(--card);
+  cursor:pointer;color:var(--muted);font-size:17px;line-height:1
+}
+.ym button:hover:not(:disabled){color:var(--ink);border-color:var(--blank-hi)}
+.ym button:disabled{opacity:.3;cursor:default}
+.whole{
+  width:100%;margin-bottom:10px;padding:11px 0;border-radius:13px;border:1px solid var(--line);
+  background:var(--card);cursor:pointer;font:600 13.5px var(--f-ui);color:var(--muted);transition:all .15s
+}
+.whole:hover{color:var(--ink);border-color:var(--blank-hi)}
+.whole.on{background:var(--v3);border-color:var(--v3);color:#fff}
+.months{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.months button{
+  position:relative;padding:12px 0 14px;border-radius:13px;border:1px solid var(--line);
+  background:var(--card);cursor:pointer;font:500 13.5px var(--f-ui);color:var(--muted);transition:all .15s
+}
+.months button:hover{color:var(--ink);border-color:var(--blank-hi)}
+.months button.on{background:var(--ink);border-color:var(--ink);color:var(--bg);font-weight:600}
+.months button i{
+  position:absolute;left:50%;bottom:7px;transform:translateX(-50%);
+  width:4px;height:4px;border-radius:50%;background:var(--v3)
+}
+.months button.on i{background:var(--bg)}
+@media (max-width:420px){.months{grid-template-columns:repeat(3,1fr)}}
+.province.lv-dim{fill:var(--blank);opacity:.5}
+.province.faded{opacity:.3}
+.outline.spot{stroke:var(--accent);stroke-width:2.6;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--accent) 60%,transparent))}
+.spot-bar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;
+  margin:0 0 10px;padding:8px 14px;border-radius:13px;
+  background:color-mix(in srgb,var(--accent) 9%,var(--card));
+  border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);font-size:13px;color:var(--muted)
+}
+.spot-bar b{color:var(--ink)}
+.spot-bar button{border:none;background:none;padding:0;color:var(--accent);font:600 13px var(--f-ui);cursor:pointer;text-decoration:underline}
+.filter-note{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;padding:8px 13px;
+  border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:12.5px;color:var(--muted)
+}
+.filter-note button{border:none;background:none;padding:0;color:var(--accent);font:600 12.5px var(--f-ui);cursor:pointer;text-decoration:underline}
+.map{display:block;width:100%;max-width:580px;height:auto;margin:0 auto}
+#country{filter:drop-shadow(0 10px 18px rgba(28,26,23,.13))}
+.province{
+  fill:var(--blank);stroke:var(--card);stroke-width:1.1;stroke-linejoin:round;
+  cursor:pointer;transition:fill .18s ease
+}
+.province.lv-wish{fill:var(--wish)}
+.province.lv-1{fill:var(--v1)}
+.province.lv-2{fill:var(--v2)}
+.province.lv-3{fill:var(--v3)}
+.province:hover{fill:var(--blank-hi)}
+.province.lv-wish:hover{fill:color-mix(in srgb,var(--wish) 82%,#fff)}
+.province.lv-1:hover{fill:color-mix(in srgb,var(--v1) 82%,#fff)}
+.province.lv-2:hover{fill:color-mix(in srgb,var(--v2) 82%,#fff)}
+.province.lv-3:hover{fill:color-mix(in srgb,var(--v3) 82%,#fff)}
+.province:focus{outline:none}
+/* viền vẽ riêng sau tất cả các tỉnh, nếu không tỉnh liền kề sẽ đè mất một phần */
+.outline{fill:none;stroke-linejoin:round;pointer-events:none}
+.outline.sel{stroke:var(--accent);stroke-width:2.6}
+.outline.hov{stroke:color-mix(in srgb,var(--accent) 50%,transparent);stroke-width:1.7}
+
+.lbl{fill:var(--ink);stroke:var(--card);stroke-width:2.6;paint-order:stroke;text-anchor:middle;font:600 8.6px var(--f-ui);pointer-events:none;opacity:.88}
+.lbl.on{fill:#fff;stroke:rgba(0,0,0,.28);opacity:1}
+.badge{fill:var(--card);stroke:color-mix(in srgb,var(--ink) 16%,transparent);stroke-width:.6;pointer-events:none}
+.badge-n{fill:var(--ink);font:700 6px var(--f-ui);text-anchor:middle;pointer-events:none}
+
+.map-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:6px 8px 8px}
+.legend{display:flex;flex-wrap:wrap;gap:5px 14px;list-style:none;margin:0;padding:0;font-size:12px;color:var(--faint)}
+.legend li{display:flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:3px;flex:none}
+.sw-0{background:var(--blank)}.sw-1{background:var(--v1)}.sw-3{background:var(--v3)}.sw-w{background:var(--wish)}
+.hint{font-size:12.5px;color:var(--faint);margin:0}
+.hint b{color:var(--ink);font-weight:600}
+
+/* ---------- cột phải ---------- */
+.side{display:flex;flex-direction:column;gap:14px;position:sticky;top:26px}
+@media (max-width:940px){.side{position:static}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--sh-1);padding:16px}
+.panel>h2{font:600 16px/1.3 var(--f-serif);margin-bottom:1px}
+.panel>.sub{font-size:12px;color:var(--faint);margin:0 0 10px}
+.search{width:100%;padding:11px 14px;border-radius:13px;border:1px solid var(--line);background:var(--sunk);color:var(--ink);font:14px var(--f-ui)}
+.search::placeholder{color:var(--faint)}
+.search:focus{outline:none;border-color:var(--accent);background:var(--card)}
+.results{margin-top:8px;display:flex;flex-direction:column;gap:1px;max-height:30vh;overflow:auto}
+.results button{display:flex;align-items:center;gap:10px;padding:8px 9px;border:none;background:none;border-radius:10px;cursor:pointer;font-size:14px;text-align:left}
+.results button:hover{background:var(--sunk)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--blank-hi);flex:none}
+.dot.lv-wish{background:var(--wish)}.dot.lv-1{background:var(--v1)}.dot.lv-2{background:var(--v2)}.dot.lv-3{background:var(--v3)}
+
+.feed{max-height:50vh;overflow:auto;margin:0 -6px}
+.yr{display:flex;align-items:center;gap:10px;padding:12px 8px 6px;font:600 11px/1 var(--f-ui);letter-spacing:.12em;color:var(--faint)}
+.yr::after{content:'';flex:1;height:1px;background:var(--line)}
+.feed-item{display:grid;grid-template-columns:40px 1fr;gap:11px;width:100%;padding:8px 8px;border:none;background:none;border-radius:11px;cursor:pointer;text-align:left}
+.feed-item:hover{background:var(--sunk)}
+.feed-when{font:600 11px/1.35 var(--f-ui);color:var(--faint);padding-top:2px;letter-spacing:.04em}
+.feed-main{min-width:0}
+.feed-title{display:block;font-size:14px;font-weight:600}
+.feed-desc{display:block;font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---------- popup ---------- */
+dialog{
+  width:min(580px,calc(100vw - 28px));max-height:min(88vh,880px);padding:0;border:none;
+  border-radius:26px;background:var(--card);color:var(--ink);box-shadow:var(--sh-3);overflow:hidden
+}
+dialog::backdrop{background:rgba(24,20,16,.42);backdrop-filter:blur(4px)}
+dialog[open]{animation:pop .2s cubic-bezier(.2,.8,.3,1)}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.dlg{display:flex;flex-direction:column;max-height:inherit}
+
+/* màn rộng: popup tỉnh là bảng cố định bên phải, bản đồ bên trái vẫn bấm được */
+@media (min-width:861px){
+  :root{--panel-w:min(46vw,560px)}
+  #dlg{
+    position:fixed;inset:0 0 0 auto;margin:0;width:var(--panel-w);max-width:none;
+    /* dialog mặc định cao vừa nội dung, phải ép mới kéo hết chiều cao màn */
+    height:100vh;height:100dvh;max-height:none;
+    border-radius:26px 0 0 26px;box-shadow:-20px 0 60px -28px rgba(24,20,16,.38)
+  }
+  #dlg .dlg{height:100%;max-height:none}
+  #dlg[open]{animation:slide .24s cubic-bezier(.2,.8,.3,1)}
+  @keyframes slide{from{opacity:0;transform:translateX(30px)}}
+  body{transition:padding-right .26s cubic-bezier(.2,.8,.3,1)}
+  body.panel-open{padding-right:var(--panel-w)}
+}
+@media (min-width:861px) and (prefers-reduced-motion:reduce){
+  body{transition:none}
+  #dlg[open]{animation:none}
+}
+
+.dlg-head{position:relative;flex:none;padding:24px 24px 20px;overflow:hidden;border-bottom:1px solid var(--line)}
+.dlg-head::before{content:'';position:absolute;inset:0;opacity:.42;background:linear-gradient(135deg,var(--tint,var(--blank)),transparent 62%)}
+.silh{position:absolute;right:12px;top:-10px;height:156px;width:auto;opacity:.12;pointer-events:none}
+.silh path{fill:currentColor}
+/* chỉ nâng hai khối nội dung lên trên lớp nền, không đụng tới .silh */
+.dlg-head .row,.dlg-head .seg{position:relative}
+.dlg-head .row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+/* chừa chỗ bên phải cho hình tỉnh mờ, khỏi chạy chữ xuống dưới nó */
+.dlg-head .row>div{flex:1;min-width:0;padding-right:112px}
+.dlg-head h3{font:600 30px/1.08 var(--f-serif);letter-spacing:-.015em}
+.dlg-head .meta{font-size:12.5px;color:var(--muted);margin:7px 0 0}
+.x{
+  flex:none;border:1px solid transparent;background:color-mix(in srgb,var(--card) 70%,transparent);
+  width:32px;height:32px;border-radius:50%;font-size:19px;line-height:1;color:var(--muted);cursor:pointer
+}
+.x:hover{color:var(--ink);border-color:var(--line);background:var(--card)}
+.seg{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}
+.seg button{
+  padding:7px 15px;border-radius:999px;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--card) 72%,transparent);cursor:pointer;font-size:13.5px;font-weight:500;
+  transition:background .15s,color .15s,border-color .15s
+}
+.seg button:hover{background:var(--card)}
+.seg button.on{color:#fff;border-color:transparent}
+.seg button.on.s-visited{background:var(--v3)}
+.seg button.on.s-wish{background:var(--wish)}
+.seg button.on.s-none{background:var(--faint)}
+
+.dlg-body{padding:18px 24px 22px;overflow:auto;flex:1;background:var(--sunk)}
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sec-head h4{font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.add{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;
+  border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);background:var(--card);
+  cursor:pointer;font-size:13px;font-weight:600;color:var(--accent);box-shadow:var(--sh-1)
+}
+.add:hover{background:color-mix(in srgb,var(--accent) 9%,var(--card))}
+
+/* dòng thời gian các chuyến */
+.tl{position:relative;list-style:none;margin:0;padding:0 0 0 26px}
+.tl::before{content:'';position:absolute;left:5px;top:10px;bottom:14px;width:2px;border-radius:2px;
+  background:linear-gradient(var(--line) 70%,transparent)}
+.tl-item{position:relative;margin-bottom:12px}
+.tl-item:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-26px;top:17px;width:12px;height:12px;border-radius:50%;
+  background:var(--v2);border:3px solid var(--sunk);box-sizing:content-box}
+
+.trip{position:relative;padding:15px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:var(--sh-1)}
+.trip-top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;padding-right:70px}
+.trip-date{font:600 15px/1.2 var(--f-ui)}
+.trip-len{font-size:12.5px;color:var(--faint)}
+.stars{position:absolute;right:16px;top:15px;color:var(--star);font-size:12.5px;letter-spacing:1.5px;transition:opacity .15s}
+.trip:hover .stars,.trip:focus-within .stars{opacity:0}
+.trip-with{font-size:12.5px;color:var(--muted);margin:4px 0 0}
+.trip-with::before{content:'with ';display:none}
+.places{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0 0}
+.places[data-clip] .place:nth-of-type(n+9){display:none}
+.more{padding:3px 11px;border-radius:999px;border:1px dashed var(--line);background:none;color:var(--accent);font:500 12.5px var(--f-ui);cursor:pointer}
+.more:hover{border-style:solid;background:var(--card)}
+.opt{text-transform:none;letter-spacing:0;font-weight:400;color:var(--line)}
+.place{padding:3px 11px;border-radius:999px;background:var(--sunk);border:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.trip-note{margin:11px 0 0;font:400 14.5px/1.65 var(--f-serif);white-space:pre-wrap}
+/* nút Sửa/Xoá hiện đúng chỗ mấy ngôi sao, đổi chỗ cho nhau khi rê vào, khỏi đè lên chữ */
+.trip-acts{position:absolute;right:13px;top:12px;display:flex;gap:5px;opacity:0;transition:opacity .15s}
+.trip:hover .trip-acts,.trip:focus-within .trip-acts{opacity:1}
+.trip-acts button{border:1px solid var(--line);background:var(--sunk);border-radius:9px;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--muted)}
+.trip-acts button:hover{color:var(--ink);background:var(--card)}
+.trip-acts .del:hover{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+
+/* máy cảm ứng không rê chuột được: cho sao và nút Sửa/Xoá nằm hẳn trong khối */
+@media (hover:none){
+  .trip-top{padding-right:0}
+  .stars{position:static;display:block;margin-top:3px;opacity:1 !important}
+  .trip-acts{position:static;opacity:1;margin-top:12px;justify-content:flex-end}
+}
+.empty{text-align:center;padding:30px 18px;border:1px dashed var(--line);border-radius:18px;background:var(--card)}
+.empty svg{color:var(--blank-hi);margin-bottom:10px}
+.empty p{margin:0 0 14px;color:var(--muted);font:italic 400 15px/1.6 var(--f-serif)}
+
+/* form thêm / sửa chuyến */
+.form{border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);border-radius:18px;padding:18px;background:var(--card);box-shadow:var(--sh-2);margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.grid2{grid-template-columns:1fr}}
+label{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:6px}
+.inp{width:100%;padding:10px 12px;border-radius:11px;border:1px solid var(--line);background:var(--sunk);color:var(--ink);font:14px var(--f-ui)}
+.inp::placeholder{color:var(--faint)}
+.inp:focus{outline:none;border-color:var(--accent);background:var(--card)}
+textarea.inp{resize:vertical;min-height:88px;font:400 14.5px/1.65 var(--f-serif)}
+.field{margin-top:13px}
+.chips-in{display:flex;flex-wrap:wrap;gap:6px;padding:7px;border:1px solid var(--line);border-radius:11px;background:var(--sunk)}
+.chips-in:focus-within{border-color:var(--accent);background:var(--card)}
+.chips-in .place{background:var(--card);color:var(--ink);display:inline-flex;align-items:center}
+.chips-in .place button{border:none;background:none;cursor:pointer;color:var(--faint);padding:0 0 0 6px;font-size:14px;line-height:1}
+.chips-in .place button:hover{color:var(--accent)}
+.chips-in input{flex:1;min-width:130px;border:none;background:none;padding:4px 6px;font:14px var(--f-ui)}
+.chips-in input:focus{outline:none}
+.chips-in input::placeholder{color:var(--faint)}
+.rate{display:flex;gap:2px}
+.rate button{border:none;background:none;cursor:pointer;font-size:23px;line-height:1;color:var(--line);padding:0 2px;transition:color .12s,transform .12s}
+.rate button:hover{transform:scale(1.14)}
+.rate button.on{color:var(--star)}
+.form-acts{display:flex;gap:9px;justify-content:flex-end;margin-top:18px}
+.btn{padding:10px 20px;border-radius:12px;border:1px solid var(--line);background:var(--sunk);cursor:pointer;font-size:14px;font-weight:500}
+.btn:hover{background:var(--card)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 30%,transparent)}
+.btn.primary:hover{filter:brightness(1.08)}
+
+@media (max-width:520px){
+  .dlg-head{padding:20px 18px 18px}
+  .dlg-head .row>div{padding-right:72px}
+  .dlg-head h3{font-size:25px}
+  .silh{height:106px;right:6px;top:-4px;opacity:.1}
+  .dlg-body{padding:16px 16px 20px}
+  .tl{padding-left:22px}
+  .tl-dot{left:-22px}
+}
+.dlg-head.plain{background:var(--card)}
+.dlg-head.plain::before{display:none}
+.dlg-head.plain .row>div{padding-right:0}
+.dlg-head.plain .search{margin-top:16px}
+.dlg-head.plain .when{margin:16px 0 0}
+.dlg-acts{flex:none;display:flex;align-items:center;gap:9px;padding:14px 24px 18px;border-top:1px solid var(--line);background:var(--card)}
+.acts-note{margin-right:auto;font-size:12.5px;color:var(--faint)}
+.pick-group{margin-bottom:6px}
+.pick-group h5{margin:10px 2px 5px;font:700 11px/1 var(--f-ui);letter-spacing:.11em;text-transform:uppercase;color:var(--faint)}
+.pick-row{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:12px;background:var(--card);border:1px solid transparent;cursor:pointer;margin-bottom:3px;
+  text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink)}
+.pick-row:hover{border-color:var(--line)}
+.pick-row input{width:17px;height:17px;accent-color:var(--accent);flex:none;margin:0}
+.pick-row.on{border-color:color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 7%,var(--card))}
+.pick-name{flex:1;min-width:0;font-size:14.5px;font-weight:500}
+.pick-n{font-size:12.5px;color:var(--faint)}
+#dlg-log .feed{max-height:none;overflow:visible;margin:0}
+#dlg-log .feed-item{background:var(--card);margin-bottom:3px}
+#dlg-log .feed-item:hover{background:color-mix(in srgb,var(--accent) 7%,var(--card))}
+.dlg-foot{flex:none;padding:13px 24px 16px;font-size:11.5px;color:var(--faint);border-top:1px solid var(--line);background:var(--card)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="note-bar"><span>🎨</span>
+    <span><b>Bản thiết kế để xem trước.</b> Bấm vào tỉnh bất kỳ để mở popup chuyến đi. Dữ liệu chỉ nằm trong bộ nhớ trang này, tải lại là mất — bản thật sẽ lưu qua backend.</span></p>
+
+  <header class="top">
+    <h1><span class="ic">🌷</span><span class="n he">Đức</span><em>&amp;</em><span class="n she">Ngọc</span><span class="ic heart">♡</span></h1>
+    <p class="tagline">Câu chuyện của chúng mình <span class="ic">✨</span></p>
+    <p class="motto">
+      <span><span class="ic">📸</span> Những chuyến đi</span>
+      <span><span class="ic">💗</span> Những kỷ niệm</span>
+      <span><span class="ic">♾️</span> Chúng mình</span>
+    </p>
+    <div class="stats" id="stats"></div>
+    <div class="toolbar">
+      <div class="when" data-when></div>
+      <div class="tools">
+        <button class="tool" id="btn-find">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          Tìm tỉnh</button>
+        <button class="tool" id="btn-log">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H19v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M8 4v16"/></svg>
+          Nhật ký <span class="count" id="log-count"></span></button>
+      </div>
+    </div>
+  </header>
+
+    <section class="map-card">
+      <div class="spot-bar" id="spot-bar" hidden></div>
+      <svg class="map" id="map" role="group" aria-label="Bản đồ 34 tỉnh thành Việt Nam"></svg>
+      <div class="map-foot">
+        <ul class="legend">
+          <li><span class="sw sw-0"></span>Chưa đi</li>
+          <li><span class="sw sw-1"></span>1 chuyến</li>
+          <li><span class="sw sw-3"></span>3 chuyến trở lên</li>
+          <li><span class="sw sw-w"></span>Muốn đi</li>
+        </ul>
+        <p class="hint" id="hint">Bấm vào một tỉnh để xem và ghi chuyến đi</p>
+      </div>
+    </section>
+
+</div>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <div class="dlg">
+    <div class="dlg-head" id="dlg-head">
+      <svg class="silh" id="dlg-silh" aria-hidden="true"><path id="dlg-silh-p"></path></svg>
+      <div class="row">
+        <div>
+          <h3 id="dlg-title"></h3>
+          <p class="meta" id="dlg-meta"></p>
+        </div>
+        <button class="x" id="dlg-close" aria-label="Đóng">✕</button>
+      </div>
+      <div class="seg" id="dlg-seg"></div>
+    </div>
+    <div class="dlg-body">
+      <div class="sec-head">
+        <h4 id="dlg-count"></h4>
+        <button class="add" id="dlg-add">＋ Thêm chuyến</button>
+      </div>
+      <div id="dlg-form"></div>
+      <div id="dlg-trips"></div>
+    </div>
+    <p class="dlg-foot">Bản thật: mỗi chuyến là một bản ghi trong database, kèm ảnh và vị trí.</p>
+  </div>
+</dialog>
+
+<dialog id="dlg-find" aria-labelledby="find-title">
+  <div class="dlg">
+    <div class="dlg-head plain">
+      <div class="row">
+        <div>
+          <h3 id="find-title">Tìm tỉnh</h3>
+          <p class="meta">Tích một hoặc vài tỉnh rồi xác nhận, bản đồ sẽ khoanh những tỉnh đó.</p>
+        </div>
+        <button class="x" data-close aria-label="Đóng">✕</button>
+      </div>
+      <input class="search" id="q" type="search" placeholder="Gõ tên tỉnh, không dấu cũng được" aria-label="Tìm tỉnh">
+    </div>
+    <div class="dlg-body"><div id="pick"></div></div>
+    <div class="dlg-acts">
+      <span class="acts-note" id="find-note"></span>
+      <button type="button" class="btn" id="find-clear">Bỏ hết tích</button>
+      <button type="button" class="btn primary" id="find-ok">Chọn tỉnh</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-when" aria-labelledby="when-title">
+  <div class="dlg">
+    <div class="dlg-head plain">
+      <div class="row">
+        <div>
+          <h3 id="when-title">Chọn thời gian</h3>
+          <p class="meta">Một tháng hay cả năm đều được — bản đồ, thống kê và nhật ký lọc theo đúng khoảng đó.</p>
+        </div>
+        <button class="x" data-close aria-label="Đóng">✕</button>
+      </div>
+    </div>
+    <div class="dlg-body">
+      <div class="ym">
+        <button type="button" id="ym-prev" aria-label="Năm trước">‹</button>
+        <b id="ym-year"></b>
+        <button type="button" id="ym-next" aria-label="Năm sau">›</button>
+      </div>
+      <button type="button" class="whole" id="ym-whole"></button>
+      <div class="months" id="ym-months" role="group" aria-label="Chọn tháng"></div>
+    </div>
+    <div class="dlg-acts">
+      <span class="acts-note" id="when-note"></span>
+      <button type="button" class="btn" id="when-all">Tất cả thời gian</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-log" aria-labelledby="log-title">
+  <div class="dlg">
+    <div class="dlg-head plain">
+      <div class="row">
+        <div>
+          <h3 id="log-title">Nhật ký</h3>
+          <p class="meta" id="log-sub"></p>
+        </div>
+        <button class="x" data-close aria-label="Đóng">✕</button>
+      </div>
+      <div class="when" data-when></div>
+    </div>
+    <div class="dlg-body"><div class="feed" id="feed"></div></div>
+  </div>
+</dialog>
+
+<script src="paths.js"></script>
+<script>
+const { W, H, provinces } = window.MAP_DATA;
+const byCode = Object.fromEntries(provinces.map(p => [p.code, p]));
+const REGION = { bac: 'Miền Bắc', trung: 'Miền Trung', nam: 'Miền Nam' };
+const CLIP = 8;   // quá số này thì gấp bớt chip địa điểm lại
+
+/* ---------- dữ liệu mẫu (bản thật sẽ lấy từ API) ---------- */
+const state = {
+  // Lấy từ sổ tay chuyến 3–11/10/2026 trong travel/ — hai chặng, nơi ghé theo lịch từng ngày.
+  // Tam Đảo thuộc Vĩnh Phúc cũ, từ 1/7/2025 là Phú Thọ.
+  'phu-tho': { status: 'visited', trips: [
+    { id: 1, from: '2026-10-03', to: '2026-10-04', with: 'Ngọc', rate: 0,
+      places: ['Chợ Tam Đảo', 'Nhà hàng Phố Mây', 'Cafe Lưng Chừng', 'Thác Bạc',
+               'Nhà thờ đá Tam Đảo', 'Cổng Trời', 'Quán Gió', 'Đền Bà Chúa Thượng Ngàn'],
+      note: 'Ngọc đáp Nội Bài 17:45, đi thẳng Tam Đảo 60 km, tới nơi thì đã tối. Hôm sau gói gọn cả Tam Đảo trong một buổi sáng rồi ra lại Nội Bài, bay chiều vào Đà Lạt.' },
+  ]},
+  'lam-dong': { status: 'visited', trips: [
+    { id: 2, from: '2026-10-04', to: '2026-10-11', with: 'Ngọc', rate: 0,
+      places: ['Bánh mì Liên Hoa', 'Dốc Thị', 'Bún bò Ấp Ánh Sáng', 'Hồ Xuân Hương', 'Đồ nướng chợ đêm',
+               'Thiền viện Trúc Lâm', 'Hồ Tuyền Lâm', 'Nem nướng Bà Hùng', 'Cà phê Tùng', 'Lẩu gà lá é Tao Ngộ',
+               'Đỉnh Langbiang', 'Hồ Đankia – Suối Vàng', 'Làng Cù Lần', 'Mê Linh Coffee Garden', 'Lẩu bò Ba Toa',
+               'An Cafe', 'Chùa Linh Phước', 'Đồi chè Cầu Đất', 'Cầu Đất Farm', "Thị trấn D'ran",
+               'Fujiya Sushi', 'Chợ Đà Lạt', 'Là Việt Coffee', 'Nhà thờ Con Gà', 'Lẩu bò Nhà Gỗ',
+               'Bánh mì xíu mại Cô Hồng'],
+      note: 'Bảy ngày ở Đà Lạt. Ngày đầu ngủ bù, chiều ra Dốc Thị. Hôm 9/10 dậy 4:30 đi Cầu Đất – D\'ran, tối mới về lại phố. Ngày cuối ngủ nướng rồi đi mua quà, chiều bay DLI → HAN.' },
+  ]},
+};
+let nextId = 3;
+const entry = code => state[code] || (state[code] = { status: 'none', trips: [] });
+
+/* ---------- tiện ích ---------- */
+const pad = n => String(n).padStart(2, '0');
+const parse = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const fmtRange = (from, to) => {
+  if (!from) return 'Chưa rõ ngày';
+  const a = parse(from), b = to ? parse(to) : a;
+  const sameMonth = a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
+  if (+a === +b) return `${pad(a.getDate())}/${pad(a.getMonth() + 1)}/${a.getFullYear()}`;
+  if (sameMonth) return `${pad(a.getDate())}–${pad(b.getDate())}/${pad(b.getMonth() + 1)}/${b.getFullYear()}`;
+  return `${pad(a.getDate())}/${pad(a.getMonth() + 1)} – ${pad(b.getDate())}/${pad(b.getMonth() + 1)}/${b.getFullYear()}`;
+};
+const nights = (from, to) => {
+  if (!from || !to) return '';
+  const n = Math.round((parse(to) - parse(from)) / 86400000);
+  return n > 0 ? `${n + 1} ngày ${n} đêm` : '';
+};
+const stars = n => (n ? '★'.repeat(n) + '☆'.repeat(5 - n) : '');
+const noMark = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').toLowerCase();
+const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/** 0 chưa đi · 'wish' muốn đi · 1–3 theo số chuyến */
+function level(code) {
+  const e = entry(code), n = tripsIn(code).length;
+  if (n) return Math.min(3, n);
+  if (year) return 'dim';                  // đang lọc: tỉnh ngoài khoảng đó mờ đi
+  return e.status === 'wish' ? 'wish' : e.status === 'visited' ? 1 : 0;
+}
+
+/* ---------- vẽ bản đồ ---------- */
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('map');
+svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+const gCountry = document.createElementNS(NS, 'g');
+gCountry.id = 'country';
+const gOutline = document.createElementNS(NS, 'g');
+const gMarks = document.createElementNS(NS, 'g');
+svg.append(gCountry, gOutline, gMarks);
+
+let hovered = null, selected = null;
+let year = null;              // null = không lọc thời gian
+let month = null;             // 1–12, chỉ có nghĩa khi đã chọn năm
+const spotlight = new Set();  // tỉnh được làm nổi từ popup Tìm tỉnh
+
+const yearOf = t => (t.from ? +t.from.slice(0, 4) : null);
+const ymOf = s => (s ? s.slice(0, 7) : null);   // '2026-10-04' → '2026-10'
+
+/**
+ * Chuyến có nằm trong khoảng đang chọn không. So trên cả from…to nên chuyến vắt
+ * qua hai tháng (hay hai năm) hiện ở cả hai bên chứ không rơi mất.
+ */
+function inPeriod(t) {
+  const a = ymOf(t.from);
+  if (!year) return true;
+  if (!a) return false;
+  const b = ymOf(t.to) || a;
+  if (!month) return +a.slice(0, 4) <= year && year <= +b.slice(0, 4);
+  const k = `${year}-${pad(month)}`;
+  return a <= k && k <= b;
+}
+const tripsIn = code => entry(code).trips.filter(inPeriod);
+const allYears = () => [...new Set(Object.values(state).flatMap(e => e.trips.map(yearOf)).filter(Boolean))]
+  .sort((a, b) => b - a);
+
+/** Mọi tháng 'YYYY-MM' có chuyến, để chấm dấu trong bộ chọn. */
+function tripMonths() {
+  const set = new Set();
+  for (const e of Object.values(state)) for (const t of e.trips) {
+    const a = ymOf(t.from);
+    if (!a) continue;
+    const b = ymOf(t.to) || a;
+    for (let y = +a.slice(0, 4); y <= +b.slice(0, 4); y++)
+      for (let m = 1; m <= 12; m++) { const k = `${y}-${pad(m)}`; if (k >= a && k <= b) set.add(k); }
+  }
+  return set;
+}
+
+/** Số chuyến rơi vào một năm, dùng cho dòng chú trong bộ chọn. */
+const tripsOfYear = y => Object.values(state).reduce((n, e) => n + e.trips.filter(t => {
+  const a = ymOf(t.from);
+  if (!a) return false;
+  const b = ymOf(t.to) || a;
+  return +a.slice(0, 4) <= y && y <= +b.slice(0, 4);
+}).length, 0);
+
+const scopeLabel = () => (!year ? null : month ? `tháng ${month}/${year}` : `năm ${year}`);
+const scopeShort = () => (!year ? '' : month ? `${pad(month)}/${year}` : String(year));
+
+/** Đặt khoảng thời gian đang lọc rồi vẽ lại mọi thứ đang mở. */
+function setPeriod(y, m) {
+  year = y;
+  month = m;
+  paint();
+  if (dlg.open) renderDialog();
+}
+
+provinces.forEach(p => {
+  const path = document.createElementNS(NS, 'path');
+  path.setAttribute('d', p.d);
+  path.dataset.code = p.code;
+  path.setAttribute('tabindex', '0');
+  path.setAttribute('role', 'button');
+  path.setAttribute('aria-label', p.name);
+  path.addEventListener('pointerenter', () => setHover(p.code));
+  path.addEventListener('pointerleave', () => setHover(null));
+  path.addEventListener('focus', () => setHover(p.code));
+  path.addEventListener('blur', () => setHover(null));
+  path.addEventListener('click', () => open(p.code));
+  path.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(p.code); } });
+  gCountry.append(path);
+});
+
+function setHover(code) {
+  hovered = code;
+  paintOutline();
+  document.getElementById('hint').innerHTML = code
+    ? `<b>${esc(byCode[code].name)}</b> — ${describe(code)}`
+    : 'Bấm vào một tỉnh để xem và ghi chuyến đi';
+}
+
+function describe(code) {
+  const e = entry(code), n = tripsIn(code).length;
+  if (n) return year ? `${n} chuyến trong ${scopeLabel()}` : `${n} chuyến, lần gần nhất ${lastWhen(code)}`;
+  if (year) return e.trips.length ? `không đi trong ${scopeLabel()}` : 'chưa đi lần nào';
+  return e.status === 'wish' ? 'đang muốn đi' : 'chưa đi lần nào';
+}
+function lastWhen(code) {
+  const t = [...entry(code).trips].sort((a, b) => (b.from || '').localeCompare(a.from || ''))[0];
+  if (!t || !t.from) return '—';
+  const d = parse(t.from);
+  return `${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+}
+
+function paintOutline() {
+  gOutline.replaceChildren();
+  const ring = (code, cls) => {
+    const o = document.createElementNS(NS, 'path');
+    o.setAttribute('d', byCode[code].d);
+    o.setAttribute('class', `outline ${cls}`);
+    gOutline.append(o);
+  };
+  // viền vẽ sau toàn bộ các tỉnh nên không bị tỉnh bên cạnh đè mất một đoạn
+  for (const code of spotlight) if (code !== selected) ring(code, 'spot');
+  for (const [code, cls] of [[hovered, 'hov'], [selected, 'sel']]) {
+    if (!code || (cls === 'hov' && code === selected)) continue;
+    ring(code, cls);
+  }
+}
+
+/**
+ * Xếp nhãn: duyệt tỉnh từ lớn đến nhỏ, thử vài vị trí quanh tâm, chỗ nào chưa
+ * đụng nhãn đã đặt thì lấy. Chen quá thì bỏ nhãn, tên vẫn hiện ở dòng dưới bản đồ.
+ */
+const TRY = [[0, 0], [0, -10], [0, 11], [-16, 0], [16, 0], [0, -20], [0, 21], [-22, -9], [22, -9]];
+function layoutLabels() {
+  const placed = [];
+  const hit = (a, b) => !(a.x2 < b.x1 || b.x2 < a.x1 || a.y2 < b.y1 || b.y2 < a.y1);
+  const out = [];
+  for (const p of [...provinces].sort((a, b) => b.area - a.area)) {
+    if (p.area < 700) continue;
+    const n = tripsIn(p.code).length;
+    const w = p.name.length * 4.5 + (n > 1 ? 13 : 0);
+    for (const [dx, dy] of TRY) {
+      const x = p.lx + dx, y = p.ly + dy;
+      const box = { x1: x - w / 2 - 2, x2: x + w / 2 + 2, y1: y - 7, y2: y + 3 };
+      if (placed.some(q => hit(box, q))) continue;
+      placed.push(box);
+      out.push({ p, x, y, n });
+      break;
+    }
+  }
+  return out;
+}
+
+function paint() {
+  for (const path of gCountry.children) {
+    const code = path.dataset.code;
+    const faded = spotlight.size && !spotlight.has(code) ? ' faded' : '';
+    path.setAttribute('class', `province lv-${level(code)}${faded}`);
+  }
+
+  gMarks.replaceChildren();
+  for (const { p, x, y, n } of layoutLabels()) {
+    const lv = level(p.code);
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('class', `lbl${lv === 'wish' || lv >= 2 ? ' on' : ''}`);
+    t.setAttribute('x', n > 1 ? x - 6 : x);
+    t.setAttribute('y', y);
+    t.textContent = p.name;
+    gMarks.append(t);
+    if (n > 1) {                       // huy hiệu số chuyến cho tỉnh đi nhiều lần
+      const cx = x - 6 + p.name.length * 2.25 + 7;
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('class', 'badge');
+      c.setAttribute('cx', cx); c.setAttribute('cy', y - 3); c.setAttribute('r', 5);
+      const num = document.createElementNS(NS, 'text');
+      num.setAttribute('class', 'badge-n');
+      num.setAttribute('x', cx); num.setAttribute('y', y - .9);
+      num.textContent = n;
+      gMarks.append(c, num);
+    }
+  }
+  paintOutline();
+  paintWhen();
+  paintSpot();
+  paintStats();
+  paintFeed();
+}
+
+function paintWhen() {
+  const label = year ? (month ? `Tháng ${month}/${year}` : `Năm ${year}`) : 'Tất cả thời gian';
+  for (const box of document.querySelectorAll('[data-when]')) {
+    const b = el('button', `when-btn${year ? ' on' : ''}`,
+      `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+         <rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+       <span>${label}</span>
+       <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6">
+         <path d="m6 9 6 6 6-6"/></svg>`);
+    b.type = 'button';
+    b.addEventListener('click', openWhen);
+    box.replaceChildren(b);
+    if (!year) continue;
+    const x = el('button', 'when-clear', '✕');
+    x.type = 'button';
+    x.title = 'Bỏ lọc thời gian';
+    x.setAttribute('aria-label', 'Bỏ lọc thời gian');
+    x.addEventListener('click', () => setPeriod(null, null));
+    box.append(x);
+  }
+}
+
+function paintSpot() {
+  const bar = document.getElementById('spot-bar');
+  if (!spotlight.size) { bar.hidden = true; return; }
+  bar.hidden = false;
+  const names = [...spotlight].map(c => `<b>${esc(byCode[c].name)}</b>`).join(', ');
+  bar.replaceChildren(el('span', null, `Đang chọn ${names}`));
+  const off = el('button', '', 'Bỏ chọn');
+  off.addEventListener('click', () => { spotlight.clear(); paint(); });
+  bar.append(off);
+}
+
+function paintStats() {
+  const codes = Object.keys(state);
+  const visited = codes.filter(c => tripsIn(c).length || (!year && entry(c).status === 'visited')).length;
+  const trips = codes.reduce((n, c) => n + tripsIn(c).length, 0);
+  const wish = codes.filter(c => entry(c).status === 'wish' && !entry(c).trips.length).length;
+  const third = year
+    ? `<div class="stat"><span class="n${month ? ' sm' : ''}">${scopeShort()}</span><span class="k">Đang xem</span></div>`
+    : `<div class="stat w"><span class="n">${wish}</span><span class="k">Muốn đi</span></div>`;
+  document.getElementById('stats').innerHTML =
+    `<div class="stat v"><span class="n">${visited}<small>/34</small></span>
+       <span class="k">Tỉnh ${year ? (month ? 'trong tháng' : 'trong năm') : 'đã đi'}</span>
+       <div class="bar"><i style="width:${Math.round(visited / 34 * 100)}%"></i></div></div>
+     <div class="stat"><span class="n">${trips}</span><span class="k">Chuyến đi</span></div>` + third;
+}
+
+function paintFeed() {
+  const rows = [];
+  for (const code of Object.keys(state)) for (const t of tripsIn(code)) rows.push({ code, t });
+  rows.sort((a, b) => (b.t.from || '').localeCompare(a.t.from || ''));
+  document.getElementById('log-sub').textContent = rows.length
+    ? `${rows.length} chuyến${year ? ` trong ${scopeLabel()}` : ', mới nhất trước'}`
+    : year ? `Không có chuyến nào trong ${scopeLabel()}` : 'Chưa có chuyến nào';
+  document.getElementById('log-count').textContent = rows.length;
+
+  const box = document.getElementById('feed');
+  box.replaceChildren();
+
+  if (!rows.length) {
+    const empty = el('div', 'empty',
+      `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+         <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H19v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M8 4v16"/></svg>
+       <p>${year ? `Chưa có chuyến nào trong ${scopeLabel()}.` : 'Chưa ghi chuyến nào.'}</p>`);
+    if (year) {
+      const b = el('button', 'btn primary', 'Xem tất cả thời gian');
+      b.addEventListener('click', () => setPeriod(null, null));
+      empty.append(b);
+    }
+    box.append(empty);
+    return;
+  }
+
+  let group = null;   // năm đang gom nhóm, khác với `year` của bộ lọc
+  for (const { code, t } of rows) {
+    const d = t.from ? parse(t.from) : null;
+    const y = d ? d.getFullYear() : '—';
+    if (y !== group) { group = y; box.append(el('div', 'yr', String(y))); }
+    const b = el('button', 'feed-item');
+    b.innerHTML =
+      `<span class="feed-when">${d ? `Tháng ${d.getMonth() + 1}` : '—'}</span>` +
+      `<span class="feed-main"><span class="feed-title">${esc(byCode[code].name)}</span>` +
+      `<span class="feed-desc">${esc(t.places.join(' · ') || t.note.slice(0, 60))}</span></span>`;
+    b.addEventListener('click', () => { dlgLog.close(); open(code); });
+    box.append(b);
+  }
+}
+
+/* ---------- popup ---------- */
+const dlg = document.getElementById('dlg');
+const wide = window.matchMedia('(min-width:861px)');
+
+/**
+ * Màn rộng thì mở không-modal để bản đồ không bị khoá — bấm thẳng sang tỉnh khác
+ * là bảng bên phải đổi theo. Màn hẹp vẫn là popup giữa màn như cũ.
+ */
+let switchingDlg = false;   // đang đổi giữa kiểu bảng và kiểu popup, đừng coi là đóng hẳn
+
+function showDlg() {
+  const panel = wide.matches;
+  document.body.classList.toggle('panel-open', panel);
+  if (dlg.open) return;
+  panel ? dlg.show() : dlg.showModal();
+}
+let editing = null;   // id chuyến đang sửa, 'new' nếu đang thêm
+
+// svg ẩn chỉ để đo khung hình từng tỉnh, lấy viewBox cho hình mờ trong popup
+const ruler = document.createElementNS(NS, 'svg');
+ruler.setAttribute('style', 'position:absolute;width:0;height:0;overflow:hidden');
+document.body.append(ruler);
+function bboxOf(d) {
+  const p = document.createElementNS(NS, 'path');
+  p.setAttribute('d', d);
+  ruler.append(p);
+  const b = p.getBBox();
+  p.remove();
+  return b;
+}
+
+function open(code) {
+  selected = code;
+  hovered = null;
+  editing = null;
+  renderDialog();
+  showDlg();
+  paint();
+}
+
+function renderDialog() {
+  const p = byCode[selected], e = entry(selected);
+  document.getElementById('dlg-title').textContent = p.name;
+  document.getElementById('dlg-meta').textContent =
+    [p.isCity ? 'Thành phố trực thuộc trung ương' : 'Tỉnh', REGION[p.region],
+     p.merged.length ? `trước 2025: ${p.merged.join(', ')}` : ''].filter(Boolean).join(' · ');
+
+  const lv = level(selected);
+  const head = document.getElementById('dlg-head');
+  head.style.setProperty('--tint',
+    lv === 'wish' ? 'var(--wish)' : lv === 0 ? 'var(--blank-hi)' : 'var(--v2)');
+
+  const b = bboxOf(p.d), m = Math.max(b.width, b.height) * .06;
+  const silh = document.getElementById('dlg-silh');
+  const vw = b.width + m * 2, vh = b.height + m * 2;
+  silh.setAttribute('viewBox', `${b.x - m} ${b.y - m} ${vw} ${vh}`);
+  silh.style.aspectRatio = (vw / vh).toFixed(3);   // bề ngang tự suy ra từ tỉ lệ hình tỉnh
+  document.getElementById('dlg-silh-p').setAttribute('d', p.d);
+
+  const seg = document.getElementById('dlg-seg');
+  seg.replaceChildren(...[['visited', 'Đã đi'], ['wish', 'Muốn đi'], ['none', 'Chưa đánh dấu']].map(([id, label]) => {
+    const btn = el('button', `s-${id}${e.status === id ? ' on' : ''}`, label);
+    btn.addEventListener('click', () => { e.status = id; renderDialog(); paint(); });
+    return btn;
+  }));
+
+  const shown = tripsIn(selected).length;
+  document.getElementById('dlg-count').textContent =
+    shown ? `${shown} chuyến đi${year ? ` · ${scopeShort()}` : ''}` : 'Chuyến đi';
+  document.getElementById('dlg-add').hidden = editing === 'new';
+
+  renderForm();
+  renderTrips();
+}
+
+function renderTrips() {
+  const e = entry(selected);
+  const box = document.getElementById('dlg-trips');
+  const list = [...tripsIn(selected)].sort((a, b) => (b.from || '').localeCompare(a.from || ''));
+  const hidden = e.trips.length - list.length;
+
+  // đang lọc mà tỉnh này còn chuyến ngoài khoảng thì nói rõ, kèm lối bỏ lọc
+  const banner = () => {
+    if (!year || !hidden) return null;
+    const n = el('div', 'filter-note',
+      `Đang xem <b>${scopeLabel()}</b> — còn ${hidden} chuyến ở lúc khác.`);
+    const b = el('button', '', `Xem cả ${e.trips.length} chuyến`);
+    b.addEventListener('click', () => setPeriod(null, null));
+    n.append(b);
+    return n;
+  };
+
+  if (!list.length && editing !== 'new') {
+    const empty = el('div', 'empty',
+      `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+         <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+       <p>${hidden
+          ? `Không có chuyến nào ở đây trong ${scopeLabel()}.`
+          : 'Chưa ghi chuyến nào ở đây.<br>Đi ngày nào, ghé những đâu, thấy thế nào?'}</p>`);
+    const btn = el('button', 'btn primary',
+      hidden ? `Xem cả ${e.trips.length} chuyến` : 'Ghi chuyến đầu tiên');
+    btn.addEventListener('click', hidden ? () => setPeriod(null, null) : startNew);
+    empty.append(btn);
+    box.replaceChildren(empty);
+    return;
+  }
+
+  const ol = el('ol', 'tl');
+  for (const t of list) {
+    if (t.id === editing) continue;
+    const li = el('li', 'tl-item');
+    li.append(el('span', 'tl-dot'));
+    const card = el('article', 'trip');
+    card.innerHTML =
+      `<div class="trip-top"><span class="trip-date">${fmtRange(t.from, t.to)}</span>` +
+      `<span class="trip-len">${nights(t.from, t.to)}</span></div>` +
+      (t.rate ? `<span class="stars" title="${t.rate}/5 sao">${stars(t.rate)}</span>` : '') +
+      (t.with ? `<p class="trip-with">Đi cùng ${esc(t.with)}</p>` : '') +
+      (t.places.length ? `<div class="places"${t.places.length > CLIP ? ' data-clip' : ''}>` +
+        t.places.map(x => `<span class="place">${esc(x)}</span>`).join('') +
+        (t.places.length > CLIP ? `<button type="button" class="more">+${t.places.length - CLIP} nữa</button>` : '') +
+        '</div>' : '') +
+      (t.note ? `<p class="trip-note">${esc(t.note)}</p>` : '');
+    const more = card.querySelector('.more');
+    if (more) more.addEventListener('click', () => {
+      more.closest('.places').removeAttribute('data-clip');
+      more.remove();
+    });
+
+    const acts = el('div', 'trip-acts');
+    const edit = el('button', '', 'Sửa'), del = el('button', 'del', 'Xoá');
+    edit.addEventListener('click', () => { editing = t.id; renderDialog(); });
+    del.addEventListener('click', () => {
+      if (!confirm('Xoá chuyến này?')) return;
+      const e2 = entry(selected);
+      e2.trips = e2.trips.filter(x => x.id !== t.id);
+      renderDialog(); paint();
+    });
+    acts.append(edit, del);
+    card.append(acts);
+    li.append(card);
+    ol.append(li);
+  }
+  box.replaceChildren(...[banner(), ol].filter(Boolean));
+}
+
+function startNew() { editing = 'new'; renderDialog(); }
+document.getElementById('dlg-add').addEventListener('click', startNew);
+
+function renderForm() {
+  const box = document.getElementById('dlg-form');
+  if (editing == null) { box.replaceChildren(); return; }
+
+  const e = entry(selected);
+  const t = editing === 'new'
+    ? { from: '', to: '', with: '', rate: 0, places: [], note: '' }
+    : { ...e.trips.find(x => x.id === editing) };
+  const places = [...t.places];
+
+  const form = el('form', 'form');
+  form.innerHTML = `
+    <div class="grid2">
+      <div><label for="f-from">Đi ngày</label><input class="inp" type="date" id="f-from" value="${t.from}"></div>
+      <div><label for="f-to">Đến ngày</label><input class="inp" type="date" id="f-to" value="${t.to}"></div>
+    </div>
+    <div class="field"><label for="f-with">Đi cùng ai</label>
+      <input class="inp" id="f-with" placeholder="Ngọc, nhóm công ty, đi một mình…" value="${esc(t.with)}"></div>
+    <div class="field"><label>Đã ghé những đâu</label>
+      <div class="chips-in" id="f-places"><input id="f-place" placeholder="Gõ tên rồi Enter…"></div></div>
+    <div class="field"><label>Thấy thế nào <span class="opt">không bắt buộc</span></label><div class="rate" id="f-rate"></div></div>
+    <div class="field"><label for="f-note">Trải nghiệm</label>
+      <textarea class="inp" id="f-note" placeholder="Ăn gì, ở đâu, lần sau quay lại thì làm gì khác…">${esc(t.note)}</textarea></div>
+    <div class="form-acts">
+      <button type="button" class="btn" id="f-cancel">Huỷ</button>
+      <button type="submit" class="btn primary">${editing === 'new' ? 'Thêm chuyến' : 'Lưu thay đổi'}</button>
+    </div>`;
+  box.replaceChildren(form);
+
+  // ô nhập địa điểm kiểu chip
+  const wrap = form.querySelector('#f-places'), input = form.querySelector('#f-place');
+  const drawPlaces = () => {
+    wrap.querySelectorAll('.place').forEach(n => n.remove());
+    places.forEach((name, i) => {
+      const chip = el('span', 'place', esc(name));
+      const rm = el('button', '', '✕');
+      rm.type = 'button';
+      rm.setAttribute('aria-label', `Bỏ ${name}`);
+      rm.addEventListener('click', () => { places.splice(i, 1); drawPlaces(); });
+      chip.append(rm);
+      wrap.insertBefore(chip, input);
+    });
+  };
+  drawPlaces();
+  input.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter' || ev.key === ',') {
+      ev.preventDefault();
+      const v = input.value.trim();
+      if (v && !places.includes(v)) { places.push(v); drawPlaces(); }
+      input.value = '';
+    } else if (ev.key === 'Backspace' && !input.value && places.length) {
+      places.pop(); drawPlaces();
+    }
+  });
+
+  // chấm sao
+  let rate = t.rate;
+  const rateBox = form.querySelector('#f-rate');
+  const drawRate = () => rateBox.replaceChildren(...[1, 2, 3, 4, 5].map(n => {
+    const b = el('button', n <= rate ? 'on' : '', '★');
+    b.type = 'button';
+    b.setAttribute('aria-label', `${n} sao`);
+    b.addEventListener('click', () => { rate = rate === n ? 0 : n; drawRate(); });
+    return b;
+  }));
+  drawRate();
+
+  form.querySelector('#f-cancel').addEventListener('click', () => { editing = null; renderDialog(); });
+  form.addEventListener('submit', ev => {
+    ev.preventDefault();
+    const data = {
+      from: form.querySelector('#f-from').value,
+      to: form.querySelector('#f-to').value,
+      with: form.querySelector('#f-with').value.trim(),
+      rate, places, note: form.querySelector('#f-note').value.trim(),
+    };
+    if (editing === 'new') {
+      e.trips.push({ id: nextId++, ...data });
+      if (e.status !== 'visited') e.status = 'visited';
+    } else {
+      Object.assign(e.trips.find(x => x.id === editing), data);
+    }
+    editing = null;
+    renderDialog(); paint();
+  });
+
+  form.querySelector('#f-from').focus();
+}
+
+document.getElementById('dlg-close').addEventListener('click', () => dlg.close());
+// sự kiện close chạy sau một nhịp, nên lần đổi kiểu phải chặn ở đây kẻo xoá mất tỉnh vừa mở
+dlg.addEventListener('close', () => {
+  if (switchingDlg) { switchingDlg = false; return; }
+  document.body.classList.remove('panel-open');
+  selected = null;
+  editing = null;
+  paint();
+});
+dlg.addEventListener('click', ev => { if (ev.target === dlg) dlg.close(); });
+
+/* ---------- popup Tìm tỉnh ---------- */
+const dlgFind = document.getElementById('dlg-find');
+const dlgLog = document.getElementById('dlg-log');
+const q = document.getElementById('q');
+let picked = new Set();   // đang tích trong popup, chỉ đổ sang spotlight khi bấm xác nhận
+
+function renderPick() {
+  const s = noMark(q.value.trim());
+  const box = document.getElementById('pick');
+  box.replaceChildren();
+  let found = 0;
+
+  for (const [id, label] of Object.entries(REGION)) {
+    const hit = provinces.filter(p => p.region === id &&
+      (!s || noMark(p.name).includes(s) || p.merged.some(m => noMark(m).includes(s))));
+    if (!hit.length) continue;
+    found += hit.length;
+    const g = el('div', 'pick-group', `<h5>${label}</h5>`);
+    for (const p of hit) {
+      const n = tripsIn(p.code).length;
+      const row = el('label', `pick-row${picked.has(p.code) ? ' on' : ''}`,
+        `<span class="dot lv-${level(p.code)}"></span>` +
+        `<span class="pick-name">${esc(p.name)}</span>` +
+        `<span class="pick-n">${n ? `${n} chuyến` : entry(p.code).status === 'wish' ? 'muốn đi' : ''}</span>`);
+      const cb = el('input');
+      cb.type = 'checkbox';
+      cb.checked = picked.has(p.code);
+      cb.addEventListener('change', () => {
+        cb.checked ? picked.add(p.code) : picked.delete(p.code);
+        row.classList.toggle('on', cb.checked);
+        paintPickNote();
+      });
+      row.prepend(cb);
+      g.append(row);
+    }
+    box.append(g);
+  }
+  if (!found) box.append(el('div', 'empty', '<p>Không có tỉnh nào khớp.</p>'));
+  paintPickNote();
+}
+
+function paintPickNote() {
+  document.getElementById('find-note').textContent =
+    picked.size ? `Đã chọn ${picked.size} tỉnh` : 'Chưa chọn tỉnh nào';
+  document.getElementById('find-ok').disabled = !picked.size && !spotlight.size;
+}
+
+document.getElementById('btn-find').addEventListener('click', () => {
+  setHover(null);
+  picked = new Set(spotlight);
+  q.value = '';
+  renderPick();
+  dlgFind.showModal();
+});
+q.addEventListener('input', renderPick);
+document.getElementById('find-clear').addEventListener('click', () => { picked.clear(); renderPick(); });
+document.getElementById('find-ok').addEventListener('click', () => {
+  spotlight.clear();
+  for (const c of picked) spotlight.add(c);
+  dlgFind.close();
+  paint();
+  // chọn đúng một tỉnh thì mở luôn chuyến đi của tỉnh đó
+  if (spotlight.size === 1) open([...spotlight][0]);
+});
+
+/* ---------- popup Chọn thời gian ---------- */
+const dlgWhen = document.getElementById('dlg-when');
+const YEAR_MIN = 2000, YEAR_MAX = new Date().getFullYear() + 2;
+let pickYear = null;   // năm đang mở trong bộ chọn, chưa chắc là năm đang lọc
+
+function openWhen() {
+  setHover(null);
+  pickYear = year || allYears()[0] || new Date().getFullYear();
+  renderWhen();
+  dlgWhen.showModal();
+}
+
+function renderWhen() {
+  const has = tripMonths();
+  document.getElementById('ym-year').textContent = pickYear;
+  document.getElementById('ym-prev').disabled = pickYear <= YEAR_MIN;
+  document.getElementById('ym-next').disabled = pickYear >= YEAR_MAX;
+
+  const whole = document.getElementById('ym-whole');
+  whole.textContent = `Cả năm ${pickYear}`;
+  whole.classList.toggle('on', year === pickYear && !month);
+
+  document.getElementById('ym-months').replaceChildren(...Array.from({ length: 12 }, (_, i) => {
+    const m = i + 1, on = year === pickYear && month === m;
+    const b = el('button', on ? 'on' : '', `Tháng ${m}`);
+    b.type = 'button';
+    b.setAttribute('aria-pressed', String(on));
+    if (has.has(`${pickYear}-${pad(m)}`)) b.append(el('i'));
+    b.addEventListener('click', () => { setPeriod(pickYear, m); dlgWhen.close(); });
+    return b;
+  }));
+
+  const n = tripsOfYear(pickYear);
+  document.getElementById('when-note').textContent =
+    n ? `${pickYear} có ${n} chuyến` : `${pickYear} chưa có chuyến nào`;
+}
+
+document.getElementById('ym-prev').addEventListener('click', () => { pickYear--; renderWhen(); });
+document.getElementById('ym-next').addEventListener('click', () => { pickYear++; renderWhen(); });
+document.getElementById('ym-whole').addEventListener('click', () => { setPeriod(pickYear, null); dlgWhen.close(); });
+document.getElementById('when-all').addEventListener('click', () => { setPeriod(null, null); dlgWhen.close(); });
+
+/* ---------- popup Nhật ký ---------- */
+document.getElementById('btn-log').addEventListener('click', () => { setHover(null); paintFeed(); dlgLog.showModal(); });
+
+// bảng bên phải không phải modal nên phải tự nghe Esc, và nhường popup đang chồng lên
+document.addEventListener('keydown', ev => {
+  if (ev.key !== 'Escape' || !dlg.open || !wide.matches) return;
+  if (dlgFind.open || dlgLog.open || dlgWhen.open) return;
+  dlg.close();
+});
+
+// kéo cửa sổ qua lại giữa hai khổ thì mở lại cho đúng kiểu
+wide.addEventListener('change', () => {
+  if (!dlg.open) return;
+  const code = selected;
+  switchingDlg = true;
+  dlg.close();
+  open(code);
+});
+
+for (const d of [dlgFind, dlgLog, dlgWhen]) {
+  d.querySelector('[data-close]').addEventListener('click', () => d.close());
+  d.addEventListener('click', ev => { if (ev.target === d) d.close(); });
+}
+
+paint();
+</script>
+</body>
+</html>
