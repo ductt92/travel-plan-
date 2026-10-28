@@ -334,6 +334,21 @@ label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 14px
 .imp-secret { display: grid; gap: 6px; font-size: 14px; font-weight: 600; max-width: 380px; }
 .imp-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; border-top: 1px solid var(--line); padding-top: 14px; }
 .imp-foot .sum { flex: 1 1 200px; font-size: 14px; }
+/* lọc thuật ngữ từ biên bản: chọn buổi, chuyên ngành; mỗi thuật ngữ mới một dòng sửa được */
+.doc-opts { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: end; }
+.doc-opts label { display: grid; gap: 4px; font-size: 14px; font-weight: 600; }
+.doc-opts input { font: inherit; font-weight: 400; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--fg); }
+.doc-ai { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 8px; font-size: 14px; }
+.dt-row { display: grid; grid-template-columns: 20px 150px minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr); gap: 8px; align-items: center; padding: 7px 0; border-top: 1px solid var(--line); }
+.dt-row.off { opacity: .55; }
+.dt-row input[type=checkbox], .dt-chip input { accent-color: var(--accent); margin: 0; }
+.dt-zh .hz { font-size: 18px; color: var(--accent); line-height: 1.3; }
+.dt-zh small { display: block; font-size: 12px; color: var(--muted); }
+.dt-zh small.warn { color: var(--mark); }
+.dt-in { font: inherit; font-size: 14px; min-width: 0; padding: 5px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); }
+.dt-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.dt-chip { display: inline-flex; gap: 6px; align-items: center; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 15px; cursor: pointer; }
+.dt-chip small { color: var(--muted); font-size: 12px; }
 
 /* ---------- Từ vựng ---------- */
 .vtools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
@@ -452,6 +467,8 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
   .terms .vtools > * { flex: 1 1 100%; width: 100%; }
   .imp-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ti-cfl { grid-template-columns: minmax(0, 1fr); }
+  .dt-row { grid-template-columns: 20px minmax(0, 1fr); }
+  .dt-row .dt-in { grid-column: 2; }
   .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; }
   .stat .num { font-size: 22px; }
   .opts { grid-template-columns: minmax(0, 1fr); }
@@ -516,13 +533,15 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
     </div>
     <div class="ctrls">
       <button class="btn small" id="termImport"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M7.25 1.5h1.5v7.4l2.7-2.7 1.06 1.06L8 11.77 3.5 7.26 4.55 6.2l2.7 2.7zM2 12.5h1.5V14h9v-1.5H14V15.5H2z"/></svg> Nhập file Excel</button>
-      <input type="file" id="termFile" accept=".xlsx,.xls" hidden>
+      <button class="btn small" id="termDocImport"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5h6.5L13 5v9.5H3zm1.5 1.5v10h7V5.6H8.9V3zM6 8h4v1.3H6zm0 2.3h4v1.3H6z"/></svg> Lọc từ biên bản</button>
+      <input type="file" id="termFile" accept=".xlsx,.xls,.docx,.txt" hidden>
+      <input type="file" id="termDocFile" accept=".docx,.txt" hidden>
     </div>
   </div>
   <label class="dropzone term-drop" id="termDrop" for="termFile" tabindex="0">
     <svg class="dz-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 5h-3.5v6h-3V8H7zM4 15h2.5v3.5h11V15H20v6H4z"/></svg>
-    <b>Kéo thả file Excel thuật ngữ vào đây</b>
-    <span>hoặc bấm để chọn file .xlsx · file sẽ ghi đè toàn bộ danh sách trên máy chủ, được xem lại trước khi ghi</span>
+    <b>Kéo thả file Excel hoặc biên bản bài giảng vào đây</b>
+    <span>File Excel (.xlsx) ghi đè toàn bộ danh sách · biên bản (.docx, .txt) được lọc ra thuật ngữ mới để thêm vào. Luôn được xem lại trước khi ghi lên máy chủ.</span>
   </label>
   <div class="note-warn" id="termWarn" hidden></div>
   <div class="term-imp" id="termImp" hidden></div>
@@ -1177,7 +1196,7 @@ const TERM_BE = (() => {
     return { fileName: input.fileName, summaryName: summary ? summary.name : "Tổng hợp", sheetNames: majorNames,
       issues, conflicts, terms, errors: issues.filter(i => i.level === "error").length };
   }
-  return { parse };
+  return { parse, keyOf };
 })();
 
 const nf = n => n.toLocaleString("vi-VN");
@@ -1192,8 +1211,8 @@ const lsGet = k => { try { return localStorage.getItem(k) || ""; } catch (e) { r
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
 const API_BACKEND = lsGet("trang-api-backend") === "go" ? "go" : "node";
 const SECRET_KEY = "trang-sync-secret";
-async function termApi(method, body, secret) {
-  const r = await fetch(`/api/${API_BACKEND}/terms`, {
+async function termApi(method, body, secret, path = "terms") {
+  const r = await fetch(`/api/${API_BACKEND}/${path}`, {
     method, cache: "no-store",
     headers: body ? { "Content-Type": "application/json", "X-App-Secret": secret } : {},
     body: body && JSON.stringify(body),
@@ -1206,7 +1225,7 @@ async function termApi(method, body, secret) {
 try { localStorage.removeItem("ngoc-thuat-ngu"); } catch (e) {}
 
 let TL = null, tErr = "", tSheet = S.termSheet || "", tGroup = "", tShow = 80;
-let tIn = null, tPv = null, tRes = {}, tShowC = 8, tAskSecret = false, tSaving = false;
+let tIn = null, tPv = null, tRes = {}, tShowC = 8, tAskSecret = false, tSaving = false, tDoc = null;
 
 function termWarn(msg, ok) {
   const w = $("#termWarn"); w.hidden = !msg; w.textContent = msg || "";
@@ -1230,7 +1249,8 @@ function openTerms() {
     $("#termGroup").onchange = () => { tGroup = $("#termGroup").value; tShow = 80; renderTerms(); };
     $("#termSearch").oninput = () => { tShow = 80; renderTerms(); };
     $("#termImport").onclick = () => $("#termFile").click();
-    $("#termFile").onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (f) termOpenFile(f); };
+    $("#termDocImport").onclick = () => $("#termDocFile").click();
+    $("#termFile").onchange = $("#termDocFile").onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (f) termOpenAny(f); };
     $("#termDrop").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("#termFile").click(); } };
   }
   loadTerms();
@@ -1300,13 +1320,13 @@ async function termOpenFile(f) {
     await loadXlsx();
     const wb = XLSX.read(await f.arrayBuffer(), { type: "array" }), sheets = {};
     for (const n of wb.SheetNames) sheets[n] = XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, defval: null, raw: false });
-    tIn = { fileName: f.name, sheets }; tRes = {}; tShowC = 8; tAskSecret = !lsGet(SECRET_KEY);
+    tIn = { fileName: f.name, sheets }; tRes = {}; tDoc = null; tShowC = 8; tAskSecret = !lsGet(SECRET_KEY);
     termWarn(""); termParse();
     $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (e) { termWarn("Không đọc được file: " + e.message); }
 }
 function termParse() { tPv = TERM_BE.parse(tIn, tRes); renderImp(); }
-function closeImp() { tPv = null; tIn = null; $("#termImp").hidden = true; $("#termImp").innerHTML = ""; }
+function closeImp() { tPv = null; tIn = null; tDoc = null; $("#termImp").hidden = true; $("#termImp").innerHTML = ""; }
 function renderImp(msg) {
   const p = tPv, box = $("#termImp"), cur = TL && !TL.fallback ? TL.terms.length : 0;
   box.hidden = false;
@@ -1374,6 +1394,268 @@ async function termSave() {
     else renderImp("Chưa ghi được: " + e.message + ". Danh sách trên máy chủ vẫn giữ nguyên.");
   }
 }
+/* ---------- Lọc thuật ngữ từ biên bản bài giảng (.docx, .txt) ----------
+   Lớp 1, ngay trên trang: dò các thuật ngữ đã có trong danh sách xuất hiện ở biên bản (sẽ ghi thêm buổi học).
+   Lớp 2, Gemini qua /api/<node|go>/ai: cắt biên bản thành đoạn ~2.000 chữ (API nhận tối đa 8.000 ký tự mỗi lượt),
+   mỗi đoạn hỏi AI các thuật ngữ chuyên ngành kèm pinyin, nghĩa, nhóm; bỏ những từ đã có.
+   Xem lại, chọn rồi GỘP: đọc lại bản mới nhất trên máy chủ, thêm thuật ngữ mới, ghi buổi học và chuyên ngành
+   cho thuật ngữ cũ, gửi cả danh sách qua PUT như nhập Excel. Thuật ngữ cũ không bị xóa hay sửa nghĩa. */
+const DOC_CHUNK = 2000, DOC_MAX_CHUNKS = 60, DOC_WORKERS = 3;
+function termOpenAny(f) {
+  if (/\.(docx|txt)$/i.test(f.name)) return docOpenFile(f);
+  if (/\.doc$/i.test(f.name)) { termWarn("File .doc đời cũ chưa đọc được, mở bằng Word rồi lưu lại thành .docx nhé."); return Promise.resolve(); }
+  return termOpenFile(f);
+}
+// lấy một file trong .docx (là file zip) bằng DecompressionStream có sẵn trong trình duyệt, không cần thư viện
+async function unzipText(buf, want) {
+  const u8 = new Uint8Array(buf), dv = new DataView(buf), dec = new TextDecoder();
+  let e = u8.length - 22;
+  while (e >= 0 && dv.getUint32(e, true) !== 0x06054b50) e--;
+  if (e < 0) throw new Error("không phải file .docx");
+  for (let i = 0, p = dv.getUint32(e + 16, true), n = dv.getUint16(e + 10, true); i < n; i++) {
+    const nl = dv.getUint16(p + 28, true), name = dec.decode(u8.subarray(p + 46, p + 46 + nl));
+    if (name === want) {
+      const method = dv.getUint16(p + 10, true), size = dv.getUint32(p + 20, true), off = dv.getUint32(p + 42, true);
+      const start = off + 30 + dv.getUint16(off + 26, true) + dv.getUint16(off + 28, true), data = u8.subarray(start, start + size);
+      if (method === 0) return dec.decode(data);
+      if (method !== 8) throw new Error("file .docx nén theo kiểu lạ");
+      return new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).text();
+    }
+    p += 46 + nl + dv.getUint16(p + 30, true) + dv.getUint16(p + 32, true);
+  }
+  throw new Error("không thấy nội dung văn bản trong file");
+}
+async function docText(f) {
+  if (/\.txt$/i.test(f.name)) return (await f.text()).replace(/\r\n?/g, "\n");
+  const W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+  const doc = new DOMParser().parseFromString(await unzipText(await f.arrayBuffer(), "word/document.xml"), "application/xml");
+  return [...doc.getElementsByTagNameNS(W, "p")].map(p => [...p.getElementsByTagNameNS(W, "*")]
+    .map(n => n.localName === "t" ? n.textContent : n.localName === "tab" ? " " : n.localName === "br" ? "\n" : "").join("").trim())
+    .filter(Boolean).join("\n");
+}
+// ngày buổi học đoán từ tên file hoặc đầu biên bản: 2026年9月1日, 2026-09-01, 01.09.2026, 20260901
+function docDate(s) {
+  const iso = (y, m, d) => { const v = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`; return isNaN(new Date(v)) ? "" : v; };
+  let m = /(20\d{2})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/.exec(s) || /(20\d{2})[-./](\d{1,2})[-./](\d{1,2})/.exec(s);
+  if (m) return iso(m[1], m[2], m[3]);
+  if ((m = /(\d{1,2})[-./](\d{1,2})[-./](20\d{2})/.exec(s))) return iso(m[3], m[2], m[1]);
+  if ((m = /(20\d{2})(\d{2})(\d{2})/.exec(s))) return iso(m[1], m[2], m[3]);
+  return "";
+}
+function docChunks(text) {
+  const out = []; let cur = "";
+  for (let line of text.split("\n")) {
+    while (line.length > DOC_CHUNK) { if (cur) out.push(cur), cur = ""; out.push(line.slice(0, DOC_CHUNK)); line = line.slice(DOC_CHUNK); }
+    if (cur && cur.length + line.length + 1 > DOC_CHUNK) out.push(cur), cur = "";
+    cur += (cur ? "\n" : "") + line;
+  }
+  if (cur.trim()) out.push(cur);
+  return out;
+}
+const docMajors = () => { const live = TL ? TL.terms : []; return [...new Set([...(TL?.sheets || []), ...live.flatMap(t => t.majors.map(m => m.name))])]; };
+const docGroups = () => [...new Set((TL ? TL.terms : []).flatMap(t => [t.group, ...t.majors.map(m => m.group)]).filter(Boolean))];
+const docCount = (text, s) => s ? text.split(s).length - 1 : 0;
+
+async function docOpenFile(f) {
+  let text;
+  try { text = (await docText(f)).trim(); } catch (e) { termWarn("Không đọc được file: " + e.message); return; }
+  if (!/\p{Script=Han}/u.test(text)) { termWarn(`${f.name} không có chữ Hán nào để lọc.`); return; }
+  closeImp(); termWarn("");
+  let chunks = docChunks(text), cut = 0;
+  if (chunks.length > DOC_MAX_CHUNKS) { cut = chunks.slice(DOC_MAX_CHUNKS).join("").length; chunks = chunks.slice(0, DOC_MAX_CHUNKS); }
+  // lớp 1: thuật ngữ đã có; "A / B" thì khớp A hoặc B, bỏ qua thuật ngữ một chữ vì dễ khớp nhầm
+  const live = TL ? TL.terms : [], have = new Set(), known = [], tally = {};
+  for (const t of live) {
+    const parts = t.zh.split(/\s*[\/／]\s*/).map(s => s.trim()).filter(Boolean);
+    have.add(t.key); parts.forEach(s => have.add(TERM_BE.keyOf(s)));
+    const count = parts.filter(s => s.length > 1).reduce((a, s) => a + docCount(text, s), 0);
+    if (!count) continue;
+    known.push({ key: t.key, zh: t.zh, vi: t.vi, count, on: true });
+    t.majors.forEach(m => tally[m.name] = (tally[m.name] || 0) + count);
+  }
+  known.sort((a, b) => b.count - a.count);
+  const major = Object.entries(tally).sort((a, b) => b[1] - a[1])[0]?.[0] || docMajors()[0] || "";
+  tDoc = { fileName: f.name, text, chunks, cut, known, have, fresh: [], date: docDate(f.name) || docDate(text.slice(0, 600)) || new Date().toLocaleDateString("sv"),
+    major, newMajor: !major, ai: null, show: 60 };
+  tAskSecret = !lsGet(SECRET_KEY);
+  renderDoc();
+  $("#termImp").scrollIntoView({ behavior: "smooth", block: "start" });
+  if (!tAskSecret) docRunAi();
+}
+
+function docSystem() {
+  return `Bạn giúp lập bảng thuật ngữ chuyên ngành du lịch (chuyên ngành: ${tDoc.major || "du lịch"}) từ biên bản bài giảng tiếng Trung.
+Biên bản do máy chuyển từ giọng nói nên lẫn câu nói, từ đệm và lỗi chính tả.
+Hãy lấy các thuật ngữ chuyên môn: khái niệm, lý thuyết, mô hình, phương pháp, loại hình, chỉ tiêu, tên chính sách hoặc văn bản chuyên ngành.
+KHÔNG lấy từ thông dụng hằng ngày, tên người, tên trường lớp, từ đệm, cả câu dài.
+Chữ Hán chép đúng nguyên văn như trong biên bản. Mỗi thuật ngữ chỉ ghi một lần.
+Trả về DUY NHẤT một mảng JSON, không giải thích, mỗi phần tử có dạng:
+{"zh": "旅游规划", "pinyin": "lǚyóu guīhuà", "vi": "Quy hoạch du lịch (tourism planning)", "group": "Khái niệm cơ bản"}
+- pinyin: có dấu thanh, viết liền trong một từ, các từ cách nhau bằng khoảng trắng
+- vi: nghĩa tiếng Việt ngắn gọn, kèm tiếng Anh trong ngoặc
+- group: ưu tiên một tên trong các nhóm đang dùng: ${docGroups().join("; ").slice(0, 4000)}. Không hợp thì đặt tên nhóm mới ngắn bằng tiếng Việt.
+Không có thuật ngữ nào thì trả về [].`;
+}
+const clip = (s, n) => String(s ?? "").normalize("NFC").replace(/\s+/g, " ").trim().slice(0, n);
+function docAdd(d, reply) {
+  const a = reply.indexOf("["), b = reply.lastIndexOf("]");
+  if (a < 0 || b < a) throw new Error("AI không trả về danh sách");
+  for (const x of JSON.parse(reply.slice(a, b + 1))) {
+    const zh = clip(x?.zh, 60), key = TERM_BE.keyOf(zh);
+    if (!/\p{Script=Han}/u.test(zh) || d.have.has(key) || d.fresh.some(f => f.key === key)) continue;
+    // từ AI viết khác nguyên văn (sửa lỗi chính tả, tự ghép) thì để bỏ chọn, người xem tự quyết
+    const count = docCount(d.text, zh);
+    d.fresh.push({ key, zh, pinyin: clip(x.pinyin, 300), vi: clip(x.vi, 1000), group: clip(x.group, 200) || "Khác", count, on: count > 0 });
+  }
+}
+async function docRunAi(only) {
+  const d = tDoc, secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : lsGet(SECRET_KEY);
+  if (!secret) { tAskSecret = true; renderDoc("Nhập mã đồng bộ để lọc bằng AI."); $("#impSecret")?.focus(); return; }
+  const todo = only || d.chunks.map((_, i) => i), system = docSystem();
+  d.ai = { run: true, done: 0, total: todo.length, failed: [], err: "", stop: false };
+  renderDoc();
+  let next = 0;
+  const work = async () => {
+    while (next < todo.length && !d.ai.stop && tDoc === d) {
+      const i = todo[next++];
+      try {
+        const r = await termApi("POST", { system, contents: [{ role: "user", parts: [{ text: `Biên bản, đoạn ${i + 1}/${d.chunks.length}:\n${d.chunks[i]}` }] }] }, secret, "ai");
+        docAdd(d, r.text);
+        if (tAskSecret) { lsSet(SECRET_KEY, secret); tAskSecret = false; }
+      } catch (e) {
+        d.ai.failed.push(i); d.ai.err = e.message;
+        if (e.status === 401 || e.status === 503) d.ai.stop = true;
+      }
+      d.ai.done++;
+      if (tDoc === d) renderDoc();
+    }
+  };
+  await Promise.all(Array.from({ length: DOC_WORKERS }, work));
+  d.ai.failed.push(...todo.slice(next));
+  d.ai.failed.sort((a, b) => a - b);
+  d.ai.run = false;
+  if (d.ai.stop && /mã đồng bộ/.test(d.ai.err)) { tAskSecret = true; lsSet(SECRET_KEY, ""); }
+  if (tDoc === d) renderDoc(d.ai.stop ? `Dừng lọc: ${d.ai.err}.` : "");
+}
+
+const docCanSave = d => !d.ai?.run && !tSaving && /^\d{4}-\d{2}-\d{2}$/.test(d.date) && clip(d.major, 200)
+  && (d.known.some(k => k.on) || d.fresh.some(f => f.on));
+function renderDoc(msg) {
+  const d = tDoc, box = $("#termImp");
+  box.hidden = false;
+  // giữ chỗ đang gõ khi danh sách vẽ lại (AI trả kết quả từng đoạn trong lúc đang sửa)
+  const a = document.activeElement, keep = a && box.contains(a) && a.id ? { id: a.id, s: a.selectionStart, e: a.selectionEnd } : null;
+  const kpi = (cls, n, lbl) => `<div class="imp-kpi ${cls}"><b>${nf(n)}</b><span>${lbl}</span></div>`;
+  const nFresh = d.fresh.filter(f => f.on).length, nKnown = d.known.filter(k => k.on).length, ai = d.ai, majors = docMajors();
+  const aiLine = !ai ? `Biên bản chia thành ${nf(d.chunks.length)} đoạn, mỗi đoạn hỏi AI một lần.`
+    : ai.run ? `Đang lọc… ${nf(ai.done)}/${nf(ai.total)} đoạn`
+    : `Đã lọc ${nf(ai.total - ai.failed.length)}/${nf(ai.total)} đoạn` + (ai.failed.length ? `, ${nf(ai.failed.length)} đoạn chưa lọc được (${esc(ai.err)})` : "") + ".";
+  const aiBtn = ai?.run ? "" : !ai ? `<button class="btn small primary" data-act="ai">Lọc bằng AI</button>`
+    : ai.failed.length ? `<button class="btn small" data-act="retry">Lọc lại ${nf(ai.failed.length)} đoạn</button>` : "";
+  const all = (list, on) => `<span class="seg"><button data-all="${list}" data-v="1" aria-pressed="${on}">Chọn hết</button><button data-all="${list}" data-v="0">Bỏ hết</button></span>`;
+  const secretVal = $("#impSecret")?.value || "";
+  box.innerHTML = `
+    <div class="imp-head">
+      <div><h3>Lọc thuật ngữ từ ${esc(d.fileName)}</h3>
+        <p class="muted">${nf(d.text.length)} chữ · ${nf(d.chunks.length)} đoạn${d.cut ? ` · bỏ ${nf(d.cut)} chữ cuối vì biên bản quá dài` : ""}</p></div>
+      <button class="btn small" data-act="close">Đóng</button>
+    </div>
+    <div class="doc-opts">
+      <label>Buổi học <input type="date" id="docDate" value="${esc(d.date)}"></label>
+      <label>Chuyên ngành <select class="note-filter" id="docMajor">${majors.map(m => `<option ${!d.newMajor && m === d.major ? "selected" : ""}>${esc(m)}</option>`).join("")}
+        <option value="__new" ${d.newMajor ? "selected" : ""}>+ Chuyên ngành mới…</option></select></label>
+      ${d.newMajor ? `<label>Tên chuyên ngành mới <input id="docMajorNew" value="${esc(d.major)}" maxlength="200"></label>` : ""}
+    </div>
+    <div class="imp-kpis">${kpi("new", d.fresh.length, "thuật ngữ mới AI đề xuất")}${kpi("cfl", d.known.length, "thuật ngữ đã có xuất hiện")}${kpi("new", nFresh, "mới sẽ thêm")}${kpi("chg", nKnown, "cũ sẽ ghi thêm buổi")}</div>
+    <div class="imp-sec">
+      <h4>Thuật ngữ mới${d.fresh.length ? all("fresh", nFresh === d.fresh.length) : ""}</h4>
+      <p class="doc-ai muted">${aiLine} ${aiBtn}</p>
+      ${d.fresh.slice(0, d.show).map((f, i) => `<div class="dt-row ${f.on ? "" : "off"}">
+        <input type="checkbox" data-on="${i}" ${f.on ? "checked" : ""} aria-label="Chọn ${esc(f.zh)}">
+        <div class="dt-zh"><span class="hz" lang="zh">${esc(f.zh)}</span>${f.count ? `<small>${nf(f.count)} lần</small>` : `<small class="warn">không thấy nguyên văn</small>`}</div>
+        <input class="dt-in" id="dt-${i}-pinyin" data-k="${i}" data-f="pinyin" value="${esc(f.pinyin)}" placeholder="Pinyin" aria-label="Pinyin của ${esc(f.zh)}">
+        <input class="dt-in" id="dt-${i}-vi" data-k="${i}" data-f="vi" value="${esc(f.vi)}" placeholder="Nghĩa tiếng Việt" aria-label="Nghĩa của ${esc(f.zh)}">
+        <input class="dt-in" id="dt-${i}-group" data-k="${i}" data-f="group" value="${esc(f.group)}" placeholder="Nhóm" list="docGroupList" aria-label="Nhóm của ${esc(f.zh)}">
+      </div>`).join("")}
+      ${d.fresh.length > d.show ? `<div class="term-more"><button class="btn small" data-act="moreF">Xem thêm (còn ${nf(d.fresh.length - d.show)})</button></div>` : ""}
+      <datalist id="docGroupList">${docGroups().map(g => `<option value="${esc(g)}">`).join("")}</datalist>
+    </div>
+    ${d.known.length ? `<div class="imp-sec"><details class="imp-cfl" id="docKnown"><summary>Thuật ngữ đã có trong danh sách xuất hiện ở biên bản (${nf(d.known.length)})</summary>
+      <p class="muted">Thuật ngữ được chọn sẽ ghi thêm buổi ${esc(d.date ? dm(d.date) : "")}${d.major ? ` và chuyên ngành “${esc(d.major)}”` : ""}, nghĩa giữ nguyên. ${all("known", nKnown === d.known.length)}</p>
+      <div class="dt-chips">${d.known.map((k, i) => `<label class="dt-chip" title="${esc(k.vi)}"><input type="checkbox" data-kn="${i}" ${k.on ? "checked" : ""}><span lang="zh">${esc(k.zh)}</span><small>${nf(k.count)}</small></label>`).join("")}</div>
+    </details></div>` : ""}
+    ${tAskSecret ? `<label class="imp-secret">Mã đồng bộ (giống nút “Đồng bộ” ở các app khác)
+      <input class="search" id="impSecret" type="password" autocomplete="current-password" value="${esc(secretVal)}"></label>` : ""}
+    ${msg ? `<div class="note-warn">${esc(msg)}</div>` : ""}
+    <div class="imp-foot">
+      <span class="sum muted">Danh sách cũ giữ nguyên, chỉ thêm ${nf(nFresh)} thuật ngữ mới và ghi buổi cho ${nf(nKnown)} thuật ngữ đã có.</span>
+      <button class="btn small" data-act="close">Hủy</button>
+      <button class="btn small primary" data-act="save" ${docCanSave(d) ? "" : "disabled"}>${tSaving ? "Đang ghi…" : "Thêm vào danh sách"}</button>
+    </div>`;
+  const det = $("#docKnown");
+  if (det) { det.open = !!renderDoc.knownOpen; det.ontoggle = () => renderDoc.knownOpen = det.open; }
+  const saveBtn = box.querySelector('[data-act="save"]'), refresh = () => saveBtn.disabled = !docCanSave(d);
+  $("#docDate").onchange = e => { d.date = e.target.value; renderDoc(); };
+  $("#docMajor").onchange = e => { d.newMajor = e.target.value === "__new"; d.major = d.newMajor ? "" : e.target.value; renderDoc(); if (d.newMajor) $("#docMajorNew").focus(); };
+  if ($("#docMajorNew")) $("#docMajorNew").oninput = e => { d.major = e.target.value; refresh(); };
+  box.querySelectorAll(".dt-in").forEach(el => el.oninput = () => d.fresh[+el.dataset.k][el.dataset.f] = el.value);
+  box.querySelectorAll("[data-on]").forEach(c => c.onchange = () => { d.fresh[+c.dataset.on].on = c.checked; renderDoc(); });
+  box.querySelectorAll("[data-kn]").forEach(c => c.onchange = () => { d.known[+c.dataset.kn].on = c.checked; renderDoc(); });
+  box.querySelectorAll("[data-all]").forEach(b => b.onclick = () => { d[b.dataset.all].forEach(x => x.on = b.dataset.v === "1"); renderDoc(); });
+  box.querySelectorAll("[data-act]").forEach(b => b.onclick = () => {
+    const act = b.dataset.act;
+    if (act === "close") closeImp();
+    if (act === "ai") docRunAi();
+    if (act === "retry") docRunAi(d.ai.failed.slice());
+    if (act === "moreF") { d.show += 120; renderDoc(); }
+    if (act === "save") docSave();
+  });
+  if (keep && document.getElementById(keep.id)) {
+    const el = document.getElementById(keep.id); el.focus();
+    try { el.setSelectionRange(keep.s, keep.e); } catch (e) {}
+  }
+}
+
+async function docSave() {
+  const d = tDoc, secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : lsGet(SECRET_KEY);
+  if (!secret) { tAskSecret = true; renderDoc("Nhập mã đồng bộ để ghi lên máy chủ."); $("#impSecret")?.focus(); return; }
+  tSaving = true; renderDoc();
+  try {
+    // gộp vào bản mới nhất trên máy chủ (máy khác có thể vừa ghi); máy chủ trống thì lấy bản kèm trang làm nền
+    let base = await termApi("GET");
+    if (!base.terms.length && TERMS_FILE) { const p = TERM_BE.parse(TERMS_FILE); base = { ...base, summaryName: p.summaryName, sheets: p.sheetNames, terms: p.terms }; }
+    const major = clip(d.major, 200), date = d.date;
+    const terms = base.terms.map(t => ({ ...t, majors: t.majors.map(m => ({ ...m })), sessions: [...t.sessions] }));
+    const byKey = new Map(terms.map(t => [t.key, t]));
+    let maxN = terms.reduce((a, t) => Math.max(a, t.n < 1e6 ? t.n : 0), 0);
+    let maxM = terms.reduce((a, t) => Math.max(a, ...t.majors.filter(m => m.name === major).map(m => m.n)), 0);
+    const touch = (t, group) => {
+      if (!t.sessions.includes(date)) { t.sessions.push(date); t.sessions.sort(); }
+      if (!t.majors.some(m => m.name === major)) t.majors.push({ name: major, group: group || t.group, n: ++maxM });
+    };
+    let added = 0, updated = 0;
+    for (const k of d.known.filter(k => k.on)) { const t = byKey.get(k.key); if (t) { touch(t); updated++; } }
+    for (const f of d.fresh.filter(f => f.on)) {
+      let t = byKey.get(f.key);
+      if (t) { touch(t, f.group); updated++; continue; }
+      t = { key: f.key, zh: clip(f.zh, 200), pinyin: clip(f.pinyin, 300), vi: clip(f.vi, 1000), group: clip(f.group, 200) || "Khác", n: ++maxN, majors: [], sessions: [] };
+      touch(t, t.group); terms.push(t); byKey.set(t.key, t); added++;
+    }
+    const sheets = base.sheets?.includes(major) ? base.sheets : [...(base.sheets || []), major];
+    const r = await termApi("PUT", { fileName: d.fileName.slice(0, 200), summaryName: base.summaryName || "Tổng hợp", sheets, terms }, secret);
+    lsSet(SECRET_KEY, secret);
+    tSaving = false; tAskSecret = false; closeImp();
+    termWarn("");
+    await loadTerms();
+    termWarn(`Đã thêm ${nf(added)} thuật ngữ mới và ghi buổi ${dm(date)} cho ${nf(updated)} thuật ngữ đã có (bản ${r.version}, tổng ${nf(r.count)}).`, true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (e) {
+    tSaving = false;
+    if (e.status === 401) { tAskSecret = true; renderDoc("Sai mã đồng bộ, nhập lại nhé."); }
+    else renderDoc("Chưa ghi được: " + e.message + ". Danh sách trên máy chủ vẫn giữ nguyên.");
+  }
+}
+
 $("#toTerms").onclick = () => { showView("terms"); window.scrollTo(0, 0); };
 /* kéo thả file Excel: thả vào ô kéo thả hoặc bất cứ đâu trên trang thuật ngữ; đang kéo thì ô sáng lên */
 let termDrag = 0;
@@ -1386,7 +1668,7 @@ document.addEventListener("drop", e => {
   if (view !== "terms") return;
   e.preventDefault(); termDrag = 0; termDragOn(false);
   const fs = [...(e.dataTransfer?.files || [])];
-  if (fs.length) termOpenFile(fs[0]).then(() => { if (fs.length > 1 && tPv) termWarn("Mỗi lần chỉ nhập một file Excel, đang dùng file đầu tiên."); });
+  if (fs.length) termOpenAny(fs[0]).then(() => { if (fs.length > 1 && (tPv || tDoc)) termWarn("Mỗi lần chỉ nhập một file, đang dùng file đầu tiên."); });
 });
 
 /* ---------- Tab ---------- */
