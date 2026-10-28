@@ -49,10 +49,14 @@ export function authorized(req) {
 // Vercel đã parse sẵn req.body khi là JSON; chạy ở máy thì tự đọc luồng
 export async function readJson(req, limit = 1 << 20) {
   if (req.body !== undefined) return typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-  let raw = '';
+  // gom Buffer rồi mới giải mã: cộng chuỗi từng mẩu sẽ cắt đôi chữ nhiều byte (chữ Hán, tiếng Việt) ở ranh giới mẩu
+  const chunks = [];
+  let size = 0;
   for await (const chunk of req) {
-    raw += chunk;
-    if (raw.length > limit) throw new Error('quá lớn');
+    size += chunk.length;
+    if (size > limit) throw new Error('quá lớn');
+    chunks.push(chunk);
   }
+  const raw = Buffer.concat(chunks).toString('utf8');
   return raw ? JSON.parse(raw) : {};
 }

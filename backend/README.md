@@ -33,8 +33,15 @@ Server chỉ nhận đúng dạng hội thoại, tối đa 16 lượt, mỗi đo
 mỗi thuật ngữ `{key, zh, pinyin, vi, group, majors: [{name, group, n}], sessions: ["2026-09-01"], n}`
 (`n` là số dòng trong sheet để giữ thứ tự như file Excel). Chưa có thì `version: 0, terms: []`.
 
-**`PUT /api/<go|node>/terms`** với `{fileName, summaryName, sheets, terms}` → **ghi đè toàn bộ**: xóa hết
+**`GET /api/<go|node>/terms?versions`** → `200 {versions: [{version, fileName, mode, count, createdAt, saved}]}`
+(100 bản mới nhất). **`GET ...?version=N`** → bản sao cả danh sách của bản N (`{version, fileName, summaryName,
+sheets, mode, updatedAt, terms}`), chưa có bản sao thì `404`.
+
+**`PUT /api/<go|node>/terms`** với `{fileName, summaryName, sheets, terms, mode?}` → **ghi đè toàn bộ**: xóa hết
 thuật ngữ cũ rồi ghi danh sách mới trong một transaction, trả `200 {version, count, updatedAt}`.
+`mode` chỉ để ghi vào lịch sử: `replace` (mặc định, ghi đè bằng file), `add` (trang đã gộp file vào danh sách cũ),
+`restore` (khôi phục bản cũ). Mỗi lần ghi lưu kèm bản sao cả danh sách vào `term_upload.terms`, nên bản nào cũng
+khôi phục được; bản ghi từ trước khi có lịch sử thì được sao lưu ngay trước lần ghi kế tiếp.
 Trang hsk6 đọc file Excel và chuẩn hóa (`TERM_BE` trong `BaiGiang/web/template.html` bên repo HSK);
 server kiểm tra lại từng trường (tối đa 5.000 thuật ngữ, khóa không trùng, buổi học dạng `YYYY-MM-DD`),
 sai thì `400` kèm lý do và dữ liệu cũ giữ nguyên.
@@ -55,7 +62,8 @@ CREATE TABLE IF NOT EXISTS term (
 );
 CREATE TABLE IF NOT EXISTS term_upload (
   id bigserial PRIMARY KEY, file_name text NOT NULL, summary_name text NOT NULL, sheets jsonb NOT NULL,
-  count integer NOT NULL, created_at timestamptz NOT NULL DEFAULT now()
+  count integer NOT NULL, created_at timestamptz NOT NULL DEFAULT now(),
+  mode text NOT NULL DEFAULT 'replace', terms jsonb   -- bản sao cả danh sách sau lần ghi này
 );
 ```
 

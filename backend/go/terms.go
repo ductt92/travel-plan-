@@ -3,8 +3,10 @@ package gobackend
 // GET/PUT /api/go/terms
 //
 // Thuật ngữ du lịch của trang "Ngọc học tiếng Trung" (hsk6/), mỗi thuật ngữ một dòng trong bảng term.
-// GET ai cũng đọc được (nội dung học, không bí mật). PUT cần mã đồng bộ và GHI ĐÈ toàn bộ:
-// xóa hết thuật ngữ cũ rồi ghi danh sách mới trong một transaction, mỗi lần ghi thêm một dòng term_upload.
+// GET ai cũng đọc được (nội dung học, không bí mật); ?versions là lịch sử phiên bản, ?version=N là bản sao của bản N.
+// PUT cần mã đồng bộ và GHI ĐÈ toàn bộ bằng danh sách gửi lên (trang tự gộp khi chọn "thêm vào"):
+// xóa hết thuật ngữ cũ rồi ghi danh sách mới trong một transaction, mỗi lần ghi thêm một dòng term_upload
+// kèm bản sao cả danh sách, nên bản nào cũng khôi phục được.
 // Trang đọc file Excel và chuẩn hóa (TERM_BE trong BaiGiang/web/template.html), server kiểm tra lại từng trường.
 
 import (
@@ -14,6 +16,7 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -41,12 +44,18 @@ CREATE TABLE IF NOT EXISTS term_upload (
 	sheets       jsonb NOT NULL,
 	count        integer NOT NULL,
 	created_at   timestamptz NOT NULL DEFAULT now()
-)`
+);
+ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS mode text NOT NULL DEFAULT 'replace';
+ALTER TABLE term_upload ADD COLUMN IF NOT EXISTS terms jsonb`
 
 const (
 	maxTerms     = 5000
 	maxTermsBody = 4 << 20 // ~1.500 thuật ngữ chỉ khoảng 500 KB
+	maxVersions  = 100
 )
+
+// replace: ghi đè bằng file; add: trang đã gộp file vào danh sách cũ; restore: khôi phục một bản cũ
+var termModes = map[string]bool{"replace": true, "add": true, "restore": true}
 
 var (
 	termTablesMu sync.Mutex
@@ -73,9 +82,29 @@ type term struct {
 
 type termUpload struct {
 	FileName    string   `json:"fileName"`
+	Mode        string   `json:"mode"`
 	SummaryName string   `json:"summaryName"`
 	Sheets      []string `json:"sheets"`
 	Terms       []term   `json:"terms"`
+}
+
+type termVersion struct {
+	Version   int64      `json:"version"`
+	FileName  string     `json:"fileName"`
+	Mode      string     `json:"mode"`
+	Count     int        `json:"count"`
+	CreatedAt *time.Time `json:"createdAt"`
+	Saved     bool       `json:"saved"`
+}
+
+type termSnapshot struct {
+	Version     int64           `json:"version"`
+	FileName    string          `json:"fileName"`
+	SummaryName string          `json:"summaryName"`
+	Sheets      json.RawMessage `json:"sheets"`
+	Mode        string          `json:"mode"`
+	UpdatedAt   *time.Time      `json:"updatedAt"`
+	Terms       json.RawMessage `json:"terms"`
 }
 
 type termList struct {
@@ -122,6 +151,31 @@ func Terms(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if r.Method == http.MethodGet && r.URL.Query().Has("versions") {
+		list, err := termVersions(ctx, p)
+		if err != nil {
+			fail(w, http.StatusInternalServerError, "lỗi đọc dữ liệu")
+			return
+		}
+		writeJSON(w, http.StatusOK, map[string]any{"versions": list})
+		return
+	}
+	if r.Method == http.MethodGet && r.URL.Query().Has("version") {
+		id, err := strconv.ParseInt(r.URL.Query().Get("version"), 10, 64)
+		var snap *termSnapshot
+		if err == nil && id > 0 {
+			if snap, err = termSnapshotOf(ctx, p, id); err != nil {
+				fail(w, http.StatusInternalServerError, "lỗi đọc dữ liệu")
+				return
+			}
+		}
+		if snap == nil {
+			fail(w, http.StatusNotFound, "không có bản sao của phiên bản này")
+			return
+		}
+		writeJSON(w, http.StatusOK, snap)
+		return
+	}
 	if r.Method == http.MethodGet {
 		list, err := loadTerms(ctx, p)
 		if err != nil {
@@ -162,6 +216,9 @@ func checkTerms(b termUpload) string {
 	}
 	if !strOK(b.SummaryName, 200, true) {
 		return "thiếu tên sheet tổng hợp"
+	}
+	if b.Mode != "" && !termModes[b.Mode] {
+		return "cách ghi không hợp lệ"
 	}
 	if b.Sheets == nil || len(b.Sheets) > 50 {
 		return "danh sách sheet không hợp lệ"
@@ -240,6 +297,41 @@ func loadTerms(ctx context.Context, p *pgxpool.Pool) (termList, error) {
 	return l, rows.Err()
 }
 
+func termVersions(ctx context.Context, p *pgxpool.Pool) ([]termVersion, error) {
+	rows, err := p.Query(ctx, fmt.Sprintf(`SELECT id, file_name, mode, count, created_at, terms IS NOT NULL
+		FROM term_upload ORDER BY id DESC LIMIT %d`, maxVersions))
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	list := []termVersion{}
+	for rows.Next() {
+		var v termVersion
+		if err := rows.Scan(&v.Version, &v.FileName, &v.Mode, &v.Count, &v.CreatedAt, &v.Saved); err != nil {
+			return nil, err
+		}
+		v.CreatedAt = utc(v.CreatedAt)
+		list = append(list, v)
+	}
+	return list, rows.Err()
+}
+
+// Bản sao của một phiên bản; nil nếu không có bản đó hoặc bản đó ghi từ trước khi có lịch sử
+func termSnapshotOf(ctx context.Context, p *pgxpool.Pool, id int64) (*termSnapshot, error) {
+	var s termSnapshot
+	var terms []byte
+	err := p.QueryRow(ctx, `SELECT id, file_name, summary_name, sheets, mode, created_at, terms FROM term_upload WHERE id = $1`, id).
+		Scan(&s.Version, &s.FileName, &s.SummaryName, &s.Sheets, &s.Mode, &s.UpdatedAt, &terms)
+	if errors.Is(err, pgx.ErrNoRows) || (err == nil && terms == nil) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	s.UpdatedAt, s.Terms = utc(s.UpdatedAt), terms
+	return &s, nil
+}
+
 // Ghi đè trong một transaction: lỗi giữa chừng thì giữ nguyên danh sách cũ
 func replaceTerms(ctx context.Context, p *pgxpool.Pool, b termUpload) (map[string]any, error) {
 	terms, err := json.Marshal(b.Terms)
@@ -255,6 +347,12 @@ func replaceTerms(ctx context.Context, p *pgxpool.Pool, b termUpload) (map[strin
 		return nil, err
 	}
 	defer tx.Rollback(ctx)
+	// sao lưu bản đang có: bản mới nhất ghi từ trước khi có lịch sử (chưa có bản sao) thì chép danh sách hiện tại vào
+	if _, err := tx.Exec(ctx, `UPDATE term_upload SET terms = (SELECT COALESCE(jsonb_agg(jsonb_build_object('key', key, 'zh', zh, 'pinyin', pinyin,
+			'vi', vi, 'group', grp, 'majors', majors, 'sessions', sessions, 'n', n) ORDER BY n, key), '[]') FROM term)
+		WHERE id = (SELECT max(id) FROM term_upload) AND terms IS NULL`); err != nil {
+		return nil, err
+	}
 	if _, err := tx.Exec(ctx, `DELETE FROM term`); err != nil {
 		return nil, err
 	}
@@ -266,8 +364,12 @@ func replaceTerms(ctx context.Context, p *pgxpool.Pool, b termUpload) (map[strin
 	}
 	var id int64
 	var at *time.Time
-	if err := tx.QueryRow(ctx, `INSERT INTO term_upload (file_name, summary_name, sheets, count)
-		VALUES ($1, $2, $3, $4) RETURNING id, created_at`, b.FileName, b.SummaryName, string(sheets), len(b.Terms)).Scan(&id, &at); err != nil {
+	mode := b.Mode
+	if mode == "" {
+		mode = "replace"
+	}
+	if err := tx.QueryRow(ctx, `INSERT INTO term_upload (file_name, summary_name, sheets, count, mode, terms)
+		VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, created_at`, b.FileName, b.SummaryName, string(sheets), len(b.Terms), mode, string(terms)).Scan(&id, &at); err != nil {
 		return nil, err
 	}
 	if err := tx.Commit(ctx); err != nil {
