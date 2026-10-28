@@ -1,5 +1,5 @@
 """Dựng video MP4 cho bài giảng.
-Chạy: python3 apps/hoc-tieng-trung/tools/make_video.py <thư mục tạm> apps/hoc-tieng-trung/public/video <id bài> [...]   (vd 1-1 1-2 … hoặc "all")
+Chạy: python3 apps/hoc-tieng-trung/tools/make_video.py <thư mục tạm> apps/hoc-tieng-trung/public/video <id bài> [...]   (vd 1-1 1-2 …, "cap3" cho cả một cấp, hoặc "all")
 Cần: site đã build đang chạy (npm run build && npm run preview, cổng 4173), ffmpeg, Google Chrome, kho giọng public/audio/ (tools/gen_audio.py).
 Giọng: file Google Dịch trong audio/; câu nào thiếu thì dùng giọng macOS (Linh / Tingting).
 Khung hình: Chrome headless chụp route #/render/<id>/<bước> ở 1920×1080."""
@@ -100,8 +100,9 @@ def build(lid):
     return out, duration(out), len(steps), missing
 
 os.makedirs(OUTDIR, exist_ok=True)
-if IDS == ['all']:
-    IDS = [f'{lv}-{n}' for lv in (1, 2) for n in range(1, 16)]
+if IDS == ['all'] or (len(IDS) == 1 and IDS[0].startswith('cap')):   # "all" hoặc cả một cấp, vd "cap3"
+    LS = json.load(open(os.path.join(ROOT, 'src', 'data', 'lessons.json')))
+    IDS = [l['id'] for l in LS if IDS[0] == 'all' or l['lv'] == int(IDS[0][3:])]
 t0 = time.time()
 for lid in IDS:
     lv, no = lid.split('-')

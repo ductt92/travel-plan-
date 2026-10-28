@@ -26,6 +26,8 @@ export function LevelView() {
           <p className="ui-muted" style={{ maxWidth: '62ch' }}>
             {L.book
               ? `Bám theo khung chủ đề, từ vựng và ngữ pháp của giáo trình ${L.book}. Hoàn thành cấp này bạn nắm được khoảng ${fmtN(L.words)} từ.`
+              : L.std
+              ? `Bám theo danh sách ${fmtN(L.newWords)} từ và ${L.gram} điểm ngữ pháp của ${L.name} trong chuẩn HSK 3.0 bản 2021, chia thành ${L.plan} bài theo chủ đề đời sống. Theo chuẩn, hết cấp này bạn tích lũy khoảng ${fmtN(L.words)} từ.`
               : `Theo chuẩn HSK 3.0 bản 2021, cấp này tích lũy khoảng ${fmtN(L.words)} từ và ${fmtN(L.chars)} chữ Hán.`}
           </p>
         </Stack>
@@ -39,11 +41,11 @@ export function LevelView() {
       </header>
 
       <div className="lv-tiles">
-        {L.book ? <>
-          <StatTile label="Từ vựng mới" value={`+${fmtN(L.words - p.words)}`} />
+        {L.book || L.std ? <>
+          <StatTile label="Từ vựng mới" value={`+${fmtN(L.book ? L.words - p.words : L.newWords)}`} />
           <StatTile label="Điểm ngữ pháp" value={L.gram} />
-          <StatTile label="Số bài" value={ls.length} />
-          <StatTile label="Giáo trình tham chiếu" value={<span className="ui-hz" style={{ fontSize: 18 }}>{L.book}</span>} />
+          <StatTile label={L.plan > ls.length ? 'Bài đã soạn' : 'Số bài'} value={L.plan > ls.length ? `${ls.length}/${L.plan}` : ls.length} />
+          <StatTile label={L.book ? 'Giáo trình tham chiếu' : 'Chuẩn tham chiếu'} value={<span className="ui-hz" style={{ fontSize: 18 }}>{L.book || L.std}</span>} />
         </> : <>
           <StatTile label="Từ vựng tích lũy" value={fmtN(L.words)} />
           <StatTile label="Chữ Hán tích lũy" value={fmtN(L.chars)} />

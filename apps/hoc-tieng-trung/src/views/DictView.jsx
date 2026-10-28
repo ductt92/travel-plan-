@@ -2,14 +2,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Chip, Icon, LinkButton, PageHeader, Pill, Row, Stack, Tag, Card, useToast } from '@trang/ui';
-import { WORDS, WMAP, byHz } from '../core/data.js';
+import { WORDS, WMAP, byHz, CONTENT_LEVELS } from '../core/data.js';
 import { syls, pyText, toneOf, fold, plainHz } from '../core/pinyin.js';
 import { say } from '../core/speech.js';
 import { useStore, getState, addCards, activity, fmtWait } from '../core/store.js';
 import { Hz, Py, Hv, SayButton } from '../components/Hanzi.jsx';
 import './DictView.css';
 
-const FILTERS = [[0, 'Tất cả'], [1, 'Cấp 1'], [2, 'Cấp 2'], [-1, 'Từ đã học']];
+const FILTERS = [[0, 'Tất cả'], ...CONTENT_LEVELS.map(n => [n, `Cấp ${n}`]), [-1, 'Từ đã học']];
 const memo = { q: '', lv: 0, sel: null }; // giữ ô tìm và bộ lọc khi rời trang
 
 function searchWords(query, lv) {

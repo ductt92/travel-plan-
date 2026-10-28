@@ -6,7 +6,7 @@ export const LEVELS = [
   {n:0, hz:'零', name:'Cấp 0 · Nhập môn', sub:'Pinyin, 4 thanh điệu, nét cơ bản'},
   {n:1, hz:'一', name:'Cấp 1', sub:'Chào hỏi, gia đình, thời gian, mua sắm, ăn uống', words:300, gram:40, book:'新HSK教程 1'},
   {n:2, hz:'二', name:'Cấp 2', sub:'Đi lại, du lịch, sở thích, so sánh, thời tiết', words:500, gram:45, book:'新HSK教程 2'},
-  {n:3, hz:'三', name:'Cấp 3', sub:'Học tập, công việc, du lịch', syl:608, chars:900, words:2245, gram:81},
+  {n:3, hz:'三', name:'Cấp 3', sub:'Nhà ở, mua sắm, sức khỏe, đi lại, học tập, công việc', syl:608, chars:900, words:2245, gram:81, newWords:973, plan:40, std:'等级标准 2021'},
   {n:4, hz:'四', name:'Cấp 4', sub:'Quan hệ xã hội, văn hóa, cảm xúc', syl:724, chars:1200, words:3245, gram:76},
   {n:5, hz:'五', name:'Cấp 5', sub:'Kinh tế, môi trường, truyền thông', syl:822, chars:1500, words:4316, gram:71},
   {n:6, hz:'六', name:'Cấp 6', sub:'Khoa học, chính sách, bình luận', syl:908, chars:1800, words:5456, gram:67},
@@ -50,5 +50,7 @@ export const PINYIN = PINYIN_RAW;
 export const byHz = hz => WORDS.find(w => w.hz === hz);
 export const lessonById = id => LESSONS.find(l => l.id === id);
 export const lessonsOf = n => LESSONS.filter(l => l.lv === n);
+// Các cấp có bài trong lessons.json (dùng cho bộ lọc, bài kiểm tra cuối cấp)
+export const CONTENT_LEVELS = [...new Set(RAW.map(l => l.lv))].sort((a, b) => a - b);
 export const hasContent = n => n === 0 || lessonsOf(n).length > 0;
 export const NPARTS = 5; // Bài giảng, Từ mới, Ngữ pháp, Hội thoại, Luyện tập
