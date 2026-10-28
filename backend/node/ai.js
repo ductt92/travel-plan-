@@ -1,9 +1,9 @@
 // POST /api/node/ai  { model?, provider?, system?, contents: [{role, parts:[{text}]}] } → { text, provider, model }
-// Gọi AI bằng khóa giấu trên server, người dùng chỉ cần mã đồng bộ chung.
+// Gọi AI bằng khóa giấu trên server, người dùng chỉ cần mã đồng bộ chung (hoặc mật khẩu trang hsk6).
 // Nhiều nhà cung cấp có gói miễn phí, thử lần lượt: hết lượt (429), quá tải, lỗi hay quá giờ thì chuyển sang cái kế tiếp.
 // Chỉ dùng cái nào có khóa trong biến môi trường; đổi thứ tự bằng AI_ORDER (vd "groq,gemini"), đổi model bằng <TÊN>_MODELS,
 // đổi địa chỉ (proxy, máy chủ thử) bằng <TÊN>_BASE_URL.
-import { authorized, fail, readJson, send } from './common.js';
+import { authorizedHsk6, fail, readJson, send } from './common.js';
 
 const MODEL_RE = /^gemini-[\w.-]{1,40}$/;
 const MAX_TURNS = 16;
@@ -68,7 +68,7 @@ async function callOpenAI(id, key, model, { system, contents }, signal) {
 
 export default async function ai(req, res) {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return fail(res, 405, 'chỉ hỗ trợ POST'); }
-  if (!authorized(req)) return fail(res, 401, 'sai mã đồng bộ');
+  if (!authorizedHsk6(req)) return fail(res, 401, 'sai mã đồng bộ hoặc mật khẩu');
 
   let body;
   try { body = await readJson(req); } catch { return fail(res, 400, 'dữ liệu không hợp lệ'); }
