@@ -133,9 +133,9 @@ footer { display: flex; justify-content: center; gap: 8px; padding: 10px 12px ca
 <section id="join">
   <form>
     <h1>Lớp học trực tiếp</h1>
-    <p class="hint">Bản thử: video, bảng vẽ trên slide, chat. Tối đa 6 người một phòng.</p>
+    <p class="hint">Video, bảng vẽ trên slide, chat. Tối đa 6 người một phòng.</p>
     <label>Tên của bạn <input name="name" required maxlength="30" autocomplete="nickname"></label>
-    <label>Mã phòng <input name="room" required maxlength="32" value="hsk"></label>
+    <label>Mã phòng <input name="room" required maxlength="32" value="hsk" autocapitalize="none"></label>
     <div class="roles">
       <label><input type="radio" name="role" value="student" checked> Học sinh</label>
       <label><input type="radio" name="role" value="teacher"> Giáo viên</label>
@@ -218,23 +218,30 @@ footer { display: flex; justify-content: center; gap: 8px; padding: 10px 12px ca
 
 <div id="toast" class="hidden"></div>
 
-<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ably@2.28.0/build/ably.min.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const params = new URLSearchParams(location.search);
-const FAKE = params.has('fake'); // ?fake=1: camera giả để thử nhiều tab trên một máy
+const FAKE = params.has('fake');   // ?fake=1: camera giả để thử nhiều tab trên một máy
+const LOCAL = params.has('local'); // ?local=1: các tab nói chuyện với nhau qua BroadcastChannel, không cần Ably
+const API = `/api/${params.get('api') === 'go' ? 'go' : 'node'}/lop-hoc`;
 const ICE = [{ urls: 'stun:stun.l.google.com:19302' }];
 const COLORS = ['#1f1d1a', '#c0392b', '#1e6fd9', '#2f7d4f', '#d68910'];
+const MAX_PEOPLE = 6;
+const CHUNK = 30000; // gửi nét vẽ cho người mới theo từng gói ~30 KB (Ably giới hạn cỡ một tin nhắn)
 
 const store = {
   get(k) { try { return localStorage.getItem(k); } catch { return null; } },
   set(k, v) { try { localStorage.setItem(k, v); } catch {} }
 };
 
-let socket, me, people = new Map(), lessons = [];
+let net, me, people = new Map(), lessons = [];
 let local = new MediaStream(), facing = 'user';
 const peers = new Map(); // id → { pc, stream, queue: [] }
-const state = { lesson: null, slide: 0, strokes: [], mic: true, cam: true, hand: false };
+const state = { lesson: null, slide: 0, mic: true, cam: true, hand: false };
+const pages = new Map(); // "bai21:3" → Map(id → nét vẽ): giữ nét của mọi trang để người vào sau nhận lại
+let drawers = new Set(); // học sinh được giáo viên giao bút
+const chatLog = [];
 
 function toast(text, ms = 2500) {
   const t = $('#toast');
@@ -244,8 +251,80 @@ function toast(text, ms = 2500) {
   toast.timer = setTimeout(() => t.classList.add('hidden'), ms);
 }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const isTeacher = () => me?.role === 'teacher';
-const canDraw = () => isTeacher() || people.get(me?.id)?.draw;
+const roleOf = id => id.startsWith('gv-') ? 'teacher' : 'student';
+const isTeacher = (id = me?.id) => !!id && roleOf(id) === 'teacher';
+const canDraw = (id = me?.id) => isTeacher(id) || drawers.has(id);
+const randomId = () => [...crypto.getRandomValues(new Uint8Array(12))].map(b => (b % 36).toString(36)).join('');
+
+/* ---------- Kênh liên lạc ---------- */
+// Mỗi phòng một kênh Ably "lop:<phòng>". Token do /api/<node|go>/lop-hoc ký, gắn clientId vào mọi tin nhắn:
+// "gv-…" chắc chắn là giáo viên, nên lệnh đổi slide, tắt mic, giao bút chỉ nhận khi đến từ "gv-…".
+async function connectAbly(room, clientId, pass) {
+  const getToken = async () => {
+    const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ room, clientId, pass }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || `Máy chủ lỗi (${r.status})`);
+    return j;
+  };
+  let first = await getToken(); // xin trước để báo lỗi (sai mật khẩu…) ngay ở màn hình vào lớp
+  const client = new Ably.Realtime({
+    clientId, echoMessages: false,
+    authCallback: (_, cb) => {
+      if (first) { const t = first; first = null; return cb(null, t); }
+      getToken().then(t => cb(null, t), err => cb(err.message, null)); // token hết hạn thì xin lại
+    }
+  });
+  await new Promise((ok, bad) => {
+    const fail = msg => { client.close(); bad(new Error(msg)); };
+    const timer = setTimeout(() => fail('Không kết nối được, kiểm tra lại mạng'), 15000);
+    client.connection.once('connected', () => { clearTimeout(timer); ok(); });
+    client.connection.once('failed', s => { clearTimeout(timer); fail(s.reason?.message || 'Không kết nối được Ably'); });
+  });
+  const ch = client.channels.get('lop:' + room);
+  return {
+    publish: (type, data) => ch.publish(type, data).catch(err => console.warn('gửi lỗi', type, err)),
+    listen: cb => ch.subscribe(m => cb(m.name, m.data, m.clientId)),
+    watch: cb => ch.presence.subscribe(m => cb(m.action, { id: m.clientId, ...m.data })),
+    members: async () => (await ch.presence.get()).map(m => ({ id: m.clientId, ...m.data })),
+    enter: data => ch.presence.enter(data),
+    update: data => ch.presence.update(data),
+    onState: cb => client.connection.on(s => cb(s.current)),
+    close: () => client.close()
+  };
+}
+
+// Bản thử không cần Ably: các tab cùng trình duyệt nói chuyện qua BroadcastChannel, có nhịp tim thay cho presence
+function connectLocal(room, clientId) {
+  const bc = new BroadcastChannel('lop-hoc:' + room);
+  const seen = new Map(); // id → { data, at }
+  let mine = null, onMsg = () => {}, onPres = () => {};
+  const post = (kind, body = {}) => bc.postMessage({ kind, from: clientId, ...body });
+  bc.onmessage = ({ data: m }) => {
+    if (m.kind === 'msg') return onMsg(m.type, m.data, m.from);
+    if (m.kind === 'who') return mine && post('here', { data: mine });
+    if (m.kind === 'leave') { if (seen.delete(m.from)) onPres('leave', { id: m.from, ...m.data }); return; }
+    const isNew = !seen.has(m.from);
+    seen.set(m.from, { data: m.data, at: Date.now() });
+    if (isNew) onPres('enter', { id: m.from, ...m.data });
+    else if (m.kind === 'update') onPres('update', { id: m.from, ...m.data });
+  };
+  const beat = setInterval(() => {
+    if (mine) post('here', { data: mine });
+    for (const [id, v] of seen) if (Date.now() - v.at > 6000) { seen.delete(id); onPres('leave', { id, ...v.data }); }
+  }, 2000);
+  const leave = () => mine && post('leave', { data: mine });
+  addEventListener('pagehide', leave);
+  return {
+    publish: (type, data) => post('msg', { type, data }),
+    listen: cb => { onMsg = cb; },
+    watch: cb => { onPres = cb; },
+    members: () => new Promise(ok => { post('who'); setTimeout(() => ok([...seen].map(([id, v]) => ({ id, ...v.data }))), 500); }),
+    enter: data => { mine = data; post('here', { data }); },
+    update: data => { mine = data; post('update', { data }); },
+    onState: () => {},
+    close: () => { leave(); clearInterval(beat); bc.close(); }
+  };
+}
 
 /* ---------- Vào lớp ---------- */
 const form = $('#join form');
@@ -255,16 +334,30 @@ form.addEventListener('change', () => $('.pass').classList.toggle('hidden', form
 form.addEventListener('submit', async e => {
   e.preventDefault();
   const btn = form.querySelector('button');
+  const err = $('#join .err');
+  const room = form.room.value.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 32);
+  const name = form.name.value.trim().slice(0, 30);
+  if (!room || !name) { err.textContent = 'Cần nhập tên và mã phòng (chữ không dấu, số)'; return; }
   btn.disabled = true;
-  $('#join .err').textContent = '';
-  store.set('lop-name', form.name.value.trim());
-  await startMedia();
-  socket = io({ transports: ['websocket'] });
-  socket.emit('join', { room: form.room.value, name: form.name.value, role: form.role.value, pass: form.pass.value }, res => {
-    btn.disabled = false;
-    if (res.error) { $('#join .err').textContent = res.error; socket.disconnect(); return; }
-    enter(res);
-  });
+  err.textContent = 'Đang kết nối…';
+  store.set('lop-name', name);
+  const clientId = (form.role.value === 'teacher' ? 'gv-' : 'hs-') + randomId();
+  try {
+    net = LOCAL ? connectLocal(room, clientId) : await connectAbly(room, clientId, form.pass.value);
+    await net.listen(onMessage);
+    await net.watch(onPresence);
+    const others = (await net.members()).filter(p => p.id !== clientId);
+    if (others.length >= MAX_PEOPLE) throw new Error(`Phòng đã đủ ${MAX_PEOPLE} người`);
+    await startMedia(name);
+    me = { id: clientId, name, role: roleOf(clientId) };
+    form.room.value = room;
+    err.textContent = '';
+    await enter();
+  } catch (ex) {
+    err.textContent = ex.message || String(ex);
+    net?.close();
+    net = null;
+  } finally { btn.disabled = false; }
 });
 
 /* ---------- Camera / mic ---------- */
@@ -286,14 +379,14 @@ function fakeStream(label) {
   return new MediaStream([...c.captureStream(10).getVideoTracks(), ...dest.stream.getAudioTracks()]);
 }
 
-async function startMedia() {
-  if (FAKE) { local = fakeStream(form.name.value || 'Thử'); return; }
+async function startMedia(name) {
+  if (FAKE) { local = fakeStream(name); return; }
   try {
     local = await navigator.mediaDevices.getUserMedia({
       audio: { echoCancellation: true, noiseSuppression: true },
       video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { max: 20 }, facingMode: facing }
     });
-  } catch (err) {
+  } catch {
     // không có camera hoặc bị từ chối: thử chỉ mic, rồi tới không có gì (vẫn xem và nghe được)
     try { local = await navigator.mediaDevices.getUserMedia({ audio: true }); }
     catch { local = new MediaStream(); }
@@ -321,13 +414,13 @@ async function toggle(kind) {
       local.addTrack(t);
       replaceEverywhere(kind, t);
       state[key] = true;
-      return refreshMe({ [key]: true });
+      return refreshMe(true);
     } catch { return toast(kind === 'audio' ? 'Không mở được mic' : 'Không mở được camera'); }
   }
   if (!t) return;
   t.enabled = !t.enabled;
   state[key] = t.enabled;
-  refreshMe({ [key]: t.enabled });
+  refreshMe(true);
 }
 
 async function flip() {
@@ -340,7 +433,7 @@ async function flip() {
     local.addTrack(t);
     replaceEverywhere('video', t);
     state.cam = true;
-    refreshMe({ cam: true });
+    refreshMe(true);
   } catch { toast('Không đổi được camera'); }
 }
 
@@ -352,20 +445,22 @@ function paintButtons() {
   $('#hand').classList.toggle('on', state.hand);
   $('#hand').textContent = state.hand ? '✋ Đang giơ tay' : '✋ Giơ tay';
 }
-// chỉ gửi trường vừa đổi: gửi cả cục thì có thể ghi đè việc giáo viên vừa hạ tay giúp mình
+// Trạng thái mic/cam/giơ tay của mình nằm trong presence: chỉ mình sửa, người khác đọc
+const myPresence = () => ({ name: me.name, mic: state.mic, cam: state.cam, hand: state.hand });
 function refreshMe(changed) {
   paintButtons();
-  if (changed) socket?.emit('status', changed);
+  if (changed) net?.update(myPresence());
   renderTile(me.id);
 }
 
 /* ---------- WebRTC: mỗi người nối thẳng với từng người khác ---------- */
+const signal = (to, data) => net.publish('signal', { to, data });
 function peer(id) {
   if (peers.has(id)) return peers.get(id);
   const pc = new RTCPeerConnection({ iceServers: ICE });
   const p = { pc, stream: new MediaStream(), queue: [] };
   peers.set(id, p);
-  pc.onicecandidate = e => e.candidate && socket.emit('signal', { to: id, data: { candidate: e.candidate } });
+  pc.onicecandidate = e => e.candidate && signal(id, { candidate: e.candidate.toJSON() });
   pc.ontrack = e => { p.stream.addTrack(e.track); renderTile(id); };
   pc.onconnectionstatechange = () => {
     renderTile(id);
@@ -374,18 +469,20 @@ function peer(id) {
   return p;
 }
 
-// Người mới vào gọi tới người đã có trong phòng
+// Hai người biết nhau (qua presence) thì người có mã nhỏ hơn gọi, nên không bao giờ hai bên gọi cùng lúc
 async function call(id) {
+  if (peers.has(id)) return;
   const { pc } = peer(id);
   for (const kind of ['audio', 'video']) {
     const tr = pc.addTransceiver(kind, { direction: 'sendrecv' });
     await tr.sender.replaceTrack(track(kind));
   }
   await pc.setLocalDescription(await pc.createOffer());
-  socket.emit('signal', { to: id, data: { sdp: pc.localDescription } });
+  signal(id, { sdp: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } });
 }
+const meet = id => { if (me.id < id) call(id).catch(err => console.warn('gọi lỗi', err)); };
 
-async function onSignal({ from, data }) {
+async function onSignal(from, data) {
   const p = peer(from), pc = p.pc;
   if (data.sdp) {
     await pc.setRemoteDescription(data.sdp);
@@ -395,7 +492,7 @@ async function onSignal({ from, data }) {
         await tr.sender.replaceTrack(track(tr.receiver.track.kind));
       }
       await pc.setLocalDescription(await pc.createAnswer());
-      socket.emit('signal', { to: from, data: { sdp: pc.localDescription } });
+      signal(from, { sdp: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } });
     }
     for (const c of p.queue.splice(0)) await pc.addIceCandidate(c).catch(() => {});
   } else if (data.candidate) {
@@ -412,7 +509,7 @@ function drop(id) {
 
 /* ---------- Ô video ---------- */
 function renderTile(id) {
-  const person = people.get(id) || (id === me.id ? me : null);
+  const person = people.get(id);
   if (!person) return;
   let el = document.getElementById('tile-' + id);
   if (!el) {
@@ -440,8 +537,8 @@ function renderTile(id) {
     (micOn ? '' : '<span>🔇</span>') + (hand ? '<span>✋</span>' : '');
   const st = el.querySelector('.state');
   const cs = peers.get(id)?.pc.connectionState;
-  st.classList.toggle('hidden', id === me.id || !cs || cs === 'connected');
-  st.textContent = { new: 'đang nối…', connecting: 'đang nối…', disconnected: 'chập chờn…', failed: 'không nối được', closed: 'đã đóng' }[cs] || cs || '';
+  st.classList.toggle('hidden', id === me.id || cs === 'connected');
+  st.textContent = { new: 'đang nối…', connecting: 'đang nối…', disconnected: 'chập chờn…', failed: 'không nối được', closed: 'đã đóng' }[cs] || 'đang nối…';
   // giáo viên lên đầu
   if (person.role === 'teacher' && $('#videos').firstChild !== el) $('#videos').prepend(el);
   if (person.role === 'teacher') renderFocus();
@@ -469,7 +566,7 @@ function renderFocus() {
   const camOn = mine ? state.cam && !!track('video') : t.cam !== false;
   box.querySelector('.avatar').classList.toggle('hidden', camOn);
   box.querySelector('.avatar').textContent = t.name.trim().split(/\s+/).pop().slice(0, 1).toUpperCase();
-  box.querySelector('.label').textContent = t.name + (mine ? ' (bạn)' : '') + (t.mic === false ? ' · 🔇' : '');
+  box.querySelector('.label').textContent = t.name + (mine ? ' (bạn)' : '') + ((mine ? state.mic : t.mic !== false) ? '' : ' · 🔇');
 }
 function setFocus(on) {
   focusOn = on;
@@ -484,13 +581,14 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && focusOn) setFocus(f
 /* ---------- Danh sách người học ---------- */
 function renderPeople() {
   $('#count').textContent = people.size;
+  const hand = p => p.id === me.id ? state.hand : !!p.hand;
   $('#people').innerHTML = [...people.values()]
-    .sort((a, b) => (b.role === 'teacher') - (a.role === 'teacher') || b.hand - a.hand)
+    .sort((a, b) => (b.role === 'teacher') - (a.role === 'teacher') || hand(b) - hand(a))
     .map(p => `<div class="person">
-      <span class="name">${p.hand ? '✋ ' : ''}${esc(p.name)}${p.id === me.id ? ' (bạn)' : ''}
-        <span class="role">${p.role === 'teacher' ? 'Giáo viên' : 'Học sinh'}${p.draw ? ' · được vẽ' : ''}</span></span>
+      <span class="name">${hand(p) ? '✋ ' : ''}${esc(p.name)}${p.id === me.id ? ' (bạn)' : ''}
+        <span class="role">${p.role === 'teacher' ? 'Giáo viên' : 'Học sinh'}${drawers.has(p.id) ? ' · được vẽ' : ''}</span></span>
       ${isTeacher() && p.role !== 'teacher' ? `
-        <button data-act="draw" data-id="${p.id}">${p.draw ? 'Thu bút' : 'Cho vẽ'}</button>
+        <button data-act="draw" data-id="${p.id}">${drawers.has(p.id) ? 'Thu bút' : 'Cho vẽ'}</button>
         <button data-act="mute" data-id="${p.id}" ${p.mic === false ? 'disabled' : ''}>Tắt mic</button>
         ${p.hand ? `<button data-act="hand" data-id="${p.id}">Hạ tay</button>` : ''}` : ''}
     </div>`).join('');
@@ -501,20 +599,24 @@ function renderPeople() {
 $('#people').addEventListener('click', e => {
   const b = e.target.closest('button[data-act]');
   if (!b) return;
-  const id = b.dataset.id, p = people.get(id);
-  if (b.dataset.act === 'draw') socket.emit('allow-draw', { id, on: !p.draw });
-  if (b.dataset.act === 'mute') socket.emit('mute', { id });
-  if (b.dataset.act === 'hand') socket.emit('lower-hand', { id });
+  const id = b.dataset.id;
+  if (b.dataset.act === 'draw') {
+    const next = new Set(drawers);
+    next.has(id) ? next.delete(id) : next.add(id);
+    act('perm', { drawers: [...next] });
+  }
+  if (b.dataset.act === 'mute') net.publish('mute', { to: id });
+  if (b.dataset.act === 'hand') net.publish('lower-hand', { to: id });
 });
 
 function applyRole() {
   document.querySelectorAll('.teacher-only').forEach(el => el.classList.toggle('hidden', !isTeacher()));
   document.querySelectorAll('.student-only').forEach(el => el.classList.toggle('hidden', isTeacher()));
   document.querySelectorAll('.draw-only').forEach(el => el.classList.toggle('hidden', !canDraw()));
-  board.classList.toggle('drawing', !!canDraw());
+  board.classList.toggle('drawing', canDraw());
   board.style.pointerEvents = canDraw() ? 'auto' : 'none';
   // học sinh được giao bút thì lời nhắc chỉ hiện một lần
-  const drawNow = !!canDraw();
+  const drawNow = canDraw();
   if (!isTeacher() && applyRole.last === false && drawNow) toast('Giáo viên cho bạn vẽ lên bảng');
   applyRole.last = drawNow;
 }
@@ -540,14 +642,16 @@ function addMsg(m, quiet) {
 $('#chatForm').addEventListener('submit', e => {
   e.preventDefault();
   const t = e.target.text;
-  if (t.value.trim()) socket.emit('chat', t.value);
+  const text = t.value.trim().slice(0, 500);
+  if (text) act('chat', { name: me.name, text, at: Date.now() });
   t.value = '';
 });
 
 /* ---------- Slide + bảng vẽ ---------- */
 const stage = $('#stage'), board = $('#board'), ctx = board.getContext('2d');
 let color = COLORS[1], erasing = false;
-const strokeMap = new Map(); // id → stroke
+const pageKey = () => `${state.lesson || 'trang'}:${state.slide}`;
+const page = key => { if (!pages.has(key)) pages.set(key, new Map()); return pages.get(key); };
 
 function fitStage() {
   // giữ khung 16:9 vừa cả bề rộng lẫn bề cao chỗ trống
@@ -585,16 +689,11 @@ function seg(s, from) {
 }
 function redraw() {
   ctx.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
-  for (const s of strokeMap.values()) seg(s, 0);
-}
-function setStrokes(list) {
-  strokeMap.clear();
-  for (const s of list) strokeMap.set(s.id, s);
-  redraw();
+  for (const s of page(pageKey()).values()) seg(s, 0);
 }
 
-function showPage({ lesson, slide, strokes }) {
-  state.lesson = lesson; state.slide = slide;
+function showPage() {
+  const { lesson, slide } = state;
   const L = lessons.find(l => l.id === lesson);
   const img = $('#slide');
   img.classList.toggle('hidden', !L);
@@ -606,47 +705,52 @@ function showPage({ lesson, slide, strokes }) {
   $('#lesson').value = lesson || '';
   $('#prev').disabled = !L || slide <= 0;
   $('#next').disabled = !L || slide >= L.slides.length - 1;
-  setStrokes(strokes || []);
+  redraw();
 }
-function go(lesson, slide) { socket.emit('goto', { lesson, slide }); }
+const go = (lesson, slide) => act('goto', { lesson, slide });
 $('#lesson').addEventListener('change', e => go(e.target.value || null, 0));
 $('#prev').addEventListener('click', () => go(state.lesson, state.slide - 1));
 $('#next').addEventListener('click', () => go(state.lesson, state.slide + 1));
 addEventListener('keydown', e => {
-  if (!isTeacher() || e.target.closest('input, select, textarea')) return;
+  if (!me || !isTeacher() || e.target.closest('input, select, textarea')) return;
   if (e.key === 'ArrowLeft' && !$('#prev').disabled) go(state.lesson, state.slide - 1);
   if (e.key === 'ArrowRight' && !$('#next').disabled) go(state.lesson, state.slide + 1);
 });
 
-// Vẽ: gửi điểm theo lô ~25 lần/giây để mạng nhẹ mà người xem vẫn thấy nét chạy
+// Vẽ: gửi điểm theo lô 10 lần/giây — đủ để người xem thấy nét chạy mà tốn ít tin nhắn
 let drawing = null, pending = [], seq = 0, flushTimer = null;
 const pos = e => {
   const r = stage.getBoundingClientRect();
   return [+((e.clientX - r.left) / r.width).toFixed(4), +((e.clientY - r.top) / r.height).toFixed(4)];
 };
 function flush() {
+  clearTimeout(flushTimer);
   flushTimer = null;
-  if (drawing && pending.length) socket.emit('stroke:points', { id: drawing.id, points: pending.splice(0) });
+  if (drawing && pending.length) net.publish('s:pts', { page: drawing.page, id: drawing.id, points: pending.splice(0) });
+}
+function startStroke(p) {
+  drawing = { id: `${me.id}-${++seq}`, by: me.id, page: pageKey(), color: erasing ? 'erase' : color,
+    width: erasing ? 30 : Number($('#size').value), points: [p] };
+  page(drawing.page).set(drawing.id, drawing);
+  seg(drawing, 0);
+  net.publish('s:start', { id: drawing.id, page: drawing.page, color: drawing.color, width: drawing.width, points: [p] });
 }
 board.addEventListener('pointerdown', e => {
   if (!canDraw() || (e.pointerType === 'mouse' && e.button !== 0)) return;
   try { board.setPointerCapture(e.pointerId); } catch {}
-  drawing = { id: `${me.id}-${++seq}`, by: me.id, color: erasing ? 'erase' : color,
-    width: erasing ? 30 : Number($('#size').value), points: [pos(e)] };
-  strokeMap.set(drawing.id, drawing);
-  seg(drawing, 0);
-  socket.emit('stroke:start', drawing);
+  startStroke(pos(e));
 });
 board.addEventListener('pointermove', e => {
   if (!drawing) return;
   const co = e.getCoalescedEvents?.() || [];
-  const evs = co.length ? co : [e];
   const from = drawing.points.length;
-  for (const ev of evs) { const p = pos(ev); drawing.points.push(p); pending.push(p); }
+  for (const ev of co.length ? co : [e]) { const p = pos(ev); drawing.points.push(p); pending.push(p); }
   seg(drawing, from);
-  flushTimer ||= setTimeout(flush, 40);
+  // nét quá dài thì cắt thành nét mới để mỗi nét vừa một tin nhắn khi gửi cho người vào sau
+  if (drawing.points.length > 1000) { const last = drawing.points.at(-1); flush(); startStroke(last); }
+  flushTimer ||= setTimeout(flush, 100);
 });
-const endStroke = () => { if (!drawing) return; clearTimeout(flushTimer); flush(); drawing = null; };
+const endStroke = () => { if (!drawing) return; flush(); drawing = null; };
 board.addEventListener('pointerup', endStroke);
 board.addEventListener('pointercancel', endStroke);
 
@@ -657,74 +761,169 @@ function pickTool() {
 }
 $('#swatches').addEventListener('click', e => { const b = e.target.closest('.swatch'); if (b) { color = b.dataset.c; erasing = false; pickTool(); } });
 $('#eraser').addEventListener('click', () => { erasing = !erasing; pickTool(); });
-$('#undo').addEventListener('click', () => socket.emit('undo'));
-$('#clear').addEventListener('click', () => confirm('Xóa hết nét vẽ trên trang này?') && socket.emit('clear'));
+$('#undo').addEventListener('click', () => {
+  // giáo viên xóa nét mới nhất của bất kỳ ai, học sinh chỉ xóa nét của mình
+  const last = [...page(pageKey()).values()].reverse().find(s => isTeacher() || s.by === me.id);
+  if (last) act('remove', { page: pageKey(), id: last.id });
+});
+$('#clear').addEventListener('click', () => confirm('Xóa hết nét vẽ trên trang này?') && act('clear', { page: pageKey() }));
 pickTool();
 
+/* ---------- Tin nhắn trong phòng ---------- */
+// act: làm ngay ở máy mình rồi gửi cho mọi người (Ably không gửi lại tin cho chính người gửi)
+function act(type, data) { onMessage(type, data, me.id); net.publish(type, data); }
+
+// Người vào sau xin trạng thái; giáo viên trả lời, không có giáo viên thì người có mã nhỏ nhất trả lời
+function isHostFor(newId) {
+  const ids = [...people.keys()].filter(id => id !== newId).sort();
+  return (ids.find(isTeacher) || ids[0]) === me.id;
+}
+function sendState(to) {
+  net.publish('state', { to, lesson: state.lesson, slide: state.slide, drawers: [...drawers], chat: chatLog.slice(-40) });
+  for (const [key, map] of pages) {
+    let batch = [], size = 0, first = true;
+    const send = () => { net.publish('page', { to, key, reset: first, strokes: batch }); first = false; batch = []; size = 0; };
+    for (const s of map.values()) {
+      const n = JSON.stringify(s).length;
+      if (size + n > CHUNK && batch.length) send();
+      batch.push(s); size += n;
+    }
+    if (batch.length) send();
+  }
+}
+
+function onMessage(type, d, from) {
+  if (!me || !d) return;
+  const fromTeacher = isTeacher(from);
+  const forMe = d.to === me.id;
+  switch (type) {
+    case 'signal': if (forMe) onSignal(from, d.data).catch(err => console.warn('signal', err)); break;
+    case 'hello': if (from !== me.id && isHostFor(from)) sendState(from); break;
+    case 'state':
+      if (!forMe) break;
+      state.lesson = d.lesson || null; state.slide = Number(d.slide) || 0;
+      drawers = new Set(d.drawers || []);
+      if (!chatLog.length) for (const m of d.chat || []) { chatLog.push(m); addMsg(m, true); }
+      showPage(); renderPeople();
+      break;
+    case 'page':
+      if (d.to && !forMe) break;
+      if (d.reset) pages.set(d.key, new Map());
+      for (const s of d.strokes || []) page(d.key).set(s.id, s);
+      if (d.key === pageKey()) redraw();
+      break;
+    case 'goto':
+      if (!fromTeacher) break;
+      state.lesson = d.lesson || null; state.slide = Math.max(0, Number(d.slide) || 0);
+      showPage();
+      break;
+    case 'perm':
+      if (!fromTeacher) break;
+      drawers = new Set(d.drawers || []);
+      renderPeople();
+      break;
+    case 'mute':
+      if (!fromTeacher || !forMe) break;
+      if (track('audio')) track('audio').enabled = false;
+      state.mic = false;
+      refreshMe(true);
+      toast('Giáo viên đã tắt mic của bạn');
+      break;
+    case 'lower-hand':
+      if (!fromTeacher || !forMe) break;
+      state.hand = false;
+      refreshMe(true);
+      renderPeople();
+      break;
+    case 's:start': {
+      if (!canDraw(from)) break;
+      const s = { id: String(d.id), by: from, page: d.page, color: String(d.color), width: Math.min(40, Number(d.width) || 3), points: d.points || [] };
+      page(s.page).set(s.id, s);
+      if (s.page === pageKey()) seg(s, 0);
+      break;
+    }
+    case 's:pts': {
+      const s = page(d.page).get(d.id);
+      if (!s || s.by !== from) break;
+      const at = s.points.length;
+      s.points.push(...(d.points || []));
+      if (s.page === pageKey()) seg(s, at);
+      break;
+    }
+    case 'remove': {
+      const s = page(d.page).get(d.id);
+      if (s && (fromTeacher || s.by === from)) { page(d.page).delete(d.id); if (d.page === pageKey()) redraw(); }
+      break;
+    }
+    case 'clear':
+      if (!fromTeacher) break;
+      pages.set(d.page, new Map());
+      if (d.page === pageKey()) redraw();
+      break;
+    case 'chat': {
+      const m = { name: String(d.name).slice(0, 30), role: roleOf(from), text: String(d.text).slice(0, 500), at: Number(d.at) || Date.now() };
+      chatLog.push(m);
+      if (chatLog.length > 100) chatLog.shift();
+      addMsg(m, from === me.id);
+      break;
+    }
+  }
+}
+
+function onPresence(action, p) {
+  if (!me || p.id === me.id) return;
+  if (action === 'leave' || action === 'absent') {
+    const was = people.get(p.id);
+    people.delete(p.id);
+    drop(p.id);
+    if (was) toast(`${was.name} đã rời lớp`);
+  } else {
+    const isNew = !people.has(p.id);
+    people.set(p.id, { ...p, name: String(p.name || 'Ẩn danh'), role: roleOf(p.id) });
+    if (isNew) meet(p.id);
+    if (isNew && action === 'enter') toast(`${people.get(p.id).name} vừa vào lớp`);
+  }
+  renderPeople();
+}
+
 /* ---------- Vào phòng ---------- */
-async function enter(res) {
-  me = res.me;
+async function enter() {
+  people = new Map([[me.id, me]]);
   $('#join').classList.add('hidden');
   $('#app').classList.remove('hidden');
-  $('.room').textContent = 'Phòng ' + form.room.value.trim().toLowerCase();
+  $('.room').textContent = 'Phòng ' + form.room.value;
   $('#flip').classList.toggle('hidden', FAKE || !/Android|iPhone|iPad/i.test(navigator.userAgent));
-  lessons = await fetch('/api/lessons').then(r => r.json()).catch(() => []);
+  lessons = await fetch('lessons.json').then(r => r.json()).catch(() => []);
   $('#lesson').insertAdjacentHTML('beforeend', lessons.map(l => `<option value="${l.id}">${l.id.replace('bai', 'Bài ')}</option>`).join(''));
-  people = new Map([[me.id, me], ...res.others.map(p => [p.id, p])]);
-  refreshMe({ mic: state.mic, cam: state.cam });
+  // lấy lại danh sách: có thể có người vào trong lúc mình chờ trình duyệt hỏi quyền camera
+  const others = (await net.members()).filter(p => p.id !== me.id);
+  for (const p of others) if (!people.has(p.id)) people.set(p.id, { ...p, name: String(p.name || 'Ẩn danh'), role: roleOf(p.id) });
+  paintButtons();
   fitStage();
-  showPage(res);
-  res.chat.forEach(m => addMsg(m, true));
+  showPage();
   renderPeople();
-
-  socket.on('people', list => {
-    people = new Map(list.map(p => [p.id, p]));
-    // giáo viên có thể hạ tay giúp mình
-    if (people.get(me.id)) { state.hand = !!people.get(me.id).hand; paintButtons(); }
-    renderPeople();
+  await net.enter(myPresence());
+  net.publish('hello', {});
+  net.onState(s => {
+    $('.net').textContent = s === 'connected' ? (LOCAL ? 'chế độ thử một máy' : FAKE ? 'camera giả' : '')
+      : { connecting: 'đang kết nối…', disconnected: '⚠️ Mất mạng — đang nối lại…', suspended: '⚠️ Mất mạng lâu — đang thử lại…', failed: '⚠️ Không kết nối được' }[s] || '';
   });
-  socket.on('joined', p => toast(`${p.name} vừa vào lớp`));
-  socket.on('left', id => { const p = people.get(id); drop(id); if (p) toast(`${p.name} đã rời lớp`); });
-  socket.on('signal', m => onSignal(m).catch(err => console.warn('signal', err)));
-  socket.on('goto', showPage);
-  socket.on('stroke:start', s => { strokeMap.set(s.id, s); seg(s, 0); });
-  socket.on('stroke:points', ({ id, points }) => {
-    const s = strokeMap.get(id);
-    if (!s) return;
-    const from = s.points.length;
-    s.points.push(...points);
-    seg(s, from);
-  });
-  socket.on('remove', id => { strokeMap.delete(id); redraw(); });
-  socket.on('clear', () => setStrokes([]));
-  socket.on('chat', m => addMsg(m));
-  socket.on('muted', () => {
-    const t = track('audio');
-    if (t) t.enabled = false;
-    state.mic = false;
-    refreshMe({ mic: false });
-    toast('Giáo viên đã tắt mic của bạn');
-  });
-  socket.on('disconnect', () => { $('.net').textContent = '⚠️ Mất kết nối server — đang thử lại…'; });
-  // id Socket.IO đổi sau khi mất kết nối nên cách chắc nhất là vào lại
-  socket.io.on('reconnect', () => { toast('Đã nối lại, đang vào lại lớp…'); setTimeout(() => location.reload(), 800); });
-  $('.net').textContent = FAKE ? 'camera giả' : '';
-
-  for (const p of res.others) call(p.id).catch(err => console.warn('call', err));
+  $('.net').textContent = LOCAL ? 'chế độ thử một máy' : FAKE ? 'camera giả' : '';
+  for (const p of others) meet(p.id);
 }
 
 $('#mic').addEventListener('click', () => toggle('audio'));
 $('#cam').addEventListener('click', () => toggle('video'));
 $('#flip').addEventListener('click', flip);
-$('#hand').addEventListener('click', () => { state.hand = !state.hand; refreshMe({ hand: state.hand }); });
+$('#hand').addEventListener('click', () => { state.hand = !state.hand; refreshMe(true); renderPeople(); });
 $('#leave').addEventListener('click', () => {
   for (const id of [...peers.keys()]) drop(id);
   local.getTracks().forEach(t => t.stop());
-  socket.disconnect();
+  net?.close();
   location.reload();
 });
 $('#copy').addEventListener('click', async () => {
-  const link = `${location.origin}${location.pathname}?room=${encodeURIComponent(form.room.value.trim().toLowerCase())}`;
+  const link = `${location.origin}${location.pathname}?room=${encodeURIComponent(form.room.value)}`;
   try { await navigator.clipboard.writeText(link); toast('Đã chép link: ' + link); }
   catch { prompt('Chép link này gửi học sinh:', link); }
 });

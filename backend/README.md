@@ -10,13 +10,14 @@ Mỗi phản hồi có header `X-Backend: go|node` để biết bản nào đã 
 | Đồng bộ dữ liệu | `go/sync.go` | `node/sync.js` |
 | Hỏi AI (Gemini) | `go/ai.go` | `node/ai.js` |
 | Thuật ngữ du lịch (trang hsk6) | `go/terms.go` | `node/terms.js` |
+| Token Ably cho lớp học trực tiếp | `go/lophoc.go` | `node/lophoc.js` |
 | Lối vào Vercel | `../api/go/*.go` | `../api/node/*.js` |
 | Chạy ở máy | `../cmd/dev-api` (gọi từ `npm run dev:api`) | chạy ngay trong `../scripts/dev-api.mjs` |
 
 ## Hợp đồng
 
 Mọi request cần header `X-App-Secret: <APP_SECRET>`, sai thì `401 {"error": "sai mã đồng bộ"}`
-(riêng `GET /terms` thì ai cũng đọc được).
+(riêng `GET /terms` và `POST /lop-hoc` thì không cần).
 
 **`GET /api/<go|node>/sync?key=<khóa>`** → `200 {key, data, version, updatedAt}`
 (chưa có thì `version: 0, data: null`). Khóa hợp lệ: `dadiqua-trip`, `da-di-qua-v1`, `hanlo-v2`.
@@ -45,6 +46,12 @@ khôi phục được; bản ghi từ trước khi có lịch sử thì được
 Trang hsk6 đọc file Excel và chuẩn hóa (`TERM_BE` trong `BaiGiang/web/template.html` bên repo HSK);
 server kiểm tra lại từng trường (tối đa 5.000 thuật ngữ, khóa không trùng, buổi học dạng `YYYY-MM-DD`),
 sai thì `400` kèm lý do và dữ liệu cũ giữ nguyên.
+
+**`POST /api/<go|node>/lop-hoc`** với `{room, clientId, pass?}` → `200` TokenRequest của Ably
+`{keyName, ttl, capability, clientId, timestamp, nonce, mac}`, ký bằng `ABLY_API_KEY` y như `Auth.createTokenRequest`
+của thư viện Ably, chỉ cho `presence`, `publish`, `subscribe` trên kênh `lop:<room>`, hạn 1 giờ (thư viện tự xin lại).
+`room` dạng `[a-z0-9-]{1,32}`, `clientId` dạng `gv-…` (giáo viên, `pass` phải đúng `TEACHER_PASS`, sai thì `401`)
+hoặc `hs-…` (học sinh) với 8–32 chữ thường/số; sai dạng thì `400`, thiếu biến môi trường thì `503`.
 
 Bảng:
 

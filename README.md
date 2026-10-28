@@ -9,7 +9,7 @@ apps/hoc-tieng-trung/   app Hán Lộ học tiếng Trung (HashRouter)          
 apps/ban-do/            bản đồ 34 tỉnh: đánh dấu đã đi / muốn đi và ghi chú          → /ban-do/
 packages/sync/          @trang/sync — đồng bộ localStorage lên API, nút "Đồng bộ" chọn Node.js / Go
 travel/                 sổ tay chuyến Tam Đảo – Đà Lạt, HTML tĩnh (sẽ chuyển React sau) → /travel/
-lop-hoc/                bản thử lớp học trực tiếp (video + bảng vẽ, Socket.IO) — server Node riêng, không lên Vercel
+lop-hoc/                lớp học trực tiếp: video, bảng vẽ trên slide, chat (trang tĩnh + Ably)   → /lop-hoc/
 backend/go/, backend/node/   cùng một API viết bằng Go và Node.js (xem backend/README.md)
 api/go/, api/node/      lối vào Vercel Functions                                     → /api/go/…, /api/node/…
 scripts/build.mjs       build cả site vào dist/
@@ -31,8 +31,9 @@ npm run preview         # xem bản build ở http://localhost:4173
 ```
 
 Deploy Vercel: `vercel.json` đã đặt build `npm run build`, thư mục xuất `dist`. Thư mục `api/` tự thành
-Vercel Functions (Go và Node). Cần ba biến môi trường: `DATABASE_URL` (tự có khi gắn Neon ở mục Storage),
-`APP_SECRET` (mã đồng bộ chung) và `GEMINI_API_KEY`. Mẫu ở `.env.example`.
+Vercel Functions (Go và Node). Cần các biến môi trường: `DATABASE_URL` (tự có khi gắn Neon ở mục Storage),
+`APP_SECRET` (mã đồng bộ chung), `GEMINI_API_KEY`, và cho lớp học trực tiếp `ABLY_API_KEY` + `TEACHER_PASS`
+(xem [lop-hoc/README.md](lop-hoc/README.md)). Mẫu ở `.env.example`.
 
 ## Backend: một API, hai ngôn ngữ
 
