@@ -317,10 +317,16 @@ label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 14px
 .modal[hidden] { display: none; }
 .modal-card { width: min(780px, 100%); max-height: min(86vh, 900px); display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
   border-radius: 18px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 20px 60px rgb(0 0 0 / .25); overflow: hidden; }
-.modal-head { padding: 16px 18px 12px; border-bottom: 1px solid var(--line); }
+.modal-head { padding: 16px 12px 12px 18px; border-bottom: 1px solid var(--line); flex-wrap: nowrap; }
+.modal-head > div { flex: 1; min-width: 0; }
 .modal-body { overflow: auto; padding: 6px 18px 16px; }
 .modal-foot { padding: 12px 18px; border-top: 1px solid var(--line); }
 .modal-foot .note-warn { margin: 0; }
+.modal-x { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; border: 0; background: none; color: var(--muted); }
+.modal-x:hover { background: var(--sunken); color: var(--fg); }
+.modal-x svg { width: 18px; height: 18px; fill: currentColor; }
+.pager { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 14px; }
+.modal-foot .pager + div { margin-top: 10px; }
 .term-drops.dragging .dropzone { border-color: var(--accent); }
 .word.term .w-hz .hz { font-size: 21px; line-height: 1.3; }
 .word.term .py { font-size: 14px; }
@@ -377,7 +383,7 @@ label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 14px
 .ver-list { display: grid; }
 .ver { display: grid; grid-template-columns: 70px minmax(0, 1fr) auto; gap: 6px 14px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); font-size: 15px; }
 .ver.cur .ver-no { color: var(--accent); }
-.ver.off { opacity: .55; }
+.ver.off .ver-no, .ver.off .ver-main { opacity: .5; }
 .ver-sum { margin: 0 0 4px; font-size: 14px; }
 .ver-no { font-weight: 700; font-variant-numeric: tabular-nums; }
 .ver-main .muted { font-size: 13px; }
@@ -1325,7 +1331,8 @@ if (!passGet()) gateOpen();
 // bản trước lưu thuật ngữ trong localStorage; nay đã chuyển lên máy chủ nên xóa cho nhẹ trình duyệt
 try { localStorage.removeItem("ngoc-thuat-ngu"); } catch (e) {}
 
-let TL = null, tErr = "", tSheet = S.termSheet || "", tGroup = "", tShow = 80;
+const TERM_PAGE = 200; // danh sách ngoài: mỗi lần cuộn tải thêm 200 thuật ngữ
+let TL = null, tErr = "", tSheet = S.termSheet || "", tGroup = "", tShow = TERM_PAGE;
 let tIn = null, tPv = null, tRes = {}, tShowC = 8, tAskSecret = false, tSaving = false, tDoc = null;
 let tMode = "replace", tPvSheet = "", tPvRows = 40, tVer = null;
 
@@ -1347,9 +1354,9 @@ let termsReady = false;
 function openTerms() {
   if (!termsReady) {
     termsReady = true;
-    $("#termSheet").onchange = () => { tSheet = $("#termSheet").value; S.termSheet = tSheet; save(); tGroup = ""; tShow = 80; renderTerms(); };
-    $("#termGroup").onchange = () => { tGroup = $("#termGroup").value; tShow = 80; renderTerms(); };
-    $("#termSearch").oninput = () => { tShow = 80; renderTerms(); };
+    $("#termSheet").onchange = () => { tSheet = $("#termSheet").value; S.termSheet = tSheet; save(); tGroup = ""; tShow = TERM_PAGE; renderTerms(); };
+    $("#termGroup").onchange = () => { tGroup = $("#termGroup").value; tShow = TERM_PAGE; renderTerms(); };
+    $("#termSearch").oninput = () => { tShow = TERM_PAGE; renderTerms(); };
     new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) termMoreCheck(); }, { rootMargin: "600px 0px" }).observe($("#termMore"));
     $("#termImport").onclick = () => $("#termFile").click();
     $("#termDocImport").onclick = () => $("#termDocFile").click();
@@ -1409,7 +1416,7 @@ function renderTerms() {
 function termMoreCheck() {
   const m = $("#termMore");
   if (!renderTerms.more || view !== "terms" || m.getBoundingClientRect().top > innerHeight + 600) return;
-  tShow += 150; renderTerms();
+  tShow += TERM_PAGE; renderTerms();
 }
 function sayZh(text) {
   if (!("speechSynthesis" in window)) return;
@@ -1617,7 +1624,7 @@ async function termSave() {
    Tải Excel: dựng lại các sheet từ bản sao. */
 const MODE_LABEL = { replace: "Ghi đè", add: "Thêm vào", restore: "Khôi phục" };
 async function openVersions() {
-  tVer = { list: null, err: "", busy: 0 };
+  tVer = { list: null, err: "", busy: 0, page: 0, total: 0, on: 0 };
   tAskSecret = !passGet();
   $("#verModal").hidden = false;
   renderVersions();
@@ -1627,8 +1634,16 @@ async function openVersions() {
 function closeVersions() { tVer = null; $("#verModal").hidden = true; $("#verCard").innerHTML = ""; $("#termVersions").focus(); }
 $("#verModal").onclick = e => { if (e.target === e.currentTarget) closeVersions(); };
 document.addEventListener("keydown", e => { if (e.key === "Escape" && tVer) closeVersions(); });
+// lịch sử lấy theo trang từ máy chủ, mỗi trang VER_PAGE bản (mới nhất trước)
+const VER_PAGE = 20;
 async function verReload() {
-  try { tVer.list = (await termApi("GET", null, null, "terms?versions")).versions; tVer.err = ""; } catch (e) { tVer.err = e.message; }
+  const v = tVer;
+  try {
+    const r = await termApi("GET", null, null, `terms?versions&limit=${VER_PAGE}&offset=${v.page * VER_PAGE}`);
+    Object.assign(v, { list: r.versions, total: r.total, on: r.active, err: "" });
+    // trang hiện tại trống (vd vừa còn ít bản hơn) thì lùi về trang cuối
+    if (!r.versions.length && v.page > 0) { v.page = Math.max(0, Math.ceil(r.total / VER_PAGE) - 1); return verReload(); }
+  } catch (e) { v.err = e.message; }
   renderVersions();
 }
 function renderVersions(msg, ok) {
@@ -1636,18 +1651,18 @@ function renderVersions(msg, ok) {
   if (!v) return;
   const secretVal = $("#verSecret")?.value || "";
   const when = s => new Date(s).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" });
-  const on = v.list ? v.list.filter(x => x.active).length : 0;
+  const on = v.on, pages = Math.max(1, Math.ceil(v.total / VER_PAGE));
   card.innerHTML = `
     <div class="modal-head imp-head">
       <div><h3 id="verTitle">Lịch sử chỉnh sửa</h3>
         <p class="muted">Mỗi lần thêm vào hay ghi đè là một bản. Danh sách trên trang là bản mới nhất đang bật;
           tắt một bản thì trang hiện bản đang bật ngay trước nó, bật lại lúc nào cũng được, không mất dữ liệu.</p></div>
-      <button class="btn small" data-act="close">Đóng</button>
+      <button class="modal-x" data-act="close" aria-label="Đóng" title="Đóng (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.3 2.2 8 6.9l4.7-4.7 1.1 1.1L9.1 8l4.7 4.7-1.1 1.1L8 9.1l-4.7 4.7-1.1-1.1L6.9 8 2.2 3.3z"/></svg></button>
     </div>
     <div class="modal-body">
     ${!v.list ? `<p class="muted">${v.err ? "Không tải được lịch sử: " + esc(v.err) : "Đang tải…"}</p>`
       : !v.list.length ? `<p class="muted">Chưa có bản nào. Bản đầu tiên được tạo khi bạn xác nhận thêm vào hoặc ghi đè.</p>`
-      : `<p class="muted ver-sum">${nf(v.list.length)} bản · ${nf(on)} đang bật${on ? ` · trang đang hiện bản ${cur}` : " · danh sách đang trống"}</p>
+      : `<p class="muted ver-sum">${nf(v.total)} bản · ${nf(on)} đang bật${on ? ` · trang đang hiện bản ${cur}` : " · danh sách đang trống"}</p>
       <div class="ver-list">${v.list.map(x => `<div class="ver ${x.version === cur ? "cur" : ""} ${x.active ? "" : "off"}">
         <div class="ver-no">Bản ${x.version}</div>
         <div class="ver-main"><b>${esc(MODE_LABEL[x.mode] || x.mode)}</b> · ${esc(x.fileName)}
@@ -1662,10 +1677,15 @@ function renderVersions(msg, ok) {
     ${tAskSecret ? `<label class="imp-secret">Mật khẩu của trang
       <input class="search" id="verSecret" type="password" autocomplete="current-password" value="${esc(secretVal)}"></label>` : ""}
     </div>
-    ${msg ? `<div class="modal-foot"><div class="${ok ? "imp-note" : "note-warn"}" role="status">${esc(msg)}</div></div>` : ""}`;
+    ${pages > 1 || msg ? `<div class="modal-foot">
+      ${pages > 1 ? `<div class="pager"><button class="btn small" data-page="-1" ${v.page ? "" : "disabled"}>‹ Trước</button>
+        <span class="muted">Trang ${v.page + 1}/${pages}</span>
+        <button class="btn small" data-page="1" ${v.page + 1 < pages ? "" : "disabled"}>Sau ›</button></div>` : ""}
+      ${msg ? `<div class="${ok ? "imp-note" : "note-warn"}" role="status">${esc(msg)}</div>` : ""}</div>` : ""}`;
   card.querySelectorAll("[data-on]").forEach(b => b.onclick = () => verToggle(+b.dataset.v, b.dataset.on === "1"));
   card.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => verDownload(+b.dataset.dl));
   card.querySelector("[data-act=close]").onclick = closeVersions;
+  card.querySelectorAll("[data-page]").forEach(b => b.onclick = () => { v.page += +b.dataset.page; verReload(); });
 }
 async function verDownload(n) {
   try {
