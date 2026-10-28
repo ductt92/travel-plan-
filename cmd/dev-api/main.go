@@ -17,6 +17,7 @@ func main() {
 	}
 	http.HandleFunc("/api/go/sync", gobackend.Sync)
 	http.HandleFunc("/api/go/ai", gobackend.AI)
-	log.Printf("API Go: http://localhost:%s/api/go/{sync,ai}", port)
+	http.HandleFunc("/api/go/terms", gobackend.Terms)
+	log.Printf("API Go: http://localhost:%s/api/go/{sync,ai,terms}", port)
 	log.Fatal(http.ListenAndServe("127.0.0.1:"+port, nil))
 }
