@@ -63,8 +63,8 @@ const (
 	pageMax      = 100     // ?versions trả theo trang: &limit= (mặc định 20, tối đa 100) &offset=
 )
 
-// replace: ghi đè bằng file; add: trang đã gộp file vào danh sách cũ; restore: khôi phục một bản cũ
-var termModes = map[string]bool{"replace": true, "add": true, "restore": true}
+// replace: ghi đè bằng file; add: trang đã gộp file vào danh sách cũ; edit: sửa tay trên danh sách; restore: khôi phục bản cũ
+var termModes = map[string]bool{"replace": true, "add": true, "edit": true, "restore": true}
 
 var (
 	termTablesMu sync.Mutex

@@ -48,7 +48,7 @@ sheets, mode, updatedAt, terms}`), chưa có bản sao thì `404`.
 **`PUT /api/<go|node>/terms`** với `{fileName, summaryName, sheets, terms, mode?}` → **ghi đè toàn bộ**: xóa hết
 thuật ngữ cũ rồi ghi danh sách mới trong một transaction, trả `200 {version, count, updatedAt}`.
 `mode` chỉ để ghi vào lịch sử: `replace` (mặc định, ghi đè bằng file), `add` (trang đã gộp file vào danh sách cũ),
-`restore` (khôi phục bản cũ). Mỗi lần ghi lưu kèm bản sao cả danh sách vào `term_upload.terms`, nên bản nào cũng
+`edit` (sửa tay trên danh sách), `restore` (khôi phục bản cũ). Mỗi lần ghi lưu kèm bản sao cả danh sách vào `term_upload.terms`, nên bản nào cũng
 khôi phục được; bản ghi từ trước khi có lịch sử thì được sao lưu ngay trước lần ghi kế tiếp.
 
 **`PATCH /api/<go|node>/terms?version=N`** với `{active: true|false}` → tắt hoặc bật lại bản N, trả `200 {version, count}`
