@@ -353,7 +353,9 @@ func termVersions(ctx context.Context, p *pgxpool.Pool, limit, offset int) ([]te
 		return nil, 0, 0, err
 	}
 	rows, err := p.Query(ctx, `SELECT id, file_name, mode, count, created_at, terms IS NOT NULL, active
-		FROM term_upload ORDER BY id DESC LIMIT $1 OFFSET $2`, limit, offset)
+		FROM term_upload
+		ORDER BY id = (SELECT max(id) FROM term_upload WHERE active) DESC, id DESC -- bản đang hiện đứng đầu
+		LIMIT $1 OFFSET $2`, limit, offset)
 	if err != nil {
 		return nil, 0, 0, err
 	}
