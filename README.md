@@ -32,7 +32,7 @@ npm run preview         # xem bản build ở http://localhost:4173
 
 Deploy Vercel: `vercel.json` đã đặt build `npm run build`, thư mục xuất `dist`. Thư mục `api/` tự thành
 Vercel Functions (Go và Node). Cần các biến môi trường: `DATABASE_URL` (tự có khi gắn Neon ở mục Storage),
-`APP_SECRET` (mã đồng bộ chung), `GEMINI_API_KEY`, và cho lớp học trực tiếp `ABLY_API_KEY` + `TEACHER_PASS`
+`APP_SECRET` (mã đồng bộ chung), `GEMINI_API_KEY` (thêm `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `MISTRAL_API_KEY` nếu muốn AI dự phòng), và cho lớp học trực tiếp `ABLY_API_KEY` + `TEACHER_PASS`
 (xem [lop-hoc/README.md](lop-hoc/README.md)). Mẫu ở `.env.example`.
 
 ## Backend: một API, hai ngôn ngữ

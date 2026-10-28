@@ -1619,11 +1619,13 @@ async function verRestore(n) {
 
 /* ---------- Lọc thuật ngữ từ biên bản bài giảng (.docx, .txt) ----------
    Lớp 1, ngay trên trang: dò các thuật ngữ đã có trong danh sách xuất hiện ở biên bản (sẽ ghi thêm buổi học).
-   Lớp 2, Gemini qua /api/<node|go>/ai: cắt biên bản thành đoạn ~2.000 chữ (API nhận tối đa 8.000 ký tự mỗi lượt),
+   Lớp 2, AI qua /api/<node|go>/ai (Gemini, hết lượt thì máy chủ tự chuyển sang Groq, OpenRouter, Mistral):
+   cắt biên bản thành đoạn ~2.000 chữ (API nhận tối đa 8.000 ký tự mỗi lượt),
    mỗi đoạn hỏi AI các thuật ngữ chuyên ngành kèm pinyin, nghĩa, nhóm; bỏ những từ đã có.
    Xem lại, chọn rồi tạo file Excel (docToPreview) và mở bản xem trước chung với nhập Excel:
    người dùng chọn "thêm vào" (gộp, termMerge) hay "ghi đè", mỗi lần ghi máy chủ giữ một phiên bản. */
 const DOC_CHUNK = 2000, DOC_MAX_CHUNKS = 60, DOC_WORKERS = 3;
+const AI_NAME = { gemini: "Gemini", groq: "Groq", openrouter: "OpenRouter", mistral: "Mistral" };
 // mỗi ô chỉ nhận đúng loại của nó, thả nhầm thì chỉ sang ô kia chứ không tự đổi việc
 async function termDropFile(kind, f) {
   if (kind === "doc") {
@@ -1740,7 +1742,7 @@ async function docRunAi(only) {
   const d = tDoc, secret = tAskSecret ? ($("#impSecret")?.value || "").trim() : lsGet(SECRET_KEY);
   if (!secret) { tAskSecret = true; renderDoc("Nhập mã đồng bộ để lọc bằng AI."); $("#impSecret")?.focus(); return; }
   const todo = only || d.chunks.map((_, i) => i), system = docSystem();
-  d.ai = { run: true, done: 0, total: todo.length, failed: [], err: "", stop: false };
+  d.ai = { run: true, done: 0, total: todo.length, failed: [], err: "", stop: false, by: d.ai?.by || {} };
   renderDoc();
   let next = 0;
   const work = async () => {
@@ -1749,10 +1751,13 @@ async function docRunAi(only) {
       try {
         const r = await termApi("POST", { system, contents: [{ role: "user", parts: [{ text: `Biên bản, đoạn ${i + 1}/${d.chunks.length}:\n${d.chunks[i]}` }] }] }, secret, "ai");
         docAdd(d, r.text);
+        const who = AI_NAME[r.provider] || r.provider || "AI";
+        d.ai.by[who] = (d.ai.by[who] || 0) + 1;
         if (tAskSecret) { lsSet(SECRET_KEY, secret); tAskSecret = false; }
       } catch (e) {
         d.ai.failed.push(i); d.ai.err = e.message;
-        if (e.status === 401 || e.status === 503) d.ai.stop = true;
+        // sai mã, chưa có khóa AI, hay mọi AI đều hết lượt thì dừng, các đoạn còn lại để "Lọc lại" sau
+        if (e.status === 401 || e.status === 503 || e.status === 429) d.ai.stop = true;
       }
       d.ai.done++;
       if (tDoc === d && !tIn) renderDoc();
@@ -1775,9 +1780,11 @@ function renderDoc(msg) {
   const a = document.activeElement, keep = a && box.contains(a) && a.id ? { id: a.id, s: a.selectionStart, e: a.selectionEnd } : null;
   const kpi = (cls, n, lbl) => `<div class="imp-kpi ${cls}"><b>${nf(n)}</b><span>${lbl}</span></div>`;
   const nFresh = d.fresh.filter(f => f.on).length, nKnown = d.known.filter(k => k.on).length, ai = d.ai, majors = docMajors();
-  const aiLine = !ai ? `Biên bản chia thành ${nf(d.chunks.length)} đoạn, mỗi đoạn hỏi AI một lần.`
+  const by = Object.entries(ai?.by || {}).map(([k, n]) => `${esc(k)} ${nf(n)}`).join(" · ");
+  const aiLine = (!ai ? `Biên bản chia thành ${nf(d.chunks.length)} đoạn, mỗi đoạn hỏi AI một lần.`
     : ai.run ? `Đang lọc… ${nf(ai.done)}/${nf(ai.total)} đoạn`
-    : `Đã lọc ${nf(ai.total - ai.failed.length)}/${nf(ai.total)} đoạn` + (ai.failed.length ? `, ${nf(ai.failed.length)} đoạn chưa lọc được (${esc(ai.err)})` : "") + ".";
+    : `Đã lọc ${nf(ai.total - ai.failed.length)}/${nf(ai.total)} đoạn` + (ai.failed.length ? `, ${nf(ai.failed.length)} đoạn chưa lọc được (${esc(ai.err)})` : "") + ".")
+    + (by ? ` <span title="Số đoạn mỗi AI đã lọc">AI đã dùng: ${by}</span>` : "");
   const aiBtn = ai?.run ? "" : !ai ? `<button class="btn small primary" data-act="ai">Lọc bằng AI</button>`
     : ai.failed.length ? `<button class="btn small" data-act="retry">Lọc lại ${nf(ai.failed.length)} đoạn</button>` : "";
   const all = (list, on) => `<span class="seg"><button data-all="${list}" data-v="1" aria-pressed="${on}">Chọn hết</button><button data-all="${list}" data-v="0">Bỏ hết</button></span>`;

@@ -4,7 +4,7 @@
 // Biến môi trường:
 //   DATABASE_URL    chuỗi kết nối Postgres (Neon trên Vercel, Docker ở máy)
 //   APP_SECRET      mã chung, client gửi qua header X-App-Secret
-//   GEMINI_API_KEY  khóa Gemini cho /api/node/ai
+//   GEMINI_API_KEY  khóa Gemini cho /api/node/ai (dự phòng: GROQ_API_KEY, OPENROUTER_API_KEY, MISTRAL_API_KEY, xem ai.js)
 import { timingSafeEqual } from 'node:crypto';
 import pg from 'pg';
 
