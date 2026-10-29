@@ -103,3 +103,8 @@ tên miền của project này. Vì vậy app đặt `basePath: '/ban-do'` — m
 trang chính, không thì Next chặn server action đi qua proxy.
 
 Nhớ vào Storage của project nối cùng database Neon để có `DATABASE_URL`.
+
+Mỗi lần deploy, id của server action đổi theo. Trang ai đó đang mở từ trước gửi id cũ lên thì server
+không nhận ra — app bắt lỗi đó và hiện "Trang đang mở cũ hơn bản trên server, tải lại trang rồi thử
+lại", chứ không đánh sập trang. Muốn hết hẳn thì bật **Skew Protection** trong Settings của project,
+Vercel sẽ giữ bản cũ sống thêm một thời gian cho các tab đang mở.

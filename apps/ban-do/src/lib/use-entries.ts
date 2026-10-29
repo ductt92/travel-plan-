@@ -9,6 +9,18 @@ import type { ActionResult, Entries, ProvinceEntry, Status, Trip, TripDraft } fr
 const BLANK: ProvinceEntry = { status: 'none', trips: [] };
 
 /**
+ * Mỗi lần deploy, id của server action đổi theo. Trang mở từ trước đó gửi id cũ
+ * lên và server không nhận ra — chỉ cần tải lại là xong, nên nói đúng câu đó thay
+ * vì một lời "thử lại" chung chung.
+ */
+function failureText(err: unknown) {
+  const msg = err instanceof Error ? err.message : String(err);
+  return /server action/i.test(msg)
+    ? 'Trang đang mở cũ hơn bản trên server. Tải lại trang rồi thử lại nhé.'
+    : 'Không gọi được server, thay đổi chưa lưu. Kiểm tra mạng rồi thử lại.';
+}
+
+/**
  * Nhật ký chuyến đi và bốn cách sửa nó.
  *
  * Sửa hiện ra ngay rồi mới gửi lên server; server báo hỏng thì trả màn hình về
@@ -33,14 +45,22 @@ export function useEntries(initial: Entries, live: boolean) {
     <T,>(before: Entries, send: () => Promise<ActionResult<T>>, done?: (value: T) => void) => {
       if (!live) return;
       startSaving(async () => {
-        const res = await send();
-        if (!res.ok) {
+        try {
+          const res = await send();
+          if (!res.ok) {
+            write(before);
+            setError(res.error);
+            return;
+          }
+          done?.(res.value);
+          setError(null);
+        } catch (err) {
+          // không bắt ở đây thì lời hứa vỡ ngay trong transition và React đánh sập
+          // cả trang — mất chuyến đang xem chỉ vì rớt mạng một nhịp
+          console.error('[ban-do] gọi server hỏng', err);
           write(before);
-          setError(res.error);
-          return;
+          setError(failureText(err));
         }
-        done?.(res.value);
-        setError(null);
       });
     },
     [live, write],
