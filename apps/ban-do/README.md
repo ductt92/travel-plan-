@@ -1,44 +1,105 @@
-# Bản đồ du lịch của Ngọc và Đức
+# Bản đồ "đã đi qua" — Next.js
 
-App React: bản đồ 34 tỉnh thành Việt Nam của hai người. Các chuyến đi (khai báo trong `src/trips.js`) hiện
-thành trái tim ở từng điểm dừng và đường bay nét đứt; tỉnh có điểm dừng tô hồng. Bấm trái tim để xem và tích
-các quán ăn, điểm chơi của chặng đó (dùng chung dấu tích với sổ tay `travel/`). Bấm vào một tỉnh để đánh dấu
-**đã đi** / **muốn đi** và viết ghi chú. Dữ liệu nằm trong `localStorage` khoá `da-di-qua-v1`,
-không có backend; có nút xuất/nhập file JSON để chuyển máy hoặc sao lưu.
+Trang bản đồ 34 tỉnh thành: bấm vào một tỉnh để xem và ghi chuyến đi. Giao diện dựng
+theo bản thiết kế ở `apps/ban-do/prototype/index.html`, dữ liệu nằm trong Postgres
+(Neon trên Vercel, Docker ở máy) qua Drizzle và server action.
 
-Là một workspace của repo (`@trang/ban-do`), chạy từ gốc repo:
+## Chạy
 
 ```bash
-npm install          # một lần, ở gốc repo
-npm run dev:map      # http://localhost:5175/ban-do/
-npm run build        # build cả site, app này ra dist/ban-do/
+npm install          # chạy trong thư mục này, không phải ở gốc repo
+npm run db:migrate   # tạo hai bảng, chỉ cần lần đầu
+npm run db:import    # nạp dữ liệu đang có
+npm run dev          # http://localhost:5177
 ```
 
-## Cấu trúc
+Từ gốc repo cũng được: `npm run dev:map`.
 
-| File | Việc |
-|---|---|
-| `src/App.jsx` | Bố cục, đếm số tỉnh, ô tìm kiếm, xuất/nhập file |
-| `src/VietnamMap.jsx` | Vẽ SVG từ GeoJSON (d3-geo), hover/chọn tỉnh, phóng to – kéo |
-| `src/ProvincePanel.jsx` | Panel bên phải: trạng thái + ô ghi chú |
-| `src/TripPanels.jsx` | Thẻ chuyến đi và bảng một điểm dừng (danh sách địa điểm, tích đã ghé) |
-| `src/trips.js` | Các chuyến: điểm dừng, tọa độ, đường đi; hook đọc/ghi dấu tích `dadiqua-trip` |
-| `src/data/trip-2026-10.json` | 49 địa điểm của chuyến 3–11/10, trích từ `travel/index.html` |
-| `src/store.js` | Đọc/ghi `localStorage` |
-| `src/data/provinces.json` | Ranh giới 34 tỉnh (GeoJSON, ~71 KB) |
-| `src/data/provinces.meta.json` | Tên, miền, thành phố trực thuộc TW, tên các tỉnh cũ |
+App này **không nằm trong npm workspaces của repo**. Nó dùng React 19 (Next 15 cần),
+ba app kia dùng React 18; để chung thì npm kéo React 18 lên gốc và Next lấy nhầm bản
+đó, làm hỏng lúc dựng trang. Tách ra nên nó có `node_modules` và `package-lock.json`
+riêng, và `npm run build` ở gốc repo không đụng tới nó.
 
-## Dữ liệu bản đồ
+## Database
 
-Nguồn: [geoBoundaries](https://www.geoboundaries.org/) ADM1 Việt Nam (bản simplified,
-CC BY 4.0) — gồm 63 tỉnh cũ. Quy trình tạo `provinces.json`:
+`DATABASE_URL` lấy theo thứ tự: biến môi trường sẵn có (trên Vercel) → `.env.local`
+trong thư mục này → `.env.local` ở gốc repo. **Nghĩa là chạy `npm run db:migrate`
+mà không đặt gì thì nó chạy thẳng vào Neon**, vì đó là chuỗi kết nối trong
+`.env.local` ở gốc. Muốn thử ở máy thì đặt riêng:
 
-1. Gán mỗi tỉnh cũ vào tỉnh mới theo Nghị quyết sáp nhập có hiệu lực 1/7/2025.
-2. `mapshaper -dissolve2 fields=code,name -simplify 35% keep-shapes -clean` để xoá
-   ranh giới nội bộ và giảm dung lượng.
+```bash
+cp .env.example .env.local    # trỏ vào Postgres chạy bằng Docker (backend/README)
+```
 
-Lưu ý khi sửa code: file GeoJSON theo đúng chuẩn RFC 7946 (vòng ngoài ngược chiều kim
-đồng hồ), còn `d3-geo` tính trên mặt cầu nên cần chiều ngược lại — `VietnamMap.jsx` đảo
-chiều lúc nạp. Bỏ bước đó thì mỗi tỉnh sẽ phủ kín quả địa cầu và bản đồ ra một ô vuông.
+Hai bảng, định nghĩa ở `src/db/schema.ts`:
 
-Bản đồ chỉ có phần đất liền và đảo ven bờ, không vẽ Hoàng Sa – Trường Sa.
+- **provinces** — `code` (mã tỉnh), `status` (`none` · `visited` · `wish`). Chỉ có dòng
+  cho tỉnh đã đụng tới; hình 34 tỉnh vẫn nằm trong `src/data/provinces.json`.
+- **trips** — mỗi chuyến một dòng, khoá ngoại về `provinces.code`, xoá tỉnh thì xoá theo.
+  Ngày để kiểu `date` nên không lệch múi giờ, `places` là `jsonb` giữ nguyên thứ tự.
+
+Đổi schema thì `npm run db:generate` ra file SQL mới trong `drizzle/`, rồi
+`npm run db:migrate`. Xem dữ liệu bằng `npm run db:studio`.
+
+Chưa có đăng nhập: server action là đầu vào công khai, ai mở được trang cũng ghi và
+xoá được. Dữ liệu từ form đều soát lại ở `src/lib/validate.ts` chứ không tin trình
+duyệt, nhưng đó là chống dữ liệu hỏng, không phải chống người lạ.
+
+## Nhập dữ liệu đang có
+
+```bash
+npm run db:import                          # cả hai nguồn
+npm run db:import -- --dry                 # chỉ xem sẽ làm gì
+npm run db:import -- --file sao-luu.json   # từ một file JSON thay vì bảng docs
+```
+
+Chạy lại bao nhiêu lần cũng được: chỉ thêm cái còn thiếu.
+
+Hai nguồn:
+
+1. `src/lib/seed.ts` — hai chuyến 3–11/10/2026 rút từ sổ tay `travel/`.
+2. Bản ghi `da-di-qua-v1` mà app Vite cũ đồng bộ lên (bảng `docs` trong cùng database),
+   dạng `{ "ma-tinh": { status, note } }`. Bảng mới không có chỗ cho ghi chú theo tỉnh,
+   nên mỗi ghi chú thành **một chuyến chưa rõ ngày** — chữ giữ nguyên, sửa và xoá được
+   như mọi chuyến khác. Mã tỉnh không nhận ra (tên tỉnh đổi từ 1/7/2025) thì bỏ qua và
+   kể tên ra ở cuối.
+
+Dấu tích địa điểm `dadiqua-trip` không nhập: nó là tích từng điểm trong lịch trình
+`travel/`, bảng mới không có khái niệm tương ứng.
+
+## Mã nguồn
+
+```
+src/app/        layout, page (server component), actions.ts (server action), globals.css
+src/components/ TravelMap (giữ toàn bộ trạng thái) + bản đồ, bảng tỉnh, ba popup
+src/db/         schema, pool + Drizzle, câu đọc
+src/lib/        kiểu dữ liệu, định dạng ngày, bộ lọc thời gian, soát dữ liệu, hook
+src/data/       provinces.json — hình 34 tỉnh, chỗ đặt nhãn, khung bao tính sẵn
+drizzle/        file SQL sinh ra từ schema
+scripts/        import.ts
+```
+
+Sửa gì hiện ra ngay rồi mới gửi lên server (`src/lib/use-entries.ts`); server báo hỏng
+thì màn hình trả về đúng như trước và hiện một dòng lỗi ở đáy trang.
+
+Trang có ba trạng thái: đọc được database thì ghi thẳng xuống đó; chưa cấu hình
+`DATABASE_URL` thì bày dữ liệu mẫu và nói rõ là không lưu; có cấu hình mà đọc hỏng thì
+để trống chứ không bày dữ liệu mẫu ra — nhìn vào tưởng mất sạch còn tệ hơn.
+
+## Bước sau
+
+1. Auth.js (Google) để chỉ hai đứa sửa được.
+2. Ảnh theo từng chuyến, trang chia sẻ công khai, thống kê.
+
+## Trên Vercel
+
+App này là **một project Vercel riêng**, Root Directory đặt là `apps/ban-do`. Nó không gộp được
+vào project chính vì project đó build ra một thư mục `dist/` tĩnh, còn app này cần server để chạy
+server action và nối Postgres.
+
+Trang chính giữ nguyên đường dẫn `/ban-do/` bằng `rewrites` trong `vercel.json` ở gốc repo, trỏ sang
+tên miền của project này. Vì vậy app đặt `basePath: '/ban-do'` — mở thẳng tên miền của project này
+ở gốc sẽ ra 404, phải vào `/ban-do/`. Và `allowedOrigins` trong `next.config.ts` phải có tên miền
+trang chính, không thì Next chặn server action đi qua proxy.
+
+Nhớ vào Storage của project nối cùng database Neon để có `DATABASE_URL`.
