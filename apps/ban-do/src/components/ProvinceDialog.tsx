@@ -22,6 +22,8 @@ interface Props {
   period: Period;
   /** Màn hẹp mở kiểu popup giữa màn, màn rộng mở kiểu bảng bên phải. */
   modal: boolean;
+  /** Chưa đăng nhập thì chỉ đọc: giấu hết nút sửa, nút xoá và ô đánh dấu. */
+  canEdit: boolean;
   onClose: () => void;
   onStatus: (status: Status) => void;
   onAdd: (data: TripDraft) => void;
@@ -44,7 +46,8 @@ export default function ProvinceDialog({ province, modal, onClose, ...rest }: Pr
 type BodyProps = Omit<Props, 'modal'> & { province: Province };
 
 function Body({
-  province, entry, level, period, onClose, onStatus, onAdd, onUpdate, onRemove, onClearPeriod,
+  province, entry, level, period, canEdit,
+  onClose, onStatus, onAdd, onUpdate, onRemove, onClearPeriod,
 }: BodyProps) {
   /** id chuyến đang sửa, 'new' nếu đang thêm, null nếu không mở form nào. */
   const [editing, setEditing] = useState<number | 'new' | null>(null);
@@ -93,10 +96,11 @@ function Body({
         </div>
 
         <div className="seg">
-          {STATUSES.map(([id, label]) => (
+          {(canEdit ? STATUSES : STATUSES.filter(([id]) => id === entry.status)).map(([id, label]) => (
             <button
               key={id}
               className={`s-${id}${entry.status === id ? ' on' : ''}`}
+              disabled={!canEdit}
               onClick={() => onStatus(id)}
             >{label}</button>
           ))}
@@ -106,12 +110,12 @@ function Body({
       <div className="dlg-body">
         <div className="sec-head">
           <h4>{shown.length ? `${shown.length} chuyến đi${period.year ? ` · ${scopeShort(period)}` : ''}` : 'Chuyến đi'}</h4>
-          {editing !== 'new' && (
+          {canEdit && editing !== 'new' && (
             <button className="add" onClick={() => setEditing('new')}>＋ Thêm chuyến</button>
           )}
         </div>
 
-        {editing !== null && (
+        {canEdit && editing !== null && (
           <TripForm
             trip={editing === 'new' ? null : entry.trips.find(t => t.id === editing) ?? null}
             onCancel={() => setEditing(null)}
@@ -125,16 +129,20 @@ function Body({
             <p>
               {outside ? (
                 `Không có chuyến nào ở đây trong ${scope}.`
-              ) : (
+              ) : canEdit ? (
                 <>Chưa ghi chuyến nào ở đây.<br />Đi ngày nào, ghé những đâu, thấy thế nào?</>
+              ) : (
+                'Chưa ghi chuyến nào ở đây.'
               )}
             </p>
-            <button
-              className="btn primary"
-              onClick={outside ? onClearPeriod : () => setEditing('new')}
-            >
-              {outside ? `Xem cả ${entry.trips.length} chuyến` : 'Ghi chuyến đầu tiên'}
-            </button>
+            {(outside || canEdit) && (
+              <button
+                className="btn primary"
+                onClick={outside ? onClearPeriod : () => setEditing('new')}
+              >
+                {outside ? `Xem cả ${entry.trips.length} chuyến` : 'Ghi chuyến đầu tiên'}
+              </button>
+            )}
           </div>
         ) : (
           <>
@@ -151,6 +159,7 @@ function Body({
                   <span className="tl-dot" />
                   <TripCard
                     trip={t}
+                    canEdit={canEdit}
                     onEdit={() => setEditing(t.id)}
                     onRemove={() => {
                       if (window.confirm('Xoá chuyến này?')) onRemove(t.id);
@@ -168,7 +177,9 @@ function Body({
   );
 }
 
-function TripCard({ trip, onEdit, onRemove }: { trip: Trip; onEdit: () => void; onRemove: () => void }) {
+function TripCard({ trip, canEdit, onEdit, onRemove }: {
+  trip: Trip; canEdit: boolean; onEdit: () => void; onRemove: () => void;
+}) {
   const [all, setAll] = useState(false);
   const clip = trip.places.length > CLIP && !all;
 
@@ -197,10 +208,12 @@ function TripCard({ trip, onEdit, onRemove }: { trip: Trip; onEdit: () => void; 
 
       {trip.note && <p className="trip-note">{trip.note}</p>}
 
-      <div className="trip-acts">
-        <button onClick={onEdit}>Sửa</button>
-        <button className="del" onClick={onRemove}>Xoá</button>
-      </div>
+      {canEdit && (
+        <div className="trip-acts">
+          <button onClick={onEdit}>Sửa</button>
+          <button className="del" onClick={onRemove}>Xoá</button>
+        </div>
+      )}
     </article>
   );
 }

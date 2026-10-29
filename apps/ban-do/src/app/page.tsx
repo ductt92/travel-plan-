@@ -1,4 +1,5 @@
 import TravelMap from '@/components/TravelMap';
+import { canSignIn, signedIn } from '@/lib/auth';
 import { hasDb } from '@/db/client';
 import { loadEntries } from '@/db/queries';
 import { mapData } from '@/lib/map-data';
@@ -30,5 +31,17 @@ export default async function Page() {
     }
   }
 
-  return <TravelMap width={mapData.W} height={mapData.H} initial={entries} mode={mode} />;
+  // chưa nối database thì sửa gì cũng chỉ nằm trong bộ nhớ trang, khoá lại cũng vô nghĩa
+  const canEdit = mode === 'nodb' ? true : await signedIn();
+
+  return (
+    <TravelMap
+      width={mapData.W}
+      height={mapData.H}
+      initial={entries}
+      mode={mode}
+      canEdit={canEdit}
+      canSignIn={mode !== 'nodb' && canSignIn()}
+    />
+  );
 }

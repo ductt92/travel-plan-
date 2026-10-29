@@ -45,6 +45,23 @@ Chưa có đăng nhập: server action là đầu vào công khai, ai mở đư�
 xoá được. Dữ liệu từ form đều soát lại ở `src/lib/validate.ts` chứ không tin trình
 duyệt, nhưng đó là chống dữ liệu hỏng, không phải chống người lạ.
 
+## Đăng nhập
+
+Đọc thì ai vào cũng xem được — trang này nối từ thẻ "Bản đồ du lịch" ở trang chủ. Ghi, sửa và xoá
+thì phải đăng nhập bằng **mật khẩu chung**: `APP_SECRET` hoặc `HSK6_PASS`, đúng hai mã mà trang
+hsk6 và lớp học trực tiếp đang dùng. Không có bảng người dùng, không OAuth — hai đứa một mã.
+
+Đăng nhập xong, server đặt một cookie `ban-do-phien` ký bằng HMAC-SHA256 với `APP_SECRET`,
+`httpOnly` và giới hạn trong đường dẫn `/ban-do`, hạn 30 ngày. Cookie tự mang hạn dùng trong
+phần đã ký nên không cần lưu phiên ở đâu cả. Đổi `APP_SECRET` là mọi phiên cũ hết hiệu lực ngay.
+
+Bốn thao tác ghi trong `src/app/actions.ts` đều hỏi lại cookie trước khi chạm database. Giấu nút
+trên màn hình chỉ cho đỡ rối mắt — server action là đầu vào công khai, ai cũng gọi thẳng được,
+nên chốt thật nằm ở server. Đoán sai mật khẩu thì server chờ 0,4 giây rồi mới trả lời.
+
+Muốn khoá cả phần đọc thì trong `src/app/page.tsx`, chưa đăng nhập là trả về trang đăng nhập
+thay vì `<TravelMap>`.
+
 ## Nhập dữ liệu đang có
 
 ```bash
