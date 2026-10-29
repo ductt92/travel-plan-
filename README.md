@@ -6,7 +6,7 @@ Monorepo React (Vite + npm workspaces), chia thành các app độc lập dùng 
 packages/ui/            @trang/ui — component dùng chung (Button, Card, Tabs, AppShell, Icon, …) và tokens.css
 apps/home/              trang chủ: hai thẻ chọn Travel plan / App học tiếng Trung   → /
 apps/hoc-tieng-trung/   app Hán Lộ học tiếng Trung (HashRouter)                     → /hoc-tieng-trung/
-apps/ban-do/            bản đồ 34 tỉnh: đánh dấu đã đi / muốn đi và ghi chú          → /ban-do/
+apps/ban-do/            bản đồ 34 tỉnh + nhật ký chuyến đi (Next.js, Postgres)       → /ban-do/ (project Vercel riêng)
 packages/sync/          @trang/sync — đồng bộ localStorage lên API, nút "Đồng bộ" chọn Node.js / Go
 travel/                 sổ tay chuyến Tam Đảo – Đà Lạt, HTML tĩnh (sẽ chuyển React sau) → /travel/
 lop-hoc/                lớp học trực tiếp: video, bảng vẽ trên slide, chat (trang tĩnh + Ably)   → /lop-hoc/
@@ -15,8 +15,11 @@ api/go/, api/node/      lối vào Vercel Functions                             
 scripts/build.mjs       build cả site vào dist/
 ```
 
-Mỗi app build riêng (`npm -w apps/<tên> run build`); `npm run build` gộp tất cả vào `dist/` theo đúng
+Mỗi app build riêng (`npm -w apps/<tên> run build`); `npm run build` gộp phần tĩnh vào `dist/` theo đúng
 đường dẫn trên. Các app liên kết với nhau bằng đường dẫn thường, không nạp nhau lúc chạy.
+
+`apps/ban-do` là ngoại lệ: nó là app Next.js cần server, không nằm trong npm workspaces (React 19 vs 18)
+và không vào `dist/`. Cài và chạy riêng trong thư mục đó — xem [apps/ban-do/README.md](apps/ban-do/README.md).
 
 ## Lệnh
 
@@ -24,7 +27,7 @@ Mỗi app build riêng (`npm -w apps/<tên> run build`); `npm run build` gộp t
 npm install
 npm run dev:home        # trang chủ ở http://localhost:5173
 npm run dev:zh          # app học ở http://localhost:5174/hoc-tieng-trung/
-npm run dev:map         # bản đồ ở http://localhost:5175/ban-do/
+npm run dev:map         # bản đồ ở http://localhost:5177/ban-do/
 npm run dev:api         # API Node + Go ở http://localhost:3001 (vite dev tự chuyển /api sang đây)
 npm run build           # build cả site vào dist/
 npm run preview         # xem bản build ở http://localhost:4173
@@ -50,17 +53,13 @@ Màu chỉ lấy từ token trong `tokens.css`; thêm biểu tượng thì thêm
 
 ## Bản đồ "Đã đi qua" (`apps/ban-do/`)
 
-Bản đồ SVG 34 tỉnh thành (sau sáp nhập 1/7/2025) vẽ bằng `d3-geo`; chọn một tỉnh để đánh dấu đã đi /
-muốn đi và viết ghi chú, lưu localStorage khóa `da-di-qua-v1`, có xuất/nhập JSON.
-Ranh giới nằm sẵn trong `src/data/provinces.json` — xem [apps/ban-do/README.md](apps/ban-do/README.md)
-để biết nguồn dữ liệu và lưu ý về chiều cuộn polygon của d3-geo.
+Bản đồ SVG 34 tỉnh thành (sau sáp nhập 1/7/2025); bấm một tỉnh để mở bảng nhật ký, ghi từng chuyến đi
+với ngày, người đi cùng, nơi đã ghé và cảm nhận. Dữ liệu nằm trong Postgres (cùng Neon với `/api`),
+ghi qua server action của Next.js. Ranh giới tỉnh để sẵn trong `src/data/provinces.json`.
 
-## Bản đồ du lịch (`apps/ban-do/`)
-
-Xem `apps/ban-do/README.md`. Các chuyến đi khai báo trong `apps/ban-do/src/trips.js` (điểm dừng, tọa độ,
-đường đi); danh sách địa điểm của chuyến 3–11/10 nằm ở `src/data/trip-2026-10.json`, trích từ
-`travel/index.html`. Dấu tích "đã ghé" dùng chung khóa localStorage `dadiqua-trip` với sổ tay, nên tích
-ở bản đồ hay ở sổ tay đều thấy ở cả hai (cùng trình duyệt).
+Đây là app Next.js nên **deploy thành một project Vercel riêng** (Root Directory `apps/ban-do`), còn
+trang chính chuyển tiếp `/ban-do/*` sang đó bằng `rewrites` trong `vercel.json`. Xem
+[apps/ban-do/README.md](apps/ban-do/README.md) để biết bảng dữ liệu, cách nhập dữ liệu cũ và các lệnh.
 
 ## App học tiếng Trung (`apps/hoc-tieng-trung/`)
 
