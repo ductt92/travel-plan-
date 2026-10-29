@@ -1,48 +1,35 @@
-'use client';
-
-import { useState, useTransition } from 'react';
-import { signInAction } from '@/app/auth-actions';
+import { useState } from 'react';
 import { useDialog } from '@/lib/use-dialog';
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  /** Đăng nhập xong thì nạp lại trang để server dựng lại với quyền sửa. */
-  onDone: () => void;
+  /** Trả về null nếu mật khẩu đúng, còn lại là câu lỗi để hiện ra. */
+  onSubmit: (pass: string) => Promise<string | null>;
 }
 
-export default function LoginDialog({ open, onClose, onDone }: Props) {
+export default function LoginDialog({ open, onClose, onSubmit }: Props) {
   const { ref, onBackdropClick } = useDialog(open, onClose);
 
   return (
     <dialog id="dlg-login" ref={ref} onClick={onBackdropClick} aria-labelledby="login-title">
-      {open && <Body onClose={onClose} onDone={onDone} />}
+      {open && <Body onClose={onClose} onSubmit={onSubmit} />}
     </dialog>
   );
 }
 
-function Body({ onClose, onDone }: Omit<Props, 'open'>) {
+function Body({ onClose, onSubmit }: Omit<Props, 'open'>) {
   const [pass, setPass] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [busy, start] = useTransition();
+  const [busy, setBusy] = useState(false);
 
   const submit = (ev: React.FormEvent) => {
     ev.preventDefault();
     setError(null);
-    start(async () => {
-      try {
-        const res = await signInAction(pass);
-        if (res.ok) {
-          setPass('');
-          onDone();
-        } else {
-          setError(res.error);
-        }
-      } catch (err) {
-        console.error('[ban-do] đăng nhập hỏng', err);
-        setError('Không gọi được server. Thử lại nhé.');
-      }
-    });
+    setBusy(true);
+    onSubmit(pass)
+      .then(err => (err ? setError(err) : onClose()))
+      .finally(() => setBusy(false));
   };
 
   return (
@@ -65,7 +52,9 @@ function Body({ onClose, onDone }: Omit<Props, 'open'>) {
       </div>
 
       <div className="dlg-acts">
-        <span className={`acts-note${error ? ' bad' : ''}`}>{error ?? 'Đăng nhập rồi mới ghi và xoá được'}</span>
+        <span className={`acts-note${error ? ' bad' : ''}`}>
+          {error ?? 'Đăng nhập rồi mới ghi và xoá được'}
+        </span>
         <button type="submit" className="btn primary" disabled={busy || !pass}>
           {busy ? 'Đang kiểm…' : 'Vào'}
         </button>

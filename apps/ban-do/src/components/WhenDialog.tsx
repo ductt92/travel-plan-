@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { pad } from '@/lib/format';
 import { allYears, tripMonths, tripsOfYear } from '@/lib/period';

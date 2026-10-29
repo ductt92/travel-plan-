@@ -20,6 +20,7 @@ const { default: nodeSync } = await import('../backend/node/sync.js');
 const { default: nodeAi } = await import('../backend/node/ai.js');
 const { default: nodeTerms } = await import('../backend/node/terms.js');
 const { default: nodeLopHoc } = await import('../backend/node/lophoc.js');
+const { default: nodeBanDo } = await import('../backend/node/bando.js');
 
 const PORT = Number(process.env.API_PORT || 3001);
 const GO_PORT = String(PORT + 1);
@@ -27,7 +28,10 @@ const go = spawn('go', ['run', './cmd/dev-api'], { cwd: root, env: { ...process.
 process.on('exit', () => go.kill());
 for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => process.exit());
 
-const NODE_ROUTES = { '/api/node/sync': nodeSync, '/api/node/ai': nodeAi, '/api/node/terms': nodeTerms, '/api/node/lop-hoc': nodeLopHoc };
+const NODE_ROUTES = {
+  '/api/node/sync': nodeSync, '/api/node/ai': nodeAi, '/api/node/terms': nodeTerms,
+  '/api/node/lop-hoc': nodeLopHoc, '/api/node/ban-do': nodeBanDo,
+};
 
 http.createServer((req, res) => {
   const path = req.url.split('?')[0];

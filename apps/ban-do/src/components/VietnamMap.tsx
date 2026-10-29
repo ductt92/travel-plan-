@@ -1,5 +1,3 @@
-'use client';
-
 import { useMemo } from 'react';
 import { byCode, provinces } from '@/lib/map-data';
 import type { Level, Province } from '@/lib/types';

@@ -9,6 +9,7 @@ Mỗi phản hồi có header `X-Backend: go|node` để biết bản nào đã 
 | Kết nối DB, tạo bảng, kiểm tra mã | `go/common.go` (pgx, `sync.Once`) | `node/common.js` (pg, Pool) |
 | Đồng bộ dữ liệu | `go/sync.go` | `node/sync.js` |
 | Hỏi AI (Gemini) | `go/ai.go` | `node/ai.js` |
+| Nhật ký bản đồ | `go/bando.go` | `node/bando.js` |
 | Thuật ngữ du lịch (trang hsk6) | `go/terms.go` | `node/terms.js` |
 | Token Ably cho lớp học trực tiếp | `go/lophoc.go` | `node/lophoc.js` |
 | Lối vào Vercel | `../api/go/*.go` | `../api/node/*.js` |
@@ -27,6 +28,12 @@ trang hsk6 (`HSK6_PASS`, cho Ngọc); `GET /terms?check` trả `200 {ok: true}` 
 - Server vẫn ở `base` → ghi, trả `200` với `version` mới.
 - Máy khác đã ghi trước → `409` kèm bản mới nhất; client gộp ba chiều (`merge3` trong
   `packages/sync`) rồi gửi lại. Đây là khóa lạc quan: không cần khóa dòng, không mất thay đổi.
+
+**`/api/<go|node>/ban-do`** — nhật ký chuyến đi của trang bản đồ. `GET` ai cũng đọc được, trả
+`{entries: {"<mã tỉnh>": {status, trips}}}`; `GET ?check` kiểm mật khẩu. Ghi thì cần mật khẩu
+(`APP_SECRET` hoặc `HSK6_PASS`): `PUT ?province=` đặt trạng thái, `POST ?province=` thêm chuyến,
+`PATCH ?province=&id=` sửa, `DELETE ?province=&id=` xoá. Bảng `provinces` và `trips` tự tạo ở lần
+gọi đầu. Ngày đọc ra bằng `from_date::text` cho khỏi trôi theo múi giờ.
 
 **`POST /api/<go|node>/ai`** với `{model?, provider?, system?, contents: [{role, parts: [{text}]}]}` → `200 {text, provider, model}`.
 Server chỉ nhận đúng dạng hội thoại, tối đa 16 lượt, mỗi đoạn 8000 ký tự. Gọi lần lượt các AI có khóa

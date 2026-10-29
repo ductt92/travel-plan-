@@ -1,5 +1,3 @@
-'use client';
-
 import { CalendarIcon, ChevronIcon } from './icons';
 import type { Period } from '@/lib/types';
 

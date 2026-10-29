@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { noMark } from '@/lib/format';
 import { REGION, provinces } from '@/lib/map-data';
