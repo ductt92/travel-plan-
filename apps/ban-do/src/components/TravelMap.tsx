@@ -1,13 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 import FindDialog from './FindDialog';
+import LoginDialog from './LoginDialog';
 import LogDialog, { type FeedRow } from './LogDialog';
 import ProvinceDialog from './ProvinceDialog';
 import VietnamMap from './VietnamMap';
 import WhenButton from './WhenButton';
 import WhenDialog from './WhenDialog';
-import { BookIcon, SearchIcon } from './icons';
+import { BookIcon, LockIcon, SearchIcon } from './icons';
+import { signOutAction } from '@/app/auth-actions';
 import { byCode, provinces } from '@/lib/map-data';
 import { inPeriod, scopeLabel, scopeShort } from '@/lib/period';
 import { useEntries } from '@/lib/use-entries';
@@ -24,8 +27,14 @@ const BLANK = { status: 'none' as const, trips: [] };
 export type Mode = 'db' | 'nodb' | 'error';
 
 export default function TravelMap({
-  width, height, initial, mode,
-}: { width: number; height: number; initial: Entries; mode: Mode }) {
+  width, height, initial, mode, canEdit, canSignIn,
+}: {
+  width: number; height: number; initial: Entries; mode: Mode;
+  /** Đã đăng nhập (hoặc đang chạy không database) thì mới ghi được. */
+  canEdit: boolean;
+  canSignIn: boolean;
+}) {
+  const router = useRouter();
   const {
     entries, entryOf, setStatus, addTrip, updateTrip, removeTrip, saving, error, clearError,
   } = useEntries(initial, mode !== 'nodb');
@@ -38,6 +47,8 @@ export default function TravelMap({
   const [findOpen, setFindOpen] = useState(false);
   const [whenOpen, setWhenOpen] = useState(false);
   const [logOpen, setLogOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [, startLeaving] = useTransition();
 
   // màn rộng mở bảng bên phải, màn hẹp mở popup giữa màn
   const wide = useMedia('(min-width:861px)');
@@ -71,13 +82,13 @@ export default function TravelMap({
 
   // bảng bên phải không phải modal nên phải tự nghe Esc, và nhường popup đang chồng lên
   useEffect(() => {
-    if (!panel || findOpen || whenOpen || logOpen) return;
+    if (!panel || findOpen || whenOpen || logOpen || loginOpen) return;
     const onKey = (ev: KeyboardEvent) => {
       if (ev.key === 'Escape') setSelected(null);
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [panel, findOpen, whenOpen, logOpen]);
+  }, [panel, findOpen, whenOpen, logOpen, loginOpen]);
 
   const scope = scopeLabel(period);
 
@@ -111,7 +122,7 @@ export default function TravelMap({
   return (
     <>
       <div className="wrap">
-        <NoteBar mode={mode} />
+        <NoteBar mode={mode} canEdit={canEdit} />
 
         <header className="top">
           <h1>
@@ -162,6 +173,21 @@ export default function TravelMap({
                 <BookIcon />
                 Nhật ký <span className="count">{rows.length}</span>
               </button>
+              {canEdit && canSignIn && (
+                <button
+                  className="tool"
+                  onClick={() => startLeaving(async () => { await signOutAction(); router.refresh(); })}
+                >
+                  <LockIcon open />
+                  Thoát
+                </button>
+              )}
+              {!canEdit && canSignIn && (
+                <button className="tool" onClick={() => { setHovered(null); setLoginOpen(true); }}>
+                  <LockIcon />
+                  Đăng nhập
+                </button>
+              )}
             </div>
           </div>
         </header>
@@ -215,12 +241,19 @@ export default function TravelMap({
         <div className="toast muted" role="status">Đang lưu…</div>
       ) : null}
 
+      <LoginDialog
+        open={loginOpen}
+        onClose={() => setLoginOpen(false)}
+        onDone={() => { setLoginOpen(false); router.refresh(); }}
+      />
+
       <ProvinceDialog
         province={province}
         entry={entry}
         level={selected ? levelOf(selected) : 0}
         period={period}
         modal={!wide}
+        canEdit={canEdit}
         onClose={() => setSelected(null)}
         onStatus={s => selected && setStatus(selected, s)}
         onAdd={data => selected && addTrip(selected, data)}
@@ -265,7 +298,7 @@ export default function TravelMap({
   );
 }
 
-function NoteBar({ mode }: { mode: Mode }) {
+function NoteBar({ mode, canEdit }: { mode: Mode; canEdit: boolean }) {
   if (mode === 'error') return (
     <p className="note-bar warn"><span>⚠️</span>
       <span>
@@ -284,11 +317,18 @@ function NoteBar({ mode }: { mode: Mode }) {
     </p>
   );
 
+  if (!canEdit) return (
+    <p className="note-bar"><span>👀</span>
+      <span>
+        <b>Đang xem thôi.</b> Đăng nhập bằng mật khẩu chung thì mới ghi, sửa và xoá chuyến được.
+      </span>
+    </p>
+  );
+
   return (
     <p className="note-bar"><span>💾</span>
       <span>
-        <b>Mọi thay đổi lưu thẳng xuống database.</b> Trang chưa có đăng nhập, nên ai mở được
-        link cũng ghi và xoá được.
+        <b>Đang đăng nhập.</b> Mọi thay đổi lưu thẳng xuống database.
       </span>
     </p>
   );

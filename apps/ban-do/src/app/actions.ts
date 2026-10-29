@@ -4,6 +4,7 @@ import { and, eq } from 'drizzle-orm';
 import { db } from '@/db/client';
 import { toTrip } from '@/db/queries';
 import { provinces, trips } from '@/db/schema';
+import { signedIn } from '@/lib/auth';
 import { checkCode, checkDraft, checkStatus } from '@/lib/validate';
 // mọi export của file 'use server' phải là hàm async, nên kiểu trả về để ở lib/types
 import type { ActionResult, Trip } from '@/lib/types';
@@ -12,12 +13,26 @@ import type { ActionResult, Trip } from '@/lib/types';
  * Lỗi thật ghi ra log của server, người dùng chỉ thấy một câu gọn. Chuỗi kết nối
  * hay câu SQL hỏng không nên chạy ngược về trình duyệt.
  */
+/**
+ * Server action là đầu vào công khai: ai cũng gọi thẳng được, không qua giao diện.
+ * Nên mọi thao tác ghi đều hỏi lại cookie phiên ở đây, giấu nút trên màn hình thôi
+ * thì chưa chặn được gì.
+ */
+async function denied(): Promise<ActionResult<never> | null> {
+  return (await signedIn())
+    ? null
+    : { ok: false, error: 'Chưa đăng nhập, hoặc phiên đã hết hạn. Đăng nhập lại nhé.' };
+}
+
 function failed(where: string, err: unknown): ActionResult<never> {
   console.error(`[ban-do] ${where}`, err);
   return { ok: false, error: 'Chưa lưu được xuống database. Thử lại nhé.' };
 }
 
 export async function setStatusAction(rawCode: string, rawStatus: string): Promise<ActionResult> {
+  const no = await denied();
+  if (no) return no;
+
   const code = checkCode(rawCode);
   if (!code.ok) return code;
   const status = checkStatus(rawStatus);
@@ -38,6 +53,9 @@ export async function setStatusAction(rawCode: string, rawStatus: string): Promi
 }
 
 export async function addTripAction(rawCode: string, rawDraft: unknown): Promise<ActionResult<Trip>> {
+  const no = await denied();
+  if (no) return no;
+
   const code = checkCode(rawCode);
   if (!code.ok) return code;
   const draft = checkDraft(rawDraft);
@@ -75,6 +93,9 @@ export async function updateTripAction(
   id: number,
   rawDraft: unknown,
 ): Promise<ActionResult<Trip>> {
+  const no = await denied();
+  if (no) return no;
+
   const code = checkCode(rawCode);
   if (!code.ok) return code;
   const draft = checkDraft(rawDraft);
@@ -105,6 +126,9 @@ export async function updateTripAction(
 }
 
 export async function removeTripAction(rawCode: string, id: number): Promise<ActionResult> {
+  const no = await denied();
+  if (no) return no;
+
   const code = checkCode(rawCode);
   if (!code.ok) return code;
   if (!Number.isInteger(id)) return { ok: false, error: 'Không tìm thấy chuyến này.' };

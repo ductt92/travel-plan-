@@ -409,6 +409,13 @@ textarea.inp{resize:vertical;min-height:88px;font:400 14.5px/1.65 var(--f-serif)
 .dlg-head.plain .when{margin:16px 0 0}
 .dlg-acts{flex:none;display:flex;align-items:center;gap:9px;padding:14px 24px 18px;border-top:1px solid var(--line);background:var(--card)}
 .acts-note{margin-right:auto;font-size:12.5px;color:var(--faint)}
+.acts-note.bad{color:var(--accent);font-weight:600}
+/* chưa đăng nhập: ô đánh dấu chỉ còn để đọc, bỏ hẳn vẻ bấm được */
+.seg button:disabled{cursor:default}
+.seg button:disabled:hover{background:color-mix(in srgb,var(--card) 72%,transparent)}
+.seg button.on:disabled:hover{background:var(--v3)}
+.seg button.on.s-wish:disabled:hover{background:var(--wish)}
+.seg button.on.s-none:disabled:hover{background:var(--faint)}
 .pick-group{margin-bottom:6px}
 .pick-group h5{margin:10px 2px 5px;font:700 11px/1 var(--f-ui);letter-spacing:.11em;text-transform:uppercase;color:var(--faint)}
 .pick-row{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:12px;background:var(--card);border:1px solid transparent;cursor:pointer;margin-bottom:3px;
