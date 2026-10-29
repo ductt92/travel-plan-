@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import TripForm from './TripForm';
 import { PinIcon } from './icons';

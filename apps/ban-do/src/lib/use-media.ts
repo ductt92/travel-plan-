@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 
 /** Theo dõi một media query. Lần dựng đầu luôn trả false để server và trình duyệt khớp nhau. */

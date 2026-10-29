@@ -1,7 +1,4 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import FindDialog from './FindDialog';
 import LoginDialog from './LoginDialog';
 import LogDialog, { type FeedRow } from './LogDialog';
@@ -10,7 +7,6 @@ import VietnamMap from './VietnamMap';
 import WhenButton from './WhenButton';
 import WhenDialog from './WhenDialog';
 import { BookIcon, LockIcon, SearchIcon } from './icons';
-import { signOutAction } from '@/app/auth-actions';
 import { byCode, provinces } from '@/lib/map-data';
 import { inPeriod, scopeLabel, scopeShort } from '@/lib/period';
 import { useEntries } from '@/lib/use-entries';
@@ -20,24 +16,19 @@ import type { Entries, Level, Period } from '@/lib/types';
 const TOTAL = provinces.length;
 const BLANK = { status: 'none' as const, trips: [] };
 
-/**
- * 'db' nhật ký đọc từ database và ghi xuống đó · 'nodb' chưa cấu hình DATABASE_URL,
- * đang xem dữ liệu mẫu · 'error' có cấu hình nhưng đọc hỏng.
- */
-export type Mode = 'db' | 'nodb' | 'error';
-
 export default function TravelMap({
-  width, height, initial, mode, canEdit, canSignIn,
+  width, height, initial, pass, onSignIn, onSignOut,
 }: {
-  width: number; height: number; initial: Entries; mode: Mode;
-  /** Đã đăng nhập (hoặc đang chạy không database) thì mới ghi được. */
-  canEdit: boolean;
-  canSignIn: boolean;
+  width: number; height: number; initial: Entries;
+  /** Mật khẩu đang giữ; rỗng là chưa đăng nhập, chỉ xem được. */
+  pass: string;
+  onSignIn: (pass: string) => Promise<string | null>;
+  onSignOut: () => void;
 }) {
-  const router = useRouter();
+  const canEdit = Boolean(pass);
   const {
     entries, entryOf, setStatus, addTrip, updateTrip, removeTrip, saving, error, clearError,
-  } = useEntries(initial, mode !== 'nodb');
+  } = useEntries(initial, pass, onSignOut);
 
   const [period, setPeriod] = useState<Period>({ year: null, month: null });
   const [selected, setSelected] = useState<string | null>(null);
@@ -48,7 +39,6 @@ export default function TravelMap({
   const [whenOpen, setWhenOpen] = useState(false);
   const [logOpen, setLogOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
-  const [, startLeaving] = useTransition();
 
   // màn rộng mở bảng bên phải, màn hẹp mở popup giữa màn
   const wide = useMedia('(min-width:861px)');
@@ -122,7 +112,7 @@ export default function TravelMap({
   return (
     <>
       <div className="wrap">
-        <NoteBar mode={mode} canEdit={canEdit} />
+        <NoteBar canEdit={canEdit} />
 
         <header className="top">
           <h1>
@@ -173,16 +163,13 @@ export default function TravelMap({
                 <BookIcon />
                 Nhật ký <span className="count">{rows.length}</span>
               </button>
-              {canEdit && canSignIn && (
-                <button
-                  className="tool"
-                  onClick={() => startLeaving(async () => { await signOutAction(); router.refresh(); })}
-                >
+              {canEdit && (
+                <button className="tool" onClick={onSignOut}>
                   <LockIcon open />
                   Thoát
                 </button>
               )}
-              {!canEdit && canSignIn && (
+              {!canEdit && (
                 <button className="tool" onClick={() => { setHovered(null); setLoginOpen(true); }}>
                   <LockIcon />
                   Đăng nhập
@@ -244,7 +231,7 @@ export default function TravelMap({
       <LoginDialog
         open={loginOpen}
         onClose={() => setLoginOpen(false)}
-        onDone={() => { setLoginOpen(false); router.refresh(); }}
+        onSubmit={onSignIn}
       />
 
       <ProvinceDialog
@@ -298,25 +285,7 @@ export default function TravelMap({
   );
 }
 
-function NoteBar({ mode, canEdit }: { mode: Mode; canEdit: boolean }) {
-  if (mode === 'error') return (
-    <p className="note-bar warn"><span>⚠️</span>
-      <span>
-        <b>Không đọc được database.</b> Trang đang để trống chứ không phải nhật ký mất —
-        xem log của server để biết vì sao.
-      </span>
-    </p>
-  );
-
-  if (mode === 'nodb') return (
-    <p className="note-bar warn"><span>🎨</span>
-      <span>
-        <b>Chưa nối database.</b> Đây là dữ liệu mẫu, sửa gì tải lại cũng mất.
-        Đặt DATABASE_URL rồi chạy <code>npm run db:migrate</code> là xong, cách làm ở README.
-      </span>
-    </p>
-  );
-
+function NoteBar({ canEdit }: { canEdit: boolean }) {
   if (!canEdit) return (
     <p className="note-bar"><span>👀</span>
       <span>
