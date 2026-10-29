@@ -15,7 +15,7 @@ import { DictView } from './views/DictView.jsx';
 import { AiView } from './views/AiView.jsx';
 import { VideosView } from './views/VideosView.jsx';
 import { ClassView } from './views/ClassView.jsx';
-import { RenderView, StepsView, AllTextsView } from './views/ToolViews.jsx';
+import { RenderView, SlideView, StepsView, AllTextsView } from './views/ToolViews.jsx';
 import { PinyinFab } from './components/PinyinFab.jsx';
 
 const NAV = [
@@ -73,6 +73,8 @@ export function App() {
         <Routes>
           {/* Các route cho công cụ dựng video / tạo giọng: không có khung app */}
           <Route path="/render/:id/:i" element={<RenderView />} />
+          {/* trọn một trang bài giảng, lớp học trực tiếp (lop-hoc/) nhúng làm slide */}
+          <Route path="/slide/:id/:s" element={<SlideView />} />
           <Route path="/steps/:id" element={<StepsView />} />
           <Route path="/alltexts" element={<AllTextsView />} />
           <Route path="*" element={

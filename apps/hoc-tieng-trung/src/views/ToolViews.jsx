@@ -21,6 +21,20 @@ export function RenderView() {
   return <LecturePlayer key={l.id} lesson={l} renderMode startStep={+i || 0} />;
 }
 
+/** /slide/:id/:s — trọn trang s của bài giảng (đủ nội dung, không phụ đề), lớp học trực tiếp nhúng làm slide */
+export function SlideView() {
+  const { id, s } = useParams();
+  const l = lessonById(id);
+  useEffect(() => {
+    const b = document.body.style, h = document.documentElement.style;
+    const old = [b.background, b.overflow, h.overflow];
+    b.background = '#000'; b.overflow = 'hidden'; h.overflow = 'hidden';
+    return () => { [b.background, b.overflow, h.overflow] = old; };
+  }, []);
+  if (!l) return null;
+  return <LecturePlayer key={l.id} lesson={l} renderMode slide={+s || 0} />;
+}
+
 /** /steps/:id — danh sách bước đọc của bài giảng dạng JSON */
 export function StepsView() {
   const { id } = useParams();
