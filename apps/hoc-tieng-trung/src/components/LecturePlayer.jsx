@@ -1,6 +1,7 @@
 // Trình phát bài giảng: màn chiếu 16:9 kiểu bảng lớp học, lời giảng bằng giọng đọc
 // (tiếng Việt giảng giải, tiếng Trung đọc mẫu), có phụ đề và thanh điều khiển.
 // renderMode: dùng cho công cụ dựng video, hiện đúng một bước, không phát âm, không điều khiển.
+// slide (kèm renderMode): hiện trọn một trang, đủ nội dung, không phụ đề (bảng của lớp học trực tiếp).
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Chip, Icon, IconButton, ProgressBar, useToast } from '@trang/ui';
 import { LEVELS } from '../core/data.js';
@@ -85,7 +86,7 @@ function Slide({ sl, r, l }) {
   );
 }
 
-export function LecturePlayer({ lesson, renderMode = false, startStep = 0 }) {
+export function LecturePlayer({ lesson, renderMode = false, startStep = 0, slide = null }) {
   const { slides, steps } = useMemo(() => buildLecture(lesson), [lesson]);
   const N = steps.length;
   const [i, setI] = useState(() => (renderMode ? Math.max(0, Math.min(+startStep || 0, N - 1)) : 0));
@@ -127,6 +128,7 @@ export function LecturePlayer({ lesson, renderMode = false, startStep = 0 }) {
   const step = steps[Math.min(i, N - 1)];
   const chapters = slides.map((x, k) => (x.ch ? [x.ch, k] : null)).filter(Boolean);
   const cur = chapters.filter(c => c[1] <= step.s).pop();
+  const whole = renderMode && slide != null ? slides[Math.max(0, Math.min(+slide || 0, slides.length - 1))] : null;
 
   const seekSlide = s => { const k = steps.findIndex(x => x.s === s); if (k >= 0) { setI(k); setNonce(n => n + 1); } };
   const toggle = () => {
@@ -144,8 +146,8 @@ export function LecturePlayer({ lesson, renderMode = false, startStep = 0 }) {
   return (
     <section className={`lec${renderMode ? ' lec--render' : ''}`} ref={box}>
       <div className="stage" aria-live="off">
-        <Slide key={step.s} sl={slides[step.s]} r={ended ? 99 : step.reveal} l={lesson} />
-        {subs && !ended && <div className={`s-sub${step.lang === 'zh' ? ' zh' : ''}`}>{step.text}</div>}
+        <Slide key={whole ? `w${slide}` : step.s} sl={whole || slides[step.s]} r={whole || ended ? 99 : step.reveal} l={lesson} />
+        {subs && !ended && !whole && <div className={`s-sub${step.lang === 'zh' ? ' zh' : ''}`}>{step.text}</div>}
         {!playing && !renderMode && (
           <button type="button" className="s-cover" onClick={toggle} aria-label={ended ? 'Xem lại' : 'Phát bài giảng'}>
             <span><Icon name={ended ? 'loop' : 'play'} /></span>

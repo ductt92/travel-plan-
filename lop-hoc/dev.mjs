@@ -1,7 +1,8 @@
 // Chạy trang lớp học ở máy giống trên Vercel:  node lop-hoc/dev.mjs  → http://localhost:8780/lop-hoc/
 //   /lop-hoc/              trang lớp học (index.html)
-//   /lop-hoc/lessons.json  danh sách slide, tính từ hsk6/ (trên Vercel do scripts/build.mjs ghi sẵn)
-//   /hsk6/…                slide các bài
+//   /lop-hoc/lessons.json  danh sách bài, gộp Hán Lộ và hsk6/ (trên Vercel do scripts/build.mjs ghi sẵn)
+//   /hsk6/…                slide các bài HSK 6
+//   /hoc-tieng-trung/…     bản build của Hán Lộ (npm -w apps/hoc-tieng-trung run build), slide bài HSK 1–3 nhúng từ đây
 //   /api/node/lop-hoc      ký token Ably (backend/node/lophoc.js), cần ABLY_API_KEY (và HSK6_PASS hoặc APP_SECRET cho giáo viên) trong .env.local
 // Chưa có khóa Ably thì thêm ?local=1 vào link để các tab cùng máy nói chuyện với nhau mà không cần Ably.
 import { createServer } from 'node:http';
@@ -23,8 +24,10 @@ const { default: lopHoc } = await import('../backend/node/lophoc.js');
 
 const PORT = Number(process.env.PORT || 8780);
 const TYPES = { '.html': 'text/html; charset=utf-8', '.json': 'application/json', '.jpg': 'image/jpeg', '.png': 'image/png',
-  '.webp': 'image/webp', '.mp3': 'audio/mpeg', '.mp4': 'video/mp4', '.js': 'text/javascript', '.css': 'text/css' };
+  '.webp': 'image/webp', '.mp3': 'audio/mpeg', '.mp4': 'video/mp4', '.js': 'text/javascript', '.css': 'text/css',
+  '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.ico': 'image/x-icon' };
 const HSK6 = join(root, 'hsk6');
+const HANLO = join(root, 'apps', 'hoc-tieng-trung', 'dist');
 
 const server = createServer(async (req, res) => {
   const path = decodeURIComponent(new URL(req.url, 'http://x').pathname);
@@ -36,12 +39,15 @@ const server = createServer(async (req, res) => {
     }
     if (path === '/lop-hoc/lessons.json') {
       res.writeHead(200, { 'Content-Type': TYPES['.json'] });
-      return res.end(JSON.stringify(lessons(HSK6)));
+      return res.end(JSON.stringify(lessons(root)));
     }
     if (path === '/api/node/lop-hoc') return lopHoc(req, res);
-    if (path.startsWith('/hsk6/')) {
-      const file = normalize(join(root, path));
-      if (file.startsWith(HSK6 + sep)) {
+    if (path.startsWith('/hsk6/') || path.startsWith('/hoc-tieng-trung/')) {
+      const hanLo = path.startsWith('/hoc-tieng-trung/');
+      const base = hanLo ? HANLO : HSK6;
+      let file = normalize(hanLo ? join(HANLO, path.slice('/hoc-tieng-trung'.length)) : join(root, path));
+      if (hanLo && file === HANLO + sep) file = join(HANLO, 'index.html');
+      if (file.startsWith(base + sep)) {
         const body = await readFile(file);
         res.writeHead(200, { 'Content-Type': TYPES[extname(file)] || 'application/octet-stream' });
         return res.end(body);
