@@ -13,7 +13,10 @@ Chạy miễn phí hoàn toàn, không có server riêng phải bật:
 1. Tạo tài khoản Ably (gói Free), tạo app, vào **API Keys** chép khóa dạng `appId.keyId:secret`.
 2. Vercel → Settings → Environment Variables: thêm `ABLY_API_KEY` (khóa vừa chép). Mật khẩu giáo viên dùng chung
    `HSK6_PASS` (mật khẩu trang hsk6 của Ngọc), hoặc mã đồng bộ `APP_SECRET`.
-3. Deploy lại. Vào `https://<tên-miền>/lop-hoc/`, chọn **Giáo viên**, nhập mật khẩu, rồi bấm **Sao chép link mời** gửi học sinh.
+3. **TURN** (để máy khác mạng vẫn thấy và nghe nhau, nên có): Cloudflare Dashboard → Realtime → TURN Server → tạo khóa,
+   chép **Turn Token ID** vào `CF_TURN_KEY_ID` và **API Token** vào `CF_TURN_API_TOKEN` (miễn phí 1 TB/tháng).
+   Dùng TURN khác (Metered…) thì đặt `TURN_URLS` (cách nhau bởi dấu phẩy), `TURN_USERNAME`, `TURN_CREDENTIAL`.
+4. Deploy lại. Vào `https://<tên-miền>/lop-hoc/`, chọn **Giáo viên**, nhập mật khẩu, rồi bấm **Sao chép link mời** gửi học sinh.
 
 ## Chạy ở máy
 
@@ -48,6 +51,9 @@ giao bút, tắt mic, hạ tay chỉ được nhận khi đến từ `gv-…`; n
 ## Chưa có / lưu ý
 
 - Cả phòng rời đi là bảng mất (chưa lưu vào Neon)
-- Chỉ có STUN, chưa có TURN: hai máy ở mạng chặn kết nối trực tiếp (một số mạng 4G, wifi công ty) có thể không thấy hình nhau
+- Chưa cấu hình TURN (bước 3) thì chỉ có STUN: hai máy ở mạng chặn kết nối trực tiếp (nhiều mạng 4G, wifi công ty/trường)
+  sẽ kẹt ở "không nối được". Đã có TURN thì video đi vòng qua TURN khi không nối thẳng được
+- Kết nối hỏng giữa chừng (đổi wifi ↔ 4G…) thì người gọi tự gửi lại offer `iceRestart` để nối lại
+- Trình duyệt chặn tự phát video có tiếng (hay gặp trên iPhone) thì hiện nút "Bấm để xem và nghe mọi người"
 - Chưa chia sẻ màn hình, chưa ghi lại buổi học
 - Nét vẽ gửi 10 lô/giây để tiết kiệm tin nhắn Ably; gói Free đủ cho vài người, xem hạn mức hiện tại ở trang giá của Ably

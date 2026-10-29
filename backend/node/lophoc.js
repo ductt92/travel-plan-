@@ -1,11 +1,15 @@
-// POST /api/node/lop-hoc  { room, clientId, pass? } → TokenRequest của Ably
+// POST /api/node/lop-hoc  { room, clientId, pass?, ice? } → TokenRequest của Ably (+ iceServers nếu ice: true)
 //
 // Trang lớp học trực tiếp (lop-hoc/) không có server riêng: nét vẽ, chat và làm mối video đi qua Ably.
 // Ở đây chỉ ký "phiếu xin token" bằng khóa Ably giấu trên server, cho vào đúng một kênh lop:<phòng>.
 // clientId "gv-…" là giáo viên (mật khẩu là HSK6_PASS của Ngọc, hoặc mã chung APP_SECRET), "hs-…" là học sinh.
 // Ably gắn clientId vào mọi tin nhắn, nên máy khác tin được tin nào thật sự do giáo viên gửi (đổi slide, tắt mic, giao bút…).
+// ice: true (lần xin đầu tiên) thì trả thêm iceServers để video đi qua TURN khi hai máy không nối thẳng được
+// (4G, wifi công ty/trường). Không cấu hình TURN thì chỉ có STUN như cũ.
 //
 // Biến môi trường: ABLY_API_KEY (dạng "appId.keyId:secret"), HSK6_PASS, APP_SECRET
+//   TURN Cloudflare (miễn phí 1 TB/tháng): CF_TURN_KEY_ID, CF_TURN_API_TOKEN
+//   hoặc TURN bất kỳ (Metered…): TURN_URLS (cách nhau bởi dấu phẩy), TURN_USERNAME, TURN_CREDENTIAL
 import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 import { fail, readJson, send } from './common.js';
 
@@ -27,6 +31,30 @@ export function tokenRequest(key, clientId, room, timestamp = Date.now(), nonce 
   return { keyName, ttl: TTL, capability, clientId, timestamp, nonce, mac };
 }
 
+const STUN = { urls: 'stun:stun.l.google.com:19302' };
+
+// Danh sách ICE cho RTCPeerConnection. Cloudflare cấp tên/mật khẩu TURN ngắn hạn, lỗi thì lùi về STUN.
+export async function iceServers(env = process.env) {
+  if (env.CF_TURN_KEY_ID && env.CF_TURN_API_TOKEN) {
+    try {
+      const r = await fetch(`https://rtc.live.cloudflare.com/v1/turn/keys/${env.CF_TURN_KEY_ID}/credentials/generate-ice-servers`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${env.CF_TURN_API_TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ttl: 6 * 60 * 60 }),
+        signal: AbortSignal.timeout(4000)
+      });
+      if (!r.ok) throw new Error(`Cloudflare TURN ${r.status}`);
+      const list = [].concat((await r.json()).iceServers || []);
+      if (list.length) return list;
+    } catch (err) { console.warn('lop-hoc: không lấy được TURN Cloudflare', err.message); }
+  }
+  if (env.TURN_URLS) {
+    const urls = env.TURN_URLS.split(',').map(u => u.trim()).filter(Boolean);
+    return [STUN, { urls, username: env.TURN_USERNAME || '', credential: env.TURN_CREDENTIAL || '' }];
+  }
+  return [STUN];
+}
+
 export default async function lopHoc(req, res) {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return fail(res, 405, 'chỉ hỗ trợ POST'); }
   const key = process.env.ABLY_API_KEY;
@@ -41,5 +69,6 @@ export default async function lopHoc(req, res) {
     const pass = body?.pass;
     if (!same(pass, process.env.HSK6_PASS) && !same(pass, process.env.APP_SECRET)) return fail(res, 401, 'Sai mật khẩu giáo viên');
   }
-  return send(res, 200, tokenRequest(key, clientId, room));
+  const token = tokenRequest(key, clientId, room);
+  return send(res, 200, body?.ice ? { ...token, iceServers: await iceServers() } : token);
 }

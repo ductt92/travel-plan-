@@ -1,11 +1,16 @@
 package gobackend
 
-// POST /api/go/lop-hoc  { room, clientId, pass? } → TokenRequest của Ably (bản Node: backend/node/lophoc.js)
+// POST /api/go/lop-hoc  { room, clientId, pass?, ice? } → TokenRequest của Ably (+ iceServers nếu ice: true)
+// (bản Node: backend/node/lophoc.js)
 //
 // Ký "phiếu xin token" bằng khóa Ably giấu trên server, cho vào đúng một kênh lop:<phòng>.
 // clientId "gv-…" là giáo viên (mật khẩu là HSK6_PASS của Ngọc, hoặc mã chung APP_SECRET), "hs-…" là học sinh.
+// ice: true thì trả thêm iceServers (TURN Cloudflare qua CF_TURN_KEY_ID + CF_TURN_API_TOKEN,
+// hoặc TURN_URLS + TURN_USERNAME + TURN_CREDENTIAL), không cấu hình thì chỉ có STUN.
 
 import (
+	"bytes"
+	"context"
 	"crypto/hmac"
 	"crypto/rand"
 	"crypto/sha256"
@@ -13,6 +18,8 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"regexp"
@@ -50,6 +57,68 @@ func tokenRequest(key, clientID, room string, timestamp int64, nonce string) abl
 	return ablyTokenRequest{keyName, lopTTL, capability, clientID, timestamp, nonce, base64.StdEncoding.EncodeToString(m.Sum(nil))}
 }
 
+type iceServer struct {
+	URLs       any    `json:"urls"`
+	Username   string `json:"username,omitempty"`
+	Credential string `json:"credential,omitempty"`
+}
+
+var stunServer = iceServer{URLs: "stun:stun.l.google.com:19302"}
+
+// Danh sách ICE cho RTCPeerConnection. Cloudflare cấp tên/mật khẩu TURN ngắn hạn, lỗi thì lùi về STUN.
+func iceServers(ctx context.Context) []iceServer {
+	if id, token := os.Getenv("CF_TURN_KEY_ID"), os.Getenv("CF_TURN_API_TOKEN"); id != "" && token != "" {
+		if list, err := cloudflareTurn(ctx, id, token); err == nil && len(list) > 0 {
+			return list
+		} else if err != nil {
+			log.Printf("lop-hoc: không lấy được TURN Cloudflare: %v", err)
+		}
+	}
+	if raw := os.Getenv("TURN_URLS"); raw != "" {
+		var urls []string
+		for _, u := range strings.Split(raw, ",") {
+			if u = strings.TrimSpace(u); u != "" {
+				urls = append(urls, u)
+			}
+		}
+		return []iceServer{stunServer, {URLs: urls, Username: os.Getenv("TURN_USERNAME"), Credential: os.Getenv("TURN_CREDENTIAL")}}
+	}
+	return []iceServer{stunServer}
+}
+
+func cloudflareTurn(ctx context.Context, id, token string) ([]iceServer, error) {
+	ctx, cancel := context.WithTimeout(ctx, 4*time.Second)
+	defer cancel()
+	url := "https://rtc.live.cloudflare.com/v1/turn/keys/" + id + "/credentials/generate-ice-servers"
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBufferString(`{"ttl":21600}`))
+	req.Header.Set("Authorization", "Bearer "+token)
+	req.Header.Set("Content-Type", "application/json")
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("Cloudflare TURN %d", res.StatusCode)
+	}
+	var out struct {
+		IceServers json.RawMessage `json:"iceServers"`
+	}
+	if err := json.NewDecoder(res.Body).Decode(&out); err != nil {
+		return nil, err
+	}
+	// bản API mới trả mảng, bản cũ trả một đối tượng
+	var list []iceServer
+	if err := json.Unmarshal(out.IceServers, &list); err != nil {
+		var one iceServer
+		if err := json.Unmarshal(out.IceServers, &one); err != nil {
+			return nil, err
+		}
+		list = []iceServer{one}
+	}
+	return list, nil
+}
+
 func samePass(got, want string) bool {
 	return want != "" && subtle.ConstantTimeCompare([]byte(got), []byte(want)) == 1
 }
@@ -69,6 +138,7 @@ func LopHoc(w http.ResponseWriter, r *http.Request) {
 		Room     string `json:"room"`
 		ClientID string `json:"clientId"`
 		Pass     string `json:"pass"`
+		Ice      bool   `json:"ice"`
 	}
 	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 4096)).Decode(&body); err != nil {
 		fail(w, http.StatusBadRequest, "dữ liệu không hợp lệ")
@@ -85,5 +155,13 @@ func LopHoc(w http.ResponseWriter, r *http.Request) {
 	}
 	nonce := make([]byte, 16)
 	rand.Read(nonce)
-	writeJSON(w, http.StatusOK, tokenRequest(key, body.ClientID, body.Room, time.Now().UnixMilli(), hex.EncodeToString(nonce)))
+	token := tokenRequest(key, body.ClientID, body.Room, time.Now().UnixMilli(), hex.EncodeToString(nonce))
+	if !body.Ice {
+		writeJSON(w, http.StatusOK, token)
+		return
+	}
+	writeJSON(w, http.StatusOK, struct {
+		ablyTokenRequest
+		IceServers []iceServer `json:"iceServers"`
+	}{token, iceServers(r.Context())})
 }
