@@ -1,0 +1,3 @@
+.class-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;max-width:760px}
+.home-class{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.home-class__icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--jade);color:#FFFFFF;flex:none}
