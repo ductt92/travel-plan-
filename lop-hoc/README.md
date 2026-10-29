@@ -41,7 +41,10 @@ giao bút, tắt mic, hạ tay chỉ được nhận khi đến từ `gv-…`; n
 ## Đã có
 
 - Video + mic, bật/tắt mic và camera, đổi camera trước/sau trên điện thoại
-- Giáo viên chọn bài, chuyển slide (nút hoặc phím ←/→); học sinh tự theo slide của giáo viên
+- Giáo viên bấm **📚 Chọn bài giảng** ở thanh trên: danh sách bài có tên đầy đủ, bấm vào bài thấy từng slide kèm tiêu đề,
+  chia theo phần (Mở đầu, Từ mới, Bài khóa…), bấm slide nào mở slide đó. Dưới bảng chỉ còn ‹ › (hoặc phím ←/→)
+  và tiêu đề slide đang chiếu; học sinh tự theo slide của giáo viên và cũng thấy tiêu đề đó.
+  Tên bài và tiêu đề slide lấy từ `hsk6/<bài>/slides/titles.json` (do `BaiGiang/build_site.py` ghi ra cùng ảnh slide)
 - Vẽ lên slide: 5 màu, 3 độ dày, tẩy, hoàn tác, xóa trang; nét vẽ giữ riêng cho từng slide
 - Giáo viên giao bút cho học sinh, tắt mic học sinh, hạ tay giúp
 - Chat, giơ tay; người vào muộn thấy lại nét vẽ và 40 tin nhắn gần nhất
