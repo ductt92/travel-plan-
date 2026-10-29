@@ -70,6 +70,9 @@ sai thì `400` kèm lý do và dữ liệu cũ giữ nguyên.
 của thư viện Ably, chỉ cho `presence`, `publish`, `subscribe` trên kênh `lop:<room>`, hạn 1 giờ (thư viện tự xin lại).
 `room` dạng `[a-z0-9-]{1,32}`, `clientId` dạng `gv-…` (giáo viên, `pass` phải đúng `HSK6_PASS` hoặc `APP_SECRET`, sai thì `401`)
 hoặc `hs-…` (học sinh) với 8–32 chữ thường/số; sai dạng thì `400`, thiếu biến môi trường thì `503`.
+Gửi thêm `ice: true` (trang chỉ gửi ở lần xin đầu) thì kèm `iceServers` cho `RTCPeerConnection`: TURN Cloudflare cấp
+ngắn hạn (`CF_TURN_KEY_ID`, `CF_TURN_API_TOKEN`), hoặc TURN tĩnh (`TURN_URLS`, `TURN_USERNAME`, `TURN_CREDENTIAL`),
+không cấu hình hay Cloudflare lỗi thì chỉ có STUN.
 
 Bảng:
 

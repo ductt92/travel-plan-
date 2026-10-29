@@ -115,6 +115,7 @@ header .room, header button { white-space: nowrap; }
 
 footer { display: flex; justify-content: center; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; }
 #toast { position: fixed; left: 50%; top: 60px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 8px; font-size: 14px; z-index: 10; max-width: calc(100% - 32px); }
+#unlock { position: fixed; left: 50%; bottom: calc(76px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 11; background: var(--accent); color: var(--accent-ink); border: 0; padding: 12px 20px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 16px rgba(0, 0, 0, .25); }
 
 @media (max-width: 820px) {
   #app { height: auto; min-height: 100%; }
@@ -227,6 +228,7 @@ footer { display: flex; justify-content: center; gap: 8px; padding: 10px 12px ca
 </section>
 
 <div id="toast" class="hidden"></div>
+<button id="unlock" class="hidden">🔊 Bấm để xem và nghe mọi người</button>
 
 <script src="https://cdn.jsdelivr.net/npm/ably@2.28.0/build/ably.min.js"></script>
 <script>
@@ -235,7 +237,8 @@ const params = new URLSearchParams(location.search);
 const FAKE = params.has('fake');   // ?fake=1: camera giả để thử nhiều tab trên một máy
 const LOCAL = params.has('local'); // ?local=1: các tab nói chuyện với nhau qua BroadcastChannel, không cần Ably
 const API = `/api/${params.get('api') === 'go' ? 'go' : 'node'}/lop-hoc`;
-const ICE = [{ urls: 'stun:stun.l.google.com:19302' }];
+// Chỉ STUN thì hai máy khác mạng (4G, wifi công ty/trường) hay không thấy nhau: server trả thêm TURN cùng token Ably
+let ICE = [{ urls: 'stun:stun.l.google.com:19302' }];
 const COLORS = ['#1f1d1a', '#c0392b', '#1e6fd9', '#2f7d4f', '#d68910'];
 const MAX_PEOPLE = 6;
 const CHUNK = 30000; // gửi nét vẽ cho người mới theo từng gói ~30 KB (Ably giới hạn cỡ một tin nhắn)
@@ -270,13 +273,15 @@ const randomId = () => [...crypto.getRandomValues(new Uint8Array(12))].map(b => 
 // Mỗi phòng một kênh Ably "lop:<phòng>". Token do /api/<node|go>/lop-hoc ký, gắn clientId vào mọi tin nhắn:
 // "gv-…" chắc chắn là giáo viên, nên lệnh đổi slide, tắt mic, giao bút chỉ nhận khi đến từ "gv-…".
 async function connectAbly(room, clientId, pass) {
-  const getToken = async () => {
-    const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ room, clientId, pass }) });
+  const getToken = async ice => {
+    const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ room, clientId, pass, ice }) });
     const j = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(j.error || `Máy chủ lỗi (${r.status})`);
-    return j;
+    const { iceServers, ...token } = j;
+    if (Array.isArray(iceServers) && iceServers.length) ICE = iceServers;
+    return token;
   };
-  let first = await getToken(); // xin trước để báo lỗi (sai mật khẩu…) ngay ở màn hình vào lớp
+  let first = await getToken(true); // xin trước để báo lỗi (sai mật khẩu…) ngay ở màn hình vào lớp
   const client = new Ably.Realtime({
     clientId, echoMessages: false,
     authCallback: (_, cb) => {
@@ -475,9 +480,21 @@ function peer(id) {
   pc.ontrack = e => { p.stream.addTrack(e.track); renderTile(id); };
   pc.onconnectionstatechange = () => {
     renderTile(id);
-    if (pc.connectionState === 'failed') pc.restartIce?.();
+    clearTimeout(p.retry);
+    if (pc.connectionState === 'failed') restart(id).catch(err => console.warn('nối lại lỗi', err));
+    // chập chờn quá vài giây (đổi wifi ↔ 4G…) thì cũng nối lại, không chờ tới lúc trình duyệt báo hỏng hẳn
+    if (pc.connectionState === 'disconnected') p.retry = setTimeout(() => restart(id).catch(() => {}), 6000);
   };
   return p;
+}
+
+// Kết nối hỏng: người gọi gửi offer mới có iceRestart, người kia trả lời như một offer thường.
+// (Chỉ gọi pc.restartIce() mà không ai gửi offer thì kết nối hỏng luôn.)
+async function restart(id) {
+  const p = peers.get(id);
+  if (!p || me.id > id || p.pc.signalingState !== 'stable' || p.pc.connectionState === 'connected') return;
+  await p.pc.setLocalDescription(await p.pc.createOffer({ iceRestart: true }));
+  signal(id, { sdp: { type: p.pc.localDescription.type, sdp: p.pc.localDescription.sdp } });
 }
 
 // Hai người biết nhau (qua presence) thì người có mã nhỏ hơn gọi, nên không bao giờ hai bên gọi cùng lúc
@@ -519,6 +536,16 @@ function drop(id) {
 }
 
 /* ---------- Ô video ---------- */
+// Trình duyệt (nhất là iPhone) có thể chặn tự phát video có tiếng: khi đó cả hình lẫn tiếng đứng im,
+// nên hiện nút để người dùng bấm một lần là phát lại hết
+function play(v) {
+  v.play?.().catch(err => { if (err.name === 'NotAllowedError') $('#unlock').classList.remove('hidden'); });
+}
+$('#unlock').addEventListener('click', () => {
+  $('#unlock').classList.add('hidden');
+  for (const v of document.querySelectorAll('video')) play(v);
+});
+
 function renderTile(id) {
   const person = people.get(id);
   if (!person) return;
@@ -536,7 +563,7 @@ function renderTile(id) {
   const v = el.querySelector('video');
   if (id !== me.id && peers.get(id) && v.srcObject !== peers.get(id).stream) v.srcObject = peers.get(id).stream;
   if (id === me.id && v.srcObject !== local) v.srcObject = local;
-  v.play?.().catch(() => {});
+  play(v);
   el.classList.toggle('teacher', person.role === 'teacher');
   const camOn = id === me.id ? state.cam && !!track('video') : person.cam !== false;
   el.querySelector('.avatar').classList.toggle('hidden', camOn);
@@ -573,7 +600,7 @@ function renderFocus() {
   // video này luôn tắt tiếng: tiếng giáo viên đã phát ở ô nhỏ bên phải
   const stream = mine ? local : peers.get(t.id)?.stream || null;
   if (v.srcObject !== stream) v.srcObject = stream;
-  v.play?.().catch(() => {});
+  play(v);
   box.classList.toggle('me', mine);
   const camOn = mine ? state.cam && !!track('video') : t.cam !== false;
   box.querySelector('.avatar').classList.toggle('hidden', camOn);
