@@ -14,6 +14,11 @@ const config: NextConfig = {
   // trong monorepo có nhiều package-lock.json, chỉ rõ gốc của riêng app này
   outputFileTracingRoot: path.join(__dirname),
 
+  // app sống ở /ban-do/, nên vào gốc tên miền thì đưa thẳng về đó cho khỏi gặp 404
+  async redirects() {
+    return [{ source: '/', destination: '/ban-do', permanent: false, basePath: false }];
+  },
+
   experimental: {
     // server action gửi về đúng đường dẫn cũ, Next đối chiếu Origin với Host —
     // đi qua proxy thì hai cái khác nhau, phải khai tên miền trang chính ra đây
