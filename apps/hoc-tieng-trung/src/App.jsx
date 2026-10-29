@@ -14,6 +14,7 @@ import { WriteView } from './views/WriteView.jsx';
 import { DictView } from './views/DictView.jsx';
 import { AiView } from './views/AiView.jsx';
 import { VideosView } from './views/VideosView.jsx';
+import { ClassView } from './views/ClassView.jsx';
 import { RenderView, StepsView, AllTextsView } from './views/ToolViews.jsx';
 import { PinyinFab } from './components/PinyinFab.jsx';
 
@@ -25,6 +26,8 @@ const NAV = [
   { to: '/dict', label: 'Tra từ', short: 'Tra từ', icon: 'search' },
   { to: '/pinyin', label: 'Bảng pinyin', short: 'Pinyin', icon: 'grid' },
   { to: '/videos', label: 'Video bài giảng', short: 'Video', icon: 'video' },
+  // thanh dưới trên điện thoại đã đủ chỗ: ở đó vào lớp qua thẻ trên trang Lộ trình
+  { to: '/lop-hoc', label: 'Lớp học trực tiếp', short: 'Lớp học', icon: 'cam', desktopOnly: true },
   { to: '/ai', label: 'Hỏi AI', short: 'Hỏi AI', icon: 'ai' }
 ];
 
@@ -91,6 +94,7 @@ export function App() {
                 <Route path="/videos" element={<VideosView />} />
                 <Route path="/videos/:id" element={<VideosView />} />
                 <Route path="/ai" element={<AiView />} />
+                <Route path="/lop-hoc" element={<ClassView />} />
                 <Route path="*" element={<p>Không tìm thấy trang. <Link to="/">Về lộ trình</Link></p>} />
               </Routes>
             </Shell>

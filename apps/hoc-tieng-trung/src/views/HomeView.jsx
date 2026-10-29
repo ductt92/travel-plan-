@@ -7,6 +7,7 @@ import { fmtN } from '../core/pinyin.js';
 import { SyncButton } from '@trang/sync';
 import { useStore, nextLesson, dueCards, lessonDoneCount, lessonDone, levelStats, levelStatus, streak, resetAll } from '../core/store.js';
 import './HomeView.css';
+import './ClassView.css';
 
 /** Thẻ "học tiếp": Nhập môn, bài tiếp theo, hoặc đã học hết */
 function NextCard({ nl }) {
@@ -125,6 +126,15 @@ export function HomeView() {
           <Button variant="light" as={Link} to="/review" style={{ alignSelf: 'flex-start' }}>{due ? 'Ôn ngay' : 'Mở ôn tập'}</Button>
         </Card>
       </section>
+
+      <Card className="home-class" aria-label="Lớp học trực tiếp">
+        <span className="home-class__icon"><Icon name="cam" size={24} /></span>
+        <Stack gap={4} style={{ flex: '1 1 240px', minWidth: 0 }}>
+          <b style={{ fontSize: 17 }}>Lớp học trực tiếp</b>
+          <span className="ui-muted" style={{ fontSize: 14 }}>Học online cùng giáo viên: video, vẽ lên slide bài giảng, giơ tay, chat.</span>
+        </Stack>
+        <Button as={Link} to="/lop-hoc">Vào lớp học</Button>
+      </Card>
 
       <Stack as="section" gap={24} aria-labelledby="h-lt">
         <Row between style={{ alignItems: 'baseline' }}>
