@@ -14,7 +14,7 @@ TEMPO = {'vi': 1.08, 'zh': 0.88}          # tốc độ đọc: tiếng Việt n
 GAP = {'vi': 0.3, 'zh': 0.6}
 SLIDE_GAP = 0.7
 MAC = {'vi': ('Linh', '185'), 'zh': ('Tingting', '135')}
-N = 6
+N = int(os.environ.get('VIDEO_JOBS', 6))   # số Chrome chụp khung song song
 
 def key(lang, text):
     h1, h2 = 0x811c9dc5, 5381
