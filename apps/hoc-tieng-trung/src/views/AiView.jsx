@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button, Card, Chip, Field, PageHeader, Row, Stack, useToast } from '@trang/ui';
-import { PasswordInput } from '@trang/ui/password';
+import { Password } from 'liquidglass-ui';
 import { apiFetch, SyncButton, useSyncStatus } from '@trang/sync';
 import { useStore, getState, update, activity, DEF } from '../core/store.js';
 import './AiView.css';
@@ -111,7 +111,7 @@ export function AiView() {
         <form className="ui-stack" style={{ gap: 12, paddingTop: 8 }} onSubmit={save}>
           <p className="ui-muted" style={{ fontSize: 14 }}>Tạo khóa miễn phí tại <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">aistudio.google.com/apikey</a> rồi dán vào đây. Khóa chỉ lưu trong trình duyệt này và chỉ gửi tới máy chủ của Google.</p>
           <Field id="ai-key" label="Khóa API Gemini">
-            <PasswordInput id="ai-key" ref={keyRef} className="ui-input" autoComplete="off" value={keyIn} onChange={e => setKeyIn(e.target.value)} />
+            <Password id="ai-key" ref={keyRef} size="lg" variant="outline" autoComplete="off" value={keyIn} onChange={e => setKeyIn(e.target.value)} />
           </Field>
           <Field id="ai-model" label="Mô hình">
             <input id="ai-model" className="ui-input" autoComplete="off" value={modelIn} onChange={e => setModelIn(e.target.value)} />

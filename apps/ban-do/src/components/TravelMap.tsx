@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Button } from 'liquidglass-ui';
 import FindDialog from './FindDialog';
 import LoginDialog from './LoginDialog';
 import LogDialog, { type FeedRow } from './LogDialog';
@@ -164,15 +165,13 @@ export default function TravelMap({
                 Nhật ký <span className="count">{rows.length}</span>
               </button>
               {canEdit ? (
-                <button className="tool key glass" onClick={onSignOut}>
-                  <LockIcon open />
+                <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon open />} onClick={onSignOut}>
                   Thoát
-                </button>
+                </Button>
               ) : (
-                <button className="tool key glass" onClick={() => { setHovered(null); setLoginOpen(true); }}>
-                  <LockIcon />
+                <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon />} onClick={() => { setHovered(null); setLoginOpen(true); }}>
                   Đăng nhập
-                </button>
+                </Button>
               )}
             </div>
           </div>
