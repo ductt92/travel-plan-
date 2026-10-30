@@ -1,5 +1,6 @@
 import { Icon } from '@trang/ui';
 import { Tag } from 'react-liquis-glass';
+import { GlassToggle } from '@trang/ui/glass';
 import { MapArt, ZhArt, Hsk6Art } from './Art.jsx';
 
 // Các lối vào của site. Thêm app mới: thêm một phần tử vào đây và một tranh trong Art.jsx.
@@ -45,7 +46,10 @@ export function App() {
     <>
       <main className="home">
         <header className="home__hello">
-          <span className="ui-eyebrow">{d.toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' })}</span>
+          <div className="home__top">
+            <span className="ui-eyebrow">{d.toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' })}</span>
+            <GlassToggle />
+          </div>
           <h1>{greeting(d.getHours())}, hôm nay mở <em>trang nào</em>?</h1>
         </header>
         <div className="home__choices">{CHOICES.map(c => <ChoiceCard key={c.id} c={c} />)}</div>

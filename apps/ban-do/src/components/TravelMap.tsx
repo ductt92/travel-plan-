@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from 'react-liquis-glass';
+import { GlassToggle } from '@trang/ui/glass';
 import FindDialog from './FindDialog';
 import LoginDialog from './LoginDialog';
 import LogDialog, { type FeedRow } from './LogDialog';
@@ -43,6 +44,8 @@ export default function TravelMap({
 
   // màn rộng mở bảng bên phải, màn hẹp mở popup giữa màn
   const wide = useMedia('(min-width:861px)');
+  // màn điện thoại: nút Kính chỉ còn biểu tượng cho hàng nút khỏi rớt dòng
+  const narrow = useMedia('(max-width:620px)');
   const panel = Boolean(selected) && wide;
 
   const countOf = useCallback(
@@ -156,14 +159,12 @@ export default function TravelMap({
           <div className="toolbar">
             <WhenButton period={period} onOpen={() => { setHovered(null); setWhenOpen(true); }} onClear={clearPeriod} />
             <div className="tools">
-              <button className="tool" onClick={() => { setHovered(null); setFindOpen(true); }}>
-                <SearchIcon />
+              <Button className="tool tool-key" icon={<SearchIcon />} onClick={() => { setHovered(null); setFindOpen(true); }}>
                 Tìm tỉnh
-              </button>
-              <button className="tool" onClick={() => { setHovered(null); setLogOpen(true); }}>
-                <BookIcon />
+              </Button>
+              <Button className="tool tool-key" icon={<BookIcon />} onClick={() => { setHovered(null); setLogOpen(true); }}>
                 Nhật ký <span className="count">{rows.length}</span>
-              </button>
+              </Button>
               {canEdit ? (
                 <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon open />} onClick={onSignOut}>
                   Thoát
@@ -173,6 +174,7 @@ export default function TravelMap({
                   Đăng nhập
                 </Button>
               )}
+              <GlassToggle size="md" compact={narrow} className="tool tool-key" />
             </div>
           </div>
         </header>
@@ -270,8 +272,10 @@ export default function TravelMap({
         onPick={(year, month) => setPeriod({ year, month })}
       />
 
+      {/* Nhật ký tạm khuất khi popup thời gian mở từ trong nó: hai Modal của thư viện
+          chồng nhau thì cả hai cùng bẫy phím Tab và cùng nghe Esc */}
       <LogDialog
-        open={logOpen}
+        open={logOpen && !whenOpen}
         rows={rows}
         period={period}
         onClose={() => setLogOpen(false)}

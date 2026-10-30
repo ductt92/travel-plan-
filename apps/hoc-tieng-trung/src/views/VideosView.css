@@ -12,3 +12,7 @@
 .vd-t{min-width:0;display:flex;flex-direction:column}
 .vd-t small{color:var(--muted);font-size:12px}
 .vd-t .ui-hz{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .vd-item{background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) .vd-empty{background:var(--gl-fill-soft);box-shadow:var(--gl-shadow-flat)}

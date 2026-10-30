@@ -93,3 +93,57 @@
   .ui-dot{position:absolute;top:6px;left:calc(50% + 6px);min-width:16px;height:16px;border-radius:999px;background:var(--seal);color:#FFFFFF;font-size:10px;font-weight:700;display:grid;place-items:center;padding:0 4px}
   .ui-toast{bottom:96px}
 }
+
+/* ===== Giao diện kính =====
+   Chỉ áp khi kính bật (html không có data-glass="off"); tắt kính thì mọi thứ ở trên giữ nguyên
+   kiểu phẳng. Bọc trong :where() để độ ưu tiên bằng kiểu gốc: các trạng thái như .is-on,
+   :hover, :disabled viết ở trên vẫn thắng. Mờ nền dùng --lg-blur/--lg-saturate của
+   react-liquis-glass, màu kính lấy từ --surface nên tự theo sáng/tối. */
+:root:not([data-glass="off"]){
+  --gl-blur:blur(var(--lg-blur,22px)) saturate(var(--lg-saturate,190%));
+  --gl-sheen:linear-gradient(145deg,rgba(255,255,255,var(--glass-sheen)),rgba(255,255,255,0) 45%,rgba(255,255,255,calc(var(--glass-sheen) / 2)));
+  --gl-fill:color-mix(in srgb,var(--surface) 56%,transparent);
+  --gl-fill-strong:color-mix(in srgb,var(--surface) 80%,transparent);
+  --gl-fill-soft:color-mix(in srgb,var(--surface) 38%,transparent);
+  --gl-hover:color-mix(in srgb,var(--surface) 88%,transparent);
+  --gl-shadow:inset 0 1px .5px var(--glass-edge),inset 0 -1px 1px var(--glass-edge-low),var(--glass-shadow);
+  --gl-shadow-flat:inset 0 1px .5px var(--glass-edge),inset 0 -1px 1px var(--glass-edge-low);
+}
+/* mặt kính lớn: thẻ, thanh bên, ô số liệu */
+:where(:root:not([data-glass="off"])) :is(.ui-card,.ui-tile){background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+/* thẻ tối giữ tông tối nhưng trong mờ, chữ sáng vẫn đủ tương phản */
+:where(:root:not([data-glass="off"])) .ui-card--dark{background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,0) 50%),color-mix(in srgb,var(--dark) 92%,transparent);border-color:rgba(255,255,255,.1);box-shadow:inset 0 1px .5px rgba(255,255,255,.18),var(--glass-shadow)}
+:where(:root:not([data-glass="off"])) .ui-card--muted{background:var(--gl-fill-soft);border-color:var(--line-2);box-shadow:none}
+:where(:root:not([data-glass="off"])) .ui-card--accent{border-color:var(--jade)}
+
+/* nút, ô bấm nhỏ: kính không bóng đổ lớn. Phần :not() bọc :where() để kiểu riêng của app
+   (vd. .lec-main tô ngọc bích cho nút phát) viết sau vẫn thắng */
+:where(:root:not([data-glass="off"])) :is(.ui-btn--secondary,.ui-iconbtn:where(:not(.ui-iconbtn--plain,.ui-iconbtn--solid,.ui-iconbtn--ondark)),.ui-chip:where(:not(.is-on))){background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow-flat),0 4px 14px -8px rgba(0,0,0,.25)}
+:where(:root:not([data-glass="off"])) :is(.ui-btn--secondary,.ui-chip:where(:not(.is-on))):hover{background:var(--gl-hover)}
+:where(:root:not([data-glass="off"])) .ui-iconbtn:where(:not(.ui-iconbtn--plain,.ui-iconbtn--solid,.ui-iconbtn--ondark)):hover{background:color-mix(in srgb,var(--jade-soft) 85%,transparent)}
+:where(:root:not([data-glass="off"])) :is(.ui-btn--ghost,.ui-iconbtn--plain):hover{background:var(--gl-fill)}
+:where(:root:not([data-glass="off"])) .ui-btn:disabled{background:color-mix(in srgb,var(--line) 80%,transparent);box-shadow:none}
+:where(:root:not([data-glass="off"])) :is(.ui-pill--grey,.ui-tag){background:var(--gl-fill)}
+:where(:root:not([data-glass="off"])) .ui-kbd{background:var(--gl-fill-strong)}
+:where(:root:not([data-glass="off"])) .ui-bar{background:color-mix(in srgb,var(--line) 75%,transparent)}
+:where(:root:not([data-glass="off"])) .ui-input{background:var(--gl-fill-strong);border-color:var(--glass-border);box-shadow:var(--gl-shadow-flat),inset 0 0 0 1px var(--line);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur)}
+:where(:root:not([data-glass="off"])) .ui-tabs{border-bottom-color:color-mix(in srgb,var(--line-2) 70%,transparent)}
+
+/* thông báo nhanh: kính tối */
+:where(:root:not([data-glass="off"])) .ui-toast{background:color-mix(in srgb,var(--ink) 80%,transparent);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);box-shadow:inset 0 1px .5px rgba(255,255,255,.25),var(--shadow)}
+
+/* khung app: thanh bên và thanh tab dưới là kính, nội dung cuộn qua phía sau */
+:where(:root:not([data-glass="off"])) .ui-side{background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-right-color:var(--glass-border);box-shadow:var(--gl-shadow-flat),8px 0 30px -24px rgba(0,0,0,.3)}
+:where(:root:not([data-glass="off"])) .ui-nav a:hover{background:var(--gl-fill-strong)}
+:where(:root:not([data-glass="off"])) .ui-nav a.is-on{background:color-mix(in srgb,var(--jade-soft) 85%,transparent);box-shadow:var(--gl-shadow-flat)}
+@media (max-width:900px){
+  :where(:root:not([data-glass="off"])) .ui-tabbar{background:var(--gl-sheen),var(--gl-fill-strong);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-top-color:var(--glass-border);box-shadow:inset 0 1px .5px var(--glass-edge),0 -10px 30px -18px rgba(0,0,0,.28)}
+}
+
+/* Thanh trên cùng chỉ có trên điện thoại (thanh bên bị ẩn): tên app và nút bật/tắt kính */
+.ui-mbar{display:none}
+@media (max-width:900px){
+  .ui-mbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:-6px}
+  .ui-mbar .ui-brand__mark{width:34px;height:34px;font-size:14px;border-radius:8px}
+  .ui-mbar .ui-brand b{font-size:16px}
+}

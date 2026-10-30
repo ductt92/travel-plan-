@@ -19,6 +19,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..600&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<!-- kính dùng chung (react-liquis-glass + bật/tắt); thiếu các tệp này trang vẫn chạy, chỉ không có nút bật/tắt -->
+<link rel="stylesheet" href="/glass/react-liquis-glass.css">
+<link rel="stylesheet" href="/glass/glass.css">
+<script src="/glass/glass.js"></script>
 <style>
   :root{
     --paper:#EFF2ED; --surface:#FCFDFB; --surface-2:#E6ECE4; --raise:#FFFFFF;
@@ -381,6 +385,102 @@
   .strip a.full .d::after{content:" ✓";color:var(--moss);font-size:12px}
   .home-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:14px;font:500 13px var(--sans);color:var(--ink-2);text-decoration:none;padding:4px 10px;border:1px solid var(--line);border-radius:999px}
   .home-link:hover{color:var(--ink);border-color:var(--fog)}
+  /* ---------- kính (liquid glass) ----------
+     mặc định bật; <html data-glass="off"> (glass.js) thì về mặt giấy đặc như cũ.
+     biến lấy từ react-liquis-glass, có giá trị dự phòng khi không tải được /glass/.
+     chỉ thanh nav dính và các ô ở đầu trang nhòe nền; thẻ bên dưới chỉ trong mờ cho nhẹ máy khi cuộn. */
+  :root{
+    --gl-bg:rgba(252,253,251,.6); --gl-raise:rgba(255,255,255,.66); --gl-inner:rgba(20,29,25,.045);
+    --gl-border:var(--lg-glass-border,rgba(255,255,255,.6)); --gl-edge:var(--lg-glass-edge,rgba(255,255,255,.9));
+    --gl-line:rgba(20,29,25,.1);
+    --gl-sheen:linear-gradient(145deg,rgba(255,255,255,.3),rgba(255,255,255,.06) 45%,rgba(255,255,255,.14));
+    --gl-shadow:0 1px 2px rgba(20,29,25,.04),0 10px 26px -18px rgba(20,29,25,.35);
+    --gl-blob-1:rgba(59,132,97,.2); --gl-blob-2:rgba(192,110,36,.15);
+    --gl-blur:blur(var(--lg-blur,22px)) saturate(var(--lg-saturate,190%));
+    --gl-fog:#647469; /* chữ phụ đậm hơn chút cho đủ tương phản trên mặt kính */
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --gl-bg:rgba(20,28,24,.6); --gl-raise:rgba(26,35,30,.62); --gl-inner:rgba(255,255,255,.045);
+      --gl-border:rgba(255,255,255,.1); --gl-edge:rgba(255,255,255,.12); --gl-line:rgba(255,255,255,.09);
+      --gl-sheen:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.01) 45%,rgba(255,255,255,.03));
+      --gl-shadow:0 14px 34px -24px rgba(0,0,0,.9);
+      --gl-blob-1:rgba(122,203,159,.11); --gl-blob-2:rgba(223,160,97,.08); --gl-fog:#7B8B83;
+    }
+  }
+  :root[data-theme="dark"]{
+    --gl-bg:rgba(20,28,24,.6); --gl-raise:rgba(26,35,30,.62); --gl-inner:rgba(255,255,255,.045);
+    --gl-border:rgba(255,255,255,.1); --gl-edge:rgba(255,255,255,.12); --gl-line:rgba(255,255,255,.09);
+    --gl-sheen:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.01) 45%,rgba(255,255,255,.03));
+    --gl-shadow:0 14px 34px -24px rgba(0,0,0,.9);
+    --gl-blob-1:rgba(122,203,159,.11); --gl-blob-2:rgba(223,160,97,.08); --gl-fog:#7B8B83;
+  }
+  :root:not([data-glass="off"]){--fog:var(--gl-fog)}
+
+  /* nền: vài vệt rêu và hổ phách đứng yên sau trang để mặt kính bắt màu */
+  :root:not([data-glass="off"]) body::before{
+    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(60vmax 45vmax at 88% 0%, var(--gl-blob-1), transparent 70%),
+      radial-gradient(50vmax 40vmax at 0% 45%, var(--gl-blob-2), transparent 70%),
+      radial-gradient(55vmax 45vmax at 75% 100%, var(--gl-blob-1), transparent 70%);
+  }
+  :root:not([data-glass="off"]) .masthead{
+    border-bottom-color:var(--gl-line);
+    background:
+      radial-gradient(90% 120% at 92% -20%, color-mix(in srgb,var(--moss-soft) 80%,transparent) 0%, transparent 60%),
+      radial-gradient(70% 100% at 8% 0%, color-mix(in srgb,var(--amber-soft) 80%,transparent) 0%, transparent 55%),
+      color-mix(in srgb,var(--surface) 30%,transparent);
+  }
+  :root:not([data-glass="off"]) footer{background:color-mix(in srgb,var(--surface) 40%,transparent);border-top-color:var(--gl-line)}
+
+  /* ô đầu trang (nhòe nền) */
+  :root:not([data-glass="off"]) :is(.prog,.countdown,.trip-facts){
+    background:var(--gl-sheen),var(--gl-raise);border-color:var(--gl-border);
+    -webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    box-shadow:inset 0 1px .5px var(--gl-edge),var(--gl-shadow);
+  }
+  :root:not([data-glass="off"]) .trip-facts > div{background:none;box-shadow:0 0 0 1px var(--gl-line)}
+  :root:not([data-glass="off"]) .strip a:not(.full){background:var(--gl-sheen),var(--gl-raise);border-top-color:var(--gl-border);border-bottom-color:var(--gl-border);box-shadow:inset 0 1px .5px var(--gl-edge),var(--gl-shadow)}
+  :root:not([data-glass="off"]) :is(.bar,.meter .track){background:var(--gl-inner)}
+
+  /* thanh nav dính */
+  :root:not([data-glass="off"]) .nav{
+    background:var(--gl-sheen),color-mix(in srgb,var(--paper) 55%,transparent);
+    -webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border-bottom-color:var(--gl-border);box-shadow:inset 0 -1px 0 var(--gl-line),0 8px 24px -20px rgba(20,29,25,.5);
+  }
+  :root:not([data-glass="off"]) .nav a:hover{background:var(--gl-raise)}
+
+  /* thẻ nội dung (trong mờ, không nhòe) */
+  :root:not([data-glass="off"]) :is(.card,.day,.notes > div,.anchor){
+    background:var(--gl-sheen),var(--gl-bg);border-color:var(--gl-border);
+    box-shadow:inset 0 1px .5px var(--gl-edge),var(--gl-shadow);
+  }
+  :root:not([data-glass="off"]) .anchor{border-left-color:var(--amber)}
+  :root:not([data-glass="off"]) .card:hover{border-color:var(--gl-border);box-shadow:inset 0 1px .5px var(--gl-edge),0 2px 4px rgba(20,29,25,.05),0 16px 32px -18px rgba(20,29,25,.4)}
+  :root:not([data-glass="off"]) .day.free{border-color:var(--gl-line)}
+  :root:not([data-glass="off"]) :is(.stay,.move,.day-date){background:var(--gl-inner)}
+  :root:not([data-glass="off"]) .chk:hover{background:var(--gl-inner)}
+  :root:not([data-glass="off"]) .rule,:root:not([data-glass="off"]) .subhead::after{background:var(--gl-line)}
+  :root:not([data-glass="off"]) .anchor .checks{border-top-color:var(--gl-line)}
+
+  /* nút phụ thành viên kính */
+  :root:not([data-glass="off"]) :is(.home-link,.back-top,.reset,.glass-btn){
+    background:var(--gl-sheen),var(--gl-raise);border-color:var(--gl-border);
+    box-shadow:inset 0 1px .5px var(--gl-edge),0 1px 2px rgba(20,29,25,.08);
+  }
+
+  /* nút bật/tắt kính trên thanh nav, kiểu giống nút "Trang chủ"; chỉ hiện khi có glass.js.
+     dính mép phải để trên điện thoại (nav cuộn ngang) vẫn thấy */
+  .glass-btn{
+    flex:none;display:inline-flex;align-items:center;gap:7px;margin-left:6px;position:sticky;right:-14px;
+    font:500 12.5px var(--sans);color:var(--ink-2);white-space:nowrap;cursor:pointer;
+    background:var(--surface);padding:5px 12px;border:1px solid var(--line);border-radius:999px;transition:border-color .15s,color .15s;
+  }
+  :root:not([data-glass="off"]) .glass-btn{-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur)}
+  .glass-btn:hover{color:var(--ink);border-color:var(--fog)}
+  .glass-btn[aria-pressed="true"] .glass-toggle__dot{background:var(--moss)}
 </style>
 
 </head>
@@ -471,6 +571,7 @@
     <a href="#tamdao">Tam Đảo</a>
     <a href="#dalat">Đà Lạt</a>
     <a href="#ghichu">Ghi chú</a>
+    <button class="glass-btn glass-toggle" type="button" data-glass-toggle aria-pressed="true" hidden><span class="glass-toggle__dot" aria-hidden="true"></span><span data-glass-label>Kính: bật</span></button>
   </div>
 </nav>
 
@@ -1404,6 +1505,10 @@
   paint();
   setInterval(paint, 1000);
 })();
+</script>
+<script>
+  // nút bật/tắt kính chỉ hiện khi /glass/glass.js đã nạp
+  if(window.glassMode)document.querySelectorAll('[data-glass-toggle]').forEach(function(b){b.hidden=false});
 </script>
 </body>
 </html>

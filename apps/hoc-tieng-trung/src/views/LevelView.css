@@ -14,3 +14,8 @@
 .lv-row--test,.lv-row--test:hover{background:var(--dark);color:var(--on-dark)}
 .lv-row--test .lv-row__no{background:var(--seal);border-color:var(--seal);color:#FFFFFF;font-family:var(--f-hz)}
 @media (max-width:600px){.lv-row{padding:12px 14px;gap:12px}.lv-row__tag{display:none}}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .lv-row:not(.is-cur,.lv-row--test):hover{background:var(--gl-fill-strong)}
+:where(:root:not([data-glass="off"])) .lv-row.is-cur{background:color-mix(in srgb,var(--jade-soft) 88%,transparent)}
+:where(:root:not([data-glass="off"])) .lv-row{border-bottom-color:color-mix(in srgb,var(--line-2) 60%,transparent)}

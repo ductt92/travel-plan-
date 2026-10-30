@@ -60,3 +60,7 @@ select.lec-rate{appearance:auto;padding:0 10px}
 .lec--render{border:0;border-radius:0;background:#000}
 .lec--render .stage{width:100vw;height:100vh;aspect-ratio:auto}
 .lec--render .fade{animation:none}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .lec:not(.lec--render,:fullscreen){background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) .lec:not(.lec--render,:fullscreen) .lec-bar{border-top-color:var(--glass-border)}

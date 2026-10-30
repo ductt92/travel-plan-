@@ -79,3 +79,12 @@
   .pyf__write{grid-column:3;grid-row:1;padding:0 12px}
   .pk-tabs button{flex:0 0 auto;padding:6px 12px}
 }
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .pk-legend li{background:var(--gl-fill);border-color:var(--glass-border)}
+:where(:root:not([data-glass="off"])) .pk-legend--big li{background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) .pyf{background:linear-gradient(135deg,color-mix(in srgb,var(--jade-soft) 80%,transparent),var(--gl-fill));-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) :is(.pyf__tone,.pyf__write){background:var(--gl-fill-strong)}
+:where(:root:not([data-glass="off"])) .pyf__write{border-color:var(--glass-border)}
+:where(:root:not([data-glass="off"])) .pk-tabs{background:var(--gl-fill-soft);box-shadow:var(--gl-shadow-flat)}
+:where(:root:not([data-glass="off"])) .pk-tabs button.is-on{background:var(--gl-sheen),var(--gl-fill-strong);box-shadow:var(--gl-shadow-flat),0 4px 12px -6px rgba(0,0,0,.25)}

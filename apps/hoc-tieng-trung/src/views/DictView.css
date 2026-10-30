@@ -9,3 +9,9 @@
 .parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .part{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:var(--surface-2);text-decoration:none;color:var(--ink)}
 .part .ui-hz{font-size:36px}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .search{background:var(--gl-fill-strong);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);box-shadow:var(--gl-shadow-flat),var(--glass-shadow)}
+:where(:root:not([data-glass="off"])) .res:hover{background:var(--gl-fill-strong)}
+:where(:root:not([data-glass="off"])) .res.on{background:color-mix(in srgb,var(--jade-soft) 88%,transparent)}
+:where(:root:not([data-glass="off"])) .part{background:var(--gl-fill-soft);box-shadow:var(--gl-shadow-flat)}

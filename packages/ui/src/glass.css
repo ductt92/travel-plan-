@@ -1,0 +1,26 @@
+/* Tắt kính (html[data-glass="off"]): mọi mặt kính của react-liquis-glass thành mặt đặc,
+   không nhòe nền. Viết đè biến của thư viện — cần chọn mạnh hơn .lg-root[data-lg-theme=…]
+   của thư viện (trang tĩnh không có .lg-root thì biến nằm ở :root, nên đè cả ở html).
+   Màu mặt đặc lấy --surface của app (bản đồ dùng --card), có màu dự phòng. */
+html[data-glass="off"],
+html[data-glass="off"] .lg-root[data-lg-theme]{
+  --lg-blur:0px;
+  --lg-saturate:1;
+  --lg-glass-bg:var(--surface,var(--card,#fff));
+  --lg-glass-bg-strong:var(--surface,var(--card,#fff));
+  --lg-glass-bg-hover:var(--surface-2,var(--sunk,#f1f1f1));
+  --lg-glass-edge:transparent;
+  --lg-glass-edge-low:transparent;
+  --lg-glass-border:var(--line,rgba(0,0,0,.1));
+}
+html[data-glass="off"] .lg-root[data-lg-theme="dark"]{
+  --lg-glass-bg:var(--surface,var(--card,#26262b));
+  --lg-glass-bg-strong:var(--surface,var(--card,#26262b));
+  --lg-glass-bg-hover:var(--surface-2,var(--sunk,#303036));
+}
+html[data-glass="off"] .lg-glass,
+html[data-glass="off"] .lg-mask{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+
+/* Nút bật/tắt kính (GlassToggle và nút [data-glass-toggle] ở trang tĩnh) */
+.glass-toggle__dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.35;flex:none;transition:opacity .15s}
+.glass-toggle[aria-pressed="true"] .glass-toggle__dot{opacity:1}

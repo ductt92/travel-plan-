@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Button } from 'react-liquis-glass';
+import { CloseIcon, PlusIcon } from 'react-liquis-glass/icons';
 import TripForm from './TripForm';
 import { PinIcon } from './icons';
 import { CLIP, REGION } from '@/lib/map-data';
@@ -34,7 +36,12 @@ export default function ProvinceDialog({ province, modal, onClose, ...rest }: Pr
   const { ref, onBackdropClick } = useDialog(Boolean(province), onClose, modal);
 
   return (
-    <dialog id="dlg" ref={ref} onClick={onBackdropClick} aria-labelledby="dlg-title">
+    // vẫn là <dialog> thật: màn rộng nó là bảng không-modal bên phải (Drawer của thư viện
+    // luôn là modal, có nền che), nên chỉ mượn mặt kính lg-glass của thư viện
+    <dialog
+      id="dlg" className="lg-glass lg-glass-strong" ref={ref}
+      onClick={onBackdropClick} aria-labelledby="dlg-title"
+    >
       {/* key theo mã tỉnh: đổi tỉnh là form đang mở dẹp đi, khỏi lẫn sang tỉnh mới */}
       {province && <Body key={province.code} province={province} onClose={onClose} {...rest} />}
     </dialog>
@@ -90,7 +97,7 @@ function Body({
               ].filter(Boolean).join(' · ')}
             </p>
           </div>
-          <button className="x" aria-label="Đóng" onClick={onClose}>✕</button>
+          <button type="button" className="x lg-close-btn" aria-label="Đóng" onClick={onClose}><CloseIcon /></button>
         </div>
 
         <div className="seg">
@@ -109,7 +116,10 @@ function Body({
         <div className="sec-head">
           <h4>{shown.length ? `${shown.length} chuyến đi${period.year ? ` · ${scopeShort(period)}` : ''}` : 'Chuyến đi'}</h4>
           {canEdit && editing !== 'new' && (
-            <button className="add" onClick={() => setEditing('new')}>＋ Thêm chuyến</button>
+            <Button
+              variant="tinted" color="primary" size="sm" className="add" icon={<PlusIcon />}
+              onClick={() => setEditing('new')}
+            >Thêm chuyến</Button>
           )}
         </div>
 
@@ -134,12 +144,12 @@ function Body({
               )}
             </p>
             {(outside || canEdit) && (
-              <button
-                className="btn primary"
+              <Button
+                variant="filled" color="primary"
                 onClick={outside ? onClearPeriod : () => setEditing('new')}
               >
                 {outside ? `Xem cả ${entry.trips.length} chuyến` : 'Ghi chuyến đầu tiên'}
-              </button>
+              </Button>
             )}
           </div>
         ) : (

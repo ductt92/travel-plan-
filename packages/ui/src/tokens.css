@@ -18,6 +18,11 @@
   --f-brush:'Ma Shan Zheng','Kaiti SC','STKaiti',serif;
   --shadow:0 1px 0 var(--line),0 18px 40px -24px rgba(24,32,28,.28);
   --r:16px; --r-sm:11px;
+  /* Giao diện kính (bật/tắt bằng html[data-glass]): màu các đốm nền mờ và viền, bóng
+     của mặt kính. Thông số viền/bóng theo bản sáng/tối của react-liquis-glass. */
+  --glass-glow-1:#BFE6D3; --glass-glow-2:#FBD6B4; --glass-glow-3:#F3C6BE;
+  --glass-border:rgba(255,255,255,.62); --glass-edge:rgba(255,255,255,.9); --glass-edge-low:rgba(255,255,255,.25);
+  --glass-sheen:.22; --glass-shadow:0 10px 30px -12px rgba(24,48,38,.22),0 2px 6px rgba(24,48,38,.06);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#111614; --surface:#19201D; --surface-2:#202825; --surface-3:#1D2521;
@@ -29,6 +34,9 @@
   --t1:#FB923C; --t2:#4ADE80; --t3:#8AB0FF; --t4:#C99BFF; --t5:#98A59F;
   --grid:rgba(240,113,95,.30);
   --shadow:0 1px 0 var(--line),0 18px 40px -24px rgba(0,0,0,.6);
+  --glass-glow-1:#11392A; --glass-glow-2:#3A2514; --glass-glow-3:#381A17;
+  --glass-border:rgba(255,255,255,.12); --glass-edge:rgba(255,255,255,.22); --glass-edge-low:rgba(255,255,255,.05);
+  --glass-sheen:.06; --glass-shadow:0 10px 30px -10px rgba(0,0,0,.6),0 2px 6px rgba(0,0,0,.25);
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
@@ -41,6 +49,9 @@
   --t1:#FB923C; --t2:#4ADE80; --t3:#8AB0FF; --t4:#C99BFF; --t5:#98A59F;
   --grid:rgba(240,113,95,.30);
   --shadow:0 1px 0 var(--line),0 18px 40px -24px rgba(0,0,0,.6);
+  --glass-glow-1:#11392A; --glass-glow-2:#3A2514; --glass-glow-3:#381A17;
+  --glass-border:rgba(255,255,255,.12); --glass-edge:rgba(255,255,255,.22); --glass-edge-low:rgba(255,255,255,.05);
+  --glass-sheen:.06; --glass-shadow:0 10px 30px -10px rgba(0,0,0,.6),0 2px 6px rgba(0,0,0,.25);
   color-scheme:dark;
 }
 

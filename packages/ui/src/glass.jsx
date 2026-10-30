@@ -4,9 +4,14 @@
 // mà không phải lặp lại mã màu. Sáng/tối theo :root[data-theme] nếu trang có đặt,
 // còn không thì theo cài đặt của máy — giống tokens.css. Nhãn có sẵn của thư viện
 // (Đóng, Hủy, hiện mật khẩu…) bằng tiếng Việt.
-import { useEffect, useState } from 'react';
-import { ConfigProvider, viVN } from 'react-liquis-glass';
+import { useEffect, useState, useSyncExternalStore } from 'react';
+import { Button, ConfigProvider, viVN } from 'react-liquis-glass';
+import { SparklesIcon } from 'react-liquis-glass/icons';
 import 'react-liquis-glass/styles.css';
+import './glass.css';
+import { getGlass, setGlass, subscribe } from './glass-mode.js';
+
+export { getGlass, setGlass };
 
 const dark = matchMedia('(prefers-color-scheme: dark)');
 
@@ -37,5 +42,27 @@ export function GlassRoot({ accent = 'var(--accent)', children, ...tokens }) {
     <ConfigProvider theme={useTheme()} accent={accent} locale={viVN} style={ROOT} {...tokens}>
       {children}
     </ConfigProvider>
+  );
+}
+
+/** true khi giao diện kính đang bật (theo nút bật/tắt dùng chung cả site). */
+export function useGlass() {
+  return useSyncExternalStore(subscribe, getGlass);
+}
+
+/** Nút bật/tắt kính. `compact` chỉ hiện biểu tượng (vẫn có nhãn cho trình đọc màn hình). */
+export function GlassToggle({ compact = false, className = '', ...rest }) {
+  const on = useGlass();
+  const label = on ? 'Tắt hiệu ứng kính' : 'Bật hiệu ứng kính';
+  return (
+    <Button
+      variant="glass" size="sm" {...rest}
+      className={`glass-toggle ${className}`.trim()}
+      icon={<SparklesIcon />}
+      aria-pressed={on} aria-label={compact ? label : undefined} title={label}
+      onClick={() => setGlass(!on)}
+    >
+      {!compact && <>Kính <span className="glass-toggle__dot" aria-hidden="true" /></>}
+    </Button>
   );
 }
