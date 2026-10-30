@@ -85,6 +85,7 @@ button,input,textarea{font:inherit;color:inherit}
 
 /* ---------- đầu trang ---------- */
 .top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:13px;margin-bottom:20px}
+.home-link{align-self:flex-start;font:600 13px var(--f-ui)}
 h1{
   display:flex;align-items:center;justify-content:center;gap:.26em;flex-wrap:wrap;
   font:600 clamp(30px,4.6vw,46px)/1.12 var(--f-serif);letter-spacing:-.01em

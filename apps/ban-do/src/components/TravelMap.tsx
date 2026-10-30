@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from 'react-liquis-glass';
+import { HomeIcon } from 'react-liquis-glass/icons';
 import { GlassToggle } from '@trang/ui/glass';
 import FindDialog from './FindDialog';
 import LoginDialog from './LoginDialog';
@@ -119,6 +120,8 @@ export default function TravelMap({
         <NoteBar canEdit={canEdit} onLogin={() => setLoginOpen(true)} />
 
         <header className="top">
+          {/* về hẳn trang chủ của site để chọn web khác */}
+          <Button href="/" variant="glass" size="sm" className="home-link" icon={<HomeIcon />}>Trang chủ</Button>
           <h1>
             <span className="ic">🌷</span>
             <span className="n he">Đức</span>
