@@ -40,7 +40,7 @@ function Body({ onClose, onSubmit }: Omit<Props, 'open'>) {
       </p>
 
       <Password
-        autoFocus size="lg" status={error ? 'error' : undefined}
+        data-autofocus size="lg" status={error ? 'error' : undefined}
         autoComplete="current-password" placeholder="Mật khẩu" aria-label="Mật khẩu"
         value={pass} onChange={e => setPass(e.target.value)}
       />

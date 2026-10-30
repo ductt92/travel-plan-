@@ -12,6 +12,6 @@
   },
   "dependencies": {
     "@trang/ui": "0.1.0",
-    "liquidglass-ui": "file:../../vendor/liquidglass-ui-0.1.0.tgz"
+    "liquidglass-ui": "file:../../third_party/liquidglass-ui-0.1.1.tgz"
   }
 }
