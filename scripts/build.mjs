@@ -2,6 +2,7 @@
 //   dist/                  ← apps/home (trang chủ)
 //   dist/hoc-tieng-trung/  ← apps/hoc-tieng-trung (kèm public/audio, public/video)
 //   dist/ban-do/           ← apps/ban-do (bản đồ "đã đi qua", dữ liệu qua /api/*/ban-do)
+//   dist/quan-ly/          ← apps/quan-ly (trang quản lý học liệu, dữ liệu qua /api/*/quan-ly)
 //   dist/travel/           ← travel/ (trang tĩnh, chưa chuyển sang React)
 //   dist/hsk6/             ← hsk6/ (trang tĩnh "Ngọc học tiếng Trung", dựng sẵn bằng BaiGiang/build_site.py)
 //   dist/glass/            ← CSS của react-liquis-glass + nút bật/tắt kính cho các trang tĩnh ở trên
@@ -15,10 +16,12 @@ rmSync('dist', { recursive: true, force: true });
 run('npm -w apps/home run build');
 run('npm -w apps/hoc-tieng-trung run build');
 run('npm -w apps/ban-do run build');
+run('npm -w apps/quan-ly run build');
 mkdirSync('dist', { recursive: true });
 cpSync('apps/home/dist', 'dist', { recursive: true });
 cpSync('apps/hoc-tieng-trung/dist', 'dist/hoc-tieng-trung', { recursive: true });
 cpSync('apps/ban-do/dist', 'dist/ban-do', { recursive: true });
+cpSync('apps/quan-ly/dist', 'dist/quan-ly', { recursive: true });
 cpSync('travel', 'dist/travel', { recursive: true, filter: src => !src.endsWith('README.md') });
 cpSync('hsk6', 'dist/hsk6', { recursive: true });
 // trang tĩnh không qua Vite nên lấy CSS kính và nút bật/tắt từ /glass/

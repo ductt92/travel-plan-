@@ -6,7 +6,8 @@
     "packages/*",
     "apps/home",
     "apps/hoc-tieng-trung",
-    "apps/ban-do"
+    "apps/ban-do",
+    "apps/quan-ly"
   ],
   "scripts": {
     "dev:home": "npm -w apps/home run dev",
@@ -14,7 +15,8 @@
     "dev:map": "npm -w apps/ban-do run dev",
     "build": "node scripts/build.mjs",
     "dev:api": "node scripts/dev-api.mjs",
-    "preview": "npx --yes serve@14.2.4 dist -l 4173"
+    "preview": "npx --yes serve@14.2.4 dist -l 4173",
+    "dev:admin": "npm -w apps/quan-ly run dev"
   },
   "dependencies": {
     "pg": "8.13.1"
