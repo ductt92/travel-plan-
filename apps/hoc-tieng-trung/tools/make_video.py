@@ -7,7 +7,9 @@ import html, json, os, re, shutil, subprocess, sys, time
 from concurrent.futures import ThreadPoolExecutor
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TMP, OUTDIR, IDS = sys.argv[1], sys.argv[2], [a for a in sys.argv[3:] if a != '--skip']
+TMP, OUTDIR, IDS = sys.argv[1], sys.argv[2], [a for a in sys.argv[3:] if not a.startswith('--')]
+TIMING_ONLY = '--timing' in sys.argv     # chỉ tính mốc thời gian từng bước (không chụp khung, không dựng video)
+TIMING = os.path.join(ROOT, 'src', 'data', 'video-timing.json')
 BASE = os.environ.get('BASE', 'http://localhost:4173/hoc-tieng-trung/')
 CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 TEMPO = {'vi': 1.08, 'zh': 0.88}          # tốc độ đọc: tiếng Việt nhanh hơn chút, tiếng Trung chậm lại cho dễ nghe
@@ -33,6 +35,14 @@ def dump(route):
     dom = subprocess.run([CHROME, '--headless=new', '--disable-gpu', f'--user-data-dir={TMP}/prof-x', '--virtual-time-budget=5000',
                           '--dump-dom', f'{BASE}#/{route}'], capture_output=True, text=True).stdout
     return json.loads(html.unescape(re.search(r'<pre id="steps">(.*?)</pre>', dom, re.S).group(1)))
+
+def save_timing(lid, durs):
+    """Giây bắt đầu của từng bước trong video, để trang Video bài giảng nhảy tới câu / slide"""
+    data = json.load(open(TIMING)) if os.path.exists(TIMING) else {}
+    t, starts = 0.0, []
+    for d in durs: starts.append(round(t, 2)); t += d
+    data[lid] = starts
+    open(TIMING, 'w').write(json.dumps(dict(sorted(data.items(), key=lambda kv: tuple(map(int, kv[0].split('-'))))), separators=(',', ':')))
 
 def silence(sec, path):
     run('ffmpeg', '-y', '-f', 'lavfi', '-i', 'anullsrc=r=44100:cl=mono', '-t', f'{sec:.2f}', '-c:a', 'pcm_s16le', path)
@@ -84,6 +94,10 @@ def build(lid):
 
     with ThreadPoolExecutor(N) as ex:
         durs = list(ex.map(step_audio, range(len(steps))))
+    save_timing(lid, durs)
+    if TIMING_ONLY:
+        shutil.rmtree(work, ignore_errors=True)
+        return None, sum(durs), len(steps), missing
     for b in range(0, len(steps), N):       # mỗi luồng một hồ sơ Chrome riêng (i % N) để không bị khóa hồ sơ
         with ThreadPoolExecutor(N) as ex:
             list(ex.map(frame, range(b, min(b + N, len(steps)))))
@@ -111,8 +125,8 @@ if IDS == ['all'] or (len(IDS) == 1 and IDS[0].startswith('cap')):   # "all" ho�
 t0 = time.time()
 for lid in IDS:
     lv, no = lid.split('-')
-    if '--skip' in sys.argv and os.path.exists(os.path.join(OUTDIR, f'bai-giang-cap{lv}-bai{int(no):02d}.mp4')):
+    if '--skip' in sys.argv and not TIMING_ONLY and os.path.exists(os.path.join(OUTDIR, f'bai-giang-cap{lv}-bai{int(no):02d}.mp4')):
         continue
     out, d, n, miss = build(lid)
-    print(f'{lid}: {d / 60:.1f} phút, {n} bước{f", {miss} câu dùng giọng macOS" if miss else ""} → {os.path.basename(out)}  [{(time.time() - t0) / 60:.0f} phút]', flush=True)
+    print(f'{lid}: {d / 60:.1f} phút, {n} bước{f", {miss} câu dùng giọng macOS" if miss else ""} → {os.path.basename(out) if out else "mốc thời gian"}  [{(time.time() - t0) / 60:.0f} phút]', flush=True)
 print('XONG')
