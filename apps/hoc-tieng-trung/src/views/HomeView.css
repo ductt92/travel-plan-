@@ -12,3 +12,7 @@
 .home-lvl.is-active .home-lvl__n{color:var(--jade);font-weight:700}
 .home-lvl.is-soon{background:var(--surface-2);border-style:dashed;border-color:var(--line-2);color:var(--ink-2)}
 .home-lvl.is-soon .home-lvl__n{color:var(--line-2)}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .home-lvl{background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) .home-lvl.is-soon{background:var(--gl-fill-soft);border-color:var(--line-2);box-shadow:none}

@@ -128,8 +128,9 @@ export function ToastProvider({ children }) {
 export const useToast = () => useContext(ToastCtx);
 
 /* Khung app: thanh bên trên desktop, thanh tab dưới trên điện thoại.
-   nav = [{ to, label, short, icon, badge, active }], LinkComponent = Link của router */
-export function AppShell({ brand, nav, sideExtra, footer, LinkComponent = 'a', children }) {
+   nav = [{ to, label, short, icon, badge, active }], LinkComponent = Link của router.
+   mobileBar: thanh nhỏ đầu trang chỉ hiện trên điện thoại, thay chỗ cho thanh bên bị ẩn */
+export function AppShell({ brand, nav, sideExtra, footer, mobileBar, LinkComponent = 'a', children }) {
   const L = LinkComponent;
   return (
     <div className="ui-app">
@@ -145,7 +146,7 @@ export function AppShell({ brand, nav, sideExtra, footer, LinkComponent = 'a', c
         {sideExtra}
         {footer}
       </aside>
-      <main className="ui-main"><div className="ui-wrap">{children}</div></main>
+      <main className="ui-main"><div className="ui-wrap">{mobileBar && <div className="ui-mbar">{mobileBar}</div>}{children}</div></main>
       <nav className="ui-tabbar" aria-label="Điều hướng chính" style={{ gridTemplateColumns: `repeat(${nav.filter(n => !n.desktopOnly).length},minmax(0,1fr))` }}>
         {nav.filter(n => !n.desktopOnly).map(n => (
           <L key={n.to} to={n.to} href={n.to} className={n.active ? 'is-on' : ''} aria-current={n.active ? 'page' : undefined}>

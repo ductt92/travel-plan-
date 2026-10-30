@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { Button, Modal } from 'react-liquis-glass';
+import { ChevronLeftIcon, ChevronRightIcon } from 'react-liquis-glass/icons';
 import { pad } from '@/lib/format';
 import { allYears, tripMonths, tripsOfYear } from '@/lib/period';
-import { useDialog } from '@/lib/use-dialog';
 import type { Entries, Period } from '@/lib/types';
 
 const YEAR_MIN = 2000;
@@ -15,13 +16,11 @@ interface Props {
 }
 
 export default function WhenDialog({ open, onClose, ...rest }: Props) {
-  const { ref, onBackdropClick } = useDialog(open, onClose);
-
   return (
-    <dialog id="dlg-when" ref={ref} onClick={onBackdropClick} aria-labelledby="when-title">
-      {/* chỉ dựng khi mở, nên mỗi lần mở là năm đang xem quay về năm đang lọc */}
-      {open && <Body onClose={onClose} {...rest} />}
-    </dialog>
+    <Modal open={open} onClose={onClose} title="Chọn thời gian" footer={null} width={480} className="bd-modal">
+      {/* Modal chỉ dựng ruột khi mở, nên mỗi lần mở là năm đang xem quay về năm đang lọc */}
+      <Body onClose={onClose} {...rest} />
+    </Modal>
   );
 }
 
@@ -41,28 +40,22 @@ function Body({ period, entries, onClose, onPick }: Omit<Props, 'open'>) {
   return (
     <div className="dlg">
       <div className="dlg-head plain">
-        <div className="row">
-          <div>
-            <h3 id="when-title">Chọn thời gian</h3>
-            <p className="meta">
-              Một tháng hay cả năm đều được — bản đồ, thống kê và nhật ký lọc theo đúng khoảng đó.
-            </p>
-          </div>
-          <button className="x" aria-label="Đóng" onClick={onClose}>✕</button>
-        </div>
+        <p className="meta">
+          Một tháng hay cả năm đều được — bản đồ, thống kê và nhật ký lọc theo đúng khoảng đó.
+        </p>
       </div>
 
       <div className="dlg-body">
         <div className="ym">
-          <button
-            type="button" aria-label="Năm trước"
+          <Button
+            shape="circle" icon={<ChevronLeftIcon />} aria-label="Năm trước"
             disabled={pickYear <= YEAR_MIN} onClick={() => setPickYear(y => y - 1)}
-          >‹</button>
+          />
           <b>{pickYear}</b>
-          <button
-            type="button" aria-label="Năm sau"
+          <Button
+            shape="circle" icon={<ChevronRightIcon />} aria-label="Năm sau"
             disabled={pickYear >= yearMax} onClick={() => setPickYear(y => y + 1)}
-          >›</button>
+          />
         </div>
 
         <button
@@ -91,9 +84,7 @@ function Body({ period, entries, onClose, onPick }: Omit<Props, 'open'>) {
         <span className="acts-note">
           {n ? `${pickYear} có ${n} chuyến` : `${pickYear} chưa có chuyến nào`}
         </span>
-        <button type="button" className="btn" onClick={() => choose(null, null)}>
-          Tất cả thời gian
-        </button>
+        <Button onClick={() => choose(null, null)}>Tất cả thời gian</Button>
       </div>
     </div>
   );

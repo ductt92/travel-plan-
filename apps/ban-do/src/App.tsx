@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Button } from 'react-liquis-glass';
 import TravelMap from './components/TravelMap';
 import { checkPass, loadEntries, rememberPass, savedPass } from './lib/api';
 import { mapData } from './lib/map-data';
@@ -53,7 +54,7 @@ export default function App() {
         </p>
         {loadError && (
           <p style={{ textAlign: 'center' }}>
-            <button className="btn primary" onClick={load}>Thử lại</button>
+            <Button variant="filled" color="primary" onClick={load}>Thử lại</Button>
           </p>
         )}
       </div>

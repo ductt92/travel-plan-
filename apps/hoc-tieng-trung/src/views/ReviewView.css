@@ -17,3 +17,7 @@
 .r2{background:var(--warn-soft);color:var(--warn-ink)}
 .r3{background:var(--jade-soft);color:var(--jade-ink)}
 .r4{background:var(--jade);color:var(--on-jade)}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+/* mặt thẻ lật 3D không dùng backdrop-filter: trình duyệt vẽ sai trong khối preserve-3d */
+:where(:root:not([data-glass="off"])) .face{background:var(--gl-sheen),color-mix(in srgb,var(--surface) 88%,transparent);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}

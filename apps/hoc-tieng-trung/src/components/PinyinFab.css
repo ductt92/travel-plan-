@@ -44,3 +44,9 @@
   @keyframes pysheet-fade{from{opacity:0}}
   @media (max-width:900px){@keyframes pysheet-in{from{transform:translateY(100%)}}}
 }
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .pysheet{background:var(--gl-sheen),var(--gl-fill-strong);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);box-shadow:inset 0 0 0 1px var(--glass-border),inset 0 1px .5px var(--glass-edge),0 40px 90px -30px rgba(10,20,16,.55)}
+:where(:root:not([data-glass="off"])) .pysheet__head{background:radial-gradient(120% 140% at 0% 0%,color-mix(in srgb,var(--jade-soft) 85%,transparent),transparent 60%);border-bottom-color:var(--glass-border)}
+:where(:root:not([data-glass="off"])) .pysheet__x{background:var(--gl-fill);border-color:var(--glass-border)}
+:where(:root:not([data-glass="off"])) .pysheet__x:hover{background:var(--gl-hover)}

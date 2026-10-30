@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { Button, Input, Modal } from 'react-liquis-glass';
+import { SearchIcon } from './icons';
 import { noMark } from '@/lib/format';
 import { REGION, provinces } from '@/lib/map-data';
-import { useDialog } from '@/lib/use-dialog';
 import type { Entries, Level, Region } from '@/lib/types';
 
 interface Props {
@@ -15,17 +16,16 @@ interface Props {
 }
 
 export default function FindDialog({ open, onClose, ...rest }: Props) {
-  const { ref, onBackdropClick } = useDialog(open, onClose);
-
   return (
-    <dialog id="dlg-find" ref={ref} onClick={onBackdropClick} aria-labelledby="find-title">
-      {/* dựng lại mỗi lần mở: ô tìm trống, phần tích lấy lại từ những tỉnh đang chọn */}
-      {open && <Body onClose={onClose} {...rest} />}
-    </dialog>
+    <Modal open={open} onClose={onClose} title="Tìm tỉnh" footer={null} width={580} className="bd-modal">
+      {/* Modal chỉ dựng ruột khi đang mở (và lúc mờ dần khi đóng), nên mỗi lần mở là
+          dựng lại: ô tìm trống, phần tích lấy lại từ những tỉnh đang chọn */}
+      <Body onClose={onClose} {...rest} />
+    </Modal>
   );
 }
 
-function Body({ entries, spotlight, levelOf, countOf, onClose, onApply }: Omit<Props, 'open'>) {
+function Body({ entries, spotlight, levelOf, countOf, onApply }: Omit<Props, 'open'>) {
   const [q, setQ] = useState('');
   // đang tích trong popup, chỉ đổ sang bản đồ khi bấm xác nhận
   const [picked, setPicked] = useState<string[]>(spotlight);
@@ -43,15 +43,10 @@ function Body({ entries, spotlight, levelOf, countOf, onClose, onApply }: Omit<P
   return (
     <div className="dlg">
       <div className="dlg-head plain">
-        <div className="row">
-          <div>
-            <h3 id="find-title">Tìm tỉnh</h3>
-            <p className="meta">Tích một hoặc vài tỉnh rồi xác nhận, bản đồ sẽ khoanh những tỉnh đó.</p>
-          </div>
-          <button className="x" aria-label="Đóng" onClick={onClose}>✕</button>
-        </div>
-        <input
-          className="search" type="search" data-autofocus
+        <p className="meta">Tích một hoặc vài tỉnh rồi xác nhận, bản đồ sẽ khoanh những tỉnh đó.</p>
+        <Input
+          className="search" type="search" data-autofocus allowClear variant="filled" size="lg"
+          prefix={<SearchIcon />}
           placeholder="Gõ tên tỉnh, không dấu cũng được" aria-label="Tìm tỉnh"
           value={q} onChange={e => setQ(e.target.value)}
         />
@@ -86,12 +81,12 @@ function Body({ entries, spotlight, levelOf, countOf, onClose, onApply }: Omit<P
         <span className="acts-note">
           {picked.length ? `Đã chọn ${picked.length} tỉnh` : 'Chưa chọn tỉnh nào'}
         </span>
-        <button type="button" className="btn" onClick={() => setPicked([])}>Bỏ hết tích</button>
-        <button
-          type="button" className="btn primary"
+        <Button onClick={() => setPicked([])}>Bỏ hết tích</Button>
+        <Button
+          variant="filled" color="primary"
           disabled={!picked.length && !spotlight.length}
           onClick={() => onApply(picked)}
-        >Chọn tỉnh</button>
+        >Chọn tỉnh</Button>
       </div>
     </div>
   );

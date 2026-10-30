@@ -21,3 +21,9 @@
 .sync__seg input{position:absolute;opacity:0;pointer-events:none}
 .sync__seg label:has(input:focus-visible){outline:2px solid var(--ink,#1C1A17);outline-offset:1px}
 .sync__small{font-size:12px}
+
+/* Giao diện kính (html không có data-glass="off"): nút và khung là kính. Biến --gl-* do
+   @trang/ui đặt; app không có thì rơi về mặt đặc như trên */
+:where(:root:not([data-glass="off"])) .sync__btn{background:var(--gl-sheen,none),var(--gl-fill,var(--surface,#FFF));-webkit-backdrop-filter:var(--gl-blur,none);backdrop-filter:var(--gl-blur,none);border-color:var(--glass-border,var(--line,#E4DED4));box-shadow:var(--gl-shadow-flat,none),0 4px 14px -8px rgba(0,0,0,.25)}
+:where(:root:not([data-glass="off"])) .sync__pop{background:var(--gl-sheen,none),var(--gl-fill-strong,var(--surface,#FFF));-webkit-backdrop-filter:var(--gl-blur,none);backdrop-filter:var(--gl-blur,none);border-color:var(--glass-border,var(--line,#E4DED4));box-shadow:var(--gl-shadow-flat,0 0 #0000),0 18px 40px -18px rgba(0,0,0,.35)}
+:where(:root:not([data-glass="off"])) .sync__seg{border-color:var(--glass-border,var(--line,#E4DED4))}

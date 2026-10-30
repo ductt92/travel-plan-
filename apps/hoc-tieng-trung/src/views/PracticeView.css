@@ -30,3 +30,8 @@
 .choice{display:flex;flex-direction:column;gap:6px;padding:18px 20px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);cursor:pointer;text-align:left}
 .choice:hover{border-color:var(--jade);color:var(--ink)}
 .choice[aria-disabled="true"]{opacity:.6;pointer-events:none}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) :is(.opt,.tok){background:var(--gl-sheen),var(--gl-fill-strong);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur)}
+:where(:root:not([data-glass="off"])) .slot{background:var(--gl-fill-soft);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur)}
+:where(:root:not([data-glass="off"])) :is(.slowbtn,.choice){background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}

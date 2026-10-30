@@ -1,4 +1,5 @@
 import { useId, useState } from 'react';
+import { Button, Input, TextArea } from 'react-liquis-glass';
 import type { Trip, TripDraft } from '@/lib/types';
 
 interface Props {
@@ -35,15 +36,15 @@ export default function TripForm({ trip, onCancel, onSave }: Props) {
       <div className="grid2">
         <div>
           <label htmlFor={`${id}-from`}>Đi ngày</label>
-          <input
-            className="inp" type="date" id={`${id}-from`} autoFocus
+          <Input
+            variant="filled" type="date" id={`${id}-from`} autoFocus
             value={from} onChange={e => setFrom(e.target.value)}
           />
         </div>
         <div>
           <label htmlFor={`${id}-to`}>Đến ngày</label>
-          <input
-            className="inp" type="date" id={`${id}-to`}
+          <Input
+            variant="filled" type="date" id={`${id}-to`}
             value={to} onChange={e => setTo(e.target.value)}
           />
         </div>
@@ -51,8 +52,8 @@ export default function TripForm({ trip, onCancel, onSave }: Props) {
 
       <div className="field">
         <label htmlFor={`${id}-with`}>Đi cùng ai</label>
-        <input
-          className="inp" id={`${id}-with`} placeholder="Ngọc, nhóm công ty, đi một mình…"
+        <Input
+          variant="filled" id={`${id}-with`} placeholder="Ngọc, nhóm công ty, đi một mình…"
           value={withWho} onChange={e => setWithWho(e.target.value)}
         />
       </div>
@@ -99,16 +100,16 @@ export default function TripForm({ trip, onCancel, onSave }: Props) {
 
       <div className="field">
         <label htmlFor={`${id}-note`}>Trải nghiệm</label>
-        <textarea
-          className="inp" id={`${id}-note`}
+        <TextArea
+          className="note-in" id={`${id}-note`} rows={4}
           placeholder="Ăn gì, ở đâu, lần sau quay lại thì làm gì khác…"
           value={note} onChange={e => setNote(e.target.value)}
         />
       </div>
 
       <div className="form-acts">
-        <button type="button" className="btn" onClick={onCancel}>Huỷ</button>
-        <button type="submit" className="btn primary">{trip ? 'Lưu thay đổi' : 'Thêm chuyến'}</button>
+        <Button onClick={onCancel}>Huỷ</Button>
+        <Button type="submit" variant="filled" color="primary">{trip ? 'Lưu thay đổi' : 'Thêm chuyến'}</Button>
       </div>
     </form>
   );

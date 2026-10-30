@@ -66,3 +66,10 @@
   .pv-stats dd{font-size:26px}
   .pv-play{padding:10px;border-radius:20px;margin:0 -6px}
 }
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .pv-hero{background:radial-gradient(90% 120% at 0% 0%,color-mix(in srgb,var(--jade-soft) 80%,transparent),transparent 60%),radial-gradient(60% 90% at 100% 100%,color-mix(in srgb,var(--seal-soft) 80%,transparent),transparent 70%),var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) .pv-stats div{background:var(--gl-fill);border-color:var(--glass-border);box-shadow:var(--gl-shadow-flat)}
+:where(:root:not([data-glass="off"])) :is(.pv-init,.pv-rule){background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) .pv-key{background:var(--gl-fill-strong)}
+:where(:root:not([data-glass="off"])) .pv-play{background:var(--gl-fill-soft);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);box-shadow:var(--gl-shadow)}

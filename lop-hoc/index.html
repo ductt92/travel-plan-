@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+<!-- Kính dùng chung (react-liquis-glass + bật/tắt). Thiếu các tệp này trang vẫn chạy, chỉ không có nút bật/tắt -->
+<link rel="stylesheet" href="/glass/react-liquis-glass.css">
+<link rel="stylesheet" href="/glass/glass.css">
+<script src="/glass/glass.js"></script>
 <style>
 /* Cùng bảng màu và font với Hán Lộ (packages/ui/src/tokens.css), giao diện tối định nghĩa lại cùng tên token */
 :root {
@@ -351,6 +355,102 @@ footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 12; display: fl
   #picker.slides .lessons, #picker:not(.slides) .slides-col { display: none; }
   #picker.slides .back { display: inline-flex; }
 }
+
+/* ---------- Kính (liquid glass) ----------
+   Mặc định bật; <html data-glass="off"> (glass.js) thì về giao diện đặc như cũ. Lấy biến của react-liquis-glass,
+   có giá trị dự phòng khi không tải được /glass/. Video, slide giữ nền đặc. */
+:root {
+  --gl-bg: var(--lg-glass-bg-strong, rgba(255, 255, 255, .62)); --gl-bg-soft: var(--lg-glass-bg-hover, rgba(255, 255, 255, .46));
+  --gl-border: var(--lg-glass-border, rgba(255, 255, 255, .6)); --gl-edge: var(--lg-glass-edge, rgba(255, 255, 255, .9));
+  --gl-edge-low: var(--lg-glass-edge-low, rgba(255, 255, 255, .25));
+  --gl-sheen: linear-gradient(145deg, rgba(255, 255, 255, .28), rgba(255, 255, 255, .06) 45%, rgba(255, 255, 255, .14));
+  --gl-shadow: 0 12px 32px -14px rgba(24, 32, 28, .28), 0 2px 6px rgba(24, 32, 28, .06);
+  --gl-fill: rgba(24, 32, 28, .06); --gl-line: rgba(24, 32, 28, .09);
+  --gl-blob-1: rgba(31, 111, 87, .2); --gl-blob-2: rgba(242, 184, 75, .2);
+  --gl-blur: blur(var(--lg-blur, 22px)) saturate(var(--lg-saturate, 190%));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --gl-bg: rgba(25, 32, 29, .62); --gl-bg-soft: rgba(255, 255, 255, .08); --gl-border: rgba(255, 255, 255, .12);
+    --gl-edge: rgba(255, 255, 255, .16); --gl-edge-low: rgba(255, 255, 255, .04);
+    --gl-sheen: linear-gradient(145deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .01) 45%, rgba(255, 255, 255, .03));
+    --gl-shadow: 0 18px 40px -20px rgba(0, 0, 0, .7), 0 2px 6px rgba(0, 0, 0, .25);
+    --gl-fill: rgba(255, 255, 255, .06); --gl-line: rgba(255, 255, 255, .08);
+    --gl-blob-1: rgba(79, 181, 146, .14); --gl-blob-2: rgba(242, 184, 75, .08);
+  }
+}
+:root[data-theme="dark"] {
+  --gl-bg: rgba(25, 32, 29, .62); --gl-bg-soft: rgba(255, 255, 255, .08); --gl-border: rgba(255, 255, 255, .12);
+  --gl-edge: rgba(255, 255, 255, .16); --gl-edge-low: rgba(255, 255, 255, .04);
+  --gl-sheen: linear-gradient(145deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .01) 45%, rgba(255, 255, 255, .03));
+  --gl-shadow: 0 18px 40px -20px rgba(0, 0, 0, .7), 0 2px 6px rgba(0, 0, 0, .25);
+  --gl-fill: rgba(255, 255, 255, .06); --gl-line: rgba(255, 255, 255, .08);
+  --gl-blob-1: rgba(79, 181, 146, .14); --gl-blob-2: rgba(242, 184, 75, .08);
+}
+
+/* nền có vệt màu ngọc bích và vàng để mặt kính bắt màu */
+:root:not([data-glass="off"]) #join {
+  background: radial-gradient(640px 420px at 18% 8%, var(--gl-blob-1), transparent 70%),
+    radial-gradient(560px 380px at 86% 92%, var(--gl-blob-2), transparent 70%),
+    radial-gradient(900px 480px at 50% -8%, var(--jade-soft), transparent 70%), var(--bg); }
+:root:not([data-glass="off"]) #app {
+  background: radial-gradient(700px 380px at 10% -6%, var(--gl-blob-1), transparent 70%),
+    radial-gradient(620px 340px at 94% 6%, var(--gl-blob-2), transparent 70%),
+    radial-gradient(600px 300px at 20% 100%, var(--gl-blob-1), transparent 70%),
+    radial-gradient(500px 260px at 80% 100%, var(--gl-blob-2), transparent 70%), var(--bg); }
+
+/* mặt kính: thanh trên, thanh dưới bảng, bảng người học/chat, bảng màu, chọn bài, thẻ vào lớp */
+:root:not([data-glass="off"]) :is(.topbar, .boardbar, .panel, .pop, #picker, #join form) {
+  background: var(--gl-sheen), var(--gl-bg);
+  -webkit-backdrop-filter: var(--gl-blur); backdrop-filter: var(--gl-blur);
+  border-color: var(--gl-border);
+  box-shadow: inset 0 1px .5px var(--gl-edge), inset 0 -1px 1px var(--gl-edge-low), var(--gl-shadow); }
+:root:not([data-glass="off"]) .topbar { margin: 10px 16px 12px; padding: 8px 10px 8px 12px; border: 1px solid var(--gl-border); border-radius: 18px; position: relative; z-index: 5; }
+:root:not([data-glass="off"]) .topbar .icon-btn:not(.sel),
+:root:not([data-glass="off"]) .join-glass {
+  background: var(--gl-bg-soft); border-color: var(--gl-border); box-shadow: inset 0 1px 0 var(--gl-edge-low), 0 1px 2px rgba(24, 32, 28, .08); }
+:root:not([data-glass="off"]) .topbar .icon-btn:not(.sel):hover,
+:root:not([data-glass="off"]) .join-glass:hover { background: var(--gl-bg); }
+:root:not([data-glass="off"]) .net,
+:root:not([data-glass="off"]) .nav,
+:root:not([data-glass="off"]) .drawtools,
+:root:not([data-glass="off"]) #join .roles,
+:root:not([data-glass="off"]) .tabs button.sel,
+:root:not([data-glass="off"]) .msg div { background: var(--gl-fill); }
+:root:not([data-glass="off"]) :is(.tabs, .person, .chat-form, .custom, #picker .head) { border-color: var(--gl-line); }
+:root:not([data-glass="off"]) #picker .col + .col { background: var(--gl-fill); border-color: var(--gl-line); }
+:root:not([data-glass="off"]) #picker .item:not(.sel):hover { background: var(--gl-fill); }
+:root:not([data-glass="off"]) #picker .col + .col .item:not(.sel):hover { background: var(--gl-bg-soft); }
+/* bảng màu nằm trong thanh đã nhòe nên không nhòe được slide phía sau: cho đặc hơn để màu bút dễ nhìn */
+:root:not([data-glass="off"]) .pop { background: var(--gl-sheen), color-mix(in srgb, var(--surface) 86%, transparent); }
+:root:not([data-glass="off"]) #picker::backdrop { background: rgba(10, 16, 13, .36); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+/* bảng chọn bài nằm đè lên slide nhiều màu: cho đặc hơn để chữ nhỏ vẫn rõ */
+:root:not([data-glass="off"]) #picker { background: var(--gl-sheen), color-mix(in srgb, var(--surface) 82%, transparent); }
+/* ô tìm bài dính sát mép trên khi cuộn (dải che màu đặc cũ sẽ lộ ra trên nền kính) */
+:root:not([data-glass="off"]) #pickSearch { top: -10px; box-shadow: none; }
+:root:not([data-glass="off"]) #toast { background: rgba(24, 32, 28, .8); -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 10px 30px -10px rgba(0, 0, 0, .5); }
+/* thanh điều khiển nổi vốn đã là kính: chỉ lấy độ nhòe và viền của thư viện */
+:root:not([data-glass="off"]) .dock { -webkit-backdrop-filter: var(--gl-blur); backdrop-filter: var(--gl-blur); }
+
+/* Tắt kính: thanh điều khiển thành mặt đặc, không nhòe */
+:root[data-glass="off"] .dock { --chip: var(--surface-2); --chip-hover: var(--line); --chip-ink: var(--ink);
+  background: var(--surface); border-color: var(--line); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: var(--shadow); }
+:root[data-glass="off"] .dock::before { display: none; }
+:root[data-glass="off"] .dock .div { background: var(--line-2); }
+
+/* Nút bật/tắt kính: ở thanh trên (trong lớp) và góc màn hình vào lớp; chỉ hiện khi có glass.js */
+.glass-toggle .ic { transition: color .15s, opacity .15s; }
+.glass-toggle[aria-pressed="true"] .ic { color: var(--jade); }
+.glass-toggle[aria-pressed="false"] .ic { opacity: .55; }
+.topbar .glass-btn { width: auto; min-width: 40px; padding: 0 14px 0 11px; gap: 6px; border-radius: 999px; font-size: 14px; }
+#join { position: relative; }
+.join-glass { position: absolute; top: calc(14px + env(safe-area-inset-top)); right: 14px; gap: 6px; padding: 6px 13px 6px 10px; font-size: 13px; color: var(--ink-2); }
+.join-glass .ic { width: 17px; height: 17px; }
+@media (max-width: 820px) {
+  .topbar .glass-btn { padding: 0; }
+  :root:not([data-glass="off"]) .topbar { margin: 8px 8px 10px; padding: 6px 8px; border-radius: 16px; }
+}
 </style>
 </head>
 <body>
@@ -380,10 +480,12 @@ footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 12; display: fl
   <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
   <symbol id="i-sound" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+  <symbol id="i-glass" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
   <symbol id="i-board" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></symbol>
 </svg>
 
 <section id="join">
+  <button type="button" class="join-glass glass-toggle hidden" data-glass-toggle aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-glass"/></svg><span data-glass-label>Kính: bật</span></button>
   <form>
     <div class="brand">
       <span class="mark" aria-hidden="true">课</span>
@@ -418,6 +520,9 @@ footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 12; display: fl
     </button>
     <button id="focusBtn" type="button" class="icon-btn tip-down hidden" aria-label="Phóng to giáo viên" data-tip="Phóng to giáo viên">
       <svg class="ic"><use href="#i-expand"/></svg>
+    </button>
+    <button type="button" class="icon-btn glass-btn glass-toggle hidden" data-glass-toggle aria-pressed="true">
+      <svg class="ic" aria-hidden="true"><use href="#i-glass"/></svg><span class="long" data-glass-label>Kính: bật</span>
     </button>
     <button id="copy" type="button" class="icon-btn tip-down" aria-label="Sao chép link mời" data-tip="Sao chép link mời">
       <svg class="ic"><use href="#i-link"/></svg>
@@ -1408,6 +1513,10 @@ $('#copy').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(link); toast('Đã chép link: ' + link); }
   catch { prompt('Chép link này gửi học sinh:', link); }
 });
+</script>
+<script>
+// nút bật/tắt kính chỉ hiện khi /glass/glass.js đã nạp
+if (window.glassMode) document.querySelectorAll('[data-glass-toggle]').forEach(b => b.classList.remove('hidden'));
 </script>
 </body>
 </html>

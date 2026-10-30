@@ -5,3 +5,7 @@
 .msg.me{align-self:flex-end;background:var(--jade);color:var(--on-jade);border-top-right-radius:4px}
 .msg.err{align-self:flex-start;background:var(--seal-soft);color:var(--seal-ink);border:1px solid var(--seal)}
 details.set summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .chat{background:var(--gl-fill-soft);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) .msg.ai{background:var(--gl-fill-strong);border-color:var(--glass-border);box-shadow:var(--gl-shadow-flat)}

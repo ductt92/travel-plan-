@@ -31,3 +31,9 @@
 .l0-strokes{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
 .l0-stroke{display:flex;flex-direction:column;gap:4px;padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);color:var(--ink)}
 .l0-stroke .ui-hz:first-child{font-size:34px;line-height:1.1}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) :is(.l0-tone,.l0-ini,.l0-stroke){background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
+:where(:root:not([data-glass="off"])) .l0-opt{background:var(--gl-sheen),var(--gl-fill-strong);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur)}
+:where(:root:not([data-glass="off"])) .l0-keys button{background:var(--gl-fill-strong)}
+:where(:root:not([data-glass="off"])) .l0-finals span{background:var(--gl-fill)}

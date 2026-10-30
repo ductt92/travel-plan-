@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AppShell, Brand, ProgressBar, Icon, ToastProvider } from '@trang/ui';
+import { GlassToggle } from '@trang/ui/glass';
 import { useStore, dueCards, todayN, streak, GOAL } from './core/store.js';
 import { stopQueue } from './core/speech.js';
 import { HomeView } from './views/HomeView.jsx';
@@ -36,7 +37,10 @@ function Goal() {
   const n = todayN();
   return (
     <div className="side-goal">
-      <a className="side-home" href="../"><Icon name="home" size={18} />Trang chủ</a>
+      <div className="side-links">
+        <a className="side-home" href="../"><Icon name="home" size={18} />Trang chủ</a>
+        <GlassToggle />
+      </div>
       <div className="side-goal__box">
         <span className="ui-eyebrow">Mục tiêu hôm nay</span>
         <b className="ui-num">{Math.min(n, GOAL)} / {GOAL} lượt</b>
@@ -59,7 +63,11 @@ function Shell({ children }) {
   return (
     <AppShell LinkComponent={Link} nav={nav}
       brand={<Brand LinkComponent={Link} href="/" mark="汉路" title="Hán Lộ" sub="Tiếng Trung theo HSK 3.0" />}
-      footer={<Goal />}>
+      footer={<Goal />}
+      mobileBar={<>
+        <Brand LinkComponent={Link} href="/" mark="汉路" title="Hán Lộ" sub="Tiếng Trung theo HSK 3.0" />
+        <GlassToggle />
+      </>}>
       {children}
       <PinyinFab />
     </AppShell>

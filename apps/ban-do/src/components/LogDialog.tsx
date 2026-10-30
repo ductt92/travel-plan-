@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
+import { Button, Modal } from 'react-liquis-glass';
 import WhenButton from './WhenButton';
 import { BookIcon } from './icons';
 import { byCode } from '@/lib/map-data';
 import { monthOf, yearOf } from '@/lib/format';
 import { scopeLabel } from '@/lib/period';
-import { useDialog } from '@/lib/use-dialog';
 import type { Period, Trip } from '@/lib/types';
 
 export interface FeedRow { code: string; trip: Trip }
@@ -22,7 +22,6 @@ interface Props {
 export default function LogDialog({
   open, rows, period, onClose, onPick, onOpenWhen, onClearPeriod,
 }: Props) {
-  const { ref, onBackdropClick } = useDialog(open, onClose);
   const scope = scopeLabel(period);
 
   const sub = rows.length
@@ -32,16 +31,10 @@ export default function LogDialog({
   let group: number | null = null;
 
   return (
-    <dialog id="dlg-log" ref={ref} onClick={onBackdropClick} aria-labelledby="log-title">
+    <Modal open={open} onClose={onClose} title="Nhật ký" footer={null} width={580} className="bd-modal bd-log">
       <div className="dlg">
         <div className="dlg-head plain">
-          <div className="row">
-            <div>
-              <h3 id="log-title">Nhật ký</h3>
-              <p className="meta">{sub}</p>
-            </div>
-            <button className="x" aria-label="Đóng" onClick={onClose}>✕</button>
-          </div>
+          <p className="meta">{sub}</p>
           <WhenButton period={period} onOpen={onOpenWhen} onClear={onClearPeriod} />
         </div>
 
@@ -52,7 +45,7 @@ export default function LogDialog({
                 <BookIcon size={40} width={1.5} />
                 <p>{period.year ? `Chưa có chuyến nào trong ${scope}.` : 'Chưa ghi chuyến nào.'}</p>
                 {period.year !== null && (
-                  <button className="btn primary" onClick={onClearPeriod}>Xem tất cả thời gian</button>
+                  <Button variant="filled" color="primary" onClick={onClearPeriod}>Xem tất cả thời gian</Button>
                 )}
               </div>
             ) : rows.map(({ code, trip }) => {
@@ -77,6 +70,6 @@ export default function LogDialog({
           </div>
         </div>
       </div>
-    </dialog>
+    </Modal>
   );
 }

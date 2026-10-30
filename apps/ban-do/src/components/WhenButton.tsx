@@ -1,3 +1,5 @@
+import { Button } from 'react-liquis-glass';
+import { CloseIcon } from 'react-liquis-glass/icons';
 import { CalendarIcon, ChevronIcon } from './icons';
 import type { Period } from '@/lib/types';
 
@@ -11,17 +13,20 @@ export default function WhenButton({
 
   return (
     <div className="when">
-      <button type="button" className={`when-btn${period.year ? ' on' : ''}`} onClick={onOpen}>
-        <CalendarIcon />
+      {/* đang lọc thì tô đặc màu nhấn, nhìn qua là biết bản đồ đang không hiện hết */}
+      <Button
+        variant={period.year ? 'filled' : 'glass'} color={period.year ? 'primary' : 'default'}
+        className="when-btn tool-key" icon={<CalendarIcon />} onClick={onOpen}
+      >
         <span>{label}</span>
         <ChevronIcon />
-      </button>
+      </Button>
       {period.year !== null && (
-        <button
-          type="button" className="when-clear"
+        <Button
+          size="sm" shape="circle" className="when-clear" icon={<CloseIcon />}
           title="Bỏ lọc thời gian" aria-label="Bỏ lọc thời gian"
           onClick={onClear}
-        >✕</button>
+        />
       )}
     </div>
   );

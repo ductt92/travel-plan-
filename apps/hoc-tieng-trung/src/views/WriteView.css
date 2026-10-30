@@ -7,3 +7,7 @@
 .sugg{display:flex;flex-wrap:wrap;gap:8px}
 .sugg button{width:48px;height:48px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font:500 24px var(--f-hz);cursor:pointer;color:var(--ink)}
 .sugg button:hover,.sugg button.on{border-color:var(--jade);background:var(--jade-soft)}
+
+/* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
+:where(:root:not([data-glass="off"])) .tzg{background:var(--gl-fill-strong);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);box-shadow:var(--glass-shadow)}
+:where(:root:not([data-glass="off"])) .sugg button{background:var(--gl-fill-strong);border-color:var(--glass-border)}
