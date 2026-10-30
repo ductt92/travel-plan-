@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button } from 'liquidglass-ui';
+import { Button } from 'react-liquis-glass';
 import FindDialog from './FindDialog';
 import LoginDialog from './LoginDialog';
 import LogDialog, { type FeedRow } from './LogDialog';

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button, Card, Chip, Field, PageHeader, Row, Stack, useToast } from '@trang/ui';
-import { Password } from 'liquidglass-ui';
+import { Password } from 'react-liquis-glass';
 import { apiFetch, SyncButton, useSyncStatus } from '@trang/sync';
 import { useStore, getState, update, activity, DEF } from '../core/store.js';
 import './AiView.css';

@@ -485,14 +485,14 @@ textarea.inp{resize:vertical;min-height:88px;font:400 14.5px/1.65 var(--f-serif)
   @keyframes sheen{from{transform:translateX(-120%)}to{transform:translateX(120%)}}
 }
 
-/* nút Đăng nhập / Thoát (Button của liquidglass-ui): cùng cỡ chữ với mấy nút bên cạnh */
+/* nút Đăng nhập / Thoát (Button của react-liquis-glass): cùng cỡ chữ với mấy nút bên cạnh */
 .tool-key{font:600 13.5px var(--f-ui)}
 
 /* chữ bấm được nằm trong một dòng văn xuôi */
 .link{border:none;background:none;padding:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .link:hover{text-decoration-thickness:2px}
 
-/* ---------- popup đăng nhập (Modal của liquidglass-ui) ---------- */
+/* ---------- popup đăng nhập (Modal của react-liquis-glass) ---------- */
 .login .lg-modal-header{position:absolute;right:8px;top:8px;padding:0}
 .login .lg-modal-body{padding:30px 26px 24px}
 .login__form{text-align:center}

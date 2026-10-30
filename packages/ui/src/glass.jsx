@@ -1,12 +1,12 @@
-// Gốc giao diện kính: bọc app trong ConfigProvider của liquidglass-ui.
+// Gốc giao diện kính: bọc app trong ConfigProvider của react-liquis-glass.
 //
 // Màu nhấn mặc định là var(--accent) của chính app, nên mỗi trang giữ tông riêng
 // mà không phải lặp lại mã màu. Sáng/tối theo :root[data-theme] nếu trang có đặt,
 // còn không thì theo cài đặt của máy — giống tokens.css. Nhãn có sẵn của thư viện
 // (Đóng, Hủy, hiện mật khẩu…) bằng tiếng Việt.
 import { useEffect, useState } from 'react';
-import { ConfigProvider, viVN } from 'liquidglass-ui';
-import 'liquidglass-ui/styles.css';
+import { ConfigProvider, viVN } from 'react-liquis-glass';
+import 'react-liquis-glass/styles.css';
 
 const dark = matchMedia('(prefers-color-scheme: dark)');
 
