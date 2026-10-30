@@ -261,7 +261,7 @@ dialog{
   width:min(580px,calc(100vw - 28px));max-height:min(88vh,880px);padding:0;border:none;
   border-radius:26px;background:var(--card);color:var(--ink);box-shadow:var(--sh-3);overflow:hidden
 }
-dialog::backdrop{background:rgba(24,20,16,.42);backdrop-filter:blur(4px)}
+dialog::backdrop{background:rgba(20,16,12,.3);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
 dialog[open]{animation:pop .2s cubic-bezier(.2,.8,.3,1)}
 @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}}
 .dlg{display:flex;flex-direction:column;max-height:inherit}
@@ -429,3 +429,107 @@ textarea.inp{resize:vertical;min-height:88px;font:400 14.5px/1.65 var(--f-serif)
 #dlg-log .feed-item{background:var(--card);margin-bottom:3px}
 #dlg-log .feed-item:hover{background:color-mix(in srgb,var(--accent) 7%,var(--card))}
 .dlg-foot{flex:none;padding:13px 24px 16px;font-size:11.5px;color:var(--faint);border-top:1px solid var(--line);background:var(--card)}
+
+/* ---------- mặt kính ---------- */
+/* Cả trang là kính: nền trong mờ, làm nhòe cái nằm sau, mép trên bắt sáng như rìa
+   một tấm kính dày. Mọi chỗ đều đi qua mấy biến dưới đây, nên máy không hỗ trợ
+   backdrop-filter hoặc người dùng tắt hiệu ứng trong suốt thì chỉ cần đổi lại
+   biến là cả trang rơi về nền đục, không phải sửa từng chỗ một.
+
+   Quy tắc: mỗi chồng chỉ nhòe một lớp. Khối nằm trong popup kính thì chỉ tô màu
+   trong mờ (--glass-2), không tự nhòe nữa — nhòe lên cái đã nhòe vừa không đẹp
+   thêm được gì vừa tốn máy. */
+:root{
+  --glass:rgba(255,255,255,.46);      /* mặt ngoài, có nhòe */
+  --glass-2:rgba(255,255,255,.34);    /* khối nằm trong mặt ngoài, không nhòe */
+  --glass-sunk:rgba(28,26,23,.05);    /* vùng lõm: ô nhập, nền ruột popup */
+  --glass-edge:rgba(255,255,255,.85); /* vạch sáng ở mép trên */
+  --glass-line:rgba(28,26,23,.1);
+  --glass-sh:0 24px 60px -18px rgba(28,26,23,.34),0 3px 12px rgba(28,26,23,.08);
+  --blur:blur(22px) saturate(180%);
+  --blur-sm:blur(13px) saturate(170%);
+  --sheen:linear-gradient(150deg,color-mix(in srgb,var(--glass-edge) 42%,transparent),transparent 40%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --glass:rgba(58,52,46,.5);
+    --glass-2:rgba(255,255,255,.055);
+    --glass-sunk:rgba(0,0,0,.2);
+    --glass-edge:rgba(255,255,255,.2);
+    --glass-line:rgba(255,255,255,.1);
+    --glass-sh:0 24px 60px -18px rgba(0,0,0,.7),0 3px 12px rgba(0,0,0,.4);
+  }
+}
+/* Hai đường lùi: máy cũ không làm nhòe được, và người đã tắt hiệu ứng trong suốt
+   trong cài đặt hệ thống. Cả hai cùng một cách chữa — trả màu về nền đục cũ. */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  :root{--glass:var(--card);--glass-2:var(--card);--glass-sunk:var(--sunk);--glass-edge:transparent;--blur:none;--blur-sm:none}
+}
+@media (prefers-reduced-transparency:reduce){
+  :root{--glass:var(--card);--glass-2:var(--card);--glass-sunk:var(--sunk);--glass-edge:transparent;--blur:none;--blur-sm:none}
+}
+
+.glass{
+  background:var(--sheen),var(--glass);
+  border:1px solid var(--glass-line);
+  box-shadow:var(--glass-sh),inset 0 1px 0 var(--glass-edge);
+  -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)
+}
+/* vệt sáng quét qua một lần lúc mở, cho ra chất kính chứ không phải giấy mờ */
+@media (prefers-reduced-motion:no-preference){
+  .sheen[open]::after{
+    content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(105deg,transparent 32%,color-mix(in srgb,var(--glass-edge) 60%,transparent) 48%,transparent 64%);
+    animation:sheen 1.1s cubic-bezier(.3,.7,.3,1) .16s both
+  }
+  @keyframes sheen{from{transform:translateX(-120%)}to{transform:translateX(120%)}}
+}
+
+/* nút Đăng nhập / Thoát: cùng cỡ với mấy nút bên cạnh nhưng là kính, có màu nhấn */
+.tool.key{
+  color:var(--ink);
+  background:var(--sheen),color-mix(in srgb,var(--accent) 13%,var(--glass));
+  border-color:color-mix(in srgb,var(--accent) 22%,transparent);
+  box-shadow:var(--sh-2),inset 0 1px 0 var(--glass-edge)
+}
+.tool.key svg,.tool.key:hover svg{color:var(--accent)}
+.tool.key:hover{border-color:color-mix(in srgb,var(--accent) 46%,transparent)}
+
+/* chữ bấm được nằm trong một dòng văn xuôi */
+.link{border:none;background:none;padding:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.link:hover{text-decoration-thickness:2px}
+
+/* ---------- popup đăng nhập ---------- */
+#dlg-login{width:min(390px,calc(100vw - 28px));border-radius:30px}
+.lg{position:relative;padding:30px 26px 24px;text-align:center}
+.lg .x{position:absolute;right:13px;top:13px}
+.lg-ring{
+  display:grid;place-items:center;width:56px;height:56px;margin:0 auto 15px;border-radius:50%;
+  color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);
+  background:
+    linear-gradient(150deg,color-mix(in srgb,var(--glass-edge) 65%,transparent),transparent 52%),
+    color-mix(in srgb,var(--accent) 13%,transparent);
+  box-shadow:inset 0 1px 0 var(--glass-edge)
+}
+.lg h3{font:600 27px/1.14 var(--f-serif);letter-spacing:-.015em}
+.lg .meta{margin:9px 0 20px;font-size:13px;line-height:1.6;color:var(--muted)}
+.lg-inp{
+  width:100%;padding:13px 16px;border-radius:16px;text-align:center;font:15px var(--f-ui);color:var(--ink);
+  border:1px solid var(--glass-line);background:color-mix(in srgb,var(--card) 55%,transparent);
+  box-shadow:inset 0 1px 0 var(--glass-edge);transition:border-color .15s,background .15s
+}
+.lg-inp::placeholder{color:var(--faint)}
+.lg-inp:focus{outline:none;border-color:color-mix(in srgb,var(--accent) 52%,transparent);background:color-mix(in srgb,var(--card) 82%,transparent)}
+/* ô căn giữa: chừa trái bằng chỗ nút con mắt bên phải, không thì chữ lệch */
+.lg .ui-pw .ui-pw__in{padding-left:44px}
+.lg-msg{min-height:19px;margin:11px 0 0;font-size:12.5px;color:var(--faint)}
+.lg-msg.bad{color:var(--accent);font-weight:600}
+.lg-go{
+  width:100%;margin-top:13px;padding:13px 0;border-radius:16px;border:1px solid transparent;cursor:pointer;
+  font:600 15px var(--f-ui);color:#fff;
+  background:linear-gradient(150deg,color-mix(in srgb,#fff 32%,transparent),transparent 46%),var(--accent);
+  box-shadow:0 12px 26px -10px color-mix(in srgb,var(--accent) 75%,transparent),inset 0 1px 0 rgba(255,255,255,.4);
+  transition:filter .15s,opacity .15s
+}
+.lg-go:hover:not(:disabled){filter:brightness(1.07)}
+.lg-go:disabled{opacity:.42;cursor:default;box-shadow:none}

@@ -30,7 +30,8 @@ export default function App() {
     });
   }, [pass]);
 
-  const signIn = useCallback(async (typed: string) => {
+  const signIn = useCallback(async (raw: string) => {
+    const typed = raw.trim();
     const err = await checkPass(typed);
     if (err) return err;
     rememberPass(typed);
