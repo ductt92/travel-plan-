@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Modal, Password } from 'liquidglass-ui';
+import { Button, Modal, Password } from 'react-liquis-glass';
 import { LockIcon } from './icons';
 
 interface Props {

@@ -1,6 +1,6 @@
 // Nút trạng thái đồng bộ + ô nhập mã chung. Đặt ở header hoặc thanh bên của app.
 import { useEffect, useRef, useState } from 'react';
-import { Button, Password } from 'liquidglass-ui';
+import { Button, Password } from 'react-liquis-glass';
 import { BACKENDS, connect, disconnect, setBackend, useSyncStatus } from './index.js';
 import './sync.css';
 

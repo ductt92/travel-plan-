@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@trang/ui": "0.1.0",
-    "liquidglass-ui": "file:../../third_party/liquidglass-ui-0.1.1.tgz",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "react-liquis-glass": "^0.1.1"
   },
   "devDependencies": {
     "@types/react": "18.3.12",

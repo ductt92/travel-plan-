@@ -13,7 +13,7 @@
     }
   },
   "dependencies": {
-    "liquidglass-ui": "file:../../third_party/liquidglass-ui-0.1.1.tgz"
+    "react-liquis-glass": "^0.1.1"
   },
   "peerDependencies": {
     "react": "^18.3.1",

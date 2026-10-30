@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { Locale, ThemeTokens } from 'liquidglass-ui';
+import type { Locale, ThemeTokens } from 'react-liquis-glass';
 
 export interface GlassRootProps extends ThemeTokens {
   locale?: Locale;

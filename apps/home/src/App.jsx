@@ -1,5 +1,5 @@
 import { Icon } from '@trang/ui';
-import { Tag } from 'liquidglass-ui';
+import { Tag } from 'react-liquis-glass';
 import { MapArt, ZhArt, Hsk6Art } from './Art.jsx';
 
 // Các lối vào của site. Thêm app mới: thêm một phần tử vào đây và một tranh trong Art.jsx.
