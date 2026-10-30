@@ -12,7 +12,8 @@ Mỗi phản hồi có header `X-Backend: go|node` để biết bản nào đã 
 | Nhật ký bản đồ | `go/bando.go` | `node/bando.js` |
 | Thuật ngữ du lịch (trang hsk6) | `go/terms.go` | `node/terms.js` |
 | Token Ably cho lớp học trực tiếp | `go/lophoc.go` | `node/lophoc.js` |
-| Lối vào Vercel | `../api/go/*.go` | `../api/node/*.js` |
+| Danh mục khóa học (trang quản lý) | `go/catalog.go` | `node/catalog.js` |
+| Lối vào Vercel | `../api/go/*.go` | `../api/node/*.js` (tổng cộng 12 function, 6 Node + 6 Go, đúng giới hạn gói Hobby: thêm API mới phải gộp bớt) |
 | Chạy ở máy | `../cmd/dev-api` (gọi từ `npm run dev:api`) | chạy ngay trong `../scripts/dev-api.mjs` |
 
 ## Hợp đồng
@@ -74,6 +75,52 @@ Gửi thêm `ice: true` (trang chỉ gửi ở lần xin đầu) thì kèm `iceS
 ngắn hạn (`CF_TURN_KEY_ID`, `CF_TURN_API_TOKEN`), hoặc TURN tĩnh (`TURN_URLS`, `TURN_USERNAME`, `TURN_CREDENTIAL`),
 không cấu hình hay Cloudflare lỗi thì chỉ có STUN.
 
+**`/api/<go|node>/quan-ly`** — danh mục khóa học cho trang quản lý: khóa → bài → file. Cơ sở dữ liệu chỉ giữ
+danh mục, không giữ file (Neon miễn phí chỉ 0,5 GB). File nằm ở một trong ba nơi (`storage`): `repo` (có sẵn trong repo,
+`url` tương đối như `/hsk6/bai01/`), `r2` (Cloudflare R2, trình duyệt tải thẳng lên bằng URL ký sẵn) hoặc `youtube` (chỉ là link).
+**Mọi** request cần `X-App-Secret` đúng `APP_SECRET` (không nhận `HSK6_PASS`), sai thì `401 {error}`. Dữ liệu sai thì `400`
+kèm lý do, id không có thì `404`, chuỗi bị cắt bớt (tên 200 ký tự, url 2000). Ba bảng `catalog_*` tự tạo ở lần gọi đầu.
+
+- `GET ?check` → `200 {ok: true}` (không đụng cơ sở dữ liệu).
+- `GET` → `200 {courses, usage, r2}`:
+  `courses: [{id, slug, title, sort, lessons: [{id, num, title, zh, visible, sort, assets: [{id, kind, name, size, url, storage, key, createdAt}]}]}]`
+  (khóa theo `sort, id`; bài theo `sort, num`; file theo `kind, name`; `size` là số byte, `createdAt` dạng `2026-10-30T12:00:00.000Z`),
+  `usage: {dbBytes, dbLimitBytes: 536870912, r2Bytes, r2LimitBytes: 10737418240, repoBytes, youtubeCount}`
+  (`dbBytes` = `pg_database_size` cả cơ sở dữ liệu; `r2Bytes`/`repoBytes` cộng `size` theo nơi lưu, link YouTube chỉ đếm số lượng),
+  `r2: {configured, publicUrl}` (`configured` khi đủ năm biến `R2_*`).
+- `POST ?course` `{slug, title, sort?}` → `201 {course: {id, slug, title, sort}}`; `slug` dạng `[a-z0-9][a-z0-9-]{0,39}`, trùng thì `409`.
+  `PATCH ?course=<id>` `{title?, sort?}` → `200 {course}`. `DELETE ?course=<id>` → `200 {ok: true}` (xoá luôn bài và file bên trong).
+- `POST ?lesson` `{courseId, num, title, zh?, visible?, sort?}` → `201 {lesson: {id, num, title, zh, visible, sort, courseId}}`;
+  `PATCH ?lesson=<id>` `{num?, title?, zh?, visible?, sort?}` → `200 {lesson}`; `DELETE ?lesson=<id>` → `200 {ok: true}`.
+  Trùng số bài trong một khóa thì `409`, `courseId` không có thì `404`. `num` 0–9999, `sort` mặc định 0.
+- `POST ?upload` `{lessonId, name, kind, size, type}` → `200 {putUrl, key, publicUrl, headers: {"Content-Type": type}}`: URL `PUT` ký sẵn
+  (SigV4, hạn 15 phút) để trình duyệt gửi thẳng file lên R2 với đúng các header đó; `key` = `<slug khóa>/<số bài 2 chữ số>/<unix ms>-<tên file ASCII>`
+  (bỏ dấu tiếng Việt, ký tự lạ thành `-`). `size` bắt buộc, quá 200 MB thì `400`; `type` sai dạng thì thành `application/octet-stream`.
+  Chưa cấu hình R2 thì `503 {error: "Chưa cấu hình Cloudflare R2 (…)"}`. Tải xong thì gọi `POST ?asset` để ghi vào danh mục.
+- `POST ?asset` `{lessonId, kind, name, size?, url, storage, key?}` → `201 {asset: {…, lessonId}}`. `kind` ∈ `video, slides, audio, pdf, other`.
+  `storage: "repo"`: `url` bắt đầu bằng `/` hoặc `http(s)://`. `storage: "r2"`: cần `key` (phải nằm dưới `<slug>/<NN>/` của đúng bài này),
+  `url` do server dựng = `R2_PUBLIC_URL + "/" + key` (bỏ qua `url` client gửi), `size` tối đa 200 MB. `storage: "youtube"`: `url` phải là link
+  `youtube.com/watch?v=`, `youtu.be/`, `youtube.com/embed/` hoặc `youtube.com/shorts/`, server chuẩn hoá thành `https://www.youtube.com/watch?v=<id>`;
+  `size` mặc định 0, `key` luôn rỗng, `kind` thường là `video`.
+- `DELETE ?asset=<id>` → `200 {ok: true}`. File `r2` thì gửi lệnh xoá (ký SigV4) lên R2 trước, R2 lỗi thì `502` và giữ nguyên dòng;
+  `repo` và `youtube` chỉ xoá dòng. Xoá khóa/bài có file `r2` bên trong cũng xoá trên R2 trước như vậy (R2 lỗi → `502`, chưa xoá gì).
+- `POST ?import` `{courses: [{slug, title, sort, lessons: [{num, title, zh, assets: [{kind, name, size, url}]}]}]}` → `200 {ok: true, courses, lessons, assets}`
+  (số dòng đã ghi). Một transaction: khóa ghi gộp theo `slug` (cập nhật `title`, `sort`), bài theo `(khóa, num)` (cập nhật `title`, `zh`; giữ `visible`, `sort`),
+  file của mỗi bài được nhập thì **chỉ thay các file `storage = 'repo'`**, file `r2` và `youtube` giữ nguyên. Tối đa 50 khóa × 500 bài × 50 file, thân 5 MB
+  (trên Vercel thân request bị chặn ở 4,5 MB; danh mục hiện tại chỉ ~27 KB). `scripts/seed-catalog.mjs` dựng dữ liệu này từ repo:
+  `node scripts/seed-catalog.mjs --dry` để xem tóm tắt, bỏ `--dry` (và `--url …` nếu không chạy ở máy) để ghi.
+
+Cloudflare R2 (10 GB miễn phí, tải xuống không mất phí) cho file mới:
+1. Cloudflare → R2 → Create bucket (ví dụ `hsk-media`).
+2. Bucket → Settings → Public access: bật `r2.dev` hoặc gắn tên miền riêng; địa chỉ đó là `R2_PUBLIC_URL` (không có `/` cuối).
+3. R2 → Manage API tokens → Create token quyền **Object Read & Write**, chỉ cho bucket đó; lấy Access Key ID, Secret Access Key và Account ID.
+4. Bucket → Settings → CORS policy, cho phép trình duyệt tải thẳng lên:
+   ```json
+   [{"AllowedOrigins": ["https://<tên-miền-trang>", "http://localhost:*"], "AllowedMethods": ["PUT", "GET", "HEAD"], "AllowedHeaders": ["Content-Type"], "MaxAgeSeconds": 3600}]
+   ```
+5. Vercel → Settings → Environment Variables: `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `R2_PUBLIC_URL`
+   (ở máy thì điền vào `.env.local`). Chữ ký SigV4 viết tay (`presign` trong hai file catalog), không cần SDK.
+
 Bảng:
 
 ```sql
@@ -93,6 +140,24 @@ CREATE TABLE IF NOT EXISTS term_upload (
   count integer NOT NULL, created_at timestamptz NOT NULL DEFAULT now(),
   mode text NOT NULL DEFAULT 'replace', terms jsonb,  -- bản sao cả danh sách sau lần ghi này
   active boolean NOT NULL DEFAULT true                 -- tắt thì danh sách bỏ qua bản này
+);
+-- trang quản lý: chỉ danh mục, file thật ở repo / R2 / YouTube
+CREATE TABLE IF NOT EXISTS catalog_courses (
+  id serial PRIMARY KEY, slug text UNIQUE NOT NULL, title text NOT NULL,
+  sort integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS catalog_lessons (
+  id serial PRIMARY KEY, course_id integer NOT NULL REFERENCES catalog_courses ON DELETE CASCADE,
+  num integer NOT NULL, title text NOT NULL, zh text NOT NULL DEFAULT '',
+  visible boolean NOT NULL DEFAULT true, sort integer NOT NULL DEFAULT 0, UNIQUE (course_id, num)
+);
+CREATE TABLE IF NOT EXISTS catalog_assets (
+  id serial PRIMARY KEY, lesson_id integer NOT NULL REFERENCES catalog_lessons ON DELETE CASCADE,
+  kind text NOT NULL CHECK (kind IN ('video', 'slides', 'audio', 'pdf', 'other')),
+  name text NOT NULL, size bigint NOT NULL DEFAULT 0, url text NOT NULL DEFAULT '',
+  storage text NOT NULL CHECK (storage IN ('repo', 'r2', 'youtube')),  -- bảng cũ chưa có 'youtube' thì tự nới ràng buộc
+  key text NOT NULL DEFAULT '',                                        -- key object trên R2
+  created_at timestamptz NOT NULL DEFAULT now()
 );
 ```
 

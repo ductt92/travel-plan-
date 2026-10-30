@@ -1,6 +1,6 @@
 // Chạy cả hai bản API ở máy giống trên Vercel: npm run dev:api
-//   /api/node/sync, /api/node/ai, /api/node/terms, /api/node/lop-hoc → backend/node (chạy ngay trong tiến trình này)
-//   /api/go/sync,   /api/go/ai,   /api/go/terms,   /api/go/lop-hoc   → backend/go qua `go run ./cmd/dev-api`
+//   /api/node/{sync,ai,terms,lop-hoc,ban-do,quan-ly} → backend/node (chạy ngay trong tiến trình này)
+//   /api/go/{sync,ai,terms,lop-hoc,ban-do,quan-ly}   → backend/go qua `go run ./cmd/dev-api`
 // Biến môi trường đọc từ .env.local ở gốc repo (không đưa lên git, mẫu ở .env.example).
 import http from 'node:http';
 import { spawn } from 'node:child_process';
@@ -21,6 +21,7 @@ const { default: nodeAi } = await import('../backend/node/ai.js');
 const { default: nodeTerms } = await import('../backend/node/terms.js');
 const { default: nodeLopHoc } = await import('../backend/node/lophoc.js');
 const { default: nodeBanDo } = await import('../backend/node/bando.js');
+const { default: nodeCatalog } = await import('../backend/node/catalog.js');
 
 const PORT = Number(process.env.API_PORT || 3001);
 const GO_PORT = String(PORT + 1);
@@ -30,7 +31,7 @@ for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => process.exit());
 
 const NODE_ROUTES = {
   '/api/node/sync': nodeSync, '/api/node/ai': nodeAi, '/api/node/terms': nodeTerms,
-  '/api/node/lop-hoc': nodeLopHoc, '/api/node/ban-do': nodeBanDo,
+  '/api/node/lop-hoc': nodeLopHoc, '/api/node/ban-do': nodeBanDo, '/api/node/quan-ly': nodeCatalog,
 };
 
 http.createServer((req, res) => {
@@ -43,4 +44,4 @@ http.createServer((req, res) => {
   });
   up.on('error', () => { res.statusCode = 502; res.end('{"error":"API Go chưa chạy xong, thử lại sau vài giây"}'); });
   req.pipe(up);
-}).listen(PORT, '127.0.0.1', () => console.log(`API Node: http://localhost:${PORT}/api/node/{sync,ai,terms,lop-hoc} (Go chuyển tiếp qua /api/go/...)`));
+}).listen(PORT, '127.0.0.1', () => console.log(`API Node: http://localhost:${PORT}/api/node/{sync,ai,terms,lop-hoc,ban-do,quan-ly} (Go chuyển tiếp qua /api/go/...)`));
