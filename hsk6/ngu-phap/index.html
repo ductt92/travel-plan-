@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>body { margin: 0; }</style>
+<link rel="stylesheet" href="/glass/react-liquis-glass.css">
+<link rel="stylesheet" href="/glass/glass.css">
+<script src="/glass/glass.js"></script>
+<script>if (window.glassMode) document.documentElement.classList.add("glass-ok");</script>
 <title>Ngữ pháp qua tình huống</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -157,11 +161,67 @@ mark { background: var(--mark-soft); color: inherit; border-bottom: 2px solid va
   .say .zh { font-size: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- Liquis glass ----------
+   Chỉ có trên web Ngọc: build_site.py chèn /glass/glass.js vào <head> (html.glass-ok); tắt bằng nút
+   (html[data-glass="off"], nhớ chung cả site). Bản artifact không có file này nên vẫn phẳng. Giống web/template.html. */
+.top-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.top-row .back { margin-bottom: 0; }
+.glass-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; font-size: 13.5px; }
+.glass-toggle__dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .35; flex: none; }
+.glass-toggle[aria-pressed="true"] .glass-toggle__dot { opacity: 1; background: var(--mark); }
+@supports (background: color-mix(in srgb, red 50%, transparent)) {
+:root.glass-ok:not([data-glass="off"]) {
+  --gl-bg: color-mix(in srgb, var(--surface) 58%, transparent);
+  --gl-bg-strong: color-mix(in srgb, var(--surface) 84%, transparent);
+  --gl-sunken: color-mix(in srgb, var(--sunken) 70%, transparent);
+  --gl-filter: blur(var(--lg-blur, 22px)) saturate(var(--lg-saturate, 180%));
+  --gl-hi: rgb(255 255 255 / .75);
+  --gl-shadow: inset 0 1px 0 var(--gl-hi), 0 10px 30px -14px rgb(40 15 50 / .28);
+  --gl-shadow-sm: inset 0 1px 0 var(--gl-hi), 0 2px 8px -3px rgb(40 15 50 / .14);
+  --gl-blob: 34%;
+}
+@media (prefers-color-scheme: dark) {
+  :root.glass-ok:not([data-glass="off"]):not([data-theme="light"]) { --gl-bg: color-mix(in srgb, var(--surface) 64%, transparent); --gl-hi: rgb(255 255 255 / .08); --gl-blob: 20%;
+    --gl-shadow: inset 0 1px 0 var(--gl-hi), 0 12px 32px -12px rgb(0 0 0 / .55); --gl-shadow-sm: inset 0 1px 0 var(--gl-hi), 0 2px 8px -3px rgb(0 0 0 / .4); }
+}
+:root.glass-ok[data-theme="dark"]:not([data-glass="off"]) { --gl-bg: color-mix(in srgb, var(--surface) 64%, transparent); --gl-hi: rgb(255 255 255 / .08); --gl-blob: 20%;
+  --gl-shadow: inset 0 1px 0 var(--gl-hi), 0 12px 32px -12px rgb(0 0 0 / .55); --gl-shadow-sm: inset 0 1px 0 var(--gl-hi), 0 2px 8px -3px rgb(0 0 0 / .4); }
+@media (prefers-reduced-transparency: reduce) { :root.glass-ok:not([data-glass="off"]) { --gl-bg: color-mix(in srgb, var(--surface) 94%, transparent); } }
+
+/* nền có vài đốm màu theo giao diện để kính có cái mà nhòe */
+:root.glass-ok:not([data-glass="off"]) body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background:
+    radial-gradient(55vmax 45vmax at 6% -4%, color-mix(in srgb, var(--accent) var(--gl-blob), transparent), transparent 70%),
+    radial-gradient(45vmax 40vmax at 102% 18%, color-mix(in srgb, var(--mark) var(--gl-blob), transparent), transparent 70%),
+    radial-gradient(50vmax 40vmax at 30% 104%, color-mix(in srgb, var(--mark) calc(var(--gl-blob) * .7), transparent), transparent 70%),
+    radial-gradient(45vmax 40vmax at 96% 96%, color-mix(in srgb, var(--accent) calc(var(--gl-blob) * .8), transparent), transparent 70%); }
+
+/* mặt kính: tình huống, câu hỏi, mẹo, bảng so sánh; câu sai/đúng giữ màu đỏ/xanh nhưng trong hơn */
+:root.glass-ok:not([data-glass="off"]) :is(.scene, .q, .tip, .cmp) {
+  background: var(--gl-bg); -webkit-backdrop-filter: var(--gl-filter); backdrop-filter: var(--gl-filter); box-shadow: var(--gl-shadow); }
+:root.glass-ok:not([data-glass="off"]) .cmp { border-radius: var(--r); padding: 4px 12px; }
+:root.glass-ok:not([data-glass="off"]) .say.bad { background: color-mix(in srgb, var(--bad-soft) 78%, transparent); -webkit-backdrop-filter: var(--gl-filter); backdrop-filter: var(--gl-filter); box-shadow: var(--gl-shadow-sm); }
+:root.glass-ok:not([data-glass="off"]) .say.ok { background: color-mix(in srgb, var(--good-soft) 78%, transparent); -webkit-backdrop-filter: var(--gl-filter); backdrop-filter: var(--gl-filter); box-shadow: var(--gl-shadow-sm); }
+:root.glass-ok:not([data-glass="off"]) .bar { background: var(--gl-sunken); }
+:root.glass-ok:not([data-glass="off"]) .toc button[aria-current="true"] { background: color-mix(in srgb, var(--accent-soft) 80%, transparent); }
+:root.glass-ok:not([data-glass="off"]) .toc button:not([aria-current="true"]):hover { background: var(--gl-sunken); }
+
+/* nút: kính mỏng; nút chính (màu đặc) và đáp án đúng/sai giữ nguyên */
+:root.glass-ok:not([data-glass="off"]) :is(.btn:not(.primary):not([aria-pressed="true"]), .speak, .glass-toggle, .opt:not(.right):not(.wrong), .formula span:not(.k)) {
+  background: var(--gl-bg); -webkit-backdrop-filter: var(--gl-filter); backdrop-filter: var(--gl-filter); box-shadow: var(--gl-shadow-sm); }
+:root.glass-ok:not([data-glass="off"]) :is(.btn:not(.primary):hover, .opt:not(.right):not(.wrong):not(:disabled):hover) { background: var(--gl-bg-strong); }
+@media (max-width: 860px) {
+  :root.glass-ok:not([data-glass="off"]) .toc button:not([aria-current="true"]) { background: var(--gl-bg); -webkit-backdrop-filter: var(--gl-filter); backdrop-filter: var(--gl-filter); }
+}
+}
 </style>
 
 <header class="top">
   <div class="wrap">
-    <a class="back" id="back" href="../" hidden>← Ngọc học tiếng Trung</a>
+    <div class="top-row" id="topRow" hidden>
+      <a class="back" href="../">← Ngọc học tiếng Trung</a>
+      <button class="btn glass-toggle" id="glassBtn" type="button" data-glass-toggle aria-pressed="true" hidden><span class="glass-toggle__dot" aria-hidden="true"></span><span data-glass-label>Liquis glass: on</span></button>
+    </div>
     <h1>Ngữ pháp qua tình huống <span class="hz">情景语法</span></h1>
     <p>Mỗi bài bắt đầu bằng một câu Ngọc rất dễ nói sai, rồi giải thích vì sao sai, cách sửa và cho làm thử ngay. Đây cũng chính là các lỗi mà phần Đọc 1 của HSK 6 (chọn câu sai) hay kiểm tra.</p>
     <div class="progress"><div class="bar"><i id="bar"></i></div><span id="progText">0 bài đã hiểu</span></div>
@@ -558,7 +618,8 @@ let done = store.get("ngoc-np-done", {});
 
 // Trên web Ngọc (site/ngu-phap/): hiện nút về trang chủ và dùng giao diện Ngọc đã chọn ở đó
 if (/\/ngu-phap\/(index\.html)?$/.test(location.pathname)) {
-  document.getElementById("back").hidden = false;
+  document.getElementById("topRow").hidden = false;
+  if (window.glassMode) document.getElementById("glassBtn").hidden = false;
   const skin = store.get("ngoc-hoc-tieng-trung", {}).skin;
   if (skin) document.documentElement.setAttribute("data-skin", skin);
 }
