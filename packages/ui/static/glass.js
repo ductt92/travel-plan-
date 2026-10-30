@@ -6,7 +6,7 @@
 //   <link rel="stylesheet" href="/glass/glass.css">
 //   <script src="/glass/glass.js"></script>
 // Nút bật/tắt: bất kỳ phần tử nào có [data-glass-toggle] (thường là <button>).
-// Phần tử con [data-glass-label] (nếu có) được ghi chữ "Kính: bật" / "Kính: tắt".
+// Phần tử con [data-glass-label] (nếu có) được ghi chữ "Liquis glass: on" / "Liquis glass: off".
 (function () {
   var KEY = 'glass';
   var root = document.documentElement;
@@ -21,9 +21,9 @@
     for (var i = 0; i < btns.length; i++) {
       var b = btns[i];
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      b.title = on ? 'Tắt hiệu ứng kính' : 'Bật hiệu ứng kính';
+      b.title = on ? 'Tắt Liquis glass' : 'Bật Liquis glass';
       var l = b.querySelector('[data-glass-label]');
-      if (l) l.textContent = on ? 'Kính: bật' : 'Kính: tắt';
+      if (l) l.textContent = on ? 'Liquis glass: on' : 'Liquis glass: off';
     }
   }
   function set(on) {

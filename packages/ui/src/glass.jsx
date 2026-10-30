@@ -53,7 +53,7 @@ export function useGlass() {
 /** Nút bật/tắt kính. `compact` chỉ hiện biểu tượng (vẫn có nhãn cho trình đọc màn hình). */
 export function GlassToggle({ compact = false, className = '', ...rest }) {
   const on = useGlass();
-  const label = on ? 'Tắt hiệu ứng kính' : 'Bật hiệu ứng kính';
+  const label = on ? 'Tắt Liquis glass' : 'Bật Liquis glass';
   return (
     <Button
       variant="glass" size="sm" {...rest}
@@ -62,7 +62,7 @@ export function GlassToggle({ compact = false, className = '', ...rest }) {
       aria-pressed={on} aria-label={compact ? label : undefined} title={label}
       onClick={() => setGlass(!on)}
     >
-      {!compact && <>Kính <span className="glass-toggle__dot" aria-hidden="true" /></>}
+      {!compact && <>Liquis glass: {on ? 'on' : 'off'} <span className="glass-toggle__dot" aria-hidden="true" /></>}
     </Button>
   );
 }
