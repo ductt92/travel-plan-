@@ -112,7 +112,7 @@ export default function TravelMap({
   return (
     <>
       <div className="wrap">
-        <NoteBar canEdit={canEdit} />
+        <NoteBar canEdit={canEdit} onLogin={() => setLoginOpen(true)} />
 
         <header className="top">
           <h1>
@@ -163,14 +163,13 @@ export default function TravelMap({
                 <BookIcon />
                 Nhật ký <span className="count">{rows.length}</span>
               </button>
-              {canEdit && (
-                <button className="tool" onClick={onSignOut}>
+              {canEdit ? (
+                <button className="tool key glass" onClick={onSignOut}>
                   <LockIcon open />
                   Thoát
                 </button>
-              )}
-              {!canEdit && (
-                <button className="tool" onClick={() => { setHovered(null); setLoginOpen(true); }}>
+              ) : (
+                <button className="tool key glass" onClick={() => { setHovered(null); setLoginOpen(true); }}>
                   <LockIcon />
                   Đăng nhập
                 </button>
@@ -285,11 +284,13 @@ export default function TravelMap({
   );
 }
 
-function NoteBar({ canEdit }: { canEdit: boolean }) {
+function NoteBar({ canEdit, onLogin }: { canEdit: boolean; onLogin: () => void }) {
   if (!canEdit) return (
     <p className="note-bar"><span>👀</span>
       <span>
-        <b>Đang xem thôi.</b> Đăng nhập bằng mật khẩu chung thì mới ghi, sửa và xoá chuyến được.
+        <b>Đang xem thôi.</b>{' '}
+        <button type="button" className="link" onClick={onLogin}>Đăng nhập</button>{' '}
+        bằng mật khẩu chung thì mới ghi, sửa và xoá chuyến được.
       </span>
     </p>
   );

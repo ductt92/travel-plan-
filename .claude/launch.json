@@ -32,6 +32,15 @@
         "dev:api"
       ],
       "port": 3001
+    },
+    {
+      "name": "hoc-tieng-trung",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:zh"
+      ],
+      "port": 5174
     }
   ]
 }

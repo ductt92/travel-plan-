@@ -1,5 +1,6 @@
 // Nút trạng thái đồng bộ + ô nhập mã chung. Đặt ở header hoặc thanh bên của app.
 import { useEffect, useRef, useState } from 'react';
+import { PasswordInput } from '@trang/ui/password';
 import { BACKENDS, connect, disconnect, setBackend, useSyncStatus } from './index.js';
 import './sync.css';
 
@@ -76,7 +77,7 @@ export function SyncButton({ className = '' }) {
             <form onSubmit={submit}>
               <b>Đồng bộ giữa hai máy</b>
               <p>Nhập mã chung của hai bạn. Mã chỉ lưu trong trình duyệt này.</p>
-              <input type="password" autoComplete="off" placeholder="Mã đồng bộ" value={code} onChange={e => setCode(e.target.value)} autoFocus />
+              <PasswordInput autoComplete="off" placeholder="Mã đồng bộ" value={code} onChange={e => setCode(e.target.value)} autoFocus />
               <BackendPicker value={st.backend} />
               {err && <p className="sync__err">{err}</p>}
               <button type="submit" className="sync__primary" disabled={busy || !code.trim()}>{busy ? 'Đang kiểm tra…' : 'Bật đồng bộ'}</button>

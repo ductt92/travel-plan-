@@ -40,8 +40,8 @@ export const ChevronIcon = () => (
   </svg>
 );
 
-export const LockIcon = ({ open = false }: { open?: boolean }) => (
-  <svg viewBox="0 0 24 24" width="15" height="15" {...line}>
+export const LockIcon = ({ open = false, size = 15, width = 2 }: { open?: boolean; size?: number; width?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} {...line} strokeWidth={width}>
     <rect x="4" y="10" width="16" height="11" rx="2.5" />
     {open
       ? <path d="M8 10V7a4 4 0 0 1 7.5-1.9" />

@@ -48,10 +48,13 @@ async function call<T>(query: string, init?: RequestInit & { pass?: string }): P
 
 export const loadEntries = () => call<{ entries: Entries }>('').then(r => r.entries);
 
-/** Trả về null nếu mật khẩu đúng, còn lại là câu để hiện ra. */
+/**
+ * Trả về null nếu mật khẩu đúng, còn lại là câu để hiện ra.
+ * Cắt khoảng trắng hai đầu như nút Đồng bộ: dán mật khẩu rất hay dính một dấu cách.
+ */
 export async function checkPass(pass: string) {
   try {
-    await call('?check', { pass });
+    await call('?check', { pass: pass.trim() });
     return null;
   } catch (err) {
     return err instanceof ApiError && err.status === 401 ? 'Sai mật khẩu.' : (err as Error).message;
