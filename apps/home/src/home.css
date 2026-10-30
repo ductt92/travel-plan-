@@ -53,17 +53,25 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 .choice:hover .choice__photo{transform:translateY(-6px) scale(1.02)}
 
 /* ---------- Kính (react-liquis-glass), tắt bằng nút "Kính": html[data-glass="off"] ----------
-   Phần chữ dưới mỗi thẻ thành một tấm kính màu nằm trên tranh: tranh phía sau nhòe đi nên
-   chữ trắng vẫn đọc được. Lúc tắt kính thẻ giữ nguyên kiểu dải màu như trước. */
+   Phần chữ dưới mỗi thẻ thành một tấm kính màu mỏng nằm trên tranh. Nhòe nhẹ và trong dần
+   lên phía trên để tranh (chữ 学, ảnh Ngọc…) vẫn hiện; thẻ cao hơn chút để tranh có chỗ.
+   Lúc tắt kính thẻ giữ nguyên kiểu dải màu như trước. */
+:root:not([data-glass="off"]) .choice{min-height:540px}
 :root:not([data-glass="off"]) .choice__body{
-  margin:auto 12px 12px;border-radius:22px;padding:22px 22px 20px;
-  background:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.04) 45%),var(--pane,rgba(30,16,12,.42));
-  -webkit-backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-saturate));backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-saturate));
-  border:1px solid rgba(255,255,255,.28);box-shadow:inset 0 1px .5px rgba(255,255,255,.55),0 18px 40px -22px rgba(0,0,0,.55)
+  margin:auto 12px 12px;border-radius:22px;padding:18px 20px;gap:8px;
+  background:linear-gradient(150deg,rgba(255,255,255,.18),rgba(255,255,255,0) 40%),
+    linear-gradient(to top,var(--pane,rgba(30,16,12,.6)),color-mix(in srgb,var(--pane,rgba(30,16,12,.6)) 45%,transparent));
+  -webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.26);box-shadow:inset 0 1px .5px rgba(255,255,255,.5),0 18px 40px -22px rgba(0,0,0,.55);
+  text-shadow:0 1px 8px rgba(0,0,0,.25)
 }
-.choice--map{--pane:rgba(90,20,40,.46)}
-.choice--zh{--pane:rgba(70,18,12,.6)}
-.choice--hsk6{--pane:rgba(52,20,66,.6)}
+:root:not([data-glass="off"]) .choice b{font-size:clamp(24px,2.6vw,30px)}
+:root:not([data-glass="off"]) .choice p{font-size:14px}
+:root:not([data-glass="off"]) .choice__go{min-height:44px;margin-top:4px}
+@media (max-width:560px){:root:not([data-glass="off"]) .choice{min-height:480px}}
+.choice--map{--pane:rgba(90,20,40,.62)}
+.choice--zh{--pane:rgba(70,18,12,.72)}
+.choice--hsk6{--pane:rgba(52,20,66,.72)}
 :root:not([data-glass="off"]) .choice__chips span{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 :root:not([data-glass="off"]) .home__foot{width:fit-content;max-width:calc(100% - 32px);margin:0 auto 32px;padding:10px 18px;border-radius:999px;
   background:var(--lg-glass-bg);border:1px solid var(--lg-glass-border);box-shadow:inset 0 1px .5px var(--lg-glass-edge),var(--lg-glass-shadow);
