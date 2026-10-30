@@ -1,4 +1,5 @@
 import { Icon } from '@trang/ui';
+import { Tag } from 'liquidglass-ui';
 import { MapArt, ZhArt, Hsk6Art } from './Art.jsx';
 
 // Các lối vào của site. Thêm app mới: thêm một phần tử vào đây và một tranh trong Art.jsx.
@@ -28,7 +29,7 @@ function ChoiceCard({ c }) {
     <a className={`choice choice--${c.id}`} href={c.href}>
       <Art />
       <div className="choice__body">
-        <span className="choice__tag">{c.tag}</span>
+        <Tag variant="glass" className="choice__tag">{c.tag}</Tag>
         <b>{c.title}</b>
         <p>{c.text}</p>
         <div className="choice__chips">{c.chips.map(t => <span key={t}>{t}</span>)}</div>

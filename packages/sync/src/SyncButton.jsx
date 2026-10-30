@@ -1,6 +1,6 @@
 // Nút trạng thái đồng bộ + ô nhập mã chung. Đặt ở header hoặc thanh bên của app.
 import { useEffect, useRef, useState } from 'react';
-import { PasswordInput } from '@trang/ui/password';
+import { Button, Password } from 'liquidglass-ui';
 import { BACKENDS, connect, disconnect, setBackend, useSyncStatus } from './index.js';
 import './sync.css';
 
@@ -71,16 +71,16 @@ export function SyncButton({ className = '' }) {
               <BackendPicker value={st.backend} />
               {st.served && <p className="sync__small">Lần gọi gần nhất do bản <b>{st.served === 'go' ? 'Go' : 'Node.js'}</b> trả lời.</p>}
               {st.error && <p className="sync__err">{st.error}</p>}
-              <button type="button" className="sync__ghost" onClick={() => { disconnect(); setOpen(false); }}>Tắt đồng bộ trên máy này</button>
+              <Button variant="outline" block onClick={() => { disconnect(); setOpen(false); }}>Tắt đồng bộ trên máy này</Button>
             </>
           ) : (
             <form onSubmit={submit}>
               <b>Đồng bộ giữa hai máy</b>
               <p>Nhập mã chung của hai bạn. Mã chỉ lưu trong trình duyệt này.</p>
-              <PasswordInput autoComplete="off" placeholder="Mã đồng bộ" value={code} onChange={e => setCode(e.target.value)} autoFocus />
+              <Password autoComplete="off" placeholder="Mã đồng bộ" value={code} onChange={e => setCode(e.target.value)} autoFocus />
               <BackendPicker value={st.backend} />
               {err && <p className="sync__err">{err}</p>}
-              <button type="submit" className="sync__primary" disabled={busy || !code.trim()}>{busy ? 'Đang kiểm tra…' : 'Bật đồng bộ'}</button>
+              <Button type="submit" variant="filled" color="primary" block loading={busy} disabled={!code.trim()}>{busy ? 'Đang kiểm tra…' : 'Bật đồng bộ'}</Button>
             </form>
           )}
         </div>

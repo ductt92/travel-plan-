@@ -28,7 +28,8 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 .choice:hover .ink{transform:scale(1.04)}
 .choice__body{margin-top:auto;padding:28px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(to top,rgba(0,0,0,.42),rgba(0,0,0,0))}
 .choice--zh .choice__body{background:linear-gradient(to top,rgba(70,18,12,.78),rgba(70,18,12,0))}
-.choice__tag{align-self:flex-start;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+/* Tag kính của liquidglass-ui, chữ trắng vì nằm trên tranh màu */
+.choice__tag{align-self:flex-start;color:#fff;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .choice b{font:600 clamp(28px,3.4vw,36px)/1.15 var(--f-serif);text-shadow:0 2px 12px rgba(0,0,0,.25)}
 .choice p{font-size:15px;max-width:42ch;opacity:.95}
 .choice__chips{display:flex;flex-wrap:wrap;gap:8px}

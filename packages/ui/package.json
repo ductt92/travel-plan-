@@ -6,11 +6,14 @@
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js",
-    "./password": {
-      "types": "./src/PasswordInput.d.ts",
-      "default": "./src/PasswordInput.jsx"
-    },
-    "./tokens.css": "./src/tokens.css"
+    "./tokens.css": "./src/tokens.css",
+    "./glass": {
+      "types": "./src/glass.d.ts",
+      "default": "./src/glass.jsx"
+    }
+  },
+  "dependencies": {
+    "liquidglass-ui": "file:../../vendor/liquidglass-ui-0.1.0.tgz"
   },
   "peerDependencies": {
     "react": "^18.3.1",
