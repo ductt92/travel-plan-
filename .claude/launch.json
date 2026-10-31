@@ -50,6 +50,15 @@
         "dev:admin"
       ],
       "port": 5176
+    },
+    {
+      "name": "home",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:home"
+      ],
+      "port": 5173
     }
   ]
 }

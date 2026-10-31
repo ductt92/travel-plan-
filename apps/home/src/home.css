@@ -13,13 +13,15 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 .home__top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .home__hello h1{font:600 clamp(28px,4.4vw,44px)/1.15 var(--f-serif)}
 .home__hello em{font-style:italic;background:linear-gradient(90deg,#E0702F,#C2335B 55%,#2F7D5B);-webkit-background-clip:text;background-clip:text;color:transparent}
-.home__choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:24px}
+.home__choices{display:grid;grid-template-columns:1fr;gap:24px}
+@media (min-width:720px){.home__choices{grid-template-columns:repeat(2,1fr)}} /* 4 thẻ xếp 2×2 cho cân */
 .home__foot{position:relative;z-index:1;text-align:center;font-size:13px;color:var(--muted);padding:0 16px 32px}
 
 .choice{position:relative;display:flex;flex-direction:column;min-height:460px;border-radius:28px;text-decoration:none;color:#FFFFFF;overflow:hidden;isolation:isolate;
   box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 24px 50px -28px rgba(40,20,10,.55);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
 .choice:nth-child(2){animation-delay:.12s}
 .choice:nth-child(3){animation-delay:.24s}
+.choice:nth-child(4){animation-delay:.36s}
 @keyframes rise{from{transform:translateY(18px)}to{transform:none}}
 .choice:hover{color:#FFFFFF;transform:translateY(-6px) rotate(-.3deg);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 36px 60px -26px rgba(40,20,10,.6)}
 .choice:focus-visible{outline:3px solid var(--ink);outline-offset:5px}
@@ -51,6 +53,11 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 .choice__photo{position:absolute;right:-6px;top:14px;z-index:-1;height:68%;max-width:56%;object-fit:contain;object-position:right top;
   -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent);mask-image:linear-gradient(to bottom,#000 72%,transparent);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 .choice:hover .choice__photo{transform:translateY(-6px) scale(1.02)}
+/* Thẻ "Quản lý học liệu": xanh ngọc + dấu 学 đỏ như đầu trang quản lý */
+.choice--admin .choice__body{background:linear-gradient(to top,rgba(18,58,48,.82),rgba(18,58,48,0))}
+.choice--admin .choice__go{color:#2F6F5E}
+.choice__stamp--admin{top:28px;right:28px;font-size:30px}
+@media (max-width:560px){.choice__stamp--admin{top:24px}}
 
 /* ---------- Kính (react-liquis-glass), tắt bằng nút "Kính": html[data-glass="off"] ----------
    Phần chữ dưới mỗi thẻ thành một tấm kính màu mỏng nằm trên tranh. Nhòe nhẹ và trong dần
@@ -72,6 +79,7 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 .choice--map{--pane:rgba(90,20,40,.62)}
 .choice--zh{--pane:rgba(70,18,12,.72)}
 .choice--hsk6{--pane:rgba(52,20,66,.72)}
+.choice--admin{--pane:rgba(18,58,48,.72)}
 :root:not([data-glass="off"]) .choice__chips span{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 :root:not([data-glass="off"]) .home__foot{width:fit-content;max-width:calc(100% - 32px);margin:0 auto 32px;padding:10px 18px;border-radius:999px;
   background:var(--lg-glass-bg);border:1px solid var(--lg-glass-border);box-shadow:inset 0 1px .5px var(--lg-glass-edge),var(--lg-glass-shadow);
