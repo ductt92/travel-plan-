@@ -41,6 +41,15 @@
         "dev:zh"
       ],
       "port": 5174
+    },
+    {
+      "name": "quan-ly",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:admin"
+      ],
+      "port": 5176
     }
   ]
 }
