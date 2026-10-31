@@ -13,7 +13,7 @@
     }
   },
   "dependencies": {
-    "react-liquis-glass": "^0.1.2"
+    "react-liquis-glass": "^0.1.3"
   },
   "peerDependencies": {
     "react": "^18.3.1",

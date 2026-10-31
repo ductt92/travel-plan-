@@ -108,9 +108,9 @@ export const GROUP_TABS = [
 
 export function GroupTabs({ value, onChange }) {
   return (
-    <div className="pk-tabs" role="group" aria-label="Nhóm vần">
+    <div className="pk-tabs">
       {/* Segmented của react-liquis-glass chỉ nhận string/number, nên "Tất cả" (id null) đổi thành 'all' */}
-      <Segmented block value={value ?? 'all'} onChange={v => onChange(v === 'all' ? null : v)}
+      <Segmented block aria-label="Nhóm vần" value={value ?? 'all'} onChange={v => onChange(v === 'all' ? null : v)}
         options={GROUP_TABS.map(t => ({ value: t.id ?? 'all', label: <span className="pk-tab"><b>{t.label}</b><small>{t.sub}</small></span> }))} />
     </div>
   );

@@ -82,7 +82,7 @@ function PracticeHome() {
       </div>
       <Stack as="section">
         <h2 style={{ fontSize: 18 }}>Theo từng bài</h2>
-        <Row gap={8}>{LESSONS.map(l => <Chip key={l.id} to={`/practice/lesson/${l.id}`}>{l.lv}.{l.no} {l.title}</Chip>)}</Row>
+        <Row gap={8}>{LESSONS.map(l => <Chip key={l.id} as={Link} to={`/practice/lesson/${l.id}`}>{l.lv}.{l.no} {l.title}</Chip>)}</Row>
       </Stack>
     </>
   );

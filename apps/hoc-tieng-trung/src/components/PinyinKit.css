@@ -83,4 +83,3 @@
 :where(:root:not([data-glass="off"])) .pyf{background:linear-gradient(135deg,color-mix(in srgb,var(--jade-soft) 80%,transparent),var(--gl-fill));-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
 :where(:root:not([data-glass="off"])) :is(.pyf__tone,.pyf__write){background:var(--gl-fill-strong)}
 :where(:root:not([data-glass="off"])) .pyf__write{border-color:var(--glass-border)}
-.pk-tabs .lg-segmented-item{height:auto;min-height:48px}

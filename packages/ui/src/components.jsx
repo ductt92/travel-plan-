@@ -1,15 +1,13 @@
 import {
-  Breadcrumb, Button as GlassButton, Checkbox, IconButton as GlassIconButton, Progress, Switch as GlassSwitch,
-  Tabs as GlassTabs, Tag as GlassTag, message
+  Breadcrumb, Button as GlassButton, Card as GlassCard, Checkbox, IconButton as GlassIconButton, Progress,
+  Switch as GlassSwitch, Tabs as GlassTabs, Tag as GlassTag, message
 } from 'react-liquis-glass';
 import { Icon } from './Icon.jsx';
 
 const cx = (...a) => a.filter(Boolean).join(' ');
 
-// Nút, nhãn, tab, công tắc, thanh tiến độ, thông báo là component của react-liquis-glass; ở đây chỉ giữ
-// props cũ của @trang/ui để các view không phải sửa. Đường dẫn: app dùng HashRouter nên `as={Link} to="/x"`
-// thành href="#/x" của nút thư viện, bấm vẫn chuyển trang không tải lại.
-const hrefOf = (to, href) => (to != null ? `#${to}` : href);
+// Thẻ, nút, nhãn, tab, công tắc, thanh tiến độ, thông báo là component của react-liquis-glass; ở đây chỉ giữ
+// props cũ của @trang/ui để các view không phải sửa. Nút nhận as={Link} to="/…" để chuyển trang.
 
 /* Bố cục */
 export function Stack({ gap = 12, as: Tag = 'div', className, style, ...rest }) {
@@ -28,19 +26,19 @@ const BUTTON = {
   danger: { variant: 'filled', color: 'danger' },
   ghost: { variant: 'text' }
 };
-export function Button({ variant = 'secondary', size, icon, as, to, href, className, ...rest }) {
+export function Button({ variant = 'secondary', size, icon, className, ...rest }) {
   const v = BUTTON[variant] || BUTTON.secondary;
   // cỡ mặc định của thư viện (38px) nhỏ hơn vùng chạm 44px của app, nên cỡ thường dùng lg, cỡ sm dùng md
   return (
-    <GlassButton variant={v.variant} color={v.color} size={size === 'sm' ? 'md' : 'lg'} href={hrefOf(to, href)}
+    <GlassButton variant={v.variant} color={v.color} size={size === 'sm' ? 'md' : 'lg'}
       icon={icon && <Icon name={icon} size={18} />} className={cx('ui-btn', v.className, className)} {...rest} />
   );
 }
 const ICON_BUTTON = { plain: 'text', solid: 'filled', ondark: 'outline' };
-export function IconButton({ icon, label, variant, size = 44, as, to, href, className, style, ...rest }) {
+export function IconButton({ icon, label, variant, size = 44, className, style, ...rest }) {
   return (
     <GlassIconButton variant={ICON_BUTTON[variant] || 'glass'} color={variant === 'solid' ? 'primary' : undefined}
-      href={hrefOf(to, href)} icon={<Icon name={icon} size={Math.round(size * 0.42)} />} aria-label={label} title={label}
+      icon={<Icon name={icon} size={Math.round(size * 0.42)} />} aria-label={label} title={label}
       className={cx('ui-iconbtn', variant && `ui-iconbtn--${variant}`, className)} style={{ width: size, height: size, ...style }} {...rest} />
   );
 }
@@ -48,12 +46,11 @@ export function LinkButton({ icon, className, ...rest }) {
   return <GlassButton variant="link" color="primary" size="sm" icon={icon && <Icon name={icon} size={15} />} className={cx('ui-link', className)} {...rest} />;
 }
 
-/* Bề mặt: mặt kính lg-glass của thư viện. Không dùng Card của thư viện vì nó bọc nội dung trong
-   .lg-card-body và không đổi được thẻ (as), trong khi nhiều chỗ đặt bố cục ui-stack/ui-row thẳng lên thẻ.
-   tone = dark | muted | accent */
-export function Card({ tone, pad = true, as: Tag = 'div', className, ...rest }) {
-  const glass = !tone || tone === 'accent';
-  return <Tag className={cx('ui-card', glass && 'lg-glass', tone && `ui-card--${tone}`, pad && 'ui-card--pad', className)} {...rest} />;
+/* Bề mặt: Card của thư viện ở dạng bare (không có lớp .lg-card-body), vì nhiều chỗ đặt bố cục
+   ui-stack/ui-row thẳng lên thẻ. tone = dark | muted | accent; thẻ tối và thẻ mờ không dùng mặt kính */
+export function Card({ tone, pad = true, className, ...rest }) {
+  return <GlassCard bare variant={tone === 'dark' || tone === 'muted' ? 'plain' : 'glass'}
+    className={cx('ui-card', tone && `ui-card--${tone}`, pad && 'ui-card--pad', className)} {...rest} />;
 }
 const PILL = { jade: 'primary', seal: 'var(--seal)', grey: 'default' };
 export function Pill({ tone = 'grey', ...rest }) {
@@ -62,29 +59,24 @@ export function Pill({ tone = 'grey', ...rest }) {
     : <GlassTag color={PILL[tone] || 'default'} size="sm" {...rest} />;
 }
 /* Chip là nút bấm được (lọc, chọn), nên dùng nút tròn của thư viện; đang chọn thì tô màu */
-export function Chip({ active, to, href, className, ...rest }) {
+export function Chip({ active, className, ...rest }) {
   return <GlassButton shape="round" size="md" variant={active ? 'filled' : 'glass'} color={active ? 'primary' : undefined}
-    href={hrefOf(to, href)} aria-pressed={active} className={cx('ui-chip', className)} {...rest} />;
+    aria-pressed={active} className={cx('ui-chip', className)} {...rest} />;
 }
 export function Tag(props) { return <GlassTag size="sm" {...props} />; }
 export function Kbd(props) { return <kbd className="ui-kbd" {...props} />; }
 
-/* Tiến độ: value từ 0 đến 1. Progress của thư viện không nhận aria-label nên nhãn đặt ở khung bọc */
+/* Tiến độ: value từ 0 đến 1 */
 export function ProgressBar({ value = 0, height = 6, label, className }) {
-  return (
-    <div className={cx('ui-bar', className)} role="group" aria-label={label}>
-      <Progress percent={Math.min(100, Math.max(0, value * 100))} size={height} showInfo={false} status="normal" />
-    </div>
-  );
+  return <Progress percent={Math.min(100, Math.max(0, value * 100))} size={height} showInfo={false} status="normal"
+    aria-label={label} className={cx('ui-bar', className)} />;
 }
 
 /* Tabs gạch chân: items = [{ id, label, done }] */
 export function Tabs({ items, value, onChange, label }) {
   return (
-    <nav className="ui-tabs" aria-label={label}>
-      <GlassTabs activeKey={value} onChange={onChange}
-        items={items.map(t => ({ key: t.id, label: <>{t.label}{t.done && <Icon name="check" size={16} className="ui-tabs__ok" strokeWidth="2.4" />}</> }))} />
-    </nav>
+    <GlassTabs className="ui-tabs" aria-label={label} activeKey={value} onChange={onChange}
+      items={items.map(t => ({ key: t.id, label: <>{t.label}{t.done && <Icon name="check" size={16} className="ui-tabs__ok" strokeWidth="2.4" />}</> }))} />
   );
 }
 
@@ -112,6 +104,7 @@ export function PageHeader({ eyebrow, title, sub, extra, size = 30 }) {
     </header>
   );
 }
+// Breadcrumb của thư viện chỉ nhận href (chưa có as); app dùng HashRouter nên to="/x" thành href="#/x"
 export function Breadcrumbs({ items }) {
   return <Breadcrumb className="ui-crumbs" items={items.map(it => ({ title: it.label, href: it.to != null ? `#${it.to}` : undefined }))} />;
 }

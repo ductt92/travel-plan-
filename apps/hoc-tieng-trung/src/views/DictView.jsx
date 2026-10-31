@@ -120,7 +120,7 @@ function Detail({ w, S, askAi, add }) {
           ? <Pill tone="jade">Đang ôn · lần tới sau {fmtWait(Math.max(0, card.due - Date.now()))}</Pill>
           : <Button variant="soft" icon="plus" onClick={add}>Thêm vào ôn tập</Button>}
         <Row gap={4}>
-          <LinkButton href={`#/lesson/${w.lesson}`}>Xem trong bài</LinkButton>
+          <LinkButton as={Link} to={`/lesson/${w.lesson}`}>Xem trong bài</LinkButton>
           <LinkButton icon="ai" onClick={() => askAi(`Giải thích chi tiết từ ${w.hz} (${pyText(w)}): cách dùng, từ gần nghĩa, 3 câu ví dụ có pinyin và nghĩa tiếng Việt.`)}>Hỏi AI</LinkButton>
         </Row>
       </Row>

@@ -168,9 +168,7 @@ export function LecturePlayer({ lesson, renderMode = false, startStep = 0, slide
             {chapters.map(([c, k]) => <Chip key={k} active={cur && cur[1] === k} onClick={() => seekSlide(k)}>{c}</Chip>)}
           </div>
           <div className="ui-row" style={{ gap: 6, marginLeft: 'auto' }}>
-            <div role="group" aria-label="Tốc độ">
-              <Segmented size="sm" value={rate} onChange={setRate} options={RATES.map(v => ({ value: v, label: `${v}×` }))} />
-            </div>
+            <Segmented size="sm" aria-label="Tốc độ" value={rate} onChange={setRate} options={RATES.map(v => ({ value: v, label: `${v}×` }))} />
             <Chip active={subs} onClick={() => setSubs(v => !v)}>Phụ đề</Chip>
             <IconButton icon="full" label="Toàn màn hình" onClick={full} />
           </div>
