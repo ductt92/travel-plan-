@@ -306,6 +306,9 @@ async function runImport(p, courses) {
 }
 
 const ACTIONS = ['course', 'lesson', 'asset', 'upload', 'import'];
+// TẠM BỎ mật khẩu (người dùng yêu cầu 31/10): ai có link cũng xem và sửa được.
+// Bật lại: đổi OPEN thành false ở đây, catOpen trong backend/go/catalog.go và OPEN trong apps/quan-ly/src/App.tsx.
+const OPEN = true;
 
 export default async function catalog(req, res) {
   const url = new URL(req.url, 'http://localhost');
@@ -315,7 +318,7 @@ export default async function catalog(req, res) {
     res.setHeader('Allow', 'GET, POST, PATCH, DELETE');
     return fail(res, 405, 'chỉ hỗ trợ GET, POST, PATCH và DELETE');
   }
-  if (!authorized(req)) return fail(res, 401, 'sai mật khẩu');
+  if (!OPEN && !authorized(req)) return fail(res, 401, 'sai mật khẩu');
   if (method === 'GET' && url.searchParams.has('check')) return send(res, 200, { ok: true });
 
   const action = ACTIONS.find(a => url.searchParams.has(a));

@@ -15,6 +15,10 @@ import YoutubeDialog from './components/YoutubeDialog';
 type CourseEdit = { course: Course | null } | null;
 type LessonEdit = { course: Course; lesson: Lesson | null } | null;
 
+// TẠM BỎ mật khẩu (người dùng yêu cầu 31/10): không hỏi đăng nhập, API cũng tạm không kiểm tra.
+// Bật lại: đổi OPEN thành false ở đây, trong backend/node/catalog.js và backend/go/catalog.go.
+const OPEN = true;
+
 /**
  * Danh mục cần mật khẩu ngay từ lúc đọc. Có mật khẩu nhớ sẵn thì nạp luôn; server
  * báo 401 (đổi mật khẩu) thì mở lại hộp đăng nhập kèm câu "Sai mật khẩu".
@@ -22,7 +26,7 @@ type LessonEdit = { course: Course; lesson: Lesson | null } | null;
  */
 export default function App() {
   const [pass, setPassState] = useState(api.savedPass);
-  const [login, setLogin] = useState<{ error: string | null } | null>(pass ? null : { error: null });
+  const [login, setLogin] = useState<{ error: string | null } | null>(pass || OPEN ? null : { error: null });
   const [data, setData] = useState<Catalog | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<number | null>(null);
@@ -52,7 +56,7 @@ export default function App() {
     });
   }, []);
 
-  useEffect(() => { if (pass) void reload(); }, [pass, reload]);
+  useEffect(() => { if (pass || OPEN) void reload(); }, [pass, reload]);
 
   const signIn = useCallback(async (raw: string) => {
     const typed = raw.trim();
@@ -132,14 +136,14 @@ export default function App() {
         <nav className="top__tools" aria-label="Công cụ">
           <Button variant="glass" size="sm" href="/" icon={<HomeIcon />}>Trang chủ</Button>
           <GlassToggle compact />
-          {pass
+          {OPEN ? null : pass
             ? <Button variant="glass" size="sm" icon={<LogOutIcon />} onClick={signOut}>Thoát</Button>
             : <Button variant="filled" color="primary" size="sm" icon={<LogInIcon />} onClick={() => setLogin({ error: null })}>Đăng nhập</Button>}
         </nav>
       </header>
 
       <main>
-        {!pass ? (
+        {!pass && !OPEN ? (
           <Card className="gate">
             <Empty description="Đăng nhập để xem và sửa danh mục học liệu.">
               <Button variant="filled" color="primary" icon={<LogInIcon />} onClick={() => setLogin({ error: null })}>Đăng nhập</Button>

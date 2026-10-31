@@ -674,6 +674,10 @@ func catRunImport(ctx context.Context, p *pgxpool.Pool, courses []catImportCours
 
 var catActions = []string{"course", "lesson", "asset", "upload", "import"}
 
+// TẠM BỎ mật khẩu (người dùng yêu cầu 31/10): ai có link cũng xem và sửa được.
+// Bật lại: đổi catOpen thành false ở đây, OPEN trong backend/node/catalog.js và apps/quan-ly/src/App.tsx.
+const catOpen = true
+
 // Catalog xử lý /api/go/quan-ly.
 func Catalog(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
@@ -693,7 +697,7 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 		fail(w, http.StatusMethodNotAllowed, "chỉ hỗ trợ GET, POST, PATCH và DELETE")
 		return
 	}
-	if !authorized(r) {
+	if !catOpen && !authorized(r) {
 		fail(w, http.StatusUnauthorized, "sai mật khẩu")
 		return
 	}
