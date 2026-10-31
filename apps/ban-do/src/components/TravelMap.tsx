@@ -45,8 +45,6 @@ export default function TravelMap({
 
   // màn rộng mở bảng bên phải, màn hẹp mở popup giữa màn
   const wide = useMedia('(min-width:861px)');
-  // màn điện thoại: nút Kính chỉ còn biểu tượng cho hàng nút khỏi rớt dòng
-  const narrow = useMedia('(max-width:620px)');
   const panel = Boolean(selected) && wide;
 
   const countOf = useCallback(
@@ -177,7 +175,7 @@ export default function TravelMap({
                   Đăng nhập
                 </Button>
               )}
-              <GlassToggle size="md" compact={narrow} className="tool tool-key" />
+              <GlassToggle size="md" className="tool tool-key" />
             </div>
           </div>
         </header>

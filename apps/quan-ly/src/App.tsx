@@ -135,7 +135,7 @@ export default function App() {
         </div>
         <nav className="top__tools" aria-label="Công cụ">
           <Button variant="glass" size="sm" href="/" icon={<HomeIcon />}>Trang chủ</Button>
-          <GlassToggle compact />
+          <GlassToggle />
           {OPEN ? null : pass
             ? <Button variant="glass" size="sm" icon={<LogOutIcon />} onClick={signOut}>Thoát</Button>
             : <Button variant="filled" color="primary" size="sm" icon={<LogInIcon />} onClick={() => setLogin({ error: null })}>Đăng nhập</Button>}
