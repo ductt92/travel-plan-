@@ -601,6 +601,111 @@
    "src": "《HSK语法指要与训练》第五讲 指代的表示法（tr. 26） · 《HSK应试语法》第二章 第二节 指示代词（tr. 17–18）"
   },
   {
+   "id": "so-dai-tu-phiem",
+   "g": "N",
+   "short": "其他 / 别的 / 另外 / 任何",
+   "zh": "其他·别的·另外·任何·某",
+   "title": "Phòng “còn lại” là <span class='hz'>另外一间</span>, không phải <span class='hz'>别的</span>",
+   "scene": "Ngọc và bạn thuê một căn hộ hai phòng ngủ khi đi Thành Đô. Ngọc bảo bạn: “Phòng to cho cậu, phòng còn lại tớ ở.”",
+   "wrong": "大的那间给你，[别的一间]我住。",
+   "right": "大的那间给你，[另外一间]我住。",
+   "vi": "Phòng to cho cậu, phòng còn lại tớ ở.",
+   "why": [
+    "<span class='hz'>另外</span>: cái “kia, còn lại” nằm ngoài cái vừa nhắc. Trước danh từ phải có <b>số + lượng từ</b> (<span class='hz'>另外一件事、另外两个人</span>) hoặc <span class='hz'>的</span> (<span class='hz'>另外的事</span>); không nói <span class='hz'>另外事情</span>.",
+    "<span class='hz'>其他</span>: “những … khác”, đi thẳng với danh từ (<span class='hz'>其他人、其他国家</span>) hoặc với số lượng <b>số nhiều</b> (<span class='hz'>其他几个人</span>). Không nói <span class='hz'>其他一间</span>.",
+    "<span class='hz'>别的</span>: “khác” nói chung, đi thẳng với danh từ (<span class='hz'>别的地方、别的颜色</span>) hoặc đứng một mình (<span class='hz'>还要别的吗？</span>). Nó <b>không đi với một số lượng cụ thể</b> như <span class='hz'>一间、两个</span>, nên “cái còn lại” phải dùng <span class='hz'>另外</span>.",
+    "<span class='hz'>任何</span> = “bất kỳ”. Khi <span class='hz'>任何 + N</span> đứng <b>trước động từ</b> thì vị ngữ phải có <span class='hz'>都/也</span>: <span class='hz'>任何人都可以参加。我任何东西都不想吃。</span> Đứng sau <span class='hz'>没有/不 + V</span> thì không cần: <span class='hz'>我没有任何意见。</span>",
+    "<span class='hz'>某</span> = “… nào đó” (không biết hoặc không muốn nói rõ): <span class='hz'>某人、某天、某地</span>, hoặc <span class='hz'>某(一)个/种 + N</span>: <span class='hz'>因为某种原因，会议推迟了。</span>"
+   ],
+   "formula": [
+    [
+     "cái này …",
+     "另外",
+     "一/两 + lượng từ",
+     "(N)"
+    ],
+    [
+     "其他",
+     "N / 几 + lượng từ + N"
+    ],
+    [
+     "任何",
+     "N",
+     "都/也",
+     "V"
+    ],
+    [
+     "没有/不 V",
+     "任何",
+     "N"
+    ]
+   ],
+   "cmp": [
+    [
+     "ok",
+     "大的那间给你，另外一间我住。",
+     "Cái còn lại có số lượng: 另外"
+    ],
+    [
+     "bad",
+     "大的那间给你，别的一间我住。",
+     "别的 không đi với 一 + lượng từ"
+    ],
+    [
+     "ok",
+     "除了小王，其他人都同意了。",
+     "其他人 = những người khác"
+    ],
+    [
+     "bad",
+     "我任何东西不想吃。",
+     "任何 đứng trước động từ phải có 都/也"
+    ],
+    [
+     "ok",
+     "我对这个安排没有任何意见。",
+     "Sau 没有 không cần 都"
+    ]
+   ],
+   "tip": "<b>Cái “còn lại” có số đếm → 另外 + 一/两 + lượng từ. “Bất kỳ” đứng trước động từ → 任何 … 都.</b>",
+   "quiz": [
+    {
+     "stem": "这两本书，一本是我的，______一本是图书馆的。",
+     "opts": [
+      "别的",
+      "其他",
+      "另外",
+      "任何"
+     ],
+     "a": 2,
+     "ex": "Cái còn lại có 一本 đi kèm: chỉ 另外 đi được với 一 + lượng từ."
+    },
+    {
+     "stem": "______人都可以报名参加这次比赛。",
+     "opts": [
+      "任何",
+      "某",
+      "另外",
+      "其中"
+     ],
+     "a": 0,
+     "ex": "任何人 + 都: bất kỳ ai cũng được."
+    },
+    {
+     "stem": "Chọn câu đúng",
+     "col": true,
+     "opts": [
+      "我还有另外事情要做。",
+      "我还有另外一件事情要做。",
+      "我还有任何事情要做。"
+     ],
+     "a": 1,
+     "ex": "另外 trước danh từ cần số + lượng từ: 另外一件事情."
+    }
+   ],
+   "src": "《HSK应试语法》第二章 第二节 指示代词（tr. 16–17） · 第三节 疑问代词的特殊用法（tr. 23） · 第八章 第二节 “都”的注意（tr. 146） · 《HSK语法指要与训练》第五讲 指代的表示法（tr. 27）"
+  },
+  {
    "id": "so-thoi-gian",
    "g": "N",
    "short": "以后 / 后来 / 然后",
@@ -893,6 +998,113 @@
     }
    ],
    "src": "《HSK语法指要与训练》第八讲 第二节 概数的表示法（tr. 52–55）"
+  },
+  {
+   "id": "so-hai-boi-so",
+   "g": "N",
+   "short": "二 / 两, 倍, phân số",
+   "zh": "二·两·倍数·分数",
+   "title": "Giảm một nửa là <span class='hz'>降低了一半</span>, đừng dùng <span class='hz'>倍</span>",
+   "scene": "Ngọc thấy vé máy bay Hà Nội đi Côn Minh rẻ hẳn, nhắn ngay cho bạn Trung Quốc: “Giá vé giảm 2 lần so với tháng trước!”",
+   "wrong": "机票价格比上个月[降低了两倍]！",
+   "right": "机票价格比上个月[降低了一半]！",
+   "vi": "Giá vé máy bay giảm một nửa so với tháng trước!",
+   "why": [
+    "<span class='hz'>倍</span> chỉ dùng khi <b>tăng</b> hoặc <b>lớn hơn</b>. Khi giảm thì dùng <span class='hz'>一半</span>, phân số hay phần trăm: <span class='hz'>降低了一半、减少了百分之三十</span>. Tiếng Việt nói “giảm 2 lần” nhưng tiếng Trung không có <span class='hz'>降低了两倍</span>.",
+    "Gấp đôi nói chắc nhất là <span class='hz'>A 是 B 的两倍</span>. <span class='hz'>增加了一倍</span> = tăng thêm 100%, cũng là gấp đôi. Theo sách, <span class='hz'>增加了两倍</span> = tăng thêm 200%, tức <b>gấp ba</b>, còn <span class='hz'>增加到两倍</span> mới là thành gấp đôi.",
+    "Phân số đọc mẫu trước, tử sau, ngược tiếng Việt: <span class='hz'>三分之一</span> = một phần ba, <span class='hz'>百分之二十</span> = 20%. <span class='hz'>打八折</span> là <b>trả 80%</b> (giảm 20%), không phải giảm 80%.",
+    "Trước lượng từ dùng <span class='hz'>两</span>: <span class='hz'>两个人、两本书</span>. Đếm số, số thứ tự, hàng chục dùng <span class='hz'>二</span>: <span class='hz'>二加二、第二名、二楼、二十</span> (không nói <span class='hz'>第两、两十</span>). Trước <span class='hz'>百、千、万</span> thì cả hai đều được, khẩu ngữ hay nói <span class='hz'>两千、两万</span>."
+   ],
+   "formula": [
+    [
+     "两",
+     "lượng từ",
+     "N"
+    ],
+    [
+     "第",
+     "二",
+     "(lượng từ)"
+    ],
+    [
+     "A",
+     "是",
+     "B",
+     "的",
+     "X倍"
+    ],
+    [
+     "A",
+     "比",
+     "B",
+     "降低/减少了",
+     "一半/百分之X"
+    ]
+   ],
+   "cmp": [
+    [
+     "ok",
+     "我们公司有两个越南员工。",
+     "Trước lượng từ dùng 两"
+    ],
+    [
+     "bad",
+     "他在比赛中得了第两名。",
+     "Số thứ tự dùng 二: 第二名"
+    ],
+    [
+     "ok",
+     "今年的销售额是去年的两倍。",
+     "Gấp đôi"
+    ],
+    [
+     "bad",
+     "这个月的电费比上个月减少了两倍。",
+     "Giảm không dùng 倍: 减少了一半"
+    ],
+    [
+     "ok",
+     "全班有三分之一的同学去过中国。",
+     "三分之一 = một phần ba"
+    ]
+   ],
+   "tip": "<b>Đếm đồ vật dùng 两, xếp thứ tự dùng 二. Tăng mới dùng 倍, giảm thì dùng 一半 / 百分之….</b>",
+   "quiz": [
+    {
+     "stem": "他这次比赛得了第______名。",
+     "opts": [
+      "两",
+      "二",
+      "俩",
+      "双"
+     ],
+     "a": 1,
+     "ex": "Số thứ tự chỉ dùng 二: 第二名."
+    },
+    {
+     "stem": "去年他的月薪是一万块，今年是两万块。今年的月薪是去年的______。",
+     "opts": [
+      "一倍",
+      "两倍",
+      "一半",
+      "百分之五十"
+     ],
+     "a": 1,
+     "ex": "Hai vạn = gấp đôi một vạn: A 是 B 的两倍."
+    },
+    {
+     "stem": "这件衣服原价五百块，现在打八折，只要______。",
+     "opts": [
+      "一百块",
+      "四百块",
+      "八十块",
+      "四十块"
+     ],
+     "a": 1,
+     "ex": "打八折 = trả 80% giá gốc: 500 × 80% = 400."
+    }
+   ],
+   "src": "《HSK语法指要与训练》第八讲 第一节 常用数的表示法（tr. 49–51） · 《HSK应试语法》第五章 第一节 数词（tr. 73–74） · 第二节 “二”、“两”与“俩”（tr. 76–77）"
   },
   {
    "id": "so-luong-tu",
@@ -3276,6 +3488,112 @@
    "src": "《HSK语法指要与训练》第二十六讲 第七节 多(么)、太、极、挺、最、非常、白（tr. 165–167）"
   },
   {
+   "id": "pt-pham-vi",
+   "g": "D",
+   "short": "都 / 全 / 只 / 一共 / 光",
+   "zh": "范围副词",
+   "title": "“Tất cả” đứng đầu câu không dịch là <span class='hz'>都</span>",
+   "scene": "Ngọc đăng ảnh tiệc sinh nhật lên WeChat, viết: “Tất cả bạn cùng lớp đều đến dự sinh nhật mình.”",
+   "wrong": "[都]同学们来参加了我的生日聚会。",
+   "right": "同学们[都]来参加了我的生日聚会。",
+   "vi": "Các bạn cùng lớp đều đến dự tiệc sinh nhật của tôi.",
+   "why": [
+    "<span class='hz'>都</span> là phó từ, giống chữ “đều”: đứng <b>sau chủ ngữ, trước động từ</b>, không đứng trước danh từ hay đại từ. Chữ “tất cả” ở đầu câu tiếng Việt thì dịch là <span class='hz'>所有的 / 大家 / 全班</span>, còn <span class='hz'>都</span> vẫn đặt trước động từ: <span class='hz'>所有的同学都来了。</span>",
+    "<span class='hz'>都</span> tổng kết những gì đứng <b>trước</b> nó. Muốn bao cả tân ngữ thì đưa tân ngữ lên trước: <span class='hz'>这几个城市我都去过。</span> Trong câu hỏi thì ngược lại, <span class='hz'>都</span> hỏi về cái phía sau: <span class='hz'>你都去过哪儿？</span>",
+    "Vị trí của phủ định đổi nghĩa: <span class='hz'>都不是</span> = không cái nào là; <span class='hz'>不都是</span> = không phải tất cả đều là. <span class='hz'>全</span> cũng vậy: <span class='hz'>全没听懂</span> (không hiểu gì) khác <span class='hz'>没全听懂</span> (không hiểu hết).",
+    "<span class='hz'>只</span> (chỉ) đứng trước động từ: <span class='hz'>我只喝了一杯。</span> <span class='hz'>一共</span> là cộng tổng, nên phía sau phải có <b>con số</b> hoặc <span class='hz'>多少</span>: <span class='hz'>一共花了八千块。</span>",
+    "<span class='hz'>光</span> (khẩu ngữ) = <span class='hz'>只</span>, hay dùng mẫu <span class='hz'>光…就…</span>: <span class='hz'>光机票就花了五千块。</span> <span class='hz'>净</span> (khẩu ngữ) = “toàn là”, thường mang ý chê: <span class='hz'>你别净玩手机了。</span>"
+   ],
+   "formula": [
+    [
+     "S (số nhiều)",
+     "都",
+     "V"
+    ],
+    [
+     "O",
+     "S",
+     "都",
+     "V"
+    ],
+    [
+     "S",
+     "只",
+     "V",
+     "…"
+    ],
+    [
+     "一共",
+     "(V)",
+     "số + lượng từ"
+    ]
+   ],
+   "cmp": [
+    [
+     "ok",
+     "看完这个视频，大家都笑了。",
+     ""
+    ],
+    [
+     "bad",
+     "看完这个视频，都大家笑了。",
+     "都 không đứng trước chủ ngữ"
+    ],
+    [
+     "ok",
+     "这几个城市我都去过。",
+     "Tân ngữ đưa lên trước 都"
+    ],
+    [
+     "ok",
+     "这些书不都是我的，有几本是图书馆的。",
+     "不都是 = không phải tất cả"
+    ],
+    [
+     "bad",
+     "这次旅行我们一共花了。",
+     "Sau 一共 phải có số: 一共花了八千块"
+    ]
+   ],
+   "tip": "<b>都 nhìn về phía trước</b>: cái được gom phải đứng trước 都. “Tất cả” đầu câu là 所有的/大家, không phải 都.",
+   "quiz": [
+    {
+     "stem": "Chọn câu đúng",
+     "col": true,
+     "opts": [
+      "都我们喜欢这个老师。",
+      "我们都喜欢这个老师。",
+      "我们喜欢都这个老师。"
+     ],
+     "a": 1,
+     "ex": "都 đứng sau chủ ngữ, trước động từ."
+    },
+    {
+     "stem": "“这些书不都是我的。” nghĩa là gì?",
+     "col": true,
+     "opts": [
+      "Không có quyển nào là của tôi.",
+      "Không phải tất cả số sách này đều là của tôi.",
+      "Tất cả số sách này đều là của tôi."
+     ],
+     "a": 1,
+     "ex": "不都是 = không phải tất cả; 都不是 mới là không quyển nào."
+    },
+    {
+     "stem": "这次旅行花了不少钱，______机票就花了五千块。",
+     "opts": [
+      "都",
+      "一共",
+      "光",
+      "全"
+     ],
+     "a": 2,
+     "ex": "光…就…: chỉ riêng vé máy bay đã tốn 5000 tệ."
+    }
+   ],
+   "src": "《HSK语法指要与训练》第七讲 第二节 范围副词（tr. 46–47） · 《HSK应试语法》第八章 第二节 常用副词（tr. 136, 145–146）"
+  },
+  {
    "id": "pt-cai-jiu",
    "g": "D",
    "short": "才 muộn, 就 sớm",
@@ -3579,6 +3897,114 @@
     }
    ],
    "src": "《HSK语法指要与训练》第六讲 第一节 刚才、刚（tr. 34）· 第二十六讲 第四节 正在、已经、曾经、刚（tr. 154–155） · 《HSK应试语法》第八章 第三节 正在、已经、曾经（tr. 157–159）"
+  },
+  {
+   "id": "pt-zhongyu",
+   "g": "D",
+   "short": "终于 / 最后 / 总算",
+   "zh": "终于·最后·总算·到底",
+   "title": "“Cuối cùng” khi kết bài là <span class='hz'>最后</span>, không phải <span class='hz'>终于</span>",
+   "scene": "Ngọc thuyết trình bằng tiếng Trung trước khách hàng của công ty. Đến slide cuối, Ngọc nói: “Cuối cùng, xin cảm ơn mọi người đã lắng nghe.”",
+   "wrong": "[终于]，感谢大家的聆听。",
+   "right": "[最后]，感谢大家的聆听。",
+   "vi": "Cuối cùng, xin cảm ơn mọi người đã lắng nghe.",
+   "why": [
+    "“Cuối cùng” tiếng Việt có hai nghĩa. Nghĩa “<b>rốt cuộc cũng</b>” là <span class='hz'>终于</span>: việc mong đợi đã xảy ra sau một thời gian dài: <span class='hz'>等了三年，他终于回来了。</span> Nói <span class='hz'>终于，感谢大家</span> nghe như “may quá, xong rồi”, rất buồn cười.",
+    "Nghĩa “<b>sau hết, bước cuối</b>” là <span class='hz'>最后</span>: <span class='hz'>先洗菜，再切菜，最后下锅炒。</span> <span class='hz'>最后</span> là danh từ nên đứng đầu câu được, đi với <span class='hz'>一 + lượng từ</span> (<span class='hz'>最后一天、最后一次</span>) và làm định ngữ (<span class='hz'>最后的机会</span>).",
+    "<span class='hz'>终于</span> là phó từ, chỉ đứng trước động từ hoặc tính từ, không có <span class='hz'>终于一天</span>. Phía sau phải là kết quả <b>đã thành</b> (thường có <span class='hz'>了</span>) hoặc <b>sắp thành</b> (<span class='hz'>明天终于要放假了。</span>), không nói trống <span class='hz'>他终于来。</span>",
+    "<span class='hz'>总算</span> cũng là “cuối cùng cũng” (<span class='hz'>总算到家了</span>), thêm nghĩa “cũng coi như tạm được”: <span class='hz'>这次考得总算还可以。</span> <span class='hz'>终于</span> không có nghĩa này.",
+    "Kết quả <b>không mong muốn</b>, trái lời dặn thì sách dùng <span class='hz'>到底</span> (thường kèm <span class='hz'>还是</span>), không dùng <span class='hz'>终于</span>: <span class='hz'>我叮嘱了他半天，他到底还是说出去了。</span>"
+   ],
+   "formula": [
+    [
+     "(chờ lâu)",
+     "S",
+     "终于",
+     "V",
+     "了"
+    ],
+    [
+     "首先/先 …",
+     "然后 …",
+     "最后",
+     "…"
+    ],
+    [
+     "最后",
+     "一",
+     "lượng từ",
+     "N"
+    ],
+    [
+     "S",
+     "总算",
+     "还 + tính từ"
+    ]
+   ],
+   "cmp": [
+    [
+     "ok",
+     "找了三个月，他终于找到工作了。",
+     "Mong đợi lâu, đã thành, có 了"
+    ],
+    [
+     "bad",
+     "我们等了一个小时，他终于来。",
+     "Thiếu 了: 终于来了"
+    ],
+    [
+     "ok",
+     "今天是我在北京的最后一天。",
+     "最后 là danh từ, làm định ngữ"
+    ],
+    [
+     "bad",
+     "今天是我在北京的终于一天。",
+     "终于 là phó từ, không đứng trước danh từ"
+    ],
+    [
+     "ok",
+     "这次考得总算还可以。",
+     "总算 = coi như cũng tạm"
+    ]
+   ],
+   "tip": "<b>“Rốt cuộc cũng…” → 终于 + V + 了. “Sau hết, phần cuối” → 最后.</b> 最后 đứng được đầu câu và trước danh từ, 终于 thì không.",
+   "quiz": [
+    {
+     "stem": "今天的会就开到这儿。______，祝大家周末愉快！",
+     "opts": [
+      "终于",
+      "最后",
+      "总算",
+      "到底"
+     ],
+     "a": 1,
+     "ex": "Phần kết, đứng đầu câu: 最后."
+    },
+    {
+     "stem": "等了整整两个小时，飞机______起飞了。",
+     "opts": [
+      "终于",
+      "毕竟",
+      "究竟",
+      "曾经"
+     ],
+     "a": 0,
+     "ex": "Chờ lâu rồi việc mong đợi đã xảy ra: 终于 + V + 了."
+    },
+    {
+     "stem": "Chọn câu đúng",
+     "col": true,
+     "opts": [
+      "这是我们终于一次见面。",
+      "这是我们最后一次见面。",
+      "这是我们总算一次见面。"
+     ],
+     "a": 1,
+     "ex": "Trước 一 + lượng từ chỉ dùng 最后; 终于、总算 là phó từ."
+    }
+   ],
+   "src": "《HSK语法指要与训练》第二十六讲 第四节 刚、临、将、终于、回头（tr. 155） · 《HSK应试语法》第八章 第三节 “终于”、“到底”和“毕竟”（tr. 168–169）"
   },
   {
    "id": "pt-cach-thuc",
