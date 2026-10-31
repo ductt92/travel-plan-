@@ -3,8 +3,10 @@
 
 /* Khung: hộp mục tiêu ngày và nút về trang chủ ở cuối thanh bên */
 .side-goal{margin-top:auto;display:flex;flex-direction:column;gap:10px}
-.side-links{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.side-home{display:flex;align-items:center;gap:10px;min-height:40px;padding:0 12px;border-radius:9px;color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500}
+/* thanh bên chỉ rộng 248px: "Trang chủ" và nút Liquis glass không vừa một hàng, xếp thành hai hàng */
+.side-links{display:flex;flex-direction:column;align-items:stretch;gap:4px}
+.side-links .glass-toggle{align-self:flex-start;margin-left:6px}
+.side-home{display:flex;align-items:center;gap:10px;min-height:40px;padding:0 12px;border-radius:9px;color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500;white-space:nowrap}
 .side-home:hover{background:var(--surface-2);color:var(--ink)}
 .side-goal__box{padding:14px;border-radius:12px;background:var(--surface-2);display:flex;flex-direction:column;gap:6px}
 
