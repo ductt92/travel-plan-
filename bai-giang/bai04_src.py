@@ -1,0 +1,611 @@
+#!/usr/bin/env python3
+"""Kịch bản bài giảng HSK 6 (Thượng) – Bài 4 «完美的胜利». Chạy để sinh bai04.json."""
+import json
+import os
+
+TAG = "HSK 6 (Thượng) · Bài 4 · 完美的胜利"
+slides = []
+
+
+def add(type_, chapter=None, section="", **kw):
+    s = {"type": type_, "section": section, **kw}
+    if chapter:
+        s["chapter"] = chapter
+    slides.append(s)
+
+
+def F(i, t, **kw):
+    return {"t": t, "f": i, **kw}
+
+
+# ======================= MỞ ĐẦU =======================
+add("title", chapter="Mở đầu",
+    top="Giáo trình chuẩn HSK 6 – Quyển Thượng",
+    zh="完美的胜利", py="Wánměi de shènglì", vi="Bài 4: Chiến thắng hoàn hảo",
+    sub="Bài giảng chi tiết bằng tiếng Việt",
+    say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng Giáo trình chuẩn HSK 6, quyển Thượng.",
+         "Hôm nay chúng ta học bài bốn: 完美的胜利。 Nghĩa là: Chiến thắng hoàn hảo.",
+         "Đây là bài cuối cùng của Chủ đề một, 生活点滴, những mẩu chuyện nhỏ trong cuộc sống. Bài khóa là một câu chuyện ngụ ngôn dài khoảng bảy trăm năm mươi chữ, kể về một chú chuột nhỏ muốn chiến thắng con voi to lớn. Cuối cùng chuột đã thắng, nhưng không phải bằng sức mạnh, mà bằng lòng tốt."])
+
+add("bullets", section="Mở đầu", title="Mục tiêu bài học",
+    items=["Hiểu nội dung bài khóa 完美的胜利 – chuột và voi: từ đối thủ thành bạn",
+           "Nắm vững 48 từ mới, kèm âm Hán Việt và ví dụ",
+           "Ngữ pháp: phó từ 乘机, liên từ 不料, phó từ 未免",
+           "Phân biệt hai từ 恰巧 và 正好",
+           "Kỹ năng: mô phỏng đoạn văn – câu giả thiết và câu hỏi tu từ"],
+    say=["Bài học hôm nay có năm mục tiêu.",
+         F(0, "Thứ nhất, hiểu nội dung bài khóa: chuột đã làm gì để chiến thắng voi, và vì sao thần núi lại gọi đó là chiến thắng hoàn hảo."),
+         F(1, "Thứ hai, nắm vững bốn mươi tám từ mới. Với mỗi từ, thầy sẽ đọc mẫu, cho các bạn âm Hán Việt để dễ nhớ, giải thích nghĩa và đưa ví dụ."),
+         F(2, "Thứ ba, học ba điểm ngữ pháp: phó từ 乘机, nghĩa là nhân cơ hội; liên từ 不料, nghĩa là không ngờ; và phó từ 未免, nghĩa là thật là hơi, có phần."),
+         F(3, "Thứ tư, phân biệt hai từ rất hay gặp: 恰巧 và 正好, đều có nghĩa là vừa đúng lúc, vừa khéo."),
+         F(4, "Thứ năm, kỹ năng mô phỏng đoạn văn: học cách viết chuỗi câu giả thiết và dùng câu hỏi tu từ, dựa trên chính những câu hay trong bài khóa."),
+         "Các bạn hãy chuẩn bị giấy bút, và đừng ngại tạm dừng video để ghi chép hoặc đọc theo nhé."])
+
+# ======================= KHỞI ĐỘNG =======================
+add("bullets", chapter="Khởi động", section="Khởi động 热身", title="Khởi động 1: Ghép từ với tranh", size=40,
+    items=["(1) 老鼠  (2) 蝴蝶  (3) 猴子  (4) 老虎  (5) 大象  (6) 猫",
+           "Tranh: A con voi · B bầy khỉ · C con hổ · D con chuột · E con bướm · F con mèo",
+           "Đáp án: (1) D · (2) E · (3) B · (4) C · (5) A · (6) F",
+           "上边的动物中，你觉得强大的是哪些？弱小的是哪些？",
+           "你认为老鼠可以战胜大象吗？如果可以，方法是什么？"],
+    say=["Chúng ta bắt đầu bằng phần khởi động. Bài tập thứ nhất: chọn tranh tương ứng với các từ sau.",
+         F(0, "老鼠 là con chuột. 蝴蝶 là con bướm. 猴子 là con khỉ. 老虎 là con hổ. 大象 là con voi. Và 猫 là con mèo."),
+         F(1, "Trong sách có sáu bức tranh: A là con voi, B là một bầy khỉ, C là con hổ, D là con chuột, E là con bướm, và F là con mèo."),
+         F(2, "Vậy đáp án là: 老鼠 chọn D, 蝴蝶 chọn E, 猴子 chọn B, 老虎 chọn C, 大象 chọn A, và 猫 chọn F."),
+         F(3, "Sau đó sách hỏi: 上边的动物中，你觉得强大的是哪些？弱小的是哪些？ Trong những con vật trên, bạn thấy con nào mạnh, con nào yếu?"),
+         F(4, "你认为老鼠可以战胜大象吗？如果可以，方法是什么？ Bạn có nghĩ chuột có thể chiến thắng voi không? Nếu có thể, thì bằng cách nào?"),
+         "Các bạn hãy tạm dừng video và thử trả lời bằng tiếng Trung. Câu trả lời của bài khóa hôm nay có thể sẽ làm các bạn bất ngờ đấy!"])
+
+add("bullets", section="Khởi động 热身", title="Khởi động 2: Học từ theo yếu tố cấu tạo: 物 và 弱", size=38,
+    items=["## 物 (vật): đồ vật, sự vật",
+           "宠物 thú cưng · 人物 nhân vật · 动物 động vật · 植物 thực vật · 食物 thức ăn · 事物 sự vật · 博物馆 bảo tàng",
+           "购物 mua sắm · 读物 sách báo để đọc · 废物 phế vật, đồ bỏ đi · 药物 dược phẩm · 建筑物 công trình kiến trúc · 物质 vật chất",
+           "## 弱 (nhược): yếu",
+           "弱小 nhỏ yếu · 弱点 nhược điểm · 弱者 kẻ yếu · 瘦弱 gầy yếu · 软弱 nhu nhược · 体弱 thể chất yếu · 微弱 yếu ớt",
+           "减弱 suy yếu đi · 柔弱 mềm yếu · 示弱 tỏ ra yếu thế · 虚弱 hư nhược, suy nhược · 老弱病残 người già yếu, ốm đau, tàn tật"],
+    say=["Phần khởi động thứ hai yêu cầu: hãy nghĩ xem các từ sau có liên hệ gì với nhau. Đây là cách học từ theo yếu tố cấu tạo, rất có lợi cho người Việt vì hầu hết các chữ đều có âm Hán Việt quen thuộc.",
+         F(0, "Nhóm thứ nhất có chữ 物, Hán Việt là vật, nghĩa là đồ vật, sự vật."),
+         F(1, "宠物，人物，动物，植物，食物，事物，博物馆。 Tức là: thú cưng, nhân vật, động vật, thực vật, thức ăn, sự vật, và viện bảo tàng. Câu đầu tiên của bài khóa đã có từ 宠物: chuột là thú cưng của thần núi."),
+         F(2, "购物，读物，废物，药物，建筑物，物质。 Tức là: mua sắm, sách báo để đọc, đồ bỏ đi, dược phẩm, công trình kiến trúc, và vật chất."),
+         F(3, "Nhóm thứ hai có chữ 弱, Hán Việt là nhược, nghĩa là yếu, như trong từ nhược điểm của tiếng Việt."),
+         F(4, "弱小，弱点，弱者，瘦弱，软弱，体弱，微弱。 Tức là: nhỏ yếu, nhược điểm, kẻ yếu, gầy yếu, nhu nhược, thể chất yếu, và yếu ớt. Trong bài, chuột tự thấy mình 那么弱小, nhỏ yếu biết bao."),
+         F(5, "减弱，柔弱，示弱，虚弱，老弱病残。 Tức là: suy yếu đi, mềm yếu, tỏ ra yếu thế, suy nhược, và 老弱病残, chỉ chung những người già yếu, ốm đau, tàn tật.")])
+
+add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 悲 và 费", size=38,
+    items=["## 悲 (bi): buồn, đau thương",
+           "悲伤 đau buồn · 悲观 bi quan · 悲痛 bi thống, đau đớn · 悲剧 bi kịch · 悲苦 đau khổ · 悲惨 bi thảm",
+           "悲欢离合 vui buồn tan hợp · 可悲 đáng buồn · 乐极生悲 vui quá hóa buồn",
+           "## 费 (phí): tiêu tốn, hao phí",
+           "耗费 hao phí · 花费 tiêu tốn · 浪费 lãng phí · 消费 tiêu dùng · 白费 uổng công · 费时 tốn thời gian",
+           "费心 hao tâm · 费力 tốn sức · 费钱 tốn tiền · 费电 tốn điện · 费劲 vất vả, tốn sức · 费尽心机 vắt óc tính toán"],
+    say=[F(0, "Nhóm thứ ba có chữ 悲, Hán Việt là bi, nghĩa là buồn, đau thương, như trong bi kịch, bi quan."),
+         F(1, "悲伤，悲观，悲痛，悲剧，悲苦，悲惨。 Tức là: đau buồn, bi quan, đau đớn, bi kịch, đau khổ, và bi thảm. Trong bài khóa có hai từ 悲伤 và 悲惨: con voi vừa đau buồn vừa sợ hãi, trông rất thảm thương."),
+         F(2, "悲欢离合，可悲，乐极生悲。 Tức là: vui buồn tan hợp, đáng buồn, và 乐极生悲, vui quá hóa buồn."),
+         F(3, "Nhóm cuối cùng có chữ 费, Hán Việt là phí, nghĩa là tiêu tốn, hao phí."),
+         F(4, "耗费，花费，浪费，消费，白费，费时。 Tức là: hao phí, tiêu tốn, lãng phí, tiêu dùng, uổng công, và tốn thời gian. Trong bài, chuột 耗费了全部力气, đã dốc hết toàn bộ sức lực."),
+         F(5, "费心，费力，费钱，费电，费劲，费尽心机。 Tức là: hao tâm, tốn sức, tốn tiền, tốn điện, vất vả, và vắt óc tính toán."),
+         "Các bạn thấy không, chỉ cần nắm nghĩa của một chữ gốc, ta có thể đoán được nghĩa của cả một nhóm từ. Hãy áp dụng cách này khi học từ mới nhé."])
+
+# ======================= TỪ MỚI =======================
+# (chữ Hán, pinyin, Hán Việt, từ loại, nghĩa hiển thị, ví dụ, dịch ví dụ, lời giảng[, cách đọc thay cho chữ đa âm đứng một mình])
+V = [
+    ("厌倦", "yànjuàn", "yếm quyện", "động từ", "chán ngán, chán ngấy", "他厌倦了城市的生活。", "Anh ấy đã chán ngán cuộc sống thành phố.",
+     "Động từ, nghĩa là chán ngán, chán ngấy, thường là vì một việc đã kéo dài quá lâu, lặp đi lặp lại."),
+    ("厌恶", "yànwù", "yếm ố", "động từ", "chán ghét, ghét", "我厌恶说谎的人。", "Tôi ghét những người nói dối.",
+     "Động từ, nghĩa là chán ghét, ghét cay ghét đắng, mức độ mạnh hơn 厌倦. Chú ý chữ thứ hai đọc là wù, thanh bốn, Hán Việt là ố, không phải è."),
+    ("倘若", "tǎngruò", "thảng nhược", "liên từ", "nếu như (văn viết)", "倘若明天下雨，比赛就取消。", "Nếu ngày mai trời mưa thì trận đấu sẽ bị hủy.",
+     "Liên từ, nghĩa là nếu như, giống 如果 nhưng mang sắc thái văn viết. Thường đi với 就, 便, hoặc 必须 ở vế sau."),
+    ("发觉", "fājué", "phát giác", "động từ", "phát hiện, nhận ra", "走到半路，我才发觉忘了带钥匙。", "Đi được nửa đường tôi mới nhận ra là quên mang chìa khóa.",
+     "Động từ, nghĩa là phát hiện, nhận ra. Cẩn thận, đây là từ dễ nhầm: phát giác trong tiếng Việt thường là tố giác hành vi sai trái, còn 发觉 trong tiếng Trung chỉ đơn giản là nhận ra, phát hiện ra."),
+    ("承诺", "chéngnuò", "thừa nặc", "động từ", "hứa, cam kết; lời hứa", "公司承诺免费维修一年。", "Công ty cam kết sửa chữa miễn phí trong một năm.",
+     "Động từ, nghĩa là hứa, cam kết. Cũng dùng như danh từ, nghĩa là lời hứa, ví dụ trong bài: 对山神的承诺, lời hứa với thần núi."),
+    ("草率", "cǎoshuài", "thảo suất", "tính từ", "qua loa, cẩu thả", "这么重要的事，不能草率决定。", "Việc quan trọng như thế này không thể quyết định qua loa.",
+     "Tính từ, nghĩa là qua loa, cẩu thả, làm mà không suy nghĩ kỹ. Chú ý chữ thứ hai đọc là shuài."),
+    ("对抗", "duìkàng", "đối kháng", "động từ", "đối chọi, chống lại", "一个人很难对抗整个公司。", "Một người rất khó chống lại cả một công ty.",
+     "Động từ, nghĩa là đối chọi, chống lại, đối đầu với một lực lượng khác."),
+    ("尝试", "chángshì", "thường thí", "động từ", "thử", "我想尝试一种新的学习方法。", "Tôi muốn thử một phương pháp học tập mới.",
+     "Động từ, nghĩa là thử, thử làm một việc chưa từng làm. Cũng có thể làm danh từ: 一次大胆的尝试, một lần thử táo bạo."),
+    ("盲目", "mángmù", "manh mục", "tính từ", "mù quáng", "不要盲目相信广告。", "Đừng mù quáng tin vào quảng cáo.",
+     "Tính từ, nghĩa là mù quáng, làm mà không có hiểu biết hay suy xét rõ ràng. Thường đi với các động từ như 行动, 相信, 追求."),
+    ("乘", "chéng", "thừa", "giới từ", "nhân (dịp), thừa (cơ hội)", "乘大家不注意，他悄悄离开了。", "Nhân lúc mọi người không để ý, anh ta lặng lẽ rời đi.",
+     "Ở đây là giới từ, nghĩa là nhân, thừa lúc, phía sau là một tình huống hay cơ hội. Âm Hán Việt thừa, giống thừa cơ trong tiếng Việt. Trong bài có câu 乘大象不注意, nhân lúc voi không để ý.", "承"),
+    ("喘气", "chuǎn qì", "suyễn khí", "động từ", "thở; thở hổn hển", "他跑得喘不过气来。", "Anh ấy chạy đến mức thở không ra hơi.",
+     "Động từ ly hợp, nghĩa là thở, hoặc thở hổn hển vì mệt. Chữ đầu Hán Việt là suyễn, chính là chữ suyễn trong bệnh hen suyễn."),
+    ("饶恕", "ráoshù", "nhiêu thứ", "động từ", "tha thứ, bỏ qua", "请你饶恕他这一次吧。", "Xin anh tha thứ cho nó lần này.",
+     "Động từ, nghĩa là tha thứ, bỏ qua lỗi lầm, không trừng phạt. Sắc thái trang trọng, nặng hơn 原谅."),
+    ("强迫", "qiǎngpò", "cưỡng bách", "động từ", "bắt buộc, ép buộc", "父母不应该强迫孩子学自己不喜欢的东西。", "Bố mẹ không nên ép con học những thứ con không thích.",
+     "Động từ, nghĩa là bắt buộc, ép buộc người khác làm việc họ không muốn. Chú ý chữ đầu đọc là qiǎng, thanh ba."),
+    ("实施", "shíshī", "thực thi", "động từ", "thực hiện, thực thi", "这项计划下个月开始实施。", "Kế hoạch này bắt đầu thực hiện từ tháng sau.",
+     "Động từ, nghĩa là thực hiện, thực thi, thường đi với kế hoạch, chính sách, biện pháp."),
+    ("不料", "búliào", "bất liệu", "liên từ", "không ngờ, chẳng dè", "我以为他会同意，不料他却拒绝了。", "Tôi tưởng anh ấy sẽ đồng ý, không ngờ anh ấy lại từ chối.",
+     "Liên từ, nghĩa là không ngờ, chẳng dè. Đây là điểm ngữ pháp thứ hai của bài, ta sẽ học kỹ ở phần sau."),
+    ("猛烈", "měngliè", "mãnh liệt", "tính từ", "mạnh mẽ, dữ dội", "风越来越猛烈。", "Gió càng lúc càng dữ dội.",
+     "Tính từ, nghĩa là mạnh mẽ, dữ dội. Cẩn thận: mãnh liệt trong tiếng Việt hay dùng cho tình cảm, như yêu mãnh liệt; còn 猛烈 chủ yếu dùng cho sức mạnh vật lý như gió, lửa, đợt tấn công, hay cú hắt hơi trong bài."),
+    ("子弹", "zǐdàn", "tử đạn", "danh từ", "đạn, viên đạn", "他跑得像子弹一样快。", "Anh ấy chạy nhanh như viên đạn.",
+     "Danh từ, nghĩa là viên đạn. Lượng từ là 颗 hoặc 发. Trong bài, chuột bị bắn ra 像子弹一样, như một viên đạn."),
+    ("蔑视", "mièshì", "miệt thị", "động từ", "coi thường, khinh miệt", "我们不应该蔑视比自己弱小的人。", "Chúng ta không nên coi thường người yếu hơn mình.",
+     "Động từ, nghĩa là coi thường, khinh miệt. Hán Việt miệt thị, nghĩa giống tiếng Việt."),
+    ("眼光", "yǎnguāng", "nhãn quang", "danh từ", "ánh mắt; con mắt nhìn nhận", "你的眼光真不错。", "Con mắt của bạn thật tinh.",
+     "Danh từ, có hai nghĩa: một là ánh mắt, như 蔑视的眼光, ánh mắt khinh miệt; hai là con mắt nhìn nhận, khả năng đánh giá, như 有眼光, có con mắt tinh đời."),
+    ("盯", "dīng", "đinh", "động từ", "nhìn chằm chằm", "他一直盯着手机。", "Anh ấy cứ nhìn chằm chằm vào điện thoại.",
+     "Động từ, nghĩa là nhìn chằm chằm, dán mắt vào. Thường đi với 着: 盯着."),
+    ("愤怒", "fènnù", "phẫn nộ", "tính từ", "phẫn nộ, tức giận", "听到这个消息，大家都很愤怒。", "Nghe tin này, mọi người đều rất phẫn nộ.",
+     "Tính từ, nghĩa là phẫn nộ, tức giận, mức độ mạnh hơn 生气."),
+    ("愚蠢", "yúchǔn", "ngu xuẩn", "tính từ", "ngu ngốc, ngu xuẩn", "这是一个愚蠢的决定。", "Đây là một quyết định ngu ngốc.",
+     "Tính từ, nghĩa là ngu ngốc, ngu xuẩn. Từ trái nghĩa là 聪明."),
+    ("家伙", "jiāhuo", "gia hỏa", "danh từ", "thằng, gã, thằng cha", "这个家伙又迟到了。", "Thằng cha này lại đến muộn rồi.",
+     "Danh từ khẩu ngữ, nghĩa là thằng, gã, thằng cha. Có thể mang ý mắng, như trong bài, hoặc thân mật, đùa vui giữa bạn bè. Chữ thứ hai đọc nhẹ."),
+    ("可恶", "kěwù", "khả ố", "tính từ", "đáng ghét", "这个小偷真可恶！", "Tên trộm này thật đáng ghét!",
+     "Tính từ, nghĩa là đáng ghét. Chữ thứ hai cũng đọc là wù như trong 厌恶. Chú ý: khả ố trong tiếng Việt nghĩa là đáng ghê tởm, rất nặng; còn 可恶 nhẹ hơn, chỉ là đáng ghét, đôi khi còn dùng để trách yêu."),
+    ("耍", "shuǎ", "xoạ", "động từ", "giở (trò); đùa nghịch", "别跟我耍花样。", "Đừng giở trò với tôi.",
+     "Động từ, nghĩa là giở, bày ra, thường mang nghĩa xấu: 耍花样, giở trò; 耍流氓, giở trò lưu manh. Trong khẩu ngữ còn có nghĩa là chơi đùa."),
+    ("流氓", "liúmáng", "lưu manh", "danh từ", "lưu manh; hành vi côn đồ", "那个流氓被警察抓住了。", "Tên lưu manh đó đã bị cảnh sát bắt.",
+     "Danh từ, nghĩa là kẻ lưu manh, hoặc hành vi côn đồ, quấy rối. Hán Việt lưu manh, nghĩa giống hệt tiếng Việt."),
+    ("扁", "biǎn", "biển", "tính từ", "dẹt, bẹp", "盒子被压扁了。", "Cái hộp bị đè bẹp rồi.",
+     "Tính từ, nghĩa là dẹt, bẹp. Hay làm bổ ngữ kết quả: 压扁, đè bẹp; 踩扁, giẫm bẹp, như lời con voi đe dọa trong bài.", "贬"),
+    ("夕阳", "xīyáng", "tịch dương", "danh từ", "mặt trời chiều, nắng chiều", "夕阳西下，天空一片红色。", "Mặt trời chiều ngả về tây, bầu trời một màu đỏ rực.",
+     "Danh từ, nghĩa là mặt trời lúc chiều tà. Hán Việt tịch dương, một từ rất thơ."),
+    ("留神", "liú shén", "lưu thần", "động từ", "chú ý, coi chừng", "过马路要留神。", "Qua đường phải chú ý.",
+     "Động từ ly hợp, nghĩa là chú ý, coi chừng. Dạng phủ định 不留神 nghĩa là sơ ý, không để ý, như con voi trong bài."),
+    ("打猎", "dǎ liè", "đả liệp", "động từ", "đi săn", "他爷爷年轻时经常上山打猎。", "Hồi trẻ ông của anh ấy thường lên núi đi săn.",
+     "Động từ ly hợp, nghĩa là đi săn. 打猎者 là người đi săn, thợ săn."),
+    ("不顾", "búgù", "bất cố", "động từ", "bất chấp, không đếm xỉa tới", "他不顾家人反对，辞职创业了。", "Bất chấp gia đình phản đối, anh ấy nghỉ việc để khởi nghiệp.",
+     "Động từ, nghĩa là bất chấp, không đếm xỉa tới. Cụm rất hay gặp là 不顾一切, bất chấp tất cả."),
+    ("挣扎", "zhēngzhá", "tranh trát", "động từ", "vùng vẫy, giãy giụa", "小鸟在网里拼命挣扎。", "Con chim nhỏ giãy giụa hết sức trong lưới.",
+     "Động từ, nghĩa là vùng vẫy, giãy giụa để thoát ra. Nghĩa bóng là cố gắng chống chọi với hoàn cảnh khó khăn."),
+    ("窜", "cuàn", "thoán", "động từ", "chạy tán loạn, tháo chạy", "老鼠在屋子里到处乱窜。", "Con chuột chạy tán loạn khắp nhà.",
+     "Động từ, nghĩa là chạy tán loạn, tháo chạy, thường dùng cho thú vật hoặc kẻ xấu. Hay đi với 乱 thành 乱窜."),
+    ("摆脱", "bǎituō", "bãi thoát", "động từ", "thoát khỏi", "他终于摆脱了贫困。", "Cuối cùng anh ấy đã thoát khỏi cảnh nghèo khó.",
+     "Động từ, nghĩa là thoát khỏi một tình trạng không tốt hay sự ràng buộc, như 摆脱困境, thoát khỏi khó khăn."),
+    ("死亡", "sǐwáng", "tử vong", "động từ", "chết, tử vong", "这次事故没有造成人员死亡。", "Vụ tai nạn lần này không gây ra thương vong về người.",
+     "Động từ, nghĩa là chết, tử vong, sắc thái trang trọng. Trong bài: 死亡越来越近了, cái chết ngày càng đến gần."),
+    ("恰巧", "qiàqiǎo", "kháp xảo", "phó từ", "đúng lúc, vừa khéo", "我正要找他，恰巧他来了。", "Tôi đang định tìm anh ấy thì vừa khéo anh ấy đến.",
+     "Phó từ, nghĩa là đúng lúc, vừa khéo, nhấn mạnh sự tình cờ. Lát nữa ta sẽ phân biệt từ này với 正好."),
+    ("毫无", "háo wú", "hào vô", "động từ", "không có một chút nào", "他对音乐毫无兴趣。", "Anh ấy không có chút hứng thú nào với âm nhạc.",
+     "Nghĩa là hoàn toàn không có, không có một chút nào. Phía sau thường là danh từ hai âm tiết: 毫无办法, 毫无希望, 毫无抵抗能力."),
+    ("抵抗", "dǐkàng", "để kháng", "động từ", "chống cự, kháng cự", "多运动可以提高身体的抵抗力。", "Tập thể dục nhiều có thể nâng cao sức đề kháng của cơ thể.",
+     "Động từ, nghĩa là chống cự, kháng cự. 抵抗力 chính là sức đề kháng trong tiếng Việt."),
+    ("部位", "bùwèi", "bộ vị", "danh từ", "bộ phận, vị trí (cơ thể)", "你身体哪个部位不舒服？", "Bạn thấy khó chịu ở chỗ nào trên cơ thể?",
+     "Danh từ, nghĩa là bộ phận, vị trí, đặc biệt là trên cơ thể. Trong bài: 重要部位, chỗ hiểm, bộ phận quan trọng."),
+    ("悲惨", "bēicǎn", "bi thảm", "tính từ", "bi thảm, thảm thương", "他的童年非常悲惨。", "Tuổi thơ của anh ấy vô cùng bi thảm.",
+     "Tính từ, nghĩa là bi thảm, thảm thương. Hán Việt bi thảm, nghĩa giống tiếng Việt."),
+    ("未免", "wèimiǎn", "vị miễn", "phó từ", "có hơi, thật là hơi", "你这样说未免太过分了。", "Anh nói vậy thì thật là hơi quá đáng.",
+     "Phó từ, nghĩa là thật là hơi, có phần, dùng để đánh giá, phê bình nhẹ nhàng. Đây là điểm ngữ pháp thứ ba."),
+    ("残忍", "cánrěn", "tàn nhẫn", "tính từ", "tàn nhẫn", "虐待动物是很残忍的行为。", "Ngược đãi động vật là hành vi rất tàn nhẫn.",
+     "Tính từ, nghĩa là tàn nhẫn, độc ác. Hán Việt tàn nhẫn, nghĩa giống tiếng Việt."),
+    ("良心", "liángxīn", "lương tâm", "danh từ", "lương tâm", "做事要对得起自己的良心。", "Làm việc gì cũng phải không thẹn với lương tâm.",
+     "Danh từ, nghĩa là lương tâm. Trong bài: 良心告诉它, lương tâm mách bảo nó."),
+    ("锋利", "fēnglì", "phong lợi", "tính từ", "sắc bén, sắc nhọn", "这把刀非常锋利。", "Con dao này vô cùng sắc bén.",
+     "Tính từ, nghĩa là sắc bén, dùng cho dao, răng, móng vuốt. Nghĩa bóng là lời lẽ sắc sảo."),
+    ("缠绕", "chánrào", "triền nhiễu", "động từ", "quấn quanh", "电线缠绕在一起了。", "Dây điện quấn vào nhau rồi.",
+     "Động từ, nghĩa là quấn quanh, vấn vít. Chú ý: Hán Việt triền nhiễu, nhưng không mang nghĩa nhiễu loạn như tiếng Việt, mà là quấn quanh."),
+    ("耗费", "hàofèi", "hao phí", "động từ", "tốn, hao tốn", "这项工程耗费了大量人力。", "Công trình này tốn rất nhiều nhân lực.",
+     "Động từ, nghĩa là hao tốn, tiêu tốn thời gian, sức lực, tiền bạc. Cẩn thận: hao phí trong tiếng Việt thường mang ý lãng phí, còn 耗费 chỉ trung tính là tiêu tốn."),
+    ("缺口", "quēkǒu", "khuyết khẩu", "danh từ", "lỗ hổng, chỗ hở", "墙上有一个缺口。", "Trên tường có một lỗ hổng.",
+     "Danh từ, nghĩa là lỗ hổng, chỗ hở. Nghĩa bóng là khoản thiếu hụt, ví dụ 资金缺口, thiếu hụt vốn."),
+    ("举世瞩目", "jǔshì-zhǔmù", "cử thế chúc mục", "thành ngữ", "thu hút sự chú ý của cả thế giới", "举世瞩目的奥运会开幕了。", "Thế vận hội thu hút sự chú ý của cả thế giới đã khai mạc.",
+     "Thành ngữ. 举世 là cả thế gian, 瞩目 là chú mục, hướng mắt nhìn vào. Nghĩa là thu hút sự chú ý của cả thế giới, thường đi với 成就, 成绩."),
+]
+
+add("bullets", chapter="Từ mới (48 từ)", section="Từ mới 生词", title="Phần 1: Từ mới",
+    items=["Bài 4 có 48 từ mới, chia thành 16 nhóm nhỏ",
+           "Mỗi từ: nghe đọc mẫu 2 lần → âm Hán Việt → nghĩa → ví dụ",
+           "Hãy đọc to theo sau mỗi lần nghe",
+           "Chú ý âm đọc: 厌恶 / 可恶 (wù) · 强迫 (qiǎng) · 草率 (shuài) · 家伙 (jiāhuo)"],
+    say=["Bây giờ chúng ta sang phần một: từ mới. Bài này có bốn mươi tám từ, thầy chia thành mười sáu nhóm nhỏ, mỗi nhóm ba từ.",
+         F(1, "Với mỗi từ, các bạn sẽ nghe đọc mẫu hai lần, sau đó là âm Hán Việt, nghĩa, và một ví dụ."),
+         F(2, "Hãy đọc to theo sau mỗi lần nghe, vì đọc thành tiếng giúp nhớ từ lâu hơn rất nhiều."),
+         F(3, "Một số từ có âm đọc đặc biệt, như 厌恶 và 可恶, 强迫, 草率, 家伙. Thầy sẽ nhắc khi gặp. Chúng ta bắt đầu nhé.")])
+
+for g in range(0, len(V), 3):
+    group = V[g:g + 3]
+    words, say = [], []
+    for i, item in enumerate(group):
+        zh, py, hv, loai, vi, ex, exvi, expl = item[:8]
+        spoken = item[8] if len(item) > 8 else zh
+        n = g + i + 1
+        words.append({"zh": zh, "py": py, "hv": hv.upper(), "loai": f"{n}. {loai}", "vi": vi, "ex": ex, "exvi": exvi})
+        head = f"Từ số {n}: {zh}。 {zh}。 Hán Việt là {hv}."
+        if spoken != zh:
+            say.append(F(i, f"Từ số {n}: {spoken}。 {spoken}。 Hán Việt là {hv}.", zr=120, cap=head))
+        else:
+            say.append(F(i, head, zr=120))
+        say.append(F(i, f"{expl} Ví dụ: {ex}{'' if ex[-1] in '。…！？' else '，'} {exvi[0].upper() + exvi[1:]}{'' if exvi[-1] in '.!?' else '.'}", zr=130))
+    add("vocab", section="Từ mới 生词", title=f"Từ mới ({g + 1}–{g + len(group)} / {len(V)})",
+        words=words, say=say)
+
+# ======================= BÀI KHÓA =======================
+P = [
+    ("老鼠是山神的宠物，它厌倦了宠物的生活，也很厌恶宠物这个角色，于是向山神请假，要求到动物世界走一回，心想一定要找机会证明一下自己的实力。",
+     "Chuột là con vật cưng của thần núi. Nó đã chán ngán cuộc sống làm thú cưng, cũng rất ghét cái vai thú cưng ấy, vì vậy nó xin phép thần núi, đòi được đến thế giới động vật một chuyến, trong lòng nghĩ nhất định phải tìm cơ hội chứng minh thực lực của mình.",
+     ["厌倦 là chán vì đã quá lâu, quá quen; 厌恶 là ghét, mức độ mạnh hơn. 宠物这个角色 là cái vai thú cưng ấy; 角色 đọc là juésè, nghĩa là vai, vai trò.",
+      "向山神请假 là xin phép thần núi; 请假 vốn là xin nghỉ phép. 走一回 là đi một chuyến. 心想 là trong lòng nghĩ."]),
+    ("山神说：“动物世界中，大象是最强大的，倘若你还想回来，必须战胜大象，否则，你就永远留在动物世界吧。”老鼠答应了山神的条件，并暗自把挑战目标定为了大象。",
+     "Thần núi nói: Trong thế giới động vật, voi là mạnh nhất; nếu ngươi còn muốn trở về thì phải chiến thắng voi, nếu không, ngươi cứ ở lại thế giới động vật mãi mãi đi. Chuột nhận lời điều kiện của thần núi, và thầm đặt mục tiêu thách đấu là con voi.",
+     ["倘若……必须……否则…… là chuỗi câu: nếu… thì phải…, nếu không thì…. Đây là mẫu câu mà ta sẽ mô phỏng ở phần kỹ năng.",
+      "暗自 là thầm, lặng lẽ trong lòng. 把挑战目标定为了大象 là đặt mục tiêu thách đấu là con voi; 定为 nghĩa là xác định là."]),
+    ("老鼠一来到动物界，便发觉它对山神的承诺是多么草率，它是那么弱小，丝毫没有对抗大象的力量，但老鼠还是决定尝试一下。",
+     "Chuột vừa đến thế giới động vật liền nhận ra lời hứa của nó với thần núi thật qua loa biết bao: nó nhỏ yếu như vậy, không hề có chút sức lực nào để đối đầu với voi. Nhưng chuột vẫn quyết định thử một lần.",
+     ["一……便…… giống 一……就……, nghĩa là vừa… liền…; 便 là cách nói văn viết của 就.",
+      "是多么草率 là thật qua loa biết bao. 丝毫没有 là không có một chút nào, nghĩa giống 毫无."]),
+    ("它想，我太小了，不可以盲目行动，但我可以乘大象不注意，进到大象鼻子里去，大象不能喘气了，就得请求我饶恕，我就可以强迫它认输。",
+     "Nó nghĩ: Mình bé quá, không thể hành động mù quáng, nhưng mình có thể nhân lúc voi không để ý, chui vào trong vòi của voi; voi không thở được thì sẽ phải xin mình tha, thế là mình có thể ép nó chịu thua.",
+     ["乘大象不注意 là nhân lúc voi không để ý; ở đây 乘 là giới từ, phía sau là cả một tình huống. Chú ý: 大象鼻子 là cái vòi voi, vì vòi chính là mũi của voi.",
+      "就得请求我饶恕 nghĩa là sẽ phải xin mình tha thứ, chữ cuối ở đây đọc là děi, nghĩa là phải. 认输 là chịu thua."]),
+    ("这天，大象正在吃树叶，老鼠乘机跑进大象的鼻子中，准备实施它的计划。不料，刚进去，大象痒得难受，猛烈地打起了喷嚏，老鼠像子弹一样被射了出来。",
+     "Hôm ấy, voi đang ăn lá cây, chuột nhân cơ hội chạy vào trong vòi voi, chuẩn bị thực hiện kế hoạch của mình. Không ngờ, vừa vào trong, voi ngứa đến khó chịu, hắt hơi thật mạnh, chuột bị bắn ra ngoài như một viên đạn.",
+     ["乘机 ở đây là phó từ, nghĩa là nhân cơ hội, là điểm ngữ pháp thứ nhất. 不料 nghĩa là không ngờ, là điểm ngữ pháp thứ hai.",
+      "痒得难受 là ngứa đến khó chịu. 打起了喷嚏 là hắt hơi. 像子弹一样 là như một viên đạn, một phép so sánh rất sinh động."]),
+    ("大象用蔑视的眼光盯着它，愤怒地说：“你这个愚蠢的家伙，太可恶了，下次再耍流氓，我一定踩扁了你。”从此老鼠再也不敢挑战大象了。",
+     "Voi nhìn chằm chằm vào nó bằng ánh mắt khinh miệt, giận dữ nói: Cái đồ ngu ngốc nhà ngươi, thật đáng ghét, lần sau còn giở trò lưu manh, ta nhất định sẽ giẫm bẹp ngươi. Từ đó chuột không bao giờ dám thách đấu voi nữa.",
+     ["你这个愚蠢的家伙 là cái đồ ngu ngốc nhà ngươi, mẫu 你这个 cộng danh từ dùng để mắng. 耍流氓 ở đây là giở trò quấy phá.",
+      "踩扁 là giẫm bẹp, động từ cộng bổ ngữ kết quả. 从此……再也不…… nghĩa là từ đó về sau không bao giờ… nữa."]),
+    ("那是一个夕阳将落的傍晚，大象不留神落入了打猎者设下的巨网中。它不顾一切地用力挣扎，往外乱窜，想摆脱巨网，可是，它的一切努力都没用。",
+     "Đó là một buổi chiều tà khi mặt trời sắp lặn, voi sơ ý rơi vào tấm lưới khổng lồ do thợ săn giăng sẵn. Nó bất chấp tất cả, dùng sức vùng vẫy, lao loạn ra phía ngoài, muốn thoát khỏi tấm lưới, nhưng mọi nỗ lực của nó đều vô ích.",
+     ["夕阳将落 nghĩa là mặt trời sắp lặn. 傍晚 là chiều tối. 不留神 là sơ ý. 设下的巨网 là tấm lưới lớn được giăng sẵn.",
+      "不顾一切地用力挣扎 là bất chấp tất cả mà dùng sức vùng vẫy. Câu này dùng một loạt động từ 挣扎，窜，摆脱 để tả sự hoảng loạn của con voi."]),
+    ("大象又悲伤又害怕，它觉得死亡越来越近了。恰巧，老鼠看到了这一切，它想，大象现在毫无抵抗能力，只要我在它身体的重要部位咬几个洞，它就没命了，我不就战胜大象了吗？",
+     "Voi vừa đau buồn vừa sợ hãi, nó cảm thấy cái chết ngày càng đến gần. Đúng lúc ấy, chuột nhìn thấy tất cả, nó nghĩ: Bây giờ voi hoàn toàn không có khả năng chống cự, chỉ cần mình cắn vài lỗ vào chỗ hiểm trên người nó là nó toi mạng, chẳng phải mình đã chiến thắng voi rồi sao?",
+     ["又……又…… là vừa… vừa…. 恰巧 là đúng lúc ấy, vừa khéo. 毫无抵抗能力 là hoàn toàn không có khả năng chống cự.",
+      "只要……就…… là chỉ cần… là…. Còn 我不就战胜大象了吗？ là câu hỏi tu từ, nghĩa là chẳng phải mình đã thắng voi rồi sao, tức là chắc chắn thắng."]),
+    ("然而，看到大象悲惨的样子，老鼠不忍下手，它觉得那样未免太过残忍，良心告诉它，应该救大象，于是，它开始用锋利的牙齿咬缠绕着大象的网和绳子。",
+     "Thế nhưng, nhìn thấy dáng vẻ thảm thương của voi, chuột không nỡ ra tay, nó cảm thấy làm như vậy thì thật là quá tàn nhẫn; lương tâm mách bảo nó nên cứu voi. Thế là nó bắt đầu dùng hàm răng sắc nhọn gặm tấm lưới và những sợi dây thừng đang quấn quanh voi.",
+     ["然而 là thế nhưng, đánh dấu bước ngoặt của câu chuyện. 不忍下手 là không nỡ ra tay. 未免太过残忍 là thật là quá tàn nhẫn, đây là điểm ngữ pháp thứ ba.",
+      "咬缠绕着大象的网和绳子: cụm 缠绕着大象的 làm định ngữ cho 网和绳子, tức là tấm lưới và dây thừng đang quấn quanh con voi."]),
+    ("不知过了多久，老鼠几乎耗费了全部力气，绳子终于被咬断了，巨网出现了一个大缺口，大象猛地一用力，脱离了巨网。从此，老鼠和大象成了好朋友。",
+     "Không biết đã qua bao lâu, chuột gần như đã dốc cạn toàn bộ sức lực, sợi dây cuối cùng cũng bị cắn đứt, tấm lưới khổng lồ xuất hiện một lỗ hổng lớn, voi đột ngột dùng sức một cái, thoát ra khỏi tấm lưới. Từ đó, chuột và voi trở thành bạn tốt của nhau.",
+     ["不知过了多久 là không biết đã qua bao lâu. 被咬断了 là bị cắn đứt, câu bị động với 被 cộng động từ cộng bổ ngữ kết quả.",
+      "猛地一用力 là đột ngột dùng sức một cái. 脱离 là thoát ly, thoát ra khỏi. Các bạn để ý: hai lần 从此 trong bài đánh dấu hai kết cục trái ngược nhau."]),
+    ("不久，山神找到了老鼠，要它回到自己身边。老鼠说：“这大概不可能了，我无法战胜大象。”山神说：“你化敌为友，创造了举世瞩目的成就，世界上还有比这更完美的胜利吗？”",
+     "Không lâu sau, thần núi tìm thấy chuột, bảo nó quay về bên mình. Chuột nói: Điều này e là không thể rồi, con không có cách nào chiến thắng voi. Thần núi nói: Con đã biến kẻ thù thành bạn, tạo nên thành tựu khiến cả thế giới chú ý, trên đời này còn có chiến thắng nào hoàn hảo hơn thế nữa sao?",
+     ["要它回到自己身边 là bảo nó quay về bên mình. 无法 là không có cách nào. 化敌为友 là biến kẻ thù thành bạn.",
+      "Câu kết 世界上还有比这更完美的胜利吗？ là câu hỏi tu từ, nghĩa là không có chiến thắng nào hoàn hảo hơn thế. Đây chính là chủ đề của bài: biến thù thành bạn là chiến thắng lớn nhất."]),
+]
+
+add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 2: Bài khóa 完美的胜利",
+    items=["Đọc từng đoạn: nghe tiếng Trung trước (chưa hiện bản dịch)",
+           "Sau đó: bản dịch tiếng Việt + giải thích từ ngữ, cấu trúc",
+           "Mẹo: tạm dừng, đọc to đoạn văn trước khi nghe giảng"],
+    say=["Tiếp theo là phần hai: bài khóa 完美的胜利, dài bảy trăm năm mươi chữ. Theo ghi chú của sách, bài được cải biên từ một mẩu chuyện đăng trên báo 参考消息.",
+         F(0, "Thầy chia bài thành từng đoạn ngắn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học."),
+         F(1, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
+         F(2, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
+
+for i, item in enumerate(P, 1):
+    zh, vi, notes = item[:3]
+    spoken = item[3] if len(item) > 3 else zh.replace("“", "").replace("”", "")
+    zsize = 54 if len(zh) <= 100 else 50
+    add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
+        say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
+             F(1, "Dịch nghĩa: " + vi, cap="")] + [F(1, n) for n in notes])
+
+add("bullets", chapter="Tóm tắt nội dung", section="Bài khóa 课文", title="Bố cục bài khóa (theo bài tập 5)", size=36,
+    items=["## Khởi đầu: điều kiện của thần núi",
+           "倘若……战胜大象 · 否则…… – muốn quay về thì phải thắng voi",
+           "## Lần thử thứ nhất: thất bại",
+           "进入大象鼻子 · 打喷嚏 · 像子弹一样被射出来",
+           "Phản ứng của voi: 蔑视 · 愤怒 · 愚蠢 · 可恶 · 踩扁",
+           "## Bước ngoặt: voi rơi vào lưới",
+           "Voi: 挣扎 · 窜 · 摆脱 · 悲伤 · 害怕",
+           "Chuột nghĩ: 毫无抵抗能力 · 咬几个洞 · 战胜 → 不忍下手 · 太过残忍",
+           "Chuột cứu voi: 锋利 · 咬断"],
+    say=["Chúng ta cùng nhìn lại bố cục của cả bài khóa, theo gợi ý của bài tập năm trong sách.",
+         F(0, "Khởi đầu: thần núi đặt điều kiện cho chuột."),
+         F(1, "倘若你还想回来，必须战胜大象，否则…… Muốn quay về thì phải chiến thắng voi, nếu không thì ở lại thế giới động vật mãi mãi."),
+         F(2, "Lần thử thứ nhất của chuột thất bại."),
+         F(3, "Nó chui vào vòi voi, voi hắt hơi, chuột bị bắn ra như một viên đạn."),
+         F(4, "Voi phản ứng thế nào? Voi nhìn chuột với ánh mắt khinh miệt, giận dữ mắng nó ngu ngốc, đáng ghét, và dọa sẽ giẫm bẹp nó."),
+         F(5, "Bước ngoặt: voi rơi vào lưới của thợ săn."),
+         F(6, "Voi vùng vẫy, chạy loạn, muốn thoát ra nhưng không được, vừa đau buồn vừa sợ hãi."),
+         F(7, "Chuột nghĩ: voi hoàn toàn không thể chống cự, chỉ cần cắn vài lỗ là thắng. Nhưng rồi nó không nỡ ra tay, vì làm vậy thật quá tàn nhẫn."),
+         F(8, "Chuột dùng hàm răng sắc nhọn cắn đứt dây lưới, cứu voi.")])
+
+add("bullets", section="Bài khóa 课文", title="Kết thúc và bài học của câu chuyện", size=38,
+    items=["## Kết thúc: thần núi tuyên bố chuột đã thắng",
+           "化敌为友 · 举世瞩目 – biến thù thành bạn, thành tựu cả thế giới chú ý",
+           "## Bài học: 化敌为友，就是最大的胜利。",
+           "Sức mạnh thật sự không nằm ở việc đánh bại người khác",
+           "Lòng tốt và lương tâm (良心) có thể biến đối thủ thành bạn bè"],
+    say=[F(0, "Kết thúc câu chuyện: thần núi tìm thấy chuột. Chuột nói mình không thể thắng voi, nhưng thần núi lại nói chuột đã thắng."),
+         F(1, "Vì chuột đã 化敌为友, biến kẻ thù thành bạn, tạo nên một thành tựu khiến cả thế giới chú ý."),
+         F(2, "Bài học của câu chuyện, như phần vận dụng của sách tổng kết: 化敌为友，就是最大的胜利。 Biến thù thành bạn chính là chiến thắng lớn nhất."),
+         F(3, "Sức mạnh thật sự không nằm ở việc đánh bại hay làm hại người khác."),
+         F(4, "Mà lòng tốt và lương tâm có thể biến đối thủ thành bạn bè. Đó mới là chiến thắng hoàn hảo. Bố cục này rất có ích khi các bạn làm bài tập viết tóm tắt ở cuối bài.")])
+
+# ======================= NGỮ PHÁP =======================
+add("bullets", chapter="Ngữ pháp: 乘机", section="Ngữ pháp 注释", title="1. 乘机 chéngjī – nhân cơ hội, thừa cơ", size=40,
+    items=["Phó từ: lợi dụng cơ hội (= 利用机会)",
+           "Cấu trúc: (hoàn cảnh, cơ hội)，Chủ ngữ + 乘机 + động từ",
+           "这次出差去北京，我们可以乘机游览一下长城。",
+           "这天，大象正在吃树叶，老鼠乘机跑进大象的鼻子中，准备实施它的计划。",
+           "因为一些法律法规还不完善，让犯罪分子乘机钻了空子。",
+           "Phân biệt: 乘 + tình huống (乘大象不注意) · 乘飞机 là đi máy bay"],
+    say=["Bây giờ chúng ta sang phần ngữ pháp. Điểm thứ nhất là phó từ 乘机.",
+         F(0, "Theo sách, 乘机 là phó từ, nghĩa là 利用机会, tức là lợi dụng cơ hội, nhân dịp, thừa cơ."),
+         F(1, "Cấu trúc: vế trước nêu hoàn cảnh hoặc cơ hội; vế sau là chủ ngữ, rồi 乘机, rồi động từ chỉ hành động tận dụng cơ hội đó."),
+         F(2, "Ví dụ một: 这次出差去北京，我们可以乘机游览一下长城。 Lần này đi công tác Bắc Kinh, chúng ta có thể nhân dịp đi thăm Vạn Lý Trường Thành."),
+         F(3, "Ví dụ hai, lấy từ bài khóa: 这天，大象正在吃树叶，老鼠乘机跑进大象的鼻子中，准备实施它的计划。 Voi đang mải ăn lá, chuột nhân cơ hội chạy vào vòi voi."),
+         F(4, "Ví dụ ba: 因为一些法律法规还不完善，让犯罪分子乘机钻了空子。 Vì một số luật lệ còn chưa hoàn thiện, nên kẻ phạm tội đã nhân cơ hội lách luật. 钻空子 nghĩa là lợi dụng kẽ hở."),
+         F(5, "Lưu ý: 乘机 là thừa cơ, còn nếu muốn nói nhân lúc một tình huống cụ thể, ta dùng giới từ đi kèm cả tình huống, như 乘大象不注意. Ngoài ra, trong 乘飞机, chữ này nghĩa là đi máy bay, đừng nhầm nhé.")])
+
+add("bullets", section="Ngữ pháp 注释", title="Luyện tập: dùng 乘机 viết lại câu", reveal=True, size=36,
+    items=["(1) 当人抵抗力下降的时候，病毒就会利用这一机会进入人的身体。",
+           "Đáp án: 当人抵抗力下降的时候，病毒就会乘机进入人的身体。",
+           "(2) 节日里，老人们一边品尝美酒，一边唱歌跳舞，青年男女则利用这一机会谈情说爱，寻找自己的伴侣。",
+           "Đáp án: ……青年男女则乘机谈情说爱，寻找自己的伴侣。",
+           "(3) 对方守门员救球脱手，我们利用这个机会攻入一球。",
+           "Đáp án: 对方守门员救球脱手，我们乘机攻入一球。"],
+    say=[F(0, "Luyện tập: dùng 乘机 viết lại câu. Câu một: 当人抵抗力下降的时候，病毒就会利用这一机会进入人的身体。 Khi sức đề kháng giảm sút, virus sẽ lợi dụng cơ hội này xâm nhập cơ thể. Các bạn tạm dừng và thử viết lại nhé."),
+         F(1, "Đáp án: thay cả cụm 利用这一机会 bằng 乘机: 病毒就会乘机进入人的身体。"),
+         F(2, "Câu hai: 节日里，老人们一边品尝美酒，一边唱歌跳舞，青年男女则利用这一机会谈情说爱，寻找自己的伴侣。 Ngày lễ, người già vừa thưởng thức rượu ngon vừa ca hát nhảy múa, còn nam nữ thanh niên thì nhân dịp này tìm hiểu nhau, tìm bạn đời."),
+         F(3, "Đáp án: 青年男女则乘机谈情说爱，寻找自己的伴侣。"),
+         F(4, "Câu ba: 对方守门员救球脱手，我们利用这个机会攻入一球。 Thủ môn đội bạn cản phá bóng bị tuột tay, chúng tôi tận dụng cơ hội ghi một bàn."),
+         F(5, "Đáp án: 对方守门员救球脱手，我们乘机攻入一球。 Các bạn thấy đấy, 乘机 giúp câu văn gọn hơn hẳn.")])
+
+add("bullets", chapter="Ngữ pháp: 不料", section="Ngữ pháp 注释", title="2. 不料 búliào – không ngờ, chẳng dè", size=40,
+    items=["Liên từ: = 没想到 (không ngờ)",
+           "Vế trước: tình huống / dự định như mong đợi → vế sau: 不料 + điều bất ngờ",
+           "Thường đi với: 却、竟、竟然、倒、还",
+           "我只想和她开个玩笑，不料她却生气了。",
+           "我们做好了一切准备，下个星期就去旅行，不料他竟病倒了。",
+           "老鼠乘机跑进大象的鼻子中，准备实施它的计划。不料，刚进去，大象痒得难受，猛烈地打起了喷嚏。"],
+    say=["Điểm ngữ pháp thứ hai là liên từ 不料.",
+         F(0, "不料 là liên từ, nghĩa là 没想到, tức là không ngờ, chẳng dè."),
+         F(1, "Cách dùng: vế trước nói về tình huống hay dự định như mình mong đợi; vế sau dùng 不料 để nêu ra một việc xảy ra ngoài dự tính."),
+         F(2, "不料 thường đi kèm các phó từ như 却，竟，竟然 ở phía sau, để nhấn mạnh sự bất ngờ."),
+         F(3, "Ví dụ một: 我只想和她开个玩笑，不料她却生气了。 Tôi chỉ muốn đùa cô ấy một chút, không ngờ cô ấy lại giận."),
+         F(4, "Ví dụ hai: 我们做好了一切准备，下个星期就去旅行，不料他竟病倒了。 Chúng tôi đã chuẩn bị xong xuôi, tuần sau là đi du lịch, không ngờ anh ấy lại ngã bệnh."),
+         F(5, "Ví dụ ba, lấy từ bài khóa: chuột định chui vào vòi voi để thực hiện kế hoạch, 不料，刚进去，大象痒得难受，猛烈地打起了喷嚏。 Không ngờ vừa vào, voi ngứa quá hắt hơi thật mạnh. Kế hoạch tưởng hoàn hảo, nhưng kết quả hoàn toàn ngược lại.")])
+
+add("bullets", section="Ngữ pháp 注释", title="Luyện tập: hoàn thành câu với 不料", reveal=True, size=40,
+    items=["(1) 早上天气还是好好的，不料……",
+           "Đáp án: ……不料中午突然下起了大雨。",
+           "(2) 考试前我准备得特别充分，不料题目太多，……",
+           "Đáp án: ……不料题目太多，我没能做完。",
+           "(3) 我想在这个公司好好干，不料，刚来一个月，……",
+           "Đáp án: ……刚来一个月，公司就倒闭了。"],
+    say=[F(0, "Luyện tập: hoàn thành câu. Câu một: 早上天气还是好好的，不料…… Buổi sáng trời vẫn còn đẹp, không ngờ… Các bạn thử nghĩ xem điều gì bất ngờ đã xảy ra."),
+         F(1, "Đáp án gợi ý: 不料中午突然下起了大雨。 Không ngờ đến trưa đột nhiên đổ mưa to."),
+         F(2, "Câu hai: 考试前我准备得特别充分，不料题目太多，…… Trước kỳ thi tôi đã chuẩn bị rất kỹ, không ngờ đề quá nhiều, thì sao?"),
+         F(3, "Đáp án gợi ý: 我没能做完。 Tôi đã không làm kịp hết bài."),
+         F(4, "Câu ba: 我想在这个公司好好干，不料，刚来一个月，…… Tôi muốn làm việc thật tốt ở công ty này, không ngờ mới đến được một tháng thì…"),
+         F(5, "Đáp án gợi ý: 公司就倒闭了。 Công ty đã phá sản. Các bạn có thể có đáp án khác, miễn là vế sau là một điều trái với mong đợi ở vế trước.")])
+
+add("bullets", chapter="Ngữ pháp: 未免", section="Ngữ pháp 注释", title="3. 未免 wèimiǎn – thật là hơi, có phần", size=40,
+    items=["Phó từ: không tán thành, chỉ có thể nói là… (đánh giá, phê bình nhẹ)",
+           "Thường bổ nghĩa cho tính từ mang nghĩa tiêu cực; ít đứng trước động từ",
+           "Hay đi với: 太、过于、有些、不大 và 一点儿、一些",
+           "他这个人也未免太不会关心人了。",
+           "看到大象悲惨的样子，老鼠不忍下手，它觉得那样未免太过残忍。",
+           "举办展览的想法是不错，只是现在能够展出的展品未免少了一些。"],
+    say=["Điểm ngữ pháp thứ ba là phó từ 未免.",
+         F(0, "Theo sách, 未免 biểu thị sự không tán thành, có nghĩa là chỉ có thể nói là…. Tiếng Việt dịch là thật là hơi, có phần, khó tránh khỏi là. Đây là cách đánh giá, phê bình một cách nhẹ nhàng, lịch sự."),
+         F(1, "未免 thường bổ nghĩa cho tính từ mang nghĩa tiêu cực, như 残忍，贵，复杂. Ít khi đứng trước động từ."),
+         F(2, "Nó hay đi với 太，过于，有些，不大, và các lượng từ chỉ số lượng ít như 一点儿，一些."),
+         F(3, "Ví dụ một: 他这个人也未免太不会关心人了。 Con người anh ta thật là quá không biết quan tâm người khác."),
+         F(4, "Ví dụ hai, lấy từ bài khóa: 看到大象悲惨的样子，老鼠不忍下手，它觉得那样未免太过残忍。 Chuột cảm thấy làm như vậy thì thật là quá tàn nhẫn."),
+         F(5, "Ví dụ ba: 举办展览的想法是不错，只是现在能够展出的展品未免少了一些。 Ý tưởng tổ chức triển lãm thì hay, chỉ là hiện vật có thể trưng bày bây giờ hơi ít. Các bạn thấy không, 未免 giúp lời phê bình nghe mềm mại hơn."),
+         "Sau này lên quyển Hạ, các bạn sẽ gặp từ 不免, cũng có nghĩa là khó tránh khỏi. Nhưng 未免 luôn mang sắc thái đánh giá chủ quan, còn 不免 là kết quả tự nhiên. Bây giờ các bạn chỉ cần nhớ: 未免 là để phê bình nhẹ."])
+
+add("bullets", section="Ngữ pháp 注释", title="Luyện tập: dùng 未免 viết lại câu", reveal=True, size=38,
+    items=["(1) 这么小的屋子一个月房租4500，价格太贵了吧？",
+           "Đáp án: 这么小的屋子一个月房租4500，价格未免太贵了。",
+           "(2) 这篇文章有些长，好好修改一下还是不错的。",
+           "Đáp án: 这篇文章未免有些长，好好修改一下还是不错的。",
+           "(3) 现在的规定有点儿太复杂了吧，真应该好好简练一番。",
+           "Đáp án: 现在的规定未免有点儿太复杂了，真应该好好简练一番。"],
+    say=[F(0, "Luyện tập: dùng 未免 viết lại câu. Câu một: 这么小的屋子一个月房租四千五，价格太贵了吧？ Căn phòng nhỏ thế này mà tiền thuê bốn nghìn rưỡi một tháng, giá đắt quá nhỉ? Các bạn thử viết lại nhé."),
+         F(1, "Đáp án: 价格未免太贵了。 Giá thì thật là hơi đắt. Chú ý: khi đã dùng 未免 thì bỏ 吧 và dấu hỏi, chuyển thành câu nhận xét."),
+         F(2, "Câu hai: 这篇文章有些长，好好修改一下还是不错的。 Bài văn này hơi dài, sửa kỹ một chút thì vẫn khá tốt."),
+         F(3, "Đáp án: 这篇文章未免有些长。 未免 đứng trước 有些长."),
+         F(4, "Câu ba: 现在的规定有点儿太复杂了吧，真应该好好简练一番。 Quy định hiện nay hơi phức tạp quá, thật nên tinh giản lại."),
+         F(5, "Đáp án: 现在的规定未免有点儿太复杂了。 Các bạn thấy đấy, 未免 thường đứng ngay trước 太，有些，有点儿.")])
+
+# ======================= PHÂN BIỆT TỪ =======================
+add("compare", chapter="Phân biệt 恰巧 – 正好", section="Phân biệt từ 词语辨析", title="Phân biệt 恰巧 và 正好 (1)",
+    common="Giống nhau: đều chỉ thời gian vừa khớp, điều kiện tình cờ trùng hợp. Ví dụ: 我离开北京那一天，恰巧/正好是他到达北京的日子。",
+    cols=[{"head": "恰巧",
+           "lines": ["(1) Phó từ, nhấn mạnh sự tình cờ, ngẫu nhiên về thời gian, điều kiện (có thể thay bằng 正好)",
+                     "我赶到上海找他时，他却恰巧出差了。",
+                     "我正愁没人帮忙，恰巧老王来了。"]},
+          {"head": "正好",
+           "lines": ["(1) Phó từ, ngoài thời gian, điều kiện còn chỉ không gian, thể tích, số lượng vừa khéo; nhấn mạnh sự vừa vặn",
+                     "交了房租剩下的钱正好留着交学费。",
+                     "两个人一间，我们十个人，正好是五个房间。"]}],
+    say=["Tiếp theo là phần phân biệt từ: 恰巧 và 正好. Hai từ này đều có thể dịch là vừa đúng lúc, vừa khéo, nên rất dễ dùng lẫn.",
+         "Điểm giống nhau: cả hai đều chỉ thời gian vừa khớp, hay điều kiện tình cờ trùng hợp. Ví dụ: 我离开北京那一天，恰巧是他到达北京的日子, hoặc dùng 正好, đều đúng. Ngày tôi rời Bắc Kinh lại đúng là ngày anh ấy đến Bắc Kinh.",
+         F(0, "Điểm khác thứ nhất. 恰巧 là phó từ, nhấn mạnh sự tình cờ, ngẫu nhiên về thời gian hay điều kiện. Trường hợp này có thể thay bằng 正好."),
+         F(0, "Ví dụ: 我赶到上海找他时，他却恰巧出差了。 Tôi vội đến Thượng Hải tìm anh ấy thì anh ấy lại vừa khéo đi công tác. Và 我正愁没人帮忙，恰巧老王来了。 Tôi đang lo không có ai giúp thì vừa may anh Vương đến."),
+         F(1, "Còn 正好, khi làm phó từ, ngoài thời gian và điều kiện, còn có thể chỉ không gian, thể tích, số lượng vừa khéo. Nó nhấn mạnh sự vừa vặn, thích hợp."),
+         F(1, "Ví dụ: 交了房租剩下的钱正好留着交学费。 Trả tiền nhà xong, số tiền còn lại vừa đủ để dành đóng học phí. Và 两个人一间，我们十个人，正好是五个房间。 Hai người một phòng, chúng tôi mười người, vừa đúng năm phòng. Ở đây không thể dùng 恰巧, vì đây là sự vừa vặn về số lượng, không phải sự tình cờ.")])
+
+add("compare", section="Phân biệt từ 词语辨析", title="Phân biệt 恰巧 và 正好 (2)",
+    common="Điểm khác thứ hai: từ loại và chức năng ngữ pháp",
+    cols=[{"head": "恰巧",
+           "lines": ["(2) Chỉ là phó từ: không đứng một mình, không làm vị ngữ",
+                     "Sai: 我去的时间恰巧。"]},
+          {"head": "正好",
+           "lines": ["(2) Còn là tính từ: có thể đứng một mình hoặc làm vị ngữ",
+                     "Đúng: 你来得正好，我们刚开始吃饭。",
+                     "Đúng: A：这件衣服你穿怎么样？ B：正好。"]}],
+    say=["Điểm khác thứ hai nằm ở từ loại và chức năng ngữ pháp.",
+         F(0, "恰巧 chỉ là phó từ, nên không thể đứng một mình, cũng không thể làm vị ngữ. Ví dụ: 我去的时间恰巧 là sai."),
+         F(1, "Còn 正好 còn là tính từ, nên có thể đứng một mình, hoặc làm vị ngữ, bổ ngữ. Ví dụ: 你来得正好，我们刚开始吃饭。 Bạn đến thật đúng lúc, chúng tôi vừa bắt đầu ăn."),
+         F(1, "Hoặc một đoạn hội thoại: 这件衣服你穿怎么样？ Chiếc áo này bạn mặc thấy thế nào? Trả lời: 正好。 Vừa vặn. Ở đây 正好 đứng một mình làm câu trả lời."),
+         "Mẹo nhớ: 恰巧 là tình cờ, chỉ làm phó từ; 正好 là vừa vặn, vừa làm phó từ vừa làm tính từ. Khi phân vân, hãy thử đặt từ đó ở cuối câu: nếu đứng được, đó là 正好."])
+
+add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: Đúng hay sai?", reveal=True, size=38,
+    items=["(1) 这块布正好够做一件衬衫，一点儿都不浪费。",
+           "Đáp án: Đúng – chỉ số lượng vừa đủ, dùng 正好.",
+           "(2) 这场雨下得恰巧，及时缓解了土地的干旱问题。",
+           "Đáp án: Sai – 恰巧 không làm bổ ngữ. Sửa: 这场雨下得正好。",
+           "(3) 朋友来北京看我，可我恰巧没空儿，真遗憾。",
+           "Đáp án: Đúng – sự tình cờ về thời gian (cũng có thể dùng 正好).",
+           "(4) A：你觉得水温怎么样，合适吗？ B：正好，不冷也不热。",
+           "Đáp án: Đúng – 正好 là tính từ, đứng một mình được."],
+    say=[F(0, "Bây giờ chúng ta làm thử phần 做一做 trong sách: phán đoán đúng sai. Câu một: 这块布正好够做一件衬衫，一点儿都不浪费。 Mảnh vải này vừa đủ may một chiếc áo sơ mi, không lãng phí chút nào. Đúng hay sai?"),
+         F(1, "Đáp án: đúng. Đây là sự vừa vặn về số lượng, nên dùng 正好."),
+         F(2, "Câu hai: 这场雨下得恰巧，及时缓解了土地的干旱问题。 Trận mưa này đến thật đúng lúc, kịp thời giải quyết tình trạng khô hạn của đất đai."),
+         F(3, "Đáp án: sai. Ở đây từ này làm bổ ngữ sau 下得, mà 恰巧 chỉ là phó từ, không làm bổ ngữ được. Phải sửa thành 这场雨下得正好。"),
+         F(4, "Câu ba: 朋友来北京看我，可我恰巧没空儿，真遗憾。 Bạn đến Bắc Kinh thăm tôi, nhưng tôi lại vừa khéo bận, thật tiếc."),
+         F(5, "Đáp án: đúng. Đây là sự tình cờ về thời gian, 恰巧 làm trạng ngữ. Dùng 正好 cũng được."),
+         F(6, "Câu bốn: 你觉得水温怎么样，合适吗？ Bạn thấy nhiệt độ nước thế nào, có vừa không? Trả lời: 正好，不冷也不热。 Vừa đúng, không lạnh cũng không nóng."),
+         F(7, "Đáp án: đúng. 正好 là tính từ, có thể đứng một mình làm câu trả lời.")])
+
+# ======================= KỸ NĂNG ĐOẠN VĂN =======================
+add("bullets", chapter="Kỹ năng: mô phỏng đoạn văn", section="Mô phỏng đoạn văn 模仿造句", title="Mẫu 1: chuỗi câu giả thiết", size=38,
+    items=["## 倘若……，必须……，否则，……",
+           "Giả thiết (倘若) → điều kiện bắt buộc (必须) → hậu quả nếu không làm (否则)",
+           "动物世界中，大象是最强大的，倘若你还想回来，必须战胜大象，否则，你就永远留在动物世界吧。",
+           "Câu mở đầu nêu bối cảnh → ba vế nối nhau chặt chẽ",
+           "倘若你想参加比赛，必须先报名，否则，你就没有资格参加。"],
+    say=["Bài này trong sách không có mục tu từ riêng, mà có bài tập bốn: đọc đoạn văn và mô phỏng đặt câu. Đây chính là kỹ năng viết đoạn văn của bài. Thầy sẽ phân tích hai mẫu.",
+         F(0, "Mẫu thứ nhất là chuỗi câu giả thiết: 倘若，必须，否则."),
+         F(1, "Vế đầu dùng 倘若 nêu giả thiết; vế thứ hai dùng 必须 nêu điều kiện bắt buộc; vế thứ ba dùng 否则 nêu hậu quả nếu không làm theo."),
+         F(2, "Câu mẫu trong bài: 动物世界中，大象是最强大的，倘若你还想回来，必须战胜大象，否则，你就永远留在动物世界吧。"),
+         F(3, "Các bạn để ý: câu đầu nêu bối cảnh, voi là mạnh nhất; sau đó ba vế nối nhau rất chặt chẽ, tạo thành một lời ra điều kiện rõ ràng, dứt khoát."),
+         F(4, "Thêm một ví dụ: 倘若你想参加比赛，必须先报名，否则，你就没有资格参加。 Nếu bạn muốn tham gia cuộc thi thì phải đăng ký trước, nếu không thì bạn không có tư cách tham gia.")])
+
+add("bullets", section="Mô phỏng đoạn văn 模仿造句", title="Mẫu 2: suy tính – câu hỏi tu từ – chuyển ý", size=36,
+    items=["## 只要……就……，我不就……了吗？然而，……未免太……",
+           "只要……就……: điều kiện → kết quả",
+           "我不就……了吗？: câu hỏi tu từ (反问) – hỏi mà không cần trả lời, khẳng định mạnh hơn",
+           "然而: chuyển ý, đổi hướng suy nghĩ · 未免太……: tự đánh giá",
+           "只要我在它身体的重要部位咬几个洞，它就没命了，我不就战胜大象了吗？然而，……它觉得那样未免太过残忍，良心告诉它，应该救大象。",
+           "世界上还有比这更完美的胜利吗？ = 这是最完美的胜利。"],
+    say=[F(0, "Mẫu thứ hai phức tạp hơn, gồm cả một chuỗi suy nghĩ: 只要……就……，我不就……了吗？然而，……未免太……"),
+         F(1, "Bước một: 只要……就……, nêu điều kiện và kết quả, chỉ cần làm việc này là được kết quả kia."),
+         F(2, "Bước hai: 我不就……了吗？ là câu hỏi tu từ, tiếng Trung gọi là 反问. Câu hỏi tu từ là hỏi mà không cần trả lời, để khẳng định mạnh hơn. 我不就战胜大象了吗 nghĩa là chẳng phải mình đã thắng voi rồi sao, tức là mình chắc chắn thắng."),
+         F(3, "Bước ba: 然而 chuyển ý, suy nghĩ đổi hướng. Rồi dùng 未免太…… để tự đánh giá việc mình định làm."),
+         F(4, "Đoạn mẫu trong bài: chỉ cần cắn vài lỗ là voi chết, chẳng phải mình thắng rồi sao? Thế nhưng, chuột thấy làm vậy thật quá tàn nhẫn, lương tâm bảo nó phải cứu voi. Cả đoạn thể hiện rõ sự giằng co trong lòng nhân vật."),
+         F(5, "Câu kết của bài cũng là câu hỏi tu từ: 世界上还有比这更完美的胜利吗？ Nghĩa thật của nó là: 这是最完美的胜利。 Đây là chiến thắng hoàn hảo nhất. Câu hỏi tu từ làm lời kết mạnh mẽ và đọng lại hơn.")])
+
+add("bullets", section="Mô phỏng đoạn văn 模仿造句", title="Luyện tập: mô phỏng đặt câu (bài tập 4)", reveal=True, size=36,
+    items=["(1) 没有人轻轻松松就能取得成功，倘若……，必须……，否则，……。",
+           "Đáp án: ……倘若你想成功，必须付出努力，否则，你只能一事无成。",
+           "(2) 地上有个很大的钱包，周围也没有别人，只要……，钱包就……，我不就……了吗？",
+           "Đáp án: ……只要我把它捡起来，钱包就是我的了，我不就发财了吗？",
+           "然而，想到丢钱包的人着急的样子，我觉得那样做未免太……了，良心告诉我，应该把它还给它的主人。",
+           "Đáp án: ……我觉得那样做未免太自私了……"],
+    say=[F(0, "Luyện tập: bài tập bốn trong sách. Câu một: 没有人轻轻松松就能取得成功。 Không ai dễ dàng mà thành công được. Hãy viết tiếp theo mẫu 倘若，必须，否则. Các bạn tạm dừng và thử nhé."),
+         F(1, "Đáp án gợi ý: 倘若你想成功，必须付出努力，否则，你只能一事无成。 Nếu bạn muốn thành công thì phải nỗ lực, nếu không thì bạn sẽ chẳng làm nên trò trống gì."),
+         F(2, "Câu hai: 地上有个很大的钱包，周围也没有别人。 Dưới đất có một cái ví rất to, xung quanh lại không có ai. Hãy viết tiếp theo mẫu 只要，就，我不就……了吗."),
+         F(3, "Đáp án gợi ý: 只要我把它捡起来，钱包就是我的了，我不就发财了吗？ Chỉ cần mình nhặt lên, cái ví sẽ là của mình, chẳng phải mình phát tài rồi sao?"),
+         F(4, "Phần tiếp theo: 然而，想到丢钱包的人着急的样子，我觉得那样做未免太……了，良心告诉我，应该把它还给它的主人。 Thế nhưng, nghĩ đến dáng vẻ sốt ruột của người đánh rơi ví, tôi thấy làm vậy thật là quá… Lương tâm mách bảo tôi nên trả lại ví cho chủ của nó."),
+         F(5, "Đáp án gợi ý: 未免太自私了。 Thật là quá ích kỷ. Các bạn thấy không, đoạn văn này có cấu trúc giống hệt đoạn chuột định cắn voi trong bài khóa.")])
+
+# ======================= LUYỆN TẬP =======================
+add("bullets", chapter="Luyện tập", section="Luyện tập 练习", title="Bài tập 1: Mở rộng từ theo chữ được đánh dấu", size=40,
+    items=["Ví dụ: 毫无 (毫) → 毫不 · 毫厘 · 丝毫 · 分毫",
+           "发觉 (觉) → 感觉 · 觉得 · 知觉 · 视觉 · 觉悟",
+           "猛烈 (烈) → 强烈 · 激烈 · 热烈 · 剧烈",
+           "眼光 (眼) → 眼睛 · 眼泪 · 眼镜 · 眼神",
+           "夕阳 (阳) → 太阳 · 阳光 · 阳台 · 斜阳"],
+    say=["Phần luyện tập. Bài tập một: mô phỏng ví dụ, dựa vào chữ được đánh dấu chấm bên dưới, hãy viết thêm các từ khác.",
+         F(0, "Ví dụ mẫu: 毫无, chữ được đánh dấu là chữ hào. Ta có 毫不，毫厘，丝毫，分毫. Tức là: không hề, một ly một tí, mảy may, và chút xíu."),
+         F(1, "发觉, chữ được đánh dấu là chữ thứ hai, chữ giác. Ta có 感觉，觉得，知觉，视觉，觉悟. Tức là: cảm giác, cảm thấy, tri giác, thị giác, và giác ngộ."),
+         F(2, "猛烈, chữ được đánh dấu là chữ liệt. Ta có 强烈，激烈，热烈，剧烈. Tức là: mạnh mẽ, kịch liệt, nhiệt liệt, và dữ dội."),
+         F(3, "眼光, chữ được đánh dấu là chữ nhãn. Ta có 眼睛，眼泪，眼镜，眼神. Tức là: mắt, nước mắt, kính mắt, và ánh mắt."),
+         F(4, "夕阳, chữ được đánh dấu là chữ dương. Ta có 太阳，阳光，阳台，斜阳. Tức là: mặt trời, ánh nắng, ban công, và nắng xiên chiều tà.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 2: Hoàn thành câu bằng từ cho sẵn (1)", reveal=True, size=38,
+    items=["(1) 我准备去图书馆好好复习功课，________。（不料）",
+           "Đáp án: ……不料图书馆今天闭馆。",
+           "(2) 普普通通一顿饭花了这么多钱，________。（未免）",
+           "Đáp án: ……未免太贵了。",
+           "(3) 没吃早饭，正饿得不得了时，________。（恰巧）",
+           "Đáp án: ……恰巧朋友给我送来了几个包子。"],
+    say=[F(0, "Bài tập hai: dùng từ cho sẵn để hoàn thành câu. Câu một, dùng 不料: 我准备去图书馆好好复习功课。 Tôi định đến thư viện ôn bài thật kỹ. Các bạn tạm dừng và thử hoàn thành nhé."),
+         F(1, "Đáp án gợi ý: 不料图书馆今天闭馆。 Không ngờ hôm nay thư viện đóng cửa."),
+         F(2, "Câu hai, dùng 未免: 普普通通一顿饭花了这么多钱。 Một bữa cơm bình thường mà tốn ngần ấy tiền."),
+         F(3, "Đáp án gợi ý: 未免太贵了。 Thật là đắt quá."),
+         F(4, "Câu ba, dùng 恰巧: 没吃早饭，正饿得不得了时。 Chưa ăn sáng, đang đói cồn cào thì…"),
+         F(5, "Đáp án gợi ý: 恰巧朋友给我送来了几个包子。 Vừa khéo bạn mang đến cho tôi mấy cái bánh bao.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 2: Hoàn thành câu bằng từ cho sẵn (2)", reveal=True, size=38,
+    items=["(4) ________，我将无比感激。（倘若）",
+           "Đáp án: 倘若你能帮我这个忙，我将无比感激。",
+           "(5) 妈妈不在家，孩子________。（乘机）",
+           "Đáp án: ……孩子乘机玩儿了一下午电脑游戏。",
+           "(6) 经过几十年的改革开放，中国经济________。（举世瞩目）",
+           "Đáp án: ……中国经济取得了举世瞩目的成就。"],
+    say=[F(0, "Câu bốn, dùng 倘若: vế sau là 我将无比感激。 Tôi sẽ vô cùng biết ơn. Vế trước nên là gì?"),
+         F(1, "Đáp án gợi ý: 倘若你能帮我这个忙，我将无比感激。 Nếu anh có thể giúp tôi việc này, tôi sẽ vô cùng biết ơn."),
+         F(2, "Câu năm, dùng 乘机: 妈妈不在家，孩子…… Mẹ không có nhà, đứa trẻ thì sao?"),
+         F(3, "Đáp án gợi ý: 孩子乘机玩儿了一下午电脑游戏。 Đứa trẻ nhân cơ hội chơi điện tử cả buổi chiều."),
+         F(4, "Câu sáu, dùng 举世瞩目: 经过几十年的改革开放，中国经济…… Trải qua mấy chục năm cải cách mở cửa, kinh tế Trung Quốc…"),
+         F(5, "Đáp án gợi ý: 中国经济取得了举世瞩目的成就。 Kinh tế Trung Quốc đã đạt được những thành tựu khiến cả thế giới chú ý. Cụm 取得了举世瞩目的成就 rất hay gặp, các bạn nên học thuộc.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ thích hợp điền vào chỗ trống", reveal=True, size=36,
+    items=["## 愤怒 · 留神 · 摆脱 · 对抗 · 愚蠢",
+           "《猫和老鼠》是很多小朋友都喜欢看的动画片，它讲了一只聪明的老鼠跟猫___的故事。每次小老鼠都能___猫的追赶，一不___，猫还会上老鼠的当，被老鼠笑话一番，猫虽然很___，却也没有办法。小老鼠用自己的智慧战胜了___的猫。",
+           "Đáp án: 对抗 · 摆脱 · 留神 · 愤怒 · 愚蠢",
+           "## 毫无 · 强迫 · 倘若 · 耗费 · 厌恶",
+           "我们的态度会决定做事情的心情。___你对一件事___兴趣，那么有人___你做时，你会觉得痛苦和___。而如果是你感兴趣的事情，无论___多少时间和精力，心里也都是快乐的。",
+           "Đáp án: 倘若 · 毫无 · 强迫 · 厌恶 · 耗费"],
+    say=["Bài tập ba trong sách: chọn từ thích hợp điền vào chỗ trống. Thầy làm thêm bài này để các bạn ôn từ mới.",
+         F(1, "Đoạn một nói về bộ phim hoạt hình 猫和老鼠, Tom và Jerry. Các bạn chọn trong năm từ 愤怒，留神，摆脱，对抗，愚蠢. Hãy tạm dừng và điền thử nhé."),
+         F(2, "Đáp án: 老鼠跟猫对抗的故事, câu chuyện chuột đối đầu với mèo. 每次小老鼠都能摆脱猫的追赶, lần nào chuột cũng thoát khỏi sự truy đuổi của mèo. 一不留神, chỉ sơ ý một chút. 猫虽然很愤怒, mèo tuy rất tức giận. Và 战胜了愚蠢的猫, chiến thắng con mèo ngốc nghếch."),
+         F(4, "Đoạn hai nói về thái độ và tâm trạng khi làm việc. Các bạn chọn trong năm từ 毫无，强迫，倘若，耗费，厌恶."),
+         F(5, "Đáp án: 倘若你对一件事毫无兴趣, nếu bạn hoàn toàn không có hứng thú với một việc; 那么有人强迫你做时，你会觉得痛苦和厌恶, thì khi bị ép làm, bạn sẽ thấy đau khổ và chán ghét. 无论耗费多少时间和精力, dù tốn bao nhiêu thời gian và sức lực, trong lòng vẫn vui vẻ.")])
+
+# ======================= MỞ RỘNG =======================
+add("bullets", chapter="Mở rộng", section="Mở rộng 扩展", title="Mở rộng 1: Nghĩa của từng chữ trong từ", size=36,
+    items=["俯视: 俯 cúi đầu + 视 nhìn → nhìn xuống · 偿还: 偿 đền + 还 trả lại → hoàn trả",
+           "敌视: 敌 kẻ thù + 视 đối xử → coi như kẻ thù · 孤立: 孤 đơn độc + 立 đứng → cô lập",
+           "过奖: 过 quá mức + 奖 khen → quá khen · 捍卫: 捍 bảo vệ + 卫 bảo vệ → bảo vệ",
+           "草案: 草 sơ bộ + 案 văn bản → bản dự thảo · 畅通: 畅 không trở ngại + 通 đi qua → thông suốt",
+           "巩固: 巩 chắc chắn + 固 chắc chắn → củng cố · 雇佣: 雇 thuê + 佣 thuê → thuê mướn",
+           "解雇: 解 bãi bỏ + 雇 thuê → sa thải · 表态: 表 bày tỏ + 态 thái độ → bày tỏ thái độ"],
+    say=["Phần mở rộng thứ nhất: làm quen với nghĩa của từng chữ trong từ, sách gọi là 语素义.",
+         F(0, "俯视: chữ đầu là cúi đầu, chữ sau là nhìn, nên 俯视 là nhìn xuống từ trên cao. 偿还: chữ đầu là đền bù, chữ sau là trả lại như trong 归还, nên 偿还 là hoàn trả, như 偿还债务, trả nợ."),
+         F(1, "敌视: chữ đầu là kẻ thù, chữ sau là đối xử, nên 敌视 là coi như kẻ thù. 孤立: chữ đầu là đơn độc, chữ sau là đứng, nên 孤立 là cô lập."),
+         F(2, "过奖: quá mức cộng khen, nên 过奖 là quá khen, câu khiêm tốn khi được khen: 您过奖了. 捍卫: cả hai chữ đều là bảo vệ, như 捍卫和平, bảo vệ hòa bình."),
+         F(3, "草案: chữ đầu là sơ bộ, chữ sau là văn bản ghi kế hoạch, kiến nghị, nên 草案 là bản dự thảo. 畅通: không trở ngại cộng đi qua, nên 畅通 là thông suốt."),
+         F(4, "巩固: cả hai chữ đều là chắc chắn, nên 巩固 là củng cố. 雇佣: cả hai chữ đều là thuê người làm việc cho mình, nên 雇佣 là thuê mướn."),
+         F(5, "解雇: chữ đầu là bãi bỏ, chữ sau là thuê, nên 解雇 là sa thải. Và 表态: bày tỏ cộng thái độ, nên 表态 là bày tỏ thái độ, lập trường.")])
+
+add("bullets", section="Mở rộng 扩展", title="Mở rộng 2: Lượng từ", size=42,
+    items=["磅 bàng (pound): 一磅黄油 · 一磅蛋糕",
+           "筐 kuāng (sọt, giỏ): 一筐蔬菜 · 一筐水果",
+           "艘 sōu (chiếc – tàu thuyền): 一艘轮船 · 一艘军舰",
+           "丸 wán (viên – thuốc): 一丸药"],
+    say=["Phần mở rộng thứ hai: làm quen với một số lượng từ.",
+         F(0, "一磅黄油，一磅蛋糕。 Một pao bơ, một pao bánh ngọt. Đây là đơn vị đo khối lượng pound của phương Tây, đọc là bàng, thanh bốn."),
+         F(1, "一筐蔬菜，一筐水果。 Một sọt rau, một giỏ hoa quả. Lượng từ này dùng cho những thứ đựng trong sọt, giỏ."),
+         F(2, "一艘轮船，一艘军舰。 Một chiếc tàu thủy, một chiếc tàu chiến. Lượng từ này chuyên dùng cho tàu thuyền."),
+         F(3, "一丸药。 Một viên thuốc. Lượng từ này dùng cho thuốc viên tròn, nhất là thuốc bắc.")])
+
+# ======================= TỔNG KẾT =======================
+add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng kết", title="Tổng kết bài 4", size=36,
+    items=["Từ vựng trọng tâm: 厌恶 · 倘若 · 发觉 · 草率 · 强迫 · 不顾 · 挣扎 · 毫无 · 残忍 · 举世瞩目",
+           "Ngữ pháp: 乘机 (nhân cơ hội) · 不料 (không ngờ) · 未免 (thật là hơi – phê bình nhẹ)",
+           "Phân biệt: 恰巧 (tình cờ, chỉ là phó từ) ≠ 正好 (vừa vặn, còn là tính từ)",
+           "Đoạn văn: 倘若……必须……否则…… · câu hỏi tu từ 我不就……了吗？",
+           "## Bài tập về nhà",
+           "Tham khảo bài tập 5, viết tóm tắt bài khóa khoảng 300 chữ: nguyên nhân – diễn biến – kết quả, cuối cùng nêu bài học 化敌为友，就是最大的胜利"],
+    say=["Chúng ta cùng tổng kết bài bốn.",
+         F(0, "Về từ vựng, các bạn cần đặc biệt nhớ: 厌恶，倘若，发觉，草率，强迫，不顾，挣扎，毫无，残忍，举世瞩目."),
+         F(1, "Về ngữ pháp: 乘机 nghĩa là nhân cơ hội; 不料 nghĩa là không ngờ, hay đi với 却，竟然; 未免 nghĩa là thật là hơi, dùng để phê bình nhẹ, hay đi với 太，有些."),
+         F(2, "Về phân biệt từ: 恰巧 nhấn mạnh sự tình cờ và chỉ là phó từ; 正好 nhấn mạnh sự vừa vặn, còn là tính từ, có thể đứng một mình."),
+         F(3, "Về kỹ năng đoạn văn: chuỗi câu giả thiết 倘若，必须，否则, và câu hỏi tu từ để khẳng định mạnh hơn."),
+         F(5, "Bài tập về nhà: phần vận dụng của sách yêu cầu các bạn tham khảo bài tập năm, viết tóm tắt bài khóa thành một đoạn văn khoảng ba trăm chữ. Hãy viết rõ nguyên nhân, diễn biến, kết quả của câu chuyện, và cuối cùng nêu bài học: 化敌为友，就是最大的胜利。 Nhớ thử dùng 乘机，不料，未免 trong bài viết nhé."),
+         "Như vậy là chúng ta đã học xong Chủ đề một, 生活点滴. Cảm ơn các bạn đã theo dõi bài giảng. Hẹn gặp lại các bạn ở bài năm, mở đầu Chủ đề hai 不甘平庸, Không cam chịu tầm thường, với bài khóa 学一门外语需要理由吗, Học ngoại ngữ cần lý do ư? Chúc các bạn học tốt!"])
+
+lesson = {
+    "title": "HSK 6 (Thượng) – Bài 4: 完美的胜利 (Chiến thắng hoàn hảo)",
+    "tag": TAG,
+    "vi_voice": "Linh", "zh_voice": "Tingting", "vi_rate": 175, "zh_rate": 145,
+    # sửa âm đọc của giọng máy cho các chữ đa âm (thứ tự quan trọng: cụm dài trước)
+    "tts_replace": {"化敌为友": "化敌维友", "有些长": "有些常", "好好干": "好好赣",
+                    "定为了": "定维了", "没空儿": "没控儿",
+                    "厌恶": "厌务", "可恶": "可务", "角色": "决色", "草率": "草帅",
+                    "强迫": "抢迫", "挣扎": "争闸", "流氓": "流忙", "踩扁": "踩贬",
+                    "压扁": "压贬", "子弹": "子蛋", "发觉": "发决", "请假": "请驾",
+                    "出差": "出拆", "空子": "控子", "还给": "环给", "偿还": "偿环",
+                    "归还": "归环", "雇佣": "雇拥", "一磅": "一棒", "的当": "的荡"},
+    "slides": slides,
+}
+out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai04.json")
+json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

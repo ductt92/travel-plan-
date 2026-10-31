@@ -1,0 +1,520 @@
+{
+ "books": [
+  {
+   "id": "hsk6-thuong",
+   "short": "HSK 6 · Quyển Thượng",
+   "name": "Giáo trình chuẩn HSK 6 – Quyển Thượng",
+   "zh": "标准教程 HSK 6 上",
+   "units": [
+    {
+     "zh": "第一单元 生活点滴",
+     "vi": "Chủ đề 1 · Những việc nhỏ nhặt trong cuộc sống",
+     "lessons": [
+      {
+       "n": 1,
+       "id": "bai01",
+       "zh": "孩子给我们的启示",
+       "vi": "Điều con trẻ dạy chúng ta"
+      },
+      {
+       "n": 2,
+       "id": "bai02",
+       "zh": "父母之爱",
+       "vi": "Tình yêu của ba mẹ"
+      },
+      {
+       "n": 3,
+       "id": "bai03",
+       "zh": "一盒月饼",
+       "vi": "Một hộp bánh Trung thu"
+      },
+      {
+       "n": 4,
+       "id": "bai04",
+       "zh": "完美的胜利",
+       "vi": "Chiến thắng hoàn hảo"
+      }
+     ]
+    },
+    {
+     "zh": "第二单元 不甘平庸",
+     "vi": "Chủ đề 2 · Không cam chịu tầm thường",
+     "lessons": [
+      {
+       "n": 5,
+       "id": "bai05",
+       "zh": "学一门外语需要理由吗？",
+       "vi": "Học ngoại ngữ cần lý do ư?"
+      },
+      {
+       "n": 6,
+       "id": "bai06",
+       "zh": "当好职场插班生",
+       "vi": "Hãy là học sinh giỏi tại nơi làm việc"
+      },
+      {
+       "n": 7,
+       "id": "bai07",
+       "zh": "我的人生我做主",
+       "vi": "Tôi làm chủ cuộc đời tôi"
+      },
+      {
+       "n": 8,
+       "id": "bai08",
+       "zh": "遇见原来的我",
+       "vi": "Gặp lại tôi của ngày xưa"
+      }
+     ]
+    },
+    {
+     "zh": "第三单元 多彩社会",
+     "vi": "Chủ đề 3 · Xã hội nhiều màu sắc",
+     "lessons": [
+      {
+       "n": 9,
+       "id": "bai09",
+       "zh": "不用手机的日子",
+       "vi": "Một ngày không sử dụng điện thoại di động"
+      },
+      {
+       "n": 10,
+       "id": "bai10",
+       "zh": "全球化视野中的中国饮食",
+       "vi": "Thức ăn Trung Quốc trong xu thế toàn cầu hóa"
+      },
+      {
+       "n": 11,
+       "id": "bai11",
+       "zh": "我不在时，猫在干什么？",
+       "vi": "Các chú mèo làm gì khi tôi đi vắng?"
+      },
+      {
+       "n": 12,
+       "id": "bai12",
+       "zh": "我们都爱白噪音",
+       "vi": "Chúng ta đều yêu tiếng ồn trắng"
+      }
+     ]
+    },
+    {
+     "zh": "第四单元 走遍天下",
+     "vi": "Chủ đề 4 · Đi khắp thế giới",
+     "lessons": [
+      {
+       "n": 13,
+       "id": "bai13",
+       "zh": "从旅游指南看世事变迁",
+       "vi": "Nhìn thế sự đổi thay qua sách cẩm nang du lịch"
+      },
+      {
+       "n": 14,
+       "id": "bai14",
+       "zh": "背着电饭锅拍北极",
+       "vi": "Vác nồi cơm điện đi chụp ảnh Bắc Cực"
+      },
+      {
+       "n": 15,
+       "id": "bai15",
+       "zh": "山脉上的雕刻",
+       "vi": "Các tác phẩm điêu khắc trên dãy núi"
+      },
+      {
+       "n": 16,
+       "id": "bai16",
+       "zh": "徐健和他的野生动物摄影师们",
+       "vi": "Từ Kiện và các nhà nhiếp ảnh động vật hoang dã"
+      }
+     ]
+    },
+    {
+     "zh": "第五单元 美丽家园",
+     "vi": "Chủ đề 5 · Quê hương xinh đẹp",
+     "lessons": [
+      {
+       "n": 17,
+       "id": "bai17",
+       "zh": "小动物眼中的慢世界",
+       "vi": "Thế giới chậm trong mắt động vật nhỏ"
+      },
+      {
+       "n": 18,
+       "id": "bai18",
+       "zh": "神奇的丝瓜",
+       "vi": "Quả mướp thần kỳ"
+      },
+      {
+       "n": 19,
+       "id": "bai19",
+       "zh": "无阳光的深海世界",
+       "vi": "Thế giới biển sâu không ánh mặt trời"
+      },
+      {
+       "n": 20,
+       "id": "bai20",
+       "zh": "金鸡窝",
+       "vi": "Ổ gà vàng"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hsk6-ha",
+   "short": "HSK 6 · Quyển Hạ",
+   "name": "Giáo trình chuẩn HSK 6 – Quyển Hạ",
+   "zh": "标准教程 HSK 6 下",
+   "units": [
+    {
+     "zh": "第六单元 趣味世界",
+     "vi": "Đơn vị 6 · Thế giới thú vị",
+     "lessons": [
+      {
+       "n": 21,
+       "id": "bai21",
+       "zh": "未来商店",
+       "vi": "Cửa hàng tương lai"
+      },
+      {
+       "n": 22,
+       "id": "bai22",
+       "zh": "2050年的汽车什么样",
+       "vi": "Ô tô năm 2050 sẽ như thế nào?"
+      },
+      {
+       "n": 23,
+       "id": "bai23",
+       "zh": "大数据时代",
+       "vi": "Thời đại dữ liệu lớn"
+      },
+      {
+       "n": 24,
+       "id": "bai24",
+       "zh": "体育明星们的离奇遭遇",
+       "vi": "Những chuyện lạ của các ngôi sao thể thao"
+      }
+     ]
+    },
+    {
+     "zh": "第七单元 经典阅读",
+     "vi": "Đơn vị 7 · Đọc tác phẩm kinh điển",
+     "lessons": [
+      {
+       "n": 25,
+       "id": "bai25",
+       "zh": "草船借箭",
+       "vi": "Thuyền cỏ mượn tên"
+      },
+      {
+       "n": 26,
+       "id": "bai26",
+       "zh": "奇异的灯光",
+       "vi": "Ánh đèn kỳ lạ"
+      },
+      {
+       "n": 27,
+       "id": "bai27",
+       "zh": "完璧归赵",
+       "vi": "Hoàn bích quy Triệu"
+      },
+      {
+       "n": 28,
+       "id": "bai28",
+       "zh": "高山流水遇知音",
+       "vi": "Cao sơn lưu thủy gặp tri âm"
+      }
+     ]
+    },
+    {
+     "zh": "第八单元 人体探秘",
+     "vi": "Đơn vị 8 · Khám phá cơ thể người",
+     "lessons": [
+      {
+       "n": 29,
+       "id": "bai29",
+       "zh": "“笑”的备忘录",
+       "vi": "Bản ghi nhớ về “tiếng cười”"
+      },
+      {
+       "n": 30,
+       "id": "bai30",
+       "zh": "你睡好了吗",
+       "vi": "Bạn ngủ có ngon không?"
+      },
+      {
+       "n": 31,
+       "id": "bai31",
+       "zh": "运动的学问",
+       "vi": "Kiến thức về vận động"
+      },
+      {
+       "n": 32,
+       "id": "bai32",
+       "zh": "有时，不妨悲伤",
+       "vi": "Đôi khi, cứ buồn cũng được"
+      }
+     ]
+    },
+    {
+     "zh": "第九单元 古今博览",
+     "vi": "Đơn vị 9 · Xưa và nay",
+     "lessons": [
+      {
+       "n": 33,
+       "id": "bai33",
+       "zh": "怀念慢生活",
+       "vi": "Nhớ về cuộc sống chậm"
+      },
+      {
+       "n": 34,
+       "id": "bai34",
+       "zh": "为文物而生的人",
+       "vi": "Người sinh ra vì cổ vật"
+      },
+      {
+       "n": 35,
+       "id": "bai35",
+       "zh": "走近木版年画",
+       "vi": "Tìm hiểu tranh Tết khắc gỗ"
+      },
+      {
+       "n": 36,
+       "id": "bai36",
+       "zh": "中国古代书院",
+       "vi": "Học viện cổ đại Trung Quốc"
+      }
+     ]
+    },
+    {
+     "zh": "第十单元 热点追踪",
+     "vi": "Đơn vị 10 · Theo dấu điểm nóng",
+     "lessons": [
+      {
+       "n": 37,
+       "id": "bai37",
+       "zh": "警察的故事",
+       "vi": "Câu chuyện của những người cảnh sát"
+      },
+      {
+       "n": 38,
+       "id": "bai38",
+       "zh": "慧眼捕捉商机",
+       "vi": "Mắt tinh nắm bắt cơ hội kinh doanh"
+      },
+      {
+       "n": 39,
+       "id": "bai39",
+       "zh": "互联网时代的生活",
+       "vi": "Cuộc sống thời Internet"
+      },
+      {
+       "n": 40,
+       "id": "bai40",
+       "zh": "人类超能力会改变世界纪录吗",
+       "vi": "Siêu năng lực của con người có thay đổi kỷ lục thế giới?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dingshi",
+   "short": "顶石中文",
+   "name": "顶石中文 – Đỉnh cao tiếng Trung",
+   "zh": "顶石中文",
+   "units": [
+    {
+     "zh": "第1单元 教育篇",
+     "vi": "Đơn vị 1 · Giáo dục",
+     "lessons": [
+      {
+       "n": "1.1",
+       "id": "ds11",
+       "zh": "没有高考，你怎么拼得过富二代？",
+       "vi": "Không có thi đại học, sao bạn đua lại được “phú nhị đại”?"
+      },
+      {
+       "n": "1.2",
+       "id": "ds12",
+       "zh": "学区房情结怎么破？",
+       "vi": "Phá bỏ nỗi ám ảnh “nhà gần trường” thế nào?"
+      },
+      {
+       "n": "1.3",
+       "id": "ds13",
+       "zh": "“高考移民”动了谁的奶酪？",
+       "vi": "“Di dân thi đại học” đụng đến miếng phô mai của ai?"
+      }
+     ]
+    },
+    {
+     "zh": "第2单元 时代篇",
+     "vi": "Đơn vị 2 · Thời đại",
+     "lessons": [
+      {
+       "n": "2.1",
+       "id": "ds21",
+       "zh": "融不进的城市，回不去的农村",
+       "vi": "Thành phố không hòa nhập được, nông thôn không về được"
+      },
+      {
+       "n": "2.2",
+       "id": "ds22",
+       "zh": "信息化社会：“一个都不能少”",
+       "vi": "Xã hội thông tin: “Không ai bị bỏ lại”"
+      },
+      {
+       "n": "2.3",
+       "id": "ds23",
+       "zh": "群体性孤独：网络社交正在扼杀深度关系",
+       "vi": "Cô đơn tập thể: mạng xã hội đang bóp chết những mối quan hệ sâu sắc"
+      }
+     ]
+    },
+    {
+     "zh": "第3单元 环保篇",
+     "vi": "Đơn vị 3 · Bảo vệ môi trường",
+     "lessons": [
+      {
+       "n": "3.1",
+       "id": "ds31",
+       "zh": "碳排放的“蛋糕”怎么切？",
+       "vi": "Chia “chiếc bánh” phát thải carbon thế nào?"
+      },
+      {
+       "n": "3.2",
+       "id": "ds32",
+       "zh": "“随手扔”还是“随手分”，你“拎得清”吗？",
+       "vi": "“Tiện tay vứt” hay “tiện tay phân loại”, bạn có rõ không?"
+      },
+      {
+       "n": "3.3",
+       "id": "ds33",
+       "zh": "“塑战”能否速决？",
+       "vi": "“Cuộc chiến nhựa” có thể thắng nhanh không?"
+      }
+     ]
+    },
+    {
+     "zh": "第4单元 科技篇",
+     "vi": "Đơn vị 4 · Khoa học công nghệ",
+     "lessons": [
+      {
+       "n": "4.1",
+       "id": "ds41",
+       "zh": "真的，你的隐私只值一分钱！",
+       "vi": "Thật đấy, quyền riêng tư của bạn chỉ đáng một xu!"
+      },
+      {
+       "n": "4.2",
+       "id": "ds42",
+       "zh": "机器人医生，简直神了！",
+       "vi": "Bác sĩ robot, quả là thần kỳ!"
+      },
+      {
+       "n": "4.3",
+       "id": "ds43",
+       "zh": "算法时代：谁是你的菜？",
+       "vi": "Thời đại thuật toán: ai là “gu” của bạn?"
+      }
+     ]
+    },
+    {
+     "zh": "第5单元 家庭篇",
+     "vi": "Đơn vị 5 · Gia đình",
+     "lessons": [
+      {
+       "n": "5.1",
+       "id": "ds51",
+       "zh": "对家暴必须“零容忍”",
+       "vi": "Phải “không khoan nhượng” với bạo lực gia đình"
+      },
+      {
+       "n": "5.2",
+       "id": "ds52",
+       "zh": "“养儿防老”变“养子啃老”？",
+       "vi": "“Nuôi con phòng già” thành “nuôi con ăn bám”?"
+      },
+      {
+       "n": "5.3",
+       "id": "ds53",
+       "zh": "相亲鄙视链：爱情被黑得惨不忍睹",
+       "vi": "Chuỗi khinh miệt khi xem mắt: tình yêu bị bôi đen thảm hại"
+      }
+     ]
+    },
+    {
+     "zh": "第6单元 职场篇",
+     "vi": "Đơn vị 6 · Nơi làm việc",
+     "lessons": [
+      {
+       "n": "6.1",
+       "id": "ds61",
+       "zh": "职场 996",
+       "vi": "Văn hóa làm việc “996”"
+      },
+      {
+       "n": "6.2",
+       "id": "ds62",
+       "zh": "谁能站在新职业风口？",
+       "vi": "Ai đứng được ở đầu ngọn gió nghề nghiệp mới?"
+      },
+      {
+       "n": "6.3",
+       "id": "ds63",
+       "zh": "30 岁的职场姐姐如何乘风破浪？",
+       "vi": "Các chị 30 tuổi nơi công sở vượt sóng thế nào?"
+      }
+     ]
+    },
+    {
+     "zh": "第7单元 经济篇",
+     "vi": "Đơn vị 7 · Kinh tế",
+     "lessons": [
+      {
+       "n": "7.1",
+       "id": "ds71",
+       "zh": "闲置经济是真正的共享经济",
+       "vi": "Kinh tế đồ cũ mới là kinh tế chia sẻ thực sự"
+      },
+      {
+       "n": "7.2",
+       "id": "ds72",
+       "zh": "天下没有永远免费的午餐",
+       "vi": "Trên đời không có bữa trưa nào miễn phí mãi"
+      },
+      {
+       "n": "7.3",
+       "id": "ds73",
+       "zh": "中国扶贫的道路选择",
+       "vi": "Con đường xóa đói giảm nghèo của Trung Quốc"
+      }
+     ]
+    },
+    {
+     "zh": "第8单元 法律篇",
+     "vi": "Đơn vị 8 · Pháp luật",
+     "lessons": [
+      {
+       "n": "8.1",
+       "id": "ds81",
+       "zh": "“大头条”对簿“小油条”",
+       "vi": "“Đại Đầu Điều” ra tòa với “Tiểu Du Điều”"
+      },
+      {
+       "n": "8.2",
+       "id": "ds82",
+       "zh": "高通：打官司打出的“江山”",
+       "vi": "Qualcomm: “giang sơn” dựng nên từ kiện tụng"
+      },
+      {
+       "n": "8.3",
+       "id": "ds83",
+       "zh": "善终也是一种权利",
+       "vi": "Ra đi thanh thản cũng là một quyền"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

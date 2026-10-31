@@ -62,7 +62,7 @@ khôi phục được; bản ghi từ trước khi có lịch sử thì được
 **`PATCH /api/<go|node>/terms?version=N`** với `{active: true|false}` → tắt hoặc bật lại bản N, trả `200 {version, count}`
 (bản đang hiện sau khi đổi). Danh sách `GET /terms` luôn là bản mới nhất **đang bật**; tắt hết thì danh sách trống.
 Tắt/bật không xóa gì, bản sao vẫn ở `term_upload` (cột `active`).
-Trang hsk6 đọc file Excel và chuẩn hóa (`TERM_BE` trong `BaiGiang/web/template.html` bên repo HSK);
+Trang hsk6 đọc file Excel và chuẩn hóa (`TERM_BE` trong `bai-giang/web/template.html`);
 server kiểm tra lại từng trường (tối đa 5.000 thuật ngữ, khóa không trùng, buổi học dạng `YYYY-MM-DD`),
 sai thì `400` kèm lý do và dữ liệu cũ giữ nguyên.
 

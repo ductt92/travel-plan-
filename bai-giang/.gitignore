@@ -1,0 +1,6 @@
+out/
+build/
+site/
+/bai[0-9][0-9].json
+/ds[0-9][0-9].json
+__pycache__/

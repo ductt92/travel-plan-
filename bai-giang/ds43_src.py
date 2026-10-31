@@ -1,0 +1,730 @@
+#!/usr/bin/env python3
+"""Kịch bản bài giảng 顶石中文 – Bài 4.3 «算法时代：谁是你的菜？». Chạy để sinh ds43.json."""
+import json
+import os
+
+TAG = "顶石中文 · Bài 4.3 · 算法时代：谁是你的菜？"
+slides = []
+
+
+def add(type_, chapter=None, section="", **kw):
+    s = {"type": type_, "section": section, **kw}
+    if chapter:
+        s["chapter"] = chapter
+    slides.append(s)
+
+
+def F(i, t, **kw):
+    return {"t": t, "f": i, **kw}
+
+
+# ======================= MỞ ĐẦU =======================
+add("title", chapter="Mở đầu",
+    top="顶石中文 – Đỉnh cao tiếng Trung",
+    zh="算法时代：", py="谁是你的菜？",
+    vi="Bài 4.3: Thời đại thuật toán – ai là 'gu' của bạn?",
+    sub="Suànfǎ shídài: shéi shì nǐ de cài?\nBài giảng chi tiết bằng tiếng Việt",
+    say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng giáo trình 顶石中文, Đỉnh cao tiếng Trung.",
+         "Hôm nay chúng ta học bài bốn chấm ba: 算法时代：谁是你的菜？ Nghĩa là: Thời đại thuật toán, ai là người hợp gu bạn? Chữ 菜 vốn là món ăn; người Trung Quốc nói 你是我的菜, nghĩa là bạn đúng gu của tôi, đúng mẫu người tôi thích.",
+         "Đây là bài thứ ba, cũng là bài cuối cùng của Đơn vị bốn, 科技篇, Khoa học công nghệ. Sau quyền riêng tư và bác sĩ robot, công nghệ giờ bước vào một lĩnh vực rất riêng tư của con người: tình yêu và hôn nhân.",
+         "Bài khóa là một bài nghị luận trên 中国新闻周刊. Ngày nay có những phần mềm dùng trí tuệ nhân tạo, thậm chí dùng cả gen, để ghép đôi, xem mắt. Nhưng dữ liệu có tìm được người thật sự hợp với bạn không? Tác giả phân tích cả hai mặt, rồi mới đưa ra kết luận. Cuối bài, chúng ta còn có phần ôn tập toàn bộ Đơn vị bốn."])
+
+add("bullets", section="Mở đầu", title="Mục tiêu bài học",
+    items=["Hiểu bài nghị luận: xem mắt bằng AI – lợi ích và giới hạn",
+           "Nắm vững 47 từ mới, kèm âm Hán Việt và ví dụ",
+           "10 mẫu câu trọng điểm: 日趋 · 奔着 · 多多少少 · 起初 · 反之 · 抑或 · 基于 · 即便……也…… · 何况 · 看似",
+           "Kết hợp từ (刻意、介入、一番、梳理、筛选……) và 10 thành ngữ, tục ngữ",
+           "Luyện tập, thảo luận; ôn tập Đơn vị 4 và cách viết bài nghị luận chính – phản"],
+    say=["Bài học hôm nay có năm mục tiêu.",
+         F(0, "Thứ nhất, hiểu bài nghị luận: xem mắt bằng trí tuệ nhân tạo hoạt động thế nào, có lợi ích gì, và giới hạn của nó ở đâu."),
+         F(1, "Thứ hai, nắm vững bốn mươi bảy từ mới. Bài này có cả từ khoa học như 算法，抗原，相容性, lẫn những từ rất đời thường về tình yêu, như 眼缘，来电，姻缘."),
+         F(2, "Thứ ba, học mười mẫu câu trọng điểm, như 日趋, ngày càng; 反之, ngược lại; 抑或, hay là; 即便，也, cho dù, cũng; và 何况, huống hồ."),
+         F(3, "Thứ tư, học các kết hợp từ, và mười thành ngữ, tục ngữ, như 门当户对，事半功倍，栩栩如生，入木三分."),
+         F(4, "Thứ năm, làm bài tập, thảo luận, rồi ôn tập toàn bộ Đơn vị bốn, đặc biệt là cách viết một bài nghị luận phân tích hai mặt chính và phản. Các bạn hãy chuẩn bị giấy bút, và đừng ngại tạm dừng video để ghi chép hoặc đọc theo nhé.")])
+
+# ======================= KHỞI ĐỘNG =======================
+add("bullets", chapter="Khởi động", section="Khởi động 课前思考", title="Suy nghĩ trước bài học (课前思考)", reveal=True, size=34,
+    items=["(1) 你觉得谈恋爱和找对象是不是一回事？",
+           "Đáp án gợi ý: 不完全是。谈恋爱更重视感觉，找对象是奔着结婚去的，要考虑的东西更多。",
+           "(2) 你对把计算机技术应用于相亲怎么看？",
+           "Đáp án gợi ý: 可以提高效率，帮忙筛选；但感情不能只靠数据。",
+           "(3) 你怎么看待感情和婚姻中的“门当户对”？",
+           "Đáp án gợi ý: 有一定道理：价值观、生活习惯相近，相处更容易；但不应只看家庭的钱和地位。"],
+    say=["Chúng ta bắt đầu bằng phần suy nghĩ trước bài học, với ba câu hỏi của sách.",
+         F(0, "Câu một: 你觉得谈恋爱和找对象是不是一回事？ Bạn có thấy yêu đương và tìm người để cưới là cùng một chuyện không? 谈恋爱 là yêu đương, 找对象 là tìm người yêu để tiến tới hôn nhân, 一回事 là cùng một chuyện. Các bạn tạm dừng và nghĩ thử nhé."),
+         F(1, "Đáp án gợi ý: 不完全是。谈恋爱更重视感觉，找对象是奔着结婚去的，要考虑的东西更多。 Không hoàn toàn. Yêu đương coi trọng cảm giác hơn, còn tìm đối tượng là nhắm tới hôn nhân, phải cân nhắc nhiều thứ hơn. Cụm 奔着什么去 là mẫu câu của bài hôm nay."),
+         F(2, "Câu hai: 你对把计算机技术应用于相亲怎么看？ Bạn nghĩ sao về việc ứng dụng công nghệ máy tính vào việc xem mắt? 相亲 là xem mắt, gặp mặt để tìm hiểu tiến tới hôn nhân."),
+         F(3, "Đáp án gợi ý: 可以提高效率，帮忙筛选；但感情不能只靠数据。 Có thể nâng cao hiệu quả, giúp sàng lọc; nhưng tình cảm không thể chỉ dựa vào dữ liệu."),
+         F(4, "Câu ba: 你怎么看待感情和婚姻中的门当户对？ Bạn nhìn nhận thế nào về môn đăng hộ đối trong tình cảm và hôn nhân? Thành ngữ này người Việt cũng dùng y hệt: môn đăng hộ đối."),
+         F(5, "Đáp án gợi ý: 有一定道理：价值观、生活习惯相近，相处更容易；但不应只看家庭的钱和地位。 Cũng có lý: giá trị quan, thói quen sinh hoạt gần nhau thì chung sống dễ hơn; nhưng không nên chỉ nhìn tiền bạc và địa vị của gia đình.")])
+
+# ======================= TỪ MỚI =======================
+# (chữ Hán, pinyin, Hán Việt, từ loại, nghĩa hiển thị, ví dụ, dịch ví dụ, lời giảng[, chữ đọc thay])
+V = [
+    ("算法", "suànfǎ", "toán pháp", "danh từ", "thuật toán", "短视频平台的算法很懂用户的喜好。", "Thuật toán của nền tảng video ngắn rất hiểu sở thích người dùng.",
+     "Danh từ, nghĩa gốc là phương pháp tính toán; trên Internet thường chỉ thuật toán đề xuất, đoán ra thứ người dùng có thể thích. Tên bài 算法时代 là thời đại thuật toán."),
+    ("日趋", "rìqū", "nhật xu", "phó từ", "ngày càng, dần dần đi tới", "全球环境污染日趋严重。", "Ô nhiễm môi trường toàn cầu ngày càng nghiêm trọng.",
+     "Phó từ, văn viết, nghĩa là mỗi ngày một hướng tới, ngày càng. 趋 là xu, như trong xu hướng. Hay gặp 日趋繁荣，日趋成熟，日趋严重. Đây là mẫu câu trọng điểm đầu tiên."),
+    ("偶遇", "ǒuyù", "ngẫu ngộ", "động từ", "tình cờ gặp", "我在书店偶遇了多年不见的老同学。", "Tôi tình cờ gặp lại người bạn học cũ nhiều năm không gặp ở hiệu sách.",
+     "Nghĩa là tình cờ gặp gỡ. 偶 là ngẫu, như trong ngẫu nhiên; 遇 là gặp. Trong bài, 无论是偶遇，还是刻意安排 là dù là tình cờ gặp hay được sắp đặt có chủ ý."),
+    ("刻意", "kèyì", "khắc ý", "phó từ", "cố ý, cố tình, dày công", "她从不刻意打扮自己。", "Cô ấy không bao giờ cố tình chải chuốt bản thân.",
+     "Phó từ, nghĩa là dồn hết tâm tư, cố tình làm một việc. Hay gặp 刻意打扮，刻意回避，刻意安排. Lát nữa ta học thêm các kết hợp của từ này."),
+    ("开启", "kāiqǐ", "khai khải", "động từ", "mở ra, bắt đầu", "毕业以后，他开启了人生的新篇章。", "Sau khi tốt nghiệp, anh ấy mở ra một chương mới của cuộc đời.",
+     "Động từ, nghĩa là mở, khởi động; nghĩa bóng là bắt đầu, như 开启一段感情, mở ra một cuộc tình; 开启新时代, mở ra thời đại mới."),
+    ("奔", "bèn", "bôn", "động từ", "hướng tới, nhắm tới (mục đích)", "他们是奔着冠军去的。", "Họ nhắm tới chức vô địch.",
+     "Động từ, ở đây đọc thanh bốn, nghĩa là hướng về, nhắm tới một mục đích, như 奔着目标去. Khi đọc thanh một, nó nghĩa là chạy nhanh, như 奔跑, bôn ba. Đây là mẫu câu trọng điểm thứ hai.", "笨"),
+    ("或多或少", "huòduō-huòshǎo", "hoặc đa hoặc thiểu", "phó từ", "ít nhiều", "他的话或多或少有点儿道理。", "Lời anh ấy nói ít nhiều cũng có lý.",
+     "Phó từ, nghĩa là ít nhiều, có thể nhiều một chút, cũng có thể ít một chút. Gần nghĩa với 多多少少, mẫu câu thứ ba của bài."),
+    ("盲目", "mángmù", "manh mục", "tính từ", "mù quáng", "不要盲目追求名牌。", "Đừng mù quáng chạy theo hàng hiệu.",
+     "Tính từ, nghĩa đen là mắt không nhìn thấy; nghĩa bóng là nhận thức không rõ, làm theo một cách mù quáng. 盲 là mù. Hay gặp 盲目追求，盲目自信，盲目跟风."),
+    ("结局", "jiéjú", "kết cục", "danh từ", "kết cục, kết thúc", "这部电影的结局出人意料。", "Đoạn kết của bộ phim này nằm ngoài dự đoán.",
+     "Danh từ, nghĩa là kết quả cuối cùng, cục diện sau cùng. Âm Hán Việt kết cục giống tiếng Việt. Hay gặp 圆满的结局, kết cục viên mãn; 悲惨的结局, kết cục bi thảm."),
+    ("介入", "jièrù", "giới nhập", "động từ", "can thiệp, nhúng tay vào, vào cuộc", "警方已经介入调查。", "Cảnh sát đã vào cuộc điều tra.",
+     "Động từ, nghĩa là xen vào để can thiệp. Trong bài, AI的介入便应运而生 là sự can thiệp của trí tuệ nhân tạo xuất hiện đúng lúc."),
+    ("时日", "shírì", "thời nhật", "danh từ", "thời gian, ngày giờ", "这项工程还需要一些时日。", "Công trình này còn cần thêm một thời gian.",
+     "Danh từ, nghĩa là thời gian và ngày tháng, thường chỉ một khoảng thời gian khá dài. Trong bài, 出现已有时日 là đã xuất hiện được một thời gian."),
+    ("相容性", "xiāngróngxìng", "tương dung tính", "danh từ", "tính tương hợp", "器官移植要考虑组织相容性。", "Ghép tạng phải tính đến tính tương hợp mô.",
+     "Danh từ, thuật ngữ khoa học, chỉ mức độ hai thứ có thể dung hợp với nhau. 相容 là dung nạp lẫn nhau, 性 là tính. Trong y học có 组织相容性, tính tương hợp mô."),
+    ("抗原", "kàngyuán", "kháng nguyên", "danh từ", "kháng nguyên", "抗原进入人体后会刺激产生抗体。", "Kháng nguyên vào cơ thể sẽ kích thích sinh ra kháng thể.",
+     "Danh từ, thuật ngữ y học, âm Hán Việt kháng nguyên giống hệt tiếng Việt. Hồi dịch Covid, các bạn hẳn đã nghe 抗原检测, xét nghiệm kháng nguyên, test nhanh."),
+    ("匹配", "pǐpèi", "thất phối", "động từ", "phù hợp, ghép đôi, xứng đôi", "系统会自动为你匹配合适的对象。", "Hệ thống sẽ tự động ghép cho bạn đối tượng phù hợp.",
+     "Động từ, nghĩa là phối hợp, ăn khớp với nhau; cũng chỉ hai người xứng đôi làm vợ chồng. Trong bài có 匹配度, mức độ phù hợp, và AI匹配相亲, xem mắt ghép đôi bằng trí tuệ nhân tạo."),
+    ("眼缘", "yǎnyuán", "nhãn duyên", "danh từ", "sự hợp mắt, ấn tượng đầu tiên", "我们第一次见面就很有眼缘。", "Lần đầu gặp nhau chúng tôi đã thấy rất hợp mắt.",
+     "Danh từ, nghĩa là duyên qua ánh mắt: lần đầu gặp đã bị vẻ ngoài, khí chất của người kia thu hút. Thường nói 有眼缘, hợp mắt, có cảm tình ngay từ đầu."),
+    ("反之", "fǎnzhī", "phản chi", "liên từ", "ngược lại", "努力就会进步，反之就会落后。", "Nỗ lực thì sẽ tiến bộ, ngược lại thì sẽ tụt hậu.",
+     "Liên từ, văn viết, nghĩa là trái lại, nói ngược lại. 之 thay cho điều vừa nói. Đây là mẫu câu trọng điểm thứ năm."),
+    ("俗称", "súchēng", "tục xưng", "động từ", "thường gọi là, gọi nôm na là", "马铃薯俗称土豆。", "Khoai tây, tên chính thức là mã linh thự, thường gọi là thổ đậu.",
+     "Động từ, nghĩa là cách gọi thông tục, dân gian. 俗 là tục, thông thường. Trong bài, 反之则弱，俗称不来电 là ngược lại thì yếu, dân gian gọi là không có điện."),
+    ("来电", "láidiàn", "lai điện", "tính từ", "có cảm giác, rung động (giữa nam và nữ)", "我们聊了很久，可就是不来电。", "Chúng tôi nói chuyện rất lâu, nhưng chẳng hề rung động.",
+     "Nghĩa đen là có điện đến, hay có cuộc gọi đến. Khẩu ngữ dùng để nói nam nữ có cảm giác thích nhau, như bị điện giật, giống tiếng Việt có tia lửa. Thường dùng dạng phủ định: 不来电."),
+    ("一番", "yìfān", "nhất phiên", "lượng từ", "một phen, một hồi, một lượt", "他下了一番功夫，终于考上了大学。", "Anh ấy bỏ ra một phen công sức, cuối cùng đã đỗ đại học.",
+     "Lượng từ, dùng cho tâm tư, lời nói, quá trình, số từ chỉ là một hoặc vài. Hay gặp 一番好意, một tấm lòng tốt; 一番话, một lời; 下一番功夫, bỏ một phen công sức."),
+    ("交互", "jiāohù", "giao hỗ", "động từ", "tương tác, qua lại lẫn nhau", "这个软件可以和用户进行语音交互。", "Phần mềm này có thể tương tác với người dùng bằng giọng nói.",
+     "Động từ, nghĩa là liên hệ qua lại với nhau. Trong công nghệ, 交互 là tương tác, như 人机交互, tương tác người máy."),
+    ("全方位", "quánfāngwèi", "toàn phương vị", "danh từ", "toàn diện, mọi mặt", "我们为客户提供全方位的服务。", "Chúng tôi cung cấp dịch vụ toàn diện cho khách hàng.",
+     "Danh từ, nghĩa là bốn phương tám hướng, mọi phương diện. Hay gặp 全方位检查, kiểm tra toàn diện; 全方位合作, hợp tác toàn diện."),
+    ("梳理", "shūlǐ", "sơ lý", "động từ", "sắp xếp, hệ thống lại", "写作之前，先梳理一下思路。", "Trước khi viết, hãy sắp xếp lại mạch suy nghĩ.",
+     "Động từ, nghĩa gốc là chải tóc cho gọn; nghĩa bóng là sắp xếp, phân tích sự việc cho có hệ thống. 梳 là cái lược. Hay gặp 梳理思路，梳理脉络."),
+    ("比对", "bǐduì", "tỷ đối", "động từ", "so sánh đối chiếu", "警察把现场的指纹进行了比对。", "Cảnh sát đã đối chiếu dấu vân tay tại hiện trường.",
+     "Động từ, nghĩa là so sánh, đối chiếu để phân tích. Trong bài, 经过分析比对 là qua phân tích và đối chiếu."),
+    ("提取", "tíqǔ", "đề thủ", "động từ", "rút ra, trích xuất", "请从这篇文章中提取关键词。", "Hãy trích xuất từ khóa trong bài văn này.",
+     "Động từ, nghĩa là qua phân tích mà rút ra được, như 提取观点，提取关键词. Ngoài ra còn có nghĩa là rút tiền, như 提取现金."),
+    ("尴尬", "gāngà", "giam giới", "tính từ", "ngượng ngùng, khó xử", "他忘了对方的名字，场面十分尴尬。", "Anh ấy quên mất tên người ta, tình cảnh thật ngượng ngùng.",
+     "Tính từ, nghĩa là thần sắc, thái độ không tự nhiên; hoặc tình cảnh khó xử, như 尴尬局面，尴尬场面. Đây là từ rất hay dùng trong khẩu ngữ, các bạn nên nhớ."),
+    ("筛选", "shāixuǎn", "si tuyển", "động từ", "sàng lọc, chọn lọc", "公司从一百多份简历中筛选出了十个人。", "Công ty sàng lọc ra mười người từ hơn một trăm bộ hồ sơ.",
+     "Động từ, nghĩa là chọn lựa bằng cách loại bỏ dần. Chữ 筛 chính là cái sàng, như 筛子 ở bài bốn chấm một. Hay gặp 筛选结果，筛选人才."),
+    ("抑或", "yìhuò", "ức hoặc", "liên từ", "hay là, hoặc là", "你是喝茶抑或喝咖啡？", "Bạn uống trà hay là cà phê?",
+     "Liên từ, văn viết, nghĩa giống 还是 hoặc 或者. Đây là mẫu câu trọng điểm thứ sáu."),
+    ("适婚", "shìhūn", "thích hôn", "tính từ", "đến tuổi kết hôn, thích hợp kết hôn", "很多适婚青年都面临父母的催婚。", "Nhiều thanh niên đến tuổi kết hôn đều bị bố mẹ giục cưới.",
+     "Tính từ, nghĩa là về tuổi tác, thể chất và tâm lý đều thích hợp để kết hôn. Hay gặp 适婚青年，适婚年龄，适婚人群."),
+    ("青睐", "qīnglài", "thanh lãi", "danh từ", "sự ưu ái, sự ưa chuộng", "这本小说深受读者青睐。", "Cuốn tiểu thuyết này rất được độc giả ưa chuộng.",
+     "Danh từ, văn viết. 青 ở đây là tròng đen của mắt, 睐 là nhìn: nhìn thẳng bằng tròng đen, tức là quý mến, coi trọng; ngược lại là 白眼, lườm nguýt. Hay gặp 受到青睐，深受青睐."),
+    ("引入", "yǐnrù", "dẫn nhập", "động từ", "đưa vào, du nhập", "学校引入了新的教学方法。", "Nhà trường đã đưa vào phương pháp giảng dạy mới.",
+     "Động từ, nghĩa là dẫn vào, đưa vào, như 引入话题, dẫn vào chủ đề; 引入新品种, du nhập giống mới."),
+    ("基于", "jīyú", "cơ ư", "giới từ", "dựa trên, căn cứ vào", "基于以上理由，我无法赞成你的决定。", "Dựa trên những lý do trên, tôi không thể tán thành quyết định của bạn.",
+     "Giới từ, văn viết, nghĩa là căn cứ vào, trên cơ sở của. 基 là nền móng. Đây là mẫu câu trọng điểm thứ bảy."),
+    ("美满", "měimǎn", "mỹ mãn", "tính từ", "tốt đẹp viên mãn, hạnh phúc", "祝你们婚姻美满！", "Chúc hai bạn hôn nhân hạnh phúc viên mãn!",
+     "Tính từ, nghĩa là tốt đẹp, trọn vẹn, thường nói về hôn nhân, gia đình. Câu chúc đám cưới rất hay dùng: 祝你们婚姻美满，白头偕老, chúc hôn nhân viên mãn, bạc đầu răng long."),
+    ("姻缘", "yīnyuán", "nhân duyên", "danh từ", "nhân duyên, duyên vợ chồng", "他们俩真是天赐的好姻缘。", "Hai người họ đúng là mối nhân duyên trời ban.",
+     "Danh từ, nghĩa là duyên phận vợ chồng. 姻 là hôn nhân. Hay gặp 美满的姻缘，结姻缘，求姻缘. Tiếng Việt cũng nói nhân duyên, như trong câu nhân duyên tiền định."),
+    ("局限", "júxiàn", "cục hạn", "động từ", "giới hạn, bó hẹp trong", "他的研究不局限于语言学。", "Nghiên cứu của ông ấy không bó hẹp trong ngôn ngữ học.",
+     "Động từ, nghĩa là hạn chế trong một phạm vi nhất định. Mẫu hay gặp: 局限于 cộng phạm vi. Cũng có danh từ 局限性, tính hạn chế."),
+    ("即便", "jíbiàn", "tức tiện", "liên từ", "cho dù, dù cho", "即便下雨，比赛也照常进行。", "Cho dù trời mưa, trận đấu vẫn diễn ra bình thường.",
+     "Liên từ, nghĩa giống 即使, cho dù. Thường đi với 也 ở vế sau. Đây là mẫu câu trọng điểm thứ tám."),
+    ("原生家庭", "yuánshēng jiātíng", "nguyên sinh gia đình", "danh từ", "gia đình gốc (nơi mình sinh ra, lớn lên)", "原生家庭对孩子的性格影响很大。", "Gia đình gốc ảnh hưởng rất lớn đến tính cách của đứa trẻ.",
+     "Danh từ, khái niệm xã hội học, chỉ gia đình mà con cái sống cùng cha mẹ trước khi kết hôn. Đối lập với 新生家庭, gia đình mới do vợ chồng lập nên. Đây là từ rất hay gặp trên mạng xã hội Trung Quốc."),
+    ("活生生", "huóshēngshēng", "hoạt sinh sinh", "tính từ", "sống động, bằng xương bằng thịt", "这就是一个活生生的例子。", "Đây chính là một ví dụ sống động.",
+     "Tính từ, nghĩa là đầy sức sống, sống động, có thật trước mắt. Trong bài, 冷冰冰的数据 đối lập với 活生生的人, dữ liệu lạnh lẽo và con người bằng xương bằng thịt."),
+    ("形似", "xíngsì", "hình tự", "động từ", "giống về hình thức, bề ngoài", "这幅画只是形似，还没有画出神韵。", "Bức tranh này chỉ giống về hình, chưa vẽ ra được thần thái.",
+     "Động từ, nghĩa là giống nhau về hình thức, bề ngoài. 似 là giống, Hán Việt là tự, như trong tương tự. Thường đi thành cặp với 神似."),
+    ("神似", "shénsì", "thần tự", "động từ", "giống về thần thái, giống như đúc", "他模仿得很像，可以说是神似。", "Anh ấy bắt chước rất giống, có thể nói là giống cả thần thái.",
+     "Động từ, nghĩa là giống cả thần thái, giống đến mức cao nhất. Trong hội họa Trung Quốc, 神似 được đánh giá cao hơn 形似. Trong bài: 只能形似，难以神似."),
+    ("轮廓", "lúnkuò", "luân khuếch", "danh từ", "đường nét, hình dáng; nét đại cương", "远处只能看见山的轮廓。", "Ở đằng xa chỉ nhìn thấy đường nét của dãy núi.",
+     "Danh từ, nghĩa là đường viền bên ngoài của sự vật, hoặc dáng vẻ đại khái. Tiếng Việt cũng nói đường nét khuôn mặt, tiếng Trung là 脸部轮廓."),
+    ("严峻", "yánjùn", "nghiêm tuấn", "tính từ", "nghiêm trọng, cam go, khắc nghiệt", "我们面临着严峻的考验。", "Chúng ta đang đối mặt với thử thách cam go.",
+     "Tính từ, nghĩa là nghiêm khắc, nghiêm trọng, gay go. Hay gặp 严峻的考验, thử thách cam go; 形势严峻, tình hình nghiêm trọng."),
+    ("看似", "kànsì", "khán tự", "động từ", "trông có vẻ, nhìn bề ngoài thì như", "这件事看似容易，做起来难。", "Việc này trông có vẻ dễ, làm mới thấy khó.",
+     "Động từ, nghĩa là nhìn bề ngoài thì có vẻ như. Vế sau thường có ý trái ngược, như 其实，但是. Đây là mẫu câu trọng điểm cuối cùng."),
+    ("打包票", "dǎ bāopiào", "đả bao phiếu", "động từ", "cam đoan, bảo đảm chắc chắn", "这件事我可不敢打包票。", "Việc này thì tôi không dám cam đoan đâu.",
+     "Động từ, khẩu ngữ. 包票 là tờ giấy bảo hành thời xưa; 打包票 là cam đoan chắc chắn khi rất có lòng tin. Thường nói 我敢打包票, tôi dám cam đoan."),
+    ("质保卡", "zhìbǎokǎ", "chất bảo tạp", "danh từ", "phiếu bảo hành", "买电器时一定要保存好质保卡。", "Khi mua đồ điện nhất định phải giữ kỹ phiếu bảo hành.",
+     "Danh từ, viết tắt của 质量保证卡, giấy chứng nhận bảo đảm chất lượng sản phẩm, tức là phiếu bảo hành. Trong bài, dữ liệu không thể cấp phiếu bảo hành cho tình yêu."),
+    ("诚心", "chéngxīn", "thành tâm", "tính từ", "thành tâm, thật lòng", "我是诚心诚意来道歉的。", "Tôi thành tâm thành ý đến xin lỗi.",
+     "Tính từ, nghĩa là chân thành, thật lòng. Âm Hán Việt thành tâm giống hệt tiếng Việt. Hay gặp thành ngữ 诚心诚意, thành tâm thành ý."),
+    ("设定", "shèdìng", "thiết định", "động từ", "cài đặt, đặt ra", "我把空调设定在二十六度。", "Tôi đặt điều hòa ở hai mươi sáu độ.",
+     "Động từ, nghĩa là đặt ra, xác định, như 设定目标, đặt mục tiêu; 设定密码, cài mật khẩu. Trong bài: 幸福的密码只有你自己可以设定."),
+    ("方向盘", "fāngxiàngpán", "phương hướng bàn", "danh từ", "vô lăng, bánh lái", "开车时双手要握住方向盘。", "Khi lái xe, hai tay phải nắm chắc vô lăng.",
+     "Danh từ, nghĩa là bộ phận hình bánh xe để điều khiển hướng đi của ô tô, tàu thuyền, tức là vô lăng. Trong bài, 方向盘永远由你掌握 là vô lăng mãi mãi nằm trong tay bạn."),
+]
+
+add("bullets", chapter="Từ mới (47 từ)", section="Từ mới 生词", title="Phần 1: Từ mới",
+    items=["Bài 4.3 có 47 từ mới, chia thành 16 nhóm nhỏ",
+           "Mỗi từ: nghe đọc mẫu 2 lần → âm Hán Việt → nghĩa → ví dụ",
+           "Hãy đọc to theo sau mỗi lần nghe",
+           "Chú ý âm đọc: 奔 (bèn) · 抑或 (yì) · 看似 / 形似 / 神似 (sì) · 一番 (fān)",
+           "Từ về tình yêu: 眼缘 · 来电 · 姻缘 · 适婚 · 原生家庭"],
+    say=["Bây giờ chúng ta sang phần một: từ mới. Bài này có bốn mươi bảy từ, thầy chia thành mười sáu nhóm nhỏ.",
+         F(1, "Với mỗi từ, các bạn sẽ nghe đọc mẫu hai lần, sau đó là âm Hán Việt, nghĩa, và một ví dụ."),
+         F(2, "Hãy đọc to theo sau mỗi lần nghe, vì đọc thành tiếng giúp nhớ từ lâu hơn rất nhiều."),
+         F(3, "Chú ý một số âm đọc: 奔 trong bài đọc thanh bốn; chữ 似 trong 看似，形似，神似 đọc là sì."),
+         F(4, "Bài này còn có nhiều từ rất đời thường về chuyện tình cảm, như 眼缘，来电，姻缘，适婚，原生家庭. Các từ này người Trung Quốc dùng hằng ngày, các bạn nhớ học kỹ nhé. Chúng ta bắt đầu.")])
+
+sizes = [3] * 15 + [2]
+assert sum(sizes) == len(V)
+g = 0
+for gs in sizes:
+    group = V[g:g + gs]
+    words, say = [], []
+    for i, item in enumerate(group):
+        assert len(item) in (8, 9), item[0]
+        zh, py, hv, loai, vi, ex, exvi, expl = item[:8]
+        spoken = item[8] if len(item) > 8 else zh
+        n = g + i + 1
+        words.append({"zh": zh, "py": py, "hv": hv.upper(), "loai": f"{n}. {loai}", "vi": vi, "ex": ex, "exvi": exvi})
+        head = f"Từ số {n}: {zh}。 {zh}。 Hán Việt là {hv}."
+        if spoken != zh:
+            say.append(F(i, f"Từ số {n}: {spoken}。 {spoken}。 Hán Việt là {hv}.", zr=120, cap=head))
+        else:
+            say.append(F(i, head, zr=120))
+        say.append(F(i, f"{expl} Ví dụ: {ex}{'' if ex[-1] in '。…？！，' else '，'} {exvi[0].upper() + exvi[1:]}{'' if exvi[-1] in '.!?' else '.'}", zr=130))
+    add("vocab", section="Từ mới 生词", title=f"Từ mới ({g + 1}–{g + len(group)} / {len(V)})",
+        words=words, say=say)
+    g += gs
+
+# ======================= BÀI KHÓA =======================
+# (chữ Hán hiển thị, dịch, ghi chú[, lời đọc tiếng Trung nếu khác])
+P = [
+    ("在科技日益进步，人际交往日趋便利的当今社会，无论是偶遇，还是刻意安排，甚至是微信上的“摇一摇”，都有可能开启一段感情。",
+     "Trong xã hội ngày nay, khi khoa học công nghệ ngày một tiến bộ, giao tiếp giữa người với người ngày càng thuận tiện, thì dù là tình cờ gặp gỡ, hay được sắp đặt có chủ ý, thậm chí là tính năng 'lắc lắc' trên WeChat, đều có thể mở ra một cuộc tình.",
+     ["日益进步 là ngày một tiến bộ; 日趋便利 là ngày càng thuận tiện, mẫu câu thứ nhất. 当今社会 là xã hội ngày nay. 无论是A，还是B，甚至是C，都 là dù là A, hay B, thậm chí C, đều.",
+      "摇一摇 là tính năng lắc lắc của WeChat: sách chú thích, lắc điện thoại sẽ ghép bạn với người lạ cũng đang lắc cùng lúc. 开启一段感情 là mở ra một cuộc tình."]),
+    ("但是，这些交往的打开方式对于奔着婚姻目标去的双方来说，多多少少显得有些盲目。由此导致浪漫的开始却无法带来理想的结局，于是AI（人工智能）的介入便应运而生。",
+     "Nhưng đối với hai người đang nhắm tới mục tiêu hôn nhân, những cách bắt đầu quen nhau này ít nhiều có vẻ hơi mù quáng. Vì thế, một khởi đầu lãng mạn lại không mang đến kết cục như mong muốn, và thế là sự can thiệp của AI, tức trí tuệ nhân tạo, xuất hiện đúng lúc.",
+     ["打开方式 là cách mở ra, ở đây là cách bắt đầu một mối quan hệ. 对于什么来说 là đối với ai mà nói. 奔着婚姻目标去 là nhắm tới mục tiêu hôn nhân. 多多少少显得有些盲目 là ít nhiều có vẻ hơi mù quáng.",
+      "由此导致 là từ đó dẫn đến. 却 là lại, chỉ sự trái ngược. 于是 là thế là. 应运而生 là thành ngữ, ra đời đúng lúc, thuận theo thời thế. Đoạn mở đầu nêu bối cảnh và dẫn vào vấn đề."],
+     "但是，这些交往的打开方式对于奔着婚姻目标去的双方来说，多多少少显得有些盲目。由此导致浪漫的开始却无法带来理想的结局，于是人工智能的介入便应运而生。"),
+    ("借助AI的DNA相亲出现已有时日，起初的原理是确定双方组织相容性抗原的匹配度，如果这种抗原差异性大，两性之间吸引力就强，即所谓“有眼缘”；反之则弱，俗称“不来电”。",
+     "Xem mắt bằng ADN với sự trợ giúp của AI đã xuất hiện được một thời gian. Nguyên lý ban đầu là xác định mức độ phù hợp về kháng nguyên tương hợp mô của hai bên: nếu sự khác biệt của loại kháng nguyên này lớn, sức hút giữa hai giới sẽ mạnh, tức là cái gọi là 'hợp mắt'; ngược lại thì yếu, dân gian gọi là 'không có điện', chẳng rung động.",
+     ["借助 là nhờ vào. 出现已有时日 là đã xuất hiện được một thời gian. 起初 là lúc đầu, mẫu câu thứ tư. 组织相容性抗原 là kháng nguyên tương hợp mô: sách chú thích, đây là loại kháng nguyên quyết định cơ thể có chấp nhận cơ quan được ghép hay không.",
+      "即所谓 là tức là cái gọi là. 反之则弱 là ngược lại thì yếu: 反之 là mẫu câu thứ năm, còn 则 là thì, văn viết. 俗称 là dân gian gọi là. 有眼缘 và 不来电 là hai cách nói rất khẩu ngữ về chuyện có cảm tình hay không."],
+     "借助人工智能的DNA相亲出现已有时日，起初的原理是确定双方组织相容性抗原的匹配度，如果这种抗原差异性大，两性之间吸引力就强，即所谓有眼缘；反之则弱，俗称不来电。"),
+    ("依靠技术手段，相关软件可以通过事先设计并提取的问题对双方的信息进行一番全方位的交互梳理，涉及价值观、性格、兴趣爱好、受教育程度、经济条件，家庭背景等社会性的因素。",
+     "Dựa vào phương tiện kỹ thuật, các phần mềm liên quan có thể thông qua những câu hỏi đã được thiết kế và chắt lọc từ trước, tiến hành một lượt sắp xếp, đối chiếu qua lại toàn diện thông tin của hai bên, liên quan đến những yếu tố xã hội như giá trị quan, tính cách, sở thích, trình độ học vấn, điều kiện kinh tế, hoàn cảnh gia đình.",
+     ["依靠技术手段 là dựa vào phương tiện kỹ thuật. 事先 là từ trước. 对什么进行一番全方位的交互梳理 là tiến hành một lượt sắp xếp, đối chiếu toàn diện: 进行 cộng động từ hai âm tiết là cách nói văn viết rất hay gặp.",
+      "涉及 là liên quan đến. 价值观 là giá trị quan, quan niệm giá trị. 受教育程度 là trình độ học vấn. 家庭背景 là hoàn cảnh gia đình. Đây là những thứ mà người Trung Quốc gọi chung là 门当户对."]),
+    ("经过分析比对以确认其匹配度，甚至还会调查一些双方交往时不便提出的问题，如金钱观、消费观，是否有生育意愿之类的，有效避免了双方当面谈论时的尴尬。",
+     "Qua phân tích đối chiếu để xác định mức độ phù hợp, phần mềm thậm chí còn tìm hiểu cả những vấn đề mà hai bên khó mở lời khi quen nhau, như quan niệm về tiền bạc, quan niệm tiêu dùng, có muốn sinh con hay không..., nhờ đó tránh được sự ngượng ngùng khi hai người bàn chuyện trực tiếp.",
+     ["经过分析比对 là qua phân tích, đối chiếu. 以确认其匹配度 là để xác nhận mức độ phù hợp; 以 là để, văn viết; 其 là của họ. 不便提出 là không tiện nêu ra.",
+      "金钱观，消费观 là quan niệm về tiền bạc, về tiêu dùng. 生育意愿 là mong muốn sinh con. 之类的 là các loại như thế. 当面谈论 là bàn trực tiếp. 尴尬 là ngượng ngùng, khó xử. Đây là ưu điểm thứ nhất của xem mắt bằng trí tuệ nhân tạo."]),
+    ("不论是通过收入、职业等门槛进行筛选，还是根据人们在社交软件上的性格特征来进行匹配，抑或通过照片检测技术来精准定位兴趣爱好，AI婚恋软件能够提供的服务，或许会超出我们的想象，于是AI相亲便受到许多适婚人群的青睐。",
+     "Dù là sàng lọc qua những 'ngưỡng' như thu nhập, nghề nghiệp, hay ghép đôi dựa trên đặc điểm tính cách của mọi người trên mạng xã hội, hoặc là dùng công nghệ phân tích ảnh để xác định chính xác sở thích, thì dịch vụ mà phần mềm hẹn hò bằng AI có thể cung cấp có lẽ sẽ vượt xa sức tưởng tượng của chúng ta; vì thế xem mắt bằng AI được nhiều người trong độ tuổi kết hôn ưa chuộng.",
+     ["不论是A，还是B，抑或C là dù là A, hay B, hay là C: 抑或 là mẫu câu thứ sáu. 门槛 nghĩa đen là bậc cửa, nghĩa bóng là điều kiện tối thiểu, ngưỡng cửa. 筛选 là sàng lọc. 精准定位 là xác định chính xác.",
+      "婚恋软件 là phần mềm hẹn hò, tìm bạn đời. 或许 là có lẽ. 超出我们的想象 là vượt ngoài sức tưởng tượng. 受到许多适婚人群的青睐 là được nhiều người trong độ tuổi kết hôn ưa chuộng."],
+     "不论是通过收入、职业等门槛进行筛选，还是根据人们在社交软件上的性格特征来进行匹配，抑或通过照片检测技术来精准定位兴趣爱好，人工智能婚恋软件能够提供的服务，或许会超出我们的想象，于是人工智能相亲便受到许多适婚人群的青睐。"),
+    ("日本爱媛县从2008年开始由志愿者组织单身青年男女联合约会（集体相亲），从2011年开始，他们在集体相亲活动中引入了AI技术，对每次集体相亲的人员进行筛选匹配，结果相亲成功率提高了16％。",
+     "Ở tỉnh Ehime, Nhật Bản, từ năm 2008, các tình nguyện viên bắt đầu tổ chức những buổi hẹn hò chung cho thanh niên nam nữ độc thân, tức xem mắt tập thể. Từ năm 2011, họ đưa công nghệ AI vào các buổi xem mắt tập thể, sàng lọc và ghép đôi người tham gia mỗi lần, kết quả là tỷ lệ xem mắt thành công tăng thêm 16%.",
+     ["爱媛县 là tỉnh Ehime ở Nhật Bản; chữ 县 ở Nhật tương đương với tỉnh. 由志愿者组织 là do tình nguyện viên tổ chức. 联合约会 là hẹn hò chung, 集体相亲 là xem mắt tập thể.",
+      "引入了人工智能技术 là đưa công nghệ trí tuệ nhân tạo vào. 成功率提高了百分之十六 là tỷ lệ thành công tăng thêm mười sáu phần trăm. Đây là một ví dụ cụ thể, có số liệu, làm luận cứ cho mặt tích cực."],
+     "日本爱媛县从二零零八年开始由志愿者组织单身青年男女联合约会，集体相亲，从二零一一年开始，他们在集体相亲活动中引入了人工智能技术，对每次集体相亲的人员进行筛选匹配，结果相亲成功率提高了百分之十六。"),
+    ("基于数据分析的“门当户对”真的可以成就一段美满的姻缘吗？\n毋庸讳言，技术辅助手段的作用再大，也只能局限于“师傅领进门”，而后面的恋爱“修行还要全靠个人”。",
+     "'Môn đăng hộ đối' dựa trên phân tích dữ liệu có thật sự tạo nên được một mối nhân duyên viên mãn không? Phải nói thẳng rằng, tác dụng của các phương tiện kỹ thuật hỗ trợ dù lớn đến đâu, cũng chỉ giới hạn ở mức 'thầy dẫn vào cửa', còn chuyện yêu đương về sau thì 'tu hành vẫn hoàn toàn phải dựa vào bản thân'.",
+     ["Câu hỏi này là bước ngoặt của bài: tác giả chuyển từ mặt tích cực sang mặt hạn chế. 基于数据分析 là dựa trên phân tích dữ liệu, mẫu câu thứ bảy. 门当户对 là môn đăng hộ đối. 成就 ở đây là động từ, nghĩa là làm nên, tạo nên.",
+      "毋庸讳言 là không cần phải giấu giếm, xin nói thẳng. 再大，也只能 là dù lớn đến đâu cũng chỉ có thể. 局限于 là giới hạn ở. 师傅领进门，修行靠个人 là tục ngữ: thầy chỉ dẫn vào cửa, tu luyện là ở bản thân."]),
+    ("即便现代男女自由恋爱的过程中长时间考察了对方，但也有可能不太了解对方的心灵深处，以及对方的原生家庭对其性格与行为的影响，因此仍有可能导致婚姻的失败。",
+     "Cho dù nam nữ hiện đại trong quá trình tự do yêu đương đã tìm hiểu đối phương trong thời gian dài, vẫn có thể không thật hiểu chốn sâu thẳm trong tâm hồn người kia, cũng như ảnh hưởng của gia đình gốc đến tính cách và hành vi của họ, vì vậy hôn nhân vẫn có thể đổ vỡ.",
+     ["即便，也 là cho dù, cũng, mẫu câu thứ tám; ở đây vế sau dùng 但也, nhấn mạnh thêm sự chuyển ý. 自由恋爱 là tự do yêu đương. 考察 là tìm hiểu, quan sát kỹ.",
+      "心灵深处 là chốn sâu thẳm của tâm hồn. 原生家庭 là gia đình gốc: sách chú thích, bầu không khí, thói quen của gia đình gốc ảnh hưởng đến cách con cái cư xử trong gia đình mới của mình. 仍有可能 là vẫn có thể."]),
+    ("更何况冷冰冰的数据后面是一个个活生生的人，“AI匹配相亲”试图给人们精准画像，终究也只能形似，难以神似；只能画出一个大致的轮廓，难以做到栩栩如生，入木三分。",
+     "Huống hồ đằng sau những con số lạnh lẽo là từng con người bằng xương bằng thịt. 'Xem mắt ghép đôi bằng AI' cố gắng vẽ chân dung chính xác cho mọi người, nhưng rốt cuộc cũng chỉ giống về hình, khó giống về thần; chỉ vẽ ra được một đường nét đại khái, khó mà sống động như thật, sâu sắc thấu đáo.",
+     ["更何况 là huống hồ, huống chi, mẫu câu thứ chín. 冷冰冰的数据 đối lập với 活生生的人: dữ liệu lạnh lẽo và con người sống động. 试图 là cố gắng, toan tính. 精准画像 là vẽ chân dung chính xác, ở đây là phác họa chính xác một con người.",
+      "终究 là rốt cuộc. Tác giả dùng ẩn dụ hội họa: 形似 và 神似, giống hình và giống thần; 轮廓 là đường nét; 栩栩如生 là sống động như thật; 入木三分 là thấu vào gỗ ba phân, tức là sâu sắc. Ý là dữ liệu không thể hiểu hết một con người."],
+     "更何况冷冰冰的数据后面是一个个活生生的人，人工智能匹配相亲试图给人们精准画像，终究也只能形似，难以神似；只能画出一个大致的轮廓，难以做到栩栩如生，入木三分。"),
+    ("两个人从素不相识，到逐渐相知相爱，最终进入婚姻，需要人们花费更多的心思，投入更多的精力。看似事半功倍的“AI匹配相亲”，难免要接受线下相处的严峻考验。大数据只是提供了一个机会，一种可能。无法为爱情婚姻“打包票”，开“质保卡”。",
+     "Hai người từ chỗ chưa hề quen biết, đến dần dần hiểu nhau, yêu nhau, rồi bước vào hôn nhân, cần bỏ ra nhiều tâm tư hơn, nhiều công sức hơn. 'Xem mắt ghép đôi bằng AI' trông như làm ít được nhiều, nhưng khó tránh khỏi thử thách cam go của việc chung sống ngoài đời thực. Dữ liệu lớn chỉ mang lại một cơ hội, một khả năng; nó không thể 'cam đoan', không thể cấp 'phiếu bảo hành' cho tình yêu và hôn nhân.",
+     ["从素不相识，到逐渐相知相爱，最终进入婚姻: mẫu 从A，到B，最终C mô tả ba giai đoạn. 素不相识 là xưa nay chưa từng quen biết. 花费心思 là bỏ tâm tư, 投入精力 là bỏ công sức.",
+      "看似事半功倍 là trông như làm ít được nhiều: 看似 là mẫu câu cuối cùng. 线下相处 là chung sống, qua lại ngoài đời thực. 打包票 là cam đoan, 开质保卡 là cấp phiếu bảo hành. Đây là kết luận của tác giả."],
+     "两个人从素不相识，到逐渐相知相爱，最终进入婚姻，需要人们花费更多的心思，投入更多的精力。看似事半功倍的人工智能匹配相亲，难免要接受线下相处的严峻考验。大数据只是提供了一个机会，一种可能。无法为爱情婚姻打包票，开质保卡。"),
+    ("美好的情感需要真情的付出，美满的婚姻需要诚心地经营。幸福的密码只有你自己可以设定，幸福号列车的方向盘永远由你掌握，愿你在茫茫人海中找到那个与你同行的人。",
+     "Tình cảm đẹp cần sự cho đi bằng tấm chân tình, hôn nhân viên mãn cần được vun đắp bằng tấm lòng thành. Mật mã hạnh phúc chỉ có chính bạn mới cài đặt được, vô lăng của chuyến tàu hạnh phúc mãi mãi do bạn nắm giữ. Chúc bạn tìm được giữa biển người mênh mông người cùng mình đồng hành.",
+     ["付出 là bỏ ra, cho đi. 经营 nghĩa gốc là kinh doanh, ở đây là vun đắp, gìn giữ: 经营婚姻 là vun đắp hôn nhân. Hai câu đầu đối nhau rất đẹp.",
+      "幸福的密码 là mật mã hạnh phúc, 幸福号列车 là chuyến tàu mang tên hạnh phúc: hai hình ảnh công nghệ, khớp với chủ đề. 茫茫人海 là biển người mênh mông. 与你同行的人 là người đồng hành cùng bạn; ở đây 行 đọc là xíng."]),
+]
+
+add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 2: Bài khóa 算法时代：谁是你的菜？", size=42,
+    items=["Đọc từng đoạn: nghe tiếng Trung trước (chưa hiện bản dịch)",
+           "Sau đó: bản dịch tiếng Việt + giải thích từ ngữ, cấu trúc",
+           "Bài nghị luận chính – phản: chú ý câu hỏi chuyển ý ở giữa bài",
+           "Mẹo: tạm dừng, đọc to đoạn văn trước khi nghe giảng"],
+    say=["Tiếp theo là phần hai: bài khóa. Bài được cải biên từ bài viết 基因相亲，AI让男女一见钟情 của tác giả 张田勘, đăng trên trang mạng của 中国新闻周刊 ngày bảy tháng tám năm hai nghìn không trăm mười chín.",
+         F(0, f"Thầy chia bài thành {len(P)} đoạn ngắn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học."),
+         F(1, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
+         F(2, "Đây là một bài nghị luận phân tích hai mặt: nửa đầu nói về lợi ích của xem mắt bằng trí tuệ nhân tạo, nửa sau nói về giới hạn của nó. Các bạn hãy chú ý câu hỏi chuyển ý ở giữa bài."),
+         F(3, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
+
+for i, item in enumerate(P, 1):
+    zh, vi, notes = item[:3]
+    spoken = item[3] if len(item) > 3 else zh
+    spoken = spoken.replace("“", "").replace("”", "").replace("\n", "")
+    zsize = 54 if len(zh) <= 100 else 50
+    add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
+        say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
+             F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", ""), cap="")] + [F(1, n) for n in notes])
+
+add("bullets", chapter="Đọc hiểu & bố cục", section="Bài khóa 课文", title="Kiểm tra đọc hiểu: đúng hay sai?", reveal=True, size=34,
+    items=["(1) 作者认为，偶遇和刻意安排对于奔着婚姻去的人来说有些盲目。",
+           "Đáp án: Đúng.",
+           "(2) DNA相亲的原理是：抗原差异性越小，两个人越有眼缘。",
+           "Đáp án: Sai. 抗原差异性大，吸引力就强；反之则弱。",
+           "(3) AI相亲软件可以帮双方避免当面谈论金钱观、生育意愿时的尴尬。",
+           "Đáp án: Đúng.",
+           "(4) 日本爱媛县引入AI技术以后，相亲成功率提高到了16％。",
+           "Đáp án: Sai. 成功率“提高了16％”，不是“提高到16％”。",
+           "(5) 作者认为，大数据可以为爱情婚姻“打包票”。",
+           "Đáp án: Sai. 大数据只提供一个机会，无法“打包票”。"],
+    say=["Đọc xong bài khóa, chúng ta kiểm tra nhanh mức độ hiểu bài. Thầy đọc năm câu, các bạn phán đoán đúng hay sai nhé.",
+         F(0, "Câu một: 作者认为，偶遇和刻意安排对于奔着婚姻去的人来说有些盲目。 Tác giả cho rằng tình cờ gặp hay sắp đặt có chủ ý đều hơi mù quáng đối với người nhắm tới hôn nhân."),
+         F(1, "Đúng. Bài khóa viết: 多多少少显得有些盲目."),
+         F(2, "Câu hai: DNA相亲的原理是：抗原差异性越小，两个人越有眼缘。 Nguyên lý xem mắt bằng ADN là: sự khác biệt kháng nguyên càng nhỏ, hai người càng hợp mắt."),
+         F(3, "Sai. Ngược lại mới đúng: sự khác biệt kháng nguyên lớn thì sức hút mạnh, 反之则弱. Các bạn có thấy thú vị không: về sinh học, người ta lại bị thu hút bởi người khác mình."),
+         F(4, "Câu ba: 人工智能相亲软件可以帮双方避免当面谈论金钱观、生育意愿时的尴尬。 Phần mềm có thể giúp hai bên tránh ngượng ngùng khi bàn trực tiếp về tiền bạc, chuyện sinh con."),
+         F(5, "Đúng. Bài khóa viết: 有效避免了双方当面谈论时的尴尬."),
+         F(6, "Câu bốn: 日本爱媛县引入人工智能技术以后，相亲成功率提高到了百分之十六。 Sau khi tỉnh Ehime đưa công nghệ vào, tỷ lệ thành công tăng lên đến mười sáu phần trăm."),
+         F(7, "Sai. Bài viết là 提高了百分之十六, tăng thêm mười sáu phần trăm, chứ không phải 提高到, tăng lên đến. Đây là một điểm ngữ pháp rất hay bị nhầm: 提高了 chỉ mức tăng, còn 提高到 chỉ kết quả sau khi tăng."),
+         F(8, "Câu năm: 作者认为，大数据可以为爱情婚姻打包票。 Tác giả cho rằng dữ liệu lớn có thể cam đoan cho tình yêu và hôn nhân."),
+         F(9, "Sai. Dữ liệu lớn chỉ mang lại một cơ hội, một khả năng, 无法为爱情婚姻打包票.")])
+
+add("bullets", section="Bài khóa 课文", title="Bố cục: tác giả lập luận chính – phản thế nào? (写作二)", size=32,
+    items=["## 1. Bối cảnh, nêu vấn đề",
+           "盲目的浪漫无法带来理想的结局，AI的介入便应运而生 · 借助AI的DNA相亲，原理是……",
+           "## 2. Mặt chính (正面阐述)",
+           "全方位的交互梳理，避免尴尬 · 受到适婚人群的青睐 · 爱媛县：成功率提高了16％",
+           "## 3. Câu hỏi chuyển ý (设问，过渡)",
+           "基于数据分析的“门当户对”真的可以成就一段美满的姻缘吗？",
+           "## 4. Mặt phản (反面阐述) và kết luận",
+           "数据后面是活生生的人 · 只能形似，难以神似 · 要接受线下相处的考验 → 无法为爱情婚姻“打包票”"],
+    say=["Phần 妙笔生花 trong ôn tập đơn vị của sách có phân tích chính bài khóa này, để dạy cách viết một bài nghị luận trình bày hai mặt chính và phản. Chúng ta học luôn ở đây.",
+         F(0, "Bước một: nói rõ bối cảnh, dẫn ra vấn đề."),
+         F(1, "Trong bài: sự lãng mạn mù quáng không mang lại kết cục như ý, nên trí tuệ nhân tạo vào cuộc; rồi giới thiệu nguyên lý xem mắt bằng ADN."),
+         F(2, "Bước hai: trình bày mặt chính, đưa ra lý do hoặc ví dụ."),
+         F(3, "Trong bài có ba luận cứ: phần mềm sắp xếp thông tin toàn diện, tránh được ngượng ngùng; được nhiều người ưa chuộng; và ví dụ tỉnh Ehime, tỷ lệ thành công tăng mười sáu phần trăm."),
+         F(4, "Bước ba: đặt một câu hỏi để chuyển sang quan điểm ngược lại. Sách gọi là 设问，过渡段落."),
+         F(5, "Trong bài: 基于数据分析的门当户对真的可以成就一段美满的姻缘吗？ Một câu hỏi ngắn, đứng riêng thành một đoạn, rất nổi bật."),
+         F(6, "Bước bốn: trình bày mặt phản, rồi tổng kết. Có thể giữ trung lập, hoặc ủng hộ một bên."),
+         F(7, "Trong bài: sau dữ liệu là con người sống động; dữ liệu chỉ giống hình, khó giống thần; còn phải qua thử thách chung sống ngoài đời thực. Kết luận: dữ liệu lớn chỉ là một cơ hội, không thể cam đoan cho hạnh phúc. Các bạn hãy dùng bốn bước này khi viết bài luận của mình.")])
+
+add("bullets", section="Bài khóa 课文", title="Chú thích (注释)", size=34,
+    items=["## “摇一摇”",
+           "Tính năng kết bạn ngẫu nhiên của WeChat: lắc điện thoại để gặp người lạ cũng đang “lắc” cùng lúc",
+           "## 抗原 (antigen)",
+           "Chất kích thích cơ thể sinh kháng thể; 组织相容性抗原 quyết định cơ thể có “đào thải” cơ quan ghép hay không",
+           "## 原生家庭 ↔ 新生家庭",
+           "原生家庭: gia đình gốc, sống cùng cha mẹ trước khi cưới · 新生家庭: gia đình mới của hai vợ chồng",
+           "Không khí, thói quen, cách cư xử trong 原生家庭 ảnh hưởng đến con cái trong gia đình mới"],
+    say=["Sách có ba chú thích cho bài khóa.",
+         F(1, "Chú thích một: 摇一摇, tính năng kết bạn ngẫu nhiên của WeChat. Lắc điện thoại, hoặc bấm nút, bạn sẽ được ghép với người dùng cũng đang lắc vào cùng thời điểm, và có thể làm quen với người lạ."),
+         F(3, "Chú thích hai: 抗原, kháng nguyên, là chất đi vào cơ thể và kích thích cơ thể sinh ra kháng thể, 抗体. Kháng nguyên tương hợp mô quyết định khả năng tiếp nhận cơ quan khi ghép tạng: họ hàng càng gần, mức tương hợp càng cao, ghép càng dễ thành công."),
+         F(5, "Chú thích ba: 原生家庭, gia đình gốc, là gia đình con cái sống cùng cha mẹ trước khi kết hôn. Còn 新生家庭 là gia đình mới do hai vợ chồng lập nên, không bao gồm cha mẹ hai bên."),
+         F(6, "Bầu không khí, thói quen truyền thống, tấm gương mà con cái noi theo, cách các thành viên đối xử với nhau trong gia đình gốc, đều ảnh hưởng đến cách con cái cư xử trong gia đình mới sau này. Hiểu được điều đó, người ta mới tránh mang những yếu tố tiêu cực vào gia đình mới.")])
+
+# ======================= MẪU CÂU TRỌNG ĐIỂM =======================
+add("bullets", chapter="Mẫu câu: 日趋 · 奔着", section="Mẫu câu 重点句型", title="1. 日趋 – ngày càng · 2. 奔着 – nhắm tới, hướng tới", size=33,
+    items=["## 日趋 + tính từ / động từ hai âm tiết: văn viết, mỗi ngày một hướng tới (= 日益)",
+           "(1) 在科技日益进步，人际交往日趋便利的当今社会，……都有可能开启一段感情。",
+           "(2) 这篇作品是作者在创作上日趋成熟的标志。",
+           "(3) 全球环境污染日趋严重，保护环境刻不容缓。",
+           "## 奔着 + mục tiêu (+ 去/来): nhắm tới, lấy … làm mục tiêu",
+           "(1) 这些交往的打开方式对于奔着婚姻目标去的双方来说，多多少少显得有些盲目。",
+           "(2) 我一直知道自己要做什么，奔着目标而去，就不会受到周围的干扰。",
+           "(3) 很多买彩票的人都是奔着大奖去的，但却往往空手而归。"],
+    say=["Bây giờ chúng ta sang phần mẫu câu trọng điểm. Bài này có mười mẫu, thầy chia thành năm cặp.",
+         F(0, "Mẫu thứ nhất: 日趋. Đây là phó từ văn viết, nghĩa là mỗi ngày một hướng tới, ngày càng, gần nghĩa với 日益. Phía sau thường là tính từ hoặc động từ hai âm tiết, như 日趋成熟，日趋严重，日趋便利."),
+         F(1, "Ví dụ một, lấy từ bài khóa: 在科技日益进步，人际交往日趋便利的当今社会。 Trong xã hội ngày nay, khi khoa học ngày một tiến bộ, giao tiếp ngày càng thuận tiện. Các bạn thấy, 日益 và 日趋 đứng cạnh nhau."),
+         F(2, "Ví dụ hai: 这篇作品是作者在创作上日趋成熟的标志。 Tác phẩm này là dấu mốc cho thấy tác giả ngày càng chín chắn trong sáng tác."),
+         F(3, "Ví dụ ba: 全球环境污染日趋严重，保护环境刻不容缓。 Ô nhiễm môi trường toàn cầu ngày càng nghiêm trọng, bảo vệ môi trường là việc không thể chậm trễ. 刻不容缓 là không thể chần chừ một khắc."),
+         F(4, "Mẫu thứ hai: 奔着. Chữ 奔 đọc thanh bốn, nghĩa là hướng về, nhắm tới một mục tiêu nào đó. Cấu trúc: 奔着 cộng mục tiêu, thường thêm 去 hoặc 来 ở sau."),
+         F(5, "Ví dụ một, lấy từ bài khóa: 这些交往的打开方式对于奔着婚姻目标去的双方来说，多多少少显得有些盲目。 Đối với hai người nhắm tới hôn nhân, những cách quen nhau này ít nhiều có vẻ mù quáng."),
+         F(6, "Ví dụ hai: 我一直知道自己要做什么，奔着目标而去，就不会受到周围的干扰。 Tôi luôn biết mình muốn làm gì; cứ nhắm thẳng mục tiêu mà đi thì sẽ không bị xung quanh làm xao nhãng."),
+         F(7, "Ví dụ ba: 很多买彩票的人都是奔着大奖去的，但却往往空手而归。 Nhiều người mua vé số đều nhắm tới giải lớn, nhưng thường tay trắng ra về.")])
+
+add("bullets", chapter="Mẫu câu: 多多少少 · 起初", section="Mẫu câu 重点句型", title="3. 多多少少 – ít nhiều · 4. 起初 – lúc đầu", size=33,
+    items=["## 多多少少: dạng lặp của 多少, nghĩa là hơi, ít nhiều; thường đi với 有点儿 / 有些",
+           "(1) ……对于奔着婚姻目标去的双方来说，多多少少显得有些盲目。",
+           "(2) 每个人都多多少少会有点惰性，但是我们不能放纵自己，要随时保持自律。",
+           "(3) 每个人的性格多多少少都会受到本国文化潜移默化的影响。",
+           "## 起初: lúc ban đầu; vế sau thường có 后来 để chỉ sự thay đổi",
+           "(1) 借助AI的DNA相亲出现已有时日，起初的原理是确定双方组织相容性抗原的匹配度。",
+           "(2) 在这场比赛中，我们队起初连连丢球，但后来改变了战术，终于击败了对方。",
+           "(3) 起初我还以为他性格腼腆，后来我才发觉他只是有点慢热。"],
+    say=[F(0, "Mẫu thứ ba: 多多少少. Đây là dạng lặp lại của 多少, nghĩa là ít nhiều, hơi hơi. Nó thường đi với 有点儿 hoặc 有些, làm cho lời nói nhẹ nhàng, khéo léo hơn."),
+         F(1, "Ví dụ một, lấy từ bài khóa: 多多少少显得有些盲目, ít nhiều có vẻ hơi mù quáng. Tác giả không phủ nhận hoàn toàn, chỉ nói nhẹ nhàng."),
+         F(2, "Ví dụ hai: 每个人都多多少少会有点惰性，但是我们不能放纵自己，要随时保持自律。 Ai cũng ít nhiều có chút lười biếng, nhưng chúng ta không được buông thả bản thân, phải luôn giữ kỷ luật. 惰性 là tính ỳ, lười biếng."),
+         F(3, "Ví dụ ba: 每个人的性格多多少少都会受到本国文化潜移默化的影响。 Tính cách mỗi người ít nhiều đều chịu ảnh hưởng ngấm ngầm của văn hóa nước mình. 潜移默化 là thấm dần một cách vô hình."),
+         F(4, "Mẫu thứ tư: 起初, nghĩa là lúc ban đầu, mới đầu. Vế sau thường có 后来, về sau, để chỉ sự thay đổi."),
+         F(5, "Ví dụ một, lấy từ bài khóa: 借助人工智能的DNA相亲出现已有时日，起初的原理是确定双方组织相容性抗原的匹配度。 Xem mắt bằng ADN đã có một thời gian, nguyên lý ban đầu là xác định mức độ phù hợp kháng nguyên. Ở đây 起初 làm định ngữ: 起初的原理."),
+         F(6, "Ví dụ hai: 在这场比赛中，我们队起初连连丢球，但后来改变了战术，终于击败了对方。 Trong trận này, ban đầu đội tôi liên tục để thủng lưới, nhưng sau đó thay đổi chiến thuật, cuối cùng đã đánh bại đối phương."),
+         F(7, "Ví dụ ba: 起初我还以为他性格腼腆，后来我才发觉他只是有点慢热。 Lúc đầu tôi cứ tưởng anh ấy tính nhút nhát, về sau mới nhận ra anh ấy chỉ là người chậm làm quen. 腼腆 là bẽn lẽn, 慢热 là chậm thân, cần thời gian mới cởi mở.")])
+
+add("bullets", chapter="Mẫu câu: 反之 · 抑或", section="Mẫu câu 重点句型", title="5. 反之 – ngược lại · 6. 抑或 – hay là, hoặc là", size=33,
+    items=["## 反之: liên từ, nối hai vế trái ngược nhau; vế sau thường có 则 / 便 / 就",
+           "(1) ……如果这种抗原差异性大，两性之间吸引力就强，即所谓“有眼缘”；反之则弱，俗称“不来电”。",
+           "(2) 对未来有规划，人就有前进动力；反之，便会觉得迷茫。",
+           "(3) 市场经济中，货物稀少，价格就会上涨；反之，货源充足，价格则会下降。",
+           "## 抑或: liên từ, văn viết = 还是、或者; hay dùng trong câu liệt kê, câu hỏi lựa chọn",
+           "(1) 不论是通过收入、职业等门槛进行筛选，还是……，抑或通过照片检测技术来精准定位兴趣爱好……",
+           "(2) 无论是在法律层面抑或现实层面，个人信息安全已经成为亟待解决的社会问题。",
+           "(3) 一时间，各种情感一齐涌上他的心头，说不清是震惊，还是喜悦，抑或是害怕。"],
+    say=[F(0, "Mẫu thứ năm: 反之. Đây là liên từ văn viết, nghĩa là ngược lại, nói ngược lại. Nó nối hai vế có ý trái ngược; vế sau thường có 则，便 hoặc 就."),
+         F(1, "Ví dụ một, lấy từ bài khóa: 如果这种抗原差异性大，两性之间吸引力就强，即所谓有眼缘；反之则弱，俗称不来电。 Khác biệt lớn thì sức hút mạnh; ngược lại thì yếu."),
+         F(2, "Ví dụ hai: 对未来有规划，人就有前进动力；反之，便会觉得迷茫。 Có kế hoạch cho tương lai thì con người có động lực tiến lên; ngược lại, sẽ thấy mơ hồ, lạc lối."),
+         F(3, "Ví dụ ba: 市场经济中，货物稀少，价格就会上涨；反之，货源充足，价格则会下降。 Trong kinh tế thị trường, hàng hóa khan hiếm thì giá tăng; ngược lại, nguồn hàng dồi dào thì giá sẽ giảm."),
+         F(4, "Mẫu thứ sáu: 抑或. Đây là liên từ văn viết, nghĩa giống 还是 hoặc 或者: hay là, hoặc là. Hay dùng ở vế cuối của một chuỗi liệt kê, hoặc trong câu hỏi lựa chọn."),
+         F(5, "Ví dụ một, lấy từ bài khóa: 不论是通过收入、职业等门槛进行筛选，还是根据性格特征来进行匹配，抑或通过照片检测技术来精准定位兴趣爱好。 Mẫu đầy đủ là 不论是A，还是B，抑或C."),
+         F(6, "Ví dụ hai: 无论是在法律层面抑或现实层面，个人信息安全已经成为亟待解决的社会问题。 Dù ở góc độ pháp luật hay thực tế, an toàn thông tin cá nhân đã trở thành vấn đề xã hội cần giải quyết gấp. Câu này nối ngay với bài bốn chấm một."),
+         F(7, "Ví dụ ba: 一时间，各种情感一齐涌上他的心头，说不清是震惊，还是喜悦，抑或是害怕。 Trong phút chốc, bao cảm xúc cùng dâng lên trong lòng anh, chẳng rõ là sửng sốt, vui mừng hay là sợ hãi.")])
+
+add("bullets", chapter="Mẫu câu: 基于 · 即便……也", section="Mẫu câu 重点句型", title="7. 基于 – dựa trên · 8. 即便……也…… – cho dù … cũng …", size=33,
+    items=["## 基于: giới từ, văn viết; căn cứ vào, trên cơ sở của …",
+           "(1) 基于数据分析的“门当户对”真的可以成就一段美满的姻缘吗？",
+           "(2) 基于这些现状，我们制定了新的对策。",
+           "(3) 基于以上理由，我无法赞成你的决định。",
+           "## 即便……也……: câu nhượng bộ giả thiết (= 即使……也……)",
+           "(1) 即便现代男女自由恋爱的过程中长时间考察了对方，但也有可能不太了解对方的心灵深处……",
+           "(2) 别说中学生了，即便是生物老师，也说不出这种植物的名字。",
+           "(3) 即便是富裕家庭，也经不住她这么花钱，更不用说工薪家庭了。"],
+    say=[F(0, "Mẫu thứ bảy: 基于. Đây là giới từ văn viết, nghĩa là căn cứ vào, trên cơ sở của. Cụm 基于 có thể làm định ngữ có 的 đi kèm, hoặc đứng đầu câu làm trạng ngữ."),
+         F(1, "Ví dụ một, lấy từ bài khóa: 基于数据分析的门当户对真的可以成就一段美满的姻缘吗？ Môn đăng hộ đối dựa trên phân tích dữ liệu có thật sự tạo nên nhân duyên viên mãn? Ở đây 基于 làm định ngữ."),
+         F(2, "Ví dụ hai: 基于这些现状，我们制定了新的对策。 Dựa trên những thực trạng này, chúng tôi đã đề ra đối sách mới."),
+         F(3, "Ví dụ ba: 基于以上理由，我无法赞成你的决定。 Dựa trên những lý do trên, tôi không thể tán thành quyết định của bạn. Câu này rất hữu ích khi viết bài nghị luận."),
+         F(4, "Mẫu thứ tám: 即便，也. Đây là câu phức nhượng bộ giả thiết, nghĩa giống 即使，也: cho dù, cũng. Vế trước nêu một giả thiết, có khi là điều khó xảy ra; vế sau nói kết quả vẫn không đổi."),
+         F(5, "Ví dụ một, lấy từ bài khóa: 即便现代男女自由恋爱的过程中长时间考察了对方，但也有可能不太了解对方的心灵深处。 Cho dù đã tìm hiểu nhau lâu, vẫn có thể không hiểu hết tâm hồn người kia."),
+         F(6, "Ví dụ hai: 别说中学生了，即便是生物老师，也说不出这种植物的名字。 Đừng nói học sinh trung học, ngay cả giáo viên sinh học cũng không nói được tên loài cây này."),
+         F(7, "Ví dụ ba: 即便是富裕家庭，也经不住她这么花钱，更不用说工薪家庭了。 Cho dù là gia đình giàu có cũng không chịu nổi kiểu tiêu tiền như cô ấy, huống chi gia đình làm công ăn lương. 经不住 là không chịu nổi.")])
+
+add("bullets", chapter="Mẫu câu: 何况 · 看似", section="Mẫu câu 重点句型", title="9. （更）何况 – huống hồ · 10. 看似 – trông có vẻ", size=33,
+    items=["## 何况: liên từ biểu thị tăng tiến, thường mang ý phản vấn; có thể nói 更何况",
+           "(1) 更何况冷冰冰的数据后面是一个个活生生的人。",
+           "(2) 学习本国的语言都不容易，何况同时学习几门外语呢？",
+           "(3) “人非圣贤，孰能无过”，何况他还年轻，犯点错是难免的。",
+           "## 看似: động từ, nhìn bề ngoài thì có vẻ như …; vế sau thường nêu sự thật trái ngược",
+           "(1) 看似事半功倍的“AI匹配相亲”，难免要接受线下相处的严峻考验。",
+           "(2) 邻居之间的小矛盾看似小事，积累多了也会引发大问题。",
+           "(3) 在生活中，我们一句看似平常的问候，都可能会给别人带来温暖和感动。"],
+    say=[F(0, "Mẫu thứ chín: 何况. Đây là liên từ biểu thị quan hệ tăng tiến, thường mang ý phản vấn: việc dễ còn chưa được, huống hồ việc khó. Có thể nói 更何况 để nhấn mạnh hơn. Tiếng Việt dịch là huống hồ, huống chi."),
+         F(1, "Ví dụ một, lấy từ bài khóa: 更何况冷冰冰的数据后面是一个个活生生的人。 Huống hồ đằng sau những con số lạnh lẽo là từng con người sống động. Đây là lý do thứ hai, mạnh hơn lý do thứ nhất."),
+         F(2, "Ví dụ hai: 学习本国的语言都不容易，何况同时学习几门外语呢？ Học tiếng mẹ đẻ còn chẳng dễ, huống hồ học cùng lúc mấy ngoại ngữ? Chú ý chữ 都 ở vế trước, và chữ 呢 ở cuối câu phản vấn."),
+         F(3, "Ví dụ ba: 人非圣贤，孰能无过，何况他还年轻，犯点错是难免的。 Người đâu phải thánh hiền, ai mà không có lỗi, huống chi cậu ấy còn trẻ, phạm chút sai lầm là khó tránh. 孰能无过 là ai có thể không có lỗi."),
+         F(4, "Mẫu thứ mười: 看似. Đây là động từ, nghĩa là nhìn bề ngoài thì có vẻ như. Vế sau thường nêu sự thật trái ngược với vẻ bề ngoài ấy."),
+         F(5, "Ví dụ một, lấy từ bài khóa: 看似事半功倍的人工智能匹配相亲，难免要接受线下相处的严峻考验。 Xem mắt bằng trí tuệ nhân tạo trông như làm ít được nhiều, nhưng vẫn phải qua thử thách chung sống ngoài đời thực."),
+         F(6, "Ví dụ hai: 邻居之间的小矛盾看似小事，积累多了也会引发大问题。 Mâu thuẫn nhỏ giữa hàng xóm trông như chuyện nhỏ, nhưng tích tụ nhiều cũng gây ra chuyện lớn."),
+         F(7, "Ví dụ ba: 在生活中，我们一句看似平常的问候，都可能会给别人带来温暖和感动。 Trong cuộc sống, một lời hỏi thăm trông có vẻ bình thường của chúng ta cũng có thể mang lại sự ấm áp và cảm động cho người khác.")])
+
+add("bullets", section="Mẫu câu 重点句型", title="Luyện tập mẫu câu: chọn từ thích hợp", reveal=True, size=34,
+    items=["## 日趋 · 反之 · 抑或 · 即便 · 何况 · 看似",
+           "(1) 随着网络的普及，人们的生活方式___多样化。",
+           "Đáp án: 日趋",
+           "(2) 这道题___简单，其实很多人都做错了。",
+           "Đáp án: 看似",
+           "(3) 天天锻炼，身体就会越来越好；___，身体就会越来越差。",
+           "Đáp án: 反之",
+           "(4) 连老师都不知道答案，___我们这些学生呢？",
+           "Đáp án: 何况",
+           "(5) ___工作再忙，他也每天给父母打一个电话。",
+           "Đáp án: 即便"],
+    say=["Bây giờ các bạn thử vận dụng: chọn từ thích hợp điền vào chỗ trống. Có sáu từ: 日趋，反之，抑或，即便，何况，看似. Có một từ không dùng đến.",
+         F(1, "Câu một: 随着网络的普及，人们的生活方式什么多样化。 Cùng với sự phổ cập của Internet, lối sống của mọi người thế nào đa dạng hóa?"),
+         F(2, "Đáp án: 日趋. 生活方式日趋多样化, lối sống ngày càng đa dạng."),
+         F(3, "Câu hai: 这道题什么简单，其实很多人都做错了。 Bài này thế nào đơn giản, thật ra rất nhiều người làm sai."),
+         F(4, "Đáp án: 看似. 看似简单，其实, trông có vẻ đơn giản, thật ra. Chữ 其实 ở vế sau là gợi ý."),
+         F(5, "Câu ba: 天天锻炼，身体就会越来越好；什么，身体就会越来越差。 Ngày nào cũng tập thể dục thì sức khỏe ngày càng tốt; cái gì, sức khỏe ngày càng kém."),
+         F(6, "Đáp án: 反之. Hai vế có ý trái ngược nhau."),
+         F(7, "Câu bốn: 连老师都不知道答案，什么我们这些学生呢？ Đến thầy giáo còn không biết đáp án, cái gì học sinh chúng tôi?"),
+         F(8, "Đáp án: 何况. 连什么都，何况什么呢, đến… còn…, huống hồ…. Đây là câu phản vấn tăng tiến điển hình."),
+         F(9, "Câu năm: 什么工作再忙，他也每天给父母打一个电话。 Cái gì công việc bận đến đâu, anh ấy cũng gọi điện cho bố mẹ mỗi ngày."),
+         F(10, "Đáp án: 即便. 即便，也, cho dù, cũng. Từ không dùng đến là 抑或.")])
+
+# ======================= KẾT HỢP TỪ =======================
+add("bullets", chapter="Kết hợp từ", section="Kết hợp từ 词语搭配", title="Kết hợp từ (1): 刻意 · 介入 · 一番 · 全方位", size=34,
+    items=["## 刻意: ～追求 · ～模仿 · ～制造 · ～安排 · ～回避",
+           "有了误会之后，两个人总是刻意回避与对方见面。",
+           "## 介入: 警方～ · 政府～ · ～方式 · ～程度",
+           "目前，政府有关部门已经积极介入，争取早日解决老旧小区停车难问题。",
+           "## 一番: 下～功夫 · 干～事业 · 有～作为 · 取得～成绩",
+           "青年人要想干一番轰轰烈烈的事业，少不了拼搏精神。",
+           "## 全方位: ～合作 · ～检查 · ～服务",
+           "公司宗旨是提供优质产品和最佳服务，全方位满足市场需求。"],
+    say=["Tiếp theo là phần kết hợp từ, sách có tám từ.",
+         F(0, "Từ thứ nhất: 刻意. Hay gặp: 刻意追求，刻意模仿，刻意制造，刻意安排，刻意回避. Tức là cố tình theo đuổi, cố tình bắt chước, cố tình tạo ra, cố tình sắp đặt, và cố tình né tránh."),
+         F(1, "Ví dụ: 有了误会之后，两个人总是刻意回避与对方见面。 Sau khi có hiểu lầm, hai người luôn cố tình tránh gặp mặt nhau."),
+         F(2, "Từ thứ hai: 介入. Hay gặp: 警方介入，政府介入，介入方式，介入程度. Tức là cảnh sát vào cuộc, chính quyền can thiệp, cách thức can thiệp, mức độ can thiệp."),
+         F(3, "Ví dụ: 目前，政府有关部门已经积极介入，争取早日解决老旧小区停车难问题。 Hiện nay, các cơ quan chính quyền liên quan đã tích cực vào cuộc, cố gắng sớm giải quyết vấn đề khó đỗ xe ở các khu dân cư cũ."),
+         F(4, "Từ thứ ba: 一番. Hay gặp: 下一番功夫，干一番事业，有一番作为，取得一番成绩. Tức là bỏ một phen công sức, làm nên một sự nghiệp, có một phen thành tựu, đạt được một số thành tích."),
+         F(5, "Ví dụ: 青年人要想干一番轰轰烈烈的事业，少不了拼搏精神。 Người trẻ muốn làm nên một sự nghiệp oanh liệt thì không thể thiếu tinh thần phấn đấu. 轰轰烈烈 là rầm rộ, oanh liệt."),
+         F(6, "Từ thứ tư: 全方位. Hay gặp: 全方位合作，全方位检查，全方位服务. Tức là hợp tác toàn diện, kiểm tra toàn diện, phục vụ toàn diện."),
+         F(7, "Ví dụ: 公司宗旨是提供优质产品和最佳服务，全方位满足市场需求。 Tôn chỉ của công ty là cung cấp sản phẩm chất lượng cao và dịch vụ tốt nhất, đáp ứng toàn diện nhu cầu thị trường.")])
+
+add("bullets", section="Kết hợp từ 词语搭配", title="Kết hợp từ (2): 梳理 · 筛选 · 引入 · 严峻", size=34,
+    items=["## 梳理: 仔细～ · 全面～ · ～脉络 · ～思绪",
+           "公司打算重新梳理、整合各部门的管理职能，以提质增效。",
+           "## 筛选: ～参赛队员 · ～人才 · 精心～",
+           "我们这样层层筛选、考察，就是为了最终能招聘到有真才实学的人。",
+           "## 引入: ～市场 · ～轨道 · ～歧途 · ～误区",
+           "对网络资讯，我们需要有一些分辨力，不然很可能被不良信息引入歧途。",
+           "## 严峻: ～挑战 · 形势～ · ～神情 · ～目光",
+           "本届奥运会，首轮比赛就与强手美国队相遇，中国女排面临严峻的考验。"],
+    say=[F(0, "Từ thứ năm: 梳理. Hay gặp: 仔细梳理，全面梳理，梳理脉络，梳理思绪. Tức là sắp xếp tỉ mỉ, rà soát toàn diện, làm rõ mạch lạc, và sắp xếp lại dòng suy nghĩ."),
+         F(1, "Ví dụ: 公司打算重新梳理、整合各部门的管理职能，以提质增效。 Công ty dự định rà soát, sắp xếp lại chức năng quản lý của các bộ phận, để nâng cao chất lượng và hiệu quả."),
+         F(2, "Từ thứ sáu: 筛选. Hay gặp: 筛选参赛队员，筛选人才，精心筛选. Tức là chọn lọc vận động viên dự thi, sàng lọc nhân tài, và chọn lọc kỹ lưỡng."),
+         F(3, "Ví dụ: 我们这样层层筛选、考察，就是为了最终能招聘到有真才实学的人。 Chúng tôi sàng lọc, khảo sát qua nhiều vòng như vậy, chính là để cuối cùng tuyển được người có thực tài. 真才实学 là tài thật học thật."),
+         F(4, "Từ thứ bảy: 引入. Hay gặp: 引入市场，引入轨道，引入歧途，引入误区. Tức là đưa vào thị trường, đưa vào quỹ đạo, dẫn vào đường lầm lạc, và dẫn vào ngộ nhận."),
+         F(5, "Ví dụ: 对网络资讯，我们需要有一些分辨力，不然很可能被不良信息引入歧途。 Với thông tin trên mạng, ta cần có khả năng phân biệt, nếu không rất dễ bị thông tin xấu dẫn vào con đường sai lầm."),
+         F(6, "Từ thứ tám: 严峻. Hay gặp: 严峻挑战，形势严峻，严峻神情，严峻目光. Tức là thách thức cam go, tình hình nghiêm trọng, vẻ mặt nghiêm nghị, và ánh mắt nghiêm khắc."),
+         F(7, "Ví dụ: 本届奥运会，首轮比赛就与强手美国队相遇，中国女排面临严峻的考验。 Kỳ Olympic này, ngay vòng đầu đã gặp đối thủ mạnh là đội Mỹ, đội bóng chuyền nữ Trung Quốc đối mặt với thử thách cam go.")])
+
+# ======================= THÀNH NGỮ =======================
+add("bullets", chapter="Thành ngữ, tục ngữ (10 câu)", section="Thành ngữ 成语", title="Thành ngữ (1)", size=33,
+    items=["## 应运而生 yìngyùn'érshēng – thuận thời thế mà ra đời",
+           "随着互联网的普及，线上教育应运而生。",
+           "## 门当户对 méndāng-hùduì – môn đăng hộ đối",
+           "时下的门当户对不单指经济收入、社会阶层，更包括了学历、性格等因素。",
+           "## 毋庸讳言 wúyōng-huìyán – không cần giấu giếm, xin nói thẳng",
+           "毋庸讳言，家庭教育是学校教育和社会教育的基础。",
+           "## 师傅领进门，修行靠个人 – thầy dẫn vào cửa, tu hành là ở bản thân",
+           "老师的理论传授给你了，怎么运用就看你自己了。"],
+    say=["Bài này có mười thành ngữ và tục ngữ. Thầy chia thành ba nhóm, mỗi câu kèm một ví dụ ngoài bài khóa.",
+         F(0, "Câu thứ nhất: 应运而生. Nghĩa gốc là thuận theo mệnh trời mà ra đời; nay chỉ chung một sự vật ra đời theo yêu cầu của tình hình. Trong bài: 人工智能的介入便应运而生."),
+         F(1, "Ví dụ: 随着互联网的普及，线上教育应运而生。 Cùng với sự phổ cập Internet, giáo dục trực tuyến ra đời."),
+         F(2, "Câu thứ hai: 门当户对. Chỉ thân phận, địa vị và kinh tế của hai gia đình tương xứng, rất hợp để kết thông gia. Người Việt nói y hệt: môn đăng hộ đối."),
+         F(3, "Ví dụ: 时下的门当户对不单指经济收入、社会阶层，更包括了学历、性格等因素。 Môn đăng hộ đối thời nay không chỉ là thu nhập, tầng lớp xã hội, mà còn bao gồm học vấn, tính cách."),
+         F(4, "Câu thứ ba: 毋庸讳言. 毋庸 là không cần, 讳言 là kiêng không nói: không cần giấu giếm, có thể nói thẳng. Chú ý chữ đầu đọc là wú, thanh hai."),
+         F(5, "Ví dụ: 毋庸讳言，家庭教育是学校教育和社会教育的基础。 Phải nói thẳng rằng, giáo dục gia đình là nền tảng của giáo dục nhà trường và giáo dục xã hội."),
+         F(6, "Câu thứ tư là một câu tục ngữ: 师傅领进门，修行靠个人. Thầy chỉ có vai trò dẫn dắt, còn việc trau dồi, nâng cao học vấn hay tay nghề thì phải dựa vào nỗ lực của chính người học."),
+         F(7, "Ví dụ: 当然，师傅领进门、修行靠个人，老师的理论传授给你了，怎么运用就看你自己了。 Tất nhiên, thầy dẫn vào cửa, tu hành ở bản thân: thầy đã truyền lý thuyết cho bạn rồi, vận dụng thế nào là ở bạn. Câu này cũng rất đúng với việc học tiếng Trung qua video đấy.")])
+
+add("bullets", section="Thành ngữ 成语", title="Thành ngữ (2)", size=34,
+    items=["## 栩栩如生 xǔxǔrúshēng – sống động như thật",
+           "齐白石画的小鱼小虾，生动活泼，栩栩如生。",
+           "## 入木三分 rùmù-sānfēn – thấu vào gỗ ba phân; sâu sắc, thấu đáo",
+           "他虽然只说了短短几句话，但对当前形势的分析入木三分。",
+           "## 素不相识 sùbùxiāngshí – xưa nay chưa từng quen biết",
+           "我和他素不相识，但在我摔伤后，他却立即把我送到医院治疗。"],
+    say=[F(0, "Câu thứ năm: 栩栩如生, chỉ hình tượng nghệ thuật rất giống thật, như đang sống. Trong bài: 难以做到栩栩如生."),
+         F(1, "Ví dụ: 齐白石画的小鱼小虾，生动活泼，栩栩如生。 Những chú cá nhỏ, tôm nhỏ do Tề Bạch Thạch vẽ thật sinh động, như đang sống. 齐白石 là danh họa nổi tiếng của Trung Quốc, đặc biệt giỏi vẽ tôm."),
+         F(2, "Câu thứ sáu: 入木三分. Tương truyền thư pháp gia Vương Hi Chi viết chữ lên gỗ, nét mực thấm sâu vào gỗ đến ba phân. Vốn khen nét chữ có lực, nay thường ví sự phân tích vấn đề rất sâu sắc."),
+         F(3, "Ví dụ: 他虽然只说了短短几句话，但对当前形势的分析入木三分。 Tuy anh ấy chỉ nói vài câu ngắn ngủi, nhưng phân tích tình hình hiện tại hết sức sâu sắc."),
+         F(4, "Câu thứ bảy: 素不相识. 素 là xưa nay, 识 là biết: xưa nay chưa từng quen biết. Trong bài: 两个人从素不相识，到逐渐相知相爱."),
+         F(5, "Ví dụ: 我和他素不相识，但在我摔伤后，他却立即把我送到医院治疗。 Tôi và anh ấy chưa từng quen biết, nhưng khi tôi ngã bị thương, anh ấy lập tức đưa tôi vào viện.")])
+
+add("bullets", section="Thành ngữ 成语", title="Thành ngữ (3)", size=34,
+    items=["## 事半功倍 shìbàn-gōngbèi – làm ít được nhiều",
+           "工作中，细节处理上多用些心，往往事半功倍。",
+           "## 打包票 dǎ bāopiào – cam đoan, bảo đảm chắc chắn",
+           "谁也不知道你俩的婚事能不能成，这我可不能给你打包票。",
+           "## 茫茫人海 mángmáng rénhǎi – biển người mênh mông",
+           "我是如此的幸运，竟然能够在茫茫人海中遇到你。"],
+    say=[F(0, "Câu thứ tám: 事半功倍. Chỉ bỏ một nửa sức lực mà thu được hiệu quả gấp đôi, tức là làm ít được nhiều. Trái nghĩa là 事倍功半, làm nhiều được ít. Trong bài: 看似事半功倍的人工智能匹配相亲."),
+         F(1, "Ví dụ: 工作中，细节处理上多用些心，往往事半功倍。 Trong công việc, để tâm hơn vào xử lý chi tiết thường sẽ làm ít được nhiều."),
+         F(2, "Câu thứ chín: 打包票. Sách giải thích, 包票 là tên gọi cũ của giấy bảo đảm; khi rất chắc chắn về một việc, người ta nói có thể 打包票, tức là cam đoan."),
+         F(3, "Ví dụ: 谁也不知道你俩的婚事能不能成，这我可不能给你打包票。 Chẳng ai biết chuyện cưới xin của hai người có thành hay không, việc này tôi không thể cam đoan với cậu được."),
+         F(4, "Câu thứ mười: 茫茫人海, đám đông người như biển cả mênh mông. Trong bài: 愿你在茫茫人海中找到那个与你同行的人."),
+         F(5, "Ví dụ: 我是如此的幸运，竟然能够在茫茫人海中遇到你。 Tôi thật may mắn biết bao, giữa biển người mênh mông lại có thể gặp được em. Câu này rất hay dùng trong thư tình, lời chúc cưới.")])
+
+# ======================= LUYỆN TẬP =======================
+add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ thích hợp điền vào chỗ trống", reveal=True, size=34,
+    items=["## 栩栩如生 · 筛选 · 一番 · 事半功倍 · 入木三分",
+           "(1) 他的眼光非常独到，无论分析什么事情都___。",
+           "Đáp án: 入木三分",
+           "(2) “台上一分钟，台下十年功。”学京剧他是下了___苦功夫的。",
+           "Đáp án: 一番",
+           "(3) 他学画才一年多，进步神速，你看这金鱼画得真是___。",
+           "Đáp án: 栩栩如生",
+           "(4) 我们在学习中要善于摸索规律，这样才能收到___的效果。",
+           "Đáp án: 事半功倍",
+           "(5) 竞争就是企业要经过市场的___，适合的才能生存下来。",
+           "Đáp án: 筛选"],
+    say=["Bây giờ chúng ta sang phần luyện tập. Bài tập một: chọn từ thích hợp điền vào chỗ trống. Có năm từ: 栩栩如生，筛选，一番，事半功倍，入木三分.",
+         F(1, "Câu một: 他的眼光非常独到，无论分析什么事情都什么。 Anh ấy có con mắt rất độc đáo, phân tích việc gì cũng thế nào? Các bạn tạm dừng và chọn nhé."),
+         F(2, "Đáp án: 入木三分. 分析事情入木三分, phân tích sự việc sâu sắc thấu đáo."),
+         F(3, "Câu hai: 台上一分钟，台下十年功。学京剧他是下了什么苦功夫的。 Một phút trên sân khấu, mười năm khổ luyện dưới sân khấu. Học Kinh kịch, anh ấy đã bỏ ra bao nhiêu công sức khổ luyện?"),
+         F(4, "Đáp án: 一番. 下了一番苦功夫, bỏ ra một phen khổ công. Đây là kết hợp 下一番功夫 vừa học."),
+         F(5, "Câu ba: 他学画才一年多，进步神速，你看这金鱼画得真是什么。 Anh ấy học vẽ mới hơn một năm mà tiến bộ thần tốc, bạn xem con cá vàng này vẽ thật là thế nào."),
+         F(6, "Đáp án: 栩栩如生. 金鱼画得栩栩如生, con cá vàng vẽ sống động như thật. Chữ 神速 ở đây chính là chữ 神 thần kỳ của bài trước."),
+         F(7, "Câu bốn: 我们在学习中要善于摸索规律，这样才能收到什么的效果。 Trong học tập, chúng ta phải giỏi tìm tòi quy luật, như vậy mới thu được hiệu quả thế nào?"),
+         F(8, "Đáp án: 事半功倍. 收到事半功倍的效果, đạt hiệu quả làm ít được nhiều."),
+         F(9, "Câu năm: 竞争就是企业要经过市场的什么，适合的才能生存下来。 Cạnh tranh nghĩa là doanh nghiệp phải trải qua sự gì của thị trường, ai phù hợp mới tồn tại được."),
+         F(10, "Đáp án: 筛选. 经过市场的筛选, trải qua sự sàng lọc của thị trường.")])
+
+add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn đáp án đúng (1)", reveal=True, size=34,
+    items=["(1) 人的一生不可能总是一帆风顺，我们都难免会经历生活的（  ）考验。 A.严厉 B.严峻 C.严格 D.严肃",
+           "Đáp án: B. 严峻 – 严峻的考验 (thử thách cam go)",
+           "(2) 发现问题之后，我们要进行系统（  ）和深入分析，进而有针对性地提出整改意见。 A.疏通 B.整理 C.梳理 D.清理",
+           "Đáp án: C. 梳理 – rà soát có hệ thống, đi với 分析",
+           "(3) 在学习中，老师要引导学生开动脑筋、举一反三，这样才能收到（  ）的效果。 A.栩栩如生 B.事半功倍 C.入木三分 D.应运而生",
+           "Đáp án: B. 事半功倍 – 收到事半功倍的效果"],
+    say=["Bài tập hai: chọn đáp án đúng.",
+         F(0, "Câu một: 人的一生不可能总是一帆风顺，我们都难免会经历生活的什么考验。 Đời người không thể lúc nào cũng thuận buồm xuôi gió, ai cũng khó tránh khỏi những thử thách thế nào của cuộc sống. A, 严厉; B, 严峻; C, 严格; D, 严肃."),
+         F(1, "Đáp án: B, 严峻. 严峻的考验 là kết hợp cố định, thử thách cam go. 严厉 là nghiêm khắc với người, 严格 là nghiêm ngặt về yêu cầu, 严肃 là nghiêm túc, nghiêm trang."),
+         F(2, "Câu hai: 发现问题之后，我们要进行系统什么和深入分析，进而有针对性地提出整改意见。 Sau khi phát hiện vấn đề, chúng ta phải làm gì một cách có hệ thống và phân tích sâu, từ đó đưa ra ý kiến chấn chỉnh có trọng tâm. A, 疏通; B, 整理; C, 梳理; D, 清理."),
+         F(3, "Đáp án: C, 梳理. 系统梳理 là rà soát, sắp xếp có hệ thống để phân tích vấn đề. 疏通 là khai thông, như khai thông cống rãnh; 整理 là sắp xếp đồ đạc, tài liệu cho gọn; 清理 là dọn dẹp."),
+         F(4, "Câu ba: 在学习中，老师要引导学生开动脑筋、举一反三，这样才能收到什么的效果。 Trong học tập, thầy cô phải hướng dẫn học sinh động não, học một biết mười, như vậy mới đạt hiệu quả thế nào. A, 栩栩如生; B, 事半功倍; C, 入木三分; D, 应运而生."),
+         F(5, "Đáp án: B, 事半功倍. 收到事半功倍的效果, giống câu bốn của bài tập một. 举一反三 là học một biết mười.")])
+
+add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn đáp án đúng (2)", reveal=True, size=34,
+    items=["(4) 她总是（  ）地去模仿别人，结果失去了自己的特色，人也越来越焦虑。 A.在意 B.随意 C.故意 D.刻意",
+           "Đáp án: D. 刻意 – 刻意模仿 (cố công bắt chước)",
+           "(5) 不要（  ）这两家公司的冲突，否则它会给你带来不必要的麻烦。 A.进入 B.走入 C.介入 D.步入",
+           "Đáp án: C. 介入 – xen vào, can thiệp vào xung đột",
+           "(6) 人类的祖先学会制造使用铁器，这（  ）了文明的新时代。 A.开启 B.启发 C.启动 D.发动",
+           "Đáp án: A. 开启 – 开启新时代 (mở ra thời đại mới)"],
+    say=[F(0, "Câu bốn: 她总是什么地去模仿别人，结果失去了自己的特色，人也越来越焦虑。 Cô ấy luôn bắt chước người khác một cách thế nào, kết quả đánh mất nét riêng của mình, người cũng ngày càng lo âu. A, 在意; B, 随意; C, 故意; D, 刻意."),
+         F(1, "Đáp án: D, 刻意. 刻意模仿 là cố công bắt chước, kết hợp vừa học. 故意 là cố ý làm điều không nên, thường mang nghĩa xấu, như cố ý gây hại; 随意 là tùy ý; 在意 là để tâm."),
+         F(2, "Câu năm: 不要什么这两家公司的冲突，否则它会给你带来不必要的麻烦。 Đừng làm gì vào xung đột của hai công ty này, nếu không sẽ mang lại phiền phức không cần thiết. A, 进入; B, 走入; C, 介入; D, 步入."),
+         F(3, "Đáp án: C, 介入. 介入冲突, can thiệp, xen vào xung đột. Ba từ còn lại chỉ việc đi vào một không gian hay một giai đoạn, như 步入社会, bước vào xã hội."),
+         F(4, "Câu sáu: 人类的祖先学会制造使用铁器，这什么了文明的新时代。 Tổ tiên loài người học được cách chế tạo và sử dụng đồ sắt, điều này đã làm gì với thời đại văn minh mới. A, 开启; B, 启发; C, 启动; D, 发动."),
+         F(5, "Đáp án: A, 开启. 开启新时代, mở ra thời đại mới. 启发 là gợi mở, 启动 là khởi động máy móc, dự án; 发动 là phát động, như 发动战争.")])
+
+add("bullets", section="Luyện tập 课后练习", title="Bài tập 3: Dùng từ cho sẵn trả lời câu hỏi", reveal=True, size=32,
+    items=["(1) 人工智能为什么会介入感情？（奔着）",
+           "Đáp án gợi ý: 对于奔着婚姻目标去的人来说，偶遇和刻意安排都有些盲目，所以人工智能便介入了。",
+           "(2) 什么叫“不来电”？（有眼缘）",
+           "Đáp án gợi ý: 两个人见了面却没有喜欢的感觉，就叫“不来电”；如果一见面就互相吸引，就是“有眼缘”。",
+           "(3) “门当户对”可以促成美满姻缘吗？（反之）",
+           "Đáp án gợi ý: 双方价值观相近，相处就比较容易；反之，就容易产生矛盾。但门当户对不能保证婚姻一定美满。",
+           "(4) AI匹配技术可以为婚姻“打包票”吗？（看似）",
+           "Đáp án gợi ý: 不能。AI匹配看似事半功倍，但两个人还要经过线下相处的考验，数据无法为婚姻打包票。"],
+    say=["Bài tập ba: dùng từ cho sẵn để trả lời câu hỏi. Đây là câu hỏi mở, thầy đưa ra đáp án gợi ý.",
+         F(0, "Câu một: 人工智能为什么会介入感情？ Vì sao trí tuệ nhân tạo lại can thiệp vào chuyện tình cảm? Dùng 奔着."),
+         F(1, "Đáp án gợi ý: 对于奔着婚姻目标去的人来说，偶遇和刻意安排都有些盲目，所以人工智能便介入了。 Đối với người nhắm tới hôn nhân, tình cờ gặp hay sắp đặt đều hơi mù quáng, nên trí tuệ nhân tạo đã vào cuộc."),
+         F(2, "Câu hai: 什么叫不来电？ Thế nào gọi là không có điện? Dùng 有眼缘."),
+         F(3, "Đáp án gợi ý: 两个人见了面却没有喜欢的感觉，就叫不来电；如果一见面就互相吸引，就是有眼缘。 Hai người gặp nhau mà không có cảm giác thích thì gọi là không có điện; nếu vừa gặp đã bị nhau thu hút, thì là hợp mắt."),
+         F(4, "Câu ba: 门当户对可以促成美满姻缘吗？ Môn đăng hộ đối có thể giúp tạo nên nhân duyên viên mãn không? Dùng 反之."),
+         F(5, "Đáp án gợi ý: 双方价值观相近，相处就比较容易；反之，就容易产生矛盾。但门当户对不能保证婚姻一定美满。 Giá trị quan hai bên gần nhau thì chung sống dễ hơn; ngược lại thì dễ nảy sinh mâu thuẫn. Nhưng môn đăng hộ đối không bảo đảm hôn nhân chắc chắn viên mãn."),
+         F(6, "Câu bốn: 人工智能匹配技术可以为婚姻打包票吗？ Công nghệ ghép đôi bằng trí tuệ nhân tạo có thể cam đoan cho hôn nhân không? Dùng 看似."),
+         F(7, "Đáp án gợi ý: 不能。人工智能匹配看似事半功倍，但两个人还要经过线下相处的考验，数据无法为婚姻打包票。 Không thể. Ghép đôi bằng trí tuệ nhân tạo trông như làm ít được nhiều, nhưng hai người còn phải qua thử thách chung sống ngoài đời thực, dữ liệu không thể cam đoan cho hôn nhân.")])
+
+# ======================= THẢO LUẬN =======================
+add("bullets", chapter="Thảo luận: liên hệ Việt Nam", section="Thảo luận 讨论", title="Thảo luận: AI có thể làm “bà mối” không?", reveal=True, size=33,
+    items=["(1) 在越南，年轻人一般怎么找对象？",
+           "Đáp án gợi ý: 有的通过朋友介绍、同学聚会，有的用交友软件；以前很多人靠父母或媒人介绍。",
+           "(2) 如果AI给你推荐的“完美对象”和你一眼看中的人不同，你会怎么选？",
+           "Đáp án gợi ý: 我会先跟一眼看中的人接触看看，因为感情需要“来电”；AI的推荐只能作为参考。",
+           "(3) 越南也讲究“门当户对”吗？",
+           "Đáp án gợi ý: 讲究。越南语里也有“môn đăng hộ đối”，但现在年轻人更看重两个人是否合得来。"],
+    say=["Bây giờ chúng ta cùng thảo luận, liên hệ với Việt Nam. Sách có phần 众说纷纭, mỗi người một ý, với chủ đề trí tuệ nhân tạo có tạo nên được hôn nhân hoàn hảo không. Các bạn hãy thử trả lời bằng tiếng Trung.",
+         F(0, "Câu một: 在越南，年轻人一般怎么找对象？ Ở Việt Nam, người trẻ thường tìm người yêu như thế nào?"),
+         F(1, "Đáp án gợi ý: 有的通过朋友介绍、同学聚会，有的用交友软件；以前很多人靠父母或媒人介绍。 Có người qua bạn bè giới thiệu, họp lớp; có người dùng ứng dụng hẹn hò; ngày xưa nhiều người nhờ bố mẹ hoặc bà mối giới thiệu. 媒人 là bà mối, người mai mối."),
+         F(2, "Câu hai: 如果人工智能给你推荐的完美对象和你一眼看中的人不同，你会怎么选？ Nếu đối tượng hoàn hảo mà trí tuệ nhân tạo đề xuất khác với người bạn vừa nhìn đã thích, bạn sẽ chọn thế nào? Câu này lấy từ phần thảo luận của sách."),
+         F(3, "Đáp án gợi ý: 我会先跟一眼看中的人接触看看，因为感情需要来电；人工智能的推荐只能作为参考。 Tôi sẽ thử tìm hiểu người mình vừa nhìn đã thích trước, vì tình cảm cần có rung động; đề xuất của máy chỉ để tham khảo."),
+         F(4, "Câu ba: 越南也讲究门当户对吗？ Người Việt có coi trọng môn đăng hộ đối không?"),
+         F(5, "Đáp án gợi ý: 讲究。越南语里也有门当户对这个说法，但现在年轻人更看重两个人是否合得来。 Có. Tiếng Việt cũng có câu môn đăng hộ đối, nhưng giới trẻ bây giờ coi trọng hai người có hợp nhau hay không hơn. 合得来 là hợp tính nhau.")])
+
+# ======================= ÔN TẬP ĐƠN VỊ =======================
+add("bullets", chapter="Ôn tập Đơn vị 4", section="Ôn tập 单元练习", title="Ôn tập Đơn vị 4: 学以致用 – học để vận dụng", size=33,
+    items=["## 一、新闻报告 – Báo cáo tin tức",
+           "Rò rỉ dữ liệu (滴滴、华住、顺丰……) · AI thay thế việc làm: 下一个失业的会是我们吗？",
+           "## 二、明察暗访 – Khảo sát, phỏng vấn",
+           "App lấy dữ liệu cá nhân · Tuyên truyền bảo vệ quyền riêng tư · 你对靠AI“找对象”怎么看？",
+           "## 三、众说纷纭 – Mỗi người một ý",
+           "个人隐私的边界 · 要隐私还是便利？ · 机器人医生 · AI能促成完美婚姻吗？",
+           "## 四、针锋相对 – Tranh biện · 五、妙笔生花 – Viết bài",
+           "4 đề tranh biện · 2 đề viết: 人工智能将走向何方 / AI时代，人类还需要记忆大量的知识吗？"],
+    say=["Chúng ta đã học xong ba bài của Đơn vị bốn. Phần cuối đơn vị trong sách gọi là 单元练习, với khẩu hiệu 学以致用, học để vận dụng. Phần này gồm năm loại hoạt động, thầy giới thiệu ngắn gọn để các bạn tự luyện.",
+         F(0, "Một: 新闻报告, báo cáo tin tức. Các bạn lên mạng tìm tin tức và trình bày trước lớp."),
+         F(1, "Báo cáo một về các vụ rò rỉ dữ liệu ở Trung Quốc, như ứng dụng gọi xe Didi, tập đoàn khách sạn Hoa Trú, công ty chuyển phát Thuận Phong. Báo cáo hai về trí tuệ nhân tạo thay thế việc làm: 下一个失业的可能会是我们所在的行业吗？ Ngành tiếp theo thất nghiệp có phải ngành của chúng ta không?"),
+         F(2, "Hai: 明察暗访, khảo sát và phỏng vấn."),
+         F(3, "Có ba đề: thiết kế bảng hỏi về việc ứng dụng thu thập dữ liệu cá nhân; tuyên truyền tầm quan trọng của bảo vệ quyền riêng tư; và phỏng vấn bạn bè: 你对靠人工智能找对象怎么看？ Bạn nghĩ sao về việc tìm người yêu nhờ trí tuệ nhân tạo?"),
+         F(4, "Ba: 众说纷纭, mỗi người một ý, tức là thảo luận."),
+         F(5, "Bốn chủ đề: 个人隐私的边界, ranh giới quyền riêng tư; 要隐私还是便利, chọn riêng tư hay tiện lợi; 机器人医生, bác sĩ robot; và 人工智能能促成完美婚姻吗, trí tuệ nhân tạo có tạo nên hôn nhân hoàn hảo không."),
+         F(6, "Bốn: 针锋相对, mũi kim đối nhau, tức là tranh biện. Năm: 妙笔生花, ngòi bút nở hoa, tức là viết bài."),
+         F(7, "Có bốn đề tranh biện, và hai đề viết. Chúng ta sẽ xem kỹ một số câu hỏi tranh biện và đề viết số hai ở các slide sau.")])
+
+add("bullets", section="Ôn tập 单元练习", title="Thảo luận & tranh biện (众说纷纭 · 针锋相对)", reveal=True, size=32,
+    items=["(1) 长辈问你的年龄、婚姻状况、工作收入，算不算侵犯隐私？",
+           "Đáp án gợi ý: 在中国和越南，长辈这样问多半是出于关心，不算侵犯；但如果对方公开传播这些信息，就侵犯了隐私。",
+           "(2) 海底捞给顾客“打标签”：有个性化备注才有个性化服务。你怎么看？",
+           "Đáp án gợi ý: 服务确实更贴心了，但应该提前告知顾客，并得到同意，否则无异于窥探隐私。",
+           "(3) 辩论：普通人重视隐私权限是小题大做吗？",
+           "Đáp án gợi ý (反方): 不是。隐私一旦泄露，任何人都可能遭到骚扰和诈骗，普通人更没有能力保护自己。",
+           "(4) 辩论：人工智能对人类来说，是利大于弊还是弊大于利？",
+           "Đáp án gợi ý: 利大于弊。人工智能能造福于人类，比如帮医生诊疗；但需要制度的约束。"],
+    say=["Đây là một số câu hỏi thảo luận và đề tranh biện trong phần ôn tập. Các bạn hãy thử trả lời trước, rồi nghe đáp án gợi ý, cố gắng dùng từ ngữ của cả ba bài.",
+         F(0, "Câu một, chủ đề ranh giới quyền riêng tư: 长辈问你的年龄、婚姻状况、工作收入，算不算侵犯隐私？ Người lớn tuổi hỏi tuổi, tình trạng hôn nhân, thu nhập của bạn, có tính là xâm phạm quyền riêng tư không?"),
+         F(1, "Đáp án gợi ý: 在中国和越南，长辈这样问多半是出于关心，不算侵犯；但如果对方公开传播这些信息，就侵犯了隐私。 Ở Trung Quốc và Việt Nam, người lớn hỏi như vậy phần lớn là vì quan tâm, không tính là xâm phạm; nhưng nếu đem các thông tin này đi lan truyền công khai thì là xâm phạm quyền riêng tư."),
+         F(2, "Câu hai: chuỗi lẩu Hải Để Lao từng bị phát hiện ghi chú đặc điểm ngoại hình, sở thích của khách trong hệ thống hội viên. Họ trả lời: 有个性化备注才有个性化服务, có ghi chú cá nhân hóa mới có dịch vụ cá nhân hóa. Bạn nghĩ sao?"),
+         F(3, "Đáp án gợi ý: 服务确实更贴心了，但应该提前告知顾客，并得到同意，否则无异于窥探隐私。 Dịch vụ quả thật chu đáo hơn, nhưng phải báo trước cho khách và được khách đồng ý, nếu không thì chẳng khác gì dòm ngó đời tư. Các bạn thấy, ở đây dùng lại 无异于 của bài bốn chấm một."),
+         F(4, "Câu ba, đề tranh biện: 普通人重视隐私权限是小题大做吗？ Người bình thường coi trọng quyền riêng tư có phải là chuyện bé xé ra to không? 小题大做 là bé xé ra to."),
+         F(5, "Đáp án gợi ý cho phe phản đối: 不是。隐私一旦泄露，任何人都可能遭到骚扰和诈骗，普通人更没有能力保护自己。 Không phải. Một khi quyền riêng tư bị rò rỉ, ai cũng có thể bị quấy rối và lừa đảo, mà người bình thường lại càng không có khả năng tự bảo vệ."),
+         F(6, "Câu bốn, đề tranh biện: 人工智能对人类来说，是利大于弊还是弊大于利？ Đối với loài người, trí tuệ nhân tạo lợi nhiều hơn hại, hay hại nhiều hơn lợi?"),
+         F(7, "Đáp án gợi ý: 利大于弊。人工智能能造福于人类，比如帮医生诊疗；但需要制度的约束。 Lợi nhiều hơn hại. Trí tuệ nhân tạo có thể mang lại hạnh phúc cho con người, như giúp bác sĩ khám chữa bệnh; nhưng cần sự ràng buộc của luật lệ. Câu trả lời này dùng lại 造福于 của bài hai và 制度的约束 của bài một.")])
+
+add("bullets", section="Ôn tập 单元练习", title="Viết bài nghị luận chính – phản (妙笔生花 · 写作二)", size=32,
+    items=["## Đề: AI时代，人类还需要记忆大量的知识吗？（không dưới 800 chữ）",
+           "Bước 1 – bối cảnh: 搜索引擎和网络百科可以快速提供事实性信息……",
+           "Bước 2 – mặt chính: 有人认为没有必要记了：查资料只需几秒钟，记忆的时间可以用来思考和创造",
+           "Bước 3 – câu hỏi chuyển ý: 然而，人类真的可以把记忆完全交给机器吗？",
+           "Bước 4 – mặt phản: 没有知识积累就无法思考；网络信息泥沙俱下，需要自己判断……",
+           "Kết luận: 机器可以帮我们记，但基础知识仍然要记在自己的脑子里"],
+    say=["Phần 妙笔生花 có đề viết số hai, yêu cầu vận dụng đúng bố cục chính, phản mà chúng ta vừa phân tích trong bài khóa.",
+         F(0, "Đề bài: AI时代，人类还需要记忆大量的知识吗？ Thời đại trí tuệ nhân tạo, con người có còn cần ghi nhớ một lượng lớn kiến thức không? Bài viết không dưới tám trăm chữ. Thầy gợi ý dàn ý theo bốn bước."),
+         F(1, "Bước một, bối cảnh: 搜索引擎和网络百科可以快速提供事实性信息. Công cụ tìm kiếm và bách khoa toàn thư trên mạng có thể nhanh chóng cung cấp thông tin sự kiện, như tổng thống đầu tiên của Mỹ là ai."),
+         F(2, "Bước hai, mặt chính: 有人认为没有必要记了：查资料只需几秒钟，记忆的时间可以用来思考和创造。 Có người cho rằng không cần nhớ nữa: tra tài liệu chỉ mất vài giây, thời gian ghi nhớ có thể dùng để suy nghĩ và sáng tạo."),
+         F(3, "Bước ba, câu hỏi chuyển ý: 然而，人类真的可以把记忆完全交给机器吗？ Thế nhưng, con người có thật sự giao hết trí nhớ cho máy móc được không?"),
+         F(4, "Bước bốn, mặt phản: 没有知识积累就无法思考；网络信息泥沙俱下，需要自己判断。 Không tích lũy kiến thức thì không thể suy nghĩ; thông tin trên mạng tốt xấu lẫn lộn, cần tự mình phán đoán. Các bạn thấy, thành ngữ 泥沙俱下 của bài một dùng được ngay."),
+         F(5, "Kết luận: 机器可以帮我们记，但基础知识仍然要记在自己的脑子里。 Máy móc có thể giúp ta ghi nhớ, nhưng kiến thức nền tảng vẫn phải nằm trong đầu mình. Ví dụ rõ nhất: học tiếng Trung, dù có phần mềm dịch, các bạn vẫn phải nhớ từ vựng mới nói chuyện được.")])
+
+add("bullets", section="Ôn tập 单元练习", title="Ôn tập Đơn vị 4: mẫu câu trọng điểm của 3 bài", size=33,
+    items=["## 4.1 隐私 · quyền riêng tư",
+           "V到……地步 · (连)V都懒得V · 殊不知 · 无异于 · 毫无……可言 · 仗着 · 非但不……反而…… · 被……绑架 · 切勿",
+           "## 4.2 机器人医生 · bác sĩ robot",
+           "甚为 · 顺便 · 与此同时 · 也就是说 · 短短…… · N之adj · 比N还N · 愈发 · 造福(于)",
+           "## 4.3 算法相亲 · xem mắt bằng thuật toán",
+           "日趋 · 奔着 · 多多少少 · 起初 · 反之 · 抑或 · 基于 · 即便……也…… · 何况 · 看似"],
+    say=["Cuối cùng của phần ôn tập, chúng ta hệ thống lại hai mươi tám mẫu câu trọng điểm của cả Đơn vị bốn.",
+         F(0, "Bài bốn chấm một, về quyền riêng tư."),
+         F(1, "Có chín mẫu: 到什么地步，连什么都懒得，殊不知，无异于，毫无什么可言，仗着，非但不反而，被什么绑架，切勿. Đặc điểm chung là nhiều mẫu mang sắc thái phê phán, rất hợp với bài bình luận xã hội."),
+         F(2, "Bài bốn chấm hai, về bác sĩ robot."),
+         F(3, "Có chín mẫu: 甚为，顺便，与此同时，也就是说，短短，名词之形容词，比什么还什么，愈发，造福于. Nhiều mẫu dùng để tường thuật và giải thích, rất hợp với văn bản tin tức."),
+         F(4, "Bài bốn chấm ba, về xem mắt bằng thuật toán."),
+         F(5, "Có mười mẫu: 日趋，奔着，多多少少，起初，反之，抑或，基于，即便也，何况，看似. Nhiều mẫu là từ nối dùng để lập luận, so sánh hai mặt, rất hợp với bài nghị luận. Các bạn hãy thử đặt mỗi mẫu một câu, liên quan đến chủ đề khoa học công nghệ nhé.")])
+
+# ======================= TỔNG KẾT =======================
+add("bullets", chapter="Tổng kết", section="Tổng kết", title="Tổng kết bài 4.3", size=34,
+    items=["Từ vựng trọng tâm: 日趋 · 刻意 · 开启 · 盲目 · 介入 · 匹配 · 反之 · 一番 · 梳理 · 尴尬 · 筛选 · 抑或 · 青睐 · 基于 · 局限 · 即便 · 严峻 · 看似",
+           "Mẫu câu: 日趋 · 奔着 · 多多少少 · 起初 · 反之 · 抑或 · 基于 · 即便……也…… · 何况 · 看似",
+           "Thành ngữ: 应运而生 · 门当户对 · 毋庸讳言 · 栩栩如生 · 入木三分 · 素不相识 · 事半功倍 · 茫茫人海",
+           "Viết nghị luận chính – phản: bối cảnh → mặt chính → câu hỏi chuyển ý → mặt phản → kết luận",
+           "## Bài tập về nhà",
+           "Viết bài (≥ 800 chữ): AI时代，人类还需要记忆大量的知识吗？ – theo bố cục chính – phản"],
+    say=["Chúng ta cùng tổng kết bài bốn chấm ba.",
+         F(0, "Về từ vựng, các bạn cần đặc biệt nhớ: 日趋，刻意，开启，盲目，介入，匹配，反之，一番，梳理，尴尬，筛选，抑或，青睐，基于，局限，即便，严峻，看似."),
+         F(1, "Về mẫu câu: 日趋 là ngày càng; 奔着 là nhắm tới; 多多少少 là ít nhiều; 起初 là lúc đầu; 反之 là ngược lại; 抑或 là hay là; 基于 là dựa trên; 即便也 là cho dù cũng; 何况 là huống hồ; và 看似 là trông có vẻ."),
+         F(2, "Về thành ngữ: 应运而生，门当户对，毋庸讳言，栩栩如生，入木三分，素不相识，事半功倍，茫茫人海, cùng câu tục ngữ 师傅领进门，修行靠个人."),
+         F(3, "Về cách viết: bài nghị luận chính, phản đi theo trình tự bối cảnh, mặt chính, câu hỏi chuyển ý, mặt phản, và kết luận."),
+         F(5, "Bài tập về nhà: hãy viết một bài ít nhất tám trăm chữ với đề AI时代，人类还需要记忆大量的知识吗？ theo đúng bố cục chính, phản. Các bạn có thể viết ngắn hơn trước, rồi nâng dần độ dài."),
+         "Cảm ơn các bạn đã theo dõi bài giảng. Với bài này, chúng ta đã hoàn thành Đơn vị bốn, 科技篇, Khoa học công nghệ: quyền riêng tư, bác sĩ robot và xem mắt bằng thuật toán. Ở bài sau, chúng ta bước sang Đơn vị năm, 家庭篇, Gia đình, với một chủ đề rất nghiêm túc. Hẹn gặp lại các bạn ở bài năm chấm một: 对家暴必须零容忍, Phải không khoan nhượng với bạo lực gia đình. Chúc các bạn học tốt!"])
+
+lesson = {
+    "title": "顶石中文 – Bài 4.3: 算法时代：谁是你的菜？ (Thời đại thuật toán – ai là 'gu' của bạn?)",
+    "tag": TAG,
+    "vi_voice": "Linh", "zh_voice": "Tingting", "vi_rate": 175, "zh_rate": 145,
+    # sửa âm đọc của giọng máy cho các chữ đa âm (thay bằng chữ cùng âm, cùng thanh)
+    "tts_replace": {"奔着": "笨着",            # bènzhe
+                    "爱媛": "爱元",            # Àiyuán (Ehime)
+                    "深处": "深触",            # shēnchù
+                    "相处": "相楚",            # xiāngchǔ
+                    "为爱情": "位爱情",        # wèi àiqíng
+                    "为婚姻": "位婚姻",        # wèi hūnyīn
+                    "同行": "同形",            # tóngxíng
+                    "看似": "看四",            # kànsì
+                    "形似": "形四",            # xíngsì
+                    "神似": "神四",            # shénsì
+                    "一番": "一翻",            # yì fān
+                    "毋庸": "无庸",            # wúyōng
+                    "差异": "插异",            # chāyì
+                    "合得来": "合德来",        # hé de lái
+                    "慢热": "慢热"},
+    "slides": slides,
+}
+lesson["tts_replace"].pop("慢热")
+out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds43.json")
+json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

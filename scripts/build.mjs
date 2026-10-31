@@ -4,7 +4,7 @@
 //   dist/ban-do/           ← apps/ban-do (bản đồ "đã đi qua", dữ liệu qua /api/*/ban-do)
 //   dist/quan-ly/          ← apps/quan-ly (trang quản lý học liệu, dữ liệu qua /api/*/quan-ly)
 //   dist/travel/           ← travel/ (trang tĩnh, chưa chuyển sang React)
-//   dist/hsk6/             ← hsk6/ (trang tĩnh "Ngọc học tiếng Trung", dựng sẵn bằng BaiGiang/build_site.py)
+//   dist/hsk6/             ← hsk6/ (trang tĩnh "Ngọc học tiếng Trung", dựng sẵn bằng bai-giang/build_site.py)
 //   dist/glass/            ← CSS của react-liquis-glass + nút bật/tắt kính cho các trang tĩnh ở trên
 //   dist/lop-hoc/          ← lop-hoc/index.html + lessons.json (lớp học trực tiếp, slide từ Hán Lộ và /hsk6/)
 import { execSync } from 'node:child_process';

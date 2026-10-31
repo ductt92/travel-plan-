@@ -1,7 +1,7 @@
 // Danh sách bài cho trang lớp học, gộp hai nguồn:
 //   - Hán Lộ (apps/hoc-tieng-trung, HSK 3.0 cấp 1–3): slide là trang bài giảng của app, nhúng qua
 //     /hoc-tieng-trung/#/slide/<bài>/<trang> (kind 'frame')
-//   - HSK 6 của Ngọc (hsk6/<bài>/slides/*.jpg, dựng bằng BaiGiang/build_site.py): slide là ảnh (kind 'img')
+//   - HSK 6 của Ngọc (hsk6/<bài>/slides/*.jpg, dựng bằng bai-giang/build_site.py): slide là ảnh (kind 'img')
 // Mỗi bài: { id, group: 'HSK 1', source, kind, title: 'HSK 1 · Bài 1 · Xin chào', zh, slides: [url…], titles: [tiêu đề slide…], sections: [phần…] }
 // Dùng chung cho scripts/build.mjs (ghi dist/lop-hoc/lessons.json) và dev.mjs (chạy ở máy).
 import { existsSync, readFileSync, readdirSync } from 'node:fs';

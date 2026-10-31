@@ -6,7 +6,7 @@
 // ?check kiểm tra mật khẩu. PUT, PATCH cần mật khẩu (APP_SECRET hoặc HSK6_PASS).
 // PUT ghi cả danh sách gửi lên thành bản mới (trang tự gộp khi chọn "thêm vào"), trong một transaction.
 // PATCH ?version=N {active} tắt hoặc bật lại bản N, rồi dựng lại danh sách đang dùng từ bản mới nhất còn bật.
-// Trang đọc file Excel và chuẩn hóa (TERM_BE trong BaiGiang/web/template.html), server kiểm tra lại từng trường.
+// Trang đọc file Excel và chuẩn hóa (TERM_BE trong bai-giang/web/template.html), server kiểm tra lại từng trường.
 import { authorizedHsk6, db, fail, readJson, send } from './common.js';
 
 const TABLES = `

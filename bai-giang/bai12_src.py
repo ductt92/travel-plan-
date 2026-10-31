@@ -1,0 +1,650 @@
+#!/usr/bin/env python3
+"""Kịch bản bài giảng HSK 6 (Thượng) – Bài 12 «我们都爱白噪音». Chạy để sinh bai12.json."""
+import json
+import os
+
+TAG = "HSK 6 (Thượng) · Bài 12 · 我们都爱白噪音"
+slides = []
+
+
+def add(type_, chapter=None, section="", **kw):
+    s = {"type": type_, "section": section, **kw}
+    if chapter:
+        s["chapter"] = chapter
+    slides.append(s)
+
+
+def F(i, t, **kw):
+    return {"t": t, "f": i, **kw}
+
+
+# ======================= MỞ ĐẦU =======================
+add("title", chapter="Mở đầu",
+    top="Giáo trình chuẩn HSK 6 – Quyển Thượng",
+    zh="我们都爱白噪音", py="Wǒmen dōu ài báizàoyīn",
+    vi="Bài 12: Chúng ta đều yêu tiếng ồn trắng",
+    sub="Bài giảng chi tiết bằng tiếng Việt",
+    say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng Giáo trình chuẩn HSK 6, quyển Thượng.",
+         "Hôm nay chúng ta học bài mười hai: 我们都爱白噪音。 Nghĩa là: Chúng ta đều yêu tiếng ồn trắng.",
+         "Đây là bài cuối cùng của Chủ đề ba, 多彩社会, Xã hội nhiều màu sắc. Bài khóa là một bài viết khoa học thường thức rất thú vị. Các bạn đã bao giờ gặp cảnh này chưa: cả phòng đang ồn ào, bỗng nhiên im bặt, rồi có người nói một câu, thế là mọi người lại nói chuyện tiếp?",
+         "Tác giả giải thích hiện tượng ấy bằng khái niệm tiếng ồn trắng, và bằng quá trình chọn lọc tự nhiên kéo dài hàng chục triệu năm. Cuối bài, chúng ta còn biết tiếng ồn trắng có thể giúp chữa bệnh nữa."])
+
+add("bullets", section="Mở đầu", title="Mục tiêu bài học",
+    items=["Hiểu bài khóa: tiếng ồn trắng là gì, vì sao nó mang lại cảm giác an toàn",
+           "Nắm vững 44 từ mới, kèm âm Hán Việt và ví dụ",
+           "Ngữ pháp: phó từ 不妨, phó từ 务必, giới từ – liên từ 鉴于",
+           "Phân biệt 不得已 và 不得不",
+           "Mở rộng: 12 từ và các cụm kết hợp từ (词语搭配) thường gặp"],
+    say=["Bài học hôm nay có năm mục tiêu.",
+         F(0, "Thứ nhất, hiểu nội dung bài khóa: tiếng ồn trắng là gì, vì sao loài chim lại hót, và vì sao tiếng ồn trắng khiến chúng ta thấy an toàn."),
+         F(1, "Thứ hai, nắm vững bốn mươi bốn từ mới. Với mỗi từ, thầy sẽ đọc mẫu, cho các bạn âm Hán Việt để dễ nhớ, giải thích nghĩa và đưa ví dụ."),
+         F(2, "Thứ ba, học ba điểm ngữ pháp: phó từ 不妨, nghĩa là cứ việc, chẳng ngại gì; phó từ 务必, nghĩa là nhất thiết phải; và 鉴于, nghĩa là xét thấy, do."),
+         F(3, "Thứ tư, phân biệt hai từ rất dễ nhầm: 不得已 và 不得不."),
+         F(4, "Thứ năm, phần mở rộng: làm quen với mười hai từ và các cụm kết hợp từ thường gặp, tiếng Trung gọi là 词语搭配."),
+         "Các bạn hãy chuẩn bị giấy bút, và đừng ngại tạm dừng video để ghi chép hoặc đọc theo nhé."])
+
+# ======================= KHỞI ĐỘNG =======================
+add("bullets", chapter="Khởi động", section="Khởi động 热身", title="Câu hỏi khởi động: Bạn quen với tình huống nào hơn?", size=38,
+    items=["下面的各种情况，你更习惯哪一种？ – Bạn quen với tình huống nào hơn?",
+           "在非常安静的环境中睡觉 – ngủ trong môi trường thật yên tĩnh",
+           "在下雨声中睡觉 – ngủ trong tiếng mưa rơi",
+           "（当周围突然安静时）自己也不说话了 – khi xung quanh bỗng yên lặng: mình cũng im",
+           "（当周围突然安静时）依旧大声说话 – khi xung quanh bỗng yên lặng: vẫn nói to như cũ",
+           "学习时开着背景音乐 – vừa học vừa mở nhạc nền",
+           "学习时最好一点儿声音都没有 – khi học tốt nhất là không có chút âm thanh nào"],
+    say=["Chúng ta bắt đầu bằng phần khởi động. Câu hỏi đầu tiên rất gần gũi với đời sống hằng ngày.",
+         F(0, "下面的各种情况，你更习惯哪一种？ Trong các tình huống sau đây, bạn quen với tình huống nào hơn? Mỗi cặp có hai lựa chọn, các bạn hãy chọn một."),
+         F(1, "Cặp thứ nhất. 在非常安静的环境中睡觉。 Ngủ trong một môi trường thật yên tĩnh."),
+         F(2, "Hay là: 在下雨声中睡觉。 Ngủ trong tiếng mưa rơi. Nhiều người thấy ngủ trong tiếng mưa lại sâu giấc hơn đấy."),
+         F(3, "Cặp thứ hai. Khi xung quanh bỗng nhiên yên lặng, 当周围突然安静时, bạn sẽ: 自己也不说话了, mình cũng không nói nữa."),
+         F(4, "Hay là: 依旧大声说话, vẫn nói to như cũ. 依旧 nghĩa là vẫn như cũ."),
+         F(5, "Cặp thứ ba. 学习时开着背景音乐。 Khi học thì mở nhạc nền."),
+         F(6, "Hay là: 学习时最好一点儿声音都没有。 Khi học tốt nhất là không có một chút âm thanh nào. Các bạn chọn xong chưa? Lát nữa đọc bài khóa, các bạn sẽ hiểu vì sao phần lớn chúng ta lại im lặng theo khi cả phòng bỗng yên ắng.")])
+
+add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 界 và 器", size=38,
+    items=["## 界 (giới): giới hạn, phạm vi; một giới, một ngành",
+           "世界 thế giới · 外界 bên ngoài · 学界 giới học thuật · 政界 chính giới · 自然界 giới tự nhiên",
+           "文艺界 giới văn nghệ · 体育界 giới thể thao · 教育界 giới giáo dục · 新闻界 giới báo chí · 各界 các giới",
+           "## 器 (khí): đồ dùng, dụng cụ, máy móc",
+           "机器 máy móc · 乐器 nhạc cụ · 电器 đồ điện · 充电器 bộ sạc · 警报器 thiết bị báo động",
+           "飞行器 khí cụ bay · 器材 khí tài, thiết bị · 器械 dụng cụ, khí giới · 器具 đồ dùng"],
+    say=["Phần khởi động thứ hai yêu cầu: hãy nghĩ xem các từ sau có liên hệ gì với nhau. Đây là cách học từ theo yếu tố cấu tạo, rất có lợi cho người Việt vì hầu hết các chữ đều có âm Hán Việt quen thuộc.",
+         F(0, "Nhóm thứ nhất có chữ 界, Hán Việt là giới, nghĩa là giới hạn, phạm vi; ghép với tên một ngành thì chỉ những người trong ngành đó."),
+         F(1, "世界，外界，学界，政界，自然界。 Tức là: thế giới, thế giới bên ngoài, giới học thuật, chính giới, và giới tự nhiên. Từ 自然界 có trong bài khóa: 在自然界早已被淘汰掉了, trong giới tự nhiên đã bị đào thải từ lâu."),
+         F(2, "文艺界，体育界，教育界，新闻界，各界。 Tức là: giới văn nghệ, giới thể thao, giới giáo dục, giới báo chí, và các giới."),
+         F(3, "Nhóm thứ hai có chữ 器, Hán Việt là khí, như trong vũ khí, nghĩa là đồ dùng, dụng cụ, máy móc."),
+         F(4, "机器，乐器，电器，充电器，警报器。 Tức là: máy móc, nhạc cụ, đồ điện, bộ sạc, và thiết bị báo động. Từ 警报器 có trong bài khóa: tiếng chim hót là 天然的警报器, chiếc chuông báo động tự nhiên."),
+         F(5, "飞行器，器材，器械，器具。 Tức là: khí cụ bay, khí tài hay thiết bị, dụng cụ, và đồ dùng.")])
+
+add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 止 và 呼", size=38,
+    items=["## 止 (chỉ): dừng, ngừng; ngăn lại",
+           "停止 dừng lại · 中止 bỏ dở giữa chừng · 防止 phòng ngừa · 禁止 cấm · 阻止 ngăn cản · 劝止 khuyên ngăn",
+           "止步 dừng bước · 止渴 giải khát · 止咳 cầm ho · 止疼 giảm đau · 止血 cầm máu",
+           "## 呼 (hô): kêu, gọi to; thở ra",
+           "呼唤 kêu gọi · 呼叫 gọi · 呼喊 la to · 呼救 kêu cứu · 呼声 tiếng hô, tiếng nói",
+           "欢呼 hoan hô · 高呼 hô to · 惊呼 kêu lên kinh ngạc · 称呼 xưng hô · 招呼 chào hỏi"],
+    say=[F(0, "Nhóm thứ ba có chữ 止, Hán Việt là chỉ, như trong đình chỉ, nghĩa là dừng, ngừng, hoặc ngăn lại."),
+         F(1, "停止，中止，防止，禁止，阻止，劝止。 Tức là: dừng lại, bỏ dở giữa chừng, phòng ngừa, cấm, ngăn cản, và khuyên ngăn. Bài khóa có câu: 鸟叫停止，意味着有了险情, tiếng chim ngừng hót nghĩa là có nguy hiểm."),
+         F(2, "止步，止渴，止咳，止疼，止血。 Tức là: dừng bước, giải khát, cầm ho, giảm đau, và cầm máu."),
+         F(3, "Nhóm cuối cùng có chữ 呼, Hán Việt là hô, như trong hô hấp, nghĩa là kêu, gọi to, hoặc thở ra."),
+         F(4, "呼唤，呼叫，呼喊，呼救，呼声。 Tức là: kêu gọi, gọi, la to, kêu cứu, và tiếng hô, tiếng nói của quần chúng. Từ 呼唤 là từ mới của bài: 拼命呼唤, ra sức kêu gọi."),
+         F(5, "欢呼，高呼，惊呼，称呼，招呼。 Tức là: hoan hô, hô to, kêu lên kinh ngạc, xưng hô, và chào hỏi."),
+         "Các bạn thấy không, chỉ cần nắm nghĩa của một chữ gốc, ta có thể đoán được nghĩa của cả một nhóm từ. Hãy áp dụng cách này khi học từ mới nhé."])
+
+# ======================= TỪ MỚI =======================
+# (chữ Hán, pinyin, Hán Việt, từ loại, nghĩa hiển thị, ví dụ, dịch ví dụ, lời giảng)
+V = [
+    ("白噪音", "báizàoyīn", "bạch táo âm", "danh từ", "tiếng ồn trắng", "很多人喜欢听着白噪音入睡。", "Nhiều người thích nghe tiếng ồn trắng để đi vào giấc ngủ.",
+     "Danh từ, nghĩa là tiếng ồn trắng. Đó là những âm thanh đều đều, liên tục, như tiếng mưa rơi, tiếng sóng, tiếng gió thổi lá cây. Chữ 噪 Hán Việt là táo, nghĩa là ồn ào, như trong từ táo tạp."),
+    ("嘈杂", "cáozá", "tào tạp", "tính từ", "ồn ào, huyên náo", "菜市场里人声嘈杂。", "Trong chợ, tiếng người ồn ào huyên náo.",
+     "Tính từ, nghĩa là ồn ào, huyên náo, nhiều tiếng động lộn xộn. Trong bài có cụm 屋子里一片嘈杂, cả căn phòng ồn ào."),
+    ("莫名其妙", "mòmíng-qímiào", "mạc danh kỳ diệu", "thành ngữ", "không thể giải thích được, kỳ lạ, khó hiểu", "他莫名其妙地发了一通脾气。", "Anh ta nổi cáu một trận chẳng hiểu vì sao.",
+     "Thành ngữ. 莫 là không, 名 là nói ra được; cả câu là không ai nói ra được cái lạ của nó, tức là kỳ lạ, khó hiểu, chẳng hiểu ra sao. Thường dùng theo mẫu 莫名其妙地 cộng động từ."),
+    ("淘汰", "táotài", "đào thải", "động từ", "đào thải, loại bỏ", "他在第一轮比赛中就被淘汰了。", "Anh ấy bị loại ngay từ vòng đấu đầu tiên.",
+     "Động từ, nghĩa là đào thải, loại bỏ cái kém, giữ lại cái tốt. Ngoài nghĩa đào thải trong tự nhiên, từ này còn rất hay dùng trong thi đấu, nghĩa là bị loại."),
+    ("不妨", "bùfáng", "bất phương", "phó từ", "có thể làm, đừng ngại, tốt nhất là", "有时间的话，你不妨去看看。", "Nếu có thời gian, bạn cứ thử đi xem xem.",
+     "Phó từ, nghĩa là cứ việc làm, chẳng ngại gì, làm thế cũng tốt. 妨 là cản trở, nên 不妨 là không có gì cản trở. Đây là điểm ngữ pháp thứ nhất của bài."),
+    ("描绘", "miáohuì", "miêu hội", "động từ", "miêu tả, mô tả", "这幅画描绘了江南的春天。", "Bức tranh này miêu tả mùa xuân vùng Giang Nam.",
+     "Động từ, nghĩa là miêu tả, vẽ ra bằng tranh hoặc bằng lời. 描 là tô, vẽ theo; 绘 là vẽ."),
+    ("波浪", "bōlàng", "ba lãng", "danh từ", "sóng", "今天海上的波浪很大。", "Hôm nay sóng biển rất lớn.",
+     "Danh từ, nghĩa là sóng nước. Trong bài có cụm 波浪拍打岩石, sóng vỗ vào đá."),
+    ("岩石", "yánshí", "nham thạch", "danh từ", "đá, nham thạch", "海边有很多奇形怪状的岩石。", "Bờ biển có rất nhiều tảng đá hình thù kỳ quái.",
+     "Danh từ, nghĩa là đá, khối đá. Cẩn thận: tiếng Việt nói nham thạch thường nghĩ ngay đến dung nham núi lửa; còn 岩石 chỉ là đá nói chung. Dung nham trong tiếng Trung là 岩浆."),
+    ("抚摸", "fǔmō", "phủ mô", "động từ", "vuốt ve, xoa, vỗ về", "妈妈轻轻地抚摸着孩子的头。", "Mẹ nhẹ nhàng vuốt đầu đứa con.",
+     "Động từ, nghĩa là vuốt ve, xoa nhẹ. Trong bài, tác giả nhân hóa làn gió: 微风抚摸树叶, gió nhẹ vuốt ve lá cây."),
+    ("务必", "wùbì", "vụ tất", "phó từ", "nhất thiết phải", "明天的考试，你务必早点儿到。", "Kỳ thi ngày mai, bạn nhất thiết phải đến sớm một chút.",
+     "Phó từ, nghĩa là nhất thiết phải, bằng mọi giá phải, thái độ rất kiên quyết. Đây là điểm ngữ pháp thứ hai của bài."),
+    ("警惕", "jǐngtì", "cảnh dịch", "động từ", "cảnh giác", "我们要对陌生人保持警惕。", "Chúng ta phải giữ cảnh giác với người lạ.",
+     "Động từ, nghĩa là cảnh giác, đề phòng. Hay gặp: 提高警惕, nâng cao cảnh giác; 保持警惕, giữ cảnh giác. Chú ý âm đọc: âm tiết thứ nhất thanh ba, âm tiết thứ hai thanh bốn."),
+    ("解除", "jiěchú", "giải trừ", "động từ", "hủy bỏ, xua tan, gỡ bỏ", "双方决定解除合同。", "Hai bên quyết định hủy bỏ hợp đồng.",
+     "Động từ, nghĩa là gỡ bỏ, hủy bỏ, xóa bỏ. Hay gặp: 解除警报, gỡ bỏ báo động; 解除合同, hủy hợp đồng; 解除顾虑, xua tan nỗi lo."),
+    ("不得已", "bùdéyǐ", "bất đắc dĩ", "tính từ", "bất đắc dĩ, bắt buộc phải, không thể không như vậy", "不到万不得已，我不会去麻烦别人。", "Chưa đến lúc vạn bất đắc dĩ, tôi sẽ không làm phiền người khác.",
+     "Tính từ, Hán Việt và nghĩa giống hệt tiếng Việt: bất đắc dĩ, không còn cách nào khác. Lát nữa chúng ta sẽ phân biệt kỹ từ này với từ 不得不."),
+    ("暴露", "bàolù", "bộc lộ", "động từ", "bộc lộ, để lộ", "他的话暴露了他的真实想法。", "Lời nói của anh ta đã để lộ suy nghĩ thật của anh ta.",
+     "Động từ, nghĩa là để lộ ra, phơi bày ra, thường là điều vốn được che giấu. Chữ đầu ở đây đọc Hán Việt là bộc, nên từ này chính là bộc lộ trong tiếng Việt. Nhưng 暴露 thường mang nghĩa bị lộ ra ngoài ý muốn, như 暴露目标, để lộ mục tiêu."),
+    ("惹祸", "rě huò", "nhạ họa", "động từ", "gây rắc rối, gây tai họa, chuốc lấy tai họa", "你少说两句吧，别惹祸了。", "Cậu bớt nói vài câu đi, đừng chuốc họa vào thân.",
+     "Động từ, nghĩa là gây ra tai họa, chuốc lấy rắc rối. 惹 là gây ra, trêu chọc, như 惹麻烦, gây phiền phức; 祸 là tai họa."),
+    ("雌雄", "cíxióng", "thư hùng", "danh từ", "đực cái, trống mái", "这种鸟很难分辨雌雄。", "Loài chim này rất khó phân biệt trống mái.",
+     "Danh từ, nghĩa là giống cái và giống đực. Cẩn thận: tiếng Việt nói một trận thư hùng là một trận quyết đấu; còn trong bài, 雌雄两性 chỉ đơn giản là hai giới đực và cái."),
+    ("祖先", "zǔxiān", "tổ tiên", "danh từ", "tổ tiên, ông bà", "我们的祖先很早就学会了用火。", "Tổ tiên chúng ta từ rất sớm đã biết dùng lửa.",
+     "Danh từ, nghĩa là tổ tiên. Trong bài, 祖先 còn chỉ tổ tiên xa xưa của loài người, khi chưa tiến hóa thành người."),
+    ("遗留", "yíliú", "di lưu", "động từ", "để lại, truyền lại", "这是历史遗留下来的问题。", "Đây là vấn đề do lịch sử để lại.",
+     "Động từ, nghĩa là để lại, lưu lại từ trước. Thường dùng 遗留下来 hoặc 遗留下, như trong bài: 祖先遗留下的DNA."),
+    ("嘛", "ma", "ma", "trợ từ", "biểu thị lý lẽ rõ ràng: đi, mà…", "有话就说嘛，别客气。", "Có gì thì cứ nói đi mà, đừng khách sáo.",
+     "Trợ từ ngữ khí, đặt cuối câu, biểu thị điều mình nói là hiển nhiên, có lý, hoặc dùng để khuyên nhủ. Tiếng Việt dịch là mà, đi mà. Trong bài, 怎么送给异性嘛 nghĩa là thì làm sao trao cho giống khác được chứ."),
+    ("延续", "yánxù", "diên tục", "động từ", "tiếp tục, kéo dài", "这种传统一直延续到今天。", "Truyền thống này được duy trì cho đến tận hôm nay.",
+     "Động từ, nghĩa là tiếp tục kéo dài, nối dài. Trong bài, 延续后代 là duy trì nòi giống."),
+    ("后代", "hòudài", "hậu đại", "danh từ", "đời sau, thế hệ sau", "我们要给后代留下一个美好的环境。", "Chúng ta phải để lại cho đời sau một môi trường tươi đẹp.",
+     "Danh từ, nghĩa là đời sau, thế hệ sau, con cháu. Từ trái nghĩa là 祖先."),
+    ("呼唤", "hūhuàn", "hô hoán", "động từ", "kêu gào, kêu to, kêu gọi", "妈妈在门口呼唤孩子回家吃饭。", "Mẹ đứng ở cửa gọi con về nhà ăn cơm.",
+     "Động từ, nghĩa là gọi to, kêu gọi. Cẩn thận: tiếng Việt hô hoán là la lên để báo động; còn 呼唤 là gọi ai đó, hoặc kêu gọi, như 祖国在呼唤我们, Tổ quốc đang gọi chúng ta."),
+    ("竖", "shù", "thụ", "động từ", "dựng thẳng", "他竖起大拇指说：“真棒！”", "Anh ấy giơ ngón tay cái lên nói: Tuyệt quá!",
+     "Động từ, nghĩa là dựng đứng, dựng thẳng lên. Trong bài có cụm 竖起耳朵, dỏng tai lên nghe. Ngoài ra, 竖 còn là nét sổ thẳng khi viết chữ Hán."),
+    ("原始", "yuánshǐ", "nguyên thủy", "tính từ", "nguyên thủy", "这里还保留着一片原始森林。", "Nơi đây vẫn còn giữ được một khu rừng nguyên sinh.",
+     "Tính từ, nghĩa là nguyên thủy, ban đầu, chưa phát triển. Trong bài có cụm 原始社会, xã hội nguyên thủy. Chú ý: 原始森林 tiếng Việt thường gọi là rừng nguyên sinh."),
+    ("进化", "jìnhuà", "tiến hóa", "động từ", "tiến hóa", "人类是从古猿进化而来的。", "Loài người tiến hóa từ vượn cổ mà ra.",
+     "Động từ, Hán Việt và nghĩa giống hệt tiếng Việt: tiến hóa. Trong bài, 进化成人类 là tiến hóa thành con người."),
+    ("靠拢", "kàolǒng", "kháo lũng", "động từ", "dựa sát, áp sát, đến gần", "请大家向中间靠拢一点儿。", "Mời mọi người dồn vào giữa một chút.",
+     "Động từ, nghĩa là xích lại gần, tiến sát lại. Trong bài, 危险正在靠拢 là nguy hiểm đang đến gần."),
+    ("神经", "shénjīng", "thần kinh", "danh từ", "thần kinh", "考试前他的神经一直很紧张。", "Trước kỳ thi, thần kinh của anh ấy lúc nào cũng căng thẳng.",
+     "Danh từ, nghĩa là thần kinh. Trong khẩu ngữ, 神经 hoặc 神经病 còn dùng để mắng người khác là dở hơi, nên các bạn cẩn thận khi dùng nhé."),
+    ("生物", "shēngwù", "sinh vật", "danh từ", "sinh vật", "地球上生活着各种各样的生物。", "Trên Trái Đất có đủ loại sinh vật sinh sống.",
+     "Danh từ, Hán Việt và nghĩa giống hệt tiếng Việt: sinh vật. Môn sinh học trong tiếng Trung cũng gọi là 生物."),
+    ("配偶", "pèi'ǒu", "phối ngẫu", "danh từ", "phối ngẫu, vợ, chồng", "表格上要填写配偶的姓名。", "Trên tờ khai phải điền họ tên vợ hoặc chồng.",
+     "Danh từ, nghĩa là vợ hoặc chồng, người bạn đời; với động vật là bạn tình. Đây là từ trang trọng, thường gặp trong văn bản, giấy tờ."),
+    ("世代", "shìdài", "thế đại", "danh từ", "nhiều đời, mấy đời", "他家世代都是农民。", "Nhà anh ấy bao đời nay đều làm nông.",
+     "Danh từ, nghĩa là nhiều đời, đời này qua đời khác. Trong bài có cụm 世代相传, truyền từ đời này sang đời khác."),
+    ("暗示", "ànshì", "ám thị", "động từ", "ngụ ý, ám thị, có hàm ý", "他用眼神暗示我别说话。", "Anh ấy dùng ánh mắt ra hiệu cho tôi đừng nói.",
+     "Động từ, nghĩa là ngầm gợi ý, ra hiệu, không nói thẳng ra. Tiếng Việt ám thị thường dùng trong tâm lý học, như tự kỷ ám thị; còn 暗示 trong tiếng Trung dùng rất rộng, nghĩa là ngầm cho biết, ra hiệu."),
+    ("提示", "tíshì", "đề thị", "động từ", "nhắc nhở, gợi ý", "老师提示了一下，我马上就想起来了。", "Thầy gợi ý một chút là tôi nhớ ra ngay.",
+     "Động từ, nghĩa là nhắc nhở, gợi ý. Khác với 暗示: 提示 là nhắc nhở rõ ràng, còn 暗示 là ngầm ra hiệu. Trên điện thoại, 提示 còn là thông báo, lời nhắc."),
+    ("鉴于", "jiànyú", "giám vu", "liên từ, giới từ", "do, bởi vì; xét thấy", "鉴于天气原因，比赛推迟举行。", "Do thời tiết, trận đấu được hoãn lại.",
+     "Vừa là giới từ vừa là liên từ, nghĩa là xét thấy, căn cứ vào, do. Dùng trong văn viết. Đây là điểm ngữ pháp thứ ba của bài."),
+    ("功效", "gōngxiào", "công hiệu", "danh từ", "tác dụng, hiệu lực, hiệu quả", "这种草药有止咳的功效。", "Loại thảo dược này có tác dụng cầm ho.",
+     "Danh từ, nghĩa là tác dụng, hiệu quả, thường nói về thuốc, phương pháp, sản phẩm. Hán Việt là công hiệu, giống tiếng Việt."),
+    ("理所当然", "lǐsuǒdāngrán", "lý sở đương nhiên", "thành ngữ", "đương nhiên, dĩ nhiên", "他觉得别人帮他是理所当然的。", "Anh ta cho rằng người khác giúp mình là chuyện đương nhiên.",
+     "Thành ngữ, nghĩa là theo lẽ phải thì vốn nên như vậy, tức là đương nhiên, dĩ nhiên. Thường dùng 是理所当然的, hoặc 理所当然地 cộng động từ."),
+    ("疾病", "jíbìng", "tật bệnh", "danh từ", "bệnh tật", "经常锻炼可以预防疾病。", "Thường xuyên rèn luyện có thể phòng ngừa bệnh tật.",
+     "Danh từ, nghĩa là bệnh tật, mang màu sắc văn viết. Trong bài có cụm 神经系统疾病, bệnh về hệ thần kinh."),
+    ("患者", "huànzhě", "hoạn giả", "danh từ", "người bệnh, bệnh nhân", "医生耐心地回答患者的问题。", "Bác sĩ kiên nhẫn trả lời câu hỏi của bệnh nhân.",
+     "Danh từ, nghĩa là người bệnh, bệnh nhân. 患 là mắc bệnh, như 患病. Từ 患者 trang trọng hơn từ 病人. Trong bài còn có 患儿, trẻ em bị bệnh."),
+    ("辅助", "fǔzhù", "phụ trợ", "tính từ", "phụ, bổ trợ", "音乐可以作为一种辅助治疗手段。", "Âm nhạc có thể dùng làm một biện pháp hỗ trợ điều trị.",
+     "Ở đây là tính từ, nghĩa là phụ, bổ trợ, không phải chính. Trong bài có cụm 辅助性治疗, điều trị hỗ trợ. 辅助 còn là động từ, nghĩa là giúp đỡ, hỗ trợ."),
+    ("症状", "zhèngzhuàng", "chứng trạng", "danh từ", "triệu chứng", "感冒的症状是发烧、咳嗽。", "Triệu chứng của cảm cúm là sốt và ho.",
+     "Danh từ, nghĩa là triệu chứng của bệnh. Tiếng Việt ít dùng chứng trạng, mà nói là triệu chứng. Hay gặp: 减轻症状, làm giảm triệu chứng."),
+    ("愈", "yù", "dũ", "tính từ", "khỏi bệnh, hết bệnh", "经过治疗，他的病已经痊愈了。", "Qua điều trị, bệnh của anh ấy đã khỏi hẳn.",
+     "Tính từ, nghĩa là khỏi bệnh. Thường đi trong từ ghép: 痊愈, khỏi hẳn; 治愈, chữa khỏi, như trong bài: 用它治愈了一些多动症患儿. Ngoài ra, 愈……愈…… còn có nghĩa là càng… càng…."),
+    ("障碍", "zhàng'ài", "chướng ngại", "danh từ", "sự trở ngại, sự cản trở, chướng ngại vật", "语言不通是他们交流的最大障碍。", "Bất đồng ngôn ngữ là trở ngại lớn nhất trong giao tiếp của họ.",
+     "Danh từ, nghĩa là trở ngại, chướng ngại. Trong y học, 障碍 còn chỉ chứng rối loạn, như trong bài: 精神集中能力障碍, rối loạn khả năng tập trung."),
+    ("噪音", "zàoyīn", "táo âm", "danh từ", "tiếng ồn", "窗外的噪音太大，影响了我休息。", "Tiếng ồn ngoài cửa sổ quá lớn, ảnh hưởng đến việc nghỉ ngơi của tôi.",
+     "Danh từ, nghĩa là tiếng ồn. Trong bài có cụm 噪音污染, ô nhiễm tiếng ồn. Thêm chữ 白 ở trước là thành 白噪音, tiếng ồn trắng."),
+    ("给予", "jǐyǔ", "cấp dữ", "động từ", "cho, dành cho", "感谢大家给予我的帮助。", "Cảm ơn mọi người đã dành cho tôi sự giúp đỡ.",
+     "Động từ, nghĩa là cho, dành cho, mang màu sắc văn viết, trang trọng. Chú ý âm đọc: âm tiết đầu đọc là jǐ thanh ba, không đọc như khi nói cho trong khẩu ngữ. Tân ngữ thường là danh từ trừu tượng: 给予帮助，给予支持，给予关心."),
+    ("嘿", "hēi", "hắc", "thán từ", "này, nè (nhắc nhở, gọi)", "嘿，你的钱包掉了！", "Này, ví của bạn rơi rồi kìa!",
+     "Thán từ, dùng để gọi hoặc nhắc nhở ai đó, giống này, nè trong tiếng Việt. Cuối bài khóa, tiếng ồn trắng như đang nói với chúng ta: 嘿，你可以放松精神, này, bạn có thể thả lỏng tinh thần rồi."),
+]
+
+add("bullets", chapter="Từ mới (44 từ)", section="Từ mới 生词", title="Phần 1: Từ mới",
+    items=["Bài 12 có 44 từ mới, chia thành 15 nhóm nhỏ",
+           "Mỗi từ: nghe đọc mẫu 2 lần → âm Hán Việt → nghĩa → ví dụ",
+           "Hãy đọc to theo sau mỗi lần nghe",
+           "Chú ý âm đọc: 警惕 (jǐngtì) · 给予 (jǐyǔ) · 暴露 (bàolù) · 症状 (zhèng)",
+           "Từ dễ nhầm: 岩石 · 雌雄 · 呼唤 · 暗示"],
+    say=["Bây giờ chúng ta sang phần một: từ mới. Bài này có bốn mươi bốn từ, thầy chia thành mười lăm nhóm nhỏ, mỗi nhóm hai hoặc ba từ.",
+         F(1, "Với mỗi từ, các bạn sẽ nghe đọc mẫu hai lần, sau đó là âm Hán Việt, nghĩa, và một ví dụ."),
+         F(2, "Hãy đọc to theo sau mỗi lần nghe, vì đọc thành tiếng giúp nhớ từ lâu hơn rất nhiều."),
+         F(3, "Một số từ có âm đọc cần chú ý, như 警惕，给予，暴露，症状. Thầy sẽ nhắc khi gặp."),
+         F(4, "Ngoài ra, có mấy từ Hán Việt rất dễ hiểu nhầm, như 岩石，雌雄，呼唤，暗示. Nghĩa của chúng trong tiếng Trung khác với tiếng Việt, các bạn nhớ nghe kỹ phần giải thích nhé. Chúng ta bắt đầu.")])
+
+sizes = [3] * 14 + [2]
+assert sum(sizes) == len(V)
+g = 0
+for gs in sizes:
+    group = V[g:g + gs]
+    words, say = [], []
+    for i, (zh, py, hv, loai, vi, ex, exvi, expl) in enumerate(group):
+        n = g + i + 1
+        words.append({"zh": zh, "py": py, "hv": hv.upper(), "loai": f"{n}. {loai}", "vi": vi, "ex": ex, "exvi": exvi})
+        say.append(F(i, f"Từ số {n}: {zh}。 {zh}。 Hán Việt là {hv}.", zr=120))
+        say.append(F(i, f"{expl} Ví dụ: {ex.replace('“', '').replace('”', '')}{'' if ex[-1] in '。…？！，”' else '，'} {exvi[0].upper() + exvi[1:]}{'' if exvi.endswith(('.', '!', '?')) else '.'}", zr=130))
+    add("vocab", section="Từ mới 生词", title=f"Từ mới ({g + 1}–{g + len(group)} / {len(V)})",
+        words=words, say=say)
+    g += gs
+
+# ======================= BÀI KHÓA =======================
+# (chữ Hán hiển thị, dịch, ghi chú[, lời đọc tiếng Trung nếu khác])
+P = [
+    ("你有过这样的经验吗？会还没开始，屋子里一片嘈杂，突然房间里莫名其妙地一片寂静，有人说了句“好安静啊”，马上大家又聊了起来。",
+     "Bạn đã bao giờ gặp chuyện như thế này chưa? Cuộc họp còn chưa bắt đầu, cả căn phòng ồn ào, bỗng nhiên trong phòng im phăng phắc một cách khó hiểu, có người nói một câu: Yên tĩnh quá nhỉ, thế là mọi người lập tức lại nói chuyện tiếp.",
+     ["经验 ở đây là trải nghiệm, điều mình từng trải qua. 一片 cộng tính từ chỉ một khung cảnh bao trùm: 一片嘈杂, ồn ào khắp nơi; 一片寂静, im ắng hoàn toàn. 寂静 là yên tĩnh, vắng lặng.",
+      "说了句 là cách nói rút gọn của 说了一句, nói một câu. 聊了起来 là bắt đầu tán gẫu, 起来 chỉ hành động bắt đầu và tiếp diễn."]),
+    ("这是什么现象？其实这是千万年自然选择的结果，没有学会在白噪音减退时闭嘴的人，在自然界早已被淘汰掉了。",
+     "Đây là hiện tượng gì? Thật ra đây là kết quả của hàng chục triệu năm chọn lọc tự nhiên. Những người không học được cách im lặng khi tiếng ồn trắng giảm đi, thì đã bị đào thải khỏi giới tự nhiên từ lâu rồi.",
+     ["自然选择 là chọn lọc tự nhiên, khái niệm trong thuyết tiến hóa. 千万年 là hàng chục triệu năm, chỉ một thời gian vô cùng dài.",
+      "减退 là giảm đi, yếu đi. 闭嘴 là ngậm miệng, im lặng. 被淘汰掉了 là câu bị động, 掉 làm bổ ngữ chỉ kết quả mất đi, như 扔掉，忘掉."]),
+    ("什么是白噪音？我们不妨形象地描绘一下：白噪音听上去像下雨的声音，或者像波浪拍打岩石的声音，或者像微风抚摸树叶时发出的沙沙声。",
+     "Tiếng ồn trắng là gì? Chúng ta cứ thử miêu tả nó một cách hình tượng: tiếng ồn trắng nghe giống như tiếng mưa rơi, hoặc giống tiếng sóng vỗ vào đá, hoặc giống tiếng xào xạc phát ra khi làn gió nhẹ vuốt ve lá cây.",
+     ["不妨形象地描绘一下 là cứ thử miêu tả một cách hình tượng xem sao. Đây là câu ví dụ của điểm ngữ pháp 不妨. 形象 ở đây là tính từ, nghĩa là sinh động, có hình ảnh.",
+      "听上去 là nghe có vẻ, nghe như. 拍打 là vỗ, đập. 沙沙 là từ tượng thanh, tiếng xào xạc. Câu này dùng ba lần 像, liệt kê ba loại tiếng ồn trắng."]),
+    ("在森林里，鸟的叫声就是白噪音，也是天然的警报器。",
+     "Trong rừng, tiếng chim hót chính là tiếng ồn trắng, cũng là chiếc chuông báo động tự nhiên.",
+     ["叫声 là tiếng kêu, tiếng hót của chim, thú. 天然 là tự nhiên, vốn có, không do con người làm ra.",
+      "警报器 là thiết bị báo động, ta vừa gặp trong phần khởi động. Tác giả ví tiếng chim như một chiếc chuông báo động tự nhiên của khu rừng."]),
+    ("鸟在叫，说明没有危险，鸟叫停止，意味着有了险情，务必要提高警惕了，这时，所有动物都会静下来，只有当鸟叫重新开始时，警报才会解除。",
+     "Chim còn hót nghĩa là không có nguy hiểm; chim ngừng hót nghĩa là có nguy hiểm, nhất thiết phải nâng cao cảnh giác. Lúc này, mọi loài vật đều sẽ im lặng, chỉ khi tiếng chim hót bắt đầu trở lại, báo động mới được gỡ bỏ.",
+     ["意味着 là có nghĩa là. 险情 là tình hình nguy hiểm. 务必要提高警惕了 là nhất thiết phải nâng cao cảnh giác. Đây là câu ví dụ của điểm ngữ pháp 务必.",
+      "只有当……时，……才…… nghĩa là chỉ khi… thì mới…. 静下来 là yên lặng lại, 下来 chỉ trạng thái từ động chuyển sang tĩnh."]),
+    ("其实不论是鸟叫，还是虫叫，都是寻求异性时，不得已而采取的危险举动，因为叫声暴露了自己，很容易惹祸。",
+     "Thật ra, dù là chim kêu hay côn trùng kêu, đều là hành động nguy hiểm bất đắc dĩ phải làm khi tìm kiếm bạn tình, vì tiếng kêu để lộ vị trí của chính mình, rất dễ chuốc lấy tai họa.",
+     ["不论……还是……，都…… nghĩa là bất kể… hay…, đều…. Đây là mẫu câu của bài tập bốn. 寻求 là tìm kiếm. 异性 là người khác giới, ở đây chỉ con vật khác giống.",
+      "不得已而采取 là bất đắc dĩ mà phải dùng đến. 而 nối trạng thái với hành động. 举动 là hành động, cử chỉ."]),
+    ("倘若不叫，雌雄两性谁也发现不了对方，“婚事”就更谈不上了，那么，祖先遗留下的DNA怎么送给异性嘛。",
+     "Nếu không kêu, con đực con cái chẳng con nào phát hiện được con nào, chuyện cưới hỏi lại càng không thể bàn đến. Vậy thì DNA mà tổ tiên để lại làm sao trao cho giống khác được chứ.",
+     ["倘若 là nếu như, văn viết, giống 如果. 谁也发现不了对方 là chẳng ai phát hiện được ai. 谈不上 là không thể nói đến, chưa đến mức.",
+      "婚事 có dấu ngoặc kép vì tác giả dùng chuyện cưới hỏi của con người để nói vui về động vật. 嘛 ở cuối câu nhấn mạnh lý lẽ hiển nhiên: không kêu thì làm sao duy trì nòi giống."]),
+    ("既要延续后代，又要保护自己，那就只有用最大的声音，拼命呼唤，同时竖起耳朵，提高警惕，有危险马上闭嘴。",
+     "Vừa phải duy trì nòi giống, lại vừa phải bảo vệ bản thân, thì chỉ còn cách dùng âm thanh to nhất để ra sức kêu gọi, đồng thời dỏng tai lên, nâng cao cảnh giác, hễ có nguy hiểm là im bặt ngay.",
+     ["既要……又要……，那就只有……，同时…… là mẫu câu thứ hai của bài tập bốn: vừa phải… lại phải…, thì chỉ còn cách…, đồng thời….",
+      "拼命 là liều mạng, ra sức. 竖起耳朵 là dỏng tai lên. Câu này giải thích vì sao loài chim vừa kêu thật to vừa luôn sẵn sàng im lặng."]),
+    ("原始社会之前，我们的祖先还没有进化成人类，他们最喜欢的事情，可能就是在鸟叫声中无忧无虑地睡大觉。最焦虑的事情就是周围一片寂静，因为那说明危险正在靠拢。",
+     "Trước xã hội nguyên thủy, tổ tiên chúng ta còn chưa tiến hóa thành con người. Việc họ thích nhất có lẽ là ngủ một giấc thật say, vô lo vô nghĩ trong tiếng chim hót. Việc khiến họ lo lắng nhất là xung quanh im phăng phắc, vì điều đó cho thấy nguy hiểm đang đến gần.",
+     ["无忧无虑 là thành ngữ, vô lo vô nghĩ. 睡大觉 là ngủ một giấc thật đã, thật say. 焦虑 là lo âu, sốt ruột.",
+      "Hai câu đối nhau rất rõ: 最喜欢的事情 là việc thích nhất, 最焦虑的事情 là việc lo nhất. Tiếng chim là an toàn, sự im lặng là nguy hiểm."]),
+    ("我们喜欢听鸟的叫声，因为那会让紧张的神经放松下来。经过数千万年的自然选择，对白噪音减弱越敏感的生物，存活和找到配偶的可能性越大，这种意识在DNA中保留下来，并且世代相传。",
+     "Chúng ta thích nghe tiếng chim hót, vì nó làm cho thần kinh đang căng thẳng được thả lỏng. Trải qua mấy chục triệu năm chọn lọc tự nhiên, sinh vật nào càng nhạy cảm với sự yếu đi của tiếng ồn trắng, thì khả năng sống sót và tìm được bạn đời càng lớn. Ý thức này được lưu giữ lại trong DNA, và truyền từ đời này sang đời khác.",
+     ["数千万年 là mấy chục triệu năm. 对……越敏感，……越大 là càng nhạy cảm với…, thì… càng lớn, mẫu câu 越……越…….",
+      "存活 là sống sót. 保留下来 là được giữ lại. 世代相传 là truyền từ đời này sang đời khác. Đây chính là lời giải thích cho hiện tượng ở đầu bài."]),
+    ("会议室里的嘈杂声就是白噪音，大量的白噪音暗示着安全。当嘈杂声减弱时，提示大家要警惕，然后闭嘴、观察，这是人类大脑深处的预警意识。",
+     "Tiếng ồn ào trong phòng họp chính là tiếng ồn trắng, tiếng ồn trắng nhiều nghĩa là an toàn. Khi tiếng ồn ào yếu đi, nó nhắc mọi người phải cảnh giác, rồi im lặng và quan sát. Đây là ý thức cảnh báo sớm nằm sâu trong não bộ con người.",
+     ["暗示着安全 là ngầm báo hiệu sự an toàn. 提示 là nhắc nhở. Hai từ mới 暗示 và 提示 xuất hiện liền nhau, các bạn chú ý sự khác biệt: một bên ngầm, một bên rõ ràng.",
+      "预警 là cảnh báo trước. 大脑深处 là nơi sâu thẳm trong não bộ. Tác giả quay về cảnh phòng họp ở đầu bài để áp dụng lý thuyết vừa nói."]),
+    ("当有人说“好安静啊”时，大家发现没有危险，于是，报警解除。",
+     "Khi có người nói: Yên tĩnh quá nhỉ, mọi người phát hiện ra không có nguy hiểm gì, thế là báo động được gỡ bỏ.",
+     ["当……时 là khi…. 于是 là thế là, bèn, chỉ kết quả nối tiếp. 报警解除 là báo động được gỡ bỏ.",
+      "Câu này trả lời trọn vẹn câu hỏi ở đầu bài: vì sao sau câu nói ấy, mọi người lại nói chuyện tiếp."]),
+    ("白噪音会让我们有安全感，从而放松身心。",
+     "Tiếng ồn trắng khiến chúng ta có cảm giác an toàn, từ đó mà thả lỏng cả thể xác lẫn tinh thần.",
+     ["安全感 là cảm giác an toàn. 从而 là từ đó mà, nhờ đó mà, dùng trong văn viết để nối nguyên nhân với kết quả.",
+      "身心 là thân và tâm, thể xác và tinh thần. Từ đoạn này, bài khóa chuyển sang nói về công dụng của tiếng ồn trắng."]),
+    ("鉴于白噪音有这样的功效，它理所当然地成了医生的好帮手：人们利用它对神经系统疾病患者进行辅助性治疗，成功地减轻了病人的症状；",
+     "Xét thấy tiếng ồn trắng có công hiệu như vậy, nó đương nhiên trở thành trợ thủ đắc lực của bác sĩ: người ta dùng nó để điều trị hỗ trợ cho bệnh nhân mắc bệnh về hệ thần kinh, giảm nhẹ thành công triệu chứng của người bệnh;",
+     ["鉴于……，…… là xét thấy…, thì…. Đây là câu ví dụ của điểm ngữ pháp 鉴于. 理所当然地成了 là đương nhiên trở thành. 好帮手 là trợ thủ đắc lực.",
+      "对……进行治疗 là tiến hành điều trị cho ai. 进行 đi với động từ hai âm tiết, mang màu sắc văn viết. 减轻症状 là làm giảm triệu chứng."]),
+    ("用它治愈了一些多动症患儿的精神集中能力障碍；受到环境噪音污染的人群，也可用白噪音帮助恢复工作效率……",
+     "dùng nó chữa khỏi chứng rối loạn khả năng tập trung cho một số trẻ mắc chứng tăng động; những người bị ô nhiễm tiếng ồn môi trường cũng có thể dùng tiếng ồn trắng để giúp khôi phục hiệu suất làm việc…",
+     ["治愈 là chữa khỏi. 多动症 là chứng tăng động. 患儿 là trẻ em mắc bệnh. 精神集中能力障碍 là rối loạn khả năng tập trung.",
+      "受到……污染 là bị ô nhiễm bởi…. Ba vế câu nối bằng dấu chấm phẩy liệt kê ba công dụng của tiếng ồn trắng, đúng như bảng tóm tắt của bài tập năm."]),
+    ("白噪音实际上是大自然给予我们的声音暗示，它清晰地对我们说：“嘿，你可以放松精神，不必焦虑啦。”",
+     "Tiếng ồn trắng thực ra là lời ám chỉ bằng âm thanh mà thiên nhiên dành cho chúng ta. Nó nói rõ ràng với chúng ta rằng: Này, bạn có thể thả lỏng tinh thần, không cần lo âu nữa đâu.",
+     ["给予我们的声音暗示 là lời ám chỉ bằng âm thanh mà thiên nhiên dành cho chúng ta. 给予 đọc là jǐyǔ, mang màu sắc văn viết.",
+      "啦 là trợ từ ngữ khí, kết hợp của 了 và 啊, làm câu nói nhẹ nhàng, thân mật. Bài khóa được cải biên từ bài viết cùng tên trên tạp chí Thanh niên văn trích, tác giả là Trương Anh Phong."]),
+]
+
+add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 2: Bài khóa 我们都爱白噪音", size=42,
+    items=["Đọc từng đoạn: nghe tiếng Trung trước (chưa hiện bản dịch)",
+           "Sau đó: bản dịch tiếng Việt + giải thích từ ngữ, cấu trúc",
+           "Mẹo: tạm dừng, đọc to đoạn văn trước khi nghe giảng"],
+    say=["Tiếp theo là phần hai: bài khóa 我们都爱白噪音, dài tám trăm ba mươi lăm chữ. Bài được cải biên từ bài viết cùng tên trên tạp chí 青年文摘, Thanh niên văn trích.",
+         F(0, "Thầy chia bài thành mười sáu đoạn ngắn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học."),
+         F(1, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
+         F(2, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
+
+for i, item in enumerate(P, 1):
+    zh, vi, notes = item[:3]
+    spoken = item[3] if len(item) > 3 else zh.replace("“", "").replace("”", "")
+    zsize = 54 if len(zh) <= 100 else 50
+    add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
+        say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
+             F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", ""), cap="")] + [F(1, n) for n in notes])
+
+add("bullets", chapter="Tóm tắt nội dung", section="Bài khóa 课文", title="Bố cục bài khóa (theo bài tập 5) – phần 1", size=36,
+    items=["## 1. 文中提到了哪几种白噪音？",
+           "下雨的声音 · 波浪拍打岩石的声音 · 微风抚摸树叶的声音",
+           "鸟的叫声 · 会议室的嘈杂声",
+           "## 2. 白噪音给我们什么暗示？",
+           "有白噪音 → 安全 · 白噪音减弱、停止 → 危险"],
+    say=["Bài tập năm của sách yêu cầu dựa vào gợi ý để tóm tắt nội dung chính của bài khóa. Chúng ta cùng làm luôn nhé.",
+         F(0, "Câu hỏi một: 文中提到了哪几种白噪音？ Bài khóa nhắc đến những loại tiếng ồn trắng nào?"),
+         F(1, "Có năm loại. 下雨的声音, tiếng mưa rơi. 波浪拍打岩石的声音, tiếng sóng vỗ vào đá. 微风抚摸树叶的声音, tiếng gió nhẹ vuốt ve lá cây."),
+         F(2, "鸟的叫声, tiếng chim hót. Và 会议室的嘈杂声, tiếng ồn ào trong phòng họp."),
+         F(3, "Câu hỏi hai: 白噪音给我们什么暗示？ Tiếng ồn trắng ngầm báo cho chúng ta điều gì?"),
+         F(4, "Có hai điều. Khi có tiếng ồn trắng, nghĩa là 安全, an toàn. Khi tiếng ồn trắng yếu đi hoặc dừng lại, nghĩa là 危险, nguy hiểm.")])
+
+add("bullets", section="Bài khóa 课文", title="Bố cục bài khóa (theo bài tập 5) – phần 2", size=36,
+    items=["## 3. 鸟儿为什么要叫？",
+           "寻找异性 · 延续后代",
+           "## 4. 白噪音有什么功效？",
+           "放松身心",
+           "治疗疾病：神经系统疾病 · 多动症患儿",
+           "恢复工作效率"],
+    say=[F(0, "Câu hỏi ba: 鸟儿为什么要叫？ Vì sao loài chim phải kêu?"),
+         F(1, "Để 寻找异性, tìm bạn tình, và để 延续后代, duy trì nòi giống. Dù tiếng kêu rất dễ làm lộ vị trí của chúng."),
+         F(2, "Câu hỏi bốn: 白噪音有什么功效？ Tiếng ồn trắng có công dụng gì?"),
+         F(3, "Thứ nhất, 放松身心, giúp thả lỏng thể xác và tinh thần."),
+         F(4, "Thứ hai, 治疗疾病, chữa bệnh: hỗ trợ điều trị bệnh hệ thần kinh, và chữa chứng rối loạn tập trung cho trẻ tăng động."),
+         F(5, "Thứ ba, 恢复工作效率, giúp khôi phục hiệu suất làm việc cho người bị ô nhiễm tiếng ồn. Bố cục này rất có ích khi các bạn tự kể lại bài khóa, và cũng chính là dàn ý cho bài tập về nhà hôm nay.")])
+
+# ======================= NGỮ PHÁP =======================
+add("bullets", chapter="Ngữ pháp: 不妨", section="Ngữ pháp 注释", title="1. 不妨 bùfáng – cứ việc, chẳng ngại gì", size=38,
+    items=["Phó từ: có thể làm như vậy, không có gì trở ngại",
+           "Người nói cho rằng làm như vậy thì tốt hơn → dùng để khích lệ, đề nghị",
+           "有什么意见，你不妨直说。",
+           "什么是白噪音？我们不妨形象地描绘一下。",
+           "改变人们的传统观念可能不容易，但我们不妨试一试。"],
+    say=["Bây giờ chúng ta sang phần ngữ pháp. Điểm thứ nhất là phó từ 不妨.",
+         F(0, "不妨 là phó từ, biểu thị có thể làm như vậy, không có gì trở ngại. 妨 là cản trở, như trong 妨碍, nên 不妨 nghĩa đen là không cản trở gì."),
+         F(1, "Khi dùng 不妨, người nói ngầm cho rằng làm như vậy thì tốt hơn. Vì thế nó thường dùng để khích lệ, đề nghị một cách nhẹ nhàng, tiếng Việt dịch là cứ việc, cứ thử, chẳng ngại gì."),
+         F(2, "Ví dụ một: 有什么意见，你不妨直说。 Có ý kiến gì thì bạn cứ nói thẳng ra."),
+         F(3, "Ví dụ hai, lấy từ bài khóa: 什么是白噪音？我们不妨形象地描绘一下。 Tiếng ồn trắng là gì? Chúng ta cứ thử miêu tả nó một cách hình tượng xem."),
+         F(4, "Ví dụ ba: 改变人们的传统观念可能不容易，但我们不妨试一试。 Thay đổi quan niệm truyền thống của mọi người có lẽ không dễ, nhưng chúng ta cứ thử xem sao. Các bạn để ý: sau 不妨 rất hay là động từ lặp lại, như 试一试，看看，描绘一下.")])
+
+add("bullets", section="Ngữ pháp 注释", title="Luyện tập: dùng 不妨 viết lại câu", reveal=True, size=36,
+    items=["(1) 她说的方法也许可行，你试试也可以。",
+           "Đáp án: 她说的方法也许可行，你不妨试试。",
+           "(2) 想接触社会、了解社会，你可以从做志愿者入手。",
+           "Đáp án: 想接触社会、了解社会，你不妨从做志愿者入手。",
+           "(3) 从目前我们掌握的证据来看，我们或许可以做这样的假设。",
+           "Đáp án: 从目前我们掌握的证据来看，我们不妨做这样的假设。"],
+    say=[F(0, "Luyện tập: dùng 不妨 viết lại câu. Câu một: 她说的方法也许可行，你试试也可以。 Cách cô ấy nói có lẽ làm được, bạn thử xem cũng được. Các bạn tạm dừng và thử viết lại nhé."),
+         F(1, "Đáp án: 她说的方法也许可行，你不妨试试。 Cách cô ấy nói có lẽ làm được, bạn cứ thử xem. Cụm 试试也可以 được thay bằng 不妨试试."),
+         F(2, "Câu hai: 想接触社会、了解社会，你可以从做志愿者入手。 Muốn tiếp xúc với xã hội, hiểu biết xã hội, bạn có thể bắt đầu từ việc làm tình nguyện viên."),
+         F(3, "Đáp án: 你不妨从做志愿者入手。 Bạn cứ thử bắt đầu từ việc làm tình nguyện viên. 入手 nghĩa là bắt tay vào, bắt đầu từ."),
+         F(4, "Câu ba: 从目前我们掌握的证据来看，我们或许可以做这样的假设。 Xét từ những chứng cứ chúng ta đang nắm được, có lẽ chúng ta có thể đặt ra giả thiết như thế này."),
+         F(5, "Đáp án: 我们不妨做这样的假设。 Chúng ta cứ thử đặt ra giả thiết như thế này. Cụm 或许可以 được thay bằng 不妨.")])
+
+add("bullets", chapter="Ngữ pháp: 务必", section="Ngữ pháp 注释", title="2. 务必 wùbì – nhất thiết phải", size=36,
+    items=["Phó từ: thái độ kiên quyết, nghĩa là 必须、一定要",
+           "Thường bổ nghĩa cho động từ, cụm động từ",
+           "鸟叫停止，意味着有了险情，务必要提高警惕了。",
+           "50岁以上的人容易骨折，因此进行跳跃或其他剧烈活动时务必注意了。",
+           "海带凉拌菜做法超级简单，不过务必将海带多泡些时间，不然不易消化。"],
+    say=["Điểm ngữ pháp thứ hai là phó từ 务必.",
+         F(0, "务必 là phó từ, biểu thị thái độ kiên quyết, nghĩa giống 必须 và 一定要, tiếng Việt dịch là nhất thiết phải, nhớ phải, bằng mọi giá phải."),
+         F(1, "务必 thường đứng trước động từ hoặc cụm động từ. Cũng có thể nói 务必要, như trong bài khóa. Từ này mang màu sắc trang trọng, hay gặp trong thông báo, lời dặn dò."),
+         F(2, "Ví dụ một, lấy từ bài khóa: 鸟叫停止，意味着有了险情，务必要提高警惕了。 Chim ngừng hót nghĩa là có nguy hiểm, nhất thiết phải nâng cao cảnh giác."),
+         F(3, "Ví dụ hai: 五十岁以上的人容易骨折，因此进行跳跃或其他剧烈活动时务必注意了。 Người trên năm mươi tuổi dễ bị gãy xương, vì vậy khi nhảy hoặc vận động mạnh nhất thiết phải chú ý."),
+         F(4, "Ví dụ ba: 海带凉拌菜做法超级简单，不过务必将海带多泡些时间，不然不易消化。 Món nộm rong biển cách làm siêu đơn giản, nhưng nhất định phải ngâm rong biển lâu một chút, nếu không sẽ khó tiêu.")])
+
+add("bullets", section="Ngữ pháp 注释", title="Luyện tập: dùng 务必 viết lại câu", reveal=True, size=38,
+    items=["(1) 危险来临的时候，大家一定要镇静。",
+           "Đáp án: 危险来临的时候，大家务必保持镇静。",
+           "(2) 请转告他，明天一定要出席会议。",
+           "Đáp án: 请转告他，明天务必出席会议。",
+           "(3) 山路不好走，开车一定要小心。",
+           "Đáp án: 山路不好走，开车务必小心。"],
+    say=[F(0, "Luyện tập: dùng 务必 viết lại câu. Câu một: 危险来临的时候，大家一定要镇静。 Khi nguy hiểm ập đến, mọi người nhất định phải bình tĩnh. Các bạn tạm dừng và thử viết lại nhé."),
+         F(1, "Đáp án: 危险来临的时候，大家务必保持镇静。 Khi nguy hiểm ập đến, mọi người nhất thiết phải giữ bình tĩnh. Cũng có thể nói 大家务必要镇静."),
+         F(2, "Câu hai: 请转告他，明天一定要出席会议。 Nhờ anh nhắn lại với anh ấy, ngày mai nhất định phải dự họp."),
+         F(3, "Đáp án: 请转告他，明天务必出席会议。 Thay 一定要 bằng 务必. 出席 là có mặt, tham dự một cuộc họp, buổi lễ."),
+         F(4, "Câu ba: 山路不好走，开车一定要小心。 Đường núi khó đi, lái xe nhất định phải cẩn thận."),
+         F(5, "Đáp án: 山路不好走，开车务必小心。 Các bạn thấy không, 务必 thay được cho 一定要 và 必须, nhưng nghe trang trọng và kiên quyết hơn.")])
+
+add("bullets", chapter="Ngữ pháp: 鉴于", section="Ngữ pháp 注释", title="3. 鉴于 jiànyú – xét thấy, do", size=34,
+    items=["Giới từ: nghĩa là 觉察到、考虑到 (nhận thấy, cân nhắc đến)",
+           "Liên từ: đứng đầu vế trước của câu phức nhân quả, nêu căn cứ, nguyên nhân, lý do của hành động ở vế sau",
+           "Dùng trong văn viết",
+           "鉴于农村教师严重缺乏，他决定大学毕业以后，到农村去当老师。",
+           "鉴于白噪音有这样的功效，它理所当然地成了医生的好帮手。",
+           "鉴于中国的娱乐片起步较晚，创作人员在把握观众心理、掌握特定技巧等方面尚有欠缺，这样的研讨会无疑给创作者提供了极大的帮助。"],
+    say=["Điểm ngữ pháp thứ ba là 鉴于.",
+         F(0, "鉴于 trước hết là giới từ, nghĩa là 觉察到 và 考虑到, tức là nhận thấy, cân nhắc đến. Chữ 鉴 nghĩa gốc là tấm gương soi, rồi mới thành soi xét, như trong 借鉴."),
+         F(1, "鉴于 còn là liên từ, đứng đầu vế trước của câu phức chỉ nhân quả, nêu ra căn cứ, nguyên nhân hoặc lý do; vế sau là hành động hay quyết định dựa trên lý do đó. Tiếng Việt dịch là xét thấy, căn cứ vào, do."),
+         F(2, "鉴于 dùng trong văn viết, rất hay gặp trong thông báo, văn bản hành chính."),
+         F(3, "Ví dụ một: 鉴于农村教师严重缺乏，他决定大学毕业以后，到农村去当老师。 Xét thấy giáo viên nông thôn thiếu trầm trọng, anh ấy quyết định sau khi tốt nghiệp đại học sẽ về nông thôn dạy học."),
+         F(4, "Ví dụ hai, lấy từ bài khóa: 鉴于白噪音有这样的功效，它理所当然地成了医生的好帮手。 Xét thấy tiếng ồn trắng có công hiệu như vậy, nó đương nhiên trở thành trợ thủ đắc lực của bác sĩ."),
+         F(5, "Ví dụ ba: 鉴于中国的娱乐片起步较晚，创作人员在把握观众心理、掌握特定技巧等方面尚有欠缺，这样的研讨会无疑给创作者提供了极大的帮助。 Xét thấy phim giải trí Trung Quốc khởi đầu khá muộn, người sáng tác còn thiếu sót ở các mặt như nắm bắt tâm lý khán giả và kỹ xảo đặc thù, những hội thảo như thế này chắc chắn đã giúp ích rất lớn cho họ.")])
+
+add("bullets", section="Ngữ pháp 注释", title="Luyện tập: hoàn thành câu với 鉴于", reveal=True, size=38,
+    items=["(1) 鉴于近来生意清淡，大家讨论决定……",
+           "Đáp án: ……大家讨论决定推出一些优惠活动，吸引更多的顾客。",
+           "(2) 鉴于篇幅所限，本章仅……",
+           "Đáp án: ……本章仅讨论其中最重要的几个问题。",
+           "(3) 鉴于……，学校决定明天停课一天。",
+           "Đáp án: 鉴于台风即将到来，学校决定明天停课一天。"],
+    say=[F(0, "Luyện tập: hoàn thành câu. Câu một: 鉴于近来生意清淡，大家讨论决定…… Xét thấy dạo này buôn bán ế ẩm, mọi người bàn bạc quyết định điều gì? Các bạn tạm dừng và thử hoàn thành câu nhé."),
+         F(1, "Đáp án gợi ý: 大家讨论决定推出一些优惠活动，吸引更多的顾客。 Mọi người bàn bạc quyết định tung ra một số chương trình ưu đãi để thu hút thêm khách hàng. 清淡 ở đây là ế ẩm, vắng khách."),
+         F(2, "Câu hai: 鉴于篇幅所限，本章仅…… Do giới hạn về độ dài, chương này chỉ…"),
+         F(3, "Đáp án gợi ý: 本章仅讨论其中最重要的几个问题。 Chương này chỉ bàn đến mấy vấn đề quan trọng nhất trong đó. 篇幅 là độ dài của bài viết, 所限 là bị giới hạn."),
+         F(4, "Câu ba: 鉴于什么，学校决定明天停课一天。 Xét thấy điều gì, nhà trường quyết định ngày mai cho nghỉ học một ngày?"),
+         F(5, "Đáp án gợi ý: 鉴于台风即将到来，学校决定明天停课一天。 Xét thấy bão sắp đến, nhà trường quyết định ngày mai cho nghỉ học một ngày. Các bạn thấy không, vế có 鉴于 nêu lý do, vế sau nêu quyết định.")])
+
+# ======================= PHÂN BIỆT TỪ =======================
+add("compare", chapter="Phân biệt 不得已 – 不得不", section="Phân biệt từ 词语辨析", title="Phân biệt 不得已 và 不得不",
+    common="Giống nhau: đều chỉ không còn cách nào, không thể không làm, đều bổ nghĩa cho động từ. Ví dụ: 半路上车坏了，我们不得已/不得不又回来了。",
+    cols=[{"head": "不得已",
+           "lines": ["(1) Tính từ, bổ nghĩa được cho danh từ: 这也是不得已的办法。",
+                     "(2) Có mẫu chủ ngữ + 是 + 不得已; đứng riêng thành một vế: 他半夜动身也是不得已。",
+                     "(3) Dùng sau 由于/出于/因为: 出于不得已，我只好把孩子放在亲戚家里。"]},
+          {"head": "不得不",
+           "lines": ["(1) Chỉ bổ nghĩa cho động từ: 由于资金不足，这项工程不得不停止。",
+                     "(2) Không có cách dùng này",
+                     "Sai: 他半夜动身也是不得不。",
+                     "(3) Không có cách dùng này",
+                     "Sai: 出于不得不……"]}],
+    say=["Tiếp theo là phần phân biệt từ: 不得已 và 不得不. Hai từ này chỉ khác nhau một chữ, nghĩa lại rất gần, nên học sinh hay dùng lẫn lộn.",
+         "Điểm giống nhau: cả hai đều chỉ không còn cách nào khác, không thể không làm như vậy, và đều có thể bổ nghĩa cho động từ. Ví dụ: 半路上车坏了，我们不得已又回来了, hoặc 我们不得不又回来了, đều đúng. Giữa đường xe hỏng, chúng tôi đành phải quay về.",
+         F(0, "Điểm khác thứ nhất. 不得已 là tính từ, nên ngoài động từ, nó còn bổ nghĩa được cho danh từ. Ví dụ: 这也是不得已的办法，你试试吧。 Đây cũng là cách làm bất đắc dĩ thôi, bạn cứ thử xem."),
+         F(1, "Còn 不得不 thì chỉ đứng trước động từ, nghĩa là buộc phải, đành phải. Ví dụ: 由于资金不足，这项工程不得不停止。 Do thiếu vốn, công trình này buộc phải dừng lại. Không nói 不得不的办法."),
+         F(0, "Điểm khác thứ hai. 不得已 có mẫu chủ ngữ cộng 是 cộng 不得已, và còn có thể đứng riêng thành một vế câu. Ví dụ: 他半夜动身也是不得已。 Anh ấy lên đường lúc nửa đêm cũng là bất đắc dĩ. Và: 屋里坐不下，不得已，我们只好站在外边。 Trong nhà không đủ chỗ ngồi, bất đắc dĩ, chúng tôi đành đứng ở ngoài."),
+         F(1, "不得不 không có cách dùng này. Không nói 他半夜动身也是不得不, cũng không thể để 不得不 đứng riêng một mình, vì sau nó luôn phải có động từ."),
+         F(0, "Điểm khác thứ ba. 不得已 có thể đứng sau 由于，出于，因为. Ví dụ: 出于不得已，我只好把孩子放在亲戚家里。 Vì bất đắc dĩ, tôi đành phải gửi con ở nhà họ hàng."),
+         F(1, "不得不 cũng không có cách dùng này."),
+         "Mẹo nhớ: 不得不 là hai lần phủ định, bằng 必须, nên phía sau luôn cần một động từ; còn 不得已 là một tính từ hoàn chỉnh, đứng được một mình, đứng trước danh từ, và đứng sau 是 hay 出于."])
+
+add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: chọn 不得已 hay 不得不", reveal=True, size=36,
+    items=["(1) 实在是___，我把房子卖了。",
+           "Đáp án: 不得已 – mẫu 是 + 不得已",
+           "(2) 父亲去世以后，他___放弃学业，出去打工。",
+           "Đáp án: 不得不 – đứng trước động từ 放弃 (dùng 不得已 cũng được)",
+           "(3) 这是___的措施，请大家谅解。",
+           "Đáp án: 不得已 – bổ nghĩa cho danh từ 措施",
+           "(4) 这样安排也是出于___，你就别抱怨了。",
+           "Đáp án: 不得已 – đứng sau 出于"],
+    say=[F(0, "Bây giờ chúng ta làm thử: chọn 不得已 hay 不得不 để điền vào chỗ trống. Câu một: 实在是什么，我把房子卖了。 Thật sự là … , tôi đã bán nhà rồi. Các bạn suy nghĩ nhé."),
+         F(1, "Đáp án: 不得已. 实在是不得已，我把房子卖了。 Thật sự là bất đắc dĩ, tôi mới bán nhà. Đây là mẫu 是 cộng 不得已, nên không thể dùng 不得不."),
+         F(2, "Câu hai: 父亲去世以后，他什么放弃学业，出去打工。 Sau khi bố mất, anh ấy … bỏ học, ra ngoài đi làm thuê."),
+         F(3, "Đáp án: 不得不. 他不得不放弃学业, anh ấy buộc phải bỏ học. Phía sau là động từ 放弃, nên dùng 不得不 là tự nhiên nhất. Vì cả hai đều bổ nghĩa được cho động từ, dùng 不得已 ở đây cũng không sai."),
+         F(4, "Câu ba: 这是什么的措施，请大家谅解。 Đây là biện pháp …, mong mọi người thông cảm."),
+         F(5, "Đáp án: 不得已. 这是不得已的措施, đây là biện pháp bất đắc dĩ. 措施 là danh từ, chỉ 不得已 mới bổ nghĩa được cho danh từ."),
+         F(6, "Câu bốn: 这样安排也是出于什么，你就别抱怨了。 Sắp xếp như vậy cũng là vì …, bạn đừng phàn nàn nữa."),
+         F(7, "Đáp án: 不得已. 出于不得已, vì bất đắc dĩ. Sau 出于 chỉ có thể dùng 不得已.")])
+
+# ======================= MỞ RỘNG: KẾT HỢP TỪ =======================
+add("bullets", chapter="Mở rộng: kết hợp từ", section="Mở rộng 扩展", title="Kết hợp từ (词语搭配) (1): 颁发 · 报复 · 报销 · 备份", size=34,
+    items=["## 颁发 (ban phát) – trao, cấp; ban hành",
+           "颁发证书 / 颁发奖状 · 1995年3月，国务院颁发通知，全国实行每周五天工作制。",
+           "## 报复 (báo phục) – trả thù, trả đũa",
+           "报复心理 / 打击报复 · 人类不爱护环境，最终必将招致大自然疯狂的报复。",
+           "## 报销 (báo tiêu) – thanh toán (chi phí)",
+           "凭票报销 · 因公出差车票可以报销。",
+           "## 备份 (bị phần) – sao lưu; bản dự phòng",
+           "备份文件 · 这个文件很重要，记得及时做个备份。"],
+    say=["Bây giờ chúng ta sang phần mở rộng của sách. Bài này không có mục tu từ riêng; phần mở rộng giới thiệu mười hai từ cùng các cụm kết hợp từ thường gặp, tiếng Trung gọi là 词语搭配. Học từ theo cụm sẽ giúp các bạn dùng từ tự nhiên như người bản ngữ.",
+         F(0, "Từ thứ nhất: 颁发, Hán Việt là ban phát. Nghĩa là trao, cấp giấy tờ, phần thưởng một cách trang trọng; hoặc ban hành một văn bản. Cẩn thận: tiếng Việt ban phát thường mang ý bố thí, còn 颁发 hoàn toàn trang trọng."),
+         F(1, "Cụm kết hợp: 颁发证书, cấp chứng chỉ; 颁发奖状, trao giấy khen. Ví dụ: 一九九五年三月，国务院颁发通知，全国实行每周五天工作制。 Tháng ba năm một nghìn chín trăm chín mươi lăm, Quốc vụ viện ban hành thông báo, cả nước thực hiện chế độ làm việc năm ngày mỗi tuần."),
+         F(2, "Từ thứ hai: 报复, Hán Việt là báo phục, nghĩa là trả thù, trả đũa. Cẩn thận, đừng nhầm với 报答, báo đáp, đền ơn."),
+         F(3, "Cụm kết hợp: 报复心理, tâm lý trả thù; 打击报复, trù dập trả thù. Ví dụ: 人类不爱护环境，最终必将招致大自然疯狂的报复。 Con người không bảo vệ môi trường, cuối cùng nhất định sẽ chuốc lấy sự trả thù điên cuồng của thiên nhiên."),
+         F(4, "Từ thứ ba: 报销, Hán Việt là báo tiêu, nghĩa là thanh toán lại những khoản chi phí mình đã ứng trước cho công việc."),
+         F(5, "Cụm kết hợp: 凭票报销, thanh toán dựa trên hóa đơn, vé. Ví dụ: 因公出差车票可以报销。 Đi công tác vì việc công thì vé xe được thanh toán."),
+         F(6, "Từ thứ tư: 备份, Hán Việt là bị phần, nghĩa là sao lưu, hoặc bản dự phòng."),
+         F(7, "Cụm kết hợp: 备份文件, sao lưu tài liệu. Ví dụ: 这个文件很重要，记得及时做个备份。 Tài liệu này rất quan trọng, nhớ sao lưu kịp thời nhé.")])
+
+add("bullets", section="Mở rộng 扩展", title="Kết hợp từ (2): 补贴 · 哺乳 · 巢穴 · 处分", size=34,
+    items=["## 补贴 (bổ thiếp) – trợ cấp; phụ cấp",
+           "补贴家用 / 生活补贴 · 听说有些国家对多植树的个人和家庭会给一定的绿化补贴。",
+           "## 哺乳 (bộ nhũ) – cho bú",
+           "哺乳动物 / 哺乳期 · 猫是哺乳动物吗？",
+           "## 巢穴 (sào huyệt) – tổ, hang ổ",
+           "建造巢穴 · 出去捕食的鸟妈妈一直惦记着巢穴里的孩子。",
+           "## 处分 (xử phân) – xử phạt, kỷ luật",
+           "受处分 · 考试作弊当然要受处分。"],
+    say=[F(0, "Từ thứ năm: 补贴, Hán Việt là bổ thiếp, nghĩa là trợ cấp, phụ cấp; làm động từ thì là bù thêm."),
+         F(1, "Cụm kết hợp: 补贴家用, phụ giúp chi tiêu gia đình; 生活补贴, trợ cấp sinh hoạt. Ví dụ: 听说有些国家对多植树的个人和家庭会给一定的绿化补贴。 Nghe nói có một số nước trợ cấp phủ xanh nhất định cho những cá nhân và gia đình trồng nhiều cây."),
+         F(2, "Từ thứ sáu: 哺乳, Hán Việt là bộ nhũ, nghĩa là cho bú, nuôi bằng sữa."),
+         F(3, "Cụm kết hợp: 哺乳动物, động vật có vú; 哺乳期, thời kỳ cho con bú. Ví dụ: 猫是哺乳动物吗？ Mèo có phải là động vật có vú không?"),
+         F(4, "Từ thứ bảy: 巢穴, Hán Việt là sào huyệt. Đây là từ dễ nhầm! Tiếng Việt sào huyệt thường chỉ hang ổ của bọn cướp, mang nghĩa xấu; còn 巢穴 trong câu này chỉ đơn giản là tổ chim, hang của loài vật."),
+         F(5, "Cụm kết hợp: 建造巢穴, làm tổ. Ví dụ: 出去捕食的鸟妈妈一直惦记着巢穴里的孩子。 Chim mẹ đi kiếm mồi lúc nào cũng nhớ đến những đứa con trong tổ."),
+         F(6, "Từ thứ tám: 处分, Hán Việt là xử phân, nghĩa là xử phạt, kỷ luật. Chú ý âm đọc: chǔfèn, âm tiết đầu thanh ba, âm tiết thứ hai thanh bốn."),
+         F(7, "Cụm kết hợp: 受处分, bị kỷ luật. Ví dụ: 考试作弊当然要受处分。 Gian lận trong thi cử đương nhiên phải bị kỷ luật.")])
+
+add("bullets", section="Mở rộng 扩展", title="Kết hợp từ (3): 档案 · 东道主 · 对称 · 对应", size=34,
+    items=["## 档案 (đáng án) – hồ sơ, tài liệu lưu trữ",
+           "人事档案 · 我们公司有非常完整的客户档案。",
+           "## 东道主 (đông đạo chủ) – chủ nhà",
+           "这次奥运会，东道主获得的金牌总数最多。",
+           "## 对称 (đối xứng) – cân xứng, đối xứng",
+           "不对称 · 中国很多传统建筑都是对称设计的。",
+           "## 对应 (đối ứng) – tương ứng",
+           "与……（相）对应 · 进入考场后请先找到与准考证上号码对应的座位坐好。"],
+    say=[F(0, "Từ thứ chín: 档案, nghĩa là hồ sơ, tài liệu được lưu trữ của một người hay một tổ chức."),
+         F(1, "Cụm kết hợp: 人事档案, hồ sơ nhân sự. Ví dụ: 我们公司有非常完整的客户档案。 Công ty chúng tôi có hồ sơ khách hàng vô cùng đầy đủ."),
+         F(2, "Từ thứ mười: 东道主, Hán Việt là đông đạo chủ, nghĩa là chủ nhà, người đứng ra tiếp đón khách, hoặc nước đăng cai một sự kiện."),
+         F(3, "Ví dụ: 这次奥运会，东道主获得的金牌总数最多。 Kỳ Thế vận hội lần này, nước chủ nhà giành được tổng số huy chương vàng nhiều nhất."),
+         F(4, "Từ thứ mười một: 对称, Hán Việt là đối xứng, nghĩa giống tiếng Việt. Chú ý âm đọc: duìchèn, âm tiết thứ hai đọc chèn thanh bốn, không đọc như trong 称呼."),
+         F(5, "Cụm kết hợp: 不对称, không đối xứng. Ví dụ: 中国很多传统建筑都是对称设计的。 Rất nhiều công trình kiến trúc truyền thống của Trung Quốc đều được thiết kế đối xứng."),
+         F(6, "Từ cuối cùng: 对应, Hán Việt là đối ứng, nghĩa là tương ứng với nhau."),
+         F(7, "Mẫu kết hợp: 与什么相对应, tương ứng với cái gì. Ví dụ: 进入考场后请先找到与准考证上号码对应的座位坐好。 Vào phòng thi, xin hãy tìm chỗ ngồi tương ứng với số báo danh trên thẻ dự thi rồi ngồi ngay ngắn. Câu này chắc các bạn sẽ gặp khi đi thi HSK đấy.")])
+
+add("bullets", section="Mở rộng 扩展", title="Luyện tập: chọn từ điền vào chỗ trống (1)", reveal=True, size=36,
+    items=["## Từ cho sẵn: 颁发 · 报销 · 备份 · 补贴",
+           "(1) 毕业典礼上，校长亲自为毕业生___了毕业证书。",
+           "Đáp án: 颁发",
+           "(2) 电脑突然坏了，幸好我提前___了重要文件。",
+           "Đáp án: 备份",
+           "(3) 这次出差的住宿费可以凭发票___。",
+           "Đáp án: 报销",
+           "(4) 为了___家用，她周末还去打零工。",
+           "Đáp án: 补贴"],
+    say=[F(0, "Bây giờ chúng ta luyện tập: chọn từ thích hợp điền vào chỗ trống. Bốn từ cho sẵn là: 颁发，报销，备份，补贴."),
+         F(1, "Câu một: 毕业典礼上，校长亲自为毕业生什么了毕业证书。 Trong lễ tốt nghiệp, hiệu trưởng đích thân … bằng tốt nghiệp cho các sinh viên. Các bạn tạm dừng và chọn nhé."),
+         F(2, "Đáp án: 颁发. 颁发了毕业证书, trao bằng tốt nghiệp."),
+         F(3, "Câu hai: 电脑突然坏了，幸好我提前什么了重要文件。 Máy tính đột nhiên hỏng, may mà tôi đã … các tài liệu quan trọng từ trước."),
+         F(4, "Đáp án: 备份. 幸好我提前备份了重要文件。 May mà tôi đã sao lưu tài liệu quan trọng từ trước."),
+         F(5, "Câu ba: 这次出差的住宿费可以凭发票什么。 Tiền ở trọ trong chuyến công tác lần này có thể … dựa trên hóa đơn."),
+         F(6, "Đáp án: 报销. 凭发票报销, thanh toán dựa trên hóa đơn. Rất giống cụm 凭票报销 ta vừa học."),
+         F(7, "Câu bốn: 什么家用，她周末还去打零工。 Để … chi tiêu gia đình, cuối tuần cô ấy còn đi làm thêm."),
+         F(8, "Đáp án: 补贴. 补贴家用, phụ giúp chi tiêu gia đình. 打零工 là làm việc vặt, làm thêm theo giờ.")])
+
+add("bullets", section="Mở rộng 扩展", title="Luyện tập: chọn từ điền vào chỗ trống (2)", reveal=True, size=36,
+    items=["## Từ cho sẵn: 报复 · 哺乳 · 东道主 · 对称",
+           "(5) 鲸鱼虽然生活在海里，但它是___动物。",
+           "Đáp án: 哺乳",
+           "(6) 他被批评以后，竟然想___那位同事。",
+           "Đáp án: 报复",
+           "(7) 这座建筑左右完全___，看起来非常整齐。",
+           "Đáp án: 对称",
+           "(8) 作为___，我们一定要让客人们吃好、住好、玩儿好。",
+           "Đáp án: 东道主"],
+    say=[F(0, "Phần hai, bốn từ cho sẵn là: 报复，哺乳，东道主，对称."),
+         F(1, "Câu năm: 鲸鱼虽然生活在海里，但它是什么动物。 Cá voi tuy sống dưới biển, nhưng nó là động vật …"),
+         F(2, "Đáp án: 哺乳. 鲸鱼是哺乳动物, cá voi là động vật có vú. Đây là câu đố quen thuộc trong môn sinh vật."),
+         F(3, "Câu sáu: 他被批评以后，竟然想什么那位同事。 Sau khi bị phê bình, anh ta lại muốn … người đồng nghiệp kia."),
+         F(4, "Đáp án: 报复. 竟然想报复那位同事, vậy mà lại muốn trả thù người đồng nghiệp đó."),
+         F(5, "Câu bảy: 这座建筑左右完全什么，看起来非常整齐。 Tòa nhà này hai bên trái phải hoàn toàn …, trông rất ngay ngắn."),
+         F(6, "Đáp án: 对称. 左右完全对称, hai bên hoàn toàn đối xứng."),
+         F(7, "Câu tám: 作为什么，我们一定要让客人们吃好、住好、玩儿好。 Là …, chúng ta nhất định phải để khách ăn ngon, ở tốt, chơi vui."),
+         F(8, "Đáp án: 东道主. 作为东道主, với tư cách là chủ nhà.")])
+
+# ======================= LUYỆN TẬP =======================
+add("bullets", chapter="Luyện tập", section="Luyện tập 练习", title="Bài tập 1: Mở rộng từ theo chữ có dấu chấm", size=40,
+    items=["解除 (除) → 删除 · 免除 · 除掉 · 除去",
+           "务必 (必) → 必须 · 必要 · 必然 · 未必 · 何必",
+           "延续 (续) → 继续 · 连续 · 持续 · 陆续 · 手续",
+           "后代 (代) → 古代 · 现代 · 时代 · 年代 · 一代",
+           "功效 (功) → 成功 · 功能 · 功劳 · 功课 · 用功"],
+    say=["Phần luyện tập. Bài tập một: mô phỏng ví dụ, viết thêm các từ có chứa chữ được đánh dấu chấm.",
+         F(0, "Ví dụ mẫu: 解除, chữ được đánh dấu là chữ thứ hai, nghĩa là bỏ đi. Ta có 删除，免除，除掉，除去. Tức là xóa bỏ, miễn trừ, loại bỏ, và bỏ đi."),
+         F(1, "务必, chữ được đánh dấu là chữ thứ hai, nghĩa là ắt phải. Ta có 必须，必要，必然，未必，何必. Tức là phải, cần thiết, tất nhiên, chưa chắc, và hà tất."),
+         F(2, "延续, chữ được đánh dấu là chữ thứ hai, nghĩa là nối tiếp. Ta có 继续，连续，持续，陆续，手续. Tức là tiếp tục, liên tục, kéo dài, lần lượt, và thủ tục."),
+         F(3, "后代, chữ được đánh dấu là chữ thứ hai, nghĩa là đời, thời đại. Ta có 古代，现代，时代，年代，一代. Tức là cổ đại, hiện đại, thời đại, thời kỳ, và một thế hệ."),
+         F(4, "功效, chữ được đánh dấu là chữ đầu, nghĩa là công, thành quả. Ta có 成功，功能，功劳，功课，用功. Tức là thành công, chức năng, công lao, bài vở, và chăm chỉ.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 2: Viết lại câu bằng từ cho sẵn (1)", reveal=True, size=36,
+    items=["(1) 有什么意见，你可以当面提出来，不要在背后议论。（不妨）",
+           "Đáp án: 有什么意见，你不妨当面提出来，不要在背后议论。",
+           "(2) 明天的会非常重要，大家一定要参加。（务必）",
+           "Đáp án: 明天的会非常重要，大家务必参加。",
+           "(3) 他们实在没有别的办法，只好出去向别人借钱。（不得已）",
+           "Đáp án: 他们实在没有别的办法，不得已才出去向别人借钱。"],
+    say=[F(0, "Bài tập hai: dùng từ cho sẵn để viết lại câu. Câu một, dùng 不妨: 有什么意见，你可以当面提出来，不要在背后议论。 Có ý kiến gì, bạn có thể nói thẳng trước mặt, đừng bàn tán sau lưng. Các bạn tạm dừng và thử viết lại nhé."),
+         F(1, "Đáp án: 有什么意见，你不妨当面提出来，不要在背后议论。 Có ý kiến gì, bạn cứ nói thẳng trước mặt. Thay 可以 bằng 不妨."),
+         F(2, "Câu hai, dùng 务必: 明天的会非常重要，大家一定要参加。 Cuộc họp ngày mai rất quan trọng, mọi người nhất định phải tham gia."),
+         F(3, "Đáp án: 明天的会非常重要，大家务必参加。 Thay 一定要 bằng 务必, câu nghe trang trọng hơn, đúng giọng thông báo."),
+         F(4, "Câu ba, dùng 不得已: 他们实在没有别的办法，只好出去向别人借钱。 Họ thật sự không còn cách nào khác, đành phải đi vay tiền người khác."),
+         F(5, "Đáp án: 他们实在没有别的办法，不得已才出去向别人借钱。 Họ thật sự không còn cách nào, bất đắc dĩ mới đi vay tiền người khác.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 2: Viết lại câu bằng từ cho sẵn (2)", reveal=True, size=36,
+    items=["(4) 考虑到他出色的表现，公司决定让他担任部门经理。（鉴于）",
+           "Đáp án: 鉴于他出色的表现，公司决定让他担任部门经理。",
+           "(5) 他的病彻底治好了，全家都非常高兴。（愈）",
+           "Đáp án: 他的病彻底治愈了，全家都非常高兴。",
+           "(6) 孩子按道理应该孝顺父母。（理所当然）",
+           "Đáp án: 孩子孝顺父母是理所当然的。"],
+    say=[F(0, "Câu bốn, dùng 鉴于: 考虑到他出色的表现，公司决定让他担任部门经理。 Cân nhắc đến thành tích xuất sắc của anh ấy, công ty quyết định để anh ấy làm trưởng phòng."),
+         F(1, "Đáp án: 鉴于他出色的表现，公司决定让他担任部门经理。 Thay 考虑到 bằng 鉴于, đúng như định nghĩa của sách: 鉴于 nghĩa là 考虑到."),
+         F(2, "Câu năm, dùng 愈: 他的病彻底治好了，全家都非常高兴。 Bệnh của anh ấy đã được chữa khỏi hoàn toàn, cả nhà đều rất vui."),
+         F(3, "Đáp án: 他的病彻底治愈了，全家都非常高兴。 治好 thay bằng 治愈, trang trọng hơn. Cũng có thể nói 他的病已经痊愈了."),
+         F(4, "Câu sáu, dùng 理所当然: 孩子按道理应该孝顺父母。 Theo lẽ phải, con cái nên hiếu thảo với cha mẹ."),
+         F(5, "Đáp án: 孩子孝顺父母是理所当然的。 Con cái hiếu thảo với cha mẹ là lẽ đương nhiên. 按道理应该 chính là nghĩa của 理所当然.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ thích hợp điền vào chỗ trống (1)", reveal=True, size=34,
+    items=["## Từ cho sẵn: 波浪 · 抚摸 · 岩石 · 神经 · 给予",
+           "人们喜欢在海边听___拍打___的声音，喜欢在森林里听鸟儿的叫声，也喜欢听微风___树叶发出的沙沙声，因为这些声音可以让紧张的___放松下来。这些声音是大自然___人们的宝贵礼物，可以治疗很多神经系统疾病。",
+           "Đáp án: 波浪 · 岩石 · 抚摸 · 神经 · 给予"],
+    say=[F(0, "Bài tập ba: chọn từ thích hợp điền vào chỗ trống. Đoạn một có năm từ: 波浪，抚摸，岩石，神经，给予."),
+         F(1, "人们喜欢在海边听什么拍打什么的声音，喜欢在森林里听鸟儿的叫声，也喜欢听微风什么树叶发出的沙沙声，因为这些声音可以让紧张的什么放松下来。这些声音是大自然什么人们的宝贵礼物，可以治疗很多神经系统疾病。 Các bạn tạm dừng và điền thử nhé."),
+         F(2, "Đáp án: 听波浪拍打岩石的声音，微风抚摸树叶，紧张的神经放松下来，大自然给予人们的宝贵礼物。 Người ta thích nghe tiếng sóng vỗ vào đá ở bờ biển, thích nghe tiếng chim hót trong rừng, cũng thích nghe tiếng xào xạc khi gió nhẹ vuốt ve lá cây, vì những âm thanh này giúp thần kinh căng thẳng được thả lỏng. Đó là món quà quý giá mà thiên nhiên dành cho con người, có thể chữa nhiều bệnh về hệ thần kinh.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ thích hợp điền vào chỗ trống (2)", reveal=True, size=34,
+    items=["## Từ cho sẵn: 患者 · 障碍 · 症状 · 功效 · 辅助",
+           "对于有睡眠___的人来说，除了去医院接受治疗以外，一些___性治疗方法的___也很不错，比如：睡前喝一杯牛奶，听一些轻柔的音乐，放松心情等等，都可以减轻___的___。",
+           "Đáp án: 障碍 · 辅助 · 功效 · 患者 · 症状"],
+    say=[F(0, "Đoạn hai có năm từ: 患者，障碍，症状，功效，辅助."),
+         F(1, "对于有睡眠什么的人来说，除了去医院接受治疗以外，一些什么性治疗方法的什么也很不错，比如：睡前喝一杯牛奶，听一些轻柔的音乐，放松心情等等，都可以减轻什么的什么。 Các bạn điền thử nhé."),
+         F(2, "Đáp án: 睡眠障碍，辅助性治疗方法的功效，减轻患者的症状。 Đối với người bị rối loạn giấc ngủ, ngoài việc đến bệnh viện điều trị, hiệu quả của một số phương pháp hỗ trợ cũng rất tốt, ví dụ: trước khi ngủ uống một cốc sữa, nghe một chút nhạc nhẹ nhàng, thả lỏng tâm trạng, đều có thể làm giảm triệu chứng của người bệnh."),
+         "Các bạn thấy không, cả hai đoạn văn đều xoay quanh chủ đề của bài khóa: âm thanh và sức khỏe. Lần tới khó ngủ, các bạn thử bật tiếng mưa rơi xem sao nhé."])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 4: Đọc đoạn văn, mô phỏng đặt câu", reveal=True, size=34,
+    items=["其实不论是鸟叫，还是虫叫，都是寻求异性时，不得已而采取的危险举动，因为叫声暴露了自己，很容易惹祸。",
+           "Đáp án: 不论是老人，还是孩子，都喜欢吃烤鸭，因为烤鸭外皮香脆，味道好极了。",
+           "既要延续后代，又要保护自己，那就只有用最大的声音，拼命呼唤，同时竖起耳朵，提高警惕，有危险马上闭嘴。",
+           "Đáp án: 学习汉语时，既要记住大量的汉字，又要掌握正确的发音，那就只有每天坚持练习，同时多跟中国人交流。"],
+    say=[F(0, "Bài tập bốn: đọc đoạn văn, rồi mô phỏng để đặt câu. Câu mẫu một: 其实不论是鸟叫，还是虫叫，都是寻求异性时，不得已而采取的危险举动，因为叫声暴露了自己，很容易惹祸。 Đề bài cho khung: 不论什么，还是什么，都喜欢吃烤鸭，因为什么。 Các bạn thử viết nhé."),
+         F(1, "Đáp án gợi ý: 不论是老人，还是孩子，都喜欢吃烤鸭，因为烤鸭外皮香脆，味道好极了。 Bất kể người già hay trẻ em, đều thích ăn vịt quay, vì da vịt quay thơm giòn, hương vị tuyệt vời."),
+         F(2, "Câu mẫu hai: 既要延续后代，又要保护自己，那就只有用最大的声音，拼命呼唤，同时竖起耳朵，提高警惕，有危险马上闭嘴。 Đề bài cho khung: 学习汉语时，既要什么，又要什么，那就只有什么，同时什么。"),
+         F(3, "Đáp án gợi ý: 学习汉语时，既要记住大量的汉字，又要掌握正确的发音，那就只有每天坚持练习，同时多跟中国人交流。 Khi học tiếng Trung, vừa phải nhớ rất nhiều chữ Hán, lại vừa phải nắm được cách phát âm chuẩn, thì chỉ còn cách ngày nào cũng kiên trì luyện tập, đồng thời giao tiếp nhiều với người Trung Quốc.")])
+
+# ======================= TỔNG KẾT =======================
+add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng kết", title="Tổng kết bài 12", size=36,
+    items=["Từ vựng trọng tâm: 嘈杂 · 莫名其妙 · 淘汰 · 警惕 · 解除 · 暴露 · 延续 · 暗示 · 提示 · 功效 · 理所当然 · 症状 · 障碍 · 给予",
+           "Ngữ pháp: 不妨 (cứ việc, chẳng ngại) · 务必 (nhất thiết phải) · 鉴于 (xét thấy, do)",
+           "Phân biệt: 不得已 (tính từ; trước danh từ; sau 是/出于) ≠ 不得不 (chỉ trước động từ)",
+           "Mở rộng: 12 từ và cụm kết hợp từ: 颁发 · 报销 · 备份 · 巢穴 · 处分 · 对称…",
+           "## Bài tập về nhà (运用)",
+           "Dựa vào bài tập 5, viết tóm tắt bài khóa thành một bài văn ngắn khoảng 300 chữ"],
+    say=["Chúng ta cùng tổng kết bài mười hai.",
+         F(0, "Về từ vựng, các bạn cần đặc biệt nhớ: 嘈杂，莫名其妙，淘汰，警惕，解除，暴露，延续，暗示，提示，功效，理所当然，症状，障碍，给予. Và đừng quên những từ dễ nhầm như 岩石，雌雄，呼唤，暗示."),
+         F(1, "Về ngữ pháp: 不妨 dùng để khích lệ, đề nghị nhẹ nhàng, nghĩa là cứ việc, cứ thử. 务必 thể hiện thái độ kiên quyết, nghĩa là nhất thiết phải. 鉴于 đứng đầu vế trước, nêu căn cứ hay lý do, dùng trong văn viết."),
+         F(2, "Về phân biệt từ: 不得已 là tính từ, có thể đứng trước danh từ, đứng sau 是 hoặc 出于, và đứng riêng một mình; còn 不得不 chỉ đứng trước động từ."),
+         F(3, "Về phần mở rộng: mười hai từ cùng các cụm kết hợp từ, đặc biệt cẩn thận với 巢穴 không mang nghĩa xấu, và âm đọc của 处分 và 对称."),
+         F(5, "Bài tập về nhà, theo phần vận dụng của sách: bài khóa cho chúng ta biết tiếng ồn trắng là gì, trong tự nhiên có những tiếng ồn trắng nào, chúng ngầm báo điều gì, và có những công dụng gì. Hãy dựa vào bài tập năm, viết tóm tắt bài khóa thành một bài văn ngắn khoảng ba trăm chữ. Nhớ thử dùng 不妨，务必，鉴于 trong bài viết nhé."),
+         "Cảm ơn các bạn đã theo dõi bài giảng. Với bài này, chúng ta đã hoàn thành Chủ đề ba, Xã hội nhiều màu sắc. Lần tới khi cả phòng bỗng im lặng, các bạn sẽ biết đó là bản năng được truyền lại từ tổ tiên xa xưa. Hẹn gặp lại các bạn ở bài mười ba, mở đầu Chủ đề bốn: 从旅游指南看世事变迁, Nhìn thế sự đổi thay qua trang sách cẩm nang du lịch. Chúc các bạn học tốt!"])
+
+lesson = {
+    "title": "HSK 6 (Thượng) – Bài 12: 我们都爱白噪音 (Chúng ta đều yêu tiếng ồn trắng)",
+    "tag": TAG,
+    "vi_voice": "Linh", "zh_voice": "Tingting", "vi_rate": 175, "zh_rate": 145,
+    # sửa âm đọc của giọng máy cho các chữ đa âm (thay bằng chữ cùng âm, cùng thanh)
+    "tts_replace": {"给予": "己羽",            # jǐyǔ
+                    "暴露": "暴路",            # bàolù
+                    "睡大觉": "睡大叫",        # shuì dà jiào
+                    "数千万年": "树千万年",    # shù qiānwàn nián
+                    "处分": "楚奋",            # chǔfèn
+                    "对称": "对趁",            # duìchèn
+                    "对应": "对硬",            # duìyìng
+                    "乐器": "月器"},           # yuèqì
+    "slides": slides,
+}
+out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai12.json")
+json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

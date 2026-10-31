@@ -1,7 +1,6 @@
 // Đưa danh mục khóa học có sẵn trong repo lên trang quản lý (POST /api/<node|go>/quan-ly?import).
-//   node scripts/seed-catalog.mjs [--dry] [--url http://127.0.0.1:3001/api/node/quan-ly] [--hsk ../../HSK]
+//   node scripts/seed-catalog.mjs [--dry] [--url http://127.0.0.1:3001/api/node/quan-ly]
 //   --dry  chỉ in tóm tắt (khóa, bài, file, dung lượng), không gửi gì
-//   --hsk  thư mục repo HSK (lấy tên bài HSK 6 từ BaiGiang/web/catalog.json khi bài chưa có slides/titles.json)
 // Mã APP_SECRET lấy từ biến môi trường hoặc .env.local. Chạy lại bao nhiêu lần cũng được: khóa và bài được
 // ghi gộp, file 'repo' của từng bài được thay mới, file R2 và link YouTube giữ nguyên.
 //
@@ -21,7 +20,6 @@ const args = process.argv.slice(2);
 const opt = name => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
 const DRY = args.includes('--dry');
 const URL_ = opt('--url') || 'http://127.0.0.1:3001/api/node/quan-ly';
-const HSK = opt('--hsk') || process.env.HSK_DIR || join(root, '..', '..', 'HSK');
 
 const readJson = file => { try { return JSON.parse(readFileSync(file, 'utf8')); } catch { return null; } };
 const size = file => statSync(file).size;
@@ -107,8 +105,9 @@ function folder(dirName, num, known) {
 }
 
 function hsk6() {
-  const catalog = readJson(join(HSK, 'BaiGiang', 'web', 'catalog.json'));
-  if (!catalog) console.warn(`(không đọc được ${join(HSK, 'BaiGiang', 'web', 'catalog.json')}, bài chưa có titles.json sẽ chỉ có số bài)`);
+  // tên bài dự phòng khi bài chưa có slides/titles.json
+  const catalog = readJson(join(root, 'bai-giang', 'web', 'catalog.json'));
+  if (!catalog) console.warn(`(không đọc được bai-giang/web/catalog.json, bài chưa có titles.json sẽ chỉ có số bài)`);
   const known = new Map();
   for (const b of catalog?.books || []) for (const u of b.units || []) for (const l of u.lessons || []) known.set(l.n, l);
 
