@@ -235,19 +235,17 @@ mark { background: var(--mark-soft); color: inherit; border-bottom: 2px solid va
 
 <script>
 // [..] trong câu = phần cần chú ý, được tô màu.
-// Nội dung (nhóm bài, tình huống) nằm trong cơ sở dữ liệu, đọc qua /api/node/grammar.
-// Chưa có dữ liệu hoặc lỗi mạng thì dùng bản đi kèm trang (data.json, chép từ web/ngu-phap.json lúc dựng site).
+// Nội dung (nhóm bài, tình huống) nằm trong cơ sở dữ liệu, đọc qua /api/node/grammar. Lần đầu function và Neon
+// khởi động mất vài giây, nên hiện ngay bản đi kèm trang (data.json, chép từ web/ngu-phap.json lúc dựng site),
+// bản trong cơ sở dữ liệu về sau mà khác thì thay vào.
 let GROUPS = [], CASES = [];
-async function loadData() {
-  for (const url of ["/api/node/grammar", "data.json"]) {
-    try {
-      const r = await fetch(url, { cache: "no-store" });
-      if (!r.ok) continue;
-      const d = await r.json();
-      if (Array.isArray(d.groups) && Array.isArray(d.cases) && d.cases.length) return d;
-    } catch (e) {}
-  }
-  return null;
+async function getData(url) {
+  try {
+    const r = await fetch(url, { cache: "no-store" });
+    if (!r.ok) return null;
+    const d = await r.json();
+    return Array.isArray(d.groups) && Array.isArray(d.cases) && d.cases.length ? d : null;
+  } catch (e) { return null; }
 }
 
 const store = {
@@ -404,14 +402,19 @@ document.addEventListener("click", e => {
   if (a) { e.preventDefault(); go(+a.dataset.go, true); }
 });
 
-loadData().then(d => {
-  if (!d) {
-    document.getElementById("main").innerHTML = "<p>Chưa tải được bài ngữ pháp. Kiểm tra mạng rồi tải lại trang.</p>";
-    return;
-  }
+function show(d) {
+  if (JSON.stringify(d.cases) === JSON.stringify(CASES) && JSON.stringify(d.groups) === JSON.stringify(GROUPS)) return;
+  // giữ đúng bài đang mở khi thay bản mới
+  const id = CASES.length ? CASES[current].id : (location.hash || "").slice(1);
   GROUPS = d.groups; CASES = d.cases;
-  const start = CASES.findIndex(c => c.id === (location.hash || "").slice(1));
-  go(start >= 0 ? start : 0, false);
+  const i = CASES.findIndex(c => c.id === id);
+  go(i >= 0 ? i : 0, false);
+}
+const fromDb = getData("/api/node/grammar"), fromFile = getData("data.json");
+fromFile.then(d => { if (d && !CASES.length) show(d); });
+Promise.all([fromDb, fromFile]).then(([db, local]) => {
+  if (db) show(db);
+  else if (!local) document.getElementById("main").innerHTML = "<p>Chưa tải được bài ngữ pháp. Kiểm tra mạng rồi tải lại trang.</p>";
 });
 </script>
 
