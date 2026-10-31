@@ -21,6 +21,7 @@ func main() {
 	http.HandleFunc("/api/go/lop-hoc", gobackend.LopHoc)
 	http.HandleFunc("/api/go/ban-do", gobackend.BanDo)
 	http.HandleFunc("/api/go/quan-ly", gobackend.Catalog)
-	log.Printf("API Go: http://localhost:%s/api/go/{sync,ai,terms,lop-hoc,ban-do,quan-ly}", port)
+	http.HandleFunc("/api/go/grammar", gobackend.Grammar)
+	log.Printf("API Go: http://localhost:%s/api/go/{sync,ai,terms,lop-hoc,ban-do,quan-ly,grammar}", port)
 	log.Fatal(http.ListenAndServe("127.0.0.1:"+port, nil))
 }

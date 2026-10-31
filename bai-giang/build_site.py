@@ -219,6 +219,9 @@ def main():
                 '<script src="/glass/glass.js"></script>\n'
                 '<script>if (window.glassMode) document.documentElement.classList.add("glass-ok");</script>\n'
                 + open(os.path.join(HERE, "web", "ngu-phap.html"), encoding="utf-8").read() + "\n</html>\n")
+    # nội dung trang ngữ pháp: trang đọc từ /api/node/grammar (Neon), lỗi thì dùng bản đi kèm này
+    # (nạp vào Neon: node scripts/seed-grammar.mjs trong repo da-di-qua)
+    shutil.copy(os.path.join(HERE, "web", "ngu-phap.json"), os.path.join(SITE, "ngu-phap", "data.json"))
     # file mẫu cho trang ghi chú (nút "Thêm ghi chú mẫu")
     if os.path.isdir(os.path.join(HERE, "web", "samples")):
         shutil.copytree(os.path.join(HERE, "web", "samples"), os.path.join(SITE, "samples"), dirs_exist_ok=True)

@@ -12,6 +12,7 @@ Mỗi phản hồi có header `X-Backend: go|node` để biết bản nào đã 
 | Nhật ký bản đồ | `go/bando.go` | `node/bando.js` |
 | Thuật ngữ du lịch (trang hsk6) | `go/terms.go` | `node/terms.js` |
 | Token Ably cho lớp học trực tiếp | `go/lophoc.go` | `node/lophoc.js` |
+| Ngữ pháp qua tình huống (trang hsk6) | `go/grammar.go` | `node/grammar.js` |
 | Danh mục khóa học (trang quản lý) | `go/catalog.go` | `node/catalog.js` |
 | Lối vào Vercel | `../api/go/*.go` | `../api/node/*.js` (tổng cộng 12 function, 6 Node + 6 Go, đúng giới hạn gói Hobby: thêm API mới phải gộp bớt) |
 | Chạy ở máy | `../cmd/dev-api` (gọi từ `npm run dev:api`) | chạy ngay trong `../scripts/dev-api.mjs` |
@@ -65,6 +66,12 @@ Tắt/bật không xóa gì, bản sao vẫn ở `term_upload` (cột `active`).
 Trang hsk6 đọc file Excel và chuẩn hóa (`TERM_BE` trong `bai-giang/web/template.html`);
 server kiểm tra lại từng trường (tối đa 5.000 thuật ngữ, khóa không trùng, buổi học dạng `YYYY-MM-DD`),
 sai thì `400` kèm lý do và dữ liệu cũ giữ nguyên.
+
+**`GET /api/<go|node>/grammar`** (không cần mã) → `200 {version, updatedAt, groups: [{id, name}], cases: [...]}`; mỗi tình huống
+giữ nguyên dạng JSON trang `hsk6/ngu-phap/` dùng. **`PUT`** cùng dạng `{groups, cases}` (cần `APP_SECRET` hoặc `HSK6_PASS`)
+ghi đè cả bộ trong một transaction và lưu bản sao vào `grammar_version`; mỗi tình huống phải có `id` dạng `[a-z0-9-]`, nhóm `g`
+có trong `groups`, `title` và ít nhất một câu hỏi có đáp án hợp lệ, sai thì `400`. Nạp từ dòng lệnh: `node scripts/seed-grammar.mjs`.
+Bảng: `grammar_group (id, name, ord)`, `grammar_case (id, grp, ord, data jsonb)`, `grammar_version (id, groups, cases, count)`.
 
 **`POST /api/<go|node>/lop-hoc`** với `{room, clientId, pass?}` → `200` TokenRequest của Ably
 `{keyName, ttl, capability, clientId, timestamp, nonce, mac}`, ký bằng `ABLY_API_KEY` y như `Auth.createTokenRequest`

@@ -230,385 +230,25 @@ mark { background: var(--mark-soft); color: inherit; border-bottom: 2px solid va
 
 <div class="wrap layout">
   <nav class="toc" id="toc" aria-label="Danh sách tình huống"></nav>
-  <main id="main" aria-live="polite"></main>
+  <main id="main" aria-live="polite"><p>Đang tải bài…</p></main>
 </div>
 
 <script>
 // [..] trong câu = phần cần chú ý, được tô màu.
-const GROUPS = [
-  { id: "A", name: "Bẫy trật tự từ" },
-  { id: "B", name: "Câu đặc biệt" },
-  { id: "C", name: "Hư từ và bổ ngữ" },
-  { id: "T", name: "Tổng hợp" }
-];
-
-const CASES = [
-{
-  id: "trangngu", g: "A", short: "Thời gian, nơi chốn", zh: "状语的位置",
-  title: "Nơi chốn, thời gian đứng <em>trước</em> động từ",
-  scene: "Buổi đầu gặp cô giáo mới, Ngọc tự giới thiệu và dịch thẳng từ tiếng Việt: “Tôi học tiếng Trung ở Đại học Hà Nội.”",
-  wrong: "我学习汉语[在河内大学]。",
-  right: "我[在河内大学]学习汉语。", vi: "Tôi học tiếng Trung ở Đại học Hà Nội.",
-  why: [
-    "Tiếng Việt nói hành động trước, rồi mới nói ở đâu, khi nào, với ai. Tiếng Trung làm ngược lại: mọi thông tin “khi nào, ở đâu, với ai, bằng cách nào” (trạng ngữ) đều đứng <b>trước động từ</b>.",
-    "Thứ tự quen thuộc: chủ ngữ → thời gian → nơi chốn → đối tượng (跟/给/对…) → động từ.",
-    "Ngoại lệ: với 住、放、坐、站、生、挂… thì <span class='hz'>在 + nơi chốn</span> đứng sau động từ, vì nó chỉ chỗ người/vật <i>dừng lại</i>: <span class='hz'>我住在河内。</span>"
-  ],
-  formula: [["S", "thời gian", "nơi chốn", "跟/给 + ai", "V", "O"]],
-  cmp: [
-    ["ok", "我昨天在图书馆跟朋友一起复习了。", "Khi → ở đâu → với ai → làm gì"],
-    ["bad", "我复习了在图书馆昨天。", "Thứ tự tiếng Việt"],
-    ["ok", "我住在河内。", "住 thuộc nhóm ngoại lệ"],
-    ["bad", "他工作在一家银行。", "工作 không thuộc nhóm ngoại lệ → 他在一家银行工作。"]
-  ],
-  tip: "Câu thần chú <b>“Khi – Ở – Với – Làm”</b>: nói hết khi nào, ở đâu, với ai rồi mới đến động từ.",
-  quiz: [
-    { stem: "Chọn câu đúng", opts: ["他工作在一家银行。", "他在一家银行工作。", "他工作一家银行在。"], a: 1, col: true,
-      ex: "工作 không thuộc nhóm 住/放/坐…, nên 在一家银行 đứng trước động từ." },
-    { stem: "我们______见面吧。", opts: ["明天在咖啡馆", "在咖啡馆明天", "咖啡馆明天在"], a: 0,
-      ex: "Thời gian thường đứng trước nơi chốn: 明天在咖啡馆见面。" }
-  ],
-  src: "《HSK应试语法》第十三章 状语的位置 · 《HSK语法指要与训练》第十九讲 长定语和长状语"
-},
-{
-  id: "dinhngu", g: "A", short: "Định ngữ", zh: "定语的顺序",
-  title: "Phần bổ nghĩa đứng <em>trước</em> danh từ",
-  scene: "Đi mua sắm, Ngọc muốn nói “Tôi muốn mua một cái áo màu đỏ”, rồi kể “đây là cái áo len đỏ mà hôm qua mẹ tôi mua”.",
-  wrong: "我想买一件衣服[红色的]。",
-  right: "我想买一件[红色的]衣服。", vi: "Tôi muốn mua một cái áo màu đỏ.",
-  why: [
-    "Tiếng Việt: danh từ trước, phần miêu tả sau (áo <i>đỏ</i>, bạn <i>của tôi</i>). Tiếng Trung: mọi phần miêu tả (định ngữ) đều đứng <b>trước</b> danh từ, thường nối bằng <span class='hz'>的</span>.",
-    "Nhiều định ngữ cùng lúc thì xếp: của ai → này/kia + lượng từ → cụm động từ + 的 → tính từ + 的 → danh từ. Ví dụ: <span class='hz'>我妈妈那件昨天买的漂亮的红毛衣</span>.",
-    "Tính từ có phó từ đi kèm (很好、非常漂亮) thì bắt buộc có 的: <span class='hz'>很好的朋友</span>, không nói <span class='hz'>很好朋友</span>."
-  ],
-  formula: [["của ai", "này/kia + lượng từ", "cụm động từ + 的", "tính từ + 的", "danh từ"]],
-  cmp: [
-    ["ok", "我的好朋友", "bạn tốt của tôi"],
-    ["bad", "朋友好的我", "Thứ tự tiếng Việt"],
-    ["ok", "很好的朋友", "Có 很 nên phải có 的"],
-    ["bad", "很好朋友", "Thiếu 的"]
-  ],
-  tip: "Gặp cụm danh từ dài trong tiếng Việt, hãy <b>đọc ngược từ cuối lên</b>: “áo len đỏ mà hôm qua tôi mua” → 我昨天买的红毛衣.",
-  quiz: [
-    { stem: "这是______照片。", opts: ["我们去年在北京拍的", "拍的我们去年在北京", "我们拍的去年在北京"], a: 0, col: true,
-      ex: "Cả cụm “chúng tôi chụp ở Bắc Kinh năm ngoái” đứng trước 照片, kết thúc bằng 的." },
-    { stem: "Chọn cách nói tự nhiên", opts: ["一位很热情的中国老师", "一位中国很热情的老师", "一位中国老师很热情的"], a: 0, col: true,
-      ex: "Lượng từ → tính từ + 的 → danh từ chỉ quốc tịch sát danh từ chính: 一位很热情的中国老师." }
-  ],
-  src: "《HSK应试语法》第十二章 第三节 复杂定语的顺序"
-},
-{
-  id: "bi", g: "A", short: "So sánh với 比", zh: "比字句",
-  title: "Có <span class='hz'>比</span> thì không dùng <span class='hz'>很</span>",
-  scene: "Bạn hỏi Hà Nội với Sài Gòn chỗ nào nóng hơn. Ngọc nói “Sài Gòn nóng hơn Hà Nội rất nhiều”.",
-  wrong: "胡志明市比河内[很]热。",
-  right: "胡志明市比河内热[得多]。", vi: "Sài Gòn nóng hơn Hà Nội nhiều.",
-  why: [
-    "<span class='hz'>比</span> đã mang nghĩa “hơn”, nên tính từ phía sau không nhận 很、非常、太、真.",
-    "Muốn nói hơn bao nhiêu thì đặt <b>sau</b> tính từ: <span class='hz'>一点儿、得多、多了</span> hoặc số lượng cụ thể (<span class='hz'>高十公分</span>).",
-    "Muốn nhấn mạnh thì đặt <span class='hz'>更</span> hoặc <span class='hz'>还</span> <b>trước</b> tính từ.",
-    "Phủ định thường dùng <span class='hz'>A 没有 B (那么) + tính từ</span>: <span class='hz'>河内没有胡志明市那么热。</span>"
-  ],
-  formula: [["A", "比", "B", "更/还", "tính từ", "一点儿/得多/số lượng"], ["A", "没有", "B", "(那么)", "tính từ"]],
-  cmp: [
-    ["ok", "他比我高。", ""],
-    ["bad", "他比我很高。", "Có 比 thì bỏ 很"],
-    ["ok", "他比我更高。", "更 trước tính từ được"],
-    ["ok", "他比我高十公分。", "Số lượng đặt sau"],
-    ["bad", "他比我十公分高。", "Số lượng đặt trước là sai"]
-  ],
-  tip: "<b>“Có 比 cấm 很”</b>. Mức độ thì đi sau, chỉ có 更/还 được đứng trước.",
-  quiz: [
-    { stem: "今天比昨天______冷。", opts: ["很", "非常", "还", "太"], a: 2, ex: "Trong câu 比 chỉ 更/还 đứng trước tính từ." },
-    { stem: "我的汉语______他那么好。", opts: ["不", "没有", "比", "很"], a: 1, ex: "Phủ định so sánh: A 没有 B 那么 + tính từ." }
-  ],
-  src: "《HSK语法指要与训练》第四讲 比较的表示法 · 《HSK应试语法》第七章 比较句"
-},
-{
-  id: "thoiluong", g: "A", short: "Học bao lâu", zh: "时量补语",
-  title: "“Bao lâu” đứng ngay sau động từ",
-  scene: "Người Trung Quốc khen Ngọc nói giỏi và hỏi học bao lâu rồi. Ngọc đáp “Tôi học tiếng Trung hai năm rồi”.",
-  wrong: "我学了汉语[两年]。",
-  right: "我学汉语学了[两年]。", vi: "Tôi học tiếng Trung được hai năm.",
-  why: [
-    "Khoảng thời gian (bổ ngữ thời lượng) phải đứng <b>sát sau động từ</b>, không đứng sau tân ngữ như tiếng Việt.",
-    "Có tân ngữ là danh từ thì có hai cách: lặp lại động từ (<span class='hz'>学汉语学了两年</span>) hoặc chèn thời lượng vào giữa (<span class='hz'>学了两年(的)汉语</span>).",
-    "Tân ngữ là đại từ chỉ người thì đứng trước thời lượng: <span class='hz'>我等了你半个小时</span>.",
-    "Động từ xảy ra một lần rồi thôi (来、去、毕业、结婚、离开) thì thời gian tính từ lúc xảy ra, đặt sau cả cụm: <span class='hz'>他毕业三年了</span>."
-  ],
-  formula: [["V", "了", "thời lượng", "(的)", "O"], ["V", "O", "V", "了", "thời lượng"]],
-  cmp: [
-    ["ok", "我学了两年汉语。", ""],
-    ["ok", "我学汉语学了两年。", "Lặp động từ"],
-    ["bad", "我学了汉语两年。", "Thời lượng sau tân ngữ"],
-    ["ok", "我等了你半个小时。", "Đại từ đứng trước"],
-    ["ok", "他来中国三年了。", "来 xảy ra một lần"]
-  ],
-  tip: "Hỏi “bao lâu” thì <b>dính câu trả lời vào động từ</b>, tân ngữ danh từ thì nhường chỗ.",
-  quiz: [
-    { stem: "他已经毕业______。", opts: ["三年了", "了三年的", "三年的了"], a: 0, ex: "毕业 xảy ra một lần: 毕业三年了 = tốt nghiệp được ba năm." },
-    { stem: "我找了______，你去哪儿了？", opts: ["你一个上午", "一个上午你"], a: 0, ex: "Tân ngữ đại từ (你) đứng trước thời lượng." }
-  ],
-  src: "《HSK语法指要与训练》第十八讲 第四节 时量补语"
-},
-{
-  id: "lyhop", g: "A", short: "Từ ly hợp", zh: "离合词",
-  title: "<span class='hz'>见面、结婚、帮忙</span> không mang thêm tân ngữ",
-  scene: "Ngọc nhắn tin cho bạn: “Mai mình gặp anh ấy” và “Bạn giúp mình nhé”.",
-  wrong: "我明天[见面他]。",
-  right: "我明天[跟他]见面。", vi: "Ngày mai tôi gặp anh ấy.",
-  why: [
-    "Các từ như <span class='hz'>见面、结婚、帮忙、毕业、生气、睡觉、游泳、聊天、请假</span> vốn là “động từ + tân ngữ” ghép lại (见 + 面). Chỗ tân ngữ đã có người ngồi, nên không thêm tân ngữ nữa.",
-    "Người liên quan đưa lên trước bằng giới từ: <span class='hz'>跟他见面、跟她结婚、给他生气</span>… hoặc chen vào giữa: <span class='hz'>帮我的忙</span>.",
-    "了、过、số lượng, thời lượng đều chen vào giữa: <span class='hz'>见过面、睡了八个小时的觉、请三天假</span>.",
-    "Lặp lại thì chỉ lặp phần đầu: <span class='hz'>聊聊天、见见面</span>."
-  ],
-  formula: [["跟/和", "ai", "见面/结婚/聊天"], ["V", "了/过/số lượng", "O"]],
-  cmp: [
-    ["bad", "我想帮忙你。", "→ 我想帮你的忙 / 我想帮你"],
-    ["ok", "我们见过面。", "过 chen giữa"],
-    ["bad", "我们见面过。", ""],
-    ["ok", "他请了三天假。", ""]
-  ],
-  tip: "Thấy từ hai chữ mà chữ sau là danh từ (面、婚、忙、觉、业), hãy coi nó như <b>một cụm đã có tân ngữ</b>.",
-  quiz: [
-    { stem: "她明年______。", opts: ["结婚小王", "跟小王结婚", "结婚跟小王"], a: 1, ex: "结婚 không mang tân ngữ, người kia đưa lên trước bằng 跟." },
-    { stem: "Chọn câu đúng", opts: ["我们聊天了一个小时。", "我们聊了一个小时的天。", "我们聊天一个小时了。"], a: 1, col: true,
-      ex: "Thời lượng chen vào giữa 聊…天." }
-  ],
-  src: "《HSK语法指要与训练》第十一讲 离合词"
-},
-{
-  id: "ba", g: "B", short: "Câu chữ 把", zh: "把字句",
-  title: "Câu <span class='hz'>把</span>: động từ phải có “cái đuôi”",
-  scene: "Ngọc dặn em gái trước khi đi làm: “Em dọn phòng đi, còn bài tập thì chị chưa làm xong.”",
-  wrong: "你把房间[打扫]。我把作业[没]写完。",
-  right: "你把房间打扫[干净]。我[没]把作业写完。", vi: "Em dọn phòng cho sạch đi. Chị chưa làm xong bài tập.",
-  why: [
-    "<span class='hz'>把</span> nghĩa là “đem X ra xử lý cho đến khi có kết quả”, nên sau động từ luôn phải có thứ gì đó: <span class='hz'>了</span>, bổ ngữ (干净、完、在桌子上), tân ngữ thứ hai, hoặc lặp động từ (<span class='hz'>打扫打扫</span>).",
-    "Tân ngữ sau 把 là thứ người nghe biết là cái nào: <span class='hz'>把那本书</span>, không nói <span class='hz'>把一本书</span>.",
-    "Phủ định (不、没) và động từ năng nguyện (能、要、应该) đứng <b>trước</b> 把.",
-    "Không dùng bổ ngữ khả năng (看得懂、吃不完) trong câu 把, và không dùng với động từ không tác động lên vật: 是、有、喜欢、知道、觉得."
-  ],
-  formula: [["S", "不/没/能/要", "把", "O đã xác định", "V", "kết quả"]],
-  cmp: [
-    ["ok", "我把作业写完了。", ""],
-    ["bad", "我把作业写。", "Động từ không có đuôi"],
-    ["bad", "我把这本书看得懂。", "Bổ ngữ khả năng → 我看得懂这本书"],
-    ["bad", "我把一本书放在桌子上。", "Tân ngữ chưa xác định → 把那本书"]
-  ],
-  tip: "<b>“把 phải có hậu”</b>: đọc lại câu, nếu động từ đứng trơ trọi ở cuối là thiếu.",
-  quiz: [
-    { stem: "Chọn câu đúng", opts: ["请你把门开。", "请你把门打开。", "请你开把门。"], a: 1, col: true, ex: "打开: động từ + kết quả 开." },
-    { stem: "Chọn câu đúng", opts: ["他把钱没带来。", "他没把钱带来。", "他把钱带不来。"], a: 1, col: true, ex: "没 đứng trước 把; câu 把 không dùng bổ ngữ khả năng." },
-    { stem: "你能______那张桌子搬出去吗？", opts: ["被", "把", "让", "给"], a: 1, ex: "Người nghe đem cái bàn ra xử lý: 把…搬出去." }
-  ],
-  src: "《HSK语法指要与训练》第十五讲 “把”字句"
-},
-{
-  id: "bei", g: "B", short: "Câu bị động 被", zh: "被动句",
-  title: "Câu <span class='hz'>被</span> và khi nào dùng <span class='hz'>受</span>",
-  scene: "Ngọc kể: “Xe đạp của mình bị trộm lấy mất rồi. Nhưng thầy Vương thì được học sinh rất yêu mến.”",
-  wrong: "我的自行车被小偷[偷]。王老师很[被]学生欢迎。",
-  right: "我的自行车被小偷偷[走了]。王老师很[受]学生欢迎。", vi: "Xe đạp của tôi bị trộm lấy mất. Thầy Vương rất được học sinh yêu mến.",
-  why: [
-    "Giống câu 把, động từ sau <span class='hz'>被/叫/让</span> phải có bổ ngữ, ít nhất là <span class='hz'>了</span>.",
-    "Phủ định, động từ năng nguyện và đa số phó từ đứng trước 被: <span class='hz'>那本书没有被孩子撕破</span>.",
-    "Sau <span class='hz'>叫、让</span> bắt buộc có người làm; sau <span class='hz'>被</span> có thể bỏ: <span class='hz'>小王被开除了</span> được, <span class='hz'>小王叫开除了</span> thì không.",
-    "被 thường đi với chuyện không may. Với 欢迎、尊敬、感动、影响、表扬… hay dùng <span class='hz'>受</span>; sau 受 động từ không mang bổ ngữ.",
-    "Nhiều câu tiếng Việt có “được/bị” nhưng tiếng Trung không cần 被: <span class='hz'>作业写完了、手续办好了</span>. Thêm 被 vào lại thấy gượng."
-  ],
-  formula: [["S", "(没/不/能)", "被/叫/让", "người làm", "V", "bổ ngữ/了"], ["S", "很/最", "受", "(ai 的)", "欢迎/尊敬…"]],
-  cmp: [
-    ["ok", "那本书被孩子撕破了。", ""],
-    ["bad", "那本书被孩子撕。", "Thiếu bổ ngữ"],
-    ["bad", "那本书被孩子没有撕破。", "没有 phải đứng trước 被"],
-    ["ok", "这里孙先生最受尊敬。", ""],
-    ["bad", "这里孙先生最受尊敬极了。", "Sau 受 + động từ không thêm bổ ngữ"]
-  ],
-  tip: "Tin xấu dùng <b>被</b>, được yêu quý dùng <b>受</b>, đã làm xong thì nhiều khi <b>không cần gì cả</b>.",
-  quiz: [
-    { stem: "这样的讲课方式最______同学们欢迎。", opts: ["让", "受", "叫", "被"], a: 1, ex: "受…欢迎 là kết hợp cố định." },
-    { stem: "我们绝不会被困难______吓倒。", opts: ["去", "来", "叫", "所"], a: 3, ex: "被/为…所 + V: dạng văn viết." },
-    { stem: "我新买的衣服叫他______烧了一个洞。", opts: ["所", "给", "被", "让"], a: 1, ex: "Văn nói: 叫/让/被 + người + 给 + V." }
-  ],
-  src: "《HSK语法指要与训练》第十六讲 被动句（tr. 83–86）"
-},
-{
-  id: "tonhien", g: "B", short: "Câu tồn hiện", zh: "存现句",
-  title: "“Trên tường treo một tấm bản đồ”",
-  scene: "Ngọc tả phòng trọ mới cho mẹ nghe qua video: trên tường treo bản đồ, trên bàn để từ điển.",
-  wrong: "[在]墙上挂着[了]一张地图。",
-  right: "墙上挂着一张地图。", vi: "Trên tường treo một tấm bản đồ.",
-  why: [
-    "Câu tồn hiện kể ở đâu có, xuất hiện hay mất đi cái gì. Đầu câu là nơi chốn hoặc thời gian, <b>không thêm 在</b>.",
-    "Sau động từ chỉ chọn <b>một</b> trong 着、了、过: <span class='hz'>挂着</span> hoặc <span class='hz'>来了</span>, không chồng 着了.",
-    "Người/vật phía sau thường có số lượng và chưa xác định (一张、一位). Vật đã xác định thì đổi sang: <span class='hz'>我的录音机放在床上</span>.",
-    "Tin vui: câu này gần như giống hệt thứ tự tiếng Việt, chỉ cần bỏ chữ “ở” đầu câu."
-  ],
-  formula: [["nơi chốn/thời gian", "V", "着/了/过", "số lượng", "người/vật"]],
-  cmp: [
-    ["ok", "前边走过来一位老人。", "Xuất hiện"],
-    ["ok", "衣服上掉了一个扣子。", "Mất đi"],
-    ["bad", "在北京下了一场雪。", "Bỏ 在"],
-    ["bad", "床上放着我的录音机。", "Vật đã xác định → 我的录音机放在床上"]
-  ],
-  tip: "Tả cảnh như tiếng Việt, <b>bỏ “ở” đầu câu</b> và chỉ giữ một trợ từ.",
-  quiz: [
-    { stem: "她的帽子上别______一朵小花。", opts: ["着", "在", "是", "上"], a: 0, ex: "Trạng thái tồn tại: 别着." },
-    { stem: "王叔叔家来______一位客人。", opts: ["到", "在", "着", "了"], a: 3, ex: "Xuất hiện: 来了一位客人." }
-  ],
-  src: "《HSK语法指要与训练》第十七讲 存现句（tr. 87–89）"
-},
-{
-  id: "le", g: "C", short: "Khi nào bỏ 了", zh: "了",
-  title: "Khi nào <em>không</em> dùng <span class='hz'>了</span>",
-  scene: "Ngọc kể chuyện tuổi thơ: “Hồi nhỏ mình hay về nhà bà ngoại. Hôm qua mình ra siêu thị mua đồ.”",
-  wrong: "小时候我常常去[了]外婆家。",
-  right: "小时候我常常去外婆家。", vi: "Hồi nhỏ tôi hay về nhà bà ngoại.",
-  why: [
-    "<span class='hz'>了</span> sau động từ báo một việc cụ thể đã hoàn thành. Nó không phải dấu “quá khứ” như tiếng Anh.",
-    "Việc lặp lại, thói quen (常常、每天、经常、总是) thì không dùng 了 dù là chuyện đã qua.",
-    "Hai động từ liên tiếp (连动句) thì 了 đặt sau động từ <b>cuối</b>: <span class='hz'>我去超市买了很多东西</span>.",
-    "Phủ định dùng 没 và bỏ 了: <span class='hz'>我没吃</span>, không nói <span class='hz'>我没吃了</span>.",
-    "了 cuối câu báo tình hình đã thay đổi: <span class='hz'>下雨了、我不抽烟了</span>."
-  ],
-  formula: [["thói quen", "V", "(không 了)"], ["V1", "O1", "V2", "了", "O2"]],
-  cmp: [
-    ["ok", "我昨天去超市买了很多东西。", "了 sau động từ cuối"],
-    ["bad", "我昨天去了超市买东西。", ""],
-    ["bad", "我以前每天都去了。", "Thói quen"],
-    ["ok", "我已经不抽烟了。", "Thay đổi"]
-  ],
-  tip: "<b>Thói quen thì bỏ 了, chuỗi việc thì 了 đứng cuối, có 没 thì bỏ 了.</b>",
-  quiz: [
-    { stem: "Chọn câu đúng", opts: ["去年我每个周末都去了爬山。", "去年我每个周末都去爬山。"], a: 1, col: true, ex: "每个周末 là thói quen." },
-    { stem: "我昨天______。", opts: ["没去了上课", "没去上课", "没去上课了"], a: 1, ex: "没 và 了 không đi cùng nhau trong câu kể việc chưa làm." }
-  ],
-  src: "《HSK语法指要与训练》第二十一讲 关于“了”"
-},
-{
-  id: "khanang", g: "C", short: "听不懂 hay 不能听懂", zh: "可能补语",
-  title: "<span class='hz'>听不懂</span>, không phải <span class='hz'>不能听懂</span>",
-  scene: "Xem phim không phụ đề, Ngọc than: “Họ nói nhanh quá, mình không nghe hiểu được.”",
-  wrong: "他们说得太快，我[不能听懂]。",
-  right: "他们说得太快，我[听不懂]。", vi: "Họ nói nhanh quá, tôi nghe không hiểu.",
-  why: [
-    "Không làm được vì khả năng hay điều kiện (nghe, nhìn, ăn hết, mang nổi…) thì dùng bổ ngữ khả năng: <span class='hz'>V + 不 + kết quả</span>.",
-    "<span class='hz'>不能 + V</span> thường nghĩa là “không được phép/không nên”: <span class='hz'>医生说你不能喝酒</span>. Nên <span class='hz'>我不能听懂</span> nghe rất lạ.",
-    "Khẳng định thì <span class='hz'>听得懂</span> và <span class='hz'>能听懂</span> đều dùng được.",
-    "Câu 把 và câu 被 không dùng bổ ngữ khả năng."
-  ],
-  formula: [["V", "得", "kết quả"], ["V", "不", "kết quả"]],
-  cmp: [
-    ["ok", "这么多菜，我一个人吃不完。", ""],
-    ["bad", "这么多菜，我一个人不能吃完。", ""],
-    ["ok", "明天考试，今晚你不能去酒吧。", "Không được phép"],
-    ["bad", "我把这些菜吃不完。", "Câu 把 không dùng 吃不完"]
-  ],
-  tip: "<b>Không nổi → V不C. Không được phép → 不能.</b>",
-  quiz: [
-    { stem: "黑板上的字太小，我______。", opts: ["不能看见", "看不见", "没看得见"], a: 1, ex: "Không nhìn được vì chữ nhỏ (điều kiện) → 看不见." },
-    { stem: "这件行李太重了，我一个人______。", opts: ["拿不动", "不能拿动", "拿得不动"], a: 0, ex: "Không đủ sức → 拿不动." }
-  ],
-  src: "《HSK语法指要与训练》第十八讲 第三节 可能补语"
-},
-{
-  id: "de", g: "C", short: "Bổ ngữ với 得", zh: "情态补语",
-  title: "“Nói tiếng Trung rất lưu loát” với <span class='hz'>得</span>",
-  scene: "Ngọc khen một bạn lớp trên: “Chị ấy nói tiếng Trung lưu loát lắm.”",
-  wrong: "她说[得汉语]很流利。",
-  right: "她说汉语说[得]很流利。", vi: "Chị ấy nói tiếng Trung rất lưu loát.",
-  why: [
-    "<span class='hz'>得</span> phải đứng <b>ngay sau động từ</b>, ở giữa không chen gì.",
-    "Có tân ngữ thì lặp lại động từ (<span class='hz'>说汉语说得</span>) hoặc đưa tân ngữ lên đầu (<span class='hz'>她汉语说得很流利</span>).",
-    "Phủ định đặt vào phần bổ ngữ: <span class='hz'>说得不流利</span>.",
-    "Câu hỏi chính phản lặp phần bổ ngữ, không lặp động từ: <span class='hz'>那幅画儿画得漂亮不漂亮？</span>"
-  ],
-  formula: [["(V)", "O", "V", "得", "(很)", "tính từ"]],
-  cmp: [
-    ["ok", "她汉语说得很流利。", "Tân ngữ lên trước"],
-    ["bad", "她说得汉语很流利。", "Tân ngữ chen giữa 得"],
-    ["ok", "他跑得不快。", "Phủ định ở bổ ngữ"],
-    ["bad", "那幅画儿画不画得漂亮？", "→ 画得漂亮不漂亮？"]
-  ],
-  tip: "<b>得 bám sát động từ</b>, tân ngữ muốn đi theo thì phải mượn thêm một động từ nữa.",
-  quiz: [
-    { stem: "Chọn câu đúng", opts: ["她做菜做得很好吃。", "她做得菜很好吃。", "她做菜得很好吃。"], a: 0, col: true, ex: "Lặp động từ: 做菜做得." },
-    { stem: "你觉得她汉语说得______？", opts: ["好不好", "会不会", "是不是", "对不对"], a: 0, ex: "Chính phản lặp phần bổ ngữ: 说得好不好." }
-  ],
-  src: "《HSK语法指要与训练》第一讲 正反问句、第十八讲 第六节 程度补语"
-},
-{
-  id: "quanlien", g: "C", short: "只要 / 只有 / 无论", zh: "条件复句",
-  title: "<span class='hz'>只要…就</span>, <span class='hz'>只有…才</span>, <span class='hz'>无论…都</span>",
-  scene: "Ngọc hỏi thầy cần làm gì để đỗ HSK 6. Thầy đáp: “Chỉ cần ngày nào cũng luyện là đỗ. Phải luyện đều mới đỗ được. Bận đến mấy cũng phải học.”",
-  wrong: "[只要]你每天练习，[才]能通过。",
-  right: "[只要]你每天练习，[就]能通过。", vi: "Chỉ cần ngày nào bạn cũng luyện thì sẽ đỗ.",
-  why: [
-    "<span class='hz'>只要…就</span>: điều kiện đủ. Có A là đủ để có B, giọng dễ dàng, khích lệ.",
-    "<span class='hz'>只有…才</span>: điều kiện cần duy nhất. Phải có A thì mới có B, giọng nhấn mạnh, khắt khe.",
-    "Cặp đi với nhau cố định, không đổi chéo (只要…才 là sai).",
-    "<span class='hz'>无论/不管…都/也</span>: vế sau 无论 phải có chỗ để lựa chọn: 多 + tính từ, 什么/谁/怎么, A还是B, V不V. Không nói <span class='hz'>无论天气很冷</span>."
-  ],
-  formula: [["只要", "A", "就", "B"], ["只有", "A", "才", "B"], ["无论", "多…/什么/A还是B", "都", "B"]],
-  cmp: [
-    ["ok", "只有多练习，才能说好。", ""],
-    ["bad", "只要多练习，才能说好。", "Cặp sai"],
-    ["ok", "不管天气多冷，他都去游泳。", ""],
-    ["bad", "不管天气很冷，他都去游泳。", "Không có chỗ lựa chọn"]
-  ],
-  tip: "<b>就 dễ, 才 khó.</b> 无论 phải kèm một câu hỏi bên trong (多冷？去不去？).",
-  quiz: [
-    { stem: "______多忙，他每天都坚持跑步。", opts: ["虽然", "无论", "只要", "即使"], a: 1, ex: "多忙 là chỗ lựa chọn, vế sau có 都." },
-    { stem: "______通过考试，你______能拿到奖学金。", opts: ["只有…才", "只要…才", "无论…才"], a: 0, ex: "Cặp cố định 只有…才." }
-  ],
-  src: "《HSK语法指要与训练》第二十八讲 第四节 只有、只要、除非 · 第七节 无论、即使"
-},
-{
-  id: "yimian", g: "C", short: "以便 / 以免 / 以致", zh: "以便·以免·以致",
-  title: "<span class='hz'>以便、以免、以致</span>: ba chữ 以 dễ nhầm ở HSK 6",
-  scene: "Ngọc viết email cho đồng nghiệp: nhắc mang ô để khỏi bị ướt, xin số điện thoại để tiện liên lạc, và kể chuyện một anh vì cẩu thả mà làm mất hộ chiếu.",
-  wrong: "他平时太粗心，[以免]把护照丢了。",
-  right: "他平时太粗心，[以致]把护照丢了。", vi: "Anh ấy hay cẩu thả nên đến nỗi làm mất hộ chiếu.",
-  why: [
-    "<span class='hz'>以便</span>: mục đích tích cực, “để tiện…”. Vế trước là việc làm, vế sau là điều muốn đạt.",
-    "<span class='hz'>以免 / 免得</span>: mục đích tránh điều xấu, “để khỏi…”. 免得 thiên về văn nói.",
-    "<span class='hz'>以致</span>: không phải mục đích mà là <b>kết quả xấu</b> đã xảy ra, “dẫn đến, đến nỗi”.",
-    "<span class='hz'>以至(于)</span>: “đến mức”, chỉ mức độ cao, không nhất thiết xấu."
-  ],
-  formula: [["làm A", "以便", "đạt điều tốt"], ["làm A", "以免", "tránh điều xấu"], ["vì A", "以致", "đã xảy ra điều xấu"]],
-  cmp: [
-    ["ok", "出门带把伞，以免淋雨。", "Tránh bị ướt"],
-    ["ok", "请留下电话，以便我们联系你。", "Để tiện liên lạc"],
-    ["bad", "请留下电话，以免我们联系你。", "Liên lạc không phải điều cần tránh"],
-    ["ok", "他不注意休息，以致病倒了。", "Kết quả xấu"]
-  ],
-  tip: "<b>便 = tiện, 免 = tránh, 致 = dẫn đến.</b> Đọc chữ thứ hai là đoán được nghĩa.",
-  quiz: [
-    { stem: "出门带把伞，______淋雨。", opts: ["以便", "以免", "以致"], a: 1, ex: "Tránh điều xấu (bị mưa ướt)." },
-    { stem: "请留下电话，______我们及时联系你。", opts: ["以便", "以免", "以致"], a: 0, ex: "Mục đích tích cực: để tiện liên lạc." },
-    { stem: "他太粗心，______把护照丢了。", opts: ["以便", "以免", "以致"], a: 2, ex: "Kết quả xấu đã xảy ra." }
-  ],
-  src: "《HSK语法指要与训练》第二十八讲 第五节 免得、以便、以致、以至"
-},
-{
-  id: "tonghop", g: "T", short: "Bài kiểm tra chọn câu sai", zh: "病句练习", test: true,
-  title: "Kiểm tra: tìm câu sai",
-  intro: "Giống phần Đọc 1 của HSK 6: mỗi câu hỏi có bốn câu, chỉ một câu sai ngữ pháp. Chọn câu sai, rồi đọc giải thích và bấm vào tên bài để ôn lại.",
-  quiz: [
-    { opts: ["我在河内大学学习汉语。", "他比我高得多。", "我们聊了一个小时的天。", "你把房间打扫。"], a: 3, ref: "ba", ex: "Động từ sau 把 thiếu đuôi → 你把房间打扫干净。" },
-    { opts: ["墙上挂着一张地图。", "我的钱包被小偷偷走了。", "小时候我常常去了外婆家。", "这么多菜我吃不完。"], a: 2, ref: "le", ex: "Thói quen (常常) không dùng 了." },
-    { opts: ["她汉语说得很流利。", "在北京下了一场大雪。", "只有多练习，才能说好。", "出门带伞，以免淋雨。"], a: 1, ref: "tonhien", ex: "Câu tồn hiện không có 在 ở đầu → 北京下了一场大雪。" },
-    { opts: ["他把护照没带来。", "我等了你半个小时。", "无论多忙，他都坚持锻炼。", "这是我们去年在北京拍的照片。"], a: 0, ref: "ba", ex: "没 phải đứng trước 把 → 他没把护照带来。" },
-    { opts: ["我明天见面他。", "王老师很受学生的欢迎。", "他已经毕业三年了。", "今天比昨天还冷。"], a: 0, ref: "lyhop", ex: "见面 là từ ly hợp → 我明天跟他见面。" },
-    { opts: ["他说得太快，我不能听懂。", "前边走过来一位老人。", "我们明天在咖啡馆见面吧。", "他太粗心，以致把护照丢了。"], a: 0, ref: "khanang", ex: "Không nghe hiểu vì khả năng → 我听不懂。" },
-    { opts: ["我学了两年汉语。", "胡志明市比河内很热。", "我想买一件红色的衣服。", "那本书没有被孩子撕破。"], a: 1, ref: "bi", ex: "Có 比 thì không dùng 很 → 热得多。" },
-    { opts: ["他工作在一家银行。", "请留下电话，以便我们联系你。", "她做菜做得很好吃。", "我昨天去超市买了很多东西。"], a: 0, ref: "trangngu", ex: "Nơi chốn đứng trước 工作 → 他在一家银行工作。" }
-  ],
-  src: "Tổng hợp từ các bài trên. Dạng đề theo HSK 6 阅读第一部分。"
+// Nội dung (nhóm bài, tình huống) nằm trong cơ sở dữ liệu, đọc qua /api/node/grammar.
+// Chưa có dữ liệu hoặc lỗi mạng thì dùng bản đi kèm trang (data.json, chép từ web/ngu-phap.json lúc dựng site).
+let GROUPS = [], CASES = [];
+async function loadData() {
+  for (const url of ["/api/node/grammar", "data.json"]) {
+    try {
+      const r = await fetch(url, { cache: "no-store" });
+      if (!r.ok) continue;
+      const d = await r.json();
+      if (Array.isArray(d.groups) && Array.isArray(d.cases) && d.cases.length) return d;
+    } catch (e) {}
+  }
+  return null;
 }
-];
 
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
@@ -764,8 +404,15 @@ document.addEventListener("click", e => {
   if (a) { e.preventDefault(); go(+a.dataset.go, true); }
 });
 
-const start = CASES.findIndex(c => c.id === (location.hash || "").slice(1));
-go(start >= 0 ? start : 0, false);
+loadData().then(d => {
+  if (!d) {
+    document.getElementById("main").innerHTML = "<p>Chưa tải được bài ngữ pháp. Kiểm tra mạng rồi tải lại trang.</p>";
+    return;
+  }
+  GROUPS = d.groups; CASES = d.cases;
+  const start = CASES.findIndex(c => c.id === (location.hash || "").slice(1));
+  go(start >= 0 ? start : 0, false);
+});
 </script>
 
 </html>
