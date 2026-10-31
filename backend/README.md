@@ -14,7 +14,7 @@ Mỗi phản hồi có header `X-Backend: go|node` để biết bản nào đã 
 | Token Ably cho lớp học trực tiếp | `go/lophoc.go` | `node/lophoc.js` |
 | Ngữ pháp qua tình huống (trang hsk6) | `go/grammar.go` | `node/grammar.js` |
 | Danh mục khóa học (trang quản lý) | `go/catalog.go` | `node/catalog.js` |
-| Lối vào Vercel | `../api/go/*.go` | `../api/node/*.js` (tổng cộng 12 function, 6 Node + 6 Go, đúng giới hạn gói Hobby: thêm API mới phải gộp bớt) |
+| Lối vào Vercel | `../api/go/*.go` | `../api/node/*.js` (tổng cộng 12 function, 6 Node + 6 Go, đúng giới hạn gói Hobby: thêm API mới phải gộp bớt; `/grammar` đi chung function `terms` qua rewrite trong `vercel.json`) |
 | Chạy ở máy | `../cmd/dev-api` (gọi từ `npm run dev:api`) | chạy ngay trong `../scripts/dev-api.mjs` |
 
 ## Hợp đồng

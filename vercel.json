@@ -9,5 +9,15 @@
     "api/go/ai.go": {
       "maxDuration": 60
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/node/grammar",
+      "destination": "/api/node/terms?_api=grammar"
+    },
+    {
+      "source": "/api/go/grammar",
+      "destination": "/api/go/terms?_api=grammar"
+    }
+  ]
 }
