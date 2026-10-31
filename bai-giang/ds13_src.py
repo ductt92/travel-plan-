@@ -679,33 +679,36 @@ add("bullets", chapter="Ôn tập đơn vị 1", section="Ôn tập 单元练习
          F(4, "Bài một chấm ba: di dân thi đại học và vấn đề công bằng giáo dục giữa các vùng."),
          F(5, "Các mẫu câu: 可谓是，由于……且……加上……，钻……的空子，意味着，何苦，无非，给……以. Ba bài cùng xoay quanh một chữ: 公平, công bằng trong giáo dục.")])
 
-add("bullets", section="Ôn tập 单元练习", title="Ôn tập nhanh: chọn từ đã học trong đơn vị", reveal=True, size=34,
+add("bullets", section="Ôn tập 单元练习", title="Ôn tập nhanh: chọn từ đã học trong đơn vị (1)", reveal=True, size=34,
     items=["## Từ cho sẵn: 不尽然 · 偏偏 · 何苦 · 越发 · 无非 · 并非",
            "(1) 都说名校毕业就一定能找到好工作，其实___。",
            "Đáp án: 不尽然",
            "(2) 大家都劝他报考本地的大学，他___要去外省。",
            "Đáp án: 偏偏",
            "(3) 你成绩这么好，___为了几分去当“高考移民”呢？",
-           "Đáp án: 何苦",
-           "(4) 学区房的价格越来越高，家长们的焦虑也___严重了。",
-           "Đáp án: 越发",
-           "(5) 他每天学到半夜，___是想考上一所理想的大学。",
-           "Đáp án: 无非",
-           "(6) 高考___改变命运的唯一途径。",
-           "Đáp án: 并非"],
+           "Đáp án: 何苦"],
     say=["Trước hết, chúng ta làm một bài ôn tập nhanh với sáu từ của cả ba bài: 不尽然，偏偏，何苦，越发，无非，并非. Các bạn tạm dừng sau mỗi câu nhé.",
          F(1, "Câu một: 都说名校毕业就一定能找到好工作，其实什么。 Ai cũng nói tốt nghiệp trường danh tiếng là nhất định tìm được việc tốt, thực ra…."),
          F(2, "Đáp án: 不尽然. 其实不尽然, thực ra không hẳn vậy."),
          F(3, "Câu hai: 大家都劝他报考本地的大学，他什么要去外省。 Mọi người đều khuyên cậu ấy thi trường ở quê, cậu ấy… muốn sang tỉnh khác."),
          F(4, "Đáp án: 偏偏, lại cứ."),
          F(5, "Câu ba: 你成绩这么好，什么为了几分去当高考移民呢？ Thành tích cậu tốt thế, … vì mấy điểm mà đi di dân thi đại học?"),
-         F(6, "Đáp án: 何苦, hà tất phải khổ thế. Chữ 呢 ở cuối câu là gợi ý."),
-         F(7, "Câu bốn: 学区房的价格越来越高，家长们的焦虑也什么严重了。 Giá nhà khu trường tốt ngày càng cao, nỗi lo của phụ huynh cũng… nặng nề."),
-         F(8, "Đáp án: 越发, càng thêm."),
-         F(9, "Câu năm: 他每天学到半夜，什么是想考上一所理想的大学。 Ngày nào cậu ấy cũng học đến nửa đêm, … là muốn đỗ một trường đại học lý tưởng."),
-         F(10, "Đáp án: 无非. 无非是, chẳng qua là."),
-         F(11, "Câu sáu: 高考什么改变命运的唯一途径。 Thi đại học… con đường duy nhất để thay đổi số phận."),
-         F(12, "Đáp án: 并非, hoàn toàn không phải. 高考并非改变命运的唯一途径.")])
+         F(6, "Đáp án: 何苦, hà tất phải khổ thế. Chữ 呢 ở cuối câu là gợi ý.")])
+
+add("bullets", section="Ôn tập 单元练习", title="Ôn tập nhanh: chọn từ đã học trong đơn vị (2)", reveal=True, size=34,
+    items=["## Từ cho sẵn: 不尽然 · 偏偏 · 何苦 · 越发 · 无非 · 并非",
+           "(4) 学区房的价格越来越高，家长们的焦虑也___严重了。",
+           "Đáp án: 越发",
+           "(5) 他每天学到半夜，___是想考上一所理想的大学。",
+           "Đáp án: 无非",
+           "(6) 高考___改变命运的唯一途径。",
+           "Đáp án: 并非"],
+    say=[F(1, "Câu bốn: 学区房的价格越来越高，家长们的焦虑也什么严重了。 Giá nhà khu trường tốt ngày càng cao, nỗi lo của phụ huynh cũng… nặng nề."),
+         F(2, "Đáp án: 越发, càng thêm."),
+         F(3, "Câu năm: 他每天学到半夜，什么是想考上一所理想的大学。 Ngày nào cậu ấy cũng học đến nửa đêm, … là muốn đỗ một trường đại học lý tưởng."),
+         F(4, "Đáp án: 无非. 无非是, chẳng qua là."),
+         F(5, "Câu sáu: 高考什么改变命运的唯一途径。 Thi đại học… con đường duy nhất để thay đổi số phận."),
+         F(6, "Đáp án: 并非, hoàn toàn không phải. 高考并非改变命运的唯一途径.")])
 
 add("bullets", section="Ôn tập 单元练习", title="Báo cáo · Ý kiến · Tranh luận (明察暗访 · 众说纷纭 · 针锋相对)", size=32,
     items=["## 明察暗访 – tìm hiểu, báo cáo",
@@ -781,24 +784,12 @@ lesson = {
     "tts_replace": {"应考": "硬考",            # yìngkǎo
                     "应试": "硬试",            # yìngshì
                     "一朝": "一招",            # yīzhāo
-                    "难易": "难意",            # nányì
                     "相差": "相岔",            # xiāngchà
                     "背井": "倍井",            # bèijǐng
-                    "当务": "裆务",            # dāngwù
                     "率先": "帅先",            # shuàixiān
-                    "钻高考": "躜高考",        # zuān
-                    "钻政策": "躜政策",        # zuān
-                    "钻法律": "躜法律",        # zuān
-                    "钻了": "躜了",            # zuān
-                    "钻加分": "躜加分",        # zuān
-                    "钻空子": "躜空子",        # zuān
                     "空子": "控子",            # kòngzi
                     "似锦": "四锦",            # sìjǐn
-                    "长身体": "涨身体",        # zhǎng
-                    "淋漓": "林漓",            # línlí
-                    "一分为二": "一芬为二",    # fēn
-                    "盯上": "钉上",            # dīngshang
-                    "转折": "转哲"},           # zhuǎnzhé
+                    "长身体": "涨身体"},       # zhǎng
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds13.json")

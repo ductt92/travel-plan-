@@ -99,7 +99,7 @@ V = [
      "Động từ, nghĩa là làm mất lòng, làm phật ý người khác, giống từ đắc tội trong tiếng Việt."),
     ("大臣", "dàchén", "đại thần", "danh từ", "đại thần, quan lớn (thời quân chủ)", "召集大臣商议对策", "triệu tập các đại thần bàn bạc đối sách",
      "Danh từ, nghĩa là đại thần, quan lớn trong triều đình thời phong kiến."),
-    ("对策", "duìcè", "đối sách", "danh từ", "đối sách, biện pháp đối phó", "我们得赶快想出对策。", "Chúng ta phải mau nghĩ ra cách đối phó.",
+    ("对策", "duìcè", "đối sách", "danh từ", "đối sách, biện pháp đối phó", "我们必须赶快想出对策。", "Chúng ta phải mau nghĩ ra cách đối phó.",
      "Danh từ, nghĩa là đối sách, biện pháp để đối phó với một tình huống."),
     ("提议", "tíyì", "đề nghị", "động từ", "đề nghị, đề xuất", "有人提议，听听蔺相如怎么说。", "Có người đề nghị nghe thử Lạn Tương Như nói thế nào.",
      "Động từ, nghĩa là đề nghị, đưa ra ý kiến cho mọi người bàn. Cũng có thể làm danh từ: 这个提议很好, đề nghị này rất hay."),
@@ -124,7 +124,7 @@ V = [
     ("圈套", "quāntào", "khuyên sáo", "danh từ", "cái bẫy, mưu lừa", "心想果然是个圈套。", "Trong lòng nghĩ quả nhiên là một cái bẫy.",
      "Danh từ, nghĩa là cái bẫy, mưu kế để lừa người khác. 设圈套 là giăng bẫy."),
     ("归还", "guīhuán", "quy hoàn", "động từ", "trả lại, hoàn trả", "请大王把璧归还于我。", "Xin đại vương trả ngọc lại cho thần.",
-     "Động từ, nghĩa là trả lại đồ cho chủ, trang trọng hơn 还. Chú ý: chữ 还 ở đây đọc là huán."),
+     "Động từ, nghĩa là trả lại đồ cho chủ, trang trọng hơn 还. Chú ý: chữ thứ hai ở đây đọc là huán, không đọc là hái."),
     ("从容", "cóngróng", "thung dung", "tính từ", "ung dung, bình tĩnh, thong thả", "从容地站在殿中央", "ung dung đứng giữa điện",
      "Tính từ, nghĩa là ung dung, bình tĩnh, không vội vàng, giống từ thung dung trong tiếng Việt."),
     ("中央", "zhōngyāng", "trung ương", "danh từ", "chính giữa; trung ương", "广场中央有一座雕像。", "Giữa quảng trường có một bức tượng.",
@@ -158,9 +158,9 @@ V = [
     ("边境", "biānjìng", "biên cảnh", "danh từ", "biên giới, vùng biên", "偷偷越过边境", "lén vượt qua biên giới",
      "Danh từ, nghĩa là vùng biên giới giữa hai nước."),
     ("泄露", "xièlòu", "tiết lộ", "động từ", "tiết lộ, để lộ (bí mật)", "不可泄露秘密。", "Không được tiết lộ bí mật.",
-     "Động từ, nghĩa là để lộ ra điều cần giữ kín. Chú ý: chữ 露 ở đây đọc là lòu."),
+     "Động từ, nghĩa là để lộ ra điều cần giữ kín. Chú ý: chữ thứ hai ở đây đọc là lòu."),
     ("率领", "shuàilǐng", "suất lĩnh", "động từ", "dẫn đầu, thống lĩnh", "秦王率领众臣", "vua Tần dẫn các quan",
-     "Động từ, nghĩa là dẫn đầu, chỉ huy một nhóm người. Chú ý: chữ 率 ở đây đọc là shuài."),
+     "Động từ, nghĩa là dẫn đầu, chỉ huy một nhóm người. Chú ý: chữ thứ nhất ở đây đọc là shuài, không đọc là lǜ."),
     ("镇静", "zhènjìng", "trấn tĩnh", "tính từ", "bình tĩnh, điềm tĩnh", "镇静地对秦王说", "điềm tĩnh nói với vua Tần",
      "Tính từ, nghĩa là bình tĩnh, điềm tĩnh, không hoảng hốt."),
     ("雄厚", "xiónghòu", "hùng hậu", "tính từ", "hùng hậu, dồi dào", "秦国仗着国力雄厚。", "Nước Tần cậy quốc lực hùng hậu.",
@@ -176,7 +176,7 @@ V = [
     ("履行", "lǚxíng", "lý hành", "động từ", "thực hiện (lời hứa, nghĩa vụ)", "我怕大王不履行承诺。", "Thần sợ đại vương không thực hiện lời hứa.",
      "Động từ, nghĩa là thực hiện lời hứa, nghĩa vụ, hợp đồng. Cụm cố định: 履行承诺, 履行义务, 履行合同."),
     ("歪曲", "wāiqū", "oai khúc", "động từ", "xuyên tạc, bóp méo", "你这不是歪曲我的意思吗？", "Ngươi đây chẳng phải là xuyên tạc ý ta sao?",
-     "Động từ, nghĩa là xuyên tạc, cố ý làm sai lệch sự thật hay ý của người khác. 歪 là méo, lệch; 曲 là cong."),
+     "Động từ, nghĩa là xuyên tạc, cố ý làm sai lệch sự thật hay ý của người khác. Chữ thứ nhất là méo, lệch; chữ thứ hai là cong, như trong từ 弯曲."),
     ("理直气壮", "lǐzhí-qìzhuàng", "lý trực khí tráng", "thành ngữ", "lý lẽ vững vàng, khí thế mạnh mẽ", "蔺相如理直气壮地说。", "Lạn Tương Như hùng hồn nói.",
      "Thành ngữ. 理直 là lý lẽ ngay thẳng, 气壮 là khí thế mạnh, nghĩa là có lý nên nói năng mạnh mẽ, tự tin."),
     ("压迫", "yāpò", "áp bách", "động từ", "áp bức, chèn ép", "弱国不可能压迫强国。", "Nước yếu không thể chèn ép nước mạnh.",
@@ -363,9 +363,9 @@ add("bullets", chapter="Tóm tắt nội dung", section="Bài khóa 课文", tit
          F(6, "Kết quả: ngọc trở về nước Triệu nguyên vẹn, và nước Tần không bao giờ nhắc lại chuyện lấy thành đổi ngọc nữa. Bố cục này rất có ích khi các bạn làm bài tập kể lại nội dung bài khóa.")])
 
 # ======================= NGỮ PHÁP =======================
-add("bullets", chapter="Ngữ pháp: 左……右……", section="Ngữ pháp 注释", title="1. 左……右…… (1): 左 + V₁ + 右 + V₂", size=40,
+add("bullets", chapter="Ngữ pháp: 左……右……", section="Ngữ pháp 注释", title="1. 左……右…… (1): 左 + V1 + 右 + V2", size=40,
     items=["Nhấn mạnh một hành động lặp đi lặp lại nhiều lần",
-           "Mẫu 1: 左V₁右V₂ – V₁ và V₂ giống nhau hoặc gần nghĩa",
+           "Mẫu 1: 左V1右V2 – V1 và V2 giống nhau hoặc gần nghĩa",
            "秦王对着和氏璧左看右看，爱不释手。",
            "……怎么把璧拿回来呢？左思右想之后，他对秦王说……",
            "这个学生上课不专心听讲，总是左顾右盼。",
@@ -659,7 +659,6 @@ lesson = {
     "tts_replace": {
         "相如": "象如",          # Lìn Xiàngrú, tránh đọc xiāng
         "将相和": "匠象和",      # jiàng xiàng hé
-        "列传": "列撰",          # lièzhuàn
         "为难": "违难",          # wéinán
         "上当": "上荡",          # shàngdàng
         "他的当": "他的荡",      # dàng

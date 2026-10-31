@@ -21,9 +21,9 @@ def F(i, t, **kw):
 # ======================= MỞ ĐẦU =======================
 add("title", chapter="Mở đầu",
     top="顶石中文 – Đỉnh cao tiếng Trung",
-    zh="中国扶贫的", py="道路选择",
+    zh="中国扶贫的道路选择", py="Zhōngguó fúpín de dàolù xuǎnzé",
     vi="Bài 7.3: Con đường xóa đói giảm nghèo của Trung Quốc",
-    sub="Zhōngguó fúpín de dàolù xuǎnzé\nBài giảng chi tiết bằng tiếng Việt",
+    sub="Bài giảng chi tiết bằng tiếng Việt",
     say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng giáo trình 顶石中文, Đỉnh cao tiếng Trung.",
          {"t": "Hôm nay chúng ta học bài cuối của Đơn vị bảy, chủ đề Kinh tế: bài bảy chấm ba, 中国扶贫的道路选择。 Nghĩa là: Con đường xóa đói giảm nghèo mà Trung Quốc lựa chọn.",
           "cap": "Hôm nay chúng ta học bài cuối của Đơn vị 7, chủ đề Kinh tế: bài 7.3, 中国扶贫的道路选择。 Nghĩa là: Con đường xóa đói giảm nghèo mà Trung Quốc lựa chọn."},
@@ -296,8 +296,8 @@ add("bullets", chapter="Bố cục & ghi chú", section="Bài khóa 课文", tit
     items=["## 1. Nêu vấn đề (đoạn 1): 数亿贫困人口清零 → 如何做到？能否借鉴？",
            "## 2. Gốc rễ của nghèo (đoạn 2): 不合理的计划经济体制 → 必须彻底改革制度",
            "## 3. Ba động lực giảm nghèo (đoạn 3–11)",
-           "① 家庭联产承包责任制: 取代人民公社，抛弃大锅饭 · ② 乡镇企业: 如雨后春笋",
-           "③ 国家政策扶持: 消除剪刀差，提高农产品采购价格 → 立竿见影",
+           "(1) 家庭联产承包责任制: 取代人民公社，抛弃大锅饭 · (2) 乡镇企业: 如雨后春笋",
+           "(3) 国家政策扶持: 消除剪刀差，提高农产品采购价格 → 立竿见影",
            "## 4. Tổng kết (đoạn 12–14): 制度性贫困 → 改革激发积极性，农民是减贫的最大推动力",
            "## 5. Giá trị tham khảo và khó khăn (đoạn 15–16): 天时、地利、人和 · “抄作业”并非易事"],
     say=["Trước khi sang phần mẫu câu, chúng ta cùng nhìn lại bố cục bài khóa. Bài có năm phần, lập luận theo kiểu nêu vấn đề, phân tích nguyên nhân, đưa ra lời giải.",
@@ -717,9 +717,7 @@ lesson = {
                     "干一番": "赣一番",          # gàn
                     "处理": "楚理",              # chǔlǐ
                     "增长": "增涨",              # zēngzhǎng
-                    "新冠": "新官",              # xīnguān
-                    "当之无愧": "铛之无愧",      # dāng
-                    "当仁不让": "铛仁不让"},     # dāng
+                    "新冠": "新官"},             # xīnguān
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds73.json")

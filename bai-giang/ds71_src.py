@@ -21,9 +21,9 @@ def F(i, t, **kw):
 # ======================= MỞ ĐẦU =======================
 add("title", chapter="Mở đầu",
     top="顶石中文 – Đỉnh cao tiếng Trung",
-    zh="闲置经济是\n真正的共享经济", py="Xiánzhì jīngjì shì zhēnzhèng de gòngxiǎng jīngjì",
+    zh="闲置经济", py="是真正的共享经济",
     vi="Bài 7.1: Kinh tế đồ cũ mới là kinh tế chia sẻ thực sự",
-    sub="Bài giảng chi tiết bằng tiếng Việt",
+    sub="Xiánzhì jīngjì shì zhēnzhèng de gòngxiǎng jīngjì\nBài giảng chi tiết bằng tiếng Việt",
     say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng giáo trình 顶石中文, Đỉnh cao tiếng Trung.",
          {"t": "Hôm nay chúng ta bước sang Đơn vị bảy, 经济篇, chủ đề Kinh tế, với bài bảy chấm một: 闲置经济是真正的共享经济。 Nghĩa là: Kinh tế đồ cũ, đồ để không, mới là kinh tế chia sẻ thực sự.",
           "cap": "Hôm nay chúng ta bước sang Đơn vị 7, 经济篇, chủ đề Kinh tế, với bài 7.1: 闲置经济是真正的共享经济。 Nghĩa là: Kinh tế đồ cũ, đồ để không, mới là kinh tế chia sẻ thực sự."},
@@ -224,7 +224,7 @@ P = [
       "九十四亿部 là chín tỷ bốn trăm triệu chiếc: người Trung Quốc đếm theo vạn và ức, một 亿 là một trăm triệu. 部 là lượng từ của điện thoại, máy móc. 闲置在抽屉里: nằm không trong ngăn kéo."],
      "旧手机何去何从，是一个问题。有数据显示，二零一五年至二零一九年，中国总共生产了九十四亿部手机。大量的旧手机闲置在人们的抽屉里。"),
     ("放眼邻国日本，闲置手机也有新故事。为了迎接东京奥运会，日本最大的电信运营商都科摩公司（NTT Docomo）回收了621万部手机，日本奖牌制作团队从中提纯了32公斤黄金，3.5吨银和2.2吨铜。从旧手机里提炼真金做奖牌，这在奥运史上尚属首次。",
-     "Nhìn sang nước láng giềng Nhật Bản, điện thoại để không cũng có câu chuyện mới. Để đón Thế vận hội Tokyo, nhà mạng lớn nhất Nhật Bản là NTT Docomo đã thu hồi 6,21 triệu chiếc điện thoại, đội chế tác huy chương của Nhật Bản đã tinh chế từ đó được 32 kg vàng, 3,5 tấn bạc và 2,2 tấn đồng. Chiết xuất vàng thật từ điện thoại cũ để làm huy chương, đây vẫn là lần đầu tiên trong lịch sử Olympic.",
+     "Nhìn sang nước láng giềng Nhật Bản, điện thoại để không cũng có câu chuyện mới. Để đón Thế vận hội Tokyo, nhà mạng lớn nhất Nhật Bản là NTT Docomo đã thu hồi 6,21 triệu chiếc điện thoại, đội chế tác huy chương của Nhật Bản đã tinh chế từ đó được 32 ki-lô-gam vàng, 3,5 tấn bạc và 2,2 tấn đồng. Chiết xuất vàng thật từ điện thoại cũ để làm huy chương, đây vẫn là lần đầu tiên trong lịch sử Olympic.",
      ["放眼邻国日本 là phóng tầm mắt sang nước láng giềng Nhật Bản. 奥运会 là Thế vận hội Olympic, nói tắt của 奥林匹克运动会. 都科摩 là tên phiên âm của Docomo. 回收 là thu hồi, tái chế.",
       "从中提纯 là tinh chế từ trong đó. 提炼真金做奖牌: chiết xuất vàng thật làm huy chương. 尚属首次 là vẫn còn là lần đầu, mẫu câu thứ nhất của bài. Thế vận hội Tokyo vốn dự kiến năm 2020, do dịch bệnh lùi sang năm 2021."],
      "放眼邻国日本，闲置手机也有新故事。为了迎接东京奥运会，日本最大的电信运营商都科摩公司回收了六百二十一万部手机，日本奖牌制作团队从中提纯了三十二公斤黄金，三点五吨银和二点二吨铜。从旧手机里提炼真金做奖牌，这在奥运史上尚属首次。"),
@@ -411,32 +411,34 @@ add("bullets", chapter="Mẫu câu: 换言之 · 一连", section="Mẫu câu �
          F(6, "Ví dụ hai: 南京进入了梅雨季节，一连下了十几天的雨。 Nam Kinh bước vào mùa mưa dầm, mưa liền mười mấy ngày. 梅雨 là mưa mùa mận chín, mùa mưa dầm đầu hè ở miền nam Trung Quốc."),
          F(7, "Ví dụ ba: 我最近课业压力特别大，一连三天都失眠。 Dạo này áp lực học hành của tôi rất lớn, mất ngủ liền ba đêm.")])
 
-add("bullets", section="Mẫu câu 重点句型", title="Luyện tập: điền 尚属 · 趋于 · 向来 · 严把 · 换言之 · 一连", reveal=True, size=34,
+add("bullets", section="Mẫu câu 重点句型", title="Luyện tập (1): điền 尚属 · 趋于 · 向来", reveal=True, size=36,
     items=["(1) 他___准时，今天怎么迟到了？",
-           "Đáp án: 向来",
+           "Đáp án: 向来 – thói quen từ trước tới nay",
            "(2) 经过治疗，病人的情况已___稳定。",
-           "Đáp án: 趋于",
+           "Đáp án: 趋于 – 趋于 + tính từ hai âm tiết",
            "(3) 用无人机送快递，这在我们县___首次。",
-           "Đáp án: 尚属",
-           "(4) 他___给她打了五个电话，她都没接。",
-           "Đáp án: 一连",
-           "(5) 学校招生一定要___入口关。",
-           "Đáp án: 严把",
-           "(6) 他从来不说谎，___，他是个诚实的人。",
-           "Đáp án: 换言之"],
+           "Đáp án: 尚属 – cụm cố định 尚属首次"],
     say=["Bây giờ chúng ta luyện tập nhanh sáu mẫu câu vừa học. Thầy đọc câu, các bạn tạm dừng chọn từ, rồi nghe đáp án nhé.",
          F(0, "Câu một: 他什么准时，今天怎么迟到了？ Anh ấy xưa nay luôn đúng giờ, sao hôm nay lại đến muộn?"),
          F(1, "Đáp án: 向来. 他向来准时. Từ chỉ thói quen từ trước tới nay."),
          F(2, "Câu hai: 经过治疗，病人的情况已什么稳定。 Sau khi điều trị, tình trạng bệnh nhân đã dần ổn định."),
          F(3, "Đáp án: 趋于. 趋于稳定, sau 趋于 là tính từ hai âm tiết."),
          F(4, "Câu ba: 用无人机送快递，这在我们县什么首次。 Dùng máy bay không người lái giao hàng, ở huyện chúng tôi vẫn là lần đầu."),
-         F(5, "Đáp án: 尚属. 尚属首次, cụm cố định."),
-         F(6, "Câu bốn: 他什么给她打了五个电话，她都没接。 Anh ấy gọi cho cô ấy liền năm cuộc, cô ấy đều không nghe máy."),
-         F(7, "Đáp án: 一连. Sau 一连 là cụm số lượng 五个电话."),
-         F(8, "Câu năm: 学校招生一定要什么入口关。 Nhà trường tuyển sinh nhất định phải kiểm soát chặt khâu đầu vào."),
-         F(9, "Đáp án: 严把. 严把入口关, theo mẫu 严把关."),
-         F(10, "Câu sáu: 他从来不说谎，什么，他是个诚实的人。 Anh ấy chưa bao giờ nói dối, nói cách khác, anh ấy là người trung thực."),
-         F(11, "Đáp án: 换言之. Vế sau khái quát lại vế trước.")])
+         F(5, "Đáp án: 尚属. 尚属首次, cụm cố định.")])
+
+add("bullets", section="Mẫu câu 重点句型", title="Luyện tập (2): điền 一连 · 严把 · 换言之", reveal=True, size=36,
+    items=["(4) 他___给她打了五个电话，她都没接。",
+           "Đáp án: 一连 – sau 一连 là cụm số lượng",
+           "(5) 学校招生一定要___入口关。",
+           "Đáp án: 严把 – mẫu 严把……关",
+           "(6) 他从来不说谎，___，他是个诚实的人。",
+           "Đáp án: 换言之 – vế sau khái quát lại vế trước"],
+    say=[F(0, "Câu bốn: 他什么给她打了五个电话，她都没接。 Anh ấy gọi cho cô ấy liền năm cuộc, cô ấy đều không nghe máy."),
+         F(1, "Đáp án: 一连. Sau 一连 là cụm số lượng 五个电话."),
+         F(2, "Câu năm: 学校招生一定要什么入口关。 Nhà trường tuyển sinh nhất định phải kiểm soát chặt khâu đầu vào."),
+         F(3, "Đáp án: 严把. 严把入口关, theo mẫu 严把关."),
+         F(4, "Câu sáu: 他从来不说谎，什么，他是个诚实的人。 Anh ấy chưa bao giờ nói dối, nói cách khác, anh ấy là người trung thực."),
+         F(5, "Đáp án: 换言之. Vế sau khái quát lại vế trước.")])
 
 # ======================= KẾT HỢP TỪ & THÀNH NGỮ =======================
 add("bullets", chapter="Kết hợp từ & thành ngữ", section="Kết hợp từ 词语搭配", title="Kết hợp từ: 超乎 · 放眼 · 缔造", size=32,
@@ -486,7 +488,7 @@ add("bullets", section="Thành ngữ 成语和惯用语", title="Thành ngữ (2
          F(5, "Ví dụ trong bài: 物品可追溯性大大提升，做到有案可稽。 Ví dụ khác: 白纸黑字，有案可稽，你怎么还能睁着眼睛说瞎话呢？ Giấy trắng mực đen, có hồ sơ rành rành, sao anh còn có thể trợn mắt nói dối được? 睁着眼睛说瞎话 là mở mắt nói điều mù quáng, tức là nói dối trắng trợn.")])
 
 # ======================= LUYỆN TẬP =======================
-add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ điền vào chỗ trống", reveal=True, size=32,
+add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ điền vào chỗ trống", reveal=True, size=30,
     items=["## Từ cho sẵn: 变迁 · 放眼 · 何去何从 · 显而易见 · 换言之",
            "(1) 亚洲国家对双边协定的热情是___的，他们有理由支持亚洲内部的贸易。",
            "Đáp án: 显而易见",
@@ -604,15 +606,11 @@ lesson = {
                     "宁缺": "佞缺",              # nìngquē
                     "处事": "楚事",              # chǔshì
                     "处理": "楚理",              # chǔlǐ
-                    "说白了": "说白啦",          # shuōbái le
-                    "铁了心": "铁啦心",          # tiě le xīn
                     "有案可稽": "有案可机",      # yǒu'àn kě jī
                     "撮合": "搓合",              # cuōhe
-                    "拓展": "唾展",              # tuòzhǎn
-                    "露": "露"},
+                    "拓展": "唾展"},             # tuòzhǎn
     "slides": slides,
 }
-lesson["tts_replace"].pop("露")
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds71.json")
 json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

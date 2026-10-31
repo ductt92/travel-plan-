@@ -255,7 +255,7 @@ P = [
       "事业单位 là đơn vị sự nghiệp như trường học, bệnh viện công. 月入过万 là thu nhập tháng hơn một vạn, tức hơn mười nghìn tệ. 遭到 là gặp phải, bị, thường đi với điều không hay: 遭到反对."]),
     ("如今，“95后”作为职场新力量，其就业观的变化，折射出全新的时代心态。有调查显示，“95后”最向往的职业排名是：网红、配音员、化妆师、游戏测评师和游戏角色扮演玩家，已经和父母传统观念中的公务员、教师、国企职员等“好工作”相去甚远。",
      "Ngày nay, thế hệ “sau 95” là lực lượng mới nơi công sở; sự thay đổi trong quan niệm việc làm của họ phản ánh tâm thế mới của thời đại. Khảo sát cho thấy, nghề họ mơ ước nhất là: người nổi tiếng trên mạng, diễn viên lồng tiếng, chuyên viên trang điểm, người review game và cosplayer, đã khác rất xa những “công việc tốt” trong quan niệm của bố mẹ như công chức, giáo viên, nhân viên doanh nghiệp nhà nước.",
-     ["95后 là thế hệ sinh từ năm một nghìn chín trăm chín mươi lăm đến chín mươi chín. 作为 là với tư cách là. 其 là của họ. 折射出 là phản ánh ra. 向往 là mơ ước, hướng tới.",
+     ["九五后 là thế hệ sinh từ năm một nghìn chín trăm chín mươi lăm đến chín mươi chín. 作为 là với tư cách là. 其 là của họ. 折射出 là phản ánh ra. 向往 là mơ ước, hướng tới.",
       "网红 là người nổi tiếng trên mạng; 配音员 là diễn viên lồng tiếng; 游戏角色扮演玩家 là người hóa trang nhập vai nhân vật game, tức cosplayer. 和，相去甚远 là khác rất xa so với: một mẫu câu trọng điểm."],
      "如今，九五后作为职场新力量，其就业观的变化，折射出全新的时代心态。有调查显示，九五后最向往的职业排名是：网红、配音员、化妆师、游戏测评师和游戏角色扮演玩家，已经和父母传统观念中的公务员、教师、国企职员等好工作相去甚远。"),
     ("“95后”选择创业的人群中，46%的人会选择海淘、自媒体、直播带货等新兴互联网创业项目，尤以北、深、广三地的毕业生为最。",
@@ -594,7 +594,40 @@ lesson = {
     "tag": TAG,
     "vi_voice": "Linh", "zh_voice": "Tingting", "vi_rate": 175, "zh_rate": 145,
     # sửa âm đọc của giọng máy cho các chữ đa âm (thay bằng chữ cùng âm, cùng thanh)
-    "tts_replace": {},
+    "tts_replace": {"转行": "转航",              # zhuǎnháng
+                    "这一行": "这一航",          # zhè yì háng
+                    "行行出状元": "航航出状元",  # hángháng chū zhuàngyuan
+                    "行业": "航业",              # hángyè
+                    "考量": "考粮",              # kǎoliáng
+                    "朝不保夕": "招不保夕",      # zhāo bù bǎo xī
+                    "应运": "映运",              # yìngyùn
+                    "应有": "英有",              # yīngyǒu
+                    "调研": "掉研",              # diàoyán
+                    "调查": "掉查",              # diàochá
+                    "都市": "督市",              # dūshì
+                    "新兴": "新星",              # xīnxīng
+                    "兴起": "星起",              # xīngqǐ
+                    "冠军": "贯军",              # guànjūn
+                    "着眼": "酌眼",              # zhuóyǎn
+                    "斗志": "豆志",              # dòuzhì
+                    "主角": "主决",              # zhǔjué
+                    "角色": "决色",              # juésè
+                    "大将": "大匠",              # dàjiàng
+                    "为最": "维最",              # yóu yǐ … wéi zuì
+                    "为导向": "维导向",          # yǐ … wéi dǎoxiàng
+                    "为基础": "维基础",          # wéi jīchǔ
+                    "为中心": "维中心",          # wéi zhōngxīn
+                    "称为": "称维",              # chēngwéi
+                    "更为": "更维",              # gèngwéi
+                    "极为": "极维",              # jíwéi
+                    "处于": "楚于",              # chǔyú
+                    "规划": "规话",              # guīhuà
+                    "成长": "成涨",              # chéngzhǎng
+                    "增长": "增涨",              # zēngzhǎng
+                    "家长": "家掌",              # jiāzhǎng
+                    "长远": "常远",              # chángyuǎn
+                    "数万": "树万",              # shùwàn
+                    "种茶": "众茶"},             # zhòng chá
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds62.json")

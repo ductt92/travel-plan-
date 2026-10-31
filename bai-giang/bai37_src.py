@@ -289,10 +289,14 @@ P = [
      "Sáng sớm tinh mơ, Chí Cường cùng toàn đội cảnh sát xuất phát. Đến điểm giao hàng, Chí Cường bắt đầu bố trí lực lượng. Anh để một đồng đội ẩn nấp kỹ trong xe, một người theo anh xuống xe, những đồng đội khác mai phục ở gần đó.",
      ["大清早 là sáng sớm tinh mơ. 民警 là cảnh sát nhân dân. 部署兵力 là bố trí lực lượng.",
       "Chú ý cách liệt kê: 一个同事在车里，一个随他下车，其他同事埋伏在附近, nghĩa là một người thì…, một người thì…, những người khác thì…."]),
-    ("刚刚布置妥当，一辆农用车和一辆摩托车朝自己缓缓驶来。面对毒贩，志强提出先验货后交钱，并告诉毒贩钱就放在车里。毒贩拿出毒品，奔向车门去取钱，车内民警扑上去，毒贩来不及反抗就被逮捕了。",
-     "Vừa bố trí xong xuôi, một chiếc xe nông dụng và một chiếc xe máy từ từ chạy về phía họ. Đối mặt với bọn buôn ma túy, Chí Cường đề nghị kiểm hàng trước, trả tiền sau, và nói rằng tiền để ngay trong xe. Tên buôn ma túy lấy hàng ra, lao về phía cửa xe để lấy tiền; cảnh sát trong xe lập tức xông ra, hắn chưa kịp chống cự đã bị bắt giữ.",
+    ("刚刚布置妥当，一辆农用车和一辆摩托车朝自己缓缓驶来。面对毒贩，志强提出先验货后交钱，并告诉毒贩钱就放在车里。",
+     "Vừa bố trí xong xuôi, một chiếc xe nông dụng và một chiếc xe máy từ từ chạy về phía họ. Đối mặt với bọn buôn ma túy, Chí Cường đề nghị kiểm hàng trước, trả tiền sau, và nói với chúng rằng tiền để ngay trong xe.",
      ["妥当 là thỏa đáng, xong xuôi. 农用车 là xe nông dụng, ta đã gặp ở phần khởi động. 缓缓驶来 là từ từ chạy tới.",
-      "先验货后交钱 là kiểm hàng trước, trả tiền sau, theo mẫu 先……后……. 扑上去 là xông tới, chồm tới. 来不及 là không kịp."]),
+      "先验货后交钱 là kiểm hàng trước, trả tiền sau, theo mẫu 先……后……. 验货 là kiểm tra hàng."]),
+    ("毒贩拿出毒品，奔向车门去取钱，车内民警扑上去，毒贩来不及反抗就被逮捕了。",
+     "Tên buôn ma túy lấy hàng ra, lao về phía cửa xe để lấy tiền; cảnh sát trong xe lập tức xông ra, hắn chưa kịp chống cự đã bị bắt giữ.",
+     ["奔向 là lao về phía. 扑上去 là xông tới, chồm tới. 来不及反抗就被逮捕了 là chưa kịp chống cự đã bị bắt.",
+      "Các bạn để ý: kế hoạch dụ rắn ra khỏi hang của Chí Cường đã thành công đúng như dự tính. Tiền để trong xe chính là mồi nhử."]),
     ("这次，缉毒大队成功破获了当地有史以来最大的一起非法运输贩卖毒品案。",
      "Lần này, đội phòng chống ma túy đã phá thành công vụ án vận chuyển, buôn bán ma túy trái phép lớn nhất từ trước đến nay ở địa phương.",
      ["破获 là phá án và bắt được thủ phạm. 有史以来 là từ khi có lịch sử đến nay, tức là từ trước tới nay.",
@@ -383,7 +387,7 @@ add("bullets", chapter="Ngữ pháp: 为……起见", section="Ngữ pháp 注�
            "Hay gặp: 为安全起见 · 为慎重起见 · 为方便起见 · 为保险起见"],
     say=["Bây giờ chúng ta sang phần ngữ pháp. Điểm thứ nhất là cấu trúc 为了……起见.",
          F(0, "Cấu trúc này biểu thị mục đích, tiếng Việt dịch là: để cho…, hoặc vì lý do…."),
-         F(1, "Công thức: 为 hoặc 为了, cộng một động từ hay tính từ, cộng 起见. Cả cụm này đặt ở đầu câu, trước chủ ngữ, sau đó mới đến phần chính của câu. Phần ở giữa thường là những từ hai âm tiết như 安全，慎重，方便."),
+         F(1, "Công thức: 为了, hoặc chỉ cần một chữ đầu của từ này cũng được, cộng một động từ hay tính từ, cộng 起见. Ví dụ 为安全起见, hay 为了安全起见. Cả cụm này đặt ở đầu câu, trước chủ ngữ, sau đó mới đến phần chính của câu. Phần ở giữa thường là những từ hai âm tiết như 安全，慎重，方便."),
          F(2, "Ví dụ một, lấy từ bài khóa: 为了慎重起见，她又将其他现场遗留的指尖部位指纹与王某的指纹反复比较，最终认定该系列抢劫案为王某所为。 Để cho thận trọng, cô lại so sánh nhiều lần vân tay đầu ngón ở các hiện trường khác với vân tay của Vương, cuối cùng xác định loạt vụ cướp này do Vương gây ra."),
          F(3, "Ví dụ hai: 为安全起见，家庭购买餐具后，可将餐具放在稀释后的食用醋中煮一煮，然后再使用。 Để an toàn, sau khi mua bát đĩa về, các gia đình có thể cho chúng vào nước giấm pha loãng đun sôi một lúc rồi hãy dùng. 稀释 là pha loãng."),
          F(4, "Ví dụ ba: 通常人们在思考问题时总是习惯于从正面和反面两个角度进行；在说明问题时，为了周到或强调起见，往往也从正反两方面阐述表达。 Khi suy nghĩ, người ta thường quen nhìn từ cả mặt thuận lẫn mặt nghịch; khi trình bày vấn đề, để cho chu đáo hoặc để nhấn mạnh, người ta cũng thường trình bày từ cả hai mặt."),
@@ -438,14 +442,14 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: chọn vị t
 
 # ======================= PHÂN BIỆT TỪ =======================
 add("compare", chapter="Phân biệt 恐惧 – 恐怖", section="Phân biệt từ 词语辨析", title="Phân biệt 恐惧 và 恐怖",
-    common="Giống nhau: đều có nghĩa sợ hãi, đáng sợ, nhưng thường không thay thế cho nhau. Ví dụ: 昨天的经历让我感到恐惧。/ 昨天的经历太恐怖了。",
+    common="Giống nhau: đều có nghĩa sợ hãi, nhưng thường không thay nhau được. Ví dụ: 昨天的经历让我感到恐惧。/ 昨天的经历太恐怖了。",
     cols=[{"head": "恐惧",
-           "lines": ["(1) Nhấn mạnh tâm lý hoảng sợ của con người → chủ ngữ thường là người",
+           "lines": ["(1) Tâm lý hoảng sợ của con người → chủ ngữ là người",
                      "Đúng: 遇到这样的事情，他恐惧极了。",
                      "Sai: 这件事情太恐惧了。",
                      "(2) Hay gặp: 感到恐惧 · 内心的恐惧 · 恐惧感 · 克服恐惧"]},
           {"head": "恐怖",
-           "lines": ["(1) Nhấn mạnh sự việc, cảnh tượng, thủ đoạn khiến người ta sợ → thường không bổ nghĩa cho người",
+           "lines": ["(1) Sự việc, cảnh tượng, thủ đoạn gây sợ → không nói về người",
                      "Sai: 遇到这样的事情，他恐怖极了。",
                      "Đúng: 那血腥的场面太恐怖了。",
                      "(2) Hay gặp: 恐怖电影 · 恐怖分子 · 恐怖袭击 · 气氛恐怖"]}],
@@ -664,6 +668,8 @@ lesson = {
                     "薄薄的": "雹雹的",          # báobáo
                     "干了几天": "赣了几天",      # gàn
                     "不想干了": "不想赣了",      # gàn
+                    "为题": "维题",              # 以……为题 wéi
+                    "着重": "酌重",              # zhuózhòng
                     "曾在": "层在",              # céng
                     "的确": "敌确",              # díquè
                     "参与": "参预",              # cānyù
@@ -678,11 +684,8 @@ lesson = {
                     "地处": "地楚",              # dìchǔ
                     "只得": "只德",              # zhǐdé
                     "照应": "照映",              # zhàoyìng
-                    "呼应": "呼映",              # hūyìng
                     "血腥": "谑腥",              # xuèxīng
-                    "好奇": "浩奇",              # hàoqí
                     "蹊跷": "期跷",              # qīqiāo
-                    "栽种": "栽众",              # zāizhòng
                     "试种": "试众",              # shìzhòng
                     "睡觉": "睡叫"},             # shuìjiào
     "slides": slides,

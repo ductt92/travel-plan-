@@ -21,7 +21,7 @@ def F(i, t, **kw):
 # ======================= MỞ ĐẦU =======================
 add("title", chapter="Mở đầu",
     top="Giáo trình chuẩn HSK 6 – Quyển Hạ",
-    zh="“笑”的备忘录", py="“Xiào” de bèiwànglù", vi="Bài 29: Bản ghi nhớ về tiếng cười",
+    zh="“笑”的备忘录", py="Xiào de bèiwànglù", vi="Bài 29: Bản ghi nhớ về tiếng cười",
     sub="Bài giảng chi tiết bằng tiếng Việt",
     say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng Giáo trình chuẩn HSK 6, quyển Hạ.",
          "Hôm nay chúng ta học bài hai mươi chín: 笑的备忘录。 Nghĩa là: Bản ghi nhớ về tiếng cười.",
@@ -360,16 +360,16 @@ add("bullets", chapter="Ngữ pháp: 预先", section="Ngữ pháp 注释", titl
 
 add("bullets", section="Ngữ pháp 注释", title="Luyện tập: dùng 预先 hoàn thành câu", reveal=True, size=36,
     items=["(1) 这事她________，我最近都忙糊涂了，忘了告诉你了。",
-           "Đáp án: 这事她预先跟我打过招呼……",
+           "Đáp án: 这事她预先跟我打过招呼，我最近都忙糊涂了，忘了告诉你了。",
            "(2) 他________的是，居然有那么多朋友，在他最困难的时候向他伸出了援手。",
-           "Đáp án: 他预先没有想到的是……",
+           "Đáp án: 他预先没有想到的是，居然有那么多朋友在他最困难的时候向他伸出了援手。",
            "(3) ……送公文的到了，吃饱喝足，稍稍休息一下，换一匹________，继续赶路。",
            "Đáp án: ……换一匹预先准备好的马，继续赶路。"],
-    say=[F(0, "Luyện tập. Câu một: 这事她，chỗ trống，我最近都忙糊涂了，忘了告诉你了。 Chuyện này cô ấy đã làm gì đó từ trước, dạo này tôi bận đến lú lẫn, quên mất không nói với bạn. Các bạn hãy tạm dừng và thử hoàn thành câu."),
-         F(1, "Đáp án gợi ý: 这事她预先跟我打过招呼。 Chuyện này cô ấy đã báo trước với tôi rồi."),
-         F(2, "Câu hai: 他，chỗ trống，的是，居然有那么多朋友，在他最困难的时候向他伸出了援手。 Điều mà anh ấy không ngờ tới là có nhiều bạn bè đến thế đã chìa tay giúp đỡ lúc anh khó khăn nhất."),
-         F(3, "Đáp án gợi ý: 他预先没有想到的是。 Điều anh ấy không hề lường trước được là…"),
-         F(4, "Câu ba kể chuyện người đưa công văn thời xưa cưỡi ngựa, đến mỗi trạm thì ăn uống no nê, nghỉ một chút, rồi 换一匹，chỗ trống，继续赶路。 Đổi một con ngựa như thế nào để tiếp tục lên đường?"),
+    say=[F(0, "Luyện tập. Câu một: 这事她, chỗ trống, 我最近都忙糊涂了，忘了告诉你了。 Chuyện này cô ấy đã làm gì đó từ trước, dạo này tôi bận đến lú lẫn, quên mất không nói với bạn. Các bạn hãy tạm dừng và thử hoàn thành câu."),
+         F(1, "Đáp án gợi ý: 这事她预先跟我打过招呼。 Chuyện này cô ấy đã báo trước với tôi rồi, chỉ là tôi bận quá nên quên mất."),
+         F(2, "Câu hai: 他, chỗ trống, 的是，居然有那么多朋友，在他最困难的时候向他伸出了援手。 Điều mà anh ấy không ngờ tới là có nhiều bạn bè đến thế đã chìa tay giúp đỡ lúc anh khó khăn nhất."),
+         F(3, "Đáp án gợi ý: 他预先没有想到的是，居然有那么多朋友在他最困难的时候向他伸出了援手。 Điều anh ấy không hề lường trước được là có nhiều bạn bè giúp đỡ mình đến thế."),
+         F(4, "Câu ba kể chuyện người đưa công văn thời xưa cưỡi ngựa, đến mỗi trạm thì ăn uống no nê, nghỉ một chút, rồi 换一匹, chỗ trống, 继续赶路。 Đổi một con ngựa như thế nào để tiếp tục lên đường?"),
          F(5, "Đáp án gợi ý: 换一匹预先准备好的马，继续赶路。 Đổi một con ngựa đã chuẩn bị sẵn từ trước rồi tiếp tục lên đường.")])
 
 add("bullets", chapter="Ngữ pháp: ……也好，……也罢", section="Ngữ pháp 注释", title="2. ……也好，……也罢 – … cũng được, … cũng vậy", size=36,

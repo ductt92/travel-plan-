@@ -305,7 +305,8 @@ add("bullets", section="Bài khóa 课文", title="Ghi chú 注释: hiểu thêm
          F(0, "Một: 字节跳动, tức ByteDance, thành lập tháng ba năm hai nghìn không trăm mười hai ở Bắc Kinh, là một trong những công ty đầu tiên ở Trung Quốc ứng dụng trí tuệ nhân tạo vào internet di động. Sản phẩm gồm 今日头条, 西瓜视频 và 抖音, tức TikTok. 今日头条 do 张一鸣 sáng lập, gợi ý tin tức dựa trên khai thác dữ liệu người dùng."),
          F(1, "Hai: nhãn hiệu 今日油条 thuộc về một công ty ăn uống ở tỉnh Hà Nam, thành lập ngày mười ba tháng năm năm hai nghìn không trăm hai mươi, bán quẩy, sữa đậu nành, bánh kếp, canh cay. Chỉ năm tháng sau đã thành tiệm nổi tiếng trên mạng, còn mở mô hình nhượng quyền. Tháng mười năm đó, 今日头条 khởi kiện, gây xôn xao dư luận."),
          F(2, "Ba: 阿外巴巴 là tên bịa ra để nhái 阿里巴巴, tức Alibaba, tập đoàn do 马云, Mã Vân, cùng mười bảy người khác sáng lập năm một nghìn chín trăm chín mươi chín ở Hàng Châu."),
-         F(3, "Bốn: câu 傍大牌一时爽，算后账泪两行 nhại khẩu hiệu an toàn giao thông trong phim khoa học viễn tưởng 流浪地球 năm hai nghìn không trăm mười chín: 道路千万条，安全第一条。行车不规范，亲人泪两行。 Đường có nghìn vạn lối, an toàn là số một; lái xe không đúng luật, người thân khóc hai hàng. Cư dân mạng chế ra rất nhiều câu theo mẫu này, như 超速一时爽，罚款泪两行, chạy quá tốc độ sướng nhất thời, nộp phạt nước mắt hai hàng.")])
+         F(3, "Bốn: câu 傍大牌一时爽，算后账泪两行 nhại khẩu hiệu an toàn giao thông trong phim khoa học viễn tưởng 流浪地球 năm hai nghìn không trăm mười chín: 道路千万条，安全第一条。行车不规范，亲人泪两行。 Đường có nghìn vạn lối, an toàn là số một; lái xe không đúng luật, người thân khóc hai hàng."),
+         F(3, "Cư dân mạng chế ra rất nhiều câu theo mẫu này, như 超速一时爽，罚款泪两行, chạy quá tốc độ sướng nhất thời, nộp phạt nước mắt hai hàng.")])
 
 # ======================= MẪU CÂU =======================
 add("bullets", chapter="Mẫu câu: 酷似 · 直呼 · 任…也 · 揣着明白装糊涂", section="Mẫu câu 重点句型", title="1. ……酷似…… · 2. 直呼……", size=33,
@@ -581,7 +582,8 @@ add("bullets", chapter="Liên hệ: hàng nhái & nhãn hiệu ở Việt Nam", 
            "Câu hỏi: 你会买山寨货吗？为什么？ · 小店起名“傍大牌”，你觉得可以接受吗？"],
     say=["Trước khi tổng kết, chúng ta cùng liên hệ với Việt Nam.",
          F(0, "Việt Nam có Luật Sở hữu trí tuệ, cũng theo nguyên tắc giống như luật sư trong bài nói: nhãn hiệu được bảo hộ theo nhóm hàng hóa, dịch vụ đã đăng ký. Riêng nhãn hiệu nổi tiếng thì được bảo hộ rộng hơn, cả với những hàng hóa không cùng loại, rất giống 驰名商标 của Trung Quốc."),
-         F(1, "Doanh nghiệp Việt Nam cũng từng là nạn nhân của 抢注. Thương hiệu cà phê Trung Nguyên từng bị một công ty đăng ký trước tại Mỹ; cái tên Buôn Ma Thuột, vùng cà phê nổi tiếng, cũng từng bị một công ty Trung Quốc đăng ký làm nhãn hiệu, Việt Nam phải mất nhiều năm mới đòi lại được. Bài học là: muốn ra thị trường nước ngoài, phải đăng ký nhãn hiệu trước."),
+         F(1, "Doanh nghiệp Việt Nam cũng từng là nạn nhân của 抢注. Thương hiệu cà phê Trung Nguyên từng bị một công ty đăng ký trước tại Mỹ."),
+         F(1, "Cái tên Buôn Ma Thuột, vùng cà phê nổi tiếng, cũng từng bị một công ty Trung Quốc đăng ký làm nhãn hiệu, Việt Nam phải mất nhiều năm mới đòi lại được. Bài học là: muốn ra thị trường nước ngoài, phải đăng ký nhãn hiệu trước."),
          F(2, "Rất nhiều từ lóng trong bài có từ tương ứng trong tiếng Việt: 高仿 là hàng fake loại một, hàng super fake; 蹭热度 là ăn theo; 搭便车 là đi nhờ xe; 打擦边球 là lách luật. Ở Việt Nam cũng không thiếu những cái tên quán nhái thương hiệu lớn cho vui đấy."),
          F(3, "Câu hỏi cho các bạn: 你会买山寨货吗？为什么？ Bạn có mua hàng nhái không? Vì sao? Và: 小店起名傍大牌，你觉得可以接受吗？ Cửa hàng nhỏ đặt tên bám thương hiệu lớn, bạn thấy có chấp nhận được không? Hãy thử trả lời bằng tiếng Trung, dùng 明摆着, 就而言, 说到底 nhé.")])
 
@@ -597,7 +599,9 @@ add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng k�
          F(1, "Về mẫu câu: 酷似 là giống hệt; 直呼 là thốt lên; 任也 là dù… cũng…; 揣着明白装糊涂 là biết rõ mà vờ không biết; 令不解 là khiến không hiểu nổi; 乍听起来 là thoạt nghe; 明摆着 là rõ rành rành; 就而言 là xét về; 近乎 là gần như; 说到底 là suy cho cùng; và 将落到实处 là thực hiện đến nơi đến chốn."),
          F(2, "Về thành ngữ và quán dụng ngữ: 亦庄亦谐，微乎其微，声名在外，明目张胆，措手不及，抱大腿，抖机灵，脑洞大开，蹭IP，井水不犯河水，打擦边球，搭便车. Nhiều từ lóng mạng trong số này người Trung Quốc dùng hằng ngày."),
          F(4, "Bài tập về nhà: hãy viết một đoạn văn khoảng ba trăm chữ với đề 你怎么看傍大牌现象？ Bạn nhìn nhận thế nào về hiện tượng bám thương hiệu lớn? Hãy dùng ít nhất ba mẫu câu và ba thành ngữ của bài, như 酷似，明摆着，说到底，明目张胆，搭便车."),
-         "Cảm ơn các bạn đã theo dõi bài giảng. Bài sau, bài tám chấm hai, là 高通：打官司打出的江山, Qualcomm: giang sơn dựng nên từ kiện tụng. Từ nhãn hiệu, chúng ta chuyển sang bằng sáng chế: gã khổng lồ chip Qualcomm thu phí bản quyền khắp thế giới, đấu khẩu với Apple, và từng bị Trung Quốc phạt hơn sáu tỷ tệ vì độc quyền. Bài sau có tới hai mươi mốt thành ngữ, các bạn chuẩn bị tinh thần nhé. Hẹn gặp lại các bạn. Chúc các bạn học tốt!"])
+         {"t": "Cảm ơn các bạn đã theo dõi bài giảng. Bài sau, bài tám chấm hai, là 高通：打官司打出的江山, Qualcomm: giang sơn dựng nên từ kiện tụng.",
+          "cap": "Cảm ơn các bạn đã theo dõi bài giảng. Bài sau, bài 8.2, là 高通：打官司打出的“江山”, Qualcomm: “giang sơn” dựng nên từ kiện tụng."},
+         "Từ nhãn hiệu, chúng ta chuyển sang bằng sáng chế: gã khổng lồ chip Qualcomm thu phí bản quyền khắp thế giới, đấu khẩu với Apple, và từng bị Trung Quốc phạt hơn sáu tỷ tệ vì độc quyền. Bài sau có tới hai mươi mốt thành ngữ, các bạn chuẩn bị tinh thần nhé. Hẹn gặp lại các bạn. Chúc các bạn học tốt!"])
 
 lesson = {
     "title": "顶石中文 – Bài 8.1: “大头条”对簿“小油条” (“Đại Đầu Điều” ra tòa với “Tiểu Du Điều”)",
@@ -627,10 +631,7 @@ lesson = {
                     "角色": "决色",              # juésè
                     "处罚": "楚罚",              # chǔfá
                     "宁可": "佞可",              # nìngkě
-                    "三舍": "三设",              # tuì bì sān shè
-                    "参了军": "餐了军",          # cān le jūn
-                    "重金": "众金",              # zhòngjīn
-                    "鬼才": "鬼财"},             # guǐ cái
+                    "三舍": "三设"},             # tuì bì sān shè
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds81.json")

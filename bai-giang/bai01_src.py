@@ -64,7 +64,7 @@ add("bullets", section="Mở đầu", title="Mục tiêu bài học",
     say=["Bài học hôm nay có sáu mục tiêu.",
          F(0, "Thứ nhất, hiểu nội dung bài khóa: chỉ một câu hỏi ngây thơ của con gái đã khiến bố mẹ phải suy nghĩ lại về chính mình."),
          F(1, "Thứ hai, nắm vững bốn mươi từ mới. Với mỗi từ, thầy sẽ đọc mẫu, cho các bạn âm Hán Việt để dễ nhớ, giải thích nghĩa và đưa ví dụ."),
-         F(2, "Thứ ba, học hai điểm ngữ pháp rất khẩu ngữ: 巴不得, nghĩa là chỉ mong sao; và 别提多……了, nghĩa là khỏi phải nói."),
+         F(2, "Thứ ba, học hai điểm ngữ pháp rất khẩu ngữ: 巴不得, nghĩa là chỉ mong sao; và cấu trúc 别提多 cộng tính từ, như 别提多高兴了, nghĩa là vui khỏi phải nói."),
          F(3, "Thứ tư, phong cách diễn đạt: những cặp từ cùng nghĩa nhưng một từ dùng trong văn viết, một từ dùng trong khẩu ngữ."),
          F(4, "Thứ năm, phân biệt hai đại từ đều có nghĩa là người khác: 人家 và 别人."),
          F(5, "Thứ sáu, phần mở rộng về các loại câu sai do dùng từ không đúng, một dạng bài rất hay gặp trong đề thi HSK 6."),
@@ -117,7 +117,7 @@ add("bullets", section="Khởi động 热身", title="Học từ theo yếu t�
 # (chữ Hán, pinyin, Hán Việt, từ loại, nghĩa hiển thị, ví dụ, dịch ví dụ, lời giảng)
 V = [
     ("启示", "qǐshì", "khải thị", "danh từ", "sự gợi mở, bài học rút ra", "这件事给了我很大的启示。", "Chuyện này đã cho tôi một bài học lớn.",
-     "Danh từ, nghĩa là sự gợi mở, điều khai sáng, bài học ta rút ra từ một sự việc. Tên bài 孩子给我们的启示 chính là điều con trẻ dạy chúng ta. Từ này hay đi với 给 hoặc 得到."),
+     "Danh từ, nghĩa là sự gợi mở, điều khai sáng, bài học ta rút ra từ một sự việc. Tên bài 孩子给我们的启示 chính là điều con trẻ dạy chúng ta. Hay gặp trong các cụm 给人启示，得到启示."),
     ("老公", "lǎogōng", "lão công", "danh từ", "chồng (khẩu ngữ)", "我和老公爽快地答应下来。", "Tôi và chồng vui vẻ nhận lời ngay.",
      "Danh từ khẩu ngữ, nghĩa là chồng. Chữ 老 ở đây không có nghĩa là già, mà là tiền tố thân mật. Vợ thì gọi là 老婆. Trong văn viết trang trọng, người ta dùng 丈夫 và 妻子."),
     ("爽快", "shuǎngkuai", "sảng khoái", "tính từ", "thẳng thắn, dứt khoát, vui vẻ (nhận lời)", "他爽快地答应了我的要求。", "Anh ấy vui vẻ nhận lời đề nghị của tôi ngay.",
@@ -161,7 +161,7 @@ V = [
     ("讨好", "tǎo hǎo", "thảo hảo", "động từ", "lấy lòng, nịnh", "他总是想办法讨好领导。", "Anh ta lúc nào cũng tìm cách lấy lòng sếp.",
      "Động từ, nghĩa là lấy lòng, cố làm vừa lòng người khác, thường mang nghĩa xấu là nịnh bợ."),
     ("郑重", "zhèngzhòng", "trịnh trọng", "tính từ", "nghiêm túc, trịnh trọng", "他郑重地向大家道歉。", "Anh ấy nghiêm túc xin lỗi mọi người.",
-     "Tính từ, nghĩa là nghiêm túc, trịnh trọng, thể hiện thái độ coi trọng. Hay làm trạng ngữ với 地: 郑重地说，郑重地宣布."),
+     "Tính từ, nghĩa là nghiêm túc, trịnh trọng, thể hiện thái độ coi trọng. Hay làm trạng ngữ, như 郑重地说，郑重地宣布."),
     ("当面", "dāng miàn", "đương diện", "phó từ", "trước mặt, trực tiếp", "有意见应该当面提。", "Có ý kiến thì nên nói thẳng trước mặt.",
      "Phó từ, nghĩa là trước mặt, mặt đối mặt. Trái nghĩa với 背后, sau lưng. Trong bài: 应该当面说, nên nói thẳng trước mặt."),
     ("人家", "rénjia", "nhân gia", "đại từ", "người ta, người khác", "人家都这么说。", "Người ta đều nói như vậy.",
@@ -258,10 +258,10 @@ P = [
     ("老公也在旁边附和：“大伙儿要和睦相处，对人要宽容。”女儿却是一脸的疑惑，反问道：“你们不是也有时候说，哪个朋友好相处，哪个朋友很自私吗？”",
      "Chồng tôi ở bên cạnh cũng phụ họa: Mọi người phải chung sống hòa thuận, đối xử với người khác phải bao dung. Con gái lại có vẻ mặt đầy thắc mắc, hỏi vặn lại: Chẳng phải bố mẹ đôi khi cũng nói bạn nào dễ gần, bạn nào ích kỷ đó sao?",
      ["附和 là hùa theo. 和睦相处 là chung sống hòa thuận. 一脸的疑惑 là vẻ mặt đầy thắc mắc. 反问道 là hỏi vặn lại, cách nói văn viết của 反问说.",
-      "你们不是也……吗？ là câu hỏi phản vấn, nghĩa là chẳng phải bố mẹ cũng… sao? Thật ra cô bé muốn nói: bố mẹ cũng nhận xét người khác sau lưng đấy thôi. 好相处 là dễ gần, 自私 là ích kỷ."]),
+      "你们不是也有时候说，哪个朋友好相处，哪个朋友很自私吗？ là câu hỏi phản vấn, nghĩa là chẳng phải bố mẹ cũng… sao? Thật ra cô bé muốn nói: bố mẹ cũng nhận xét người khác sau lưng đấy thôi. 好相处 là dễ gần, 自私 là ích kỷ."]),
     ("瞬间我和老公被问得说不出话来，屋子里鸦雀无声。",
      "Trong khoảnh khắc ấy, tôi và chồng bị hỏi đến mức không nói nên lời, trong phòng im phăng phắc.",
-     ["被问得说不出话来: cấu trúc 被 cộng động từ cộng 得 cộng bổ ngữ mức độ, nghĩa là bị hỏi đến mức cứng họng. 鸦雀无声 diễn tả rất đắt sự im lặng ngượng ngùng của bố mẹ."]),
+     ["被问得说不出话来 là câu bị động có bổ ngữ chỉ mức độ, nghĩa là bị hỏi đến mức cứng họng. 鸦雀无声 diễn tả rất đắt sự im lặng ngượng ngùng của bố mẹ."]),
     ("人们常说，启蒙老师的重要性不可忽视，父母就是孩子的第一任老师，这话确实不假，可如果这次不是女儿反驳，我还意识不到，我们自己的做法和对孩子的要求实行的是两套标准，那便是对自己宽容，对孩子严厉。",
      "Người ta thường nói, vai trò của người thầy vỡ lòng không thể xem nhẹ, cha mẹ chính là người thầy đầu tiên của con cái. Câu này quả thật không sai. Nhưng nếu lần này không có con gái phản bác, tôi vẫn chưa nhận ra rằng cách làm của chính chúng tôi và yêu cầu đối với con là hai tiêu chuẩn khác nhau, đó là: dễ dãi với bản thân, nghiêm khắc với con cái.",
      ["人们常说……，这话确实不假，可如果…… nghĩa là: người ta thường nói…, câu đó quả không sai, nhưng nếu…. Đây là cách thừa nhận một ý rồi chuyển sang ý mới, có trong bài tập bốn. 不可忽视 là không thể xem nhẹ.",
@@ -329,7 +329,7 @@ add("bullets", chapter="Ngữ pháp: 巴不得", section="Ngữ pháp 注释", t
            "我巴不得他们能真的和好，从此以后和和睦睦过日子。"],
     say=["Bây giờ chúng ta sang phần ngữ pháp. Điểm thứ nhất là động từ 巴不得.",
          F(0, "巴不得 có nghĩa là mong mỏi một cách tha thiết, sách giải thích là 迫切盼望. Tiếng Việt dịch là chỉ mong sao, mong còn không được. Từ này dùng trong khẩu ngữ."),
-         F(1, "Sau 巴不得 có thể là một động từ hoặc cả một mệnh đề. Nó cũng có thể đứng cuối câu, thường kèm 呢, như 我巴不得呢, tôi mong còn chẳng được ấy chứ."),
+         F(1, "Sau 巴不得 có thể là một động từ hoặc cả một mệnh đề. Nó cũng có thể đứng cuối câu, thường kèm trợ từ ngữ khí, như 我巴不得呢, tôi mong còn chẳng được ấy chứ."),
          F(2, "Ví dụ một, lấy từ bài khóa: 有个孩子和我们的独生女朝夕相处，我们巴不得呢！ Có một đứa trẻ sớm tối ở bên con gái một của chúng tôi, chúng tôi mong còn chẳng được ấy chứ!"),
          F(3, "Ví dụ hai: 就快到春节了，在外地打工一整年的他巴不得马上回到老家和父母、孩子团聚。 Sắp đến Tết rồi, anh ấy làm thuê xa nhà cả năm trời, chỉ mong sao được về quê đoàn tụ với bố mẹ, con cái ngay."),
          F(4, "Ví dụ ba: 我巴不得他们能真的和好，从此以后和和睦睦过日子。 Tôi chỉ mong họ thật sự làm lành, từ nay về sau sống hòa thuận với nhau."),
@@ -345,7 +345,7 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: viết lại 
     say=[F(0, "Luyện tập: dùng 巴不得 viết lại câu. Câu một: 他不来太好了，我就希望他不来呢。 Anh ta không đến thì tốt quá, tôi chỉ mong anh ta đừng đến. Các bạn hãy tạm dừng và thử viết lại."),
          F(1, "Đáp án: 他不来太好了，我巴不得他不来呢。 Thay 就希望 bằng 巴不得."),
          F(2, "Câu hai: 有人请你玩儿你还不去？这样的好事我盼还盼不来呢。 Có người mời đi chơi mà bạn còn không đi à? Chuyện tốt như vậy tôi mong còn chẳng được."),
-         F(3, "Đáp án: 这样的好事我巴不得呢！ Ở đây 巴不得 đứng cuối câu, kèm 呢."),
+         F(3, "Đáp án: 这样的好事我巴不得呢！ Ở đây 巴不得 đứng cuối câu, như trong bài khóa."),
          F(4, "Câu ba: 我多么希望你来帮帮我呀，怎么会觉得你多事呢？ Tôi mong bạn đến giúp tôi biết bao, sao lại thấy bạn lắm chuyện được?"),
          F(5, "Đáp án: 我巴不得你来帮帮我呢，怎么会觉得你多事呢？ 巴不得 thay cho 多么希望.")])
 
@@ -355,13 +355,13 @@ add("bullets", chapter="Ngữ pháp: 别提多……了", section="Ngữ pháp �
            "这个人办事，别提多负责了。",
            "看到女儿对伙伴热情无私，我和老公别提多高兴了。",
            "为了帮我的忙，把他累成那样，弄得我心里别提多过意不去了。"],
-    say=["Điểm ngữ pháp thứ hai là cấu trúc 别提多……了.",
+    say=["Điểm ngữ pháp thứ hai là cấu trúc 别提多, rồi tính từ, rồi trợ từ cuối câu, ví dụ 别提多高兴了.",
          F(0, "Cấu trúc này biểu thị mức độ rất cao, cao đến mức không cần nói chi tiết nữa, mang giọng điệu cường điệu. Tiếng Việt dịch là: khỏi phải nói, hoặc không biết… đến nhường nào."),
-         F(1, "Ở giữa 别提多 và 了 là một tính từ, hoặc một động từ chỉ tâm lý như 高兴，生气，担心."),
+         F(1, "Sau 别提多 là một tính từ, hoặc một động từ chỉ tâm lý như 高兴，生气，担心, và cuối câu luôn có trợ từ, như 别提多担心了."),
          F(2, "Ví dụ một: 这个人办事，别提多负责了。 Người này làm việc thì có trách nhiệm khỏi phải nói."),
          F(3, "Ví dụ hai, lấy từ bài khóa: 看到女儿对伙伴热情无私，我和老公别提多高兴了。 Thấy con gái nhiệt tình, không ích kỷ với bạn, tôi và chồng vui khỏi phải nói."),
          F(4, "Ví dụ ba: 为了帮我的忙，把他累成那样，弄得我心里别提多过意不去了。 Vì giúp tôi mà anh ấy mệt đến thế, khiến tôi áy náy vô cùng. 过意不去 nghĩa là áy náy, ngại trong lòng."),
-         "Các bạn nhớ: đừng bỏ chữ 了 ở cuối, và chữ 别提 ở đây không có nghĩa là đừng nhắc đến, mà là nhiều đến mức không cần nói nữa."])
+         "Các bạn nhớ: đừng bỏ trợ từ ở cuối câu, và 别提 ở đây không có nghĩa là đừng nhắc đến, mà là nhiều đến mức không cần nói nữa."])
 
 add("bullets", section="Ngữ pháp 注释", title="Luyện tập: viết lại câu với 别提多……了", reveal=True, size=40,
     items=["(1) 听说女儿把这么好的工作给辞了，妈妈气坏了。",
@@ -373,7 +373,7 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: viết lại 
     say=[F(0, "Luyện tập. Câu một: 听说女儿把这么好的工作给辞了，妈妈气坏了。 Nghe nói con gái bỏ một công việc tốt như vậy, mẹ tức lắm. Các bạn thử viết lại nhé."),
          F(1, "Đáp án: 妈妈别提多生气了。 Mẹ tức giận khỏi phải nói. Chú ý: 气坏了 chuyển thành 别提多生气了."),
          F(2, "Câu hai: 看到他们两个相处得这么好，我高兴极了。 Thấy hai người họ hòa thuận như vậy, tôi vui vô cùng."),
-         F(3, "Đáp án: 我别提多高兴了。 Bỏ 极了, thay bằng 别提多……了."),
+         F(3, "Đáp án: 我别提多高兴了。 Bỏ 极了, đưa 别提多 lên trước 高兴."),
          F(4, "Câu ba: 联欢会上，我们自编自演的节目特别特别受欢迎。 Trong buổi liên hoan, tiết mục do chúng tôi tự biên tự diễn được hoan nghênh cực kỳ."),
          F(5, "Đáp án: 我们自编自演的节目别提多受欢迎了。 Tiết mục được yêu thích khỏi phải nói.")])
 
@@ -404,7 +404,7 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: tìm từ kh�
          F(2, "Câu hai: 中国是世界上最早种茶、制茶、饮茶的国家，种茶的历史已有几千年了。 Trung Quốc là nước sớm nhất trên thế giới trồng chè, chế biến chè và uống trà; lịch sử trồng chè đã có mấy nghìn năm. Từ được đánh dấu nằm trong cụm 饮茶."),
          F(3, "Đáp án: 饮茶 là văn viết, khẩu ngữ nói là 喝茶."),
          F(4, "Câu ba: 他在信中写道：我不知道这本书是否能让你了解我及我生活的全部，我们努力吧。 Anh ấy viết trong thư: anh không biết cuốn sách này có giúp em hiểu được anh và toàn bộ cuộc sống của anh hay không, chúng ta cùng cố gắng nhé. Từ được đánh dấu là 是否."),
-         F(5, "Đáp án: 是否 là văn viết, khẩu ngữ nói là 是不是. Ngoài ra, trong câu này 写道 và 及 cũng là cách nói văn viết, khẩu ngữ là 写着 và 和.")])
+         F(5, "Đáp án: 是否 là văn viết, khẩu ngữ nói là 是不是. Ngoài ra, 写道 trong câu này cũng là cách nói văn viết, khẩu ngữ là 写着; còn 我及我生活的全部 nói theo khẩu ngữ là 我和我生活的全部.")])
 
 # ======================= PHÂN BIỆT TỪ =======================
 add("compare", chapter="Phân biệt 人家 – 别人", section="Phân biệt từ 词语辨析", title="Phân biệt 人家 và 别人 (1)",
@@ -535,7 +535,7 @@ add("bullets", section="Mở rộng 扩展", title="Từ vựng: làm quen các 
          F(5, "福气, phúc. Kết hợp: 有福气，福气大. Ví dụ: 一生没有遇到战争就是福气。 Cả đời không gặp chiến tranh đã là một phúc lớn.")])
 
 # ======================= LUYỆN TẬP =======================
-add("bullets", chapter="Luyện tập", section="Luyện tập 练习", title="Bài tập 1: Viết thêm từ theo chữ được đánh dấu", reveal=True, size=40,
+add("bullets", chapter="Luyện tập", section="Luyện tập 练习", title="Bài tập 1: Viết thêm từ theo chữ được đánh dấu", reveal=True, size=36,
     items=["Mẫu: 反问 → 询问 · 提问 · 疑问 · 问题",
            "(1) 爽快",
            "Đáp án gợi ý: 愉快 · 痛快 · 凉快 · 赶快",
@@ -580,7 +580,7 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 2: Viết lại
          F(1, "Đáp án: 这个老师很严厉. Ở đây nói về thái độ nghiêm khắc của thầy, nên dùng 严厉 rất hợp."),
          F(2, "Câu năm, dùng 巴不得: 我非常希望能马上回家见到妈妈。 Tôi rất mong được về nhà gặp mẹ ngay."),
          F(3, "Đáp án: 我巴不得马上回家见到妈妈。 Tôi chỉ mong sao được về nhà gặp mẹ ngay."),
-         F(4, "Câu sáu, dùng 别提多……了: 这件事情太复杂了，我一个人根本处理不了。 Việc này phức tạp quá, một mình tôi không tài nào xử lý được."),
+         F(4, "Câu sáu, dùng cấu trúc 别提多: 这件事情太复杂了，我一个人根本处理不了。 Việc này phức tạp quá, một mình tôi không tài nào xử lý được."),
          F(5, "Đáp án: 这件事情别提多复杂了，我一个人根本处理不了。 Việc này phức tạp khỏi phải nói.")])
 
 add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ thích hợp điền vào chỗ trống (1)", reveal=True, size=36,
@@ -611,7 +611,7 @@ add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng k�
            "Làm bài tập 4: đặt câu theo mẫu 一个说……，另一个说…… và 人们常说……，这话确实不假，可如果……"],
     say=["Chúng ta cùng tổng kết bài một.",
          F(0, "Về từ vựng, các bạn cần đặc biệt nhớ: 爽快，巴不得，异常，风度，融洽，当面，附和，意识，实行，约束. Nhất là những từ Hán Việt dễ nhầm như 爽快，异常，风度，实行."),
-         F(1, "Về ngữ pháp: 巴不得 nghĩa là chỉ mong sao, dùng trong khẩu ngữ. 别提多……了 nghĩa là khỏi phải nói, đừng quên chữ 了 ở cuối."),
+         F(1, "Về ngữ pháp: 巴不得 nghĩa là chỉ mong sao, dùng trong khẩu ngữ. 别提多高兴了 nghĩa là vui khỏi phải nói, đừng quên trợ từ ở cuối câu."),
          F(2, "Về phong cách: các cặp như 将屋子 và 把屋子, 反问道 và 反问说, 那便是 và 那就是. Từ trước dùng trong văn viết, từ sau dùng trong khẩu ngữ."),
          F(3, "Về phân biệt từ: 人家 có thể chỉ người vừa nhắc đến, hoặc chính người nói; còn 别人 lúc nào cũng là người khác."),
          F(4, "Về phần mở rộng: khi dùng từ gần nghĩa, phải chú ý phạm vi, mức độ, trọng điểm nghĩa, và sắc thái khen chê."),

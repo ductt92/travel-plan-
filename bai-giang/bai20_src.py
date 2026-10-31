@@ -55,7 +55,7 @@ add("bullets", chapter="Khởi động", section="Khởi động 热身", title=
          F(2, "Đáp án: 鸡窝，母鸡，鸡仔，找食，跟随."),
          F(3, "Cả đoạn là: 鸡窝旁的草地上，一只母鸡正带着一群小鸡仔四处找食吃，那些小鸡跟随妈妈走来走去，可爱极了。 Trên bãi cỏ cạnh ổ gà, một con gà mái đang dẫn một đàn gà con đi kiếm ăn khắp nơi, lũ gà con theo mẹ đi tới đi lui, đáng yêu vô cùng. Hình ảnh này sẽ xuất hiện ngay trong bài khóa đấy.")])
 
-add("bullets", section="Khởi động 热身", title="Khởi động 2: Học từ theo yếu tố cấu tạo: 得 và 远", size=38,
+add("bullets", section="Khởi động 热身", title="Khởi động 2: Học từ theo yếu tố cấu tạo: 得 và 远", size=35,
     items=["## 得 (đắc, dé): được, đạt được",
            "得知 được biết · 得到 nhận được · 得分 ghi điểm · 得力 đắc lực · 得空 rảnh rỗi · 得救 được cứu · 得胜 thắng lợi",
            "得闲 có thời gian rảnh · 难得 hiếm có · 取得 giành được · 获得 thu được · 赢得 giành được · 求之不得 cầu còn không được · 一举两得 một công đôi việc",
@@ -70,7 +70,7 @@ add("bullets", section="Khởi động 热身", title="Khởi động 2: Học t
          F(4, "久远，长远，深远，遥远，永远，远古，远见。 Tức là: xa xưa, lâu dài, sâu xa, xa xôi, mãi mãi, thời thượng cổ, và tầm nhìn xa. Từ 久远 cũng có trong câu bài khóa vừa nhắc."),
          F(5, "源远流长，为期不远。 Tức là: nguồn xa dòng dài, chỉ truyền thống lâu đời; và chẳng còn bao lâu nữa.")])
 
-add("bullets", section="Khởi động 热身", title="Khởi động 2: Học từ theo yếu tố cấu tạo: 金 và 壮", size=38,
+add("bullets", section="Khởi động 热身", title="Khởi động 2: Học từ theo yếu tố cấu tạo: 金 và 壮", size=35,
     items=["## 金 (kim): vàng, kim loại; tiền bạc",
            "金子 vàng · 金矿 mỏ vàng · 金块 cục vàng · 金条 thỏi vàng · 黄金 hoàng kim · 纯金 vàng ròng · 金钱 tiền bạc · 美金 đô la Mỹ",
            "资金 vốn · 礼金 tiền mừng · 租金 tiền thuê · 押金 tiền đặt cọc · 奖金 tiền thưởng · 现金 tiền mặt · 金融 tài chính",
@@ -510,9 +510,8 @@ add("bullets", section="Mở rộng 扩展", title="Mở rộng 扩展: nhìn tr
          F(6, "Từ thứ tám: 火焰, Hán Việt là hỏa diễm, nghĩa là ngọn lửa."),
          F(7, "Lượng từ là 团: 一团火焰, một ngọn lửa. Ví dụ: 红色的火焰让人感觉很温暖。 Ngọn lửa đỏ khiến người ta cảm thấy thật ấm áp.")])
 
-add("bullets", section="Mở rộng 扩展", title="Luyện tập: chọn danh từ điền vào chỗ trống (1)", reveal=True, size=36,
-    items=["## Từ cho sẵn: 皮革 · 钻石 · 哨 · 启事",
-           "(1) 比赛开始了，裁判员吹响了___。",
+add("bullets", section="Mở rộng 扩展", title="Luyện tập (1): điền 皮革 · 钻石 · 哨 · 启事", reveal=True, size=36,
+    items=[           "(1) 比赛开始了，裁判员吹响了___。",
            "Đáp án: 哨",
            "(2) 他的钱包丢了，就在学校门口贴了一张寻物___。",
            "Đáp án: 启事",
@@ -529,9 +528,8 @@ add("bullets", section="Mở rộng 扩展", title="Luyện tập: chọn danh t
          F(6, "Đáp án: 钻石. 一颗很大的钻石, một viên kim cương rất to. Lượng từ 颗 là gợi ý quan trọng."),
          F(7, "Câu bốn: 这个包是用真什么做的，所以很贵。 Chiếc túi này làm bằng thứ thật, nên rất đắt. Đáp án: 皮革. 真皮革, da thật.")])
 
-add("bullets", section="Mở rộng 扩展", title="Luyện tập: chọn danh từ điền vào chỗ trống (2)", reveal=True, size=36,
-    items=["## Từ cho sẵn: 油漆 · 炊烟 · 证书 · 火焰",
-           "(5) 墙上的___刚刷过，请不要用手摸。",
+add("bullets", section="Mở rộng 扩展", title="Luyện tập (2): điền 油漆 · 炊烟 · 证书 · 火焰", reveal=True, size=36,
+    items=[           "(5) 墙上的___刚刷过，请不要用手摸。",
            "Đáp án: 油漆",
            "(6) 太阳落山了，村子里升起了一缕缕___。",
            "Đáp án: 炊烟",
@@ -607,18 +605,30 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ 
          F(2, "Đáp án: 掉进了一个大坑，膝盖摔破了，手也被扎破了，还算侥幸，一瘸一拐地走回了家。 Tối thứ hai tuần trước, tôi đạp xe về nhà, không cẩn thận rơi xuống một cái hố lớn, bò dậy nhìn thì ra là hố của người trồng cây gần đó đào. Đầu gối bị trầy, tay cũng bị đâm rách, máu chảy ròng ròng, cũng còn may là xương không sao. Tôi đành dắt xe đạp tập tễnh đi về nhà."),
          "Các bạn thấy không, đoạn văn này dùng lại rất nhiều từ của bài khóa: 坑，膝盖，侥幸，一瘸一拐. Giống như cụ ba trong truyện vậy."])
 
-add("bullets", section="Luyện tập 练习", title="Bài tập 4: Chọn vị trí thích hợp cho từ trong ngoặc", reveal=True, size=34,
-    items=["(1) A晴天，B你出门时C干吗要D带把雨伞呢？（大） → Đáp án: A",
-           "(2) 与其A一个人生气，B不如C找个朋友D说出来更好。（倒） → Đáp án: B",
-           "(3) A父亲年龄大了，B身体也不好，C我不放心D他一个人去旅行。（况且） → Đáp án: B",
-           "(4) 他A自己吃点儿亏，B也不愿C让朋友D吃亏。（宁肯） → Đáp án: A",
-           "(5) 他A朝你这个方向B走来的，C你怎么D没看见他呢？（分明） → Đáp án: A"],
+add("bullets", section="Luyện tập 练习", title="Bài tập 4: Chọn vị trí thích hợp cho từ trong ngoặc (1)", reveal=True, size=36,
+    items=["(1) A晴天，B你出门时C干吗要D带把雨伞呢？（大）",
+           "Đáp án: A – 大晴天，你出门时干吗要带把雨伞呢？",
+           "(2) 与其A一个人生气，B不如C找个朋友D说出来更好。（倒）",
+           "Đáp án: B – 与其一个人生气，倒不如找个朋友说出来更好。",
+           "(3) A父亲年龄大了，B身体也不好，C我不放心D他一个人去旅行。（况且）",
+           "Đáp án: B – 父亲年龄大了，况且身体也不好，我不放心他一个人去旅行。"],
     say=["Bài tập bốn: chọn vị trí thích hợp cho từ trong ngoặc. Thầy đọc từng câu, các bạn tạm dừng để chọn, rồi nghe đáp án nhé.",
-         F(0, "Câu một, từ 大: 晴天，你出门时干吗要带把雨伞呢？ Đáp án: A. 大晴天，你出门时干吗要带把雨伞呢？ Trời nắng chang chang, ra ngoài mang ô làm gì? Đây là cách dùng 大 nhấn mạnh thời điểm."),
-         F(1, "Câu hai, từ 倒: 与其一个人生气，不如找个朋友说出来更好。 Đáp án: B. 与其一个人生气，倒不如找个朋友说出来更好。 Thay vì một mình bực bội, chi bằng tìm một người bạn nói ra cho nhẹ lòng."),
-         F(2, "Câu ba, từ 况且: 父亲年龄大了，身体也不好，我不放心他一个人去旅行。 Đáp án: B. 父亲年龄大了，况且身体也不好，我不放心他一个人去旅行。 Bố đã có tuổi, hơn nữa sức khỏe lại không tốt, tôi không yên tâm để ông đi du lịch một mình."),
-         F(3, "Câu bốn, từ 宁肯: 他自己吃点儿亏，也不愿让朋友吃亏。 Đáp án: A. 他宁肯自己吃点儿亏，也不愿让朋友吃亏。 Anh ấy thà mình chịu thiệt một chút, chứ không muốn để bạn bè chịu thiệt. Đây là mẫu 宁肯……也不……."),
-         F(4, "Câu năm, từ 分明: 他朝你这个方向走来的，你怎么没看见他呢？ Đáp án: A. 他分明朝你这个方向走来的，你怎么没看见他呢？ Rõ ràng là anh ấy đi về phía cậu, sao cậu lại không nhìn thấy?")])
+         F(0, "Câu một, điền 大: 晴天，你出门时干吗要带把雨伞呢？ Trời nắng, ra ngoài mang ô làm gì?"),
+         F(1, "Đáp án: A. 大晴天，你出门时干吗要带把雨伞呢？ Trời nắng chang chang thế này, ra ngoài mang ô làm gì? Đây là cách dùng 大 nhấn mạnh thời điểm."),
+         F(2, "Câu hai, cần điền chữ đầu của cụm 倒不如: 与其一个人生气，不如找个朋友说出来更好。 Thay vì một mình bực bội, chẳng bằng tìm một người bạn nói ra."),
+         F(3, "Đáp án: B. 与其一个人生气，倒不如找个朋友说出来更好。 Thay vì một mình bực bội, chi bằng tìm một người bạn mà tâm sự cho nhẹ lòng. Đây là mẫu 与其A，倒不如B."),
+         F(4, "Câu ba, điền 况且: 父亲年龄大了，身体也不好，我不放心他一个人去旅行。 Bố đã có tuổi, sức khỏe lại không tốt, tôi không yên tâm để ông đi du lịch một mình."),
+         F(5, "Đáp án: B. 父亲年龄大了，况且身体也不好，我不放心他一个人去旅行。 Bố đã có tuổi, hơn nữa sức khỏe lại không tốt. 况且 đứng đầu lý do thứ hai, và vế này có chữ 也.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 4: Chọn vị trí thích hợp cho từ trong ngoặc (2)", reveal=True, size=36,
+    items=["(4) 他A自己吃点儿亏，B也不愿C让朋友D吃亏。（宁肯）",
+           "Đáp án: A – 他宁肯自己吃点儿亏，也不愿让朋友吃亏。",
+           "(5) 他A朝你这个方向B走来的，C你怎么D没看见他呢？（分明）",
+           "Đáp án: A – 他分明朝你这个方向走来的，你怎么没看见他呢？"],
+    say=[F(0, "Câu bốn, điền 宁肯: 他自己吃点儿亏，也不愿让朋友吃亏。 Anh ấy tự mình chịu thiệt một chút, cũng không muốn để bạn bè chịu thiệt."),
+         F(1, "Đáp án: A. 他宁肯自己吃点儿亏，也不愿让朋友吃亏。 Anh ấy thà mình chịu thiệt một chút, chứ không muốn để bạn bè chịu thiệt. Đây là mẫu 宁肯……也不……."),
+         F(2, "Câu năm, điền 分明: 他朝你这个方向走来的，你怎么没看见他呢？ Anh ấy đi về phía cậu, sao cậu không nhìn thấy?"),
+         F(3, "Đáp án: A. 他分明朝你这个方向走来的，你怎么没看见他呢？ Rõ ràng là anh ấy đi về phía cậu, sao cậu lại không nhìn thấy? Phó từ 分明 đứng sau chủ ngữ, trước cụm giới từ 朝你这个方向.")])
 
 # ======================= TỔNG KẾT =======================
 add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng kết", title="Tổng kết bài 20", size=36,
@@ -650,7 +660,7 @@ lesson = {
                     "干草": "甘草",            # gāncǎo
                     "砸中": "砸众",            # zázhòng
                     "当拐杖": "荡拐杖",        # dàng
-                    "下不了": "下不瞭",        # xià bu liǎo
+                    "下不了": "下不蓼",        # xià bu liǎo
                     "宁肯": "佞肯",            # nìngkěn
                     "宁愿": "佞愿",            # nìngyuàn
                     "宁可": "佞可",            # nìngkě
@@ -674,7 +684,8 @@ lesson = {
                     "心脏": "心葬",            # xīnzàng
                     "不禁": "不今",            # bùjīn
                     "摔倒": "摔岛",            # shuāidǎo
-                    "琢磨": "昨磨"},           # zuómo
+                    "琢磨": "昨磨",             # zuómo
+                    "颇为": "颇维"},           # pōwéi
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai20.json")

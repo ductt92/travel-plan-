@@ -212,7 +212,7 @@ for g in range(0, len(V), 3):
         n = g + i + 1
         words.append({"zh": zh, "py": py, "hv": hv.upper(), "loai": f"{n}. {loai}", "vi": vi, "ex": ex, "exvi": exvi})
         say.append(F(i, f"Từ số {n}: {zh}。 {zh}。 Hán Việt là {hv}.", zr=120))
-        say.append(F(i, f"{expl} Ví dụ: {ex} {exvi[0].upper() + exvi[1:]}{'' if exvi.endswith('.') else '.'}", zr=130))
+        say.append(F(i, f"{expl} Ví dụ: {ex}{'' if ex[-1] in '。…' else '，'} {exvi[0].upper() + exvi[1:]}{'' if exvi.endswith('.') else '.'}", zr=130))
     add("vocab", section="Từ mới 生词", title=f"Từ mới ({g + 1}–{g + len(group)} / {len(V)})",
         words=words, say=say)
 
@@ -280,7 +280,7 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
          F(2, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
 
 for i, (zh, vi, notes) in enumerate(P, 1):
-    zsize = 48 if len(zh) <= 110 else 44
+    zsize = 54 if len(zh) <= 100 else 50
     add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
         say=[F(0, zh, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
              F(1, "Dịch nghĩa: " + vi, cap="")] + [F(1, n) for n in notes])
@@ -365,16 +365,16 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: hoàn thành 
 add("compare", chapter="Phân biệt 不免 – 未免", section="Phân biệt từ 词语辨析", title="Phân biệt 不免 và 未免",
     common="Giống nhau: đều là phó từ, đều có nghĩa “khó tránh khỏi”. Ví dụ: 这样教学，不免/未免误人子弟。",
     cols=[{"head": "不免",
-           "lines": ["① Khách quan: có nguyên nhân nên tự nhiên dẫn đến kết quả – phía trước phải nêu nguyên nhân",
+           "lines": ["(1) Khách quan: có nguyên nhân nên tự nhiên dẫn đến kết quả – phía trước phải nêu nguyên nhân",
                      "Sai: 他不免会犯错误。",
                      "Đúng: 他刚参加工作，不免会犯错误。",
-                     "② Chỉ đi với dạng khẳng định",
+                     "(2) Chỉ đi với dạng khẳng định",
                      "Đúng: 他这样说，人家不免会生气。",
                      "Sai: 他这样说，人家不免不高兴。"]},
           {"head": "未免",
-           "lines": ["① Chủ quan: đánh giá, phê bình, “không thể không nói là…” – không cần nêu nguyên nhân",
+           "lines": ["(1) Chủ quan: đánh giá, phê bình, “không thể không nói là…” – không cần nêu nguyên nhân",
                      "Đúng: 你这么做，未免太过分。",
-                     "② Đi được cả dạng khẳng định và phủ định",
+                     "(2) Đi được cả dạng khẳng định và phủ định",
                      "Đúng: 你现在才来，未免太晚了。",
                      "Đúng: 他这样对待客人，未免不礼貌。"]}],
     say=["Tiếp theo là phần phân biệt từ: 不免 và 未免. Hai từ này trông rất giống nhau, nên học sinh hay nhầm.",
@@ -387,13 +387,13 @@ add("compare", chapter="Phân biệt 不免 – 未免", section="Phân biệt t
          "Mẹo nhớ: 不免 là kết quả tự nhiên, khó tránh khỏi; 未免 là lời phê bình, thường đi với 太, 过于, 有点儿, mang nghĩa thật là hơi quá."])
 
 add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: Đúng hay sai?", reveal=True, size=38,
-    items=["① 旧地重游，感慨万千，让人不免想起往事。",
+    items=["(1) 旧地重游，感慨万千，让人不免想起往事。",
            "Đáp án: ĐÚNG – có nguyên nhân (thăm lại chốn cũ), kết quả tự nhiên.",
-           "② 真是的，他未免太不会关心人了，干脆分手算了。",
+           "(2) 真是的，他未免太不会关心人了，干脆分手算了。",
            "Đáp án: ĐÚNG – đây là lời phê bình, đánh giá.",
-           "③ 星期天，我不免有些闷闷不乐。",
+           "(3) 星期天，我不免有些闷闷不乐。",
            "Đáp án: SAI – thiếu nguyên nhân. Sửa: 星期天一个人在家，我不免有些闷闷不乐。",
-           "④ 听到老师表扬他，他未免高兴起来，手舞足蹈的。",
+           "(4) 听到老师表扬他，他未免高兴起来，手舞足蹈的。",
            "Đáp án: SAI – là kết quả tự nhiên, không phải phê bình. Sửa: 他不免高兴起来。"],
     say=[F(0, "Bây giờ chúng ta làm thử. Câu một: 旧地重游，感慨万千，让人不免想起往事。 Thăm lại chốn cũ, bao cảm xúc dâng trào, khiến người ta không khỏi nhớ lại chuyện xưa. Đúng hay sai? Các bạn suy nghĩ nhé."),
          F(1, "Đáp án: đúng. Có nguyên nhân là thăm lại chốn cũ, và kết quả tự nhiên là nhớ chuyện xưa, nên dùng 不免 là hợp lý."),
@@ -447,13 +447,13 @@ add("bullets", chapter="Luyện tập", section="Luyện tập 练习", title="B
          F(4, "装卸, có 装修，装备，装饰，装载. Tức là trang trí nội thất, trang bị, trang sức hay trang trí, và chất hàng lên xe.")])
 
 add("bullets", section="Luyện tập 练习", title="Bài tập 2: Viết lại câu bằng từ cho sẵn", reveal=True, size=36,
-    items=["① 最近几十年，世界人口快速增加，给地球造成了巨大压力。（急剧）",
+    items=["(1) 最近几十年，世界人口快速增加，给地球造成了巨大压力。（急剧）",
            "Đáp án: 最近几十年，世界人口急剧增加，给地球造成了巨大压力。",
-           "② 为了不耽误第二天的考试，他前一天晚上定好了闹钟。（以免）",
+           "(2) 为了不耽误第二天的考试，他前一天晚上定好了闹钟。（以免）",
            "Đáp án: 他前一天晚上定好了闹钟，以免耽误第二天的考试。",
-           "③ 我觉得食堂的饭菜太油腻，所以自己动手做饭。（嫌）",
+           "(3) 我觉得食堂的饭菜太油腻，所以自己动手做饭。（嫌）",
            "Đáp án: 我嫌食堂的饭菜太油腻，所以自己动手做饭。",
-           "④ 今天的会议上，总经理重点强调了以下几个问题。（着重）",
+           "(4) 今天的会议上，总经理重点强调了以下几个问题。（着重）",
            "Đáp án: 今天的会议上，总经理着重强调了以下几个问题。"],
     say=[F(0, "Bài tập hai: viết lại câu bằng từ cho sẵn. Câu một, dùng từ 急剧: 最近几十年，世界人口快速增加，给地球造成了巨大压力。"),
          F(1, "Đáp án: thay 快速 bằng 急剧: 世界人口急剧增加. Mấy chục năm gần đây dân số thế giới tăng nhanh chóng, gây áp lực rất lớn cho trái đất."),
@@ -478,14 +478,14 @@ add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng k�
          F(2, "Về phân biệt từ: 不免 là kết quả tự nhiên, khách quan, cần nêu nguyên nhân. 未免 là lời đánh giá, phê bình chủ quan."),
          F(3, "Về kỹ năng viết: khi các vế câu có cùng chủ ngữ, hãy tỉnh lược để câu văn gọn gàng."),
          F(5, "Bài tập về nhà: các bạn hãy tóm tắt bài khóa thành một đoạn văn khoảng ba trăm năm mươi chữ. Hãy dùng bố cục năm đặc điểm mà thầy đã tổng kết, và áp dụng cách tỉnh lược chủ ngữ."),
-         "Cảm ơn các bạn đã theo dõi bài giảng. Hẹn gặp lại các bạn ở bài hai mươi hai: 2050年的汽车什么样, Ô tô năm hai không năm mươi sẽ như thế nào. Chúc các bạn học tốt!"])
+         "Cảm ơn các bạn đã theo dõi bài giảng. Hẹn gặp lại các bạn ở bài hai mươi hai: 二零五零年的汽车什么样, Ô tô năm hai không năm mươi sẽ như thế nào. Chúc các bạn học tốt!"])
 
 lesson = {
     "title": "HSK 6 (Hạ) – Bài 21: 未来商店 (Cửa hàng tương lai)",
     "tag": TAG,
     "vi_voice": "Linh", "zh_voice": "Tingting", "vi_rate": 175, "zh_rate": 145,
     # sửa âm đọc của giọng máy cho các chữ đa âm
-    "tts_replace": {"着重": "酌重", "中意": "众意", "不复还": "不复环", "2050年": "二零五零年"},
+    "tts_replace": {"着重": "酌重", "中意": "众意", "不复还": "不复环"},
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai21.json")

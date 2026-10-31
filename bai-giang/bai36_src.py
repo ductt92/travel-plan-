@@ -255,7 +255,7 @@ P = [
       "《学规》 là học quy, tức nội quy học tập của thư viện. Mẫu 重视……，更重视…… là coi trọng…, càng coi trọng… hơn, dùng để nhấn mạnh vế sau. Câu đầu tiên là luận điểm, phần sau sẽ là dẫn chứng."]),
     ("比如，丽泽书院《学规》第一条大意是：凡是本书院的学子，都要孝顺长辈，敬爱兄长，为人忠诚，守信用。",
      "Ví dụ, đại ý điều thứ nhất trong Học quy của Lệ Trạch thư viện là: phàm là học trò của thư viện này, đều phải hiếu thuận với bậc bề trên, kính yêu anh trưởng, sống trung thực, giữ chữ tín.",
-     ["凡是……都…… là phàm là…, hễ là… đều…. 学子 là học trò, cách nói văn viết. 大意 là đại ý.",
+     ["凡是 nghĩa là phàm là, hễ là, vế sau thường có 都要 hoặc 都会 đi kèm. 学子 là học trò, cách nói văn viết. 大意 là đại ý.",
       "孝顺长辈 là hiếu thuận với bề trên, 敬爱兄长 là kính yêu anh trưởng, 为人忠诚 là làm người trung thực. Chú ý: trong 为人, chữ đầu đọc là wéi, thanh hai, nghĩa là làm người, cách cư xử."]),
     ("不顺从长辈，和兄弟不友善，与人不和睦，对朋友不忠诚，言行不一，擅以虚伪的言辞掩饰过失的无耻之徒，一经发现，本书院定不容纳。",
      "Những kẻ vô liêm sỉ không vâng lời bề trên, không thân thiện với anh em, không hòa thuận với người khác, không trung thực với bạn bè, nói một đằng làm một nẻo, quen dùng lời lẽ giả dối để che đậy lỗi lầm, hễ bị phát hiện, thư viện này nhất định không dung nạp.",
@@ -296,7 +296,7 @@ P = [
     ("其四，鼓励师生之间相互质疑，形成探讨争辩、求真求实的学习风气。另外，重视观点的多元化，开展不同观点的论辩、交流，也是书院提倡的。",
      "Thứ tư, khuyến khích thầy trò chất vấn lẫn nhau, hình thành phong khí học tập thảo luận tranh biện, tìm chân lý và sự thật. Ngoài ra, coi trọng sự đa dạng của quan điểm, tổ chức tranh luận, giao lưu giữa các quan điểm khác nhau, cũng là điều thư viện đề cao.",
      ["质疑 là chất vấn, đặt nghi vấn. 求真求实 là tìm cái thật, cầu sự thực. 风气 là phong khí, nếp chung.",
-      "Câu sau có cấu trúc ……，也是书院提倡的, nghĩa là… cũng là điều mà thư viện đề cao. Cấu trúc 是……的 đưa phần nhận xét ra cuối câu."]),
+      "Câu sau có cấu trúc ……，也是书院提倡的, nghĩa là… cũng là điều mà thư viện đề cao. Cách nói này đưa phần nhận xét ra cuối câu để nhấn mạnh."]),
     ("观点对立、有分歧不要紧，开放、保守也无关紧要，书院主张不同学派、不同主张之间的争辩与较量，为此书院设立了讲演辩论制度，类似今天的“论坛”。",
      "Quan điểm đối lập, có bất đồng cũng không sao, cởi mở hay bảo thủ cũng chẳng quan trọng; thư viện chủ trương tranh biện và so tài giữa các học phái, các chủ trương khác nhau; vì thế thư viện đã lập ra chế độ diễn thuyết và tranh luận, giống như diễn đàn ngày nay.",
      ["不要紧 và 无关紧要 đều nghĩa là không sao, không quan trọng. Tác giả dùng hai cách nói khác nhau để tránh lặp từ.",
@@ -656,7 +656,8 @@ lesson = {
                     "调小": "条小",              # tiáoxiǎo
                     "处于": "楚于",              # chǔyú
                     "干涉": "甘涉",              # gānshè
-                    "干一番": "赣一番"},         # gàn
+                    "干一番": "赣一番",          # gàn
+                    "中毒": "众毒"},            # zhòngdú
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai36.json")

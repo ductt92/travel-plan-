@@ -21,9 +21,9 @@ def F(i, t, **kw):
 # ======================= MỞ ĐẦU =======================
 add("title", chapter="Mở đầu",
     top="顶石中文 – Đỉnh cao tiếng Trung",
-    zh="高通：打官司打出的“江山”", py="Gāotōng: dǎ guānsi dǎ chū de “jiāngshān”",
+    zh="高通", py="打官司打出的“江山”",
     vi="Bài 8.2: Qualcomm: “giang sơn” dựng nên từ kiện tụng",
-    sub="Bài giảng chi tiết bằng tiếng Việt",
+    sub="Gāotōng: dǎ guānsi dǎ chū de “jiāngshān”\nBài giảng chi tiết bằng tiếng Việt",
     say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng giáo trình 顶石中文, Đỉnh cao tiếng Trung.",
          {"t": "Hôm nay chúng ta học bài thứ hai của Đơn vị tám, chủ đề Pháp luật: bài tám chấm hai, 高通：打官司打出的江山。 Nghĩa là: Qualcomm, giang sơn dựng nên từ kiện tụng.",
           "cap": "Hôm nay chúng ta học bài thứ hai của Đơn vị 8, chủ đề Pháp luật: bài 8.2, 高通：打官司打出的“江山”。 Nghĩa là: Qualcomm, “giang sơn” dựng nên từ kiện tụng."},
@@ -110,7 +110,7 @@ V = [
      "Danh từ. 霸王 là bá vương, kẻ ngang ngược. 霸王条款 là điều khoản do một bên tự đặt ra, hạn chế hoặc xâm hại quyền lợi người tiêu dùng, đối tác, như câu hàng đã bán miễn đổi trả rất quen thuộc."),
     ("下游", "xiàyóu", "hạ du", "danh từ", "hạ lưu; khâu hạ nguồn (của chuỗi ngành)", "芯片涨价，下游的手机厂商压力很大。", "Chip tăng giá, các hãng điện thoại ở khâu hạ nguồn chịu áp lực rất lớn.",
      "Danh từ, nghĩa gốc là hạ lưu của con sông; trong kinh tế là khâu cuối của chuỗi ngành. Trái nghĩa là 上游, thượng nguồn. Qualcomm ở thượng nguồn, các hãng điện thoại ở hạ nguồn."),
-    ("高额", "gāo'é", "cao ngạch", "tính từ", "(số tiền) cao, lớn", "他为这次比赛拿到了高额奖金。", "Anh ấy nhận được khoản tiền thưởng lớn trong cuộc thi này.",
+    ("高额", "gāo'é", "cao ngạch", "tính từ", "(số tiền) cao, lớn", "他在这次比赛中拿到了高额奖金。", "Anh ấy nhận được khoản tiền thưởng lớn trong cuộc thi này.",
      "Tính từ thuộc tính, chỉ đứng trước danh từ chỉ tiền: 高额利润，高额奖金，高额专利许可费. Chữ 额 là định mức, như trong 金额, số tiền."),
     ("业内", "yènèi", "nghiệp nội", "danh từ", "trong ngành", "业内人士认为，房价还会继续上涨。", "Người trong ngành cho rằng giá nhà sẽ còn tiếp tục tăng.",
      "Danh từ, nghĩa là trong phạm vi một ngành nghề. Cụm hay gặp nhất là 业内人士, người trong ngành, rất phổ biến trên báo chí."),
@@ -139,7 +139,7 @@ V = [
     ("立案", "lì'àn", "lập án", "động từ", "lập hồ sơ vụ án, thụ lý", "警方已对此事立案调查。", "Cảnh sát đã lập án điều tra việc này.",
      "Động từ li hợp, nghĩa là lập hồ sơ một vụ việc để điều tra, xét xử. Hay gặp 立案调查, 立案侦查. Trong bài: 发改委对高通公司采取反垄断立案调查."),
     ("路数", "lùshù", "lộ số", "danh từ", "cách thức, đường đi nước bước", "他做生意的路数跟别人不一样。", "Cách làm ăn của anh ấy khác người khác.",
-     "Danh từ, nghĩa là phương pháp, cách làm, chiêu thức. Trong bài: 高通公司从来玩的都là控制专利权与出卖行业技术标准的路数, chiêu thức của Qualcomm xưa nay là kiểm soát bằng sáng chế và bán tiêu chuẩn công nghệ của ngành."),
+     "Danh từ, nghĩa là phương pháp, cách làm, chiêu thức. Trong bài: 高通公司从来玩的都是控制专利权与出卖行业技术标准的路数, chiêu thức của Qualcomm xưa nay là kiểm soát bằng sáng chế và bán tiêu chuẩn công nghệ của ngành."),
     ("玩转", "wánzhuǎn", "ngoạn chuyển", "động từ", "chơi thạo, làm chủ, thành thạo", "我奶奶七十岁了，却能玩转智能手机。", "Bà tôi bảy mươi tuổi rồi mà vẫn dùng thạo điện thoại thông minh.",
      "Động từ, nghĩa là chơi giỏi, làm chủ hoàn toàn một việc gì đó. Rất hay gặp trong quảng cáo, như 玩转南京, khám phá trọn Nam Kinh. Trong bài: 要玩转这个模式, muốn vận hành trơn tru mô hình này."),
     ("扯皮", "chěpí", "xả bì", "động từ", "cãi cọ dây dưa, đùn đẩy", "两个部门互相扯皮，问题一直没有解决。", "Hai bộ phận đùn đẩy cho nhau, vấn đề mãi không được giải quyết.",
@@ -250,15 +250,23 @@ P = [
      "Chiêu thức Qualcomm xưa nay vẫn chơi là kiểm soát quyền sáng chế và bán các tiêu chuẩn công nghệ của ngành. Muốn vận hành trơn tru mô hình này, phải có hai bản lĩnh: ngoài tài đổi mới công nghệ phi thường, còn phải có khả năng kiện tụng “cãi lý dây dưa” không ai sánh bằng. Qualcomm từ lâu đã trăm trận dày dạn, trình độ công nghệ và bản lĩnh kiện tụng của nó tuyệt đối không thể xem thường.",
      ["路数 là chiêu thức. 出卖行业技术标准 là bán tiêu chuẩn công nghệ của ngành: công nghệ của Qualcomm trở thành tiêu chuẩn chung, ai cũng phải mua. 玩转 là vận hành thành thạo. 本领 và 本事 đều là bản lĩnh, tài năng.",
       "了不起 là phi thường. 无与伦比 là không gì sánh bằng. 扯皮 là cãi lý dây dưa. 身经百战 là thân trải trăm trận. 其 là của nó. 不容小觑 là không thể xem thường; 觑 đọc qù, là nhìn."]),
-    ("但要知道，中国市场占据高通营收及利润的半壁江山。而在当前中国高度强调“科技自主创新”的市场环境下，高通最担心的问题是遭遇更严厉的监管壁垒。两害相权取其轻，高通这才转变了应对策略，乖乖认罚。历时一年有余的高通反垄断案，中国发改委对其开出了中国反垄断历史上金额最大的罚单60.88亿元，并责令其全面整改。",
-     "Nhưng phải biết rằng, thị trường Trung Quốc chiếm tới một nửa doanh thu và lợi nhuận của Qualcomm. Mà trong môi trường thị trường hiện nay, khi Trung Quốc hết sức coi trọng “tự chủ đổi mới khoa học công nghệ”, điều Qualcomm lo nhất là gặp phải rào cản quản lý nghiêm ngặt hơn. Giữa hai cái hại thì chọn cái nhẹ hơn, Qualcomm lúc ấy mới thay đổi chiến lược ứng phó, ngoan ngoãn chịu phạt. Vụ án chống độc quyền với Qualcomm kéo dài hơn một năm, Ủy ban Phát triển và Cải cách Quốc gia đã ra mức phạt 6,088 tỷ tệ, lớn nhất trong lịch sử chống độc quyền của Trung Quốc, đồng thời buộc Qualcomm khắc phục toàn diện.",
-     ["营收及利润 là doanh thu và lợi nhuận. 半壁江山 là nửa giang sơn, tức một nửa. 自主创新 là tự chủ đổi mới. 监管壁垒 là rào cản về quản lý. 两害相权取其轻 là cân nhắc hai cái hại thì chọn cái nhẹ hơn: chịu phạt còn hơn mất cả thị trường Trung Quốc.",
-      "这才 là đến lúc ấy mới. 应对策略 là chiến lược ứng phó. 乖乖认罚 là ngoan ngoãn chịu phạt. 历时一年有余 là kéo dài hơn một năm. 六十点八八亿元 là sáu tỷ không trăm tám mươi tám triệu tệ, khoảng chín trăm bảy mươi lăm triệu đô la Mỹ, công bố tháng hai năm hai nghìn không trăm mười lăm. 责令其全面整改 là buộc Qualcomm khắc phục toàn diện."],
-     "但要知道，中国市场占据高通营收及利润的半壁江山。而在当前中国高度强调科技自主创新的市场环境下，高通最担心的问题是遭遇更严厉的监管壁垒。两害相权取其轻，高通这才转变了应对策略，乖乖认罚。历时一年有余的高通反垄断案，中国发改委对其开出了中国反垄断历史上金额最大的罚单六十点八八亿元，并责令其全面整改。"),
-    ("然而反垄断案并没有给高通带来什么实质性的影响，顶多就是敲山震虎，高通还是用合理的价格实现了其利益的合法化。即使整改之后，小企业仍摆脱不了“被欺负”的命运。因为中小企业能力有限，新合同根本看不懂，聘用能看懂合同还能谈判的律师费用可能根本无法覆盖省下来的费用，所以很多企业选择忍气吞声接受不平等的条款继续签约。",
-     "Thế nhưng vụ án chống độc quyền không hề gây ảnh hưởng thực chất nào cho Qualcomm, cùng lắm chỉ là gõ núi dọa hổ; Qualcomm vẫn dùng mức giá hợp lý để hợp pháp hóa lợi ích của mình. Kể cả sau khi khắc phục, các doanh nghiệp nhỏ vẫn không thoát khỏi số phận “bị bắt nạt”. Vì năng lực của doanh nghiệp vừa và nhỏ có hạn, hợp đồng mới căn bản không đọc hiểu nổi, còn chi phí thuê luật sư vừa đọc hiểu hợp đồng vừa biết đàm phán có khi hoàn toàn không bù nổi khoản tiền tiết kiệm được, nên nhiều doanh nghiệp chọn nhịn nhục chấp nhận điều khoản bất bình đẳng mà tiếp tục ký hợp đồng.",
-     ["实质性的影响 là ảnh hưởng thực chất. 顶多 là cùng lắm, mẫu câu trọng điểm. 敲山震虎 là gõ núi dọa hổ, tức răn đe. 合法化 là hợp pháp hóa: sau vụ phạt, Qualcomm hạ phí một chút, nhưng cách thu phí của nó lại thành hợp pháp.",
-      "摆脱命运 là thoát khỏi số phận. 中小企业 là doanh nghiệp vừa và nhỏ. 聘用律师 là thuê luật sư. 覆盖 ở đây là bù đắp: tiền thuê luật sư còn nhiều hơn tiền tiết kiệm được. 忍气吞声 là nhịn nhục, nuốt giận. 签约 là ký hợp đồng."]),
+    ("但要知道，中国市场占据高通营收及利润的半壁江山。而在当前中国高度强调“科技自主创新”的市场环境下，高通最担心的问题是遭遇更严厉的监管壁垒。两害相权取其轻，高通这才转变了应对策略，乖乖认罚。",
+     "Nhưng phải biết rằng, thị trường Trung Quốc chiếm tới một nửa doanh thu và lợi nhuận của Qualcomm. Mà trong môi trường thị trường hiện nay, khi Trung Quốc hết sức coi trọng “tự chủ đổi mới khoa học công nghệ”, điều Qualcomm lo nhất là gặp phải rào cản quản lý nghiêm ngặt hơn. Giữa hai cái hại thì chọn cái nhẹ hơn, Qualcomm lúc ấy mới thay đổi chiến lược ứng phó, ngoan ngoãn chịu phạt.",
+     ["营收及利润 là doanh thu và lợi nhuận. 半壁江山 là nửa giang sơn, tức một nửa. 自主创新 là tự chủ đổi mới. 监管壁垒 là rào cản về quản lý; 壁垒 là bức tường thành.",
+      "两害相权取其轻 là cân nhắc hai cái hại thì chọn cái nhẹ hơn: chịu phạt còn hơn mất cả thị trường Trung Quốc. 这才 là đến lúc ấy mới. 应对策略 là chiến lược ứng phó. 乖乖认罚 là ngoan ngoãn chịu phạt."]),
+    ("历时一年有余的高通反垄断案，中国发改委对其开出了中国反垄断历史上金额最大的罚单60.88亿元，并责令其全面整改。",
+     "Vụ án chống độc quyền với Qualcomm kéo dài hơn một năm, Ủy ban Phát triển và Cải cách Quốc gia Trung Quốc đã ra quyết định phạt 6,088 tỷ tệ, mức phạt lớn nhất trong lịch sử chống độc quyền của Trung Quốc, đồng thời buộc Qualcomm khắc phục toàn diện.",
+     ["历时一年有余 là kéo dài hơn một năm, từ tháng mười một năm hai nghìn không trăm mười ba. 对其开出罚单 là ra quyết định phạt đối với nó; 其 chỉ Qualcomm.",
+      "六十点八八亿元 là sáu tỷ không trăm tám mươi tám triệu tệ, khoảng chín trăm bảy mươi lăm triệu đô la Mỹ, công bố tháng hai năm hai nghìn không trăm mười lăm. 责令其全面整改 là buộc Qualcomm khắc phục toàn diện, chẳng hạn phải tính phí trên một mức giá thấp hơn giá cả chiếc máy."],
+     "历时一年有余的高通反垄断案，中国发改委对其开出了中国反垄断历史上金额最大的罚单六十点八八亿元，并责令其全面整改。"),
+    ("然而反垄断案并没有给高通带来什么实质性的影响，顶多就是敲山震虎，高通还是用合理的价格实现了其利益的合法化。即使整改之后，小企业仍摆脱不了“被欺负”的命运。",
+     "Thế nhưng vụ án chống độc quyền không hề gây ảnh hưởng thực chất nào cho Qualcomm, cùng lắm chỉ là gõ núi dọa hổ; Qualcomm vẫn dùng mức giá hợp lý để hợp pháp hóa lợi ích của mình. Kể cả sau khi khắc phục, các doanh nghiệp nhỏ vẫn không thoát khỏi số phận “bị bắt nạt”.",
+     ["实质性的影响 là ảnh hưởng thực chất. 顶多 là cùng lắm, mẫu câu trọng điểm. 敲山震虎 là gõ núi dọa hổ, tức răn đe.",
+      "合法化 là hợp pháp hóa: sau vụ phạt, Qualcomm hạ phí một chút, nhưng cách thu phí của nó lại trở thành hợp pháp. 即使 là cho dù. 摆脱命运 là thoát khỏi số phận. 欺负 là bắt nạt."]),
+    ("因为中小企业能力有限，新合同根本看不懂，聘用能看懂合同还能谈判的律师费用可能根本无法覆盖省下来的费用，所以很多企业选择忍气吞声接受不平等的条款继续签约。",
+     "Vì năng lực của doanh nghiệp vừa và nhỏ có hạn, hợp đồng mới căn bản không đọc hiểu nổi, còn chi phí thuê luật sư vừa đọc hiểu hợp đồng vừa biết đàm phán có khi hoàn toàn không bù nổi khoản tiền tiết kiệm được, nên nhiều doanh nghiệp chọn nhịn nhục chấp nhận điều khoản bất bình đẳng mà tiếp tục ký hợp đồng.",
+     ["中小企业 là doanh nghiệp vừa và nhỏ. 根本看不懂 là hoàn toàn không đọc hiểu được. 聘用律师 là thuê luật sư. 谈判 là đàm phán.",
+      "覆盖 ở đây là bù đắp: tiền thuê luật sư còn nhiều hơn tiền tiết kiệm được nhờ đàm phán. 省下来的费用 là khoản tiền tiết kiệm được. 忍气吞声 là nhịn nhục, nuốt giận. 签约 là ký hợp đồng."]),
     ("时过境迁，眼下手机芯片产业已经从高通一家独大向“百家争鸣”发展，苹果、三星、华为等厂商纷纷崛起，使得芯片销售利润率迅速下降。作为不生产手机设备的高通公司来说，芯片销售渠道越来越窄，销售价格越来越低，来自资本市场的压力越来越大。",
      "Thời thế đã đổi thay, hiện nay ngành chip điện thoại đã chuyển từ cảnh một mình Qualcomm thống trị sang cảnh “trăm nhà đua tiếng”: Apple, Samsung, Huawei và các hãng khác lần lượt vươn lên, khiến tỷ suất lợi nhuận từ bán chip giảm nhanh chóng. Đối với Qualcomm, một công ty không sản xuất điện thoại, kênh bán chip ngày càng hẹp, giá bán ngày càng thấp, áp lực từ thị trường vốn ngày càng lớn.",
      ["时过境迁 là thời gian trôi qua, hoàn cảnh đổi thay. 眼下 là hiện nay. 一家独大 là một nhà độc chiếm. 百家争鸣 là trăm nhà đua tiếng, vốn chỉ thời Xuân Thu Chiến Quốc, nay chỉ nhiều bên cùng cạnh tranh. Apple, Samsung, Huawei đều đã tự thiết kế chip riêng.",
@@ -276,7 +284,7 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
            "Sau đó: bản dịch tiếng Việt + giải thích từ ngữ, cấu trúc",
            "Mẹo: tạm dừng, đọc to đoạn văn trước khi nghe giảng"],
     say=["Tiếp theo là phần hai: bài khóa. Bài được cải biên từ bài viết cùng tên trên trang 砺石商业评论, Bình luận Thương mại Lệ Thạch, tác giả 金梅. Bài dài khoảng một nghìn bốn trăm chữ, giọng văn bình luận kinh tế, dùng dày đặc thành ngữ.",
-         F(0, "Thầy chia bài thành mười hai đoạn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học."),
+         F(0, "Thầy chia bài thành mười bốn đoạn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học."),
          F(1, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
          F(2, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
 
@@ -294,9 +302,9 @@ add("bullets", chapter="Bố cục & ghi chú", section="Bài khóa 课文", tit
            "吃瓜群众看得不亦乐乎 · 鹬蚌相争，渔翁得利 · tâm lý 微妙: kiện nhưng vẫn muốn hợp tác",
            "## 2. Vì sao Qualcomm kiện tụng triền miên? (đoạn 3–6)",
            "垄断地位 → 霸王条款: thu 5% giá cả máy · 反向授权 · 搭售、捆绑、对过期专利收费",
-           "## 3. Vụ chống độc quyền ở Trung Quốc (đoạn 7–10)",
+           "## 3. Vụ chống độc quyền ở Trung Quốc (đoạn 7–12)",
            "歧视性许可 → 发改委立案调查 → 两害相权取其轻，乖乖认罚 60.88 亿元 → 顶多敲山震虎",
-           "## 4. Thời thế đổi thay (đoạn 11–12)",
+           "## 4. Thời thế đổi thay (đoạn 13–14)",
            "一家独大 → 百家争鸣 · 加之反垄断加强 → 5G时代面临更多挑战"],
     say=["Trước khi sang phần mẫu câu, chúng ta cùng nhìn lại bố cục bài khóa. Đây là một bài bình luận kinh tế, có bốn phần.",
          F(1, "Phần một, mở đầu: cuộc khẩu chiến giữa Qualcomm và Apple khiến cư dân mạng hóng hớt say sưa. Qualcomm kiện Apple, nhưng tâm lý rất tế nhị, vì vẫn muốn tiếp tục bán chip cho Apple."),
@@ -312,14 +320,16 @@ add("bullets", section="Bài khóa 课文", title="Ghi chú 注释 (1): Qualcomm
     say=["Sách có bảy ghi chú. Thầy chia làm hai slide.",
          F(0, "Một: 高通, Qualcomm, thành lập năm một nghìn chín trăm tám mươi lăm, trụ sở ở San Diego, bang California, nước Mỹ, có hơn ba mươi lăm nghìn bốn trăm nhân viên. Mỗi năm công ty dành hai mươi phần trăm doanh thu cho nghiên cứu phát triển; đến đầu năm hai nghìn không trăm hai mươi, tổng vốn đầu tư nghiên cứu đã vượt sáu mươi mốt tỷ đô la Mỹ."),
          F(1, "Hai: 库克, Tim Cook, sinh ngày một tháng mười một năm một nghìn chín trăm sáu mươi ở bang Alabama, là tổng giám đốc Apple, kế nhiệm Steve Jobs. Ông rất coi trọng thị trường Trung Quốc, đã hơn chục lần sang thăm."),
-         F(2, "Ba: 吃瓜群众, quần chúng ăn dưa. Năm hai nghìn không trăm mười sáu, cư dân mạng gọi những người chỉ đứng xem mà không phát biểu ý kiến là 吃瓜群众, tức là chuyện không liên quan đến mình, chỉ hóng thôi. Từ này được tạp chí 咬文嚼字 bình chọn là một trong mười từ thịnh hành năm hai nghìn không trăm mười sáu. Cư dân mạng Việt Nam cũng hay nói ăn dưa, hóng drama đấy."),
+         F(2, "Ba: 吃瓜群众, quần chúng ăn dưa. Năm hai nghìn không trăm mười sáu, cư dân mạng gọi những người chỉ đứng xem mà không phát biểu ý kiến là 吃瓜群众, tức là chuyện không liên quan đến mình, chỉ hóng thôi."),
+         F(2, "Từ này được tạp chí 咬文嚼字 bình chọn là một trong mười từ thịnh hành năm hai nghìn không trăm mười sáu. Cư dân mạng Việt Nam cũng hay nói ăn dưa, hóng drama đấy."),
          F(3, "Bốn: 发改委 là cách gọi tắt của 国家发展和改革委员会, Ủy ban Phát triển và Cải cách Quốc gia. Tiền thân là Ủy ban Kế hoạch Nhà nước, thành lập năm một nghìn chín trăm năm mươi hai, đổi thành tên hiện nay năm hai nghìn không trăm linh ba, phụ trách hoạch định chính sách phát triển kinh tế xã hội.")])
 
 add("bullets", section="Bài khóa 课文", title="Ghi chú 注释 (2): 华为, 5G, 百家争鸣", size=33,
     items=["华为 Huawei: lập năm 1987, trụ sở ở Thâm Quyến; nhà cung cấp giải pháp ICT hàng đầu thế giới; 2/2018 cùng Vodafone thực hiện cuộc gọi 5G đầu tiên; 2021 doanh thu 636,8 tỷ tệ",
            "5G: công nghệ thông tin di động thế hệ thứ 5 – tốc độ cao, độ trễ thấp, kết nối lớn; nền tảng cho Internet vạn vật (xe kết nối, nhà thông minh, y tế từ xa…)",
            "百家争鸣: thời Xuân Thu – Chiến Quốc, nhiều trường phái tư tưởng (儒 Nho · 法 Pháp · 道 Đạo · 墨 Mặc…) viết sách, tranh luận; nay chỉ nhiều bên cùng tự do cạnh tranh"],
-    say=[F(0, "Năm: 华为, Huawei, thành lập năm một nghìn chín trăm tám mươi bảy, trụ sở ở Thâm Quyến, tỉnh Quảng Đông, là nhà cung cấp giải pháp công nghệ thông tin và truyền thông hàng đầu thế giới. Tháng hai năm hai nghìn không trăm mười tám, Huawei cùng Vodafone hoàn thành cuộc gọi thử nghiệm năm G đầu tiên. Năm hai nghìn không trăm hai mươi mốt, tổng doanh thu đạt sáu trăm ba mươi sáu tỷ tám trăm triệu tệ."),
+    say=[F(0, "Năm: 华为, Huawei, thành lập năm một nghìn chín trăm tám mươi bảy, trụ sở ở Thâm Quyến, tỉnh Quảng Đông, là nhà cung cấp giải pháp công nghệ thông tin và truyền thông hàng đầu thế giới."),
+         F(0, "Tháng hai năm hai nghìn không trăm mười tám, Huawei cùng Vodafone hoàn thành cuộc gọi thử nghiệm năm G đầu tiên. Năm hai nghìn không trăm hai mươi mốt, tổng doanh thu đạt sáu trăm ba mươi sáu tỷ tám trăm triệu tệ."),
          F(1, "Sáu: 5G, công nghệ thông tin di động thế hệ thứ năm, có tốc độ cao, độ trễ thấp và khả năng kết nối lớn. Năm G không chỉ phục vụ liên lạc giữa người với người, mà còn kết nối người với vật, vật với vật, làm nền tảng cho xe kết nối, nhà thông minh, y tế từ xa."),
          F(2, "Bảy: 百家争鸣, trăm nhà đua tiếng. Thời Xuân Thu Chiến Quốc, xã hội biến động lớn, sinh ra nhiều trường phái tư tưởng như Nho gia, Pháp gia, Đạo gia, Mặc gia; họ viết sách lập thuyết, tranh luận với nhau, tạo nên sự phồn thịnh về học thuật. Ngày nay thành ngữ này chỉ cảnh nhiều bên cùng tự do cạnh tranh, phát biểu.")])
 
@@ -682,9 +692,7 @@ lesson = {
                     "戏称其为": "戏称其维",      # wéi
                     "为整鸡": "位整鸡",          # wèi
                     "处于": "楚于",              # chǔyú
-                    "行业": "航业",              # hángyè
-                    "一站式": "一站室",          # yízhànshì
-                    "发难": "发难"},             # fānàn (giữ nguyên)
+                    "行业": "航业"},             # hángyè
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds82.json")

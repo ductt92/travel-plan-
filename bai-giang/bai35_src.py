@@ -196,7 +196,7 @@ V = [
     ("任重道远", "rènzhòng-dàoyuǎn", "nhậm trọng đạo viễn", "thành ngữ", "gánh nặng đường xa", "保护传统文化任重道远。", "Bảo vệ văn hóa truyền thống là trách nhiệm nặng nề, đường còn dài.",
      "Thành ngữ, nghĩa là gánh nặng mà đường còn xa, tức trách nhiệm lớn lao, cần kiên trì lâu dài."),
     ("一帆风顺", "yìfān-fēngshùn", "nhất phàm phong thuận", "thành ngữ", "thuận buồm xuôi gió", "人生不可能总是一帆风顺。", "Đời người không thể lúc nào cũng thuận buồm xuôi gió.",
-     "Thành ngữ, nghĩa giống hệt câu thuận buồm xuôi gió của tiếng Việt. Chú ý chữ 一 ở đây đọc thanh bốn vì đứng trước thanh một."),
+     "Thành ngữ, nghĩa giống hệt câu thuận buồm xuôi gió của tiếng Việt. Chú ý pinyin viết là yìfān, thanh bốn, do biến điệu."),
 ]
 # số thứ tự theo sách: 次品 là từ phụ đi kèm số 34
 NUM = []
@@ -260,7 +260,7 @@ P = [
      ["Sau 随着 là ba cụm danh từ song song: 经济的发展，文化的昌盛，以及民间绘画水平的提高. 以及 là và, cùng với, dùng trong văn viết.",
       "得以 là nhờ đó mà được, có thể. 世俗生活 là đời sống thế tục, cuộc sống thường ngày. Theo chú thích của sách: nhà Đường từ năm sáu trăm mười tám đến chín trăm linh bảy, nhà Tống từ năm chín trăm sáu mươi đến một nghìn hai trăm bảy mươi chín."]),
     ("之后，有清朝学者在论述这类画作时正式使用了“年画”一词，自此，以驱逐祸凶、祝福新年吉祥喜庆为内容的画儿就叫年画了。",
-     "Về sau, có học giả đời Thanh khi bàn về loại tranh này đã chính thức dùng từ “niên họa”, tức tranh Tết; từ đó, những bức tranh lấy việc xua đuổi tai ương, chúc năm mới may mắn vui tươi làm nội dung được gọi là tranh Tết.",
+     "Về sau, có học giả đời Thanh khi bàn về loại tranh này đã chính thức dùng từ niên họa, tức tranh Tết; từ đó, những bức tranh lấy việc xua đuổi tai ương, chúc năm mới may mắn vui tươi làm nội dung được gọi là tranh Tết.",
      ["论述 là bàn luận, trình bày. 自此 là từ đó trở đi. 祸凶 là tai họa, điều dữ.",
       "以……为内容 nghĩa là lấy… làm nội dung. Nhà Thanh theo chú thích của sách là từ năm một nghìn sáu trăm mười sáu đến một nghìn chín trăm mười một."]),
     # --- 木版年画 ---
@@ -273,8 +273,8 @@ P = [
      ["Ba vế câu đều theo cùng một mô hình: có nhu cầu, rồi 于是, dẫn đến một phát minh. Từ 于是 và 需要 lặp lại nhiều lần, đây chính là thủ pháp lặp từ khóa mà ta sẽ học ở phần tu từ.",
       "不就能……吗 là câu hỏi tu từ: chẳng phải là có thể… sao! Tức là chắc chắn có thể."]),
     ("人们尝试把印章扩大成一张纸那么大，叫作“版”，然后把书的内容刻在版上，在版上涂抹上墨，把纸铺到上面，用刷子均匀地刷印，最后将纸揭起，印品就出来了，这就是最早的雕版印刷。",
-     "Người ta thử phóng to con dấu ra bằng cả một tờ giấy, gọi là “bản”; sau đó khắc nội dung sách lên bản, quét mực lên bản, trải giấy lên trên, dùng bàn chải xoa in đều tay, cuối cùng bóc giấy lên là có bản in; đó chính là kỹ thuật in khắc bản sớm nhất.",
-     ["Đoạn này tả quy trình in theo thứ tự, có các từ nối 然后 và 最后. 叫作 là gọi là. 铺 là trải. 刷子 là bàn chải. 揭起 là bóc lên.",
+     "Người ta thử phóng to con dấu ra bằng cả một tờ giấy, gọi là bản; sau đó khắc nội dung sách lên bản, quét mực lên bản, trải giấy lên trên, dùng bàn chải xoa in đều tay, cuối cùng bóc giấy lên là có bản in; đó chính là kỹ thuật in khắc bản sớm nhất.",
+     ["Đoạn này tả quy trình in theo thứ tự, có các từ nối 然后 và 最后. 叫作 là gọi là. 铺到上面 là trải lên trên. 刷子 là bàn chải. 揭起 là bóc lên.",
       "雕版印刷 là in khắc bản. Tranh Đông Hồ của Việt Nam cũng làm theo đúng cách này: khắc ván gỗ, quét màu lên ván, đặt giấy lên rồi xoa đều."]),
     ("虽然雕版印刷中雕刻版面需要大量的人工和材料，但雕版完成后一经开印，就显示出空前的高效率和印刷量大的优越性。",
      "Tuy trong in khắc bản, việc khắc mặt bản cần rất nhiều công sức và vật liệu, nhưng một khi bản khắc đã xong và bắt đầu in, nó liền cho thấy ưu thế hiệu suất cao chưa từng có và số lượng in lớn.",
@@ -304,21 +304,21 @@ P = [
     ("那虎翘着尾巴，神态逼真，身上装饰着彩绘花纹和盛开的花朵，全身散发着喜气。",
      "Con hổ ấy vểnh đuôi, thần thái sống động như thật, trên mình trang trí hoa văn vẽ màu và những bông hoa nở rộ, toàn thân toát lên vẻ vui tươi.",
      ["逼真 là giống như thật. 彩绘 là vẽ màu. 花纹 là hoa văn. 喜气 là không khí vui mừng, hân hoan.",
-      "Câu văn tả con hổ theo trình tự rất rõ: cái đuôi, thần thái, thân mình, rồi toàn thân. Các động từ đều có 着 chỉ trạng thái đang tiếp diễn."]),
+      "Câu văn tả con hổ theo trình tự rất rõ: cái đuôi, thần thái, thân mình, rồi toàn thân. Các động từ đều có trợ từ zhe đi sau, chỉ trạng thái đang tiếp diễn."]),
     ("我问多少钱，他耸耸肩，对我说：“这是魏州虎。”言外之意是在告诉我这个外行，这虎可是系出名门。",
-     "Tôi hỏi giá bao nhiêu, anh nhún vai, nói với tôi: “Đây là hổ Ngụy Châu.” Ý ngoài lời là muốn nói với kẻ ngoài nghề như tôi rằng con hổ này có gốc gác danh tiếng đấy.",
+     "Tôi hỏi giá bao nhiêu, anh nhún vai, nói với tôi: Đây là hổ Ngụy Châu. Ý ngoài lời là muốn nói với kẻ ngoài nghề như tôi rằng con hổ này có gốc gác danh tiếng đấy.",
      ["言外之意 là ý ngoài lời, hàm ý. Cụm 系出名门 đọc là xì chū míngmén, nghĩa là xuất thân từ dòng dõi danh tiếng. 可是 ở đây là phó từ nhấn mạnh, nghĩa là quả thật là.",
       "Theo chú thích, 魏州 nay thuộc huyện Ngụy, thành phố Hàm Đan, tỉnh Hà Bắc, nơi có nghề nhuộm dệt vải hoa truyền thống đến nay vẫn rất độc đáo."]),
     ("我心想：“魏州是哪儿？我不知道别人也未必知道，这算什么推销术？”这是他给我留下的第一印象。",
-     "Tôi nghĩ bụng: “Ngụy Châu là ở đâu? Tôi không biết thì người khác cũng chưa chắc biết, thế này mà gọi là cách chào hàng à?” Đó là ấn tượng đầu tiên anh để lại cho tôi.",
+     "Tôi nghĩ bụng: Ngụy Châu là ở đâu? Tôi không biết thì người khác cũng chưa chắc biết, thế này mà gọi là cách chào hàng à? Đó là ấn tượng đầu tiên anh để lại cho tôi.",
      ["未必 là chưa chắc. 这算什么…… là thế này mà gọi là… sao, mang ý chê bai.",
       "留下……印象 là để lại ấn tượng. Tác giả kể theo trình tự: ấn tượng thứ nhất, ấn tượng thứ hai, rồi quen lâu mới hiểu."]),
     ("“这个卖年画的不像个商人”，这是他给我留下的第二印象。当你和他讨价还价的时候，他立刻就变得不好意思起来，说话吞吞吐吐。",
-     "“Người bán tranh Tết này chẳng giống dân buôn”, đó là ấn tượng thứ hai anh để lại cho tôi. Khi bạn mặc cả với anh, anh lập tức trở nên ngượng ngùng, nói năng ấp úng.",
+     "Người bán tranh Tết này chẳng giống dân buôn, đó là ấn tượng thứ hai anh để lại cho tôi. Khi bạn mặc cả với anh, anh lập tức trở nên ngượng ngùng, nói năng ấp úng.",
      ["讨价还价 là mặc cả, trả giá, đọc là tǎojià huánjià.",
       "不好意思起来 : 起来 đứng sau tính từ, chỉ trạng thái bắt đầu xuất hiện, tức là bắt đầu ngượng ngùng."]),
     ("什么“这是纯手工的”“残次品不可避免”这些现成的“谢绝”还价的理由他一条也说不出来，相反却唠唠叨叨地总想和你讨论木版年画中深厚的文化底蕴。",
-     "Những lý do có sẵn để từ chối mặc cả như “đây là hàng thủ công”, “hàng lỗi là không tránh khỏi”, anh không nói ra được lấy một câu; ngược lại, anh cứ luyên thuyên, lúc nào cũng muốn bàn với bạn về chiều sâu văn hóa trong tranh Tết khắc gỗ.",
+     "Những lý do có sẵn để từ chối mặc cả như: đây là hàng thủ công, hàng lỗi là không tránh khỏi…, anh không nói ra được lấy một câu; ngược lại, anh cứ luyên thuyên, lúc nào cũng muốn bàn với bạn về chiều sâu văn hóa trong tranh Tết khắc gỗ.",
      ["什么 đứng đầu một loạt liệt kê mang nghĩa: nào là…, những thứ như…. 一条也说不出来 là một lý do cũng không nói ra được.",
       "唠唠叨叨 là nói lải nhải, nói mãi không thôi. 底蕴 là chiều sâu, nội hàm văn hóa."]),
     ("相识久了才知道，他在年画的故乡出生、长大，从小就画年画，基本功扎实，后来又对年画的构图创作、人物塑造、雕版手法、颜料加工等进行了广泛的研究。",
@@ -334,7 +334,7 @@ P = [
      ["数年间 là trong vài năm. 同行 ở đây đọc là tóngháng, nghĩa là người cùng nghề. 不仅如此 là không chỉ như vậy.",
       "巡展 là triển lãm lưu động. 就……进行研讨 là thảo luận về…. Chú ý câu sau rất dài, liệt kê ba hoạt động rồi mới đến chủ ngữ 他 và vị ngữ 从不缺席."]),
     ("张光宁一年到头真够忙的，可他总是干劲十足。他曾真诚地说：“年画占据了我生命的全部，我喜欢它，热爱它，靠它生活，也在努力探索它、发展它。”",
-     "Trương Quang Ninh quanh năm suốt tháng thật là bận rộn, nhưng anh lúc nào cũng hăng hái tràn đầy. Anh từng chân thành nói: “Tranh Tết chiếm trọn cuộc đời tôi, tôi thích nó, yêu nó, sống nhờ nó, và cũng đang nỗ lực tìm tòi nó, phát triển nó.”",
+     "Trương Quang Ninh quanh năm suốt tháng thật là bận rộn, nhưng anh lúc nào cũng hăng hái tràn đầy. Anh từng chân thành nói: Tranh Tết chiếm trọn cuộc đời tôi, tôi thích nó, yêu nó, sống nhờ nó, và cũng đang nỗ lực tìm tòi nó, phát triển nó.",
      ["一年到头 là quanh năm suốt tháng. 真够……的 là thật là quá…. 干劲十足 là hăng hái tràn đầy.",
       "Trong lời nói của anh, chữ 它 lặp lại năm lần. Đây cũng là cách lặp từ khóa để nhấn mạnh tình yêu với tranh Tết."]),
     ("是啊，愈是经营年画久了，他对年画就愈是热爱。他已确立了自己的目标——传播他喜爱的这一民俗文化。",
@@ -434,8 +434,8 @@ add("bullets", section="Ngữ pháp 注释", title="终究 – cách dùng 2: k�
            "胜利总是在真理一边，正义的事业终究会取得胜利。",
            "……有再好的管理和技术，产品终究要靠这些普通工人去生产。",
            "Bối cảnh ví dụ 2: một doanh nghiệp không thể thiếu nhân tài quản lý, kỹ thuật, nhưng cũng không thể thiếu công nhân tuyến đầu"],
-    say=[F(0, "Cách dùng thứ hai: 终究 thường đứng trước động từ năng nguyện như 会，要, biểu thị kết quả mà ta dự đoán hoặc mong đợi nhất định sẽ xuất hiện. Dù thế nào đi nữa, cuối cùng cũng sẽ như vậy."),
-         F(1, "Cấu trúc: 终究 cộng 会 hoặc 要, rồi cộng động từ. Tiếng Việt dịch là: rốt cuộc sẽ, cuối cùng nhất định sẽ."),
+    say=[F(0, "Cách dùng thứ hai: 终究 thường đứng trước động từ năng nguyện, như 终究会，终究要, biểu thị kết quả mà ta dự đoán hoặc mong đợi nhất định sẽ xuất hiện. Dù thế nào đi nữa, cuối cùng cũng sẽ như vậy."),
+         F(1, "Cấu trúc thường gặp là 终究会 hoặc 终究要, rồi cộng động từ. Tiếng Việt dịch là: rốt cuộc sẽ, cuối cùng nhất định sẽ."),
          F(2, "Ví dụ: 胜利总是在真理一边，正义的事业终究会取得胜利。 Chiến thắng luôn đứng về phía chân lý, sự nghiệp chính nghĩa rốt cuộc sẽ giành thắng lợi."),
          F(3, "Ví dụ hai: 有再好的管理和技术，产品终究要靠这些普通工人去生产。 Dù quản lý và kỹ thuật có tốt đến đâu, sản phẩm rốt cuộc vẫn phải dựa vào những công nhân bình thường này làm ra."),
          F(4, "Câu này nằm trong một đoạn nói rằng: thành công của doanh nghiệp là kết quả nỗ lực của cả tập thể, cần nhân tài quản lý, kỹ thuật, nhưng cũng không thể thiếu những công nhân tuyến đầu.")])
@@ -468,12 +468,12 @@ add("bullets", chapter="Ngữ pháp: 愈……愈……", section="Ngữ pháp �
          F(4, "Các bạn để ý các biến thể: 愈是……就愈是……，愈……就愈……, hoặc vế sau dùng 也就愈. Chữ 就 hay 也就 ở vế sau giúp câu văn chặt chẽ hơn.")])
 
 add("bullets", section="Ngữ pháp 注释", title="Luyện tập: ghép 6 vế thành 3 đoạn với 愈", size=36,
-    items=["A. 一个家庭，愈重视教育，教育的投入愈多",
-           "B. 市场经济是法制经济，愈是发达的市场经济",
-           "C. 经营活动愈是会受到完备的法规约束，从而，在法制的框架内展开充分的公平竞争",
-           "D. 他生就一副挑战式性格，愈是面对成功",
-           "E. 家庭成员的文化水平就愈高，综合素质也就愈高",
-           "F. 愈要为自己设定更高的目标"],
+    items=["A. 一个家庭，愈重视教育，教育的投入愈多，",
+           "B. 市场经济是法制经济，愈是发达的市场经济，",
+           "C. 经营活动愈是会受到完备的法规约束，从而，在法制的框架内展开充分的公平竞争。",
+           "D. 他生就一副挑战式性格，愈是面对成功，",
+           "E. 家庭成员的文化水平就愈高，综合素质也就愈高。",
+           "F. 愈要为自己设定更高的目标。"],
     say=[F(0, "Luyện tập: hãy ghép sáu vế câu sau thành ba đoạn văn liền mạch. Vế A: 一个家庭，愈重视教育，教育的投入愈多。 Một gia đình càng coi trọng giáo dục, đầu tư cho giáo dục càng nhiều."),
          F(1, "Vế B: 市场经济是法制经济，愈是发达的市场经济。 Kinh tế thị trường là kinh tế pháp chế, kinh tế thị trường càng phát triển."),
          F(2, "Vế C: 经营活动愈是会受到完备的法规约束，从而，在法制的框架内展开充分的公平竞争。 Hoạt động kinh doanh càng chịu sự ràng buộc của hệ thống pháp quy hoàn chỉnh, từ đó triển khai cạnh tranh công bằng đầy đủ trong khuôn khổ pháp luật."),
@@ -511,7 +511,7 @@ add("compare", chapter="Phân biệt 连年 – 连续", section="Phân biệt t
                      "(2) Phía sau có thể mang cụm số lượng",
                      "Đúng: 他已经连续三天没吃东西了。"]}],
     say=["Tiếp theo là phần phân biệt từ: 连年 và 连续. Hai từ này cùng có chữ 连, nên rất dễ nhầm.",
-         "Điểm giống nhau: cả hai đều có nghĩa liên tiếp không ngừng. Ví dụ: 他们连年创造了高产纪录, hoặc 他们连续创造了高产纪录, đều đúng. Họ liên tiếp lập kỷ lục năng suất cao.",
+         "Điểm giống nhau: cả hai đều có nghĩa liên tiếp không ngừng. Ví dụ: 他们连年创造了高产纪录。 Hoặc: 他们连续创造了高产纪录。 Cả hai câu đều đúng. Họ liên tiếp lập kỷ lục năng suất cao.",
          F(0, "Điểm khác thứ nhất. 连年 nghĩa là liên tiếp nhiều năm, chỉ dùng cho thời gian tính bằng năm, không có nghĩa nào khác. Ví dụ: 连年大丰收。 Nhiều năm liền được mùa lớn."),
          F(1, "Còn 连续 nghĩa là cái này nối tiếp cái kia, dùng được cho bất kỳ khoảng thời gian nào: ngày, giờ, lần. Ví dụ: 连续下了三天雨。 Mưa liền ba ngày. Và 他们连续工作了十五个小时。 Họ làm việc liên tục mười lăm tiếng đồng hồ."),
          F(0, "Điểm khác thứ hai. Sau 连年 không mang cụm số lượng. Nói 他连年三年获奖 là sai, chỉ nói 他连年获奖, anh ấy đoạt giải nhiều năm liền."),
@@ -681,7 +681,7 @@ add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng k�
            "Gợi ý: 我们的东湖画艺术 – nguồn gốc, kỹ thuật, nghệ nhân; dùng 终究, 愈……愈…… và lặp từ khóa"],
     say=["Chúng ta cùng tổng kết bài ba mươi lăm.",
          F(0, "Về từ vựng, các bạn cần đặc biệt nhớ: 起源，驱逐，里程碑，寄托，增添，喜闻乐见，谢绝，扎实，借鉴，再接再厉，心得，任重道远，一帆风顺."),
-         F(1, "Về ngữ pháp: 终究 có hai cách dùng: nhấn mạnh bản chất không đổi, nghĩa là suy cho cùng; và đứng trước 会，要, nghĩa là rốt cuộc nhất định sẽ. Còn 愈……愈…… giống 越……越……, nhưng dùng trong văn viết."),
+         F(1, "Về ngữ pháp: 终究 có hai cách dùng: nhấn mạnh bản chất không đổi, nghĩa là suy cho cùng; và dùng trong 终究会，终究要, nghĩa là rốt cuộc nhất định sẽ. Còn 愈……愈…… giống 越……越……, nhưng dùng trong văn viết."),
          F(2, "Về phân biệt từ: 连年 là nhiều năm liền, phía sau không mang cụm số lượng; 连续 là liên tục, dùng cho mọi khoảng thời gian, và có thể mang cụm số lượng."),
          F(3, "Về kỹ năng viết: lặp lại từ khóa một cách có chủ ý để làm nổi bật thông tin và đẩy chủ đề tiến lên, giúp đoạn văn liền mạch."),
          F(5, "Bài tập về nhà, theo phần vận dụng của sách: bài khóa đã giới thiệu tranh Tết khắc gỗ và nghệ nhân Trương Quang Ninh. Ở đất nước các bạn chắc chắn cũng có loại hình hội họa mang bản sắc dân tộc và những họa sĩ tiêu biểu. Hãy viết một bài với tiêu đề 我们的什么艺术, ít nhất bốn trăm chữ."),
@@ -702,9 +702,12 @@ lesson = {
         "任重道远": "认众道远",    # rèn zhòng
         "曾真诚": "层真诚",        # céng
         "曾教导": "层教导",        # céng
+        "为内容": "维内容",        # yǐ…wéi nèiróng
+        "为止": "维止",            # wéizhǐ
         "揭露": "揭路",            # jiēlù
         "拓印": "踏印",            # tàyìn
         "外行": "外航",            # wàiháng
+        "内行": "内航",            # nèiháng
         "同行": "同航",            # tóngháng (người cùng nghề)
         "还价": "环价",            # huánjià
         "扎实": "渣实",            # zhā

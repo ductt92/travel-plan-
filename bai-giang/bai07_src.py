@@ -216,7 +216,7 @@ P = [
     ("最近，小王正为工作的事伤脑筋。毕业于3年前的他，一直做会计，成天和数字打交道，枯燥而且压力大，他做梦都想换一份工作。",
      "Gần đây, Tiểu Vương đang đau đầu vì chuyện công việc. Anh tốt nghiệp ba năm trước, từ đó đến nay luôn làm kế toán, suốt ngày tiếp xúc với những con số, vừa khô khan lại vừa áp lực, đến nằm mơ anh cũng muốn đổi một công việc khác.",
      ["正为……伤脑筋 là đang đau đầu vì chuyện gì. 毕业于三年前 là tốt nghiệp vào ba năm trước, 于 ở đây chỉ thời gian; đây chính là điểm ngữ pháp 于.",
-      "成天 là suốt ngày. 和……打交道 là giao tiếp, tiếp xúc với ai hoặc cái gì. 做梦都想 là đến nằm mơ cũng muốn, ý nói khao khát vô cùng."],
+      "成天 là suốt ngày. 和数字打交道 là tiếp xúc với những con số; mẫu 和某人打交道 là giao tiếp, làm việc với ai đó. 做梦都想 là đến nằm mơ cũng muốn, ý nói khao khát vô cùng."],
      "最近，小王正为工作的事伤脑筋。毕业于三年前的他，一直做会计，成天和数字打交道，枯燥而且压力大，他做梦都想换一份工作。"),
     ("小王对艺术、心理学都感兴趣，觉得当老师也不错，可他不确定自己真正擅长什么，怕万一选错了，要付出很大的时间成本和经济成本，为此他变得急躁、紧张、顾虑重重。",
      "Tiểu Vương đều có hứng thú với nghệ thuật và tâm lý học, cũng thấy làm giáo viên không tồi, nhưng anh không chắc mình thật sự giỏi cái gì, sợ lỡ chọn sai thì phải trả giá rất lớn về thời gian và tiền bạc, vì thế anh trở nên nôn nóng, căng thẳng, lo lắng đủ điều.",
@@ -256,7 +256,7 @@ P = [
       "原本 là vốn dĩ. 今天看来 là nhìn từ hôm nay. 并非如此 là hoàn toàn không phải như vậy, một cụm rất hay dùng với 并非."]),
     ("依我看，无论你怎么选择，都不太可能选一份称心如意的工作安安稳稳一辈子，由于经济环境的不确定，企业的寿命越来越短，现在，人们要经历更多次的职业选择。",
      "Theo tôi thấy, dù bạn chọn thế nào, cũng khó có thể chọn được một công việc như ý rồi yên ổn cả đời. Do môi trường kinh tế bất định, tuổi thọ của doanh nghiệp ngày càng ngắn, hiện nay con người phải trải qua nhiều lần chọn nghề hơn.",
-     ["依我看 là theo tôi thấy, dùng để nêu ý kiến cá nhân. 无论……都…… là bất kể… đều….",
+     ["依我看 là theo tôi thấy, dùng để nêu ý kiến cá nhân. 无论你怎么选择，都不太可能 là dù bạn chọn thế nào, cũng khó có thể; mẫu này nghĩa là bất kể… đều….",
       "安安稳稳 là dạng lặp của 安稳, yên ổn, làm trạng ngữ. 一辈子 là cả đời, khẩu ngữ, gần nghĩa với 终身. 寿命 là tuổi thọ."]),
     ("除此以外，由于人们争先恐后报考热门专业，以致人才饱和，就业困难。",
      "Ngoài ra, do mọi người tranh nhau đăng ký thi vào các ngành hot, đến nỗi nhân lực bão hòa, khó tìm việc làm.",
@@ -265,7 +265,7 @@ P = [
     ("而一些新职业的出现，需要新型人才的加入，谁能够及早抓住机会，谁就赢得了机遇。",
      "Còn sự xuất hiện của một số nghề mới cần có những nhân tài kiểu mới tham gia, ai sớm nắm bắt được cơ hội, người đó sẽ giành được thời cơ.",
      ["而 ở đầu câu biểu thị chuyển ý nhẹ, nghĩa là còn, nhưng. 新型 là kiểu mới.",
-      "谁……，谁就…… là ai…, người đó sẽ…, hai chữ 谁 chỉ cùng một người. 抓住机会 là nắm bắt cơ hội, 赢得机遇 là giành được thời cơ."]),
+      "谁能够……，谁就…… là ai có thể…, người đó sẽ…; hai đại từ nghi vấn ở hai vế chỉ cùng một người. 抓住机会 là nắm bắt cơ hội, 赢得机遇 là giành được thời cơ."]),
     ("不要怕犯错，不要害怕走弯路，犯些小错并非坏事，它会增加我们的心灵免疫力。",
      "Đừng sợ mắc lỗi, đừng sợ đi đường vòng, mắc vài lỗi nhỏ không phải là chuyện xấu, nó sẽ tăng sức đề kháng cho tâm hồn chúng ta.",
      ["走弯路 là đi đường vòng, nghĩa bóng là làm việc theo cách tốn công, mắc sai lầm rồi mới đến đích. Bài tập bốn sẽ nói về cách nói ví von này.",
@@ -453,7 +453,7 @@ add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: Đú
          F(2, "Câu hai: 大家普遍认为市场上销售的产品种类越来越增加了。 Mọi người đều cho rằng chủng loại sản phẩm bán trên thị trường ngày càng tăng."),
          F(3, "Đáp án: sai. 增加 không phải là động từ tâm lý, nên không đi sau 越来越. Sửa thành 日益增加, hoặc 越来越多了."),
          F(4, "Câu ba: 最近的一项调查显示世界各国的经济形势日益好了。 Một cuộc điều tra gần đây cho thấy tình hình kinh tế các nước trên thế giới ngày càng tốt."),
-         F(5, "Đáp án: sai. 好 là tính từ một âm tiết, không đi sau 日益. Sửa thành 越来越好了."),
+         F(5, "Đáp án: sai. Trong 日益好了, tính từ chỉ có một âm tiết, nên không đi sau 日益. Sửa thành 越来越好了."),
          F(6, "Câu bốn: 受中国朋友的影响，我越来越喜欢东方文化了。 Chịu ảnh hưởng của bạn bè người Trung Quốc, tôi ngày càng thích văn hóa phương Đông."),
          F(7, "Đáp án: đúng. 喜欢 là động từ tâm lý, đi sau 越来越 hoàn toàn được.")])
 
@@ -479,33 +479,35 @@ add("bullets", section="Mở rộng 扩展", title="Ví dụ câu sai trật t�
            "Sửa: ……别人已经给我打了。 (phó từ 已经 → giới từ 给我)",
            "## (2) Tân ngữ đặt sai vị trí",
            "Sai: 地形图上的川藏线弯弯曲曲，像极了高原反应时极速抖动的心电图谱。",
-           "Sửa: ……和高原反应时极速抖动的心电图谱像极了。",
-           "## (3) Chủ ngữ đặt sai vị trí",
-           "Sai: 郑晓龙执导的很多电视剧，对中国人是不陌生的。",
-           "Sửa: 中国人对郑晓龙执导的很多电视剧是不陌生的。"],
+           "Sửa: ……和高原反应时极速抖动的心电图谱像极了。"],
     say=[F(0, "Ví dụ một: trạng ngữ đặt sai vị trí."),
          F(1, "Câu sai: 你不必给我打电话，已经别人给我打了。 Bạn không cần gọi điện cho tôi, đã có người khác gọi cho tôi rồi."),
          F(2, "Ở vế sau, 已经 và 给我 đều là trạng ngữ, phải đặt sau chủ ngữ và trước động từ. Thứ tự đúng là: chủ ngữ, rồi phó từ, rồi giới từ chỉ đối tượng: 别人已经给我打了。"),
          F(3, "Ví dụ hai: tân ngữ đặt sai vị trí."),
          F(4, "Câu sai: 地形图上的川藏线弯弯曲曲，像极了高原反应时极速抖动的心电图谱。 Tuyến đường Tứ Xuyên – Tây Tạng trên bản đồ địa hình ngoằn ngoèo, giống hệt điện tâm đồ rung giật dữ dội khi bị sốc độ cao."),
-         F(5, "Cụm 像极了 có bổ ngữ 极了 nên không thể mang tân ngữ phía sau. Phải sửa thành 和高原反应时极速抖动的心电图谱像极了, tức là đưa đối tượng so sánh lên trước bằng 和."),
-         F(6, "Ví dụ ba: chủ ngữ đặt sai vị trí."),
-         F(7, "Câu sai: 郑晓龙执导的很多电视剧，对中国人是不陌生的。 Nhiều bộ phim truyền hình do Trịnh Hiểu Long đạo diễn, đối với người Trung Quốc là không xa lạ."),
-         F(8, "Nòng cốt câu là: người Trung Quốc không xa lạ với cái gì. Đối tượng của 不陌生 là các bộ phim. Vậy phải sửa: 中国人对郑晓龙执导的很多电视剧是不陌生的。")])
+         F(5, "Cụm 像极了 có bổ ngữ 极了 nên không thể mang tân ngữ phía sau. Phải sửa thành 和高原反应时极速抖动的心电图谱像极了, tức là dùng 和心电图谱 để đưa đối tượng so sánh lên trước.")])
 
 add("bullets", section="Mở rộng 扩展", title="Ví dụ câu sai trật tự từ (2)", size=36,
-    items=["## (4) Câu chữ 把 dạng phủ định",
+    items=["## (3) Chủ ngữ đặt sai vị trí",
+           "Sai: 郑晓龙执导的很多电视剧，对中国人是不陌生的。",
+           "Sửa: 中国人对郑晓龙执导的很多电视剧是不陌生的。",
+           "## (4) Câu chữ 把 dạng phủ định",
            "Sai: 这事对她打击一定很大，她肯定会受不了，我把这事没告诉她。",
-           "Sửa: ……我没把这事告诉她。 (từ phủ định đặt trước 把)",
-           "## (5) Từ ly hợp đi với số lượng từ",
+           "Sửa: ……我没把这事告诉她。 (từ phủ định đặt trước 把)"],
+    say=[F(0, "Ví dụ ba: chủ ngữ đặt sai vị trí."),
+         F(1, "Câu sai: 郑晓龙执导的很多电视剧，对中国人是不陌生的。 Nhiều bộ phim truyền hình do Trịnh Hiểu Long đạo diễn, đối với người Trung Quốc là không xa lạ."),
+         F(2, "Nòng cốt câu là: người Trung Quốc không xa lạ với cái gì. Đối tượng của 不陌生 là các bộ phim. Vậy phải sửa: 中国人对郑晓龙执导的很多电视剧是不陌生的。"),
+         F(3, "Ví dụ bốn: câu chữ 把 ở dạng phủ định."),
+         F(4, "Câu sai: 这事对她打击一定很大，她肯定会受不了，我把这事没告诉她。 Chuyện này chắc chắn là cú sốc lớn với cô ấy, cô ấy nhất định không chịu nổi, nên tôi không nói chuyện này cho cô ấy."),
+         F(5, "Trong câu chữ 把, từ phủ định phải đặt trước 把, không đặt trước động từ. Sửa: 我没把这事告诉她。 Đây là lỗi người Việt rất hay mắc, vì tiếng Việt nói tôi đem chuyện này không nói.")])
+
+add("bullets", section="Mở rộng 扩展", title="Ví dụ câu sai trật tự từ (3)", size=36,
+    items=["## (5) Từ ly hợp đi với số lượng từ",
            "Sai: 我们公司管理比较严格，没有特殊情况不准迟到早退，每两个星期一次开会。",
            "Sửa: ……每两个星期开一次会。 (开会 là từ ly hợp: 开 + 一次 + 会)"],
-    say=[F(0, "Ví dụ bốn: câu chữ 把 ở dạng phủ định."),
-         F(1, "Câu sai: 这事对她打击一定很大，她肯定会受不了，我把这事没告诉她。 Chuyện này chắc chắn là cú sốc lớn với cô ấy, cô ấy nhất định không chịu nổi, nên tôi không nói chuyện này cho cô ấy."),
-         F(2, "Trong câu chữ 把, từ phủ định như 没 hoặc 不 phải đặt trước 把, không đặt trước động từ. Sửa: 我没把这事告诉她。 Đây là lỗi người Việt rất hay mắc, vì tiếng Việt nói tôi đem chuyện này không nói."),
-         F(3, "Ví dụ năm: từ ly hợp đi với số lượng từ."),
-         F(4, "Câu sai: 我们公司管理比较严格，没有特殊情况不准迟到早退，每两个星期一次开会。 Công ty chúng tôi quản lý khá nghiêm, không có trường hợp đặc biệt thì không được đi muộn về sớm, cứ hai tuần họp một lần."),
-         F(5, "开会 là từ ly hợp, gồm động từ 开 và tân ngữ 会. Số lượng từ thường chen vào giữa động từ và tân ngữ. Sửa: 每两个星期开一次会。 Tương tự: 见一次面，洗个澡，帮个忙.")])
+    say=[F(0, "Ví dụ năm: từ ly hợp đi với số lượng từ."),
+         F(1, "Câu sai: 我们公司管理比较严格，没有特殊情况不准迟到早退，每两个星期一次开会。 Công ty chúng tôi quản lý khá nghiêm, không có trường hợp đặc biệt thì không được đi muộn về sớm, cứ hai tuần họp một lần."),
+         F(2, "开会 là từ ly hợp, gồm động từ 开 và tân ngữ chỉ cuộc họp. Số lượng từ thường chen vào giữa động từ và tân ngữ. Sửa: 每两个星期开一次会。 Tương tự: 见一次面，洗个澡，帮个忙.")])
 
 add("bullets", section="Mở rộng 扩展", title="Luyện tập: chỉ ra lỗi và sửa lại (1)", reveal=True, size=36,
     items=["(1) 想着想着，他发怒起来。",
@@ -519,7 +521,7 @@ add("bullets", section="Mở rộng 扩展", title="Luyện tập: chỉ ra lỗ
          F(2, "Câu hai: 她不但说了那样，而且也做了那样。 Cô ấy không những nói như vậy, mà còn làm như vậy."),
          F(3, "Đáp án: 那样 ở đây là trạng ngữ chỉ cách thức, phải đứng trước động từ. Sửa: 她不但那样说了，而且也那样做了。"),
          F(4, "Câu ba: 她不是看书就是写文章，每天到深夜都忙。 Cô ấy không đọc sách thì viết văn, ngày nào cũng bận đến đêm khuya."),
-         F(5, "Đáp án: 每天 là chủ đề thời gian, 都 là phó từ đứng trước động từ, còn 到深夜 là bổ ngữ đứng sau động từ 忙. Sửa: 每天都忙到深夜。")])
+         F(5, "Đáp án: 每天都 phải đứng trước động từ 忙, còn 到深夜 là bổ ngữ, phải đứng sau động từ. Sửa: 每天都忙到深夜。")])
 
 add("bullets", section="Mở rộng 扩展", title="Luyện tập: chỉ ra lỗi và sửa lại (2)", reveal=True, size=36,
     items=["(4) 我想去一起喝茶和我的朋友。",
@@ -659,8 +661,7 @@ lesson = {
                     "孩子似的": "孩子是的",      # shìde
                     "得不差": "得不岔",          # bù chà
                     "画得差": "画得岔",          # chà
-                    "语序不当": "语序不荡",      # bùdàng
-                    "位置不当": "位置不荡"},     # bùdàng
+                    "语序不当": "语序不荡"},      # bùdàng
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai07.json")

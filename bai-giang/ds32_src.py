@@ -23,7 +23,7 @@ def F(i, t, **kw):
 add("title", chapter="Mở đầu",
     top="顶石中文 – Đỉnh cao tiếng Trung",
     zh="“随手扔”还是“随手分”", py="你“拎得清”吗？",
-    vi="Bài 3.2: “Tiện tay vứt” hay “tiện tay phân loại”, bạn có rõ không?",
+    vi="Bài 3.2: “Tiện tay vứt” hay “tiện tay phân loại”?",
     sub="“Suíshǒu rēng” háishi “suíshǒu fēn”, nǐ “līn de qīng” ma?\nBài giảng chi tiết bằng tiếng Việt",
     say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng giáo trình 顶石中文, Đỉnh cao tiếng Trung.",
          "Hôm nay chúng ta học bài ba chấm hai: 随手扔还是随手分，你拎得清吗？ Nghĩa là: Tiện tay vứt hay tiện tay phân loại, bạn có phân biệt rõ không?",
@@ -99,7 +99,7 @@ V = [
     ("试水", "shìshuǐ", "thí thủy", "động từ", "thử nghiệm, dò đường", "一些厂家谨慎试水，小批量生产。", "Một số nhà máy thận trọng thử nghiệm, sản xuất số lượng nhỏ.",
      "Động từ ly hợp, nghĩa đen là thử nước nông sâu, nóng lạnh; nghĩa bóng là thử nghiệm, dò đường trước khi làm thật. Trong bài: 从十九年前率先试水, từ mười chín năm trước đã đi đầu thử nghiệm."),
     ("强制", "qiángzhì", "cưỡng chế", "động từ", "cưỡng chế, bắt buộc", "法院决定强制执行。", "Tòa án quyết định cưỡng chế thi hành.",
-     "Động từ, nghĩa là dùng quyền lực buộc phải làm. Hay gặp: 强制执行, cưỡng chế thi hành; 强制措施, biện pháp cưỡng chế. Trong bài: 立法强制执行, lập pháp để bắt buộc thực hiện. Chữ 强 ở đây đọc qiáng, thanh hai."),
+     "Động từ, nghĩa là dùng quyền lực buộc phải làm. Hay gặp: 强制执行, cưỡng chế thi hành; 强制措施, biện pháp cưỡng chế. Trong bài: 立法强制执行, lập pháp để bắt buộc thực hiện. Chữ đầu ở đây đọc qiáng, thanh hai."),
     ("试错", "shìcuò", "thí thác", "động từ", "thử và sai", "我们应该在不断试错的过程中获得经验。", "Chúng ta nên tích lũy kinh nghiệm qua việc liên tục thử và sai.",
      "Động từ, nghĩa là khi chưa chắc cách giải quyết có đúng không, thì thử liên tục để loại dần những cách sai. Trong bài: 不断试错和创新的过程, quá trình không ngừng thử sai và đổi mới."),
     ("基层", "jīcéng", "cơ tầng", "danh từ", "cơ sở, cấp cơ sở", "大学毕业后，他到基层工作了三年。", "Tốt nghiệp đại học, anh ấy xuống cơ sở làm việc ba năm.",
@@ -107,9 +107,9 @@ V = [
     ("试点", "shìdiǎn", "thí điểm", "danh từ", "thí điểm", "这个小区是垃圾分类的试点。", "Khu dân cư này là điểm thí điểm phân loại rác.",
      "Danh từ, cũng là động từ, nghĩa là làm thử ở quy mô nhỏ trước khi triển khai chính thức, để rút kinh nghiệm. Âm Hán Việt thí điểm, nghĩa giống hệt tiếng Việt. Trong bài: 基层的大量试点, rất nhiều điểm thí điểm ở cơ sở."),
     ("铺垫", "pūdiàn", "phô điếm", "động từ", "làm nền, chuẩn bị trước", "现在的努力都是为以后做铺垫。", "Những cố gắng bây giờ đều là để chuẩn bị cho sau này.",
-     "Động từ, nghĩa gốc là trải lót bên dưới; nghĩa bóng là làm công tác chuẩn bị, tạo tiền đề. Hay dùng trong mẫu 为某事做铺垫, mẫu câu thứ sáu của bài. Chữ 铺 ở đây đọc pū, thanh một."),
+     "Động từ, nghĩa gốc là trải lót bên dưới; nghĩa bóng là làm công tác chuẩn bị, tạo tiền đề. Hay dùng trong mẫu 为某事做铺垫, mẫu câu thứ sáu của bài. Chữ đầu đọc pū, thanh một."),
     ("切身", "qièshēn", "thiết thân", "động từ", "của chính mình, trực tiếp, thiết thân", "这是我的切身体会。", "Đây là trải nghiệm của chính bản thân tôi.",
-     "Theo sách là động từ, nghĩa là chính bản thân mình, liên quan trực tiếp đến mình, thường đứng trước danh từ: 切身感受, cảm nhận trực tiếp; 切身利益, lợi ích thiết thân. Chữ 切 đọc thanh bốn. Trong bài: 切身感受到垃圾围城的风险, tự mình cảm nhận được nguy cơ rác bao vây thành phố."),
+     "Theo sách là động từ, nghĩa là chính bản thân mình, liên quan trực tiếp đến mình, thường đứng trước danh từ: 切身感受, cảm nhận trực tiếp; 切身利益, lợi ích thiết thân. Chữ đầu đọc thanh bốn. Trong bài: 切身感受到垃圾围城的风险, tự mình cảm nhận được nguy cơ rác bao vây thành phố."),
     ("理念", "lǐniàn", "lý niệm", "danh từ", "quan niệm, triết lý, tư tưởng", "这所学校的教育理念很先进。", "Triết lý giáo dục của trường này rất tiên tiến.",
      "Danh từ, nghĩa là tư tưởng, quan niệm chỉ đạo hành động. Hay gặp: 教育理念, 人生理念, 环保理念. Trong bài: 垃圾分类理念, ý thức, quan niệm về phân loại rác."),
     ("果断", "guǒduàn", "quả đoán", "tính từ", "quả quyết, dứt khoát", "她果断地拒绝了对方的要求。", "Cô ấy dứt khoát từ chối yêu cầu của đối phương.",
@@ -143,7 +143,7 @@ V = [
     ("氛围", "fēnwéi", "phân vi", "danh từ", "bầu không khí", "人们在欢乐的氛围中迎来了新的一年。", "Mọi người đón năm mới trong bầu không khí vui tươi.",
      "Danh từ, nghĩa là bầu không khí, không khí tinh thần xung quanh, gần nghĩa với 气氛. Trong bài: 在家庭内部形成孩子监督家长的良好氛围, tạo trong gia đình một bầu không khí tốt, nơi con cái giám sát cha mẹ."),
     ("扎根", "zhāgēn", "trát căn", "động từ", "bén rễ, cắm rễ", "他毕业后一直扎根基层。", "Sau khi tốt nghiệp, anh ấy luôn gắn bó với cơ sở.",
-     "Động từ ly hợp, nghĩa đen là rễ cây bám vào đất; nghĩa bóng là đi sâu, gắn bó lâu dài, đặt nền móng. Trong bài tách ra thành 扎下根来: 让一项政策真正扎下根来, làm cho một chính sách thật sự bén rễ. Chữ 扎 ở đây đọc zhā."),
+     "Động từ ly hợp, nghĩa đen là rễ cây bám vào đất; nghĩa bóng là đi sâu, gắn bó lâu dài, đặt nền móng. Trong bài tách ra thành 扎下根来: 让一项政策真正扎下根来, làm cho một chính sách thật sự bén rễ. Chữ đầu ở đây đọc zhā."),
     ("前端", "qiánduān", "tiền đoan", "danh từ", "khâu đầu (của một quá trình); ≠ 后端", "垃圾分类的前端是居民投放。", "Khâu đầu của phân loại rác là việc người dân bỏ rác.",
      "Danh từ, nghĩa là giai đoạn phía trước của một quá trình; ngược lại là 后端, khâu sau. Trong bài: 前端分类, phân loại ở khâu đầu, tức người dân tự phân loại; 后端处理, xử lý ở khâu sau, tức thu gom, vận chuyển, xử lý. Trong tin học, hai từ này là front-end và back-end."),
     ("士气", "shìqì", "sĩ khí", "danh từ", "tinh thần, khí thế (của tập thể)", "这场胜利大大鼓舞了球队的士气。", "Chiến thắng này cổ vũ rất lớn tinh thần của đội bóng.",
@@ -167,7 +167,7 @@ V = [
     ("公信力", "gōngxìnlì", "công tín lực", "danh từ", "uy tín, sự tín nhiệm của công chúng", "政府部门要不断提升自己的公信力。", "Cơ quan chính phủ phải không ngừng nâng cao uy tín của mình.",
      "Danh từ, nghĩa là sức mạnh khiến công chúng tin tưởng. Hay gặp: 政府公信力, 媒体公信力. Trong bài: 确保公共治理的公信力, bảo đảm uy tín của công tác quản lý công."),
     ("长效", "chángxiào", "trường hiệu", "tính từ", "hiệu quả lâu dài", "我们要建立长效机制。", "Chúng ta phải xây dựng cơ chế lâu dài.",
-     "Tính từ, nghĩa là có hiệu quả lâu dài. Hay gặp: 长效机制, cơ chế hiệu quả lâu dài; 长效措施. Chữ 长 đọc cháng. Trong bài: 短期行动容易，长效推进不易, hành động ngắn hạn thì dễ, thúc đẩy lâu dài mới khó."),
+     "Tính từ, nghĩa là có hiệu quả lâu dài. Hay gặp: 长效机制, cơ chế hiệu quả lâu dài; 长效措施. Chữ đầu đọc cháng. Trong bài: 短期行动容易，长效推进不易, hành động ngắn hạn thì dễ, thúc đẩy lâu dài mới khó."),
     ("内化", "nèihuà", "nội hóa", "động từ", "thấm vào trong, biến thành cái của mình", "我们要将理论知识内化为行动实践。", "Chúng ta phải biến kiến thức lý thuyết thành hành động thực tiễn.",
      "Động từ, nghĩa là tiếp thu quan điểm của người khác, biến thành cái của chính mình. Mẫu hay gặp: A内化为B. Trong bài: 一时兴起的兴奋劲才会内化为持久的习惯, sự hào hứng nhất thời mới biến thành thói quen bền vững."),
     ("草根", "cǎogēn", "thảo căn", "danh từ", "người bình dân, giới bình dân", "他是一位草根英雄。", "Anh ấy là một người hùng bình dân.",
@@ -185,7 +185,7 @@ add("bullets", chapter="Từ mới (51 từ)", section="Từ mới 生词", titl
     say=["Bây giờ chúng ta sang phần một: từ mới. Bảng từ của sách có năm mươi tư từ. Thầy ghép ba từ vào phần giảng của từ gần nghĩa: 事理 giảng cùng 分寸, 热议 giảng cùng 热词 và 新奇, 后端 giảng cùng 前端.",
          F(1, "Như vậy còn năm mươi mốt từ, chia thành mười bảy nhóm. Với mỗi từ, các bạn nghe đọc mẫu hai lần, rồi đến âm Hán Việt, nghĩa và ví dụ."),
          F(2, "Bài này có nhiều từ mạng và từ thời sự rất sống động, như 热词，吐槽，试水，试错，一刀切，草根. Học xong, các bạn có thể đọc báo, lướt mạng Trung Quốc dễ dàng hơn nhiều."),
-         F(3, "Chú ý cách đọc: 铺垫 đọc pū; 扎根 đọc zhā; 长效 đọc cháng; còn âm tiết sau của 分寸 và 规矩 đọc nhẹ."),
+         F(3, "Chú ý cách đọc của mấy từ có chữ đa âm: 铺垫，扎根，长效; còn âm tiết sau của 分寸 và 规矩 đọc nhẹ. Thầy sẽ nhắc khi gặp từng từ."),
          F(4, "Ngoài ra có mấy từ Hán Việt dễ hiểu nhầm, như 区区，切身，借鉴. Các bạn nghe kỹ phần giải thích nhé. Chúng ta bắt đầu.")])
 
 sizes = [3] * 17
@@ -216,7 +216,7 @@ P = [
     ("何鼎鼎：2019年7月1日，《上海市生活垃圾管理条例》（以下简称《条例》）正式实施，对垃圾分类提出明确要求，“垃圾分类”一时间成了热词和技术活。将废弃物胡乱丢进垃圾桶，一扔了之的生活情景成了历史。",
      "Hà Đỉnh Đỉnh: Ngày 1 tháng 7 năm 2019, Điều lệ quản lý rác thải sinh hoạt thành phố Thượng Hải (dưới đây gọi tắt là Điều lệ) chính thức có hiệu lực, đặt ra yêu cầu rõ ràng về phân loại rác. “Phân loại rác” bỗng chốc trở thành từ khóa hot và một việc cần có kỹ thuật. Cảnh vứt bừa đồ bỏ đi vào thùng rác, vứt xong là xong chuyện, đã trở thành lịch sử.",
      ["何鼎鼎 là bình luận viên của Nhân dân Nhật báo, 本报评论员; người đối thoại là 朱珉迕, bình luận viên của Giải phóng Nhật báo, tờ báo lớn của Thượng Hải. 以下简称 là dưới đây gọi tắt là. 正式实施 là chính thức có hiệu lực.",
-      "一时间 là bỗng chốc, trong một thời gian ngắn. 技术活 là việc đòi hỏi kỹ thuật, ý đùa rằng phân loại rác khó như một nghề. 一扔了之 là vứt đi là xong chuyện: mẫu 一 cộng động từ cộng 了之, mẫu câu thứ nhất. Chữ 了 ở đây đọc liǎo."],
+      "一时间 là bỗng chốc, trong một thời gian ngắn. 技术活 là việc đòi hỏi kỹ thuật, ý đùa rằng phân loại rác khó như một nghề. 一扔了之 là vứt đi là xong chuyện: mẫu 一 cộng động từ cộng 了之, mẫu câu thứ nhất. Trong cụm 了之, chữ đầu đọc liǎo."],
      "何鼎鼎：二零一九年七月一日，《上海市生活垃圾管理条例》（以下简称《条例》）正式实施，对垃圾分类提出明确要求，垃圾分类一时间成了热词和技术活。将废弃物胡乱丢进垃圾桶，一扔了之的生活情景成了历史。"),
     ("“湿纸巾再湿也是干垃圾，干香菇再干也是湿垃圾”，“猪吃了会死的是有害垃圾，可以卖钱买猪的是可回收垃圾”，上海人用吐槽的方式学习和传播着分类知识，认真的样子让全国人民不得不点赞。",
      "“Khăn giấy ướt có ướt đến mấy cũng là rác khô, nấm hương khô có khô đến mấy cũng là rác ướt”, “thứ lợn ăn vào mà chết là rác độc hại, thứ bán lấy tiền mua được lợn là rác tái chế”: người Thượng Hải học và truyền bá kiến thức phân loại bằng những câu đùa tự trào, dáng vẻ nghiêm túc ấy khiến cả nước không thể không bấm like.",
@@ -287,11 +287,12 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
          F(2, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
          F(3, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
 
+ZS = {6: 50}  # cỡ chữ riêng cho đoạn dài hơn khung
 for i, item in enumerate(P, 1):
     zh, vi, notes = item[:3]
     spoken = item[3] if len(item) > 3 else zh.replace("“", "").replace("”", "")
     n = len(zh)
-    zsize = 54 if n <= 100 else 50 if n <= 125 else 46
+    zsize = ZS.get(i) or (54 if n <= 100 else 50 if n <= 125 else 46)
     add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
         say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
              F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", ""), cap="")] + [F(1, n) for n in notes])
@@ -339,7 +340,7 @@ add("bullets", chapter="Mẫu câu: 一V了之 · A归A · 区区 · 何必", se
            "虽然听到许多嘲讽，但他并不较真，只是一笑了之。"],
     say=["Bây giờ chúng ta sang phần mẫu câu trọng điểm. Bài này có tám mẫu. Mẫu thứ nhất: 一 cộng động từ cộng 了之.",
          F(0, "Mẫu này biểu thị chọn cách đơn giản, đỡ việc nhất để giải quyết vấn đề: làm một cái là xong chuyện, không quan tâm hậu quả. Thường mang sắc thái tiêu cực."),
-         F(1, "Chú ý: chữ 了 ở đây đọc liǎo, nghĩa là kết thúc, xong; 之 là đại từ chỉ sự việc. Hay gặp: 一扔了之, vứt đi là xong; 一走了之, bỏ đi là xong; 一笑了之, cười trừ cho qua; 一推了之, đẩy đi là xong."),
+         F(1, "Chú ý: trong 了之, chữ đầu đọc liǎo, nghĩa là kết thúc, xong; chữ sau là đại từ chỉ sự việc. Hay gặp: 一扔了之, vứt đi là xong; 一走了之, bỏ đi là xong; 一笑了之, cười trừ cho qua; 一推了之, đẩy đi là xong."),
          F(2, "Ví dụ một, từ bài khóa: 将废弃物胡乱丢进垃圾桶，一扔了之的生活情景成了历史。 Cảnh vứt bừa rác vào thùng, vứt xong là xong chuyện, đã thành lịch sử."),
          F(3, "Ví dụ hai: 面对巨大的家庭经济压力，他选择了一走了之。 Trước áp lực kinh tế gia đình quá lớn, anh ta chọn cách bỏ đi cho xong chuyện. Ở đây sắc thái tiêu cực rất rõ: trốn tránh trách nhiệm."),
          F(4, "Ví dụ ba: 虽然听到许多嘲讽，但他并不较真，只是一笑了之。 Tuy nghe nhiều lời chế giễu, nhưng anh ấy không chấp, chỉ cười cho qua. Ở câu này, 一笑了之 lại mang ý điềm tĩnh, độ lượng.")])
@@ -386,7 +387,7 @@ add("bullets", section="Mẫu câu 重点句型", title="6. 为……做（好�
            "……基层的大量试点、广泛的社会动员为最终的政策推行做好了铺垫。",
            "作为一名实习生，他紧紧抓住向前辈们学习的机会，现在的努力都是在为之后的工作做好铺垫。",
            "借着年终的时机，总经理带着下属一起拜访合作伙伴和老客户，为明年新的销售模式的推出做好铺垫。"],
-    say=["Mẫu thứ sáu: 为某事做铺垫, hoặc 为某事做好铺垫. Chữ 为 ở đây đọc wèi, nghĩa là cho, vì.",
+    say=["Mẫu thứ sáu: 为某事做铺垫, hoặc 为某事做好铺垫. Chữ đầu của mẫu đọc wèi, thanh bốn, nghĩa là cho, vì.",
          F(0, "Mẫu này biểu thị việc làm trước tạo điều kiện, tạo tiền đề cho việc sau. Tiếng Việt nói là làm nền cho, dọn đường cho, chuẩn bị cho."),
          F(1, "Ví dụ một, từ bài khóa: 基层的大量试点、广泛的社会动员为最终的政策推行做好了铺垫。 Rất nhiều điểm thí điểm ở cơ sở và sự vận động xã hội rộng rãi đã làm nền cho việc thực thi chính sách sau cùng."),
          F(2, "Ví dụ hai: 作为一名实习生，他紧紧抓住向前辈们学习的机会，现在的努力都是在为之后的工作做好铺垫。 Là một thực tập sinh, anh ấy nắm chặt cơ hội học hỏi các tiền bối; những cố gắng bây giờ đều là chuẩn bị cho công việc sau này."),
@@ -475,7 +476,7 @@ add("bullets", section="Thành ngữ 成语和惯用语", title="Thành ngữ (2
          F(1, "Ví dụ: 人们常说有志者事竟成，只有坚持不懈地努力拼搏，才能有所成就。 Người ta thường nói có chí thì nên, chỉ có kiên trì nỗ lực phấn đấu không ngừng mới đạt được thành tựu."),
          F(2, "一环扣一环: vòng này móc vào vòng kia, chỉ các sự việc liên quan chặt chẽ với nhau như mắt xích. Trong bài: 投放、收集、运输、处理等一环扣一环."),
          F(3, "Ví dụ: 这部电影人物众多、关系复杂，剧情一环扣一环、层层递进，扣人心弦。 Bộ phim này nhiều nhân vật, quan hệ phức tạp, tình tiết móc nối chặt chẽ, tăng tiến từng lớp, vô cùng hấp dẫn."),
-         F(4, "一时兴起: chữ 兴 đọc xìng, thanh bốn: bỗng nhiên nổi hứng nhất thời. Trong bài: 一时兴起的兴奋劲才会内化为持久的习惯."),
+         F(4, "一时兴起: chữ thứ ba đọc xìng, thanh bốn: bỗng nhiên nổi hứng nhất thời. Trong bài: 一时兴起的兴奋劲才会内化为持久的习惯."),
          F(5, "Ví dụ: 他买这些书只是一时兴起，带回家后就再也没翻开过。 Anh ấy mua mấy cuốn sách này chỉ vì hứng lên nhất thời, mang về nhà rồi không bao giờ mở ra nữa."),
          F(6, "毕其功于一役: 毕 là hoàn thành, 役 là trận đánh: muốn hoàn thành mọi việc chỉ trong một trận; cũng chỉ sự nóng vội muốn thành công ngay. Thường dùng ở dạng phủ định. Trong bài: 好习惯的养成不可能毕其功于一役."),
          F(7, "Ví dụ: 创建精神文明城市不能毕其功于一役，需要打持久战，年复一年，长抓不懈。 Xây dựng thành phố văn minh không thể xong trong một trận, cần đánh trận trường kỳ, năm này qua năm khác, kiên trì không lơi lỏng. Các bạn để ý, 毕其功于一役 và 持久战 thường đi cùng nhau.")])
@@ -649,13 +650,16 @@ lesson = {
                     "长效": "常效",            # chángxiào
                     "长达": "常达",            # chángdá
                     "长期": "常期",            # chángqī
+                    "长抓": "常抓",            # chángzhuā
                     "划出": "画出",            # huàchū
                     "相应": "相映",            # xiāngyìng
+                    "相处": "相楚",            # xiāngchǔ
                     "难处": "难触",            # nánchu
                     "空白": "控白",            # kòngbái
+                    "填空": "填控",            # tiánkòng
                     "调动": "掉动",            # diàodòng
                     "兴奋": "星奋",            # xīngfèn
-                    "兴起": "星起",            # xìngqǐ (theo bộ thay âm sẵn có)
+                    "一时兴起": "一时幸起",    # yīshí xìngqǐ
                     "内化为": "内化维",        # nèihuà wéi
                     "为随手分": "维随手分",    # wéi
                     "为最终": "位最终",        # wèi
@@ -667,20 +671,25 @@ lesson = {
                     "为以后": "位以后",        # wèi
                     "为某事": "位某事",        # wèi
                     "为同学们": "位同学们",    # wèi
-                    "为钱财": "位钱财",        # wèi
+                    "为人处事": "维人楚事",    # wéirén chǔshì
                     "作为": "作维",            # zuòwéi
                     "处理": "楚理",            # chǔlǐ
                     "还价": "环价",            # huánjià
                     "干劲": "赣劲",            # gànjìn
                     "强制": "墙制",            # qiángzhì
                     "累积": "垒积",            # lěijī
-                    "打瞌睡": "打瞌睡",
-                    "散发": "伞发",            # sànfā
-                    "处事": "楚事",            # chǔshì
-                    "称为": "称维"},           # chēngwéi
+                    "曾多次": "层多次",        # céng
+                    "数百年": "树百年",        # shù
+                    "差异": "插异",            # chāyì
+                    "无间": "无见",            # wújiàn
+                    "厦门": "夏门",            # Xiàmén
+                    "舍近求远": "捨近求远",    # shě
+                    "踏踏实实": "塌塌实实",    # tāta shíshí
+                    "参与": "参预",            # cānyù
+                    "行业": "航业",            # hángyè
+                    "增长": "增涨"},           # zēngzhǎng
     "slides": slides,
 }
-lesson["tts_replace"] = {k: v for k, v in lesson["tts_replace"].items() if k != v}
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds32.json")
 json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

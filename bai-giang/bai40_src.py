@@ -35,11 +35,11 @@ add("bullets", section="Mở đầu", title="Mục tiêu bài học",
            "Nắm vững 51 từ mới, kèm âm Hán Việt và ví dụ",
            "Ngữ pháp: (把)……放在眼里 và động từ 不无",
            "Phân biệt hai tính từ 顽强 và 坚强",
-           "Kỹ năng viết: kết cấu “tổng – phân” (先总说，再分说)"],
+           "Kỹ năng viết: kết cấu tổng – phân (先总说，再分说)"],
     say=["Bài học hôm nay có năm mục tiêu.",
          F(0, "Thứ nhất, hiểu nội dung bài khóa: thể lực của con người có giới hạn không, và vì sao kỷ lục thế giới vẫn liên tục bị phá."),
          F(1, "Thứ hai, nắm vững năm mươi mốt từ mới. Với mỗi từ, thầy sẽ đọc mẫu, cho các bạn âm Hán Việt để dễ nhớ, giải thích nghĩa và đưa ví dụ."),
-         F(2, "Thứ ba, học hai điểm ngữ pháp: cấu trúc 把……放在眼里, và động từ 不无."),
+         F(2, "Thứ ba, học hai điểm ngữ pháp: cấu trúc 把某某放在眼里, và động từ 不无."),
          F(3, "Thứ tư, phân biệt hai tính từ rất dễ nhầm: 顽强 và 坚强."),
          F(4, "Thứ năm, một kỹ năng viết rất thực dụng: kết cấu tổng phân, tiếng Trung gọi là 先总说，再分说, tức là nói khái quát trước, rồi mới nói cụ thể."),
          "Các bạn hãy chuẩn bị giấy bút, và đừng ngại tạm dừng video để ghi chép hoặc đọc theo nhé."])
@@ -60,7 +60,7 @@ add("bullets", chapter="Khởi động", section="Khởi động 热身", title=
          F(4, "这些器官与运动有什么关系？ Các cơ quan này liên quan gì đến vận động?"),
          F(5, "Và thầy hỏi thêm: 你知道哪些著名的运动员？他们打破过什么纪录？ Bạn biết những vận động viên nổi tiếng nào? Họ đã từng phá kỷ lục gì? Các bạn hãy tạm dừng video, thử trả lời bằng tiếng Trung, rồi mới xem tiếp nhé.")])
 
-add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 短 và 静", size=38,
+add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 短 và 静", size=35,
     items=["## 短 (đoản): ngắn",
            "短跑 chạy cự ly ngắn · 短程 cự ly ngắn · 短刀 dao găm · 短工 làm công thời vụ · 短见 thiển cận",
            "短裤 quần đùi · 短篇 truyện ngắn · 短期 ngắn hạn · 短语 cụm từ · 短暂 ngắn ngủi · 短小 nhỏ gọn",
@@ -77,7 +77,7 @@ add("bullets", section="Khởi động 热身", title="Học từ theo yếu t�
          F(5, "静止，静态，静养，静坐，安静，动静。 Tức là: đứng yên, trạng thái tĩnh, tĩnh dưỡng, ngồi yên, yên tĩnh, và động tĩnh. Bài khóa có cụm 从静止状态开跑, xuất phát từ trạng thái đứng yên."),
          F(6, "平静，文静，心静，镇静，平心静气，风平浪静。 Tức là: bình tĩnh, nho nhã điềm đạm, lòng thanh thản, trấn tĩnh, bình tâm tĩnh khí, và sóng yên biển lặng.")])
 
-add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 限 và 同", size=38,
+add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 限 và 同", size=35,
     items=["## 限 (hạn): giới hạn",
            "极限 cực hạn · 无限 vô hạn · 有限 hữu hạn · 上限 mức trần · 下限 mức sàn · 期限 kỳ hạn · 年限 niên hạn",
            "时限 thời hạn · 宽限 gia hạn · 界限 ranh giới · 权限 quyền hạn · 限制 hạn chế · 限度 hạn độ, mức độ",
@@ -203,7 +203,7 @@ add("bullets", chapter="Từ mới (51 từ)", section="Từ mới 生词", titl
     items=["Bài 40 có 51 từ mới, chia thành 17 nhóm nhỏ",
            "Mỗi từ: nghe đọc mẫu 2 lần → âm Hán Việt → nghĩa → ví dụ",
            "Hãy đọc to theo sau mỗi lần nghe",
-           "Cẩn thận “bạn giả”: 动员 ≠ động viên · 资产 ≠ tư sản · 分解 ≠ phân giải · 依托 ≠ ủy thác"],
+           "Cẩn thận bạn giả: 动员 ≠ động viên · 资产 ≠ tư sản · 分解 ≠ phân giải · 依托 ≠ ủy thác"],
     say=["Bây giờ chúng ta sang phần một: từ mới. Bài này có năm mươi mốt từ, thầy chia thành mười bảy nhóm nhỏ, mỗi nhóm ba từ.",
          F(1, "Với mỗi từ, các bạn sẽ nghe đọc mẫu hai lần, sau đó là âm Hán Việt, nghĩa, và một ví dụ."),
          F(2, "Hãy đọc to theo sau mỗi lần nghe, vì đọc thành tiếng giúp nhớ từ lâu hơn rất nhiều."),
@@ -229,8 +229,8 @@ P = [
       "Cách đọc số: 二十世纪九十年代 là thập niên chín mươi của thế kỷ hai mươi. Nghĩa là từ đó đến nay, rất nhiều kỷ lục vẫn chưa bị phá."],
      "我们一直以为世界纪录就是要不断被打破，但国际田联公布的各项比赛成绩却告诉我们，多数世界纪录都是在二十世纪九十年代创造的。"),
     ("此外，更有人引用《每日电讯报》的说法称：截至2060年，人类可能不会再创造体坛新纪录。",
-     "Ngoài ra, còn có người trích dẫn tờ “Điện tín hằng ngày” (The Daily Telegraph) cho rằng: tính đến năm 2060, có thể loài người sẽ không lập thêm được kỷ lục thể thao mới nào nữa.",
-     ["更有人 là thậm chí còn có người, mức độ mạnh hơn. 称 ở đây là nói rằng, cho rằng. 截至二零六零年 là tính đến năm hai không sáu mươi.",
+     "Ngoài ra, còn có người trích dẫn tờ Điện tín hằng ngày (The Daily Telegraph) cho rằng: tính đến năm 2060, có thể loài người sẽ không lập thêm được kỷ lục thể thao mới nào nữa.",
+     ["更有人 là thậm chí còn có người, mức độ mạnh hơn. 的说法称 ở đây là theo cách nói, cho rằng. 截至二零六零年 là tính đến năm hai không sáu mươi.",
       "体坛 là làng thể thao, giới thể thao. 创造新纪录 là lập kỷ lục mới. Chú ý 纪录 trong 世界纪录 viết với bộ mịch, nghĩa là kỷ lục."],
      "此外，更有人引用每日电讯报的说法称：截至二零六零年，人类可能不会再创造体坛新纪录。"),
     ("一个人的体能究竟有多大？人们在力争打破世界纪录的同时，不禁会对自己的身体产生疑问。",
@@ -245,12 +245,12 @@ P = [
     ("有专家认为，人类跑100米速度的极限应该是10.42秒，再考虑一般跑到80米才能达到全速，人类可能达到的最快速度大约为11.96秒。",
      "Có chuyên gia cho rằng, giới hạn tốc độ chạy 100 mét của con người đáng lẽ là 10,42 giây; lại xét đến việc thường phải chạy đến mét thứ 80 mới đạt tốc độ tối đa, thì tốc độ nhanh nhất con người có thể đạt được vào khoảng 11,96 giây.",
      ["Cách đọc số: 十点四二秒 là mười phẩy bốn hai giây; 十一点九六秒 là mười một phẩy chín sáu giây. Các con số này được ghi đúng như trong sách.",
-      "再考虑…… là lại xét thêm…. 全速 là tốc độ tối đa. 大约为 là vào khoảng, 为 ở đây bằng 是."],
+      "再考虑…… là lại xét thêm…. 全速 là tốc độ tối đa. 大约为 là vào khoảng, nghĩa giống 大约是."],
      "有专家认为，人类跑一百米速度的极限应该是十点四二秒，再考虑一般跑到八十米才能达到全速，人类可能达到的最快速度大约为十一点九六秒。"),
     ("然而，在那条狭窄的跑道上，任性的牙买加田径比赛选手博尔特简直就不把世界纪录放在眼里！",
      "Thế nhưng, trên đường chạy chật hẹp ấy, vận động viên điền kinh người Jamaica ngang tàng Usain Bolt quả thực chẳng coi kỷ lục thế giới ra gì!",
      ["然而 là thế nhưng, đánh dấu bước ngoặt: chuyên gia nói có giới hạn, nhưng Bolt lại liên tục phá kỷ lục. 牙买加 là Jamaica, 博尔特 là Usain Bolt.",
-      "简直 là quả thực, gần như là. 不把……放在眼里 là không coi… ra gì, đây là điểm ngữ pháp thứ nhất của bài."]),
+      "简直 là quả thực, gần như là. 不把某某放在眼里 là không coi… ra gì, đây là điểm ngữ pháp thứ nhất của bài."]),
     ("2008年6月1日，在美国纽约锐步大奖赛上，他以9.72秒的成绩获得100米短跑冠军，打破了同胞鲍威尔保持的9.74秒的世界纪录；",
      "Ngày 1 tháng 6 năm 2008, tại giải Grand Prix Reebok ở New York, Mỹ, anh đã giành chức vô địch chạy 100 mét với thành tích 9,72 giây, phá kỷ lục thế giới 9,74 giây do người đồng hương Asafa Powell nắm giữ;",
      ["以……的成绩 là với thành tích…. 保持纪录 là giữ kỷ lục. 纽约 là New York, 锐步大奖赛 là giải Grand Prix Reebok, 鲍威尔 là Asafa Powell.",
@@ -277,7 +277,7 @@ P = [
       "Cách đọc: 二百米 hoặc 两百米 là hai trăm mét; 第二个一百米 là một trăm mét thứ hai. Ý nói tốc độ thật của Bolt còn nhanh hơn thành tích ghi trên bảng."],
      "如果他跑二百米，那么，第二个一百米会比第一个一百米快，因为没有起跑的过程。"),
     ("数据相差如此悬殊，我们到底信谁？飞人博尔特创造的奇迹怎么解释？我们还能迷信专家吗？",
-     "Số liệu chênh lệch lớn đến thế, rốt cuộc chúng ta tin ai? Kỳ tích mà “người bay” Bolt tạo ra giải thích thế nào? Chúng ta còn có thể tin mù quáng vào chuyên gia được nữa không?",
+     "Số liệu chênh lệch lớn đến thế, rốt cuộc chúng ta tin ai? Kỳ tích mà người bay Bolt tạo ra giải thích thế nào? Chúng ta còn có thể tin mù quáng vào chuyên gia được nữa không?",
      ["相差如此悬殊 là chênh lệch lớn đến thế. 飞人 là người bay, biệt danh của vận động viên chạy cực nhanh.",
       "Ba câu hỏi liên tiếp thể hiện sự băn khoăn của dư luận, tạo cao trào cho bài viết. 迷信 ở đây là động từ, tin mù quáng."]),
     ("一时舆论哗然，质疑不断，专家、学者、网民纷纷自发掀起人体极限的讨论。",
@@ -305,7 +305,7 @@ P = [
      ["拿……来说 là lấy… mà nói, dùng để đưa ra ví dụ. 管辖着全身 là cai quản toàn thân, biện pháp nhân hóa.",
       "再……也…… là dù… đến mấy cũng…: 腿再快也不管用. 不管用 là không có tác dụng, vô dụng."]),
     ("人进入运动状态后，心率加快，运动时最高心率＝（220－年龄）次/分。运动时的心率应在一定范围内，低限一般是最高心率的60%，高限一般是最高心率的85%。",
-     "Sau khi con người bước vào trạng thái vận động, nhịp tim tăng nhanh; nhịp tim tối đa khi vận động = (220 – tuổi) lần/phút. Nhịp tim khi vận động nên nằm trong một phạm vi nhất định: mức thấp thường là 60% nhịp tim tối đa, mức cao thường là 85% nhịp tim tối đa.",
+     "Sau khi con người bước vào trạng thái vận động, nhịp tim tăng nhanh; nhịp tim tối đa khi vận động bằng 220 trừ đi số tuổi, tính theo số lần mỗi phút. Nhịp tim khi vận động nên nằm trong một phạm vi nhất định: mức thấp thường là 60% nhịp tim tối đa, mức cao thường là 85% nhịp tim tối đa.",
      ["心率 là nhịp tim. Công thức đọc là: 最高心率等于二百二十减去年龄，单位是次每分钟. Nghĩa là nhịp tim tối đa bằng hai trăm hai mươi trừ đi số tuổi.",
       "低限 là mức thấp, 高限 là mức cao. 百分之六十 là sáu mươi phần trăm, 百分之八十五 là tám mươi lăm phần trăm. Nhớ: tiếng Trung nói 百分之 trước, rồi mới đến con số."],
      "人进入运动状态后，心率加快，运动时最高心率等于二百二十减去年龄，单位是次每分钟。运动时的心率应在一定范围内，低限一般是最高心率的百分之六十，高限一般是最高心率的百分之八十五。"),
@@ -315,7 +315,7 @@ P = [
       "Các bạn thử tính nhé: hai trăm hai mươi trừ bốn mươi là một trăm tám mươi; sáu mươi phần trăm là một trăm lẻ tám, tám mươi lăm phần trăm khoảng một trăm năm mươi. Cách đọc: 每分钟一百零八到一百五十次."],
      "如一名四十岁的人，运动时的心率应保持在每分钟一百零八到一百五十次左右，严禁超过心率的极限值，否则会因供血不足发生猝死。"),
     ("每个人的运动极限都不同，长期正规科学的训练，多次接近实战性的“演习”，可以让自己越来越接近极限。",
-     "Giới hạn vận động của mỗi người đều khác nhau. Tập luyện lâu dài, bài bản và khoa học, cộng với nhiều lần “diễn tập” gần giống thực chiến, có thể giúp bản thân ngày càng tiến gần đến giới hạn.",
+     "Giới hạn vận động của mỗi người đều khác nhau. Tập luyện lâu dài, bài bản và khoa học, cộng với nhiều lần diễn tập gần giống thực chiến, có thể giúp bản thân ngày càng tiến gần đến giới hạn.",
      ["长期正规科学的训练 là tập luyện lâu dài, chính quy, khoa học. 实战性 là tính thực chiến, sát với thi đấu thật.",
       "越来越接近极限 là ngày càng tiến gần giới hạn. Chú ý: đến gần giới hạn, chứ không nói là vượt qua giới hạn."]),
     ("人的心理因素弹性很大，积极的精神状态可以激发身体潜能，从而让运动员在竞赛中超水平发挥。",
@@ -332,7 +332,7 @@ P = [
      ["Câu dùng phép đối: 年轻运动员 đối với 老运动员, mỗi bên có ưu thế riêng. 丰厚 là dồi dào. 过硬 là vững vàng, chịu được thử thách.",
       "这些使…… là những điều này khiến…. 依然 là vẫn, vẫn như cũ. 充满信心 là tràn đầy niềm tin."]),
     ("体育界有种说法：“运动员选对了，就成功了一半；通过训练让运动员的超能力发挥出来，那就是百分之百的成功。”",
-     "Giới thể thao có một câu nói: “Chọn đúng vận động viên là đã thành công một nửa; thông qua tập luyện để phát huy siêu năng lực của vận động viên, thì đó là thành công trăm phần trăm.”",
+     "Giới thể thao có một câu nói: chọn đúng vận động viên là đã thành công một nửa; thông qua tập luyện để phát huy siêu năng lực của vận động viên, thì đó là thành công trăm phần trăm.",
      ["有种说法 là có một cách nói, có câu rằng. 选对了 là chọn đúng rồi, bổ ngữ kết quả 对.",
       "超能力 là siêu năng lực, từ có trong tên bài. 百分之百 là trăm phần trăm, hoàn toàn."]),
     ("优秀的选手和科学训练相辅相成，是通往成功的有效手段。",
@@ -344,7 +344,7 @@ P = [
      ["依托……来…… là dựa vào… để…. 超高速摄影机 là máy quay tốc độ siêu cao. 以及 là cùng với, và, cách nói văn viết.",
       "Hai vế 指导训练 và 指导比赛 song song với nhau: chỉ đạo tập luyện, chỉ đạo thi đấu."]),
     ("谁能顽强地越过人体极限这道“悬崖峭壁”，找到体能的“突破口”，谁就能成为无数竞争者中涌现出来的明星，这也是一个公认的事实。",
-     "Ai có thể ngoan cường vượt qua “vách đá dựng đứng” mang tên giới hạn cơ thể, tìm ra “điểm đột phá” của thể lực, thì người đó sẽ trở thành ngôi sao nổi lên giữa vô số đối thủ. Đó cũng là một sự thật được mọi người công nhận.",
+     "Ai có thể ngoan cường vượt qua vách đá dựng đứng mang tên giới hạn cơ thể, tìm ra điểm đột phá của thể lực, thì người đó sẽ trở thành ngôi sao nổi lên giữa vô số đối thủ. Đó cũng là một sự thật được mọi người công nhận.",
      ["谁……，谁就…… là ai… thì người đó…, đại từ nghi vấn dùng với nghĩa phiếm chỉ. 道 là lượng từ cho vách núi, cửa ải.",
       "突破口 là điểm đột phá. 公认 là được mọi người công nhận. Bài văn kết thúc bằng một thông điệp lạc quan: giới hạn vẫn có thể bị thách thức."]),
 ]
@@ -392,12 +392,12 @@ add("bullets", chapter="Ngữ pháp: (把)……放在眼里", section="Ngữ ph
            "在那条狭窄的跑道上，任性的牙买加田径比赛选手博尔特简直就不把世界纪录放在眼里！",
            "一时间，大家都想挣钱，而且是想短时间挣大钱，以致一些商家根本不把10%的利润率放在眼里。",
            "烈日暴晒、大雨浇头、蚊虫叮咬，这些别人吃不了的苦他都不放在眼里，他心里只有一个念头：这次只能成功，不能失败。"],
-    say=["Bây giờ chúng ta sang phần ngữ pháp. Điểm thứ nhất là cấu trúc 把……放在眼里.",
+    say=["Bây giờ chúng ta sang phần ngữ pháp. Điểm thứ nhất là cấu trúc 把某某放在眼里.",
          F(0, "Nghĩa đen là đặt vào trong mắt; nghĩa là coi trọng, xem trọng. Cấu trúc này thường dùng trong khẩu ngữ."),
-         F(1, "Trong thực tế, nó hay xuất hiện ở dạng phủ định: 不把……放在眼里, nghĩa là không coi… ra gì, coi thường. Chữ 把 trong ngoặc có thể lược bỏ, khi đó đối tượng được đưa lên đầu câu."),
+         F(1, "Trong thực tế, nó hay xuất hiện ở dạng phủ định: 不把某某放在眼里, nghĩa là không coi… ra gì, coi thường. Thành phần trong ngoặc có thể lược bỏ, khi đó đối tượng được đưa lên đầu câu."),
          F(2, "Ví dụ một, lấy từ bài khóa: 在那条狭窄的跑道上，任性的牙买加田径比赛选手博尔特简直就不把世界纪录放在眼里！ Trên đường chạy chật hẹp ấy, Bolt quả thực chẳng coi kỷ lục thế giới ra gì."),
          F(3, "Ví dụ hai: 一时间，大家都想挣钱，而且是想短时间挣大钱，以致一些商家根本不把百分之十的利润率放在眼里。 Một dạo, ai cũng muốn kiếm tiền, lại muốn kiếm tiền lớn trong thời gian ngắn, đến nỗi một số người buôn bán hoàn toàn không coi mức lãi mười phần trăm ra gì."),
-         F(4, "Ví dụ ba: 烈日暴晒、大雨浇头、蚊虫叮咬，这些别人吃不了的苦他都不放在眼里。 Nắng gắt thiêu đốt, mưa to xối đầu, muỗi đốt côn trùng cắn, những nỗi khổ người khác không chịu nổi thì anh ấy đều chẳng coi ra gì. 他心里只有一个念头：这次只能成功，不能失败。 Trong lòng anh chỉ có một ý nghĩ: lần này chỉ được thành công, không được thất bại. Ở câu này, đối tượng 这些苦 đứng đầu câu, nên không cần chữ 把.")])
+         F(4, "Ví dụ ba: 烈日暴晒、大雨浇头、蚊虫叮咬，这些别人吃不了的苦他都不放在眼里。 Nắng gắt thiêu đốt, mưa to xối đầu, muỗi đốt côn trùng cắn, những nỗi khổ người khác không chịu nổi thì anh ấy đều chẳng coi ra gì. 他心里只有一个念头：这次只能成功，不能失败。 Trong lòng anh chỉ có một ý nghĩ: lần này chỉ được thành công, không được thất bại. Ở câu này, đối tượng 这些别人吃不了的苦 đứng đầu câu, nên không cần dùng dạng 把这些苦.")])
 
 add("bullets", section="Ngữ pháp 注释", title="Luyện tập: chọn cụm từ thích hợp điền vào chỗ trống", reveal=True, size=36,
     items=["## 把这个毛头小子放在眼里 · 谁都不放在眼里 · 把任何危险都不放在眼里",
@@ -413,10 +413,10 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: chọn cụm 
          F(3, "Câu hai: 他知道，现在忠诚、勇敢、智慧的全部内容就是：保持头脑清醒；沉着，什么什么。 Anh ấy biết, lúc này toàn bộ nội dung của trung thành, dũng cảm và trí tuệ là: giữ đầu óc tỉnh táo; bình tĩnh, và thế nào đó."),
          F(4, "Đáp án: 把任何危险都不放在眼里。 Bình tĩnh, không coi bất cứ nguy hiểm nào ra gì."),
          F(5, "Câu ba: 他这位世界冠军怎么会什么什么，可是几个回合下来就发现，这毛头小子还真是轻视不得。 Anh ta là nhà vô địch thế giới, làm sao lại thế nào đó, nhưng sau vài hiệp đấu thì phát hiện, cậu nhóc này quả thật không thể coi thường."),
-         F(6, "Đáp án: 把这个毛头小子放在眼里。 Một nhà vô địch thế giới làm sao lại coi cậu nhóc ấy ra gì. Chú ý: 怎么会 là câu hỏi tu từ, mang nghĩa phủ định, nên ở đây dùng dạng khẳng định 把……放在眼里.")])
+         F(6, "Đáp án: 把这个毛头小子放在眼里。 Một nhà vô địch thế giới làm sao lại coi cậu nhóc ấy ra gì. Chú ý: 怎么会 là câu hỏi tu từ, mang nghĩa phủ định, nên ở đây dùng dạng khẳng định 把某某放在眼里.")])
 
 add("bullets", chapter="Ngữ pháp: 不无", section="Ngữ pháp 注释", title="2. 不无 bùwú – không phải là không có, ít nhiều có", size=38,
-    items=["Động từ: “không phải không có, ít nhiều cũng có” – cách nói giảm nhẹ, uyển chuyển",
+    items=["Động từ: không phải không có, ít nhiều cũng có – cách nói giảm nhẹ, uyển chuyển",
            "Cấu trúc: 不无 + danh từ / động từ hai âm tiết (道理、关系、好处、得意……)",
            "也有人从运动医学和心理学角度出发，其观点也不无道理。",
            "他写的剧本里有很多关于股市及金融的内容，大概和他曾经从商不无关系。",
@@ -426,7 +426,7 @@ add("bullets", chapter="Ngữ pháp: 不无", section="Ngữ pháp 注释", titl
          F(1, "Phía sau 不无 thường là một từ hai âm tiết, như 道理，关系，好处，得意. 不无道理 là cũng có lý, 不无关系 là ít nhiều có liên quan."),
          F(2, "Ví dụ một, lấy từ bài khóa: 也有人从运动医学和心理学角度出发，其观点也不无道理。 Cũng có người xuất phát từ góc độ y học thể thao và tâm lý học, quan điểm của họ cũng không phải là không có lý."),
          F(3, "Ví dụ hai: 他写的剧本里有很多关于股市及金融的内容，大概和他曾经从商不无关系。 Kịch bản anh ấy viết có rất nhiều nội dung về chứng khoán và tài chính, có lẽ ít nhiều liên quan đến việc anh từng kinh doanh."),
-         F(4, "Ví dụ ba: 会上，经理不无得意地宣布，我们的产品被评为消费者信得过产品。 Tại cuộc họp, giám đốc có phần đắc ý tuyên bố rằng sản phẩm của chúng ta được bình chọn là sản phẩm người tiêu dùng tin cậy. Ở đây 不无得意 làm trạng ngữ, đi với 地."),
+         F(4, "Ví dụ ba: 会上，经理不无得意地宣布，我们的产品被评为消费者信得过产品。 Tại cuộc họp, giám đốc có phần đắc ý tuyên bố rằng sản phẩm của chúng ta được bình chọn là sản phẩm người tiêu dùng tin cậy. Ở đây 不无得意 làm trạng ngữ: 不无得意地宣布."),
          "So sánh: nói 有道理 là khẳng định thẳng, còn 不无道理 nhẹ nhàng hơn, nghĩa là ít nhiều cũng có lý. Người viết dùng 不无 khi muốn thừa nhận một phần nhưng vẫn giữ khoảng cách."])
 
 add("bullets", section="Ngữ pháp 注释", title="Luyện tập: chọn từ thích hợp điền vào chỗ trống", reveal=True, size=34,
@@ -450,14 +450,14 @@ add("compare", chapter="Phân biệt 顽强 – 坚强", section="Phân biệt t
     common="Giống nhau: đều là tính từ, nghĩa là mạnh mẽ, không thể lay chuyển. Ví dụ: 他很顽强/坚强，没有向困难低过头。",
     cols=[{"head": "顽强",
            "lines": ["(1) Dùng được với nghĩa xấu: 改革受到旧势力的顽强抵抗。",
-                     "(2) Tả cả ý chí lẫn hành động, nghĩa là “không bỏ cuộc”",
+                     "(2) Tả cả ý chí lẫn hành động, nghĩa là không bỏ cuộc",
                      "Đúng: 他们顽强拼搏，终于赢得了第一名。",
                      "(3) Không dùng làm động từ"]},
           {"head": "坚强",
            "lines": ["(1) Không dùng với nghĩa xấu",
-                     "(2) Chỉ tả ý chí, nhấn mạnh sự “vững mạnh”",
+                     "(2) Chỉ tả ý chí, nhấn mạnh sự vững mạnh",
                      "Sai: 他们坚强拼搏。",
-                     "(3) Làm động từ “làm cho vững”: 坚强自己的信心。"]}],
+                     "(3) Làm động từ làm cho vững: 坚强自己的信心。"]}],
     say=["Tiếp theo là phần phân biệt từ: 顽强 và 坚强. Tiếng Việt thường dịch cả hai là kiên cường, ngoan cường, nên rất dễ dùng lẫn.",
          "Điểm giống nhau: cả hai đều là tính từ, đều có nghĩa mạnh mẽ, không thể lay chuyển, không thể đánh gục. Ví dụ: 他很顽强, hoặc 他很坚强, 没有向困难低过头。 Anh ấy rất kiên cường, chưa từng cúi đầu trước khó khăn.",
          F(0, "Điểm khác thứ nhất. 顽强 dùng được với nghĩa xấu, tức là ngoan cố. Ví dụ: 改革受到旧势力的顽强抵抗。 Cải cách gặp phải sự chống cự ngoan cố của thế lực cũ."),
@@ -474,7 +474,7 @@ add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: Đú
            "(2) 你一定要顽强自己的意志，做生活的强者。",
            "Đáp án: Sai – 顽强 không làm động từ. Sửa: 坚强自己的意志。",
            "(3) 她在腿部受伤的情况下顽强奋战，终于获得冠军。",
-           "Đáp án: Đúng – 顽强 tả hành động (奋战), nghĩa “không bỏ cuộc”.",
+           "Đáp án: Đúng – 顽强 tả hành động (奋战), nghĩa không bỏ cuộc.",
            "(4) 不管敌人怎样坚强抗拒，最终注定要失败。",
            "Đáp án: Sai – nghĩa xấu không dùng 坚强. Sửa: 顽强抗拒。"],
     say=[F(0, "Bây giờ chúng ta làm thử. Câu một: 他以坚强的意志坚持治疗，苦练身体，终于战胜了病魔。 Anh ấy dùng ý chí kiên cường để kiên trì điều trị, chăm chỉ rèn luyện thân thể, cuối cùng đã chiến thắng bệnh tật. Đúng hay sai? Các bạn suy nghĩ nhé."),
@@ -544,7 +544,7 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 2: Dùng từ c
          F(1, "Đáp án gợi ý: 截至上个月底，这项工作已进行了一大半。 Tính đến cuối tháng trước, công việc này đã tiến hành được quá nửa. Nhớ: sau 截至 là một mốc thời gian."),
          F(2, "Câu hai, dùng 力争: 在比赛中，我们什么什么。 Trong cuộc thi, chúng tôi làm sao?"),
          F(3, "Đáp án gợi ý: 在比赛中，我们力争取得前三名的好成绩。 Trong cuộc thi, chúng tôi phấn đấu giành thành tích lọt vào ba hạng đầu."),
-         F(4, "Câu ba, dùng 把……放在眼里: 他什么什么，让老板恼羞成怒。 Anh ta làm gì đó, khiến ông chủ xấu hổ hóa giận. 恼羞成怒 là thẹn quá hóa giận."),
+         F(4, "Câu ba, dùng 把某某放在眼里: 他什么什么，让老板恼羞成怒。 Anh ta làm gì đó, khiến ông chủ xấu hổ hóa giận. 恼羞成怒 là thẹn quá hóa giận."),
          F(5, "Đáp án gợi ý: 他根本不把老板的话放在眼里，让老板恼羞成怒。 Anh ta hoàn toàn không coi lời ông chủ ra gì, khiến ông chủ thẹn quá hóa giận.")])
 
 add("bullets", section="Luyện tập 练习", title="Bài tập 2: Dùng từ cho sẵn hoàn thành câu (2)", reveal=True, size=38,
@@ -575,7 +575,7 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ 
          F(4, "运动员通过科学什么的训练，再加上良好的心理素质和什么上游的精神，是可以在什么中超水平发挥的。也就是说，一个优秀的什么，除了要具有良好的身体条件以外，什么的意志也是必不可少的。"),
          F(5, "Đáp án: 运动员通过科学正规的训练，再加上良好的心理素质和力争上游的精神，是可以在竞赛中超水平发挥的。也就是说，一个优秀的选手，除了要具有良好的身体条件以外，顽强的意志也是必不可少的。 Vận động viên được tập luyện khoa học, bài bản, cộng với tố chất tâm lý tốt và tinh thần vươn lên, thì có thể thi đấu xuất thần; một tuyển thủ xuất sắc ngoài thể chất tốt, ý chí ngoan cường cũng không thể thiếu. 力争上游 là thành ngữ, nghĩa là cố gắng vươn lên hàng đầu.")])
 
-add("bullets", section="Luyện tập 练习", title="Mở rộng 扩展: từ ngữ quân sự", reveal=True, size=34,
+add("bullets", section="Luyện tập 练习", title="Mở rộng 扩展: từ ngữ quân sự", reveal=True, size=33,
     items=["## 冲突 · 戒备 · 投降 · 牺牲 · 巡逻 · 掩护 · 阵地 · 后勤",
            "(1) 由于边界划分不清，两国士兵常常发生___。 (2) 他为国___时年仅16岁。",
            "Đáp án: (1) 冲突 · (2) 牺牲",
@@ -617,7 +617,7 @@ add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng k�
            "Dựa vào bài tập 5, viết lại bài khóa thành đoạn văn khoảng 400 chữ, áp dụng kết cấu tổng – phân"],
     say=["Chúng ta cùng tổng kết bài bốn mươi.",
          F(0, "Về từ vựng, các bạn cần đặc biệt nhớ: 截至，极限，领先，悬殊，迷信，动员，制约，顽强，得天独厚，相辅相成，涌现. Và đừng quên các bạn giả: 动员 không phải động viên, 资产 không phải tư sản."),
-         F(1, "Về ngữ pháp: 把……放在眼里 nghĩa là coi trọng, hay dùng ở dạng phủ định 不把……放在眼里, nghĩa là coi thường. 不无 nghĩa là không phải không có, ít nhiều có, như 不无道理."),
+         F(1, "Về ngữ pháp: 把某某放在眼里 nghĩa là coi trọng, hay dùng ở dạng phủ định 不把某某放在眼里, nghĩa là coi thường. 不无 nghĩa là không phải không có, ít nhiều có, như 不无道理."),
          F(2, "Về phân biệt từ: 顽强 tả cả ý chí lẫn hành động, có thể mang nghĩa xấu; 坚强 chỉ tả ý chí, luôn mang nghĩa tốt, và còn làm được động từ."),
          F(3, "Về kỹ năng viết: kết cấu tổng phân, câu đầu khái quát ý chính, các câu sau dùng luận điểm cụ thể để giải thích."),
          F(5, "Bài tập về nhà: phần vận dụng của sách hỏi: 世界纪录能不断被打破吗？人类的运动极限到底在哪儿？ Kỷ lục thế giới có thể bị phá mãi không? Giới hạn vận động của con người rốt cuộc nằm ở đâu? Các bạn hãy tham khảo bài tập năm, viết lại bài khóa thành một đoạn văn khoảng bốn trăm chữ. Mỗi đoạn hãy mở đầu bằng một câu tổng, rồi mới đến các câu phân nhé.")])
@@ -644,7 +644,6 @@ lesson = {
     "tts_replace": {"供血不足": "工谑不足",      # gōngxuè, tránh đọc gòng/xiě
                     "为国牺牲": "位国牺牲",      # wèi
                     "连只苍蝇": "连枝苍蝇",      # zhī (lượng từ)
-                    "睡大觉": "睡大叫",          # jiào
                     "改了行": "改了航",          # háng (nghề)
                     "不禁": "不今",              # bùjīn
                     "哗然": "华然",              # huárán
@@ -656,7 +655,6 @@ lesson = {
                     "处于": "楚于",              # chǔyú
                     "所处": "所楚",              # suǒ chǔ
                     "沉着": "沉酌",              # chénzhuó
-                    "屏息": "饼息",              # bǐngxī
                     "生长": "生涨",              # shēngzhǎng
                     "干好": "赣好"},             # gàn hǎo
     "slides": slides,

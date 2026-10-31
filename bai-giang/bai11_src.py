@@ -218,7 +218,7 @@ P = [
     ("钱小奇养了3只猫。大黄原本是只流浪猫，那天，淋着大雨来钱小奇家拜访，下完雨就不走了。",
      "Tiền Tiểu Kỳ nuôi ba con mèo. Đại Hoàng vốn là một con mèo hoang. Hôm ấy, nó đội mưa to đến nhà Tiền Tiểu Kỳ thăm hỏi, mưa tạnh rồi cũng chẳng chịu đi nữa.",
      ["大黄 là tên con mèo, nghĩa là Vàng To, chắc vì bộ lông màu vàng. 原本 là vốn dĩ, ban đầu. 是只流浪猫 là cách nói tắt của 是一只流浪猫.",
-      "淋着大雨 là đội mưa to; 着 chỉ trạng thái đi kèm hành động 来. Tác giả dùng 拜访 cho một con mèo hoang, như thể nó là vị khách lịch sự đến chơi rồi ở lại luôn. Thật dí dỏm!"],
+      "淋着大雨 là đội mưa to; trợ từ ở giữa chỉ trạng thái đi kèm hành động đến. Tác giả dùng 拜访 cho một con mèo hoang, như thể nó là vị khách lịch sự đến chơi rồi ở lại luôn. Thật dí dỏm!"],
      "钱小奇养了三只猫。大黄原本是只流浪猫，那天，淋着大雨来钱小奇家拜访，下完雨就不走了。"),
     ("见多识广的大黄虽有流浪史，却很有教养，它既不懒惰，也不嘴馋，天天趴在窗台上晒太阳，一副知足常乐的样子。",
      "Đại Hoàng thấy nhiều biết rộng, tuy có quá khứ lang thang, nhưng lại rất có giáo dục. Nó vừa không lười biếng, vừa không tham ăn, ngày ngày nằm bò trên bậu cửa sổ phơi nắng, ra dáng một kẻ biết đủ và luôn vui vẻ.",
@@ -238,7 +238,7 @@ P = [
       "把自己梳理得漂亮而迷人 là câu chữ 把 có bổ ngữ trạng thái: chải chuốt cho bản thân trở nên xinh đẹp. 而 nối hai tính từ: 漂亮而迷人, 快活而好动."]),
     ("钱小奇是个模范饲养员，每天早起第一件事就是伺候猫：清洁猫舍，喂水，喂饭。",
      "Tiền Tiểu Kỳ là một người nuôi mèo gương mẫu, mỗi sáng thức dậy việc đầu tiên là chăm sóc lũ mèo: dọn dẹp chuồng mèo, cho uống nước, cho ăn.",
-     ["伺候 nghĩa là hầu hạ, chăm sóc; chữ đầu đọc là cì. 猫舍 là chỗ ở của mèo, 舍 là nhà, như trong 宿舍.",
+     ["伺候 nghĩa là hầu hạ, chăm sóc; chữ đầu đọc là cì. 猫舍 là chỗ ở của mèo, chữ sau giống chữ trong từ 宿舍, nghĩa là nhà.",
       "Dấu hai chấm dùng để liệt kê những việc cụ thể của 伺候猫. Gọi người nuôi mèo là 模范饲养员 là cách nói hài hước."]),
     ("他虽然工作繁忙，但每天最急切盼望的就是回家开门的那一刻——大黄和白白在门口等候他，喜儿则毫无例外地站在远处，用凝视表达着它深沉的热情。",
      "Tuy công việc bận rộn, nhưng điều anh nôn nóng mong đợi nhất mỗi ngày chính là giây phút mở cửa về nhà: Đại Hoàng và Bạch Bạch chờ anh ở cửa, còn Hỷ Nhi thì không lần nào khác, luôn đứng ở đằng xa, dùng ánh nhìn chăm chú để bày tỏ sự nhiệt tình sâu lắng của nó.",
@@ -247,7 +247,7 @@ P = [
     ("钱小奇很好奇，自己不在家时猫在做什么？那么长时间，猫们多无聊，会不会忧郁得生病？",
      "Tiền Tiểu Kỳ rất tò mò, lúc mình không có nhà thì lũ mèo làm gì? Thời gian dài như thế, lũ mèo buồn chán biết bao, liệu có buồn bực đến phát bệnh không?",
      ["猫们 là cách nói nhân hóa, vì bình thường 们 chỉ dùng cho người. 多无聊 là buồn chán biết bao, 多 ở đây là phó từ cảm thán.",
-      "忧郁得生病 là buồn rầu đến mức sinh bệnh, động từ cộng 得 cộng kết quả. Đây là câu hỏi chính của bài, cũng là tên bài khóa."]),
+      "忧郁得生病 là buồn rầu đến mức sinh bệnh, đây là bổ ngữ chỉ mức độ. Đây là câu hỏi chính của bài, cũng là tên bài khóa."]),
     ("为了弄清楚这事，他在家里安了个摄像头，监视猫的一举一动。",
      "Để làm rõ chuyện này, anh lắp một chiếc camera trong nhà, theo dõi nhất cử nhất động của lũ mèo.",
      ["弄清楚 là làm cho rõ ràng. 安 ở đây là lắp đặt, giống 安装. 摄像头 là camera, webcam.",
@@ -259,14 +259,14 @@ P = [
     ("他边钻研边安装，经过三个多月的努力，安装好的设备不仅能够对猫的动态进行抓拍并储存下图像，钱小奇在外面时还能通过互联网遥控摄像头，对家里的猫进行即时监控，同时能通过操纵、移动摄像头，跟踪到家里的任何一个角落。",
      "Anh vừa mày mò vừa lắp đặt, sau hơn ba tháng nỗ lực, bộ thiết bị lắp xong không những có thể chụp nhanh và lưu lại hình ảnh hoạt động của mèo, mà khi ở bên ngoài, anh còn có thể điều khiển camera từ xa qua Internet để giám sát lũ mèo theo thời gian thực, đồng thời điều khiển, di chuyển camera để theo dõi tới mọi ngóc ngách trong nhà.",
      ["边……边…… là vừa… vừa…. 三个多月 là hơn ba tháng; 多 đứng sau lượng từ 个 chỉ số lẻ.",
-      "对……进行…… là tiến hành… đối với…, cấu trúc văn viết: 对猫的动态进行抓拍, 对家里的猫进行即时监控. 抓拍 là chụp nhanh khoảnh khắc. 不仅……还…… là không những… mà còn…."]),
+      "对……进行…… là tiến hành… đối với…, cấu trúc văn viết: 对猫的动态进行抓拍, 对家里的猫进行即时监控. 抓拍 là chụp nhanh khoảnh khắc. 不仅……还能…… là không những… mà còn…."]),
     ("通过对大量数据和图片进行分析，钱小奇发现，这三只猫大多数时间都在睡觉。",
      "Thông qua phân tích một lượng lớn dữ liệu và hình ảnh, Tiền Tiểu Kỳ phát hiện ba con mèo này phần lớn thời gian đều đang ngủ.",
      ["通过对……进行分析 là thông qua việc phân tích…, lại là cấu trúc 对……进行…….",
       "Đây là phát hiện đầu tiên, khá buồn cười: anh lo mèo buồn chán, nhưng thật ra chúng chỉ ngủ."]),
     ("除了睡觉，猫们的行动很有规律，以其中一只猫为例，它每天下午两点左右吃饭喝水，时间误差平均不到5分钟。",
      "Ngoài ngủ ra, hoạt động của lũ mèo rất có quy luật. Lấy một con trong số đó làm ví dụ, mỗi ngày nó ăn uống vào khoảng hai giờ chiều, thời gian sai lệch trung bình không tới năm phút.",
-     ["以其中一只猫为例 là lấy một con mèo trong số đó làm ví dụ. Đây là cấu trúc văn viết 以……为……, điểm ngữ pháp thứ hai của bài.",
+     ["以其中一只猫为例 là lấy một con mèo trong số đó làm ví dụ. Đây là cấu trúc văn viết lấy cái này làm cái kia, điểm ngữ pháp thứ hai của bài.",
       "左右 là khoảng, đặt sau con số. 误差 là sai số; 平均 là trung bình. 不到 là chưa tới."],
      "除了睡觉，猫们的行动很有规律，以其中一只猫为例，它每天下午两点左右吃饭喝水，时间误差平均不到五分钟。"),
     ("更有趣的是，每次回家时，守在门口的大黄和白白也不是长时间在门口等他，而是在屋里该干吗干吗，听到主人的脚步声和钥匙响后，才会跑到门口来迎接。",
@@ -275,11 +275,11 @@ P = [
       "钥匙响 là tiếng chìa khóa kêu. 才 nhấn mạnh: đến lúc đó chúng mới ra đón. Hóa ra sự đón chờ cảm động kia là nhờ đôi tai thính chứ không phải chờ cả ngày!"]),
     ("这套系统除了帮钱小奇了解了猫的踪迹以外，还帮过钱小奇不少忙。一次，他在办公室上网遥控摄像头，找到了掉在家里桌子下的钱包。",
      "Hệ thống này ngoài việc giúp Tiền Tiểu Kỳ biết được tung tích của lũ mèo, còn giúp anh không ít việc. Có lần, anh ở văn phòng lên mạng điều khiển camera từ xa, tìm được chiếc ví rơi dưới gầm bàn ở nhà.",
-     ["除了……以外，还…… là ngoài… ra, còn…. 套 là lượng từ cho một bộ, một hệ thống: 一套系统, 一套设备.",
+     ["除了……以外，还帮过…… là ngoài… ra, còn giúp…. 套 là lượng từ cho một bộ, một hệ thống: 一套系统, 一套设备.",
       "帮忙 là từ ly hợp, nên tách ra thành 帮过不少忙, đã giúp không ít việc. 掉在 là rơi xuống ở chỗ nào đó."]),
     ("如今，只要家里稍有动静，操作系统就能将图像记录下来，并把拍下的照片即时发到他的邮箱里“报警”。这是一套多么有用的远程遥控家庭安全机器人啊。",
      "Ngày nay, chỉ cần trong nhà có chút động tĩnh, hệ thống điều khiển sẽ ghi lại hình ảnh, và gửi ngay ảnh chụp được vào hộp thư của anh để báo động. Đây quả là một chú robot an ninh gia đình điều khiển từ xa hữu ích biết bao.",
-     ["只要……就…… là chỉ cần… thì…. 稍有 là hơi có, có một chút. 将 ở đây giống 把, mang màu sắc văn viết: 将图像记录下来.",
+     ["只要……就…… là chỉ cần… thì…. 稍有 là hơi có, có một chút. 将图像记录下来 tức là 把图像记录下来, mang màu sắc văn viết.",
       "报警 là báo cảnh sát, báo động; dấu ngoặc kép vì đây là nói ví von. Câu cảm thán 多么……啊 khép lại bài, khen hệ thống này rất hữu ích."],
      "如今，只要家里稍有动静，操作系统就能将图像记录下来，并把拍下的照片即时发到他的邮箱里报警。这是一套多么有用的远程遥控家庭安全机器人啊。"),
 ]
@@ -396,7 +396,7 @@ add("bullets", chapter="Ngữ pháp: 该干吗干吗", section="Ngữ pháp 注�
            "哭、着急都不管用，该什么结果还是什么结果。"],
     say=["Điểm ngữ pháp thứ ba là cách nói khẩu ngữ 该干吗干吗.",
          F(0, "Cách nói này được rút gọn từ một mẫu dài hơn: chữ 该, cộng động từ và tân ngữ, rồi lặp lại động từ và tân ngữ đó. Ví dụ đầy đủ là 该学汉语还得学汉语, việc phải học tiếng Trung thì vẫn phải học tiếng Trung."),
-         F(1, "Ý nghĩa: mọi việc vẫn diễn ra như vốn có, không có chuyện gì thay đổi được. Hai cụm động từ trước và sau là một. Phần ở giữa, tức 还得 hoặc 就得, thường được lược bỏ. Tiếng Việt có thể dịch là việc gì cứ làm nấy, đâu vẫn vào đấy."),
+         F(1, "Ý nghĩa: mọi việc vẫn diễn ra như vốn có, không có chuyện gì thay đổi được. Hai cụm động từ trước và sau là một. Phần ở giữa, mang nghĩa vẫn phải, thường được lược bỏ. Tiếng Việt có thể dịch là việc gì cứ làm nấy, đâu vẫn vào đấy."),
          F(2, "Cách nói này rất linh hoạt. Có thể nói 该吃吃，该玩儿玩儿, đến lúc ăn thì ăn, đến lúc chơi thì chơi; hoặc 该打球打球; hoặc 该什么结果还是什么结果, kết quả thế nào thì vẫn thế ấy, khi động từ là chữ 是 thì nó được lược đi."),
          F(3, "Ví dụ một: 在中国，过年过节商店最忙了，哪儿有假呀，该开门就得开门。 Ở Trung Quốc, dịp lễ Tết cửa hàng bận nhất, làm gì có ngày nghỉ, phải mở cửa thì vẫn phải mở cửa."),
          F(4, "Ví dụ hai, lấy từ bài khóa: 守在门口的大黄和白白也不是长时间在门口等他，而是在屋里该干吗干吗。 Đại Hoàng và Bạch Bạch không chờ ở cửa thật lâu, mà ở trong nhà làm việc của mình như thường."),
@@ -509,7 +509,7 @@ add("bullets", section="Mở rộng 扩展", title="Luyện tập: chỉ ra lỗ
            "(5) 我看见小李和他女朋友有说有笑地走过来，肩上背着双肩包。",
            "Đáp án: Ai đeo ba lô? → 我看见小李肩上背着双肩包，和他女朋友有说有笑地走过来。"],
     say=[F(0, "Câu bốn: 对学生会提出的建议，我举双手赞成。 Câu này có hai cách hiểu, các bạn có nhận ra không?"),
-         F(1, "Đáp án: 学生会 có thể là một danh từ, nghĩa là hội sinh viên; cũng có thể là 学生 cộng 会, nghĩa là học sinh sẽ đề xuất. Sửa cho rõ: 对学生会这个组织提出的建议, hoặc 对学生们将会提出的建议, tôi giơ cả hai tay tán thành."),
+         F(1, "Đáp án: 学生会 có thể là một danh từ, nghĩa là hội sinh viên; cũng có thể là 学生 cộng 会提出, nghĩa là học sinh sẽ đề xuất. Sửa cho rõ: 对学生会这个组织提出的建议, hoặc 对学生们将会提出的建议, tôi giơ cả hai tay tán thành."),
          F(2, "Câu năm: 我看见小李和他女朋友有说有笑地走过来，肩上背着双肩包。 Tôi thấy Tiểu Lý và bạn gái vừa nói vừa cười đi tới, trên vai đeo ba lô."),
          F(3, "Đáp án: ai đeo ba lô, Tiểu Lý hay bạn gái anh ấy, hay cả hai? Nếu là Tiểu Lý, sửa: 我看见小李肩上背着双肩包，和他女朋友有说有笑地走过来。 Mẹo: khi viết, mỗi lần dùng đại từ như 他，它，自己，这, hãy tự hỏi xem người đọc có biết chắc nó chỉ ai không.")])
 
@@ -534,11 +534,11 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 2: Hoàn thành
            "Đáp án: ……该上班上班，该睡觉睡觉。",
            "(3) 上个周末我___，我们聊得很高兴。（拜访）",
            "Đáp án: 上个周末我去拜访了一位老同学，我们聊得很高兴。"],
-    say=[F(0, "Bài tập hai: dùng từ hoặc cấu trúc cho sẵn để hoàn thành câu. Câu một, dùng 统统: 我不喜欢的东西，后面怎么说？ Những thứ tôi không thích thì sao? Các bạn tạm dừng và thử hoàn thành nhé."),
+    say=[F(0, "Bài tập hai: dùng từ hoặc cấu trúc cho sẵn để hoàn thành câu. Câu một, dùng 统统: 我不喜欢的东西什么。 Những thứ tôi không thích thì sao? Các bạn tạm dừng và thử hoàn thành nhé."),
          F(1, "Đáp án gợi ý: 我不喜欢的东西统统扔掉了。 Những thứ tôi không thích, tôi vứt hết rồi. Cũng có thể nói 统统送给别人了, đem cho người khác hết."),
          F(2, "Câu hai, dùng mẫu 该打球打球: 他的心情一点儿都没受这个坏消息的影响。 Tâm trạng anh ấy không hề bị tin xấu này ảnh hưởng chút nào."),
          F(3, "Đáp án gợi ý: 该上班上班，该睡觉睡觉。 Đến giờ đi làm thì đi làm, đến giờ ngủ thì ngủ, tức là mọi thứ vẫn như bình thường."),
-         F(4, "Câu ba, dùng 拜访: 上个周末我，后面怎么说？ 我们聊得很高兴。 Cuối tuần trước tôi làm gì, chúng tôi trò chuyện rất vui."),
+         F(4, "Câu ba, dùng 拜访: 上个周末我什么，我们聊得很高兴。 Cuối tuần trước tôi làm gì, chúng tôi trò chuyện rất vui."),
          F(5, "Đáp án gợi ý: 上个周末我去拜访了一位老同学，我们聊得很高兴。 Cuối tuần trước tôi đi thăm một người bạn học cũ, chúng tôi trò chuyện rất vui.")])
 
 add("bullets", section="Luyện tập 练习", title="Bài tập 2: Hoàn thành câu bằng từ cho sẵn (2)", reveal=True, size=36,
@@ -550,7 +550,7 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 2: Hoàn thành
            "Đáp án: 他游历过很多国家，是个见多识广的人。"],
     say=[F(0, "Câu bốn, dùng 例外: 每个人都应该遵守学校纪律。 Mọi người đều phải tuân thủ kỷ luật của trường."),
          F(1, "Đáp án gợi ý: 每个人都应该遵守学校纪律，谁也不能例外。 Không ai được ngoại lệ."),
-         F(2, "Câu năm, dùng 自力更生: 任何事情都，后面怎么说？ 不要总依靠别人。 Việc gì cũng phải thế nào, đừng lúc nào cũng dựa vào người khác."),
+         F(2, "Câu năm, dùng 自力更生: 任何事情都什么，不要总依靠别人。 Việc gì cũng phải thế nào, đừng lúc nào cũng dựa vào người khác."),
          F(3, "Đáp án gợi ý: 任何事情都要自力更生，不要总依靠别人。 Việc gì cũng phải tự lực cánh sinh."),
          F(4, "Câu sáu, dùng 见多识广: 他游历过很多国家。 Anh ấy đã đi chu du nhiều nước."),
          F(5, "Đáp án gợi ý: 他游历过很多国家，是个见多识广的人。 Anh ấy là người thấy nhiều biết rộng. Cũng có thể nói ngắn gọn: 他游历过很多国家，见多识广。")])
@@ -655,7 +655,8 @@ lesson = {
                     "种树": "众树",              # zhòngshù
                     "铺床单": "扑床单",          # pū chuángdān
                     "扎破": "渣破",              # zhāpò
-                    "背着": "杯着"},             # bēizhe
+                    "背着": "杯着",               # bēizhe
+                    "误差": "误插"},             # wùchā
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai11.json")

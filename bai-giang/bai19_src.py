@@ -55,7 +55,7 @@ add("bullets", chapter="Khởi động", section="Khởi động 热身", title=
          F(1, "蚌。 Đây là con trai, cũng là loài nhuyễn thể có hai mảnh vỏ, có loài còn tạo ra ngọc trai. Trong bài khóa có cụm 白蚌, con trai trắng."),
          F(2, "蟹。 Đây là con cua. Trong khẩu ngữ, người Trung Quốc hay nói 螃蟹."),
          F(3, "贝壳。 Đây là vỏ sò, vỏ ốc. Từ này là từ mới của bài, lát nữa thầy sẽ giảng kỹ hơn."),
-         F(4, "红冠蠕虫。 Đây là một loài giun ống có phần đầu màu đỏ như chiếc mào, sống thành từng cụm quanh các miệng phun nhiệt dưới đáy biển sâu. 红 là màu đỏ, 冠 ở đây là cái mào, 蠕虫 là loài giun. Loài này chính là nhân vật nổi bật ở cuối bài khóa.")])
+         F(4, "红冠蠕虫。 Đây là một loài giun ống có phần đầu màu đỏ như chiếc mào, sống thành từng cụm quanh các miệng phun nhiệt dưới đáy biển sâu. 红冠 là mào đỏ, 蠕虫 là loài giun. Loài này chính là nhân vật nổi bật ở cuối bài khóa.")])
 
 add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 疑 và 地", size=38,
     items=["## 疑 (nghi): ngờ, không tin, chưa rõ",
@@ -133,7 +133,7 @@ V = [
     ("渗透", "shèntòu", "thẩm thấu", "động từ", "thẩm thấu, ngấm vào, thấm", "雨水慢慢渗透到土里。", "Nước mưa từ từ ngấm vào đất.",
      "Động từ, nghĩa là chất lỏng ngấm dần qua một vật. Nghĩa bóng là một ảnh hưởng nào đó dần dần thâm nhập vào."),
     ("细菌", "xìjūn", "tế khuẩn", "danh từ", "vi khuẩn", "有些细菌对人体是有益的。", "Có những loại vi khuẩn có lợi cho cơ thể người.",
-     "Danh từ, nghĩa là vi khuẩn. 细 là nhỏ, 菌 là nấm, khuẩn. Chữ thứ hai đọc thanh một."),
+     "Danh từ, nghĩa là vi khuẩn. Chữ đầu nghĩa là nhỏ, chữ thứ hai nghĩa là nấm, khuẩn, và đọc thanh một."),
     ("过滤", "guòlǜ", "quá lự", "động từ", "lọc", "这种水要过滤以后才能喝。", "Loại nước này phải lọc rồi mới uống được.",
      "Động từ, nghĩa là lọc, cho chất lỏng hay khí đi qua để giữ lại tạp chất. Trong bài, 过滤海水中的食物 là lọc thức ăn trong nước biển."),
     ("来源", "láiyuán", "lai nguyên", "danh từ", "nguồn, nguồn gốc", "工资是他唯一的收入来源。", "Tiền lương là nguồn thu nhập duy nhất của anh ấy.",
@@ -243,7 +243,7 @@ P = [
      "回到地面后，科学家取出从深海带回的样品，一股带有刺鼻臭蛋气味的硫化氢气体立即冲了出来，科学家恍然大悟，进而提出了这样的假说。"),
     ("当海水从地壳分裂而成的裂缝渗透到地下时，在高温和高压的作用下，水里所含的硫酸盐转化成了硫化氢，某些细菌借硫化氢代谢变化，吸收温泉的热量得以繁殖。",
      "Khi nước biển thấm xuống lòng đất qua những khe nứt do vỏ trái đất tách ra, dưới tác dụng của nhiệt độ cao và áp suất cao, muối sunfat có trong nước chuyển hóa thành hydro sunfua; một số vi khuẩn nhờ quá trình trao đổi chất với hydro sunfua, hấp thụ nhiệt lượng của suối nước nóng mà có thể sinh sôi.",
-     ["当……时 là khi…; 在……的作用下 là dưới tác dụng của…. 硫酸盐 là muối sunfat. 代谢 là trao đổi chất.",
+     ["当海水渗透到地下时 là khi nước biển thấm xuống lòng đất; 在高温和高压的作用下 là dưới tác dụng của nhiệt độ cao và áp suất cao. 硫酸盐 là muối sunfat. 代谢 là trao đổi chất.",
       "借……得以繁殖 là nhờ vào… mà có thể sinh sôi. Đây là điểm ngữ pháp 得以: phía trước nêu điều kiện, phía sau là kết quả đạt được."]),
     ("一些小动物靠过滤细菌维持生命，而小动物又成了大动物的食物来源，这样，就构成了一个新的“食物链”。",
      "Một số động vật nhỏ sống nhờ lọc vi khuẩn, còn động vật nhỏ lại trở thành nguồn thức ăn của động vật lớn. Như vậy đã tạo thành một chuỗi thức ăn mới.",
@@ -275,7 +275,7 @@ P = [
       "与其……不如…… nghĩa là thay vì… chi bằng…. 金星 là sao Kim, hành tinh thứ hai tính từ mặt trời. 是否 là có… hay không."]),
     ("不管人类怎么想，这些深海生物依然保持着它们强大而华丽的阵容，有条不紊地过着自己的日子，展现着他们独特的精彩：",
      "Dù con người nghĩ thế nào, những sinh vật biển sâu này vẫn giữ đội hình hùng hậu và lộng lẫy của chúng, ngăn nắp sống cuộc sống của riêng mình, phô bày vẻ đặc sắc độc đáo của chúng:",
-     ["不管……都/依然…… là dù… thì vẫn…. 依然 là vẫn, vẫn như cũ.",
+     ["不管人类怎么想 là dù con người nghĩ thế nào; 不管 là bất kể, dù. 依然 là vẫn, vẫn như cũ.",
       "Tác giả dùng phép nhân hóa: 过着自己的日子, sống cuộc sống của mình, như thể sinh vật biển sâu cũng là con người. 有条不紊地 làm trạng ngữ."]),
     ("一丛丛红冠蠕虫，把白色外套管固定在岩石上，保护着自己柔软的身体。",
      "Từng cụm giun ống mào đỏ gắn chặt lớp ống bọc màu trắng bên ngoài lên vách đá, bảo vệ cơ thể mềm mại của mình.",
@@ -344,7 +344,7 @@ add("bullets", chapter="Ngữ pháp: 进而", section="Ngữ pháp 注释", titl
     items=["Liên từ, dùng ở vế sau: trên cơ sở đã có, tiến thêm một bước · dùng trong văn viết",
            "人是在改造环境的实践中认识环境并接受环境的影响，进而改造自己的。",
            "想象有减轻心理压力，维持心理平衡，进而促进心理健康的作用。",
-           "……科学家恍然大悟，进而提出了这样的假说——当海水从地壳分裂而成的裂缝渗透到地下时……"],
+           "科学家取出从深海带回的样品，……科学家恍然大悟，进而提出了这样的假说。"],
     say=["Bây giờ chúng ta sang phần ngữ pháp. Điểm thứ nhất là liên từ 进而.",
          F(0, "进而 là liên từ, dùng ở đầu vế câu phía sau, biểu thị trên cơ sở điều đã có ở vế trước, tiến thêm một bước nữa. Tiếng Việt dịch là rồi tiến tới, rồi từ đó. Từ này dùng trong văn viết."),
          F(1, "Ví dụ một: 人是在改造环境的实践中认识环境并接受环境的影响，进而改造自己的。 Con người nhận thức môi trường và chịu ảnh hưởng của môi trường trong thực tiễn cải tạo môi trường, rồi từ đó cải tạo chính mình."),
@@ -402,7 +402,7 @@ add("bullets", chapter="Ngữ pháp: 偏偏", section="Ngữ pháp 注释", titl
            "30年前我们班那个最不爱说话、最不起眼儿的女生，今天偏偏最成功。",
            "高于40℃，大部分植物和动物就无法成活；高于65℃，多数细菌会丧失生命，可是，为什么偏偏这种细菌能够存活下来？"],
     say=["Điểm ngữ pháp thứ ba là phó từ 偏偏. Từ này có hai cách dùng chính.",
-         F(0, "Cách dùng thứ nhất: biểu thị về mặt chủ quan, người ta cố tình làm ngược lại với yêu cầu hay tình hình khách quan. Tiếng Việt dịch là cứ nhất định, lại cứ. Thường đi cùng 要 hoặc 不."),
+         F(0, "Cách dùng thứ nhất: biểu thị về mặt chủ quan, người ta cố tình làm ngược lại với yêu cầu hay tình hình khách quan. Tiếng Việt dịch là cứ nhất định, lại cứ. Thường gặp dưới dạng 偏偏要 hoặc 偏偏不."),
          F(1, "Ví dụ một: 那里太危险了，大家都劝他不要去，他偏偏要去。 Chỗ đó nguy hiểm quá, mọi người đều khuyên anh ấy đừng đi, vậy mà anh ấy cứ nhất định muốn đi."),
          F(2, "Ví dụ hai: 我爱做的事，偏偏不让我做；我不爱做的事，倒非做不可，真让人生气！ Việc tôi thích làm thì cứ không cho tôi làm; việc tôi không thích thì lại bắt buộc phải làm, thật là bực mình!"),
          F(3, "Cách dùng thứ hai: biểu thị sự thật trái ngược hẳn với một mong muốn, yêu cầu, hay lẽ thường nào đó. Tiếng Việt dịch là lại, trái lại, riêng."),
@@ -436,9 +436,9 @@ add("compare", chapter="Phân biệt 历来 – 从来", section="Phân biệt t
     say=["Tiếp theo là phần phân biệt từ: 历来 và 从来. Hai từ này đều dịch là xưa nay, từ trước đến giờ, nên người học rất hay dùng lẫn lộn.",
          "Điểm giống nhau: cả hai đều là phó từ, biểu thị từ quá khứ đến hiện tại đều như vậy. Ví dụ: 我跟他下棋历来都要输的, hoặc 从来都要输的, đều đúng. Tôi chơi cờ với anh ấy xưa nay toàn thua.",
          F(0, "Điểm khác thứ nhất. 历来 chủ yếu dùng trong văn viết, và không dùng trong câu phủ định. Ví dụ: 我们历来提倡艰苦朴素，反对铺张浪费。 Chúng tôi xưa nay luôn đề cao lối sống giản dị chịu khó, phản đối phô trương lãng phí."),
-         F(1, "Còn 从来 thì chủ yếu dùng trong câu phủ định, như 从来不，从来没. Ví dụ: 我从来不隐瞒自己的观点。 Tôi trước giờ chưa bao giờ giấu quan điểm của mình."),
-         F(1, "Vì vậy, câu 我历来不隐瞒自己的观点 là không tự nhiên. Khi câu có 不 hoặc 没, các bạn hãy dùng 从来."),
-         "Mẹo nhớ: 从来不，从来没 là cụm rất quen thuộc trong khẩu ngữ; còn 历来 thì mang màu sắc trang trọng, hay gặp trong văn bản, báo chí."])
+         F(1, "Còn 从来 thì chủ yếu dùng trong câu phủ định, như 从来不，从来没有. Ví dụ: 我从来不隐瞒自己的观点。 Tôi trước giờ chưa bao giờ giấu quan điểm của mình."),
+         F(1, "Vì vậy, câu 我历来不隐瞒自己的观点 là không tự nhiên. Khi câu có 不 hoặc 没有, các bạn hãy dùng 从来."),
+         "Mẹo nhớ: 从来不，从来没有 là cụm rất quen thuộc trong khẩu ngữ; còn 历来 thì mang màu sắc trang trọng, hay gặp trong văn bản, báo chí."])
 
 add("compare", section="Phân biệt từ 词语辨析", title="Phân biệt 历来 và 从来 (2): câu khẳng định",
     cols=[{"head": "历来",
@@ -449,7 +449,7 @@ add("compare", section="Phân biệt từ 词语辨析", title="Phân biệt 历
                      "Đúng: 川西平原从来就是物产丰富。"]}],
     say=[F(0, "Điểm khác thứ hai. 历来 có thể bổ nghĩa cho một động từ hoặc tính từ hai âm tiết đứng một mình. Ví dụ: 这个人历来忠厚老实，可以信赖。 Người này xưa nay vốn trung hậu thật thà, có thể tin cậy được."),
          F(1, "Còn 从来, khi dùng trong câu khẳng định, thì bổ nghĩa cho cụm động từ, cụm tính từ hoặc cả một phân câu, thường không bổ nghĩa cho một động từ hay tính từ đứng trơ trọi. Ví dụ: 川西平原从来就是物产丰富。 Đồng bằng phía tây Tứ Xuyên xưa nay vốn sản vật phong phú."),
-         F(1, "Các bạn để ý: trong câu khẳng định, 从来 thường đi kèm 就 hoặc 都, như 从来就是，从来都是, để câu tự nhiên hơn."),
+         F(1, "Các bạn để ý: trong câu khẳng định, 从来 thường đi kèm thêm một phó từ, như 从来就是，从来都是, để câu tự nhiên hơn."),
          "Tóm lại: câu phủ định thì dùng 从来; văn viết, câu khẳng định với một từ hai âm tiết đứng một mình thì dùng 历来."])
 
 add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: chọn 历来 hay 从来 điền vào chỗ trống", reveal=True, size=38,
@@ -534,7 +534,7 @@ add("bullets", section="Mở rộng 扩展", title="Luyện tập: chỉ ra lỗ
     say=[F(0, "Câu bốn: 我看见她很高兴，就和她聊了起来。 Tôi thấy cô ấy rất vui, liền trò chuyện với cô ấy. Câu này mơ hồ ở đâu?"),
          F(1, "Đáp án: giống ví dụ về bác sĩ, câu này ngắt nhịp khác nhau thì nghĩa khác nhau. Người vui có thể là cô ấy, cũng có thể là tôi. Sửa: 我看见她很高兴的样子，就和她聊了起来, cô ấy vui. Hoặc 看见她，我很高兴，就和她聊了起来, tôi vui."),
          F(2, "Câu năm: 他借了我两本书还没还呢。 Câu này nói ai mượn sách của ai?"),
-         F(3, "Đáp án: giống động từ 租, động từ 借 cũng có hai chiều: mượn và cho mượn. Sửa: 他向我借了两本书，还没还呢, anh ấy mượn sách của tôi mà chưa trả. Hoặc 他借给我两本书，我还没还呢, anh ấy cho tôi mượn sách mà tôi chưa trả. Mẹo: khi gặp động từ hai chiều như 租，借, hãy dùng 向 hoặc 跟 để chỉ nhận vào, dùng 给 để chỉ cho đi.")])
+         F(3, "Đáp án: giống động từ 租, động từ 借 cũng có hai chiều: mượn và cho mượn. Sửa: 他向我借了两本书，还没还呢, anh ấy mượn sách của tôi mà chưa trả. Hoặc 他借给我两本书，我还没还呢, anh ấy cho tôi mượn sách mà tôi chưa trả. Mẹo: khi gặp động từ hai chiều như 租，借, hãy dùng 向我借，跟他租 để chỉ nhận vào, dùng 借给，租给 để chỉ cho đi.")])
 
 # ======================= LUYỆN TẬP =======================
 add("bullets", chapter="Luyện tập", section="Luyện tập 练习", title="Bài tập 1: Mở rộng từ theo chữ có dấu chấm", size=40,
@@ -595,27 +595,29 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ 
          F(2, "Đáp án: 经理偏偏让我去加班，我很诧异，神情都有些古怪，鲜花和蛋糕展现在我眼前，我才恍然大悟。 Hôm nay là cuối tuần, vậy mà giám đốc lại cứ bắt tôi đi làm thêm, tôi bực cả bụng mà cũng chẳng biết làm sao. Ở cổng công ty, tôi lại gặp mấy đồng nghiệp, tôi rất ngạc nhiên. Còn họ nhìn thấy tôi, vẻ mặt ai cũng hơi kỳ lạ. Đến khi bước vào văn phòng, hoa tươi và bánh kem hiện ra trước mắt, mọi người hát vang bài chúc mừng sinh nhật, tôi mới vỡ lẽ: hôm nay là sinh nhật tôi, họ đã chuẩn bị cho tôi một bữa tiệc đặc biệt."),
          "Các bạn thấy không, đoạn văn này dùng cả 偏偏 lẫn 恍然大悟, đúng là những từ trọng tâm của bài. Hãy đọc to lại đoạn văn này vài lần nhé."])
 
-add("bullets", section="Luyện tập 练习", title="Bài tập 4: Chọn vị trí thích hợp cho từ trong ngoặc", reveal=True, size=34,
+add("bullets", section="Luyện tập 练习", title="Bài tập 4: Chọn vị trí thích hợp cho từ trong ngoặc (1)", reveal=True, size=36,
     items=["(1) A只有B不断努力，C梦想才能D实现。（得以）",
            "Đáp án: D – 梦想才能得以实现。",
            "(2) 通过A调查研究B发现问题，C找到D解决问题的方法。（进而）",
            "Đáp án: C – ……发现问题，进而找到解决问题的方法。",
            "(3) 经过讨论，A大家的意见B都统一了，C可D他不同意。（偏偏）",
-           "Đáp án: D – ……可他偏偏不同意。",
-           "(4) A老校长B重视C学生们的D素质教育。（历来）",
-           "Đáp án: B – 老校长历来重视学生们的素质教育。",
-           "(5) A今年B入境旅游观光的C人数已超过D千万。（据悉）",
-           "Đáp án: A – 据悉，今年入境旅游观光的人数已超过千万。"],
+           "Đáp án: D – ……可他偏偏不同意。"],
     say=[F(0, "Bài tập bốn: chọn vị trí thích hợp cho từ trong ngoặc. Câu một, từ 得以: 只有不断努力，梦想才能实现。 Chỉ có không ngừng cố gắng, ước mơ mới có thể thành hiện thực. Các bạn chọn A, B, C hay D?"),
          F(1, "Đáp án: D. 梦想才能得以实现。 得以 đứng ngay trước động từ chỉ kết quả 实现."),
          F(2, "Câu hai, từ 进而: 通过调查研究发现问题，找到解决问题的方法。 Thông qua điều tra nghiên cứu để phát hiện vấn đề, tìm ra cách giải quyết."),
          F(3, "Đáp án: C. 进而 đứng đầu vế sau: 发现问题，进而找到解决问题的方法。 Phát hiện vấn đề, rồi từ đó tìm ra cách giải quyết."),
          F(4, "Câu ba, từ 偏偏: 经过讨论，大家的意见都统一了，可他不同意。 Qua thảo luận, ý kiến mọi người đã thống nhất, nhưng anh ấy không đồng ý."),
-         F(5, "Đáp án: D. 偏偏 là phó từ, đứng sau chủ ngữ 他, trước 不同意: 可他偏偏不同意。 Vậy mà anh ấy cứ nhất định không đồng ý."),
-         F(6, "Câu bốn, từ 历来: 老校长重视学生们的素质教育。 Thầy hiệu trưởng già coi trọng giáo dục tố chất của học sinh."),
-         F(7, "Đáp án: B. 历来 là phó từ, đứng sau chủ ngữ, trước động từ 重视: 老校长历来重视学生们的素质教育。 Thầy hiệu trưởng xưa nay luôn coi trọng giáo dục toàn diện cho học sinh."),
-         F(8, "Câu năm, từ 据悉: 今年入境旅游观光的人数已超过千万。 Năm nay số du khách nhập cảnh tham quan đã vượt quá mười triệu."),
-         F(9, "Đáp án: A. 据悉 đứng đầu câu, sau là dấu phẩy: 据悉，今年入境旅游观光的人数已超过千万。 Được biết, năm nay số du khách quốc tế đã vượt mười triệu.")])
+         F(5, "Đáp án: D. 偏偏 là phó từ, đứng sau chủ ngữ 他, trước 不同意: 可他偏偏不同意。 Vậy mà anh ấy cứ nhất định không đồng ý.")])
+
+add("bullets", section="Luyện tập 练习", title="Bài tập 4: Chọn vị trí thích hợp cho từ trong ngoặc (2)", reveal=True, size=36,
+    items=["(4) A老校长B重视C学生们的D素质教育。（历来）",
+           "Đáp án: B – 老校长历来重视学生们的素质教育。",
+           "(5) A今年B入境旅游观光的C人数已超过D千万。（据悉）",
+           "Đáp án: A – 据悉，今年入境旅游观光的人数已超过千万。"],
+    say=[F(0, "Câu bốn, từ 历来: 老校长重视学生们的素质教育。 Thầy hiệu trưởng già coi trọng giáo dục tố chất của học sinh."),
+         F(1, "Đáp án: B. 历来 là phó từ, đứng sau chủ ngữ, trước động từ 重视: 老校长历来重视学生们的素质教育。 Thầy hiệu trưởng xưa nay luôn coi trọng giáo dục toàn diện cho học sinh."),
+         F(2, "Câu năm, từ 据悉: 今年入境旅游观光的人数已超过千万。 Năm nay số du khách nhập cảnh tham quan đã vượt quá mười triệu."),
+         F(3, "Đáp án: A. 据悉 đứng đầu câu, sau là dấu phẩy: 据悉，今年入境旅游观光的人数已超过千万。 Được biết, năm nay số du khách quốc tế đã vượt mười triệu.")])
 
 add("bullets", section="Luyện tập 练习", title="Mở rộng 扩展: từ vựng và kết hợp từ (1)", size=34,
     items=["附属 phụ thuộc, trực thuộc: 附属中学 · 这所医院附属于医科大学。",
@@ -685,6 +687,7 @@ lesson = {
                     "朴素": "普素",            # pǔsù
                     "铺张": "扑张",            # pūzhāng
                     "杠杆": "杠敢",            # gànggǎn
+                    "出差": "出拆",            # chūchāi
                     "还没还呢": "还没环呢",    # huán
                     "背着爸爸，和我一起": "杯着爸爸，和我一起"},  # bēi (nghĩa cõng)
     "slides": slides,

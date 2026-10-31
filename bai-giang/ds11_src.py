@@ -141,7 +141,7 @@ V = [
     ("体制", "tǐzhì", "thể chế", "danh từ", "thể chế, cơ chế tổ chức", "中国的教育体制一直在改革。", "Thể chế giáo dục của Trung Quốc vẫn luôn được cải cách.",
      "Danh từ, chỉ chế độ tổ chức của nhà nước, cơ quan, doanh nghiệp. Hay gặp 政治体制，教育体制."),
     ("应试教育", "yìngshì jiàoyù", "ứng thí giáo dục", "cụm danh từ", "giáo dục chạy theo thi cử", "很多人批评应试教育。", "Nhiều người phê phán lối giáo dục chạy theo thi cử.",
-     "Cụm danh từ, chỉ lối giáo dục lấy việc luyện khả năng làm bài thi làm mục đích chính. Chữ 应 đọc thanh bốn. Đối lập là 素质教育, giáo dục toàn diện, chúng ta sẽ gặp lại ở phần ôn tập đơn vị."),
+     "Cụm danh từ, chỉ lối giáo dục lấy việc luyện khả năng làm bài thi làm mục đích chính. Chữ đầu đọc thanh bốn. Đối lập là 素质教育, giáo dục toàn diện, chúng ta sẽ gặp lại ở phần ôn tập đơn vị."),
     ("温情", "wēnqíng", "ôn tình", "danh từ", "sự ấm áp, tình cảm dịu dàng", "这部电影充满了温情。", "Bộ phim này tràn đầy tình cảm ấm áp.",
      "Danh từ, nghĩa là thái độ ôn hòa, tình cảm ấm áp. Hay gặp 充满温情. Trong bài: 我愿意用温情去面对这样的事情."),
     ("回想", "huíxiǎng", "hồi tưởng", "động từ", "nhớ lại, hồi tưởng", "回想起小时候的事，他笑了。", "Nhớ lại chuyện hồi nhỏ, anh ấy bật cười.",
@@ -153,7 +153,7 @@ V = [
     ("人脉", "rénmài", "nhân mạch", "danh từ", "các mối quan hệ, mạng lưới quan hệ", "做生意需要广泛的人脉。", "Làm ăn cần có mạng lưới quan hệ rộng.",
      "Danh từ, chỉ các mối quan hệ xã hội của một người. Hay gặp 人脉资源，拓展人脉, mở rộng quan hệ."),
     ("调转", "diàozhuǎn", "điệu chuyển", "động từ", "điều chuyển (công tác, vị trí)", "他最近调转到北京工作了。", "Gần đây anh ấy được điều chuyển lên Bắc Kinh làm việc.",
-     "Động từ, nghĩa là điều động, chuyển đổi công tác hay vị trí. Chữ 调 ở đây đọc là diào, như trong 调动, chứ không đọc tiáo. Trong bài: 没有为找工作、调转岗位送过一次礼."),
+     "Động từ, nghĩa là điều động, chuyển đổi công tác hay vị trí. Chữ đầu đọc thanh bốn, giống trong 调动, chứ không đọc như trong 空调. Trong bài: 没有为找工作、调转岗位送过一次礼."),
     ("渺茫", "miǎománg", "miểu mang", "tính từ", "mờ mịt, mong manh", "他觉得考上名校的希望很渺茫。", "Cậu ấy thấy hy vọng thi đỗ trường danh tiếng rất mong manh.",
      "Tính từ, nghĩa là mờ mịt, khó đoán trước vì không nắm chắc. Hay gặp 希望渺茫，前途渺茫."),
     ("寒门", "hánmén", "hàn môn", "danh từ", "nhà nghèo, gia đình nghèo khó", "他出身寒门，靠读书改变了命运。", "Anh ấy xuất thân nhà nghèo, nhờ học hành mà đổi đời.",
@@ -221,7 +221,7 @@ P = [
       "稍稍对前面的话加以改动 là sửa câu nói trên một chút; mẫu 对……加以改动 là tiến hành sửa đổi cái gì. 学子有路 là người đi học có đường đi: nhờ thi đại học, con nhà bình thường cũng có lối tiến thân."]),
     ("80年代的高考和当代高考概念是不一样的，当年我所有的科目都是满分，我报考学校的第一志愿就是北京广播学院，第二志愿是武汉大学，第三志愿是北京大学。",
      "Kỳ thi đại học những năm 80 và kỳ thi đại học ngày nay là hai khái niệm khác nhau. Năm ấy, môn nào của tôi cũng đạt điểm tối đa; khi đăng ký trường, nguyện vọng một của tôi là Học viện Phát thanh Bắc Kinh, nguyện vọng hai là Đại học Vũ Hán, nguyện vọng ba là Đại học Bắc Kinh.",
-     ["80年代 là những năm tám mươi. 当代 là thời nay. 当年 là năm ấy, hồi đó. 科目 là môn thi; 满分 là điểm tối đa.",
+     ["八十年代 là những năm tám mươi. 当代 là thời nay. 当年 là năm ấy, hồi đó. 科目 là môn thi; 满分 là điểm tối đa.",
       "报考 là đăng ký dự thi. 第一志愿 là nguyện vọng một. Điều thú vị là tác giả xếp Đại học Bắc Kinh danh tiếng chỉ ở nguyện vọng ba, sau Học viện Phát thanh Bắc Kinh, ngôi trường đào tạo phát thanh viên mà ông yêu thích."],
      "八十年代的高考和当代高考概念是不一样的，当年我所有的科目都是满分，我报考学校的第一志愿就是北京广播学院，第二志愿是武汉大学，第三志愿是北京大学。"),
     ("后来我经常和我爱人开玩笑，她是镇江文科状元，明明能够去中国所有的名牌学校，但是偏偏莫名其妙地报考了北京广播学院。",
@@ -244,7 +244,7 @@ P = [
     ("然而毛坦厂中学并非如此，毛坦厂相当多的学生是打工者的孩子，把院墙外柳树当神树祭拜的，都不是富裕的父母。",
      "Thế nhưng trường Mao Thản Xưởng hoàn toàn không phải như vậy. Khá nhiều học sinh ở đây là con của những người lao động làm thuê; những người coi cây liễu ngoài tường trường như cây thần mà khấn vái đều không phải là những bậc cha mẹ giàu có.",
      ["并非如此 là hoàn toàn không phải như vậy. 相当多 là khá nhiều. 打工者 là người lao động làm thuê, thường là nông dân lên thành phố kiếm sống.",
-      "把院墙外柳树当神树祭拜的: cấu trúc 把A当B là coi A như B, chữ 当 đọc thanh bốn. Cụm có chữ 的 ở cuối thay cho danh từ chỉ người: những người khấn vái."]),
+      "把院墙外柳树当神树祭拜的 là coi cây liễu ngoài tường trường như cây thần mà khấn vái; trong 当神树, chữ đầu đọc thanh bốn, nghĩa là coi như. Cụm có chữ 的 ở cuối thay cho danh từ chỉ người: những người khấn vái."]),
     ("毛坦厂中学的背后是非常卑微的家庭，父亲在外打工，母亲轮流给三四个孩子做饭。孩子出发去参加高考时，上万人守着大客车，这些孩子身上寄托着一个又一个非常普通甚至卑微的家庭梦想。",
      "Phía sau trường Mao Thản Xưởng là những gia đình vô cùng nhỏ bé: người cha đi làm thuê xa nhà, các bà mẹ thay phiên nhau nấu cơm cho ba bốn đứa trẻ. Khi bọn trẻ lên đường đi thi, hàng vạn người đứng chờ quanh những chiếc xe khách lớn; những đứa trẻ ấy mang trên mình giấc mơ của biết bao gia đình rất đỗi bình thường, thậm chí nhỏ bé.",
      ["卑微 là nhỏ bé, thấp kém. 在外打工 là đi làm thuê xa nhà. 轮流给三四个孩子做饭 là thay phiên nhau nấu cơm cho ba bốn đứa trẻ: nhiều phụ huynh thuê nhà gần trường để ở cùng con, gọi là 陪读.",
@@ -265,7 +265,7 @@ P = [
     ("我们没有任何的门路，我母亲就是一名普通的老师，父亲在76年就去世了。当年在北京我没有亲戚和熟悉的人脉，但我走到今天，却没有为找工作、调转岗位送过一次礼，不也走到今天了吗？",
      "Chúng tôi chẳng có đường dây quan hệ nào cả: mẹ tôi chỉ là một giáo viên bình thường, bố tôi mất từ năm 76. Hồi đó ở Bắc Kinh tôi không có họ hàng, cũng chẳng có mối quan hệ quen biết nào, vậy mà tôi đi được đến hôm nay mà chưa từng biếu xén lấy một lần vì chuyện tìm việc hay điều chuyển công tác. Chẳng phải tôi vẫn đi được đến hôm nay đó sao?",
      ["门路 là đường dây, cửa sau. 在七六年 là năm một chín bảy sáu, nói tắt. 亲戚 là họ hàng. 人脉 là các mối quan hệ.",
-      "调转岗位 là điều chuyển vị trí công tác, chữ 调 đọc là diào. 送礼 là biếu quà, đút lót; ở đây tách ra thành 送过一次礼. 不也走到今天了吗 là câu hỏi tu từ: chẳng phải tôi cũng đã đi đến ngày hôm nay sao? Ý là không cần đi cửa sau vẫn có thể thành công."],
+      "调转岗位 là điều chuyển vị trí công tác, chữ đầu đọc thanh bốn. 送礼 là biếu quà, đút lót; ở đây tách ra thành 送过一次礼. 不也走到今天了吗 là câu hỏi tu từ: chẳng phải tôi cũng đã đi đến ngày hôm nay sao? Ý là không cần đi cửa sau vẫn có thể thành công."],
      "我们没有任何的门路，我母亲就是一名普通的老师，父亲在七六年就去世了。当年在北京我没有亲戚和熟悉的人脉，但我走到今天，却没有为找工作、调转岗位送过一次礼，不也走到今天了吗？"),
     ("如果现在的年轻人说生活中有很多糟糕的东西，当然有。但是要去相信还有另外一种方式能够改变命运，那就是高考。如果你不用分数考出去，家里头帮助你进入名校的机会真的很渺茫。",
      "Nếu các bạn trẻ bây giờ nói cuộc sống có nhiều điều tồi tệ, thì đương nhiên là có. Nhưng phải tin rằng vẫn còn một cách khác có thể thay đổi số phận, đó chính là thi đại học. Nếu bạn không dùng điểm số để thi thoát ra, thì cơ hội gia đình giúp bạn vào trường danh tiếng thật sự rất mong manh.",
@@ -574,11 +574,11 @@ add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 1: Chọn
          F(6, "Đáp án: 莫名其妙. Bị mắng mà không hiểu vì sao, thật là khó hiểu.")])
 
 add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 2: Chọn đáp án đúng (1)", reveal=True, size=33,
-    items=["(1) 改变（ ）教育的体制不等于放弃考试，而是老师要更多地开发学生的潜能。  A.应考  B.笔试  C.面试  D.应试",
+    items=["(1) 改变（ ）教育的体制不等于放弃考试，而是老师要更多地开发学生的潜能。\nA.应考  B.笔试  C.面试  D.应试",
            "Đáp án: D – 应试教育: giáo dục chạy theo thi cử",
-           "(2) 并不是每个人都能自由（ ）自己未来要走的路，许多孩子都因为家庭太贫穷而放弃了自己的梦想。  A.挑选  B.采取  C.抉择  D.判断",
+           "(2) 并不是每个人都能自由（ ）自己未来要走的路，许多孩子都因为家庭太贫穷而放弃了自己的梦想。\nA.挑选  B.采取  C.抉择  D.判断",
            "Đáp án: C – 抉择: lựa chọn hệ trọng (con đường đời); 挑选 dùng khi chọn đồ vật, người trong nhiều thứ",
-           "(3) 世界上有很多（ ）的事，我们还很难用科学的观点解释。  A.莫名其妙  B.岂有此理  C.稀里糊涂  D.恍然大悟",
+           "(3) 世界上有很多（ ）的事，我们还很难用科学的观点解释。\nA.莫名其妙  B.岂有此理  C.稀里糊涂  D.恍然大悟",
            "Đáp án: A – 莫名其妙: kỳ lạ, không giải thích nổi"],
     say=["Bài tập hai: chọn một đáp án đúng.",
          F(0, "Câu một: 改变什么教育的体制不等于放弃考试，而是老师要更多地开发学生的潜能。 Thay đổi thể chế giáo dục… không có nghĩa là bỏ thi cử, mà là giáo viên phải khai thác tiềm năng của học sinh nhiều hơn. Bốn lựa chọn: 应考，笔试，面试，应试."),
@@ -589,11 +589,11 @@ add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 2: Chọn
          F(5, "Đáp án: A, 莫名其妙, kỳ lạ không giải thích nổi. 岂有此理 là vô lý hết sức, dùng khi tức giận; 稀里糊涂 là mơ mơ hồ hồ; 恍然大悟 là bừng tỉnh hiểu ra.")])
 
 add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 2: Chọn đáp án đúng (2)", reveal=True, size=33,
-    items=["(4) 这个观点（ ）是错误的，真不明白为什么还有那么多支持者？  A.渐渐  B.稍稍  C.偏偏  D.明明",
+    items=["(4) 这个观点（ ）是错误的，真不明白为什么还有那么多支持者？\nA.渐渐  B.稍稍  C.偏偏  D.明明",
            "Đáp án: D – 明明: rõ ràng là",
-           "(5) 编辑帮他把已经写好的文章（ ）作了修改，没过多久文章就发表了。  A.悄悄  B.偷偷  C.渐渐  D.稍稍",
+           "(5) 编辑帮他把已经写好的文章（ ）作了修改，没过多久文章就发表了。\nA.悄悄  B.偷偷  C.渐渐  D.稍稍",
            "Đáp án: D – 稍稍作了修改: sửa đổi một chút",
-           "(6) “别让孩子输在起跑线上”是家长们挂在嘴边的一句话，孩子是家庭的未来，（ ）了全家人的期望。  A.期待  B.托付  C.寄托  D.依靠",
+           "(6) “别让孩子输在起跑线上”是家长们挂在嘴边的一句话，孩子是家庭的未来，（ ）了全家人的期望。\nA.期待  B.托付  C.寄托  D.依靠",
            "Đáp án: C – 寄托了全家人的期望: gửi gắm kỳ vọng của cả nhà"],
     say=[F(0, "Câu bốn: 这个观点什么是错误的，真不明白为什么还有那么多支持者？ Quan điểm này… là sai, thật không hiểu sao vẫn có nhiều người ủng hộ đến vậy. Lựa chọn: 渐渐，稍稍，偏偏，明明."),
          F(1, "Đáp án: D, 明明, rõ ràng là. Đây chính là câu chúng ta vừa phân biệt với 偏偏."),
@@ -630,7 +630,8 @@ add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 4: Chọn
     say=["Bài tập bốn: chọn từ cho sẵn điền vào đoạn văn.",
          F(0, "Có sáu từ: 换一个角度，涉及，持，可喜，门槛，渺茫."),
          F(1, "Đoạn văn như sau: 据报道，近日江苏省某高中一个班有二十多名学生考取北大清华等著名高校，对此多数网友都什么积极态度，网络上一片惊叹之声。这样的成绩当然是什么的，可什么来说，中国的求学者多，名校少，大学的什么高，因此，每年高考，依然有不少的学子觉得希望什么。要让残酷的高考变成温柔的高考，需要国家增加对教育事业的投入，合理分配教育资源，这就什么到教育体制的改革，在这个方面，中国还有很长的路要走。 Các bạn tạm dừng và điền thử nhé."),
-         F(2, "Đáp án: 持积极态度，可喜的，可换一个角度来说，大学的门槛高，希望渺茫，涉及到教育体制的改革. Cả đoạn nghĩa là: Theo tin tức, một lớp của một trường cấp ba ở Giang Tô có hơn hai mươi học sinh đỗ Bắc Đại, Thanh Hoa; đa số cư dân mạng có thái độ tích cực. Thành tích như vậy đương nhiên đáng mừng, nhưng nhìn từ góc khác, Trung Quốc người muốn học nhiều mà trường danh tiếng ít, ngưỡng vào đại học cao, nên mỗi mùa thi vẫn có nhiều sĩ tử thấy hy vọng mong manh. Muốn kỳ thi tàn khốc trở nên dịu dàng, nhà nước cần đầu tư nhiều hơn cho giáo dục, phân bổ hợp lý tài nguyên giáo dục, và điều này liên quan đến cải cách thể chế giáo dục.")])
+         F(2, "Đáp án: 持积极态度，可喜的，可换一个角度来说，大学的门槛高，希望渺茫，涉及到教育体制的改革."),
+         F(2, "Cả đoạn nghĩa là: Theo tin tức, một lớp của một trường cấp ba ở Giang Tô có hơn hai mươi học sinh đỗ Bắc Đại, Thanh Hoa; đa số cư dân mạng có thái độ tích cực. Thành tích như vậy đương nhiên đáng mừng, nhưng nhìn từ góc khác, Trung Quốc người muốn học nhiều mà trường danh tiếng ít, ngưỡng vào đại học cao, nên mỗi mùa thi vẫn có nhiều sĩ tử thấy hy vọng mong manh. Muốn kỳ thi tàn khốc trở nên dịu dàng, nhà nước cần đầu tư nhiều hơn cho giáo dục, phân bổ hợp lý tài nguyên giáo dục, và điều này liên quan đến cải cách thể chế giáo dục.")])
 
 # ======================= THẢO LUẬN =======================
 add("bullets", chapter="Thảo luận", section="Thảo luận 讨论", title="Thảo luận: Không thi đại học, có đua nổi con nhà giàu?", reveal=True, size=34,
@@ -669,7 +670,7 @@ add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng k�
          F(2, "Nhóm hai: 历来, từ trước đến nay; 稍稍, một chút; 明明……偏偏……, rõ ràng là… vậy mà lại cứ…; 反倒, trái lại; 并非, hoàn toàn không phải; 无论如何……都, dù thế nào cũng; và 相反的是, ngược lại là."),
          F(3, "Ba thành ngữ: 国家兴亡，匹夫有责，莫名其妙，费尽心机."),
          F(5, "Bài tập về nhà: hãy viết một đoạn văn khoảng ba trăm chữ với đề 高考能改变命运吗, hoặc viết về kỳ thi tốt nghiệp trung học phổ thông ở Việt Nam. Hãy dùng ít nhất năm mẫu câu của bài, ví dụ mở đầu bằng 按说, chuyển ý bằng 换一个角度来看, và bày tỏ quan điểm bằng 我持……态度."),
-         "Cảm ơn các bạn đã theo dõi bài giảng. Bài sau, bài một chấm hai, vẫn thuộc chủ đề Giáo dục: 学区房情结怎么破？ Làm sao phá bỏ cơn sốt nhà gần trường điểm? Chúng ta sẽ tìm hiểu vì sao phụ huynh Trung Quốc chấp nhận bỏ ra rất nhiều tiền để mua một căn nhà cũ nát gần trường tốt, và nhà gần trường ở nước ngoài có gì khác. Hẹn gặp lại các bạn. Chúc các bạn học tốt!"])
+         "Cảm ơn các bạn đã theo dõi bài giảng. Bài sau, bài một chấm hai, vẫn thuộc chủ đề Giáo dục: 学区房情结怎么破？ Phá bỏ nỗi ám ảnh nhà gần trường thế nào? Chúng ta sẽ tìm hiểu vì sao phụ huynh Trung Quốc chấp nhận bỏ ra rất nhiều tiền để mua một căn nhà cũ nát gần trường tốt, và nhà gần trường ở nước ngoài có gì khác. Hẹn gặp lại các bạn. Chúc các bạn học tốt!"])
 
 lesson = {
     "title": "顶石中文 – Bài 1.1: 没有高考，你怎么拼得过富二代？ (Không thi đại học, sao đua nổi con nhà giàu?)",
@@ -686,13 +687,10 @@ lesson = {
                     "莘莘": "深深",            # shēnshēn
                     "朝他": "潮他",            # cháo
                     "称心": "趁心",            # chènxīn
-                    "复读": "富读",            # fùdú (phòng đọc nhầm)
                     "得心应手": "得心硬手",    # yìng
-                    "便找借口": "变找借口",    # biàn
-                    "拖泥带水": "拖泥带水"},
+                    "便找借口": "变找借口"},   # biàn
     "slides": slides,
 }
-lesson["tts_replace"].pop("拖泥带水")
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds11.json")
 json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

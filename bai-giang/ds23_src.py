@@ -266,11 +266,11 @@ P = [
      ["却指出 là thế nhưng lại chỉ ra, chữ 却 đối lập với hình ảnh tích cực ở đoạn trước. 快节奏的流量 là dòng lưu lượng nhịp độ nhanh.",
       "白白剥夺了……的时间 là tước đi một cách uổng phí khoảng thời gian…, câu mẫu 白白. 原本用于独立思考 là vốn dùng cho suy nghĩ độc lập. 比起质量，人们更在乎回复的速度 lại là mẫu 比起……更……."]),
     ("秒回成了微信社交的第一美德，而其中的敷衍却被有意无意地忽略了，虚拟社交扼杀深度关系的建立已成为心照不宣的事实。如果你还把一个人的朋友圈与他全部的真实生活划等号，那只能说明身处互联网时代的你还不够成熟。",
-     "Trả lời ngay lập tức đã trở thành đức tính số một trong giao tiếp trên WeChat, còn sự qua loa trong đó thì lại bị cố tình hay vô tình bỏ qua; việc giao tiếp ảo bóp chết sự hình thành các mối quan hệ sâu sắc đã trở thành sự thật mà ai cũng ngầm hiểu. Nếu bạn vẫn đánh đồng vòng bạn bè của một người với toàn bộ cuộc sống thật của họ, thì điều đó chỉ chứng tỏ bạn, người đang sống trong thời đại Internet, vẫn chưa đủ trưởng thành.",
+     "Trả lời ngay lập tức đã thành đức tính số một trong giao tiếp WeChat, còn sự qua loa trong đó lại bị cố tình hay vô tình bỏ qua; việc giao tiếp ảo bóp chết các mối quan hệ sâu sắc đã thành sự thật ai cũng ngầm hiểu. Nếu bạn vẫn đánh đồng vòng bạn bè của một người với toàn bộ cuộc sống thật của họ, thì chỉ chứng tỏ bạn, người sống trong thời đại Internet, vẫn chưa đủ trưởng thành.",
      ["秒回成了第一美德 là cách nói mỉa mai. 有意无意地忽略了 là cố ý hay vô tình mà bỏ qua. 心照不宣的事实 là sự thật ai cũng ngầm hiểu.",
       "把A与B划等号 là đánh đồng A với B, vẽ dấu bằng giữa A và B, câu mẫu thứ tám. 身处 là thân ở, đang ở trong, chữ 处 đọc chǔ. 那只能说明 là thì chỉ có thể chứng tỏ."]),
     ("明确朋友圈的真相，有助于我们合理分配社交能量，把时间和精力留给更重要的现实关系，尤其是留给自己。对于被虚拟社交关系消耗了大量时间精力的网民们，在享受网络社交带来的便利性的同时，更要时刻保持警惕，守护内心的那一份纯粹，那一份真诚。",
-     "Hiểu rõ bản chất của vòng bạn bè giúp chúng ta phân bổ năng lượng giao tiếp một cách hợp lý, dành thời gian và sức lực cho những mối quan hệ thật quan trọng hơn, nhất là dành cho chính mình. Đối với những cư dân mạng đã bị các quan hệ ảo tiêu hao nhiều thời gian và sức lực, trong khi tận hưởng sự tiện lợi của mạng xã hội, càng phải luôn giữ cảnh giác, gìn giữ sự thuần khiết và chân thành trong lòng mình.",
+     "Hiểu rõ bản chất của vòng bạn bè giúp ta phân bổ năng lượng giao tiếp hợp lý, dành thời gian và sức lực cho những mối quan hệ thật quan trọng hơn, nhất là cho chính mình. Với những cư dân mạng đã bị quan hệ ảo tiêu hao nhiều thời gian sức lực, trong khi tận hưởng sự tiện lợi của mạng xã hội, càng phải luôn giữ cảnh giác, gìn giữ sự thuần khiết và chân thành trong lòng.",
      ["Đoạn kết đưa ra lời khuyên. 明确真相 là hiểu rõ sự thật. 有助于 là giúp cho. 社交能量 là năng lượng giao tiếp. 尤其是留给自己 là nhất là dành cho bản thân.",
       "在……的同时，更要…… là trong khi…, càng phải…, câu mẫu cuối cùng. 时刻保持警惕 là luôn giữ cảnh giác. 守护内心的那一份纯粹，那一份真诚: điệp cấu trúc 那一份 ở cuối bài tạo âm hưởng nhẹ nhàng, sâu lắng."]),
 ]
@@ -287,7 +287,7 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
 for i, item in enumerate(P, 1):
     zh, vi, notes = item[:3]
     spoken = item[3] if len(item) > 3 else zh.replace("“", "").replace("”", "").replace("《", "").replace("》", "").replace("【", "").replace("】", "。").replace("\n", "")
-    zsize = 54 if len(zh) <= 100 else 50
+    zsize = 54 if len(zh) <= 100 and zh.count("\n") < 3 else 50
     add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
         say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
              F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", "").replace("【", "").replace("】", ""), cap="")] + [F(1, n) for n in notes])
@@ -329,7 +329,7 @@ add("bullets", chapter="Câu mẫu: 形成对比 · 说白了 · 说到底 · �
 
 add("bullets", section="Câu mẫu 重点句型", title="3. 说到底  ·  4. 比起……，……更……", size=33,
     items=["## 说到底: suy cho cùng, xét đến cùng – nói ra bản chất của vấn đề",
-           "这种快餐式的虚拟关系，说到底，是把每个人简化成实用的客体。",
+           "这种快餐式的虚拟关系，说到底，是把每个人简化成实用的客体，……",
            "人生说到底是自己的选择，自己的路在自己的脚下。",
            "你现在对我不冷不热，说到底，就是没把我放在眼里。",
            "## 比起A，B更……: so với A thì B … hơn",
@@ -363,7 +363,7 @@ add("bullets", chapter="Câu mẫu: 半A不B · 不在少数 · 白白 · 划等
 
 add("bullets", section="Câu mẫu 重点句型", title="7. 白白 + cụm động từ  ·  8. 把A与B划等号", size=33,
     items=["## 白白 + VP: một cách uổng phí, chẳng được gì",
-           "大量持续的沟通，白白剥夺了我们原本用于独立思考的时间。",
+           "……大量持续的沟通，白白剥夺了我们原本用于独立思考的时间，……",
            "我们不能白白浪费青春年华，青春就是用来奋斗的。",
            "有好几次机会他都白白错过了，真是后悔莫及。",
            "## 把A与/和B划等号: đánh đồng A với B, coi A là B",
@@ -421,20 +421,14 @@ add("bullets", section="Kết hợp từ 词语搭配", title="Kết hợp từ 
          F(5, "Ví dụ: 人生其实就是由大大小小的选择组成的，没有人能干涉和剥夺你自由选择的权利。 Đời người thực ra được tạo nên từ những lựa chọn lớn nhỏ, không ai có thể can thiệp và tước đoạt quyền tự do lựa chọn của bạn. Và: 没有人能随意剥夺他人的劳动所得, không ai được tùy tiện tước đoạt thành quả lao động của người khác.")])
 
 # ======================= LUYỆN TẬP =======================
-add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ điền vào chỗ trống", reveal=True, size=32,
+add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ điền vào chỗ trống (1)", reveal=True, size=33,
     items=["## Từ cho sẵn: 排解 · 扼杀 · 屏蔽 · 说到底 · 有意无意 · 心照不宣",
            "(1) 大量刷题会___孩子们的学习兴趣。",
            "Đáp án: 扼杀",
            "(2) 他经常以关心的名义___地触碰我的感情伤口。",
            "Đáp án: 有意无意",
            "(3) 在国外求学的过程中，她经常靠唱歌来___身在异乡的孤独。",
-           "Đáp án: 排解",
-           "(4) 这款软件能___广告、弹窗和其他网页垃圾，减少干扰，让你的工作更高效。",
-           "Đáp án: 屏蔽",
-           "(5) 小说艺术的精髓就是塑造人物，写小说___就是写人物。",
-           "Đáp án: 说到底",
-           "(6) 我们都看到了对方，但由于太过尴尬，于是彼此___，装不认识。",
-           "Đáp án: 心照不宣"],
+           "Đáp án: 排解"],
     say=["Phần luyện tập, 趁热打铁. Bài tập một: chọn từ thích hợp điền vào chỗ trống.",
          F(0, "Có sáu từ: 排解，扼杀，屏蔽，说到底，有意无意，心照不宣."),
          F(1, "Câu một: 大量刷题会什么孩子们的学习兴趣。 Làm bài tập ồ ạt sẽ thế nào hứng thú học tập của trẻ? 刷题 là cày đề. Các bạn tạm dừng và chọn nhé."),
@@ -442,13 +436,21 @@ add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", ti
          F(3, "Câu hai: 他经常以关心的名义什么地触碰我的感情伤口。 Anh ta thường nhân danh quan tâm mà thế nào chạm vào vết thương tình cảm của tôi."),
          F(4, "Đáp án: 有意无意. Chữ 地 phía sau cho thấy cần một trạng ngữ: cố ý mà như vô tình."),
          F(5, "Câu ba: 在国外求学的过程中，她经常靠唱歌来什么身在异乡的孤独。 Trong thời gian du học, cô ấy thường hát để thế nào nỗi cô đơn nơi đất khách."),
-         F(6, "Đáp án: 排解. 排解孤独, giải tỏa nỗi cô đơn."),
-         F(7, "Câu bốn: 这款软件能什么广告、弹窗和其他网页垃圾，减少干扰，让你的工作更高效。 Phần mềm này có thể thế nào quảng cáo, cửa sổ bật lên và các thứ rác trên trang web."),
-         F(8, "Đáp án: 屏蔽. 屏蔽广告, chặn quảng cáo. 弹窗 là cửa sổ bật lên, pop-up."),
-         F(9, "Câu năm: 小说艺术的精髓就是塑造人物，写小说什么就是写人物。 Tinh túy của nghệ thuật tiểu thuyết là xây dựng nhân vật, viết tiểu thuyết thế nào chính là viết về con người."),
-         F(10, "Đáp án: 说到底. Viết tiểu thuyết suy cho cùng là viết về con người."),
-         F(11, "Câu sáu: 我们都看到了对方，但由于太过尴尬，于是彼此什么，装不认识。 Chúng tôi đều nhìn thấy nhau, nhưng vì quá ngượng, nên đôi bên thế nào, giả vờ không quen."),
-         F(12, "Đáp án: 心照不宣. Hai bên ngầm hiểu mà không nói ra, giả vờ như không quen biết.")])
+         F(6, "Đáp án: 排解. 排解孤独, giải tỏa nỗi cô đơn.")])
+
+add("bullets", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ điền vào chỗ trống (2)", reveal=True, size=33,
+    items=["(4) 这款软件能___广告、弹窗和其他网页垃圾，减少干扰，让你的工作更高效。",
+           "Đáp án: 屏蔽",
+           "(5) 小说艺术的精髓就是塑造人物，写小说___就是写人物。",
+           "Đáp án: 说到底",
+           "(6) 我们都看到了对方，但由于太过尴尬，于是彼此___，装不认识。",
+           "Đáp án: 心照不宣"],
+    say=[F(0, "Câu bốn: 这款软件能什么广告、弹窗和其他网页垃圾，减少干扰，让你的工作更高效。 Phần mềm này có thể thế nào quảng cáo, cửa sổ bật lên và các thứ rác trên trang web."),
+         F(1, "Đáp án: 屏蔽. 屏蔽广告, chặn quảng cáo. 弹窗 là cửa sổ bật lên, pop-up."),
+         F(2, "Câu năm: 小说艺术的精髓就是塑造人物，写小说什么就是写人物。 Tinh túy của nghệ thuật tiểu thuyết là xây dựng nhân vật, viết tiểu thuyết thế nào chính là viết về con người."),
+         F(3, "Đáp án: 说到底. Viết tiểu thuyết suy cho cùng là viết về con người."),
+         F(4, "Câu sáu: 我们都看到了对方，但由于太过尴尬，于是彼此什么，装不认识。 Chúng tôi đều nhìn thấy nhau, nhưng vì quá ngượng, nên đôi bên thế nào, giả vờ không quen."),
+         F(5, "Đáp án: 心照不宣. Hai bên ngầm hiểu mà không nói ra, giả vờ như không quen biết.")])
 
 add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn đáp án đúng (1)", reveal=True, size=33,
     items=["(1) 河南安阳出土了一大批甲骨，上面的文字只有古文字学家才能（ ）。\nA.解读 B.解说 C.解决 D.排解",
@@ -660,11 +662,7 @@ lesson = {
                     "扬长": "扬常",            # yángcháng
                     "取长": "取常",            # qǔcháng
                     "热火朝天": "热火潮天",    # cháo
-                    "划等号": "话等号",        # huà
-                    "当下": "当夏",            # dāngxià
-                    "说白了": "说白勒",        # le
-                    "恶意": "饿意",            # èyì
-                    "着迷": "着迷"},
+                    "划等号": "话等号"},       # huà
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds23.json")

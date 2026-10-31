@@ -69,7 +69,7 @@ add("bullets", section="Khởi động 热身", title="Khởi động 2: Học t
          F(0, "Nhóm thứ nhất có chữ 随, Hán Việt là tùy. Nghĩa gốc là đi theo, từ đó có nghĩa ngay theo sau, và tùy ý."),
          F(1, "随即，随着，随身，随手，随后，随从。 Tức là: ngay sau đó, cùng với, mang theo người, tiện tay, tiếp sau đó, và tùy tùng. Từ 随即 là từ mới, đồng thời là điểm ngữ pháp thứ nhất của bài."),
          F(2, "随便，随时，随口，随意，随地，跟随。 Tức là: tùy tiện, bất cứ lúc nào, buột miệng, tùy ý, bất cứ chỗ nào, và đi theo."),
-         F(3, "Nhóm thứ hai có chữ 奇, Hán Việt là kỳ, nghĩa là lạ, khác thường."),
+         F(3, "Nhóm thứ hai có chữ kỳ, như trong từ 奇怪, nghĩa là lạ, khác thường."),
          F(4, "神奇，好奇，新奇，稀奇，奇怪，奇妙。 Tức là: thần kỳ, tò mò, mới lạ, hiếm lạ, kỳ quái, và kỳ diệu. Tên bài hôm nay chính là 神奇的丝瓜."),
          F(5, "奇特，奇景，奇谈，奇迹，千奇百怪。 Tức là: đặc biệt lạ, cảnh lạ, chuyện lạ, kỳ tích, và muôn hình vạn trạng. Trong bài khóa, tác giả viết 我却看到了奇迹, tôi lại được thấy một kỳ tích.")])
 
@@ -80,10 +80,10 @@ add("bullets", section="Khởi động 热身", title="Khởi động 2: Học t
            "## 落 (lạc): rơi xuống, rụng xuống",
            "坠落 rơi xuống · 降落 hạ cánh · 飘落 bay lả tả rơi · 掉落 rơi rớt · 散落 rơi vãi · 洒落 vương vãi",
            "日落 mặt trời lặn · 落后 lạc hậu · 落下 rơi xuống · 落花 hoa rụng · 落叶 lá rụng · 落地 rơi xuống đất"],
-    say=[F(0, "Nhóm thứ ba có chữ 转, sách ghi rõ đọc thanh ba, zhuǎn, Hán Việt là chuyển. Nghĩa là xoay, đổi hướng, thay đổi."),
+    say=[F(0, "Nhóm thứ ba có chữ chuyển, như trong từ 转变. Sách ghi rõ chữ này ở đây đọc thanh ba, zhuǎn. Nghĩa là xoay, đổi hướng, thay đổi."),
          F(1, "转眼，转身，转头，转脸，转念，转变。 Tức là: chớp mắt, quay người, quay đầu, quay mặt, nghĩ lại, và chuyển biến. Bài khóa có cụm 转眼间, trong chớp mắt."),
          F(2, "转学，转为，转瞬，好转，回转。 Tức là: chuyển trường, chuyển thành, trong chớp mắt, chuyển biến tốt, và quay lại."),
-         F(3, "Nhóm cuối cùng có chữ 落, Hán Việt là lạc, ở đây nghĩa là rơi xuống, rụng xuống."),
+         F(3, "Nhóm cuối cùng có chữ lạc, như trong từ 落叶. Ở đây nó nghĩa là rơi xuống, rụng xuống."),
          F(4, "坠落，降落，飘落，掉落，散落，洒落。 Tức là: rơi xuống, hạ cánh, bay lả tả rơi xuống, rơi rớt, rơi vãi, và vương vãi. Từ 坠落 xuất hiện nhiều lần trong bài, vì tác giả luôn sợ quả mướp rơi xuống."),
          F(5, "日落，落后，落下，落花，落叶，落地。 Tức là: mặt trời lặn, lạc hậu, rơi xuống, hoa rụng, lá rụng, và rơi xuống đất."),
          "Các bạn thấy không, chỉ cần nắm nghĩa của một chữ gốc, ta có thể đoán được nghĩa của cả một nhóm từ. Hãy áp dụng cách này khi học từ mới nhé."])
@@ -118,7 +118,7 @@ V = [
     ("宁愿", "nìngyuàn", "ninh nguyện", "phó từ", "thà rằng", "我宁愿走路，也不想挤公共汽车。", "Tôi thà đi bộ, chứ không muốn chen chúc trên xe buýt.",
      "Phó từ, nghĩa là thà rằng, dùng khi đã so sánh hơn thiệt rồi chọn một cách. Chú ý: âm tiết đầu đọc thanh bốn. Đây là điểm ngữ pháp thứ hai của bài."),
     ("疲倦", "píjuàn", "bì quyện", "tính từ", "mệt mỏi, mệt lử", "他一脸疲倦地回到了家。", "Anh ấy về đến nhà với vẻ mặt mệt mỏi.",
-     "Tính từ, nghĩa là mệt mỏi, uể oải, gần nghĩa với 疲劳 và 累. Trong bài có câu 我每天工作疲倦了, mỗi ngày làm việc mệt rồi."),
+     "Tính từ, nghĩa là mệt mỏi, uể oải, gần nghĩa với 疲劳 và 劳累. Trong bài có câu 我每天工作疲倦了, mỗi ngày làm việc mệt rồi."),
     ("茎", "jīng", "hành", "danh từ", "thân cây, cọng", "这种花的茎又细又长。", "Thân của loài hoa này vừa mảnh vừa dài.",
      "Danh từ, nghĩa là thân cây, cọng. Trong bài, 瓜茎 là dây mướp. Hán Việt là hành, như trong từ căn hành, tức là thân rễ."),
     ("幢", "zhuàng", "tràng", "lượng từ", "tòa, ngôi, căn (nhà)", "那幢楼一共有二十层。", "Tòa nhà kia có tất cả hai mươi tầng.",
@@ -132,7 +132,7 @@ V = [
     ("覆盖", "fùgài", "phúc cái", "động từ", "che, phủ", "大雪覆盖了整个城市。", "Tuyết lớn phủ kín cả thành phố.",
      "Động từ, nghĩa là che phủ, bao phủ. Ngày nay còn dùng cho phạm vi, như 网络覆盖, sóng mạng phủ khắp."),
     ("水泥", "shuǐní", "thủy nê", "danh từ", "xi măng", "工人们正在搅拌水泥。", "Các công nhân đang trộn xi măng.",
-     "Danh từ, nghĩa là xi măng. 泥 là bùn, 水泥 là thứ bùn trộn với nước rồi đông cứng lại. Trong bài có cụm 水泥墙面, mặt tường xi măng."),
+     "Danh từ, nghĩa là xi măng. 水泥 gồm chữ thủy là nước và chữ nê là bùn: thứ bùn trộn với nước rồi đông cứng lại. Trong bài có cụm 水泥墙面, mặt tường xi măng."),
     ("朝气蓬勃", "zhāoqì péngbó", "triêu khí bồng bột", "thành ngữ", "tràn đầy sức sống", "年轻人朝气蓬勃，充满希望。", "Người trẻ tràn đầy sức sống, chan chứa hy vọng.",
      "Thành ngữ. 朝气 là khí buổi sớm mai, chỉ sức sống tươi trẻ; 蓬勃 là phát triển mạnh mẽ. Cẩn thận: tiếng Việt bồng bột là nông nổi, thiếu suy nghĩ; còn 蓬勃 là phồn thịnh, mạnh mẽ, hoàn toàn mang nghĩa tốt."),
     ("生机", "shēngjī", "sinh cơ", "danh từ", "sức sống; cơ hội sống", "春天来了，到处充满了生机。", "Mùa xuân đến, khắp nơi tràn đầy sức sống.",
@@ -268,7 +268,7 @@ P = [
       "舒舒服服地躺在 là nằm thoải mái, lại là nhân hóa. Đây là lần lo lắng thứ hai, và cây mướp lại tự tìm ra cách."]),
     ("没几天，那两个大瓜下面的瓜茎末梢上，又长出来一个瓜，垂直地吊在那里，在风中晃来晃去。",
      "Chẳng mấy ngày sau, trên đầu ngọn dây mướp phía dưới hai quả to ấy, lại mọc ra một quả nữa, treo thẳng đứng ở đó, đu đưa qua lại trong gió.",
-     ["末梢 là đầu ngọn. 垂直地吊在那里 là treo thẳng đứng ở đó, 地 đứng sau tính từ để làm trạng ngữ.",
+     ["末梢 là đầu ngọn. 垂直地吊在那里 là treo thẳng đứng ở đó; trợ từ kết cấu đứng sau 垂直 biến nó thành trạng ngữ.",
       "晃来晃去 là đu đưa qua lại, mẫu V来V去 diễn tả động tác lặp đi lặp lại, như 走来走去, đi đi lại lại."]),
     ("我断定：这个瓜上面够不到窗台，下面也是空的，总有一天，瓜茎会禁不住瓜的分量，连同上面的两个大瓜一起坠落到地上。",
      "Tôi kết luận chắc chắn: quả này phía trên không với tới bậu cửa sổ, phía dưới cũng trống không, thể nào cũng có ngày dây mướp không chịu nổi sức nặng của quả, rồi cùng với hai quả to ở trên rơi cả xuống đất.",
@@ -319,7 +319,7 @@ add("bullets", chapter="Tóm tắt nội dung", section="Bài khóa 课文", tit
          F(4, "Tiếp theo, mướp ra hoa, hoa biến thành quả nhỏ. Rồi lần lượt xuất hiện quả mướp đầu tiên, hai quả mướp sau đó, và quả mướp ở dưới cùng.")])
 
 add("bullets", section="Bài khóa 课文", title="Bố cục bài khóa (theo bài tập 5) – phần 2", size=34,
-    items=["## 3. 描述一下“我”对丝瓜担心的过程 – những nỗi lo của “tôi”",
+    items=["## 3. 描述一下“我”对丝瓜担心的过程 – những nỗi lo của nhân vật tôi",
            "最初的瓜：怕瓜茎负担不起 → 长到一定程度就不长了",
            "三楼窗外的两个瓜：怕茎承担不住 → 弯起来躺在了窗台上",
            "末梢上的瓜：断定会坠落 → 躺在了加固墙体的台子上",
@@ -431,7 +431,7 @@ add("compare", chapter="Phân biệt 连同 – 一起", section="Phân biệt t
                      "Có thể dùng chung: A连同B一起 + động từ"]}],
     say=["Tiếp theo là phần phân biệt từ: 连同 và 一起. Hai từ này đều có thể dịch là cùng với, nên rất dễ dùng lẫn lộn.",
          "Điểm giống nhau: cả hai đều có ý A và B cùng nhau. Nhưng 连同 là liên từ, còn 一起 là phó từ, vì vậy không thể thay thế cho nhau.",
-         F(0, "连同 là liên từ, nghĩa giống 连 hoặc 和, tức là cùng với, kể cả. Nó thường đứng giữa hai danh từ. Ví dụ: 货物连同清单一并送过去。 Hàng hóa cùng với bảng kê, gửi qua một lượt."),
+         F(0, "连同 là liên từ, nghĩa giống chữ hòa trong cụm 我和你, tức là cùng với, kể cả. Nó thường đứng giữa hai danh từ. Ví dụ: 货物连同清单一并送过去。 Hàng hóa cùng với bảng kê, gửi qua một lượt."),
          F(1, "一起 là phó từ, nghĩa là cùng nhau, đứng trước động từ. Ví dụ: 明天你把作业和考试成绩一起带给他吧。 Ngày mai bạn mang bài tập và điểm thi cùng đưa cho cậu ấy nhé."),
          F(0, "Vì 连同 là liên từ, nên nó không đứng trước động từ được. Câu 我跟朋友连同住在公寓里 là sai, phải nói 我跟朋友一起住在公寓里。"),
          F(1, "Hai từ còn có thể dùng chung, như trong bài khóa: 连同上面的两个大瓜一起坠落到地上。 连同 nối hai danh từ, còn 一起 đứng trước động từ 坠落."),
@@ -501,7 +501,7 @@ add("bullets", section="Kỹ năng 技能", title="Làm cho đoạn tả sinh đ
            "## Nhân hóa (拟人): tả cây như tả người",
            "很有节制 · 舒舒服服地躺在了那家的窗台上 · 含笑面对秋阳",
            "丝瓜有思想，能考虑问题，而且还有行动",
-           "## Tác dụng: hình ảnh cụ thể, cây mướp trở nên gần gũi, có “tính cách”"],
+           "## Tác dụng: hình ảnh cụ thể, cây mướp trở nên gần gũi, có tính cách riêng"],
     say=["Ngoài chuỗi thời gian, tác giả còn dùng hai thủ pháp để đoạn tả thật sinh động.",
          F(0, "Thủ pháp thứ nhất là so sánh, với mẫu A一般 cộng tính từ, hoặc 如A一般 cộng tính từ. 一般 ở đây nghĩa là giống như."),
          F(1, "细绳一般粗, to như sợi dây mảnh. 小姑娘的辫子一般粗细, to bằng bím tóc cô bé. 如小孩胳膊一般粗, to như cánh tay trẻ con. Chỉ qua ba hình ảnh, người đọc thấy ngay quả mướp lớn nhanh thế nào."),
@@ -601,7 +601,7 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 2: Viết lại
          F(2, "Câu năm, dùng 连同: 妈妈把午饭和课本一起放进我的书包里了。 Mẹ bỏ bữa trưa và sách giáo khoa vào cặp cho tôi."),
          F(3, "Đáp án: 妈妈把午饭连同课本一起放进我的书包里了。 Thay 和 bằng 连同, giữ lại 一起 trước động từ, đúng như mẫu trong bài khóa."),
          F(4, "Câu sáu, dùng 一如既往: 希望你像以前一样继续关心支持我们。 Mong bạn tiếp tục quan tâm, ủng hộ chúng tôi như trước đây."),
-         F(5, "Đáp án: 希望你一如既往地关心支持我们。 一如既往 thay cho cả cụm 像以前一样继续, và đứng trước động từ với trợ từ 地.")])
+         F(5, "Đáp án: 希望你一如既往地关心支持我们。 一如既往 thay cho cả cụm 像以前一样继续, và đứng trước động từ, theo mẫu 一如既往地关心.")])
 
 add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ thích hợp điền vào chỗ trống (1)", reveal=True, size=36,
     items=["## Từ cho sẵn: 土壤 · 照耀 · 花瓣 · 粒 · 滋润",
@@ -681,7 +681,8 @@ lesson = {
                     "受累": "受泪",            # shòulèi
                     "还给": "环给",            # huán gěi
                     "他干的": "他赣的",        # gàn
-                    "转为": "转维"},           # zhuǎnwéi
+                    "转为": "转维",            # zhuǎnwéi
+                    "调和": "条和"},           # tiáohé
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai18.json")

@@ -25,7 +25,7 @@ add("title", chapter="Mở đầu",
     vi="Bài 2.1: Phố không hòa nhập, quê chẳng thể về",
     sub="Róng bu jìn de chéngshì, huí bu qù de nóngcūn\nBài giảng chi tiết bằng tiếng Việt",
     say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng giáo trình 顶石中文, Đỉnh cao tiếng Trung, giáo trình tổng hợp tiếng Trung cao cấp.",
-         "Hôm nay chúng ta bước sang Đơn vị hai: 时代篇, chủ đề Thời đại. Bài đầu tiên của đơn vị là bài 2.1: 融不进的城市，回不去的农村。 Nghĩa là: Thành phố không hòa nhập được, nông thôn không quay về được.",
+         "Hôm nay chúng ta bước sang Đơn vị hai: 时代篇, chủ đề Thời đại. Bài đầu tiên của đơn vị là bài hai chấm một: 融不进的城市，回不去的农村。 Nghĩa là: Thành phố không hòa nhập được, nông thôn không quay về được.",
          "Bài khóa là một bài báo xã hội của trang tin 中国新闻网, viết về 新生代农民工, tức lớp lao động nhập cư thế hệ mới: những người trẻ sinh sau năm một nghìn chín trăm tám mươi, rời làng quê lên thành phố làm việc, nhưng mãi vẫn chưa thật sự trở thành người thành phố.",
          "Họ đứng giữa hai thế giới: thành phố thì chưa đón nhận họ, còn làng quê thì họ đã không muốn, và cũng không thể quay về. Hiện tượng này người Việt chúng ta cũng rất quen thuộc, với hàng triệu lao động từ các tỉnh đổ về Hà Nội, Thành phố Hồ Chí Minh hay các khu công nghiệp."])
 
@@ -220,7 +220,7 @@ for gs in sizes:
 # (chữ Hán hiển thị, dịch, ghi chú[, lời đọc tiếng Trung: số viết bằng chữ Hán, bỏ ngoặc kép])
 P = [
     ("他们，是一群跨入工业文明的庄稼人的后代；他们，是游离在城市和农村之间、面临边缘化的群体。当他们身为“农民工一代”的父辈渐渐退出城市舞台，他们陆续涌入大大小小的城市——在原本不属于他们的高楼大厦间寻梦。",
-     "Họ là con cháu của những người nông dân đã bước chân vào nền văn minh công nghiệp; họ là một nhóm người lơ lửng giữa thành phố và nông thôn, đang đứng trước nguy cơ bị gạt ra bên lề. Khi thế hệ cha chú của họ, những người lao động nhập cư đời đầu, dần rút khỏi sân khấu thành phố, thì họ lần lượt đổ về các thành phố lớn nhỏ, đi tìm giấc mơ giữa những tòa cao ốc vốn không thuộc về mình.",
+     "Họ là con cháu của những người nông dân đã bước vào nền văn minh công nghiệp; họ là nhóm người lơ lửng giữa thành phố và nông thôn, có nguy cơ bị gạt ra bên lề. Khi cha chú họ, lớp lao động nhập cư đời đầu, dần rời sân khấu thành phố, họ lần lượt đổ về các thành phố lớn nhỏ, tìm giấc mơ giữa những tòa cao ốc vốn không thuộc về mình.",
      ["Đoạn mở đầu dùng phép điệp: 他们，是……；他们，是……, lặp lại chủ ngữ để gây ấn tượng mạnh, kiểu văn báo chí giàu cảm xúc. 跨入 là bước vào. 庄稼人的后代 là con cháu nhà nông.",
       "身为 nghĩa là thân là, với tư cách là: 身为农民工一代的父辈, những bậc cha chú vốn là lao động nhập cư đời đầu. 退出城市舞台 là rút khỏi sân khấu thành phố, tức là đã già, lần lượt về quê.",
       "陆续涌入 là lần lượt ồ ạt đổ vào. Dấu gạch ngang dài dẫn ra lời giải thích: 在原本不属于他们的高楼大厦间寻梦, họ đi tìm giấc mơ giữa những tòa nhà cao tầng vốn không thuộc về mình. Chữ 原本 là vốn dĩ, đã báo trước nỗi khó khăn khi hòa nhập."]),
@@ -229,7 +229,7 @@ P = [
      ["Đoạn văn chỉ có một câu, nhưng là câu then chốt: nó gọi tên đối tượng của cả bài. 有着 là có, động từ 有 thêm 着, mang màu sắc văn viết: 有着一个共同的名字.",
       "Nhớ lại phần bối cảnh: 新生代农民工 là những người sinh từ năm một nghìn chín trăm tám mươi trở về sau, làm việc ở thành phố nhưng hộ khẩu ở nông thôn. Hai đoạn đầu là phần dẫn nhập; tiếp theo, bài báo chia làm ba tiểu mục, mỗi tiểu mục là một câu hỏi."]),
     ("【他们离“新市民”还有多远？】\n繁华的大都市有着先进的教育、发达的医疗、无数的机会……是多少农民工向往的“圣地”。目前，外出打工的人数约有2.7亿，在这当中，80后、90后的新生代农民工居多，大约有1个亿。",
-     "【Họ còn cách “thị dân mới” bao xa?】 Đô thị lớn phồn hoa có nền giáo dục tiên tiến, y tế phát triển, vô số cơ hội…, là “thánh địa” mà biết bao lao động nhập cư hằng mơ ước. Hiện nay, số người rời quê đi làm thuê vào khoảng 270 triệu, trong đó phần đông là lao động nhập cư thế hệ mới thuộc thế hệ 8X, 9X, khoảng 100 triệu người.",
+     "【Họ còn cách “thị dân mới” bao xa?】 Đô thị lớn phồn hoa có nền giáo dục tiên tiến, y tế phát triển, vô số cơ hội…, là “thánh địa” mà biết bao lao động nhập cư hằng mơ ước. Hiện nay, số người rời quê đi làm thuê vào khoảng 270 triệu, trong đó phần đông là lao động nhập cư thế hệ mới sinh vào thập niên 80, 90, khoảng 100 triệu người.",
      ["Tiểu mục thứ nhất: 他们离新市民还有多远？ Họ còn cách việc trở thành thị dân mới bao xa? 新市民 là cư dân mới của thành phố.",
       "是多少农民工向往的圣地: 多少 ở đây không phải câu hỏi, mà là cảm thán, nghĩa là biết bao nhiêu. 向往 là hướng về, mong mỏi. 圣地 là thánh địa, nơi ai cũng ao ước được đến.",
       "外出打工 là rời quê đi làm thuê. 八零后、九零后 là thế hệ sinh vào thập niên tám mươi, chín mươi, tiếng Việt hay gọi là thế hệ tám X, chín X. 新生代农民工居多 nghĩa là lao động thế hệ mới chiếm đa số; đây là câu mẫu 以……居多. 一个亿 là một trăm triệu, cách nói khẩu ngữ của 一亿."],
@@ -277,7 +277,7 @@ P = [
      ["劳有所得、住有所居、病有所医 là ba cụm bốn chữ theo mẫu A有所B: lao động thì có thu nhập, cần ở thì có nhà, ốm đau thì có nơi chữa. Đây là cách nói quen thuộc trong văn bản chính sách của Trung Quốc. 障碍 là trở ngại.",
       "无论是……还是……，都…… là dù là… hay là…, đều…. 宏观的国家政策层面 là tầng chính sách vĩ mô của nhà nước. 有形无形的壁垒 là rào cản hữu hình và vô hình. 瓶颈亟待打破 là nút thắt đang chờ gấp rút phá bỏ."]),
     ("破解新生代农民工融入城市的难题，需要全社会的共同努力。\n首先，政府要将农民工群体纳入城市经济社会发展规划和公共政策体系，在教育、住房、卫生、交通等公共服务方面加大财政投入，让新生代农民工能够共享城市发展带来的红利。",
-     "Tháo gỡ bài toán hòa nhập thành phố của lao động nhập cư thế hệ mới cần có sự chung tay của toàn xã hội. Trước hết, chính phủ cần đưa nhóm lao động nhập cư vào quy hoạch phát triển kinh tế xã hội của thành phố và hệ thống chính sách công, tăng chi ngân sách cho các dịch vụ công như giáo dục, nhà ở, y tế, giao thông, để lao động nhập cư thế hệ mới được cùng hưởng thành quả mà sự phát triển của thành phố đem lại.",
+     "Tháo gỡ bài toán hòa nhập thành phố của lao động nhập cư thế hệ mới cần sự chung tay của toàn xã hội. Trước hết, chính phủ cần đưa nhóm lao động nhập cư vào quy hoạch phát triển kinh tế xã hội của thành phố và hệ thống chính sách công, tăng chi ngân sách cho giáo dục, nhà ở, y tế, giao thông, để họ được cùng hưởng thành quả phát triển của thành phố.",
      ["Phần cuối bài đưa ra giải pháp, theo trình tự 首先，其次，此外, trước hết, tiếp theo, ngoài ra. Câu chủ đề: 需要全社会的共同努力, cần sự nỗ lực chung của toàn xã hội.",
       "Giải pháp thứ nhất dành cho chính phủ: 将A纳入B, đưa A vào B; 发展规划 là quy hoạch phát triển; 加大财政投入 là tăng đầu tư ngân sách; 共享红利 là cùng hưởng lợi ích. Câu văn mang đậm phong cách văn bản chính sách."]),
     ("其次，城市居民要不断提升认同与接纳程度，给他们以温暖和关注，莫让他们遭受冷漠的社会歧视。此外，新生代农民工自己也要量力而行，选准适宜发展的地方安居乐业。这样一来，他们才不会在偌大的城市中迷失自己。",
@@ -453,9 +453,7 @@ add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", ti
            "(3) 在这个风景优美的小城里，人们（ ）。",
            "Đáp án: 安居乐业",
            "(4) 没有农民工的汗水，就没有城市的（ ）。",
-           "Đáp án: 繁华",
-           "(5) 信仰是无言的指路人，让我们在（ ）中找到出路。",
-           "Đáp án: 迷茫"],
+           "Đáp án: 繁华"],
     say=["Phần luyện tập, 课后练习, sách gọi là 趁热打铁, nghĩa là rèn sắt khi còn nóng. Bài tập một: chọn từ thích hợp điền vào chỗ trống.",
          F(0, "Có chín từ: 繁华，迷茫，承载，不争，浑身解数，一窍不通，望尘莫及，量力而行，安居乐业. Mỗi từ dùng một lần."),
          F(1, "Câu một: 大城市竞争十分激烈，这是个什么的事实。 Cạnh tranh ở thành phố lớn rất gay gắt, đây là một sự thật thế nào? Các bạn tạm dừng và chọn nhé."),
@@ -465,12 +463,12 @@ add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", ti
          F(5, "Câu ba: 在这个风景优美的小城里，人们什么。 Trong thành phố nhỏ phong cảnh tươi đẹp này, người dân thế nào?"),
          F(6, "Đáp án: 安居乐业. Người dân an cư lạc nghiệp."),
          F(7, "Câu bốn: 没有农民工的汗水，就没有城市的什么。 Không có mồ hôi của người lao động nhập cư, thì không có cái gì của thành phố?"),
-         F(8, "Đáp án: 繁华. 就没有城市的繁华, thì không có sự phồn hoa của thành phố. Ở đây 繁华 được dùng như danh từ."),
-         F(9, "Câu năm: 信仰是无言的指路人，让我们在什么中找到出路。 Niềm tin là người dẫn đường không lời, giúp ta tìm ra lối thoát giữa cái gì?"),
-         F(10, "Đáp án: 迷茫. 在迷茫中找到出路, tìm ra lối thoát giữa lúc mất phương hướng.")])
+         F(8, "Đáp án: 繁华. 就没有城市的繁华, thì không có sự phồn hoa của thành phố. Ở đây 繁华 được dùng như danh từ.")])
 
-add("bullets", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ điền vào chỗ trống (2)", reveal=True, size=33,
-    items=["(6) 金灿灿的稻田中那一串串饱满的稻子，（ ）着农民一整年的梦想。",
+add("bullets", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ điền vào chỗ trống (2)", reveal=True, size=32,
+    items=["(5) 信仰是无言的指路人，让我们在（ ）中找到出路。",
+           "Đáp án: 迷茫",
+           "(6) 金灿灿的稻田中那一串串饱满的稻子，（ ）着农民一整年的梦想。",
            "Đáp án: 承载",
            "(7) 为了在市场竞争中占有一席之地，商家们动足了脑筋，使出了（ ）。",
            "Đáp án: 浑身解数",
@@ -478,21 +476,23 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 1: Chọn
            "Đáp án: 量力而行",
            "(9) 近年来，他发表的作品无论从质量上还是数量上说，都是我们（ ）的。",
            "Đáp án: 望尘莫及"],
-    say=[F(0, "Câu sáu: 金灿灿的稻田中那一串串饱满的稻子，什么着农民一整年的梦想。 Những bông lúa trĩu hạt trên cánh đồng vàng óng, thế nào ước mơ cả năm của người nông dân?"),
-         F(1, "Đáp án: 承载. 承载着农民一整年的梦想, chứa đựng ước mơ cả năm trời của nhà nông."),
-         F(2, "Câu bảy: 为了在市场竞争中占有一席之地，商家们动足了脑筋，使出了什么。 Để giành một chỗ đứng trong cạnh tranh thị trường, các nhà buôn đã vắt óc suy nghĩ, tung ra cái gì?"),
-         F(3, "Đáp án: 浑身解数. 使出了浑身解数, trổ hết mọi bản lĩnh. Động từ 使出 là gợi ý quan trọng."),
-         F(4, "Câu tám: 人要有自知之明，处世做人，要什么，不强求自己去做超出能力以外的事情。 Con người phải biết mình, đối nhân xử thế phải thế nào, không ép mình làm những việc vượt quá khả năng?"),
-         F(5, "Đáp án: 量力而行. Phải liệu sức mà làm. Vế sau 不强求自己去做超出能力以外的事情 chính là lời giải thích của thành ngữ này."),
-         F(6, "Câu chín: 近年来，他发表的作品无论从质量上还是数量上说，都是我们什么的。 Mấy năm gần đây, tác phẩm anh ấy công bố, dù xét về chất lượng hay số lượng, đều là thứ chúng tôi thế nào?"),
-         F(7, "Đáp án: 望尘莫及. 都是我们望尘莫及的, đều là thứ chúng tôi không theo kịp.")])
+    say=[F(0, "Câu năm: 信仰是无言的指路人，让我们在什么中找到出路。 Niềm tin là người dẫn đường không lời, giúp ta tìm ra lối thoát giữa cái gì?"),
+         F(1, "Đáp án: 迷茫. 在迷茫中找到出路, tìm ra lối thoát giữa lúc mất phương hướng."),
+         F(2, "Câu sáu: 金灿灿的稻田中那一串串饱满的稻子，什么着农民一整年的梦想。 Những bông lúa trĩu hạt trên cánh đồng vàng óng, thế nào ước mơ cả năm của người nông dân?"),
+         F(3, "Đáp án: 承载. 承载着农民一整年的梦想, chứa đựng ước mơ cả năm trời của nhà nông."),
+         F(4, "Câu bảy: 为了在市场竞争中占有一席之地，商家们动足了脑筋，使出了什么。 Để giành một chỗ đứng trong cạnh tranh thị trường, các nhà buôn đã vắt óc suy nghĩ, tung ra cái gì?"),
+         F(5, "Đáp án: 浑身解数. 使出了浑身解数, trổ hết mọi bản lĩnh. Động từ 使出 là gợi ý quan trọng."),
+         F(6, "Câu tám: 人要有自知之明，处世做人，要什么，不强求自己去做超出能力以外的事情。 Con người phải biết mình, đối nhân xử thế phải thế nào, không ép mình làm những việc vượt quá khả năng?"),
+         F(7, "Đáp án: 量力而行. Phải liệu sức mà làm. Vế sau 不强求自己去做超出能力以外的事情 chính là lời giải thích của thành ngữ này."),
+         F(8, "Câu chín: 近年来，他发表的作品无论从质量上还是数量上说，都是我们什么的。 Mấy năm gần đây, tác phẩm anh ấy công bố, dù xét về chất lượng hay số lượng, đều là thứ chúng tôi thế nào?"),
+         F(9, "Đáp án: 望尘莫及. 都是我们望尘莫及的, đều là thứ chúng tôi không theo kịp.")])
 
 add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn đáp án đúng (1)", reveal=True, size=33,
-    items=["(1) 随着大批毕业生（ ）长期以来号称“世界工厂”的经济体中，人们对市场吸收能力和未来政治局势的担忧也开始加深。  A.涌入 B.流入 C.深入 D.进入",
+    items=["(1) 随着大批毕业生（ ）长期以来号称“世界工厂”的经济体中，人们对市场吸收能力和未来政治局势的担忧也开始加深。\nA.涌入 B.流入 C.深入 D.进入",
            "Đáp án: A. 涌入 – số lượng lớn ồ ạt đổ vào",
-           "(2) 在这人来人往的（ ）都市，他心中却感到空落落的，有一种说不出的孤独与迷茫。  A.繁荣 B.繁华 C.繁忙 D.繁多",
+           "(2) 在这人来人往的（ ）都市，他心中却感到空落落的，有一种说不出的孤独与迷茫。\nA.繁荣 B.繁华 C.繁忙 D.繁多",
            "Đáp án: B. 繁华 – 繁华都市, đô thị phồn hoa",
-           "(3)（ ）以后你成了领导，也没有权利要求别人放弃自己的尊严。  A.尽管 B.不然 C.虽然 D.纵然",
+           "(3)（ ）以后你成了领导，也没有权利要求别人放弃自己的尊严。\nA.尽管 B.不然 C.虽然 D.纵然",
            "Đáp án: D. 纵然 – giả định, đi với 也"],
     say=["Bài tập hai: chọn đáp án đúng.",
          F(0, "Câu một: 随着大批毕业生什么长期以来号称世界工厂的经济体中，人们对市场吸收能力和未来政治局势的担忧也开始加深。 Cùng với việc một lượng lớn sinh viên tốt nghiệp thế nào vào nền kinh tế lâu nay được mệnh danh là công xưởng của thế giới, nỗi lo của mọi người về khả năng hấp thụ của thị trường cũng tăng lên. Bốn lựa chọn: 涌入，流入，深入，进入."),
@@ -503,11 +503,11 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn
          F(5, "Đáp án: D, 纵然. Việc trở thành lãnh đạo là giả định chưa xảy ra, và vế sau có 也, nên dùng 纵然. 尽管 và 虽然 nói về sự thật đã có, vế sau thường dùng 但是.")])
 
 add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn đáp án đúng (2)", reveal=True, size=33,
-    items=["(4) 当爱情（ ）了太多不切实际的希望，它也会幻灭得更快。  A.承载 B.承受 C.承担 D.接受",
+    items=["(4) 当爱情（ ）了太多不切实际的希望，它也会幻灭得更快。\nA.承载 B.承受 C.承担 D.接受",
            "Đáp án: A. 承载 – chứa đựng, gánh (hy vọng)",
-           "(5) 警官使出浑身解数，也（ ）不了这如乱麻似的谜案。  A.解决 B.解除 C.破解 D.解开",
+           "(5) 警官使出浑身解数，也（ ）不了这如乱麻似的谜案。\nA.解决 B.解除 C.破解 D.解开",
            "Đáp án: C. 破解 – phá án, giải mã điều bí ẩn",
-           "(6) 该国若要缓解人口老化问题，保持就业人口和退休人口之间的平衡关系，就需要（ ）外来移民。  A.接待 B.采纳 C.采用 D.接纳",
+           "(6) 该国若要缓解人口老化问题，保持就业人口和退休人口之间的平衡关系，就需要（ ）外来移民。\nA.接待 B.采纳 C.采用 D.接纳",
            "Đáp án: D. 接纳 – tiếp nhận người (移民)"],
     say=[F(0, "Câu bốn: 当爱情什么了太多不切实际的希望，它也会幻灭得更快。 Khi tình yêu thế nào quá nhiều hy vọng viển vông, nó cũng sẽ tan vỡ nhanh hơn. Bốn lựa chọn: 承载，承受，承担，接受."),
          F(1, "Đáp án: A, 承载. 承载希望 là chứa đựng, gửi gắm hy vọng, đúng như phần kết hợp từ vừa học. 承受 là chịu đựng áp lực, đau khổ; 承担 là gánh vác trách nhiệm; 接受 là tiếp nhận."),
@@ -517,7 +517,7 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn
          F(5, "Đáp án: D, 接纳. 接纳移民 là tiếp nhận người nhập cư. 接待 là tiếp đón khách; 采纳 là tiếp thu ý kiến; 采用 là áp dụng phương pháp, kỹ thuật.")])
 
 add("bullets", section="Luyện tập 课后练习", title="Bài tập 3: Dùng từ và câu mẫu cho sẵn để trả lời", reveal=True, size=32,
-    items=["(1) 为什么新生代农民工在城市感到无奈和彷徨？（纵然……也……）",
+    items=["(1) 为什么新生代农民工在城市感到无奈和彷徨 （纵然……也……）",
            "Đáp án gợi ý: 因为房价和生活成本太高，又没有稳定的工作和社会保障，作为外乡人，他们纵然使出浑身解数，也很难真正融入城市。",
            "(2) 为什么新生代农民工不想留在农村？（况且……，不争的）",
            "Đáp án gợi ý: 农村的基础设施落后，公共服务薄弱，况且农业生产高投入、低回报，这都是不争的事实。再加上他们已经习惯了城市的生活。",
@@ -573,13 +573,13 @@ add("bullets", chapter="Tổng kết", section="Tổng kết", title="Tổng k�
            "Thành ngữ: 浑身解数 · 望尘莫及 · 逢年过节 · 一窍不通 · 落叶归根 · 进退两难 · 量力而行 · 安居乐业",
            "Câu mẫu: （以）……居多 · 纵然……也…… · ……固然……，可是…… · 不复 · 况且 · 被/为……所 · V准 · 这样一来",
            "Bài tập về nhà: viết đoạn văn 200 chữ về lao động nhập cư ở Việt Nam, dùng ít nhất 3 câu mẫu"],
-    say=["Chúng ta cùng tổng kết bài 2.1.",
+    say=["Chúng ta cùng tổng kết bài hai chấm một.",
          F(0, "Về nội dung: lao động nhập cư thế hệ mới hướng về thành phố nhưng không được thành phố đón nhận; gốc rễ ở nông thôn nhưng ngày càng xa cách nông thôn. Câu then chốt là: 他们向往城市，却不被城市所接纳；根在农村，却对农村日益疏远。"),
          F(1, "Về từ vựng, các bạn cần đặc biệt nhớ: 游离，边缘化，涌入，纵然，彷徨，徘徊，迷茫，固然，承载，薄弱，不争，打拼，破解，接纳，日益，疏远，壁垒，瓶颈，纳入，歧视，适宜. Và đừng quên những từ dễ nhầm như 彷徨，徘徊，适宜."),
          F(2, "Về thành ngữ: 浑身解数，望尘莫及，逢年过节，一窍不通，落叶归根，进退两难，量力而行，安居乐业. Nhiều thành ngữ rất gần với tiếng Việt, như tiến thoái lưỡng nan, an cư lạc nghiệp, lá rụng về cội."),
          F(3, "Về câu mẫu: 以……居多, chiếm đa số; 纵然……也……, dù cho… cũng…; 固然……可是……, đành rằng… nhưng…; 不复, không còn… nữa; 况且, hơn nữa; 被……所……, bị động văn viết; động từ cộng 准, làm cho đúng; và 这样一来, như vậy thì."),
          F(4, "Bài tập về nhà: các bạn hãy viết một đoạn văn khoảng hai trăm chữ, nói về lao động từ nông thôn ra thành phố ở Việt Nam: họ gặp những khó khăn gì, và xã hội nên giúp họ thế nào. Hãy dùng ít nhất ba câu mẫu vừa học, ví dụ 纵然……也……，固然……可是…… và 这样一来."),
-         "Cảm ơn các bạn đã theo dõi bài giảng. Bài sau, bài 2.2, chúng ta sẽ chuyển từ người lao động trẻ sang người cao tuổi, với chủ đề 信息化社会：一个都不能少, Xã hội thông tin: không ai bị bỏ lại phía sau. Bài báo nói về việc giúp ông bà, cha mẹ vượt qua khoảng cách số trong thời đại điện thoại thông minh. Hẹn gặp lại các bạn. Chúc các bạn học tốt!"])
+         "Cảm ơn các bạn đã theo dõi bài giảng. Bài sau, bài hai chấm hai, chúng ta sẽ chuyển từ người lao động trẻ sang người cao tuổi, với chủ đề 信息化社会：一个都不能少, Xã hội thông tin: không ai bị bỏ lại phía sau. Bài báo nói về việc giúp ông bà, cha mẹ vượt qua khoảng cách số trong thời đại điện thoại thông minh. Hẹn gặp lại các bạn. Chúc các bạn học tốt!"])
 
 lesson = {
     "title": "顶石中文 – Bài 2.1: 融不进的城市，回不去的农村 (Thành phố không hòa nhập được, nông thôn không về được)",
@@ -597,10 +597,7 @@ lesson = {
                     "量力": "亮力",            # liànglì
                     "乐业": "勒业",            # lèyè
                     "承载": "承在",            # chéngzài
-                    "庄稼": "庄家",            # zhuāngjia
-                    "为钱": "为钱",
                     "为那": "维那",            # 为……所: wéi
-                    "一窍": "一俏",            # yīqiào
                     "空落落": "空洛洛",        # kōngluòluò
                     "处世": "楚世",            # chǔshì
                     "处于": "楚于",            # chǔyú
@@ -609,8 +606,10 @@ lesson = {
                     "种种": "肿肿",            # zhǒngzhǒng
                     "重重": "虫虫",            # chóngchóng
                     "似的": "是的",            # shìde
-                    "重创": "重怆",            # zhòngchuāng
-                    "好转": "好转"},
+                    "重创": "重疮",            # zhòngchuāng
+                    "为谋生": "维谋生",        # 视……为: wéi
+                    "为生": "维生",            # 以土地为生: wéi
+                    "调控": "条控"},           # tiáokòng
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds21.json")

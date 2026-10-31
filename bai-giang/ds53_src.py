@@ -225,7 +225,7 @@ P = [
       "便是 là chính là. 无非 là chẳng qua chỉ, câu mẫu thứ hai. Phần giới thiệu bản thân chỉ vài dòng, còn 户籍、收入、房产、学历 thì in to, đỏ, đậm: điều kiện vật chất quan trọng hơn con người."]),
     ("此刻，一个个有血有肉、有思想有灵魂的男孩女孩，一律被压扁成一张张A4纸，被抽出一条条硬性条件，躺在被太阳烤热的水泥地上，供众人评头论足。",
      "Lúc này, từng chàng trai cô gái bằng xương bằng thịt, có tư tưởng có tâm hồn, đều bị ép dẹt thành từng tờ giấy A4, bị rút ra thành từng điều kiện cứng nhắc, nằm trên nền xi măng bị mặt trời nung nóng, cho mọi người bình phẩm soi mói.",
-     ["Câu văn giàu hình ảnh: con người sống động 有血有肉、有思想有灵魂 bị 压扁成一张张A4纸, ép dẹt thành tờ giấy. 一律 là đều, nhất loạt. 一个个，一张张，一条条: lặp lượng từ nhấn mạnh số lượng nhiều.",
+     ["Câu văn giàu hình ảnh: con người sống động 有血有肉、有思想有灵魂 bị 压扁成一张张纸, ép dẹt thành những tờ giấy A4. 一律 là đều, nhất loạt. 一个个，一张张，一条条: lặp lượng từ nhấn mạnh số lượng nhiều.",
       "抽出 là rút ra. 烤热 là nướng nóng. 供众人评头论足: chữ 供 đọc thanh một, nghĩa là để cho; 评头论足 là bình đầu luận chân, soi mói từ đầu đến chân. Hai câu bị động 被 liên tiếp cho thấy người trẻ hoàn toàn bị động."],
      "此刻，一个个有血有肉、有思想有灵魂的男孩女孩，一律被压扁成一张张诶四纸，被抽出一条条硬性条件，躺在被太阳烤热的水泥地上，供众人评头论足。"),
     ("这种待价而沽的商品式相亲被网友们开玩笑地称为“人口贩卖市场”。透过一张张征婚简历，我只能看到一张张相似的、模糊的脸，让人不免觉得有几分滑稽可笑，",
@@ -384,7 +384,7 @@ add("bullets", section="Câu mẫu 重点句型", title="7. 不只是……，�
          F(6, "Ví dụ hai: 一场突如其来的大灾难让人们意识到生命的脆弱，平安活着一时间成为大家最真实的渴望。 Một thảm họa bất ngờ khiến mọi người nhận ra sự mong manh của sinh mệnh, được sống bình an bỗng chốc trở thành khát khao chân thật nhất của mọi người."),
          F(7, "Ví dụ ba: 面对这封没有署名的求助信，大家一时间不知如何是好。 Trước bức thư cầu cứu không ký tên này, mọi người nhất thời không biết phải làm sao.")])
 
-add("bullets", section="Câu mẫu 重点句型", title="Luyện tập: chọn câu mẫu thích hợp", reveal=True, size=33,
+add("bullets", section="Câu mẫu 重点句型", title="Luyện tập: chọn câu mẫu thích hợp", reveal=True, size=31,
     items=["## 乍一看 · 无非 · 不由得 · 看似……实则…… · 索性 · 一时间",
            "(1) 这道题___很简单，___很复杂。",
            "Đáp án: 看似……实则…… → 这道题看似很简单，实则很复杂。",
@@ -588,7 +588,7 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 4: Điề
     say=["Bài tập bốn: dùng thành ngữ cho sẵn điền vào đoạn văn. Đoạn văn nói về 年关恐惧症, hội chứng sợ Tết: nhiều người trẻ độc thân sợ về nhà ăn Tết vì bị giục cưới. Có sáu thành ngữ, trong đó 僵持不下 là từ mới, nghĩa là giằng co không ai chịu ai.",
          F(1, "许多人忙着买票回家过年，但一些适婚却仍单身的年轻人却患上了年关恐惧症，因为春节正是家中长辈的催婚季，没有一个什么的年轻人愿意在相亲市场上被什么，如同商品一样什么，许多父母什么、一厢情愿地为儿女安排各种相亲，甚至有父母认为女性超过三十岁自身优势就消失殆尽。老年人什么地催促儿女成婚，反倒造成双方什么的局面。 Các bạn tạm dừng và điền thử nhé."),
          F(2, "Đáp án: 没有一个有血有肉的年轻人愿意在相亲市场上被评头论足，如同商品一样待价而沽，许多父母心急火燎、一厢情愿地为儿女安排各种相亲。老年人坚持不懈地催促儿女成婚，反倒造成双方僵持不下的局面。"),
-         "Đoạn văn kết thúc thế này: 实际上，这种对立说到底，无非是两种不同婚恋观的碰撞。心理咨询师建议，父母要体谅儿女们的心情和愿望，不要给孩子太大的压力，更不要把欢聚变成了不欢而散。 Thực ra, sự đối lập này nói cho cùng chẳng qua là cuộc va chạm giữa hai quan niệm hôn nhân khác nhau. Chuyên gia tư vấn tâm lý khuyên cha mẹ nên thông cảm với tâm tư, mong muốn của con, đừng gây áp lực quá lớn, càng đừng biến cuộc sum họp thành cuộc chia tay chẳng vui vẻ gì. 不欢而散 là tan cuộc trong không vui."])
+         F(2, "Đoạn văn kết thúc thế này: 实际上，这种对立说到底，无非是两种不同婚恋观的碰撞。心理咨询师建议，父母要体谅儿女们的心情和愿望，不要给孩子太大的压力，更不要把欢聚变成了不欢而散。 Thực ra, sự đối lập này nói cho cùng chẳng qua là cuộc va chạm giữa hai quan niệm hôn nhân khác nhau. Chuyên gia tư vấn tâm lý khuyên cha mẹ nên thông cảm với tâm tư, mong muốn của con, đừng gây áp lực quá lớn, càng đừng biến cuộc sum họp thành cuộc chia tay chẳng vui vẻ gì. 不欢而散 là tan cuộc trong không vui.")])
 
 # ======================= THẢO LUẬN =======================
 add("bullets", chapter="Thảo luận: liên hệ Việt Nam", section="Thảo luận 讨论", title="Thảo luận: xem mắt và chọn bạn đời ở Việt Nam", size=34,

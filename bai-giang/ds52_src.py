@@ -334,7 +334,8 @@ add("bullets", section="Câu mẫu 重点句型", title="2. 不仅……，连�
     say=["Điểm thứ hai là câu tăng tiến ba bậc: 不仅……连……甚至…….",
          F(0, "Đây là câu phức tăng tiến. 不仅 nêu điều thứ nhất, 连 nêu điều bất ngờ hơn, 甚至 nêu điều bất ngờ nhất. Mức độ tăng dần qua từng vế. Tiếng Việt: không chỉ…, ngay cả…, thậm chí…."),
          F(1, "Ví dụ một, từ bài khóa: 不仅殷实的家庭有啃老的孩子，连并不富裕的家庭也常出现不肯断奶的孩子，甚至小两口带着孩子一起啃老的现象也并非个例。 Nhà giàu có con ăn bám thì còn dễ hiểu; nhà không giàu cũng có, đã bất ngờ hơn; vợ chồng trẻ dắt cả con đi ăn bám, càng bất ngờ hơn nữa."),
-         F(2, "Ví dụ hai: 新冠疫情爆发以后，全国人民众志成城，不仅医生护士挺身而出，奔赴抗疫前线，连外卖小哥、出租车司机都不遗余力地帮助人们，甚至是海外华人华侨也纷纷捐款，共同筑起一道防疫之墙。 Sau khi dịch Covid bùng phát, nhân dân cả nước đồng lòng: không chỉ bác sĩ, y tá xông pha ra tuyến đầu chống dịch, ngay cả các anh giao đồ ăn, tài xế taxi cũng dốc hết sức giúp đỡ mọi người, thậm chí kiều bào ở nước ngoài cũng lần lượt quyên góp, cùng dựng nên bức tường phòng dịch. 众志成城 là muôn người một lòng, 不遗余力 là dốc toàn lực."),
+         F(2, "Ví dụ hai: 新冠疫情爆发以后，全国人民众志成城，不仅医生护士挺身而出，奔赴抗疫前线，连外卖小哥、出租车司机都不遗余力地帮助人们，甚至是海外华人华侨也纷纷捐款，共同筑起一道防疫之墙。"),
+         F(2, "Sau khi dịch Covid bùng phát, nhân dân cả nước đồng lòng: không chỉ bác sĩ, y tá xông pha ra tuyến đầu chống dịch, ngay cả các anh giao đồ ăn, tài xế taxi cũng dốc hết sức giúp đỡ mọi người, thậm chí kiều bào ở nước ngoài cũng lần lượt quyên góp, cùng dựng nên bức tường phòng dịch. 众志成城 là muôn người một lòng, 不遗余力 là dốc toàn lực."),
          F(3, "Ví dụ ba: 有些改革不仅让老师身心俱疲，连家长也疲软无力，甚至孩子都陷入焦虑抑郁的状态无法自拔。 Có những cải cách không chỉ khiến giáo viên kiệt quệ cả thể xác lẫn tinh thần, ngay cả phụ huynh cũng rã rời, thậm chí học sinh cũng rơi vào trạng thái lo âu trầm cảm không thoát ra được."),
          F(4, "Chú ý: vế có 连 thường đi kèm 也 hoặc 都, như 连并不富裕的家庭也, 连外卖小哥都.")])
 
@@ -591,7 +592,7 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 3: Dùng 
          F(2, "Câu năm: 如何保障老年人的基本权益？ Làm thế nào bảo đảm quyền lợi cơ bản của người già? Dùng câu mục đích với 以."),
          F(3, "Đáp án gợi ý: 可以通过立法的形式有限度地控制啃老现象的蔓延，以保障老年人的基本权益。 Có thể thông qua lập pháp để hạn chế ở mức nhất định sự lan rộng của hiện tượng ăn bám, nhằm bảo đảm quyền lợi cơ bản của người già. Ngoài ra các bạn có thể bổ sung: 子女应该自食其力，经常看望父母，以减轻父母的负担。")])
 
-add("bullets", section="Luyện tập 课后练习", title="Bài tập 4: Điền từ, thành ngữ vào đoạn tóm tắt bài khóa", reveal=True, size=30,
+add("bullets", section="Luyện tập 课后练习", title="Bài tập 4: Điền từ, thành ngữ vào đoạn tóm tắt bài khóa", reveal=True, size=36,
     items=["## 一厢情愿 · 扶持 · 索取 · 负疚感 · 困扰 · 畸形 · 控告 · 频繁 · 溺爱 · 根除 · 心安理得",
            "湖南长沙一名男子“啃老”遭拒绝后，向法院___父母的不养之“罪”……这样___的亲情关系令人叹息。刚步入社会的年轻人确实需要父母的___，但是___地靠老一辈养活而没有任何___，成为中国家庭的一大___。“啃老”现象___发生……这跟父母的___以及传统的家庭文化有关……子辈在成长过程中可能向父辈___资源……有人认为这只是___，并不能___“啃老”现象。",
            "Đáp án: 控告 · 畸形 · 扶持 · 心安理得 · 负疚感 · 困扰 · 频繁 · 溺爱 · 索取 · 一厢情愿 · 根除"],
@@ -655,8 +656,7 @@ lesson = {
                     "孝为": "孝维",            # xiào wéi
                     "更为": "更维",            # gèngwéi
                     "十有五": "十又五",        # shí yòu wǔ
-                    "长沙": "常沙",            # Chángshā
-                    "隐藏": "隐藏"},           # yǐncáng (giữ nguyên)
+                    "长沙": "常沙"},           # Chángshā
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds52.json")

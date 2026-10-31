@@ -306,9 +306,9 @@ for i, item in enumerate(P, 1):
 add("bullets", chapter="Bố cục & ghi chú", section="Bài khóa 课文", title="Bố cục bài khóa: miễn phí qua ba giai đoạn", size=33,
     items=["## 1. Sự kiện “五毛钱” của 丰巢 → 免费时代的终结 (đoạn 1)",
            "## 2. Vì sao internet từng miễn phí? (đoạn 2–9)",
-           "① 理想主义时期: 小众、自娱自乐、公开共享、排斥商业化",
-           "② 互联网营销: 免费 chỉ là hình thức · 广告收入成为标配 · 第三方买单",
-           "③ 资本请客: 以金钱换时间，以时间换规模 · 烧钱获客、规模为王 · 赔本赚吆喝",
+           "(1) 理想主义时期: 小众、自娱自乐、公开共享、排斥商业化",
+           "(2) 互联网营销: 免费 chỉ là hình thức · 广告收入成为标配 · 第三方买单",
+           "(3) 资本请客: 以金钱换时间，以时间换规模 · 烧钱获客、规模为王 · 赔本赚吆喝",
            "## 3. Tiền đâu mà đốt? 超发货币 → 热钱 → 泡沫，长此以往，难以为继 (đoạn 10–12)",
            "## 4. Kết luận: thu phí là tất yếu, là dấu hiệu trưởng thành · 免费午餐可以休矣 (đoạn 13–16)"],
     say=["Trước khi sang phần mẫu câu, chúng ta cùng nhìn lại bố cục bài khóa. Bài có bốn phần, lập luận rất chặt chẽ.",
@@ -638,10 +638,9 @@ lesson = {
                     "累累": "垒垒",              # lěilěi
                     "曲艺": "取艺",              # qǔyì
                     "种树": "众树",              # zhòngshù
-                    "调整": "调整"},
+                    "露营": "路营"},             # lùyíng
     "slides": slides,
 }
-del lesson["tts_replace"]["调整"]
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds72.json")
 json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

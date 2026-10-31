@@ -100,7 +100,7 @@ V = [
     ("平原", "píngyuán", "bình nguyên", "danh từ", "đồng bằng", "华北平原土地肥沃。", "Đồng bằng Hoa Bắc đất đai màu mỡ.",
      "Danh từ, nghĩa là đồng bằng, tức bình nguyên."),
     ("夹杂", "jiāzá", "giáp tạp", "động từ", "lẫn, xen lẫn", "他的普通话里夹杂着一些方言。", "Tiếng phổ thông của anh ấy lẫn một ít tiếng địa phương.",
-     "Động từ, nghĩa là lẫn vào, xen lẫn, thường dùng với 着: 夹杂着. Trong bài: cảnh vật nhòe đi lẫn với gió cát vùng Tây Bắc."),
+     "Động từ, nghĩa là lẫn vào, xen lẫn, thường gặp ở dạng 夹杂着. Trong bài: cảnh vật nhòe đi lẫn với gió cát vùng Tây Bắc."),
     ("呼啸", "hūxiào", "hô khiếu", "động từ", "rít, gào (gió, tàu xe chạy nhanh)", "北风呼啸着吹过大地。", "Gió bấc rít lên thổi qua mặt đất.",
      "Động từ, chỉ âm thanh rít lên, gào lên của gió, của tàu xe chạy rất nhanh. 呼啸而过 là rít lên rồi vụt qua."),
     ("宽敞", "kuānchang", "khoan sưởng", "tính từ", "rộng rãi (không gian)", "他们家的客厅非常宽敞。", "Phòng khách nhà họ rất rộng rãi.",

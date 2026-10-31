@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Dựng trang web học tập (thẳng vào hsk6/ của repo) từ các bài giảng đã làm.
+"""Dựng trang web học tập (thư mục site/) từ các bài giảng đã làm.
 
-Cách dùng:  python3 build_site.py bai21 [bai22 ...]   (không ghi tên bài: dựng mọi bài đang có out/<bai>.mp4)
+Cách dùng:  python3 build_site.py bai21 [bai22 ...]
 Cần có sẵn: <bai>_src.py, <bai>.json và out/<bai>.mp4, out/<bai>.srt, out/<bai>_slides.pdf
+(bài đã có trong web/published.json mà mất video gốc thì giữ bản đã lên trang; mọi bài trong đó luôn được giữ)
 Video được cắt theo chương và nén lại 720p để trang tải nhanh (mỗi file < 15 MB).
-Bài không dựng lại lần này giữ nguyên dữ liệu đang có trong hsk6/index.html (out/ của bài cũ có thể không còn).
+Bài đã đưa lên YouTube (có id trong web/youtube.json, hoặc file ở biến môi trường YOUTUBE_JSON)
+thì không cắt video: trang phát cả bài từ YouTube, mỗi chương ghi giây bắt đầu ("start"),
+và thư mục site/<bai>/vid/ được xoá.
 """
 import glob
 import json
@@ -16,8 +19,16 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SITE = os.environ.get("HSK6_SITE") or os.path.join(HERE, "..", "hsk6")
+SITE = os.path.join(HERE, "site")
 TEMPLATE = os.path.join(HERE, "web", "template.html")
+YOUTUBE_JSON = os.environ.get("YOUTUBE_JSON") or os.path.join(HERE, "web", "youtube.json")
+
+
+def youtube_ids():
+    """{"bai01": "<id video YouTube>", …}; chưa có file thì mọi bài dùng video trên máy."""
+    if not os.path.exists(YOUTUBE_JSON):
+        return {}
+    return {k: v for k, v in json.load(open(YOUTUBE_JSON, encoding="utf-8")).items() if v}
 
 
 def run(cmd):
@@ -44,7 +55,7 @@ def srt(path):
 
 
 def zh_audio(text, out, repl, rate):
-    """Đọc câu tiếng Trung bằng giọng Tingting, lưu m4a nhỏ."""
+    """Đọc câu tiếng Trung bằng giọng Tingting, lưu mp3 nhỏ."""
     if os.path.exists(out):
         return
     for k, v in repl.items():
@@ -59,7 +70,7 @@ def zh_audio(text, out, repl, rate):
         except subprocess.TimeoutExpired:
             if attempt == 3:
                 raise
-    run(["ffmpeg", "-y", "-i", aiff, "-ac", "1", "-c:a", "aac", "-b:a", "40k", out])
+    run(["ffmpeg", "-y", "-i", aiff, "-ac", "1", "-c:a", "libmp3lame", "-b:a", "48k", out])
     os.remove(aiff)
 
 
@@ -71,13 +82,16 @@ def slide_titles(lesson, zh):
                        for s in lesson["slides"]]}
 
 
-def build_lesson(name):
+def build_lesson(name, yt=None):
     src = runpy.run_path(os.path.join(HERE, f"{name}_src.py"), run_name="__src__")
     lesson = json.load(open(os.path.join(HERE, f"{name}.json"), encoding="utf-8"))
     repl = lesson.get("tts_replace", {})
     d = os.path.join(SITE, name)
-    for sub in ("vid", "slides", "audio"):
+    for sub in ("slides", "audio") if yt else ("vid", "slides", "audio"):
         os.makedirs(os.path.join(d, sub), exist_ok=True)
+    if yt and os.path.isdir(os.path.join(d, "vid")):
+        print("  đã có trên YouTube: xoá video trên máy")
+        shutil.rmtree(os.path.join(d, "vid"))
     mp4 = os.path.join(HERE, "out", f"{name}.mp4")
 
     # 1. Video theo chương + lời giảng (transcript) theo chương
@@ -88,6 +102,11 @@ def build_lesson(name):
     cues = [(a, b, t, cue_slide[k]) for k, (a, b, t) in enumerate(cues)]
     chaps = []
     for i, (a, b, title) in enumerate(chapters(mp4)):
+        lines = [[round(s - a, 2), t, k] for s, e, t, k in cues if a - 0.5 <= s < b - 0.1]
+        if yt:
+            # video YouTube là cả bài: chương = đoạn bắt đầu ở giây "start"
+            chaps.append({"title": title, "start": round(a, 3), "dur": round(b - a, 1), "lines": lines})
+            continue
         f = f"vid/c{i + 1:02d}.mp4"
         out = os.path.join(d, f)
         if not os.path.exists(out):
@@ -96,7 +115,6 @@ def build_lesson(name):
                  "-vf", "scale=1280:720", "-c:v", "libx264", "-tune", "stillimage", "-crf", "28",
                  "-preset", "medium", "-r", "10", "-c:a", "aac", "-b:a", "48k", "-ac", "1",
                  "-movflags", "+faststart", out])
-        lines = [[round(s - a, 2), t, k] for s, e, t, k in cues if a - 0.5 <= s < b - 0.1]
         chaps.append({"title": title, "file": f, "dur": round(b - a, 1), "lines": lines})
 
     # 2. Slide dạng ảnh
@@ -109,16 +127,21 @@ def build_lesson(name):
     # 3. Từ vựng, bài khóa + âm thanh đọc mẫu
     print("  tạo âm thanh từ vựng / bài khóa")
     vocab = []
-    for i, (zh, py, hv, loai, vi, ex, exvi, _expl) in enumerate(src["V"]):
-        w, e = f"audio/w{i + 1:02d}.m4a", f"audio/e{i + 1:02d}.m4a"
-        zh_audio(zh, os.path.join(d, w), repl, 120)
+    for i, v in enumerate(src["V"]):
+        # phần tử thứ 9 (nếu có) là chữ đồng âm để đọc từ một chữ dễ bị đọc sai âm (vd. 乘 → 承)
+        zh, py, hv, loai, vi, ex, exvi, _expl = v[:8]
+        w, e = f"audio/w{i + 1:02d}.mp3", f"audio/e{i + 1:02d}.mp3"
+        zh_audio(v[8] if len(v) > 8 else zh, os.path.join(d, w), repl, 120)
         zh_audio(ex, os.path.join(d, e), repl, 140)
         vocab.append({"zh": zh, "py": py, "hv": hv, "type": loai, "vi": vi, "ex": ex, "exvi": exvi,
                       "audio": w, "exaudio": e})
     passage = []
-    for i, (zh, vi, notes) in enumerate(src["P"]):
-        a = f"audio/p{i + 1:02d}.m4a"
-        zh_audio(zh, os.path.join(d, a), repl, 140)
+    for i, p in enumerate(src["P"]):
+        # phần tử thứ 4 (nếu có) là bản để đọc: số viết bằng chữ Hán, bỏ ngoặc kép
+        zh, vi, notes = p[:3]
+        spoken = p[3] if len(p) > 3 else zh
+        a = f"audio/p{i + 1:02d}.mp3"
+        zh_audio(spoken, os.path.join(d, a), repl, 140)
         passage.append({"zh": zh, "vi": vi, "notes": notes, "audio": a})
 
     # 4. Bài tập có đáp án (các slide "reveal": câu hỏi rồi tới dòng "Đáp án")
@@ -133,7 +156,8 @@ def build_lesson(name):
         exercises.append({"title": s["title"], "items": qs})
 
     title = src.get("TAG", lesson["tag"])
-    m = re.search(r"Bài (\d+)", title)
+    # 顶石中文 đánh số kiểu "Bài 1.1": giữ nguyên dạng chuỗi, HSK 6 vẫn là số nguyên
+    m = re.search(r"Bài (\d+(?:\.\d+)?)", title)
     first = lesson["slides"][0]
     # tên bài đầy đủ lấy từ TAG; slide tiêu đề có thể tách tên dài thành hai dòng (vd. Bài 40),
     # khi đó dòng đầu của "sub" là pinyin đầy đủ
@@ -143,36 +167,41 @@ def build_lesson(name):
         py = first["sub"].split("\n")[0]
     with open(os.path.join(d, "slides", "titles.json"), "w", encoding="utf-8") as f:
         json.dump(slide_titles(lesson, zh), f, ensure_ascii=False)
-    return {"id": name, "num": int(m.group(1)) if m else 0, "zh": zh,
+    info = {"id": name, "num": (int(m.group(1)) if m.group(1).isdigit() else m.group(1)) if m else 0, "zh": zh,
             "py": py, "vi": first.get("vi", ""), "tag": title,
             "chapters": chaps, "slides": slides, "vocab": vocab, "passage": passage,
             "exercises": exercises}
+    if yt:
+        info["yt"] = yt
+    return info
+
+
+# dữ liệu mọi bài đã lên trang (web/published.json): bài nào không còn video gốc out/<bai>.mp4
+# (vd. mất thư mục HSK ngày 31/10) vẫn giữ nguyên trên trang, và lần dựng sau không làm rơi bài nào
+PUBLISHED = os.path.join(HERE, "web", "published.json")
 
 
 def main():
     names = sys.argv[1:] or sorted(os.path.basename(p)[:-4] for p in glob.glob(os.path.join(HERE, "out", "*.mp4")))
-    built = {}
+    published = json.load(open(PUBLISHED, encoding="utf-8")) if os.path.exists(PUBLISHED) else {}
+    names += [n for n in published if n not in names]
+    built, yt = {}, youtube_ids()
     for n in names:
-        print(f"Bài {n}")
-        built[n] = build_lesson(n)
-    # giữ các bài đã có trên trang mà lần này không dựng lại
-    lessons, index = [], os.path.join(SITE, "index.html")
-    if os.path.exists(index):
-        m = re.search(r"^const LESSONS = (.*);$", open(index, encoding="utf-8").read(), re.M)
-        if m and not m.group(1).startswith("/*"):
-            lessons = json.loads(m.group(1).replace("<\\/", "</"))
-    lessons = sorted([built.pop(l["id"], l) for l in lessons] + list(built.values()), key=lambda l: l["id"])
-    data =json.dumps(lessons, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+        if not os.path.exists(os.path.join(HERE, "out", n + ".mp4")) and n in published:
+            print(f"Bài {n}  (giữ bản đã lên trang)")
+            built[n] = published[n]
+            continue
+        print(f"Bài {n}" + (f"  (YouTube {yt[n]})" if n in yt else ""))
+        built[n] = build_lesson(n, yt.get(n))
+    json.dump({**published, **built}, open(PUBLISHED, "w", encoding="utf-8"), ensure_ascii=False)
     # danh sách tất cả bài trong các giáo trình (bài chưa có video hiện là "Sắp có")
     catalog = json.load(open(os.path.join(HERE, "web", "catalog.json"), encoding="utf-8"))
+    order = [l["id"] for bk in catalog["books"] for u in bk["units"] for l in u["lessons"]]
+    lessons = sorted(built.values(), key=lambda l: order.index(l["id"]) if l["id"] in order else len(order))
+    data = json.dumps(lessons, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     cat = json.dumps(catalog, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    # file Excel thuật ngữ (tạo bằng thuat_ngu.py), nhúng nguyên dạng sheet cho mục "Thuật ngữ"
-    terms_path = os.path.join(HERE, "web", "terms.json")
-    terms = (open(terms_path, encoding="utf-8").read().strip().replace("</", "<\\/")
-             if os.path.exists(terms_path) else "null")
     html = (open(TEMPLATE, encoding="utf-8").read()
-            .replace("/*LESSONS*/[]", data).replace('/*CATALOG*/{"books":[]}', cat)
-            .replace("/*TERMS*/null", terms))
+            .replace("/*LESSONS*/[]", data).replace('/*CATALOG*/{"books":[]}', cat))
     open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(html)
     # ảnh dùng trên trang (ảnh của Ngọc…) nằm cạnh template
     os.makedirs(os.path.join(SITE, "img"), exist_ok=True)

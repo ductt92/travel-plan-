@@ -88,7 +88,7 @@ V = [
     ("减排", "jiǎnpái", "giảm bài", "động từ", "giảm phát thải", "节能减排是每个人的责任。", "Tiết kiệm năng lượng, giảm phát thải là trách nhiệm của mỗi người.",
      "Động từ, nói gọn của 减少排放, tức là giảm lượng chất độc hại thải ra, đặc biệt là giảm phát thải khí cacbonic. Cụm cố định rất hay gặp: 节能减排, tiết kiệm năng lượng và giảm phát thải."),
     ("应对", "yìngduì", "ứng đối", "động từ", "ứng phó, đối phó", "我们要制定应对危机的措施。", "Chúng ta phải đề ra biện pháp ứng phó với khủng hoảng.",
-     "Động từ, nghĩa là áp dụng biện pháp để ứng phó với tình huống xảy ra. Chữ 应 đọc thanh bốn. Trong bài: 应对气候变化, ứng phó với biến đổi khí hậu. Lát nữa chúng ta sẽ học các kết hợp của nó: 应对问题，应对挑战，应对风险."),
+     "Động từ, nghĩa là áp dụng biện pháp để ứng phó với tình huống xảy ra. Chữ đầu đọc thanh bốn. Trong bài: 应对气候变化, ứng phó với biến đổi khí hậu. Lát nữa chúng ta sẽ học các kết hợp của nó: 应对问题，应对挑战，应对风险."),
     ("协议", "xiéyì", "hiệp nghị", "danh từ", "hiệp định, thỏa thuận", "双方终于签订了合作协议。", "Hai bên cuối cùng đã ký thỏa thuận hợp tác.",
      "Danh từ, nghĩa là bản thỏa thuận, hiệp định giữa các bên. Động từ hay đi kèm là 达成 và 签订: 达成协议, đạt được thỏa thuận; 签订协议, ký kết hiệp định. Trong bài: 达成一项新协议, đạt được một hiệp định mới. Đây cũng là từ bổ sung."),
     ("历时", "lìshí", "lịch thời", "động từ", "kéo dài, trải qua (bao lâu)", "这场战争历时三年。", "Cuộc chiến tranh này kéo dài ba năm.",
@@ -146,7 +146,7 @@ V = [
     ("落实", "luòshí", "lạc thực", "động từ", "thực hiện, triển khai, đưa vào thực tế", "这项计划一定要落实到位。", "Kế hoạch này nhất định phải thực hiện đến nơi đến chốn.",
      "Động từ, nghĩa là làm cho kế hoạch, biện pháp, chính sách được thực hiện thật sự. Hay gặp: 落实计划，落实任务，落实政策. Trong bài: 落实联合国千年发展计划, thực hiện kế hoạch phát triển thiên niên kỷ của Liên Hợp Quốc."),
     ("效应", "xiàoyìng", "hiệu ứng", "danh từ", "hiệu ứng", "温室效应导致全球变暖。", "Hiệu ứng nhà kính dẫn đến trái đất nóng lên.",
-     "Danh từ, nghĩa là hiện tượng, kết quả do tác dụng vật lý hay hóa học sinh ra; nay dùng rộng hơn, như 名人效应, hiệu ứng người nổi tiếng. Âm Hán Việt hiệu ứng giống tiếng Việt. Chữ 应 đọc thanh bốn."),
+     "Danh từ, nghĩa là hiện tượng, kết quả do tác dụng vật lý hay hóa học sinh ra; nay dùng rộng hơn, như 名人效应, hiệu ứng người nổi tiếng. Âm Hán Việt hiệu ứng giống tiếng Việt. Chữ sau đọc thanh bốn."),
     ("演化", "yǎnhuà", "diễn hóa", "động từ", "biến đổi dần, tiến hóa", "地球的气候一直在演化。", "Khí hậu trái đất luôn luôn biến đổi.",
      "Động từ, nghĩa là phát triển, biến đổi qua thời gian dài, thường nói về giới tự nhiên. Gần nghĩa với 进化, tiến hóa, nhưng 演化 trung tính hơn, không nhất thiết là theo hướng tốt lên. Trong bài: 环境气候演化, sự biến đổi của môi trường khí hậu."),
     ("拯救", "zhěngjiù", "chửng cứu", "động từ", "cứu vớt, giải cứu", "朋友们合力把他从破产的边缘拯救过来。", "Bạn bè hợp sức cứu anh ấy khỏi bờ vực phá sản.",
@@ -156,13 +156,13 @@ V = [
     ("毁灭", "huǐmiè", "hủy diệt", "động từ", "hủy diệt, tiêu diệt hoàn toàn", "战争毁灭了这座古城。", "Chiến tranh đã hủy diệt tòa thành cổ này.",
      "Động từ, nghĩa là tiêu diệt hoàn toàn, giống hệt tiếng Việt hủy diệt. Trong bài: 毁灭的只是物种，毁灭的是人类自己, cái bị hủy diệt chỉ là các loài sinh vật, là chính loài người."),
     ("物种", "wùzhǒng", "vật chủng", "danh từ", "loài (sinh vật)", "大熊猫是珍贵的濒危物种。", "Gấu trúc lớn là loài quý hiếm có nguy cơ tuyệt chủng.",
-     "Danh từ, đơn vị cơ bản trong phân loại sinh vật, tức là loài. Chữ 种 đọc thanh ba, như trong 种类. Hay gặp: 濒危物种, loài có nguy cơ tuyệt chủng."),
+     "Danh từ, đơn vị cơ bản trong phân loại sinh vật, tức là loài. Chữ sau đọc thanh ba, như trong 种类. Hay gặp: 濒危物种, loài có nguy cơ tuyệt chủng."),
     ("取决", "qǔjué", "thủ quyết", "động từ", "do… quyết định, tùy thuộc vào", "成功与否取决于你自己。", "Thành công hay không là tùy vào chính bạn.",
      "Động từ, nghĩa là do một mặt nào đó quyết định, hầu như luôn đi với 于: A取决于B, A phụ thuộc vào B. Đây là mẫu câu thứ tám của bài."),
     ("包容", "bāoróng", "bao dung", "động từ", "bao dung, khoan dung; dung nạp", "夫妻之间要相互包容。", "Vợ chồng phải bao dung cho nhau.",
      "Động từ, nghĩa là khoan dung, rộng lượng; cũng có nghĩa là chứa đựng, dung nạp. Trong bài: 更具包容性的文明, một nền văn minh có tính bao dung hơn."),
     ("弹性", "tánxìng", "đàn tính", "danh từ", "tính đàn hồi; tính linh hoạt", "很多公司实行弹性工作制。", "Nhiều công ty áp dụng chế độ giờ làm linh hoạt.",
-     "Danh từ, nghĩa gốc là tính đàn hồi; nghĩa bóng là tính linh hoạt, có thể điều chỉnh theo thực tế: 弹性工作制, chế độ làm việc linh hoạt. Chữ 弹 ở đây đọc tán, khác với dàn trong 子弹, viên đạn."),
+     "Danh từ, nghĩa gốc là tính đàn hồi; nghĩa bóng là tính linh hoạt, có thể điều chỉnh theo thực tế: 弹性工作制, chế độ làm việc linh hoạt. Chữ đầu ở đây đọc tán, khác với cách đọc dàn trong 子弹, viên đạn."),
     ("碳达峰", "tàn dáfēng", "thán đạt phong", "danh từ", "đạt đỉnh phát thải carbon", "很多国家都提出了碳达峰的目标。", "Nhiều nước đã đề ra mục tiêu đạt đỉnh phát thải carbon.",
      "Danh từ, từ bổ sung lấy từ chú thích của bài tập. Nghĩa là đến một thời điểm nào đó, lượng khí cacbonic thải ra không tăng nữa, đạt đỉnh, rồi sau đó giảm dần. 达峰 là đạt đỉnh."),
     ("碳中和", "tàn zhōnghé", "thán trung hòa", "danh từ", "trung hòa carbon, phát thải ròng bằng 0", "实现碳中和需要全社会的共同努力。", "Đạt trung hòa carbon cần sự nỗ lực chung của toàn xã hội.",
@@ -178,7 +178,7 @@ add("bullets", chapter="Từ mới (45 từ)", section="Từ mới 生词", titl
     say=["Bây giờ chúng ta sang phần một: từ mới. Bảng từ của sách có ba mươi lăm từ; thầy thêm năm thành ngữ trong phần 成语和惯用语, và năm từ bổ sung rất hay gặp trong bài như 峰会，协议，意味着, cùng hai thuật ngữ 碳达峰，碳中和. Tổng cộng bốn mươi lăm từ, chia thành mười lăm nhóm.",
          F(1, "Với mỗi từ, các bạn sẽ nghe đọc mẫu hai lần, sau đó là âm Hán Việt, nghĩa, và một ví dụ."),
          F(2, "Trong sách, các từ có dấu sao là từ mở rộng, chỉ cần hiểu khi đọc. Tuy vậy, nhiều từ có dấu sao như 减排，稀缺，配额 lại là từ khóa của đề tài môi trường, nên các bạn cố gắng nhớ nhé."),
-         F(3, "Chú ý cách đọc: chữ 应 trong 应对 và 效应 đọc thanh bốn; 种 trong 物种 đọc thanh ba; 弹 trong 弹性 đọc tán; còn 配额 đọc là pèi é."),
+         F(3, "Chú ý cách đọc của mấy từ có chữ đa âm: 应对，效应，物种，弹性, và 配额. Thầy sẽ nhắc khi gặp từng từ."),
          F(4, "Ngoài ra có mấy từ dễ hiểu nhầm hoặc dễ lẫn, như 基数, phân biệt 能源 với 能量, 保障 với 保证. Các bạn nghe kỹ phần giải thích nhé. Chúng ta bắt đầu.")])
 
 sizes = [3] * 15
@@ -243,7 +243,7 @@ P = [
      "丁仲礼：那么等于这个蛋糕的数量是确定下来了，也就是说，今后发达国家的人均排放权是发展中国家的二点三倍。尽管减百分之八十，一步一步往下减，但是发达国家基数大，是发展中国家的四点八倍。如果国际上对今后的排放进行严格的限定的话，那么二氧化碳的排放权就会变成一种非常稀缺的、不可多得的商品。"),
     ("记者：就是你想要排有可能……\n丁仲礼：你不够排你就得买，前提是你承认二氧化碳排放配额是一种稀缺商品。\n记者：真金白银。\n丁仲礼：那么这个8000亿吨分配的过程当中，多分一点，少分一点是多大的利益。",
      "Phóng viên: Tức là nếu muốn thải thì có thể… Đinh Trọng Lễ: Không đủ để thải thì anh phải mua, với điều kiện anh thừa nhận hạn ngạch phát thải khí cacbonic là một thứ hàng hóa khan hiếm. Phóng viên: Tiền thật bạc thật đấy. Đinh Trọng Lễ: Vậy thì trong quá trình phân chia 800 tỷ tấn này, được chia nhiều hơn một chút hay ít hơn một chút là cả một khoản lợi ích lớn biết bao.",
-     ["你不够排你就得买: chữ 得 ở đây đọc là děi, nghĩa là phải, khẩu ngữ. 前提是 là với điều kiện là, tiền đề là. 排放配额 là hạn ngạch phát thải.",
+     ["你不够排你就得买: động từ năng nguyện ở đây đọc là děi, nghĩa là phải, khẩu ngữ. 前提是 là với điều kiện là, tiền đề là. 排放配额 là hạn ngạch phát thải.",
       "真金白银 là câu chen ngắn của phóng viên: phải trả bằng tiền thật. 多分一点，少分一点是多大的利益 là câu cảm thán: chia nhiều một chút hay ít một chút là cả một khoản lợi ích lớn biết bao; 多大 ở đây nghĩa là lớn biết bao."],
      "记者：就是你想要排有可能。丁仲礼：你不够排你就得买，前提是你承认二氧化碳排放配额是一种稀缺商品。记者：真金白银。丁仲礼：那么这个八千亿吨分配的过程当中，多分一点，少分一点是多大的利益。"),
     ("记者：它现在提出的一个概念，就是说我不管你是人均，还是说贫富，现在只以碳排放大国来算。\n丁仲礼：根据G8的方案，27个发达国家取走的是多少蛋糕，取走的是44%。发达国家多少人口，11亿人口，余下的55亿人分56%的蛋糕，那么你说公平不公平？",
@@ -290,11 +290,13 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
          F(2, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
          F(3, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
 
+ZS = {3: 50, 4: 46, 9: 44, 10: 46}
 for i, item in enumerate(P, 1):
     zh, vi, notes = item[:3]
     spoken = item[3] if len(item) > 3 else zh.replace("“", "").replace("”", "")
     n = len(zh)
-    zsize = 54 if n <= 100 else 50 if n <= 125 else 46
+    # đoạn hỏi đáp xuống dòng nhiều: chọn cỡ chữ nhỏ hơn cho vừa khung
+    zsize = ZS.get(i) or (54 if n <= 100 else 50 if n <= 125 else 46)
     add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
         say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
              F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", ""), cap="")] + [F(1, n) for n in notes])
@@ -567,7 +569,7 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 4: Điề
          F(2, "Hai thuật ngữ trong chú thích, chúng ta đã học trong phần từ mới: 碳达峰, đạt đỉnh phát thải, và 碳中和, trung hòa carbon. Còn 倒逼机制 là cơ chế dùng áp lực từ mục tiêu để buộc nền kinh tế phải chuyển đổi, phát triển chất lượng cao hơn.")])
 
 # ======================= THẢO LUẬN =======================
-add("bullets", chapter="Thảo luận", section="Thảo luận 讨论", title="Thảo luận: chiếc bánh nên chia thế nào?", size=33,
+add("bullets", chapter="Thảo luận", section="Thảo luận 讨论", title="Thảo luận: chiếc bánh nên chia thế nào?", reveal=True, size=33,
     items=["你同意丁仲礼“按人均分配排放权”的公平观吗？为什么？",
            "Đáp án gợi ý: 我基本同意。发达国家在工业化过程中已经排放了大量二氧化碳，人均排放也远远高于发展中国家，所以应该承担更多的减排责任。不过，发展中国家也不能走“先污染，后治理”的老路。",
            "## Liên hệ Việt Nam",

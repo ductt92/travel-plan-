@@ -669,10 +669,10 @@ add("bullets", section="Ôn tập đơn vị 单元练习", title="众说纷纭:
          F(5, "Gợi ý: nghề cướp ngân hàng hợp pháp là người được ngân hàng thuê để thử đột nhập, tìm ra lỗ hổng an ninh. 天鹅守望者 là người trông coi, bảo vệ đàn thiên nga, như ở nước Anh. 僵尸装扮者 là người hóa trang thành xác sống trong công viên giải trí, nhà ma. Đề tài hai của mục này là 家庭煮夫 và 超级奶爸: các bạn nghĩ gì về những ông chồng làm nội trợ, ông bố ở nhà chăm con?")])
 
 add("bullets", section="Ôn tập đơn vị 单元练习", title="从句段到篇章: phản bác bằng “phản chứng” 反证法", size=32,
-    items=["## Ba bước: ① nêu quan điểm đối phương, tỏ thái độ → ② phân tích, nêu phản ví dụ → ③ nêu quan điểm của mình",
-           "① ……的观点有一定的道理，然而…… · 我承认……但是…… · 这只是问题的一个侧面，并不全面 · ……缺乏说服力",
-           "② 按照这种逻辑，我们设想一下，…… · 我们可以举出……的反例 · ……是以偏概全 · 事实胜于雄辩 · ……的例子不胜枚举",
-           "③ ……不是……，而是…… · 在我看来，…… · 由此可见，…… · 问题的实质是…… · 既然……的说法不成立，那么正确的观点是……"],
+    items=["## Ba bước: (1) nêu quan điểm đối phương, tỏ thái độ → (2) phân tích, nêu phản ví dụ → (3) nêu quan điểm của mình",
+           "(1) ……的观点有一定的道理，然而…… · 我承认……但是…… · 这只是问题的一个侧面，并不全面 · ……缺乏说服力",
+           "(2) 按照这种逻辑，我们设想一下，…… · 我们可以举出……的反例 · ……是以偏概全 · 事实胜于雄辩 · ……的例子不胜枚举",
+           "(3) ……不是……，而是…… · 在我看来，…… · 由此可见，…… · 问题的实质是…… · 既然……的说法不成立，那么正确的观点是……"],
     say=["Hoạt động tiếp theo là 从句段到篇章, từ câu đoạn đến bài văn. Sách dạy cách phản bác quan điểm của người khác bằng 反证法, phương pháp phản chứng: muốn chứng minh luận điểm của mình đúng, trước hết chứng minh luận điểm ngược lại là sai.",
          F(0, "Có ba bước. Một, nêu quan điểm của đối phương và tỏ thái độ của mình. Hai, phân tích quan điểm ấy, đưa ra phản ví dụ. Ba, nêu quan điểm của mình."),
          F(1, "Bước một, tỏ thái độ khác: 的观点有一定的道理，然而, quan điểm ấy có lý ở một mức độ nào đó, tuy nhiên. 我承认，但是, tôi thừa nhận, nhưng. 这只是问题的一个侧面，并不全面, đây chỉ là một mặt của vấn đề, chưa toàn diện. 缺乏说服力, thiếu sức thuyết phục."),
@@ -711,7 +711,51 @@ lesson = {
     "tag": TAG,
     "vi_voice": "Linh", "zh_voice": "Tingting", "vi_rate": 175, "zh_rate": 145,
     # sửa âm đọc của giọng máy cho các chữ đa âm (thay bằng chữ cùng âm, cùng thanh)
-    "tts_replace": {},
+    "tts_replace": {"调离": "掉离",              # diàolí
+                    "调岗": "掉岗",              # diàogǎng
+                    "调动": "掉动",              # diàodòng
+                    "调和": "条和",              # tiáohé
+                    "着实": "酌实",              # zhuóshí
+                    "着手": "酌手",              # zhuóshǒu
+                    "应聘": "映聘",              # yìngpìn
+                    "倒逼": "到逼",              # dàobī
+                    "倒蛮": "到蛮",              # dào mán
+                    "重担": "众担",              # zhòngdàn
+                    "重回": "虫回",              # chónghuí
+                    "重返": "虫返",              # chóngfǎn
+                    "困难重重": "困难虫虫",      # chóngchóng
+                    "夹缝": "家凤",              # jiāfèng
+                    "产假": "产驾",              # chǎnjià (cả 陪产假)
+                    "休假": "休驾",              # xiūjià
+                    "为六个月": "维六个月",      # wéi
+                    "相夫": "象夫",              # xiàngfū
+                    "教子": "叫子",              # jiàozǐ
+                    "刨根": "袍根",              # páogēn
+                    "长此": "常此",              # chángcǐ
+                    "长期": "常期",              # chángqī
+                    "最长": "最常",              # zuì cháng
+                    "问长问短": "问常问短",      # wèn cháng wèn duǎn
+                    "长出": "涨出",              # zhǎngchū
+                    "西藏": "西葬",              # Xīzàng
+                    "参与率": "参预律",          # cānyùlǜ
+                    "基数": "基树",              # jīshù
+                    "体量": "体亮",              # tǐliàng
+                    "看守": "刊守",              # kānshǒu
+                    "为照顾": "位照顾",          # wèi
+                    "为员工": "位员工",          # wèi
+                    "晋升为": "晋升维",          # wéi
+                    "处于": "楚于",              # chǔyú
+                    "处理": "楚理",              # chǔlǐ
+                    "差别": "插别",              # chābié
+                    "睡觉": "睡叫",              # shuìjiào
+                    "真相": "真象",              # zhēnxiàng
+                    "没落": "末落",              # mòluò
+                    "窘相": "窘象",              # jiǒngxiàng
+                    "熬": "敖",                  # áo (熬夜)
+                    "干出": "赣出",              # gànchū
+                    "苦干": "苦赣",              # kǔgàn
+                    "干的活": "赣的活",          # gàn de huó
+                    "数鱼": "属鱼"},             # shǔ yú
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds63.json")

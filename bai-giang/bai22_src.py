@@ -75,7 +75,7 @@ add("bullets", section="Khởi động 热身", title="Học từ theo yếu t�
          F(1, "石油，汽油，柴油，花生油，豆油，橄榄油，奶油。 Tức là: dầu mỏ, xăng, dầu diesel, dầu lạc, dầu đậu nành, dầu ô liu và kem sữa. Trong bài khóa, các bạn sẽ gặp 石油，汽油 và 柴油."),
          F(2, "黄油，鱼油，菜籽油，鞋油，加油，油炸，油田。 Tức là: bơ, dầu cá, dầu hạt cải, xi đánh giày, đổ xăng, chiên ngập dầu, và mỏ dầu. Từ 加油 vừa là đổ xăng, vừa là cố lên, chắc các bạn rất quen."),
          F(3, "Nhóm thứ hai có chữ 缺, Hán Việt là khuyết, nghĩa là thiếu, như trong từ khuyết điểm của tiếng Việt."),
-         F(4, "紧缺，缺少，缺乏，缺口。 Tức là: khan hiếm, thiếu, thiếu hụt, và chỗ hổng. Bài khóa có câu 石油资源日益紧缺, tài nguyên dầu mỏ ngày càng khan hiếm."),
+         F(4, "紧缺，缺少，缺乏，缺口。 Tức là: khan hiếm, thiếu, thiếu hụt, và chỗ hổng. Bài khóa có câu 石油资源日益紧缺。 Tài nguyên dầu mỏ ngày càng khan hiếm."),
          F(5, "缺课，缺水，缺觉，缺勤。 Tức là: nghỉ học, thiếu nước, thiếu ngủ, và vắng mặt không đi làm. Chú ý từ 缺觉, chữ 觉 ở đây đọc là jiào, nghĩa là giấc ngủ.")])
 
 add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 迹 và 导", size=36,

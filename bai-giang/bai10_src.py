@@ -96,7 +96,7 @@ V = [
     ("饮食", "yǐnshí", "ẩm thực", "danh từ", "đồ ăn thức uống; ăn uống", "中国的饮食文化历史悠久。", "Văn hóa ẩm thực Trung Quốc có lịch sử lâu đời.",
      "Danh từ. Chữ đầu là uống, chữ sau là ăn, nên 饮食 là chuyện ăn uống, giống hệt ẩm thực trong tiếng Việt. Hay gặp: 饮食文化，饮食习惯."),
     ("蕴藏", "yùncáng", "uẩn tàng", "động từ", "chứa đựng, tiềm ẩn", "这片土地下蕴藏着丰富的石油。", "Dưới vùng đất này chứa đựng trữ lượng dầu mỏ phong phú.",
-     "Động từ, nghĩa là chứa đựng bên trong, chưa lộ ra ngoài. Dùng cho tài nguyên, sức mạnh, tình cảm hay ý nghĩa, thường đi với 着: 蕴藏着. Âm tiết thứ hai đọc là cáng, thanh hai."),
+     "Động từ, nghĩa là chứa đựng bên trong, chưa lộ ra ngoài. Dùng cho tài nguyên, sức mạnh, tình cảm hay ý nghĩa, thường nói 蕴藏着. Âm tiết thứ hai đọc là cáng, thanh hai."),
     ("传达", "chuándá", "truyền đạt", "động từ", "truyền đạt, truyền tải", "这幅画传达了画家对家乡的思念。", "Bức tranh này truyền tải nỗi nhớ quê hương của họa sĩ.",
      "Động từ, nghĩa là truyền đạt, truyền tải một tin tức, một tư tưởng hay một tình cảm. Âm Hán Việt và nghĩa giống tiếng Việt."),
     ("鲜明", "xiānmíng", "tiên minh", "tính từ", "rõ ràng, rõ nét, nổi bật", "这两种观点形成了鲜明的对比。", "Hai quan điểm này tạo thành sự đối lập rõ nét.",
@@ -150,7 +150,7 @@ V = [
     ("培育", "péiyù", "bồi dục", "động từ", "nuôi trồng, chăm bón; lai tạo giống", "科学家培育出了一种新的水稻。", "Các nhà khoa học đã lai tạo ra một giống lúa mới.",
      "Động từ, nghĩa là nuôi trồng, chăm bón cho lớn lên, hoặc lai tạo ra giống mới. Trong bài, 培育外来品种 là lai tạo, nuôi trồng giống từ nước ngoài."),
     ("凡是", "fánshì", "phàm thị", "phó từ", "phàm là, hễ là", "凡是认识他的人都说他好。", "Hễ là người quen anh ấy thì đều khen anh ấy tốt.",
-     "Phó từ, nghĩa là phàm là, hễ là, chỉ tất cả những gì nằm trong một phạm vi, không có ngoại lệ. Vế sau thường có 都. Lát nữa chúng ta sẽ phân biệt từ này với 所有."),
+     "Phó từ, nghĩa là phàm là, hễ là, chỉ tất cả những gì nằm trong một phạm vi, không có ngoại lệ. Vế sau thường có 都是 hoặc 都要. Lát nữa chúng ta sẽ phân biệt từ này với 所有."),
     ("清晰", "qīngxī", "thanh tích", "tính từ", "rõ ràng, rõ nét", "这张照片拍得非常清晰。", "Bức ảnh này chụp rất rõ nét.",
      "Tính từ, nghĩa là rõ ràng, rõ nét, dùng cho hình ảnh, âm thanh, hoặc suy nghĩ: 声音清晰，思路清晰."),
     ("分辨", "fēnbiàn", "phân biện", "động từ", "phân biệt, phân rõ", "这对双胞胎长得太像了，我分辨不出来。", "Cặp song sinh này giống nhau quá, tôi không phân biệt được.",
@@ -228,7 +228,7 @@ P = [
     ("任何一个民族的饮食都不仅仅为饮食，它蕴藏着这个民族的精神与特征，传达着这个民族的文化传统。",
      "Ẩm thực của bất kỳ dân tộc nào cũng không chỉ đơn thuần là chuyện ăn uống; nó chứa đựng tinh thần và đặc trưng của dân tộc ấy, truyền tải truyền thống văn hóa của dân tộc ấy.",
      ["不仅仅为饮食 nghĩa là không chỉ đơn thuần là ăn uống. Ở đây 仅仅为 tương đương 仅仅是, mang màu sắc văn viết.",
-      "蕴藏着 và 传达着 là hai động từ có 着 đi song song, tạo nhịp câu cân đối. Từ 与 nghĩa là và, văn viết, giống 和. Câu mở đầu nêu luận điểm chung của cả bài."]),
+      "蕴藏着 và 传达着 là hai cụm động từ đi song song, tạo nhịp câu cân đối. Trong cụm 精神与特征, chữ nối ở giữa nghĩa là và, văn viết, giống 精神和特征. Câu mở đầu nêu luận điểm chung của cả bài."]),
     ("中国的饮食文化历经数千年，始终具有魅力，是因为它不仅民族特性鲜明，而且善于吸收不同国家、不同区域、不同民族的优异之处，以至辉煌至今。",
      "Văn hóa ẩm thực Trung Quốc đã trải qua mấy nghìn năm mà luôn có sức hấp dẫn, là vì nó không những mang đặc tính dân tộc rõ nét, mà còn giỏi hấp thu những điểm ưu tú của các quốc gia, các khu vực, các dân tộc khác nhau, đến mức rực rỡ cho đến tận ngày nay.",
      ["历经 là trải qua, 数千年 là mấy nghìn năm. 是因为 nghĩa là là bởi vì: nói kết quả trước, rồi mới nêu nguyên nhân.",
@@ -364,7 +364,7 @@ add("bullets", chapter="Ngữ pháp: 即便", section="Ngữ pháp 注释", titl
            "……经过精心构思，巧妙烹饪，即便仅为一餐素食，也可以让你尽享人间美味。"],
     say=["Điểm ngữ pháp thứ hai là liên từ 即便.",
          F(0, "即便 biểu thị giả thiết kiêm nhượng bộ: tạm giả sử có một tình huống, rồi nói rằng kết quả vẫn không thay đổi. Nghĩa giống 就是 và 即使, tiếng Việt dịch là cho dù, dù cho."),
-         F(1, "Vế sau thường dùng 也, hoặc 还, 还是."),
+         F(1, "Vế sau thường dùng 也, hoặc 还是."),
          F(2, "Ví dụ một: 她最近心情不好，即便有些不讲理，你也要原谅她。 Dạo này tâm trạng cô ấy không tốt, cho dù có hơi vô lý, cậu cũng phải tha thứ cho cô ấy."),
          F(3, "Ví dụ hai: 我喜欢那个工作，即便薪水低，我还是要去。 Tôi thích công việc đó, cho dù lương thấp, tôi vẫn muốn đi."),
          F(4, "Ví dụ ba, lấy từ bài khóa: 经过精心构思，巧妙烹饪，即便仅为一餐素食，也可以让你尽享人间美味。 Qua cấu tứ dày công, nấu nướng khéo léo, cho dù chỉ là một bữa chay, cũng cho bạn tận hưởng mỹ vị nhân gian.")])
@@ -613,7 +613,11 @@ lesson = {
                     "纪伯伦": "记伯伦",        # Jìbólún
                     "长得": "掌得",            # zhǎng de
                     "折": "哲",                # zhé (mọi chữ 折 trong bài đều đọc zhé)
-                    "干什么": "赣什么"},       # gàn shénme
+                    "干什么": "赣什么",         # gàn shénme
+                    "美食之都": "美食之嘟",    # dū
+                    "为你": "位你",            # wèi nǐ
+                    "空调": "空条",            # kōngtiáo
+                    "肖向东": "萧向东"},       # Xiāo (họ)
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai10.json")

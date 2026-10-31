@@ -273,6 +273,29 @@ for i, item in enumerate(P, 1):
         say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
              F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", ""), cap="")] + [F(1, n) for n in notes])
 
+add("bullets", chapter="Đọc hiểu", section="Bài khóa 课文", title="Kiểm tra đọc hiểu: đúng hay sai?", reveal=True, size=34,
+    items=["(1) 沃森是在美国第一次为患者做义诊的。",
+           "Đáp án: Sai. 沃森是第一次在中国患者面前亮相，在中国“出诊”。",
+           "(2) 沃森医生只用了不到10秒钟，就开出了一张诊疗方案分析单。",
+           "Đáp án: Đúng.",
+           "(3) 吴尘轩和沃森依据的都是多年的临床经验。",
+           "Đáp án: Sai. 吴尘轩依据临床经验，沃森依据全球病例的大数据分析。",
+           "(4) 分析单上的红色部分表示不推荐使用。",
+           "Đáp án: Đúng. 橙色代表谨慎使用，红色代表不推荐使用。",
+           "(5) 作者认为人类医生一定会被机器人取而代之。",
+           "Đáp án: Sai. 作者希望这只是“杞人忧天”，技术是造福于人类的。"],
+    say=["Trước khi sang phần mẫu câu, chúng ta kiểm tra nhanh xem các bạn đã hiểu bài khóa chưa. Thầy đọc năm câu, các bạn phán đoán đúng hay sai nhé.",
+         F(0, "Câu một: 沃森是在美国第一次为患者做义诊的。 Watson lần đầu khám miễn phí cho bệnh nhân là ở Mỹ. Đúng hay sai?"),
+         F(1, "Sai. Bài khóa nói đây là lần đầu Watson ra mắt bệnh nhân Trung Quốc, lần đầu 出诊 ở Trung Quốc; ở Mỹ thì nó đã được dùng từ trước."),
+         F(2, "Câu hai: 沃森医生只用了不到十秒钟，就开出了一张诊疗方案分析单。 Bác sĩ Watson chỉ mất chưa đầy mười giây đã đưa ra bản phân tích phác đồ điều trị."),
+         F(3, "Đúng. Bài khóa viết: 思考了不到十秒钟."),
+         F(4, "Câu ba: 吴尘轩和沃森依据的都是多年的临床经验。 Bác sĩ Ngô và Watson đều dựa vào kinh nghiệm lâm sàng nhiều năm."),
+         F(5, "Sai. Bác sĩ Ngô dựa vào kinh nghiệm lâm sàng, còn Watson dựa vào phân tích dữ liệu lớn về các ca bệnh trên toàn cầu. Hai con đường khác nhau mà kết quả lại trùng khớp."),
+         F(6, "Câu bốn: 分析单上的红色部分表示不推荐使用。 Phần màu đỏ trên bản phân tích có nghĩa là không khuyến nghị dùng."),
+         F(7, "Đúng. Màu cam là thận trọng khi dùng, màu đỏ là không khuyến nghị dùng; còn màu xanh lá là phác đồ tốt nhất."),
+         F(8, "Câu năm: 作者认为人类医生一定会被机器人取而代之。 Tác giả cho rằng bác sĩ con người nhất định sẽ bị robot thay thế."),
+         F(9, "Sai. Tác giả mong rằng nỗi lo ấy chỉ là 杞人忧天, lo hão, vì công nghệ là do con người tạo ra để phục vụ con người.")])
+
 add("bullets", chapter="Chú thích & bố cục", section="Bài khóa 课文", title="Chú thích (注释) và bố cục bản tin", size=33,
     items=["## Chú thích",
            "执业医师资格评定考试: kỳ thi cấp chứng chỉ hành nghề bác sĩ – “giấy thông hành” để hành nghề (Mỹ: USMLE, 3 bước)",
@@ -330,7 +353,7 @@ add("bullets", chapter="Mẫu câu: 与此同时 · 也就是说", section="Mẫ
          F(6, "Ví dụ hai: 蓝牙的有效传输距离为十米，也就是说，在十米范围内手机可以搜索到其他正在使用蓝牙功能的设备，并向其发送信息。 Khoảng cách truyền hiệu quả của Bluetooth là mười mét, tức là trong phạm vi mười mét, điện thoại có thể dò thấy các thiết bị khác đang bật Bluetooth và gửi thông tin cho chúng."),
          F(7, "Ví dụ ba: 我们要对市场上那些潜在的风险保持警惕，也就是说，投资时不要过分冲动。 Chúng ta phải cảnh giác với những rủi ro tiềm ẩn trên thị trường, nói cách khác, khi đầu tư đừng quá bốc đồng.")])
 
-add("bullets", chapter="Mẫu câu: 短短 · N之adj · 比N还N", section="Mẫu câu 重点句型", title="5. 短短…… – chỉ vỏn vẹn, chỉ trong (thời gian, khoảng cách rất ngắn)", size=36,
+add("bullets", chapter="Mẫu câu: 短短 · N之adj · 比N还N", section="Mẫu câu 重点句型", title="5. 短短…… – chỉ vỏn vẹn (thời gian, khoảng cách ngắn)", size=36,
     items=["短短 + số lượng (thời gian / khoảng cách): nhấn mạnh rất ngắn, rất ít",
            "Thường đứng đầu câu; vế sau nêu một kết quả lớn (hoặc một việc rất chậm)",
            "(1) 短短两个小时，在沃森医生的神助力下，20多位……的患者获得了诊疗方案。",
@@ -377,6 +400,25 @@ add("bullets", chapter="Mẫu câu: 愈发 · 造福", section="Mẫu câu 重�
          F(5, "Ví dụ một, câu kết bài khóa: 毕竟最先进的技术是由人类发明并造福于人类的。 Dù sao công nghệ tiên tiến nhất cũng do con người phát minh và để phục vụ con người."),
          F(6, "Ví dụ hai: 植树造林是一件造福子孙后代的大事。 Trồng cây gây rừng là việc lớn mang lại phúc cho con cháu đời sau."),
          F(7, "Ví dụ ba: 一个办教育，一个修水利，都将造福于人民。 Một là làm giáo dục, một là làm thủy lợi, đều sẽ mang lại hạnh phúc cho nhân dân.")])
+
+add("bullets", section="Mẫu câu 重点句型", title="Luyện tập mẫu câu: hoàn thành câu", reveal=True, size=34,
+    items=["(1) 这家店的生意___________，每天都排长队。（N之adj）",
+           "Đáp án gợi ý: 这家店生意之好，超出了我的想象，每天都排长队。",
+           "(2) 他每天都在图书馆学到半夜，___________。（比N还N）",
+           "Đáp án gợi ý: 他每天都在图书馆学到半夜，简直比学霸还学霸。",
+           "(3) 你去邮局寄信的时候，___________。（顺便）",
+           "Đáp án gợi ý: 你去邮局寄信的时候，顺便帮我买几张邮票吧。",
+           "(4) 这次会议的气氛___________。（甚为）",
+           "Đáp án gợi ý: 这次会议的气氛甚为轻松，大家都畅所欲言。"],
+    say=["Bây giờ các bạn thử vận dụng: hoàn thành câu bằng mẫu câu cho sẵn. Đây là bài luyện thêm, thầy đưa ra đáp án gợi ý.",
+         F(0, "Câu một, dùng mẫu danh từ cộng 之 cộng tính từ: 这家店的生意什么，每天都排长队。 Việc buôn bán của cửa hàng này thế nào, ngày nào cũng xếp hàng dài."),
+         F(1, "Đáp án gợi ý: 这家店生意之好，超出了我的想象，每天都排长队。 Cửa hàng này đắt khách đến mức vượt ngoài sức tưởng tượng của tôi, ngày nào cũng xếp hàng dài."),
+         F(2, "Câu hai, dùng 比N还N: 他每天都在图书馆学到半夜，什么。 Ngày nào anh ấy cũng học ở thư viện đến nửa đêm."),
+         F(3, "Đáp án gợi ý: 他每天都在图书馆学到半夜，简直比学霸还学霸。 Đúng là còn mọt sách hơn cả mọt sách. 学霸 là từ lóng chỉ học sinh học cực giỏi, cực chăm."),
+         F(4, "Câu ba, dùng 顺便: 你去邮局寄信的时候，什么。 Lúc cậu ra bưu điện gửi thư."),
+         F(5, "Đáp án gợi ý: 你去邮局寄信的时候，顺便帮我买几张邮票吧。 Lúc cậu ra bưu điện gửi thư, tiện thể mua giúp tớ mấy con tem nhé."),
+         F(6, "Câu bốn, dùng 甚为: 这次会议的气氛什么。 Bầu không khí của cuộc họp lần này thế nào."),
+         F(7, "Đáp án gợi ý: 这次会议的气氛甚为轻松，大家都畅所欲言。 Bầu không khí cuộc họp lần này hết sức thoải mái, mọi người đều nói hết điều muốn nói. 畅所欲言 là nói thoải mái mọi điều muốn nói.")])
 
 # ======================= KẾT HỢP TỪ =======================
 add("bullets", chapter="Kết hợp từ", section="Kết hợp từ 词语搭配", title="Kết hợp từ (1): N + 生涯 · 从 + N · 庞大", size=34,
@@ -529,7 +571,7 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 4: Chọn
            "在医学影像诊断中，人工智能（AI）技术已成为医生的___助手。“AI+医学影像”技术在一众医疗服务中率先得到应用。随着科技的不断进步，医学影像的采集___便利和精准，加上___的数据库突破了___障碍，使得医学影像处理和___的技术逐渐成熟。未来，在企业与医院、医生的___合作之下，“AI+医学影像”技术的发展必将___更多患者。",
            "Đáp án: 得力 · 愈发 · 庞大 · 时空 · 识别 · 倾力 · 造福"],
     say=[F(0, "Bài tập bốn: chọn từ điền vào đoạn văn. Có bảy từ: 庞大，倾力，造福，时空，得力，识别，愈发."),
-         F(1, "在医学影像诊断中，人工智能技术已成为医生的什么助手。AI加医学影像技术在一众医疗服务中率先得到应用。随着科技的不断进步，医学影像的采集什么便利和精准，加上什么的数据库突破了什么障碍，使得医学影像处理和什么的技术逐渐成熟。未来，在企业与医院、医生的什么合作之下，AI加医学影像技术的发展必将什么更多患者。 Các bạn tạm dừng và điền thử nhé."),
+         F(1, "在医学影像诊断中，人工智能技术已成为医生的什么助手。人工智能加医学影像技术在一众医疗服务中率先得到应用。随着科技的不断进步，医学影像的采集什么便利和精准，加上什么的数据库突破了什么障碍，使得医学影像处理和什么的技术逐渐成熟。未来，在企业与医院、医生的什么合作之下，人工智能加医学影像技术的发展必将什么更多患者。 Các bạn tạm dừng và điền thử nhé."),
          F(2, "Đáp án: 已成为医生的得力助手；医学影像的采集愈发便利和精准；加上庞大的数据库突破了时空障碍；医学影像处理和识别的技术逐渐成熟；在企业与医院、医生的倾力合作之下；必将造福更多患者。 Trong chẩn đoán hình ảnh y khoa, trí tuệ nhân tạo đã trở thành trợ thủ đắc lực của bác sĩ. Cùng với tiến bộ khoa học, việc thu thập hình ảnh ngày càng tiện lợi và chính xác, thêm vào đó cơ sở dữ liệu khổng lồ đã vượt qua rào cản không gian và thời gian, khiến kỹ thuật xử lý và nhận dạng hình ảnh dần hoàn thiện. Tương lai, với sự hợp tác hết sức giữa doanh nghiệp, bệnh viện và bác sĩ, công nghệ này chắc chắn sẽ mang lại lợi ích cho nhiều bệnh nhân hơn.")])
 
 # ======================= THẢO LUẬN =======================
@@ -546,7 +588,8 @@ add("bullets", chapter="Thảo luận: AI trong y tế", section="Thảo luận 
          F(2, "Câu hai: 机器人医生能完全取代人类医生吗？ Bác sĩ robot có thể hoàn toàn thay thế bác sĩ con người không?"),
          F(3, "Đáp án gợi ý: 不能。看病不只是分析数据，还需要沟通、安慰和关心病人，这些是机器难以企及的。 Không thể. Khám bệnh không chỉ là phân tích số liệu, mà còn cần trò chuyện, an ủi và quan tâm người bệnh, đó là những điều máy móc khó lòng theo kịp."),
          F(4, "Câu ba: 在越南，人工智能在医疗方面有哪些应用？ Ở Việt Nam, trí tuệ nhân tạo được ứng dụng trong y tế như thế nào?"),
-         F(5, "Đáp án gợi ý: 一些医院用人工智能辅助看X光片、CT片；二零一八年，越南也有医院引进过沃森辅助癌症诊疗。 Một số bệnh viện dùng trí tuệ nhân tạo hỗ trợ đọc phim X quang, phim CT; năm hai nghìn không trăm mười tám, Việt Nam cũng có bệnh viện, như Bệnh viện Đa khoa tỉnh Phú Thọ, từng đưa Watson vào hỗ trợ điều trị ung thư. Tuy vậy, về sau Watson cũng bị phê bình là có những đề xuất chưa phù hợp với bệnh nhân châu Á, và năm hai nghìn không trăm hai mươi hai IBM đã bán mảng y tế này. Điều đó cho thấy: máy móc rất giỏi, nhưng vẫn cần con người kiểm tra lại.")])
+         F(5, "Đáp án gợi ý: 一些医院用人工智能辅助看X光片、CT片；二零一八年，越南也有医院引进过沃森辅助癌症诊疗。 Một số bệnh viện dùng trí tuệ nhân tạo hỗ trợ đọc phim X quang, phim CT; năm hai nghìn không trăm mười tám, Việt Nam cũng có bệnh viện, như Bệnh viện Đa khoa tỉnh Phú Thọ, từng đưa Watson vào hỗ trợ điều trị ung thư."),
+         F(5, "Tuy vậy, về sau Watson cũng bị phê bình là có những đề xuất chưa phù hợp với bệnh nhân châu Á, và năm hai nghìn không trăm hai mươi hai IBM đã bán mảng y tế này. Điều đó cho thấy: máy móc rất giỏi, nhưng vẫn cần con người kiểm tra lại.")])
 
 # ======================= TỔNG KẾT =======================
 add("bullets", chapter="Tổng kết", section="Tổng kết", title="Tổng kết bài 4.2", size=34,

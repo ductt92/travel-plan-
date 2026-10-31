@@ -197,7 +197,7 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Kiến 
          F(0, "Thứ nhất: 国际消除家庭暴力日. Đó là ngày hai mươi lăm tháng mười một, Ngày Quốc tế xóa bỏ bạo lực đối với phụ nữ do Liên Hợp Quốc xác lập, ở Trung Quốc còn gọi là Ngày quốc tế xóa bỏ bạo lực gia đình."),
          F(1, "Ngày này bắt nguồn từ một sự kiện năm một nghìn chín trăm sáu mươi: ba chị em nhà Mirabal ở Cộng hòa Dominica bị sát hại vào ngày hai mươi lăm tháng mười một. Năm một nghìn chín trăm chín mươi ba, cũng vào ngày này, Liên Hợp Quốc ra Tuyên bố về xóa bỏ bạo lực đối với phụ nữ."),
          F(2, "Thứ hai: 热搜榜, bảng tìm kiếm nóng trên Weibo, liệt kê những chủ đề được bàn tán nhiều nhất."),
-         F(3, "Lên 热搜 là dấu hiệu một sự kiện đã thu hút sự chú ý của cả xã hội. Sách cũng nhắc rằng có hiện tượng bỏ tiền mua hot search để lái sự chú ý của công chúng."),
+         F(3, "Lên 热搜 là dấu hiệu một sự kiện đã thu hút sự chú ý của cả xã hội. Sách cũng nhắc rằng có hiện tượng bỏ tiền mua vị trí trên bảng tìm kiếm nóng để lái sự chú ý của công chúng."),
          F(4, "Thứ ba: 妇联, là tên gọi tắt của 妇女联合会, Hội Liên hiệp Phụ nữ, thành lập tháng tư năm một nghìn chín trăm bốn mươi chín, có nhiệm vụ bảo vệ quyền lợi phụ nữ, thúc đẩy bình đẳng nam nữ. Ở Việt Nam, chúng ta cũng có Hội Liên hiệp Phụ nữ."),
          F(5, "Thứ tư: 反家庭暴力法, Luật Chống bạo lực gia đình, có hiệu lực từ ngày mùng một tháng ba năm hai nghìn không trăm mười sáu."),
          F(6, "Luật này lập ra chế độ 人身安全保护令, lệnh bảo vệ an toàn thân thể: cơ quan tư pháp ra quyết định để bảo vệ nạn nhân, con cái và người thân của họ. Trong bài, tòa án đã ra lệnh này cho cô blogger.")])
@@ -299,7 +299,7 @@ for i, item in enumerate(P, 1):
              F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", ""), cap="")] + [F(1, n) for n in notes])
 
 add("bullets", chapter="Ý chính bài khóa", section="Bài khóa 课文", title="Mạch lập luận của bài", size=34,
-    items=["## 1. Nêu vấn đề: một vụ bạo hành lên hot search ngày 25/11",
+    items=["## 1. Nêu vấn đề: một vụ bạo hành lên 热搜 ngày 25/11",
            "Blogger kể 5 lần bị bạo hành · dư luận: 为什么不分手？",
            "## 2. Phân tích nguyên nhân",
            "Quan hệ kinh tế bất bình đẳng → nạn nhân khó 直起腰杆 · 家丑不可外扬 · 清官难断家务事 · kênh trợ giúp không thông",
@@ -308,7 +308,7 @@ add("bullets", chapter="Ý chính bài khóa", section="Bài khóa 课文", titl
            "## 4. Giải pháp: phá vỡ im lặng",
            "Người chứng kiến lên tiếng · dư luận, pháp lý, tâm lý · 只有……才能筑起坚固防线"],
     say=["Đọc xong bài khóa, chúng ta cùng tóm tắt mạch lập luận. Đây là kết cấu rất điển hình của văn bình luận trên báo Trung Quốc: nêu vấn đề, phân tích, đưa số liệu, rồi đề xuất giải pháp.",
-         F(0, "Phần một: nêu vấn đề. Đúng ngày hai mươi lăm tháng mười một, video của một blogger bị bạo hành lên hot search."),
+         F(0, "Phần một: nêu vấn đề. Đúng ngày hai mươi lăm tháng mười một, video của một blogger bị bạo hành lên bảng tìm kiếm nóng."),
          F(1, "Cô kể đã bị đánh năm lần trong một năm. Dư luận ủng hộ, nhưng cũng có người hỏi: 第一次被打为什么不分手？"),
          F(2, "Phần hai: phân tích nguyên nhân vì sao nạn nhân không dễ dứt ra và không dám lên tiếng."),
          F(3, "Thứ nhất là quan hệ kinh tế bất bình đẳng, nạn nhân phụ thuộc nên khó 直起腰杆. Thứ hai là tâm lý 家丑不可外扬. Thứ ba là quan niệm 清官难断家务事. Thứ tư là các kênh trợ giúp chưa thông suốt."),
@@ -491,9 +491,7 @@ add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", ti
            "(3) 为了儿女的前途，她对娘家人的嘲讽只能___。",
            "Đáp án: 忍气吞声",
            "(4) 很多人担心自己的名字被___将会影响他们的就业前景，或者导致他们在现实世界中被跟踪。",
-           "Đáp án: 公之于众",
-           "(5) 你放走这些狡诈的强盗，简直就是放虎归山，___！",
-           "Đáp án: 后患无穷"],
+           "Đáp án: 公之于众"],
     say=["Phần cuối là luyện tập, phần 趁热打铁 của sách, nghĩa là rèn sắt khi còn nóng. Bài tập một: chọn thành ngữ thích hợp điền vào chỗ trống. Có chín thành ngữ cho chín câu, mỗi thành ngữ dùng một lần.",
          F(1, "Câu một: 我们要培养孩子做一些什么的事，不要娇生惯养。 Chúng ta phải tập cho trẻ làm những việc như thế nào, đừng nuông chiều. 娇生惯养 là được nuông chiều từ bé. Các bạn tạm dừng và chọn nhé."),
          F(2, "Đáp án: 力所能及. 做一些力所能及的事, làm những việc vừa sức mình."),
@@ -502,27 +500,29 @@ add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", ti
          F(5, "Câu ba: 为了儿女的前途，她对娘家人的嘲讽只能什么。 Vì tương lai của con cái, trước những lời giễu cợt của nhà ngoại, cô ấy chỉ đành làm gì? 娘家 là nhà mẹ đẻ của người phụ nữ."),
          F(6, "Đáp án: 忍气吞声. Chỉ đành nuốt giận làm thinh."),
          F(7, "Câu bốn: 很多人担心自己的名字被什么将会影响他们的就业前景，或者导致他们在现实世界中被跟踪。 Nhiều người lo rằng tên mình bị làm sao đó sẽ ảnh hưởng đến triển vọng việc làm, hoặc khiến họ bị theo dõi ngoài đời thực."),
-         F(8, "Đáp án: 公之于众. Tên bị công khai cho mọi người biết. Chú ý cấu trúc bị động 被公之于众."),
-         F(9, "Câu năm: 你放走这些狡诈的强盗，简直就是放虎归山，什么！ Anh thả những tên cướp xảo quyệt này đi, chẳng khác nào thả hổ về rừng!"),
-         F(10, "Đáp án: 后患无穷. 放虎归山，后患无穷, thả hổ về rừng thì hậu họa khôn lường. Hai thành ngữ này rất hay đi với nhau.")])
+         F(8, "Đáp án: 公之于众. Tên bị công khai cho mọi người biết. Chú ý cấu trúc bị động 被公之于众.")])
 
 add("bullets", section="Luyện tập 课后练习", title="Bài tập 1: Chọn thành ngữ thích hợp điền vào chỗ trống (2)", reveal=True, size=34,
-    items=["(6) 我们总是容易对自己身边的幸福___。",
+    items=["(5) 你放走这些狡诈的强盗，简直就是放虎归山，___！",
+           "Đáp án: 后患无穷",
+           "(6) 我们总是容易对自己身边的幸福___。",
            "Đáp án: 熟视无睹",
-           "(7) 几千年来“养儿防老”“多子多福”的旧观念，在文化不发达的山区，至今仍是___。",
+           "(7) 几千年来“养儿防老”、“多子多福”的旧观念，在文化不发达的山区，至今仍是___。",
            "Đáp án: 根深蒂固",
            "(8) 我___地对他说：“做人应该要讲原则！”",
            "Đáp án: 理直气壮",
            "(9) 小时候父亲总是教育我们，要弯下腰来做事，___做人。",
            "Đáp án: 直起腰杆"],
-    say=[F(0, "Câu sáu: 我们总是容易对自己身边的幸福什么。 Chúng ta luôn dễ như thế nào với hạnh phúc ngay bên cạnh mình?"),
-         F(1, "Đáp án: 熟视无睹. Hạnh phúc ở ngay bên cạnh, nhìn mãi thành quen, nên chẳng còn nhận ra."),
-         F(2, "Câu bảy: 几千年来养儿防老、多子多福的旧观念，在文化不发达的山区，至今仍是什么。 Mấy nghìn năm nay, quan niệm cũ nuôi con phòng già, đông con nhiều phúc, ở vùng núi văn hóa kém phát triển, đến nay vẫn ra sao?"),
-         F(3, "Đáp án: 根深蒂固. Quan niệm ăn sâu bén rễ. Các bạn để ý cụm 养儿防老, đây chính là chủ đề của bài sau."),
-         F(4, "Câu tám: 我什么地对他说：做人应该要讲原则！ Tôi nói với anh ta một cách thế nào: làm người phải có nguyên tắc!"),
-         F(5, "Đáp án: 理直气壮. Nói một cách đường hoàng, hùng hồn, vì mình có lý."),
-         F(6, "Câu chín: 小时候父亲总是教育我们，要弯下腰来做事，什么做人。 Hồi nhỏ bố luôn dạy chúng tôi: phải cúi lưng xuống mà làm việc, và làm người thì sao?"),
-         F(7, "Đáp án: 直起腰杆. 弯下腰来做事，直起腰杆做人: làm việc thì khiêm tốn, chăm chỉ; làm người thì ngay thẳng, có khí phách. Một câu rất đẹp, các bạn nên ghi nhớ.")])
+    say=[F(0, "Câu năm: 你放走这些狡诈的强盗，简直就是放虎归山，什么！ Anh thả những tên cướp xảo quyệt này đi, chẳng khác nào thả hổ về rừng!"),
+         F(1, "Đáp án: 后患无穷. 放虎归山，后患无穷, thả hổ về rừng thì hậu họa khôn lường. Hai thành ngữ này rất hay đi với nhau."),
+         F(2, "Câu sáu: 我们总是容易对自己身边的幸福什么。 Chúng ta luôn dễ như thế nào với hạnh phúc ngay bên cạnh mình?"),
+         F(3, "Đáp án: 熟视无睹. Hạnh phúc ở ngay bên cạnh, nhìn mãi thành quen, nên chẳng còn nhận ra."),
+         F(4, "Câu bảy: 几千年来养儿防老、多子多福的旧观念，在文化不发达的山区，至今仍是什么。 Mấy nghìn năm nay, quan niệm cũ nuôi con phòng già, đông con nhiều phúc, ở vùng núi văn hóa kém phát triển, đến nay vẫn ra sao?"),
+         F(5, "Đáp án: 根深蒂固. Quan niệm ăn sâu bén rễ. Các bạn để ý cụm 养儿防老, đây chính là chủ đề của bài sau."),
+         F(6, "Câu tám: 我什么地对他说：做人应该要讲原则！ Tôi nói với anh ta một cách thế nào: làm người phải có nguyên tắc!"),
+         F(7, "Đáp án: 理直气壮. Nói một cách đường hoàng, hùng hồn, vì mình có lý."),
+         F(8, "Câu chín: 小时候父亲总是教育我们，要弯下腰来做事，什么做人。 Hồi nhỏ bố luôn dạy chúng tôi: phải cúi lưng xuống mà làm việc, và làm người thì sao?"),
+         F(9, "Đáp án: 直起腰杆. 弯下腰来做事，直起腰杆做人: làm việc thì khiêm tốn, chăm chỉ; làm người thì ngay thẳng, có khí phách. Một câu rất đẹp, các bạn nên ghi nhớ.")])
 
 add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn từ thích hợp nhất (1)", reveal=True, size=34,
     items=["(1) 长江流域发生特大洪灾，___着全国亿万人民的心。  A.打动 B.触动 C.牵动 D.感动",
@@ -575,8 +575,8 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 4: Điề
     say=["Bài tập bốn: dùng từ và thành ngữ cho sẵn điền vào đoạn văn. Đoạn văn nói về 冷暴力, bạo lực lạnh. Có sáu lựa chọn: 底线，家丑不可外扬，坠入，忍气吞声，装聋作哑，恶性.",
          "Đoạn văn mở đầu thế này: 冷暴力是暴力的一种，其表现形式多为冷淡、轻视、放任、疏远和漠不关心，致使他人精神上和心理上受到侵犯和伤害。 Bạo lực lạnh là một dạng bạo lực, biểu hiện thường là lạnh nhạt, coi thường, bỏ mặc, xa lánh và thờ ơ, khiến người khác bị xâm hại, tổn thương về tinh thần và tâm lý.",
          F(1, "Tiếp theo là phần cần điền: 家庭冷暴力，多指夫妻双方产生矛盾时，漠不关心对方，在一方表达出交流意愿时，另一方仍然什么，不予理睬。遭受冷暴力的一方，抱着什么的态度，即使受了委屈，也只是什么，暗自伤心。在一方持续挑战另一方的什么后，夫妻关系进入什么循环，婚姻就此什么深渊，双方都成了这段关系的受害者。 Các bạn tạm dừng và điền thử nhé."),
-         F(2, "Đáp án: 另一方仍然装聋作哑，不予理睬。遭受冷暴力的一方，抱着家丑不可外扬的态度，即使受了委屈，也只是忍气吞声，暗自伤心。在一方持续挑战另một方的底线后，夫妻关系进入恶性循环，婚姻就此坠入深渊。".replace("另một方", "另一方")),
-         "Dịch nghĩa: khi một bên muốn trò chuyện, bên kia vẫn giả câm giả điếc, không thèm đáp lại. Bên bị bạo lực lạnh mang thái độ chuyện xấu trong nhà không được đưa ra ngoài, dù bị ấm ức cũng chỉ nuốt giận làm thinh, âm thầm đau khổ. Khi một bên liên tục thách thức giới hạn của bên kia, quan hệ vợ chồng rơi vào vòng luẩn quẩn tồi tệ, hôn nhân từ đó rơi xuống vực thẳm, cả hai đều trở thành nạn nhân. 恶性循环 là vòng luẩn quẩn, vòng xoáy tiêu cực, một cụm rất hay dùng."])
+         F(2, "Đáp án: 另一方仍然装聋作哑，不予理睬。遭受冷暴力的一方，抱着家丑不可外扬的态度，即使受了委屈，也只是忍气吞声，暗自伤心。在一方持续挑战另一方的底线后，夫妻关系进入恶性循环，婚姻就此坠入深渊。"),
+         F(2, "Dịch nghĩa: khi một bên muốn trò chuyện, bên kia vẫn giả câm giả điếc, không thèm đáp lại. Bên bị bạo lực lạnh mang thái độ chuyện xấu trong nhà không được đưa ra ngoài, dù bị ấm ức cũng chỉ nuốt giận làm thinh, âm thầm đau khổ. Khi một bên liên tục thách thức giới hạn của bên kia, quan hệ vợ chồng rơi vào vòng luẩn quẩn tồi tệ, hôn nhân từ đó rơi xuống vực thẳm, cả hai đều trở thành nạn nhân. 恶性循环 là vòng luẩn quẩn, vòng xoáy tiêu cực, một cụm rất hay dùng.")])
 
 # ======================= THẢO LUẬN =======================
 add("bullets", chapter="Thảo luận: liên hệ Việt Nam", section="Thảo luận 讨论", title="Thảo luận: Việt Nam và bạo lực gia đình", size=34,

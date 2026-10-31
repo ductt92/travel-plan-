@@ -21,7 +21,7 @@ def F(i, t, **kw):
 # ======================= MỞ ĐẦU =======================
 add("title", chapter="Mở đầu",
     top="顶石中文 – Đỉnh cao tiếng Trung",
-    zh="“塑战”能否速决？", py="“Sù zhàn” néngfǒu sù jué?",
+    zh="“塑战”能否速决？", py="“Sùzhàn” néngfǒu sùjué?",
     vi="Bài 3.3: “Cuộc chiến nhựa” có thắng nhanh được không?",
     sub="Bài giảng chi tiết bằng tiếng Việt",
     say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng giáo trình 顶石中文, Đỉnh cao tiếng Trung.",
@@ -231,7 +231,7 @@ P = [
     ("如：一次性塑料棉签、不可降解一次性塑料吸管、不可降解塑料袋等。相比旧版“限塑令”，本次“禁塑令”更具体、更直接地切入了人们的生活。\n虽然“禁塑令”在部分城市已先行执行，但效果并不理想。有媒体在政策已落地的广州市街头随机采访50位居民，居然有近6成完全不知道“禁塑令”。",
      "chẳng hạn: tăm bông thân nhựa dùng một lần, ống hút nhựa dùng một lần không phân hủy được, túi ni lông không phân hủy được, v.v. So với “lệnh hạn chế nhựa” bản cũ, “lệnh cấm nhựa” lần này cụ thể hơn, đi thẳng vào cuộc sống hơn. Tuy “lệnh cấm nhựa” đã được thực hiện trước ở một số thành phố, nhưng hiệu quả không được như mong đợi. Có cơ quan báo chí phỏng vấn ngẫu nhiên 50 người dân trên đường phố Quảng Châu, nơi chính sách đã được triển khai, vậy mà gần 6 phần 10 hoàn toàn không biết đến “lệnh cấm nhựa”.",
      ["一次性 là dùng một lần. 吸管 là ống hút. 相比旧版限塑令 là so với lệnh hạn chế nhựa bản cũ: lệnh năm 2008 chỉ buộc thu tiền túi ni lông, còn lệnh năm 2020 là cấm hẳn. 切入了人们的生活 là đi thẳng vào cuộc sống.",
-      "先行执行 là thực hiện trước. 并不理想 là không được như mong đợi. 随机采访 là phỏng vấn ngẫu nhiên. 居然 là vậy mà, tỏ ý bất ngờ. 近六成 là gần sáu phần mười; 成 là một phần mười, giống chữ thành trong tiếng Việt cổ."],
+      "先行执行 là thực hiện trước. 并不理想 là không được như mong đợi. 随机采访 là phỏng vấn ngẫu nhiên. 居然 là vậy mà, tỏ ý bất ngờ. 近六成 là gần sáu phần mười; 成 ở đây là một phần mười."],
      "如：一次性塑料棉签、不可降解一次性塑料吸管、不可降解塑料袋等。相比旧版限塑令，本次禁塑令更具体、更直接地切入了人们的生活。虽然禁塑令在部分城市已先行执行，但效果并不理想。有媒体在政策已落地的广州市街头随机采访五十位居民，居然有近六成完全不知道禁塑令。"),
     ("2008年的“限塑令”作为当年的社会热点曾广受关注，但在时间消磨下，此后竟成了“多加两毛买个袋子”的存在。此次政令再度升级，真的能减少塑料污染吗？",
      "“Lệnh hạn chế nhựa” năm 2008 từng là điểm nóng xã hội được quan tâm rộng rãi, nhưng dưới sự bào mòn của thời gian, về sau nó lại chỉ còn là chuyện “trả thêm hai hào mua cái túi”. Lần này chính lệnh lại được nâng cấp, liệu có thật sự giảm được ô nhiễm nhựa không?",
@@ -297,7 +297,7 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
          F(2, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
          F(3, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
 
-ZS = {}  # cỡ chữ riêng cho đoạn dài hơn khung
+ZS = {4: 44, 10: 44}  # cỡ chữ riêng cho đoạn dài hơn khung
 for i, item in enumerate(P, 1):
     zh, vi, notes = item[:3]
     spoken = item[3] if len(item) > 3 else zh.replace("“", "").replace("”", "")
@@ -697,11 +697,17 @@ lesson = {
                     "相处": "相楚",            # xiāngchǔ
                     "会计": "快计",            # kuàijì
                     "为切入点": "维切入点",    # wéi
-                    "转换": "转换",
-                    "买单": "买单"},
+                    "为此": "位此",            # wèicǐ
+                    "空调": "空条",            # kōngtiáo
+                    "调到": "条到",            # tiáodào
+                    "尤为": "尤维",            # yóuwéi
+                    "赖以为生": "赖以维生",    # wéi
+                    "安检处": "安检触",        # chù
+                    "屏蔽": "平蔽",            # píngbì
+                    "多重": "多虫",            # duōchóng
+                    "效应": "效映"},           # xiàoyìng
     "slides": slides,
 }
-lesson["tts_replace"] = {k: v for k, v in lesson["tts_replace"].items() if k != v}
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds33.json")
 json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

@@ -503,13 +503,13 @@ add("bullets", section="Thành ngữ 成语", title="Thành ngữ (4)", size=34,
            "## 唾手可得 tuòshǒu-kědé – dễ như trở bàn tay",
            "科学上没有唾手可得的事，任何发现都需要经过艰苦的努力。",
            "## 泥沙俱下 níshā-jùxià – bùn cát cùng trôi, tốt xấu lẫn lộn",
-           "网络文学作品数量众多，但由于创作者水平不一，所以难免泥沙俱下。"],
+           "近几年，网络文学日渐流行，作品数量众多，但由于创作者水平不一，所以难免泥沙俱下。"],
     say=[F(0, "Câu thứ mười hai: 任人宰割. 任 là mặc cho, 宰割 là giết mổ, cắt xẻ: mặc cho người khác chém giết, ức hiếp mà không có sức chống lại. Trong bài: 任人宰割的韭菜."),
          F(1, "Ví dụ: 落后就要挨打，国家没有经济实力就要任人宰割。 Lạc hậu thì sẽ bị đánh, đất nước không có thực lực kinh tế thì sẽ bị người ta chèn ép."),
          F(2, "Câu thứ mười ba: 唾手可得. 唾手 là nhổ nước bọt vào lòng bàn tay, chỉ một động tác rất dễ: tiếng Việt nói là dễ như trở bàn tay. Trong bài: 这种唾手可得的方便."),
          F(3, "Ví dụ: 科学上没有唾手可得的事，任何发现都需要经过艰苦的努力。 Trong khoa học không có gì dễ như trở bàn tay, mọi phát hiện đều phải trải qua nỗ lực gian khổ."),
          F(4, "Câu thứ mười bốn: 泥沙俱下. Bùn và cát cùng trôi theo dòng nước, ví người tốt kẻ xấu, thứ hay thứ dở lẫn lộn với nhau. Trong bài: 泥沙俱下之中，不乏海量的个人信息泄露."),
-         F(5, "Ví dụ: 网络文学作品数量众多，但由于创作者水平不一，所以难免泥沙俱下。 Tác phẩm văn học mạng rất nhiều, nhưng vì trình độ người viết không đồng đều, nên khó tránh khỏi hay dở lẫn lộn.")])
+         F(5, "Ví dụ: 近几年，网络文学日渐流行，作品数量众多，但由于创作者水平不一，所以难免泥沙俱下。 Mấy năm gần đây, văn học mạng ngày càng thịnh hành, tác phẩm rất nhiều, nhưng vì trình độ người viết không đồng đều, nên khó tránh khỏi hay dở lẫn lộn.")])
 
 # ======================= LUYỆN TẬP =======================
 add("bullets", chapter="Luyện tập", section="Luyện tập 课后练习", title="Bài tập 1: Chọn từ thích hợp điền vào chỗ trống (1)", reveal=True, size=33,
@@ -650,12 +650,9 @@ lesson = {
                     "泄露": "泄漏",            # xièlòu
                     "尤为": "尤维",            # yóuwéi
                     "切勿": "怯勿",            # qièwù
-                    "身处": "身楚",            # shēnchǔ
-                    "处境": "楚境",            # chǔjìng
-                    "供应": "供硬"},           # (dự phòng, không dùng)
+                    "身处": "身楚"},           # shēnchǔ
     "slides": slides,
 }
-lesson["tts_replace"].pop("供应")
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds41.json")
 json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

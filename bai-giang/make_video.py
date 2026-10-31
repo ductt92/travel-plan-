@@ -12,9 +12,11 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import threading
+import time
 import wave
 from concurrent.futures import ThreadPoolExecutor
 
@@ -51,7 +53,7 @@ def font(kind, size, bold=False):
 
 
 CJK_RE = re.compile(r"[一-鿿㐀-䶿　-〿＀-￯]+")
-CJK_CH = re.compile(r"[一-鿿㐀-䶿　-〿＀-￯“”‘’…—]")
+CJK_CH = re.compile(r"[一-鿿㐀-䶿　-〿＀-￯…—]")
 NO_LINE_START = set("，。、；：！？）」』”’…—,.;:!?)")
 
 
@@ -81,7 +83,7 @@ def tokens(text):
 
 def text_len(s, size, bold=False):
     total = 0
-    for i, part in enumerate(re.split(r"([一-鿿㐀-䶿　-〿＀-￯“”‘’…—]+)", s)):
+    for i, part in enumerate(re.split(r"([一-鿿㐀-䶿　-〿＀-￯…—]+)", s)):
         if not part:
             continue
         kind = "cjk" if i % 2 else "lat"
@@ -105,7 +107,7 @@ def wrap(text, size, maxw, bold=False):
 
 def draw_line(d, x, y, s, size, color, bold=False):
     asc = font("lat", size, bold).getmetrics()[0]
-    for i, part in enumerate(re.split(r"([一-鿿㐀-䶿　-〿＀-￯“”‘’…—]+)", s)):
+    for i, part in enumerate(re.split(r"([一-鿿㐀-䶿　-〿＀-￯…—]+)", s)):
         if not part:
             continue
         f = font("cjk" if i % 2 else "lat", size, bold)
@@ -157,7 +159,7 @@ def r_bullets(lesson, s, focus):
     y = 150
     if s.get("title"):
         y = draw_block(d, 80, y, s["title"], 56, PURPLE, W - 160, bold=True) + 20
-    size = s.get("size", 42)
+    size = s.get("size", 44)
     items = s["items"]
     if focus == -1:  # bản slide PDF: hiện hết, không tô sáng
         focus = None
@@ -177,7 +179,8 @@ def r_bullets(lesson, s, focus):
         if hl:
             d.rounded_rectangle([80, y - 10, W - 80, y + h], 16, fill=(255, 238, 220))
         d.ellipse([110, y + size * 0.45 - 8, 126, y + size * 0.45 + 8], fill=ORANGE if hl else PURPLE)
-        y = draw_block(d, 150, y, txt, size, INK, W - 260, bold=hl) + 14
+        color = GREEN if txt.startswith("Đáp án") else INK
+        y = draw_block(d, 150, y, txt, size, color, W - 260, bold=hl) + 14
     return im
 
 
@@ -213,14 +216,14 @@ def r_vocab(lesson, s, focus):
 def r_passage(lesson, s, focus):
     im, d = base(lesson, s)
     draw_block(d, 80, 140, s.get("title", "Bài khóa"), 44, PURPLE, W - 160, bold=True)
-    zsize = s.get("zsize", 48)
+    zsize = s.get("zsize", 54)
     y = 225
     zh_h = block_h(s["zh"], zsize, W - 260, lh=1.65)
     d.rounded_rectangle([80, y - 20, W - 80, y + zh_h + 10], 20, fill=WHITE, outline=(220, 210, 228), width=2)
     y = draw_block(d, 130, y, s["zh"], zsize, INK, W - 260, lh=1.65) + 40
     if focus is None or focus >= 1 or s.get("show_vi"):
-        d.rectangle([80, y, 88, y + block_h(s["vi"], 32, W - 260, lh=1.4)], fill=ORANGE)
-        draw_block(d, 120, y, s["vi"], 32, GRAY, W - 240, lh=1.4)
+        d.rectangle([80, y, 88, y + block_h(s["vi"], 37, W - 240, lh=1.4)], fill=ORANGE)
+        draw_block(d, 120, y, s["vi"], 37, GRAY, W - 240, lh=1.4)
     return im
 
 
@@ -239,7 +242,7 @@ def r_compare(lesson, s, focus):
         yy = y + 120
         for ln in col["lines"]:
             color = GREEN if ln.startswith("Đúng") else (200, 60, 60) if ln.startswith("Sai") else INK
-            yy = draw_block(d, x0 + 30, yy, ln, 34, color, cw - 60, lh=1.35) + 12
+            yy = draw_block(d, x0 + 30, yy, ln, 37, color, cw - 60, lh=1.35) + 14
     return im
 
 
@@ -285,6 +288,11 @@ def tts(text, voice, rate, cache):
             except subprocess.TimeoutExpired:
                 if attempt == 3:
                     raise
+            except subprocess.CalledProcessError:
+                # dịch vụ đọc của macOS đôi khi trả lỗi một lúc (gặp ở ds42): chờ rồi thử lại
+                if attempt == 3:
+                    raise
+                time.sleep(20)
         os.replace(tmp, path)
     return path
 
@@ -431,6 +439,8 @@ def main():
     print(f"Xong: {out}  ({t / 60:.1f} phút)")
     for st, ch, _ in chapters:
         print(f"  {ts(st, '.')[:8]}  {ch}")
+    # ảnh khung hình + audio.wav (~300 MB mỗi bài) chỉ dùng để ghép video: xong thì xóa để khỏi đầy ổ
+    shutil.rmtree(work, ignore_errors=True)
 
 
 if __name__ == "__main__":

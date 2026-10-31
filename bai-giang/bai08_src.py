@@ -114,7 +114,7 @@ V = [
     ("呈现", "chéngxiàn", "trình hiện", "động từ", "thể hiện, lộ ra, hiện ra", "春天到了，公园里呈现出一片绿色。", "Mùa xuân đến, công viên hiện ra một màu xanh.",
      "Động từ, nghĩa là hiện ra, bày ra trước mắt, mang sắc thái văn viết. Hay dùng 呈现出 cộng một trạng thái. Trong bài: 河流流动时会呈现出不同的状态."),
     ("固有", "gùyǒu", "cố hữu", "tính từ", "vốn có, sẵn có", "每个民族都有自己固有的文化。", "Mỗi dân tộc đều có nền văn hóa vốn có của mình.",
-     "Tính từ, nghĩa là vốn có, sẵn có từ trước, giống cố hữu trong cụm thói quen cố hữu của tiếng Việt. Thường làm định ngữ, đi với 的: 固有的那条河."),
+     "Tính từ, nghĩa là vốn có, sẵn có từ trước, giống cố hữu trong cụm thói quen cố hữu của tiếng Việt. Thường làm định ngữ, như trong bài: 固有的那条河, dòng sông vốn có ấy."),
     ("阐述", "chǎnshù", "xiển thuật", "động từ", "trình bày, nêu rõ", "他在会上阐述了自己的看法。", "Trong cuộc họp, anh ấy trình bày rõ quan điểm của mình.",
      "Động từ, nghĩa là trình bày, giải thích rõ ràng một quan điểm, một lý luận, mang sắc thái văn viết. Trong bài: 他将自己的观点阐述为, ông ấy trình bày quan điểm của mình là."),
     ("陈述", "chénshù", "trần thuật", "động từ", "phát biểu, trình bày, nói rõ", "请你把事情的经过陈述一遍。", "Mời anh trình bày lại diễn biến sự việc một lượt.",
@@ -245,15 +245,15 @@ P = [
       "把自我比喻为一条河 là ví cái tôi như một dòng sông, theo mẫu 把什么比喻为什么. 始终 là trước sau, từ đầu đến cuối."]),
     ("他将自己的观点阐述为：不管你变化了多少，始终只有一个你。",
      "Ông trình bày quan điểm của mình là: dù bạn thay đổi bao nhiêu, trước sau vẫn chỉ có một bạn.",
-     ["将 ở đây giống 把, mang sắc thái văn viết: 将自己的观点阐述为, đem quan điểm của mình trình bày thành.",
+     ["Trong cụm 他将自己的观点阐述为, từ đứng sau chủ ngữ có nghĩa giống 把, mang sắc thái văn viết: đem quan điểm của mình trình bày thành.",
       "Đây chính là quan điểm thứ nhất trong phần khởi động. 不管……始终…… nghĩa là dù… thì trước sau vẫn…."]),
     ("大卫·休谟不同意“连续的自我”的观点。他是这样陈述自己的见解的：“我们的思想，是连续不断的认知组成的演变过程”。",
      "David Hume không đồng ý với quan điểm về một cái tôi liên tục. Ông trình bày cách nhìn của mình như sau: Tư tưởng của chúng ta là một quá trình biến đổi được tạo nên bởi những nhận thức nối tiếp không ngừng.",
      ["大卫·休谟 là David Hume, nhà triết học người Anh, sống từ năm một nghìn bảy trăm mười một đến năm một nghìn bảy trăm bảy mươi sáu.",
-      "是这样……的 nhấn mạnh cách thức. 连续不断 là nối tiếp không ngừng. 认知 là nhận thức. 演变过程 là quá trình biến đổi dần dần."]),
+      "他是这样陈述自己的见解的 dùng cấu trúc nhấn mạnh để nói rõ cách thức: ông trình bày như thế này. 连续不断 là nối tiếp không ngừng. 认知 là nhận thức. 演变过程 là quá trình biến đổi dần dần."]),
     ("而你可以推测，譬如，婴儿大卫的油画呈现的是一个与成年大卫类似的人，并非完全相同。",
      "Và bạn có thể suy đoán, ví dụ như, bức tranh sơn dầu vẽ cậu bé David lúc còn sơ sinh thể hiện một người giống với David trưởng thành, chứ không hoàn toàn giống hệt.",
-     ["油画 là tranh sơn dầu. 与……类似 là giống với…. 并非 là hoàn toàn không phải, văn viết, giống 并不是.",
+     ["油画 là tranh sơn dầu. 与成年大卫类似 là giống với David trưởng thành. 并非 là hoàn toàn không phải, văn viết, giống 并不是.",
       "Theo Hume, em bé David và David người lớn chỉ giống nhau chứ không phải là một. Đây là quan điểm thứ hai trong phần khởi động."]),
     ("哲学家们对本体的问题各抒己见，我们却在想一些更为实际的问题，假如休谟是对的，那么从现在开始，10年后你就会成为另一个人，你还需要遵守现在的你做出的承诺吗？",
      "Các nhà triết học mỗi người một ý về vấn đề bản thể, còn chúng ta thì lại nghĩ đến những vấn đề thực tế hơn: giả sử Hume đúng, thì tính từ bây giờ, mười năm sau bạn sẽ trở thành một người khác; vậy bạn còn cần giữ những lời hứa mà bạn của hiện tại đã đưa ra không?",
@@ -263,7 +263,7 @@ P = [
     ("或者说，一个被通缉了15年的罪犯，今天还应该为当初触犯法律的行为受到惩罚吗？",
      "Hoặc nói cách khác, một tội phạm đã bị truy nã mười lăm năm, hôm nay có còn phải chịu trừng phạt vì hành vi vi phạm pháp luật năm xưa không?",
      ["或者说 là hay nói cách khác. 被通缉了十五年 là đã bị truy nã mười lăm năm. 当初 là lúc đầu, hồi đó.",
-      "为……受到惩罚 là bị trừng phạt vì…. Đây là câu hỏi rất thực tế: nếu con người thay đổi hoàn toàn, thì ai phải chịu trách nhiệm?"],
+      "为当初触犯法律的行为受到惩罚 là bị trừng phạt vì hành vi vi phạm pháp luật năm xưa. Đây là câu hỏi rất thực tế: nếu con người thay đổi hoàn toàn, thì ai phải chịu trách nhiệm?"],
      "或者说，一个被通缉了十五年的罪犯，今天还应该为当初触犯法律的行为受到惩罚吗？"),
     ("我们每个人都会发生变化。譬如，你去整形，你因为过于忧郁而吃药，你做心、肺或者其他器官移植手术，这些都会逐渐改变你的面貌、情绪和行为，你还是你吗？",
      "Mỗi người chúng ta đều sẽ thay đổi. Ví dụ, bạn đi phẫu thuật thẩm mỹ, bạn uống thuốc vì quá u uất, bạn phẫu thuật ghép tim, phổi hay các cơ quan khác; tất cả những điều đó sẽ dần dần thay đổi diện mạo, cảm xúc và hành vi của bạn, vậy bạn có còn là bạn không?",
@@ -387,7 +387,7 @@ add("bullets", chapter="Ngữ pháp: 有关", section="Ngữ pháp 注释", titl
          F(0, "Cách dùng thứ nhất: 有关 là động từ, nghĩa là có quan hệ, có liên quan, giống 有关系. Mẫu quen thuộc là 和什么有关, hoặc 与什么有关, có liên quan đến cái gì."),
          F(1, "Ví dụ một, lấy từ bài khóa: 有关本体的问题，困扰了哲学家两千五百多年。 Những vấn đề có liên quan đến bản thể đã làm các nhà triết học bối rối hơn hai nghìn năm trăm năm."),
          F(2, "Ví dụ hai: 中国的语文教学向来重视识字，这固然和汉字的特点有关。 Việc dạy ngữ văn ở Trung Quốc xưa nay luôn coi trọng việc nhận mặt chữ, điều này tất nhiên có liên quan đến đặc điểm của chữ Hán. Các bạn thấy từ 固然 của bài năm xuất hiện lại ở đây."),
-         F(3, "Cách dùng thứ hai: 有关 là giới từ, nghĩa là liên quan đến, về, giống 涉及. Lúc này nó đi với một danh từ, cả cụm đứng trước danh từ khác làm định ngữ, thường có 的."),
+         F(3, "Cách dùng thứ hai: 有关 là giới từ, nghĩa là liên quan đến, về, giống 涉及. Lúc này nó đi với một danh từ, cả cụm đứng trước danh từ khác làm định ngữ, như 有关病例的文字记载."),
          F(4, "Ví dụ ba: 手术前，他仔细研究了中外有关病例的文字记载。 Trước ca phẫu thuật, anh ấy nghiên cứu kỹ các ghi chép trong và ngoài nước về những ca bệnh liên quan."),
          F(5, "Ví dụ bốn: 为了这部历史剧服装的设计，他查阅了大量有关服饰问题的资料。 Để thiết kế trang phục cho bộ phim lịch sử này, anh ấy đã tra cứu rất nhiều tài liệu về vấn đề trang phục.")])
 
@@ -459,7 +459,7 @@ add("compare", chapter="Phân biệt 极端 – 极度", section="Phân biệt t
          F(1, "极度 thì thường không làm danh từ, nên không nói 走极度."),
          F(0, "Điểm khác thứ ba. 极端 còn làm tính từ, nghĩa là tuyệt đối, cực đoan, quá khích. Ví dụ: 这种观点太极端。 Quan điểm này quá cực đoan. Và trong bài khóa: 他有个极端得空前绝后的想法。 Ông ấy có một ý tưởng cực đoan có một không hai."),
          F(1, "极度 không có cách dùng này, nên không nói 这种观点太极度."),
-         "Mẹo nhớ: 极端 có chữ 端, là đầu mút, nên làm được danh từ và tính từ, chỉ cái đầu cực đoan; còn 极度 có chữ 度, là mức độ, nên chủ yếu chỉ dùng làm phó từ chỉ mức độ."])
+         "Mẹo nhớ: 极端 có chữ 端, là đầu mút, nên làm được danh từ và tính từ, chỉ cái đầu cực đoan; còn 极度 có chữ cuối là mức độ, như trong 程度, nên chủ yếu chỉ dùng làm phó từ chỉ mức độ."])
 
 add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: chọn 极端 hay 极度 điền vào chỗ trống", reveal=True, size=38,
     items=["(1) 他的做法___得让我们无法相信。",
@@ -651,6 +651,8 @@ lesson = {
                     "青藏": "青葬",            # Qīng-Zàng
                     "记载": "记宰",            # jìzǎi
                     "称不上": "撑不上",        # chēng bu shàng
+                    "什么为盛开": "什么维盛开",  # wéi
+                    "为基础": "维基础",        # wéi
                     "兴奋": "星奋",            # xīngfèn
                     "幻觉": "幻决",            # huànjué
                     "酒吧": "酒巴",            # jiǔbā

@@ -148,7 +148,7 @@ V = [
     ("敷衍", "fūyǎn", "phu diễn", "động từ", "làm lấy lệ, làm qua loa, hời hợt", "你别敷衍我，说实话吧。", "Anh đừng nói cho qua chuyện với tôi, nói thật đi.",
      "Động từ, nghĩa là làm cho có, làm lấy lệ, đối phó cho qua chuyện. Trong bài, 不敷衍每一位客户 là không đối phó qua loa với bất kỳ khách hàng nào."),
     ("想方设法", "xiǎngfāng-shèfǎ", "tưởng phương thiết pháp", "thành ngữ", "nghĩ đủ mọi cách", "父母想方设法让孩子吃得健康。", "Bố mẹ nghĩ đủ mọi cách để con ăn uống lành mạnh.",
-     "Thành ngữ, nghĩa là nghĩ đủ mọi cách, tìm mọi biện pháp. Cấu trúc 想……设…… lặp ý, giống 千方百计."),
+     "Thành ngữ, nghĩa là nghĩ đủ mọi cách, tìm mọi biện pháp. Nghĩa gần giống thành ngữ 千方百计."),
     ("凑合", "còuhe", "thấu hợp", "động từ", "làm qua quýt, miễn cưỡng; tạm bợ", "这件衣服虽然旧了，还能凑合着穿。", "Bộ quần áo này tuy cũ rồi, vẫn mặc tạm được.",
      "Động từ, khẩu ngữ, âm tiết thứ hai đọc nhẹ. Nghĩa thường gặp là tạm bợ, tạm chấp nhận dù chưa tốt. Trong bài, 多忙都不凑合 là dù bận đến mấy cũng không làm qua quýt, không làm cho có."),
     ("忙碌", "mánglù", "mang lục", "tính từ", "bận rộn", "他每天都过着忙碌的生活。", "Ngày nào anh ấy cũng sống trong bận rộn.",
@@ -252,7 +252,7 @@ P = [
     ("我和小林决定不和他们计较，全力以赴投入工作，不怠慢、不敷衍每一位客户，想方设法做好每一单业务，多忙都不凑合。",
      "Tôi và Tiểu Lâm quyết định không so đo với họ, dốc toàn lực lao vào công việc, không lạnh nhạt, không qua loa với bất kỳ khách hàng nào, nghĩ đủ mọi cách để làm tốt từng đơn hàng, bận đến mấy cũng không làm qua quýt.",
      ["不和他们计较 là không so đo với họ. 全力以赴投入工作 là dốc toàn lực lao vào công việc. 一单业务 là một đơn hàng, một vụ việc.",
-      "Chú ý chuỗi phủ định: 不怠慢，不敷衍，多忙都不凑合. Mẫu 多 cộng tính từ cộng 都 nghĩa là dù… đến mấy cũng…: 多忙都不凑合, bận đến mấy cũng không làm cho có."]),
+      "Chú ý chuỗi phủ định: 不怠慢，不敷衍，多忙都不凑合. Cấu trúc này nghĩa là dù… đến mấy cũng…: 多忙都不凑合, bận đến mấy cũng không làm cho có; tương tự, 多累都不怕, mệt đến mấy cũng không sợ."]),
     ("忙碌中，时光过得飞快，我们的业务能力得到了飞跃式的提高，点名找我们的客户越来越多。",
      "Trong bận rộn, thời gian trôi nhanh như bay, năng lực nghiệp vụ của chúng tôi được nâng cao vượt bậc, khách hàng chỉ đích danh tìm chúng tôi ngày càng nhiều.",
      ["时光过得飞快 là thời gian trôi nhanh như bay. 飞跃式的提高 là sự nâng cao kiểu nhảy vọt, tức là tiến bộ vượt bậc.",
@@ -267,7 +267,7 @@ P = [
       "前辈 là tiền bối, người đi trước. 变得热情起来 là trở nên nhiệt tình; 起来 chỉ trạng thái bắt đầu và tiếp diễn."]),
     ("再后来，公司来了新人，领导让我带他们，我把工作经验和技巧传授给他们，毫无保留。",
      "Về sau nữa, công ty có người mới đến, lãnh đạo bảo tôi kèm cặp họ, tôi truyền dạy kinh nghiệm và kỹ năng làm việc cho họ, không giữ lại chút nào.",
-     ["带 ở đây là dẫn dắt, kèm cặp người mới. 把……传授给…… là truyền dạy cái gì cho ai.",
+     ["领导让我带他们 là lãnh đạo bảo tôi kèm cặp họ. 把工作经验和技巧传授给他们 là truyền dạy kinh nghiệm và kỹ năng làm việc cho họ.",
       "毫无保留 là không giữ lại chút nào. Các bạn thấy không, nhân vật tôi không đối xử với người mới như cách mình từng bị đối xử."]),
     ("其实，进入新单位，作为一个职场插班生，这个过程，正是展示你人格魅力的时候，遇到困难，也是你施展才能的时机。",
      "Thật ra, bước vào một cơ quan mới, với tư cách là một người mới chen chân vào chốn công sở, quá trình này chính là lúc thể hiện sức hút nhân cách của bạn; gặp khó khăn, cũng là thời cơ để bạn phát huy tài năng.",
@@ -280,7 +280,7 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
            "Sau đó: bản dịch tiếng Việt + giải thích từ ngữ, cấu trúc",
            "Mẹo: tạm dừng, đọc to đoạn văn trước khi nghe giảng"],
     say=["Tiếp theo là phần hai: bài khóa 当好职场插班生, dài bảy trăm tám mươi lăm chữ. Bài được cải biên từ một bài báo cùng tên trên báo Thanh niên Bắc Kinh, tác giả là Tô Tiểu Ni.",
-         F(0, f"Thầy chia bài thành {len(P)} đoạn ngắn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học."),
+         F(0, "Thầy chia bài thành mười bốn đoạn ngắn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học."),
          F(1, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
          F(2, "Nếu muốn luyện đọc, các bạn hãy tạm dừng và tự đọc to đoạn văn trước khi nghe giảng nhé.")])
 
@@ -359,7 +359,7 @@ add("bullets", chapter="Ngữ pháp: 明明", section="Ngữ pháp 注释", titl
          F(0, "明明 biểu thị một điều rất rõ ràng, sự thật đúng là như vậy, tiếng Việt dịch là rõ ràng, rành rành."),
          F(1, "Trước hoặc sau vế câu có 明明, thường có một câu hỏi ngược, hoặc một vế chuyển ý, để phản bác lại điều trái với sự thật đó. Từ này dùng nhiều trong khẩu ngữ, thường mang giọng trách móc, bất mãn."),
          F(2, "Ví dụ một: 你唱的明明是流行歌曲，哪里是京剧啊？ Cái bạn hát rõ ràng là nhạc thịnh hành, kinh kịch ở chỗ nào chứ? Phía sau là câu hỏi ngược."),
-         F(3, "Ví dụ hai: 明明是你把书弄丢了，还说不知道，真不像话！ Rõ ràng là cậu làm mất sách, vậy mà còn nói không biết, thật chẳng ra sao! Phía sau là vế chuyển ý với 还."),
+         F(3, "Ví dụ hai: 明明是你把书弄丢了，还说不知道，真不像话！ Rõ ràng là cậu làm mất sách, vậy mà còn nói không biết, thật chẳng ra sao! Phía sau là vế chuyển ý 还说不知道."),
          F(4, "Ví dụ ba, lấy từ bài khóa: 哼，太不像话了，明明是在欺负人。 Hừ, thật quá đáng, rõ ràng là đang bắt nạt người ta.")])
 
 add("bullets", section="Ngữ pháp 注释", title="Luyện tập: hoàn thành câu với 明明", reveal=True, size=36,
@@ -407,7 +407,7 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: dùng 大不�
 
 # ======================= PHÂN BIỆT TỪ =======================
 add("compare", chapter="Phân biệt 创立 – 创办", section="Phân biệt từ 词语辨析", title="Phân biệt 创立 và 创办",
-    common="Giống nhau: đều là động từ, nghĩa là lần đầu lập ra, bắt đầu làm. Ví dụ: 这所女子职业学校于1985年创立/创办。",
+    common="Giống nhau: đều là động từ, nghĩa là lần đầu lập ra. Ví dụ: 这所女子职业学校于1985年创立/创办。",
     cols=[{"head": "创立",
            "lines": ["(1) Nhấn mạnh 开创、成立: khai sáng, thành lập",
                      "Đúng: 这个组织创立于1942年。",
@@ -597,7 +597,7 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ 
     say=[F(0, "Đoạn hai có năm từ: 激情，全力以赴，想方设法，忙碌，凑合."),
          F(1, "同事小张非常敬业，他对待工作充满什么，总是什么出色完成每一项任务，从来不什么。最近，他接到一个新任务，为一个新项目做前期准备。小张带领他们部门的员工什么投入工作，虽然很什么，却享受到了工作的快乐。 Các bạn điền thử nhé."),
          F(2, "Đáp án: 充满激情，总是想方设法出色完成每一项任务，从来不凑合，带领员工全力以赴投入工作，虽然很忙碌。 Đồng nghiệp Tiểu Trương rất tận tụy, làm việc tràn đầy nhiệt huyết, luôn nghĩ mọi cách hoàn thành xuất sắc từng nhiệm vụ, chưa bao giờ làm qua quýt. Anh ấy dẫn dắt nhân viên dốc toàn lực làm việc, tuy rất bận rộn nhưng lại tận hưởng được niềm vui công việc."),
-         "Các bạn thấy không, Tiểu Trương trong đoạn văn này rất giống nhân vật tôi trong bài khóa: không so đo, dốc toàn lực, và tìm thấy niềm vui trong công việc."])
+         F(2, "Các bạn thấy không, Tiểu Trương trong đoạn văn này rất giống nhân vật tôi trong bài khóa: không so đo, dốc toàn lực, và tìm thấy niềm vui trong công việc.")])
 
 add("bullets", section="Luyện tập 练习", title="Bài tập 4: Đọc đoạn văn, mô phỏng đặt câu", reveal=True, size=34,
     items=["清早上班，和新同事一一认识后，我以为一天的工作就此开始，没想到……我想这单位风气真好……",
@@ -636,9 +636,7 @@ lesson = {
                     "澄清": "橙清",            # chéngqīng
                     "增长": "增涨",            # zēngzhǎng
                     "数年来": "树年来",        # shùniánlái
-                    "为赢得": "位赢得",        # wèi
-                    "处境": "楚境",            # chǔjìng
-                    "乐队": "越队"},           # yuèduì
+                    "为赢得": "位赢得"},        # wèi
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai06.json")

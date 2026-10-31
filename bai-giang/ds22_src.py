@@ -106,7 +106,7 @@ V = [
      "Tính từ, văn viết, nghĩa là tuổi đã cao. Chữ 迈 ở đây là già, cũng có trong 老迈. Trong bài: 不能落下那些年迈的身影, không thể bỏ lại phía sau những bóng dáng tuổi già."),
     ("身影", "shēnyǐng", "thân ảnh", "danh từ", "bóng dáng", "我在人群中看到了妈妈的身影。", "Tôi nhìn thấy bóng dáng mẹ giữa đám đông.",
      "Danh từ, nghĩa là hình bóng, dáng người. Kết hợp hay gặp: 忙碌的身影, bóng dáng tất bật; 高大的身影, bóng dáng cao lớn."),
-    ("及", "jí", "cập", "liên từ", "và, cùng (văn viết)", "童话、寓言、故事及科幻小说，都是孩子们喜爱的读物。", "Truyện cổ tích, ngụ ngôn, truyện kể và tiểu thuyết khoa học viễn tưởng đều là sách trẻ em yêu thích.",
+    ("及", "jí", "cập", "liên từ", "và, cùng (văn viết)", "童话、寓言及科幻小说都是孩子们喜爱的读物。", "Cổ tích, ngụ ngôn và truyện viễn tưởng đều được trẻ em yêu thích.",
      "Liên từ văn viết, nghĩa là và, giống 和, thường đứng trước thành phần cuối cùng của một chuỗi liệt kê. Trong bài: 六十岁及以上人口, dân số từ sáu mươi tuổi trở lên; 及以上 là và cao hơn."),
     ("截至", "jiézhì", "tiệt chí", "giới từ", "tính đến (thời điểm)", "截至目前，尚未收到不良反应报告。", "Tính đến nay vẫn chưa nhận được báo cáo phản ứng phụ nào.",
      "Giới từ, nghĩa là tính đến một thời điểm nào đó, hay gặp trong số liệu thống kê. Phân biệt: 截止 là động từ, nghĩa là hết hạn, như 报名已经截止. Trong bài: 截至今年六月, tính đến tháng sáu năm nay."),
@@ -244,7 +244,7 @@ P = [
       "第七次全国人口普查 là cuộc Tổng điều tra dân số toàn quốc lần thứ bảy, tiến hành năm hai nghìn không trăm hai mươi. 六十岁及以上 là từ sáu mươi tuổi trở lên. 已达二点六四亿人 là đã đạt hai trăm sáu mươi tư triệu người. Số liệu được dùng làm luận cứ cho luận điểm."],
      "帮助老人顺利融入信息化社会是义务也是责任。数字时代，不能落下那些年迈的身影。第七次全国人口普查结果显示，我国六十岁及以上人口已达二点六四亿人。"),
     ("“十四五”时期，全国60周岁及以上老年人口预计将超过3亿，占总人口比例将超过20%，中国将进入中度老龄化社会。根据统计，截至今年6月，在超过9亿的网民中，60岁及以上人群占比为10.3%。",
-     "Trong thời kỳ “Quy hoạch 5 năm lần thứ 14”, dân số cao tuổi từ đủ 60 tuổi trở lên trên cả nước dự kiến sẽ vượt 300 triệu, chiếm hơn 20% tổng dân số, Trung Quốc sẽ bước vào xã hội già hóa ở mức trung bình. Theo thống kê, tính đến tháng 6 năm nay, trong hơn 900 triệu người dùng Internet, nhóm từ 60 tuổi trở lên chiếm 10,3%.",
+     "Trong thời kỳ “Quy hoạch 5 năm lần thứ 14”, dân số cao tuổi từ đủ 60 tuổi trở lên trên cả nước dự kiến sẽ vượt 300 triệu, chiếm hơn 20 phần trăm tổng dân số, Trung Quốc sẽ bước vào xã hội già hóa ở mức trung bình. Theo thống kê, tính đến tháng 6 năm nay, trong hơn 900 triệu người dùng Internet, nhóm từ 60 tuổi trở lên chiếm 10,3 phần trăm.",
      ["十四五时期 là giai đoạn quy hoạch năm năm lần thứ mười bốn. 周岁 là tuổi tròn, tính theo ngày sinh. 占总人口比例将超过百分之二十 là chiếm hơn hai mươi phần trăm tổng dân số. 中度老龄化社会 là xã hội già hóa mức trung bình.",
       "截至今年六月 là tính đến tháng sáu năm nay. 网民 là cư dân mạng, người dùng Internet. 占比为百分之十点三 là chiếm mười phẩy ba phần trăm. Hai con số đặt cạnh nhau cho thấy: người già chiếm hơn một phần năm dân số, nhưng chỉ chiếm khoảng một phần mười người dùng mạng."],
      "十四五时期，全国六十周岁及以上老年人口预计将超过三亿，占总人口比例将超过百分之二十，中国将进入中度老龄化社会。根据统计，截至今年六月，在超过九亿的网民中，六十岁及以上人群占比为百分之十点三。"),
@@ -483,24 +483,26 @@ add("bullets", section="Luyện tập 课后练习", title="Bài tập 1: Chọn
          F(6, "Câu tám: 司机突然把车开得什么一般，车上的乘客都给吓得直冒冷汗。 Tài xế đột nhiên lái xe như thế nào, hành khách trên xe đều sợ toát mồ hôi lạnh."),
          F(7, "Đáp án: 风驰电掣. 开得风驰电掣一般, lái nhanh như gió cuốn chớp giật. Mẫu 像……一般 hay 风驰电掣般 rất hay gặp với thành ngữ này.")])
 
-add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn đáp án đúng", reveal=True, size=32,
-    items=["(1) 对待工作他从来都是一丝不苟的，他的教案书写（ ）、格式规范，称得上教案中的精品。 A.整洁 B.工整 C.整齐 D.齐整",
+add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn đáp án đúng (1)", reveal=True, size=33,
+    items=["(1) 对待工作他从来都是一丝不苟的，他的教案书写（ ）、格式规范，称得上教案中的精品。\nA.整洁 B.工整 C.整齐 D.齐整",
            "Đáp án: B. 工整 – 书写工整, chữ viết ngay ngắn",
-           "(2) 读书开阔了我的（ ），陶冶了我的性情，使我获益匪浅。 A.视力 B.视角 C.视野 D.视线",
-           "Đáp án: C. 视野 – 开阔视野, mở rộng tầm nhìn",
-           "(3) 这几年政府加大空气污染治理力度，颇有成效，我感到呼吸（ ）了许多。 A.流畅 B.通顺 C.顺利 D.顺畅",
-           "Đáp án: D. 顺畅 – 呼吸顺畅, thở dễ chịu",
-           "(4) 成功是对执着者的一种（ ），失败是对追求者的一种考验。 A.赠送 B.回赠 C.馈赠 D.赠给",
-           "Đáp án: C. 馈赠 – danh từ: món quà"],
+           "(2) 读书开阔了我的（ ），陶冶了我的性情，使我获益匪浅。\nA.视力 B.视角 C.视野 D.视线",
+           "Đáp án: C. 视野 – 开阔视野, mở rộng tầm nhìn"],
     say=["Bài tập hai: chọn đáp án đúng.",
          F(0, "Câu một: 对待工作他从来都是一丝不苟的，他的教案书写什么、格式规范，称得上教案中的精品。 Anh ấy luôn làm việc tỉ mỉ, giáo án của anh chữ viết thế nào, thể thức chuẩn mực, xứng đáng là giáo án mẫu mực. Bốn lựa chọn: 整洁，工整，整齐，齐整."),
          F(1, "Đáp án: B, 工整. Nói về chữ viết, ta dùng 书写工整，字迹工整. 整洁 là sạch sẽ gọn gàng, nói về phòng ốc, quần áo; 整齐 và 齐整 là đều đặn, ngay hàng thẳng lối."),
          F(2, "Câu hai: 读书开阔了我的什么，陶冶了我的性情，使我获益匪浅。 Đọc sách đã mở rộng cái gì của tôi, hun đúc tính tình tôi, giúp tôi được lợi không ít. Bốn lựa chọn: 视力，视角，视野，视线."),
-         F(3, "Đáp án: C, 视野. 开阔视野 là mở rộng tầm nhìn, tầm hiểu biết. 视力 là thị lực; 视角 là góc nhìn; 视线 là đường nhìn, ánh mắt."),
-         F(4, "Câu ba: 这几年政府加大空气污染治理力度，颇有成效，我感到呼吸什么了许多。 Mấy năm nay chính phủ đẩy mạnh xử lý ô nhiễm không khí, khá có hiệu quả, tôi cảm thấy hít thở thế nào hơn nhiều. Bốn lựa chọn: 流畅，通顺，顺利，顺畅."),
-         F(5, "Đáp án: D, 顺畅. 呼吸顺畅 là thở thông suốt, dễ chịu, đúng như phần kết hợp từ. 流畅 là trôi chảy, nói về văn viết, lời nói; 通顺 là câu văn xuôi tai; 顺利 là thuận lợi, nói về công việc."),
-         F(6, "Câu bốn: 成功是对执着者的一种什么，失败是对追求者的一种考验。 Thành công là một thứ gì đó dành cho người kiên trì, thất bại là một thử thách dành cho người theo đuổi. Bốn lựa chọn: 赠送，回赠，馈赠，赠给."),
-         F(7, "Đáp án: C, 馈赠. Sau 一种 cần một danh từ; trong bốn từ chỉ có 馈赠 dùng được như danh từ, nghĩa là món quà, đối xứng với 考验 ở vế sau.")])
+         F(3, "Đáp án: C, 视野. 开阔视野 là mở rộng tầm nhìn, tầm hiểu biết. 视力 là thị lực; 视角 là góc nhìn; 视线 là đường nhìn, ánh mắt.")])
+
+add("bullets", section="Luyện tập 课后练习", title="Bài tập 2: Chọn đáp án đúng (2)", reveal=True, size=33,
+    items=["(3) 这几年政府加大空气污染治理力度，颇有成效，我感到呼吸（ ）了许多。\nA.流畅 B.通顺 C.顺利 D.顺畅",
+           "Đáp án: D. 顺畅 – 呼吸顺畅, thở dễ chịu",
+           "(4) 成功是对执着者的一种（ ），失败是对追求者的一种考验。\nA.赠送 B.回赠 C.馈赠 D.赠给",
+           "Đáp án: C. 馈赠 – danh từ: món quà"],
+    say=[F(0, "Câu ba: 这几年政府加大空气污染治理力度，颇有成效，我感到呼吸什么了许多。 Mấy năm nay chính phủ đẩy mạnh xử lý ô nhiễm không khí, khá có hiệu quả, tôi cảm thấy hít thở thế nào hơn nhiều. Bốn lựa chọn: 流畅，通顺，顺利，顺畅."),
+         F(1, "Đáp án: D, 顺畅. 呼吸顺畅 là thở thông suốt, dễ chịu, đúng như phần kết hợp từ. 流畅 là trôi chảy, nói về văn viết, lời nói; 通顺 là câu văn xuôi tai; 顺利 là thuận lợi, nói về công việc."),
+         F(2, "Câu bốn: 成功是对执着者的一种什么，失败是对追求者的一种考验。 Thành công là một thứ gì đó dành cho người kiên trì, thất bại là một thử thách dành cho người theo đuổi. Bốn lựa chọn: 赠送，回赠，馈赠，赠给."),
+         F(3, "Đáp án: C, 馈赠. Sau 一种 cần một danh từ; trong bốn từ chỉ có 馈赠 dùng được như danh từ, nghĩa là món quà, đối xứng với 考验 ở vế sau.")])
 
 add("bullets", section="Luyện tập 课后练习", title="Bài tập 3: Dùng từ và câu mẫu cho sẵn để trả lời", reveal=True, size=32,
     items=["(1) 老人熟悉社交软件上的操作吗？（……得不行）",
@@ -575,9 +577,8 @@ lesson = {
                     "为外婆": "位外婆",        # wèi
                     "沟壑": "沟贺",            # gōuhè
                     "风驰电掣": "风驰电彻",    # chè
-                    "一筹": "亦筹",            # yìchóu
-                    "转发": "转发",
-                    "相机": "相机"},
+                    "执着": "执酌",            # zhízhuó
+                    "教案": "叫案"},           # jiào'àn
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds22.json")

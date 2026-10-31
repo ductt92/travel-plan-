@@ -253,7 +253,7 @@ P = [
       "Câu hỏi này chuyển bài khóa từ phần tả cảnh sang phần giải thích lý do, và cũng là câu hỏi bốn của bài tập năm."]),
     ("后来，我在当地听到了一首古老的曲子，歌词的意思是，祖先们只靠打猎过不了日子，光靠采集树果也过不了日子，于是学会了翻地，学会了种植。",
      "Về sau, tôi được nghe một bài hát cổ ở địa phương, lời bài hát có ý là: tổ tiên chỉ dựa vào săn bắn thì không sống nổi, chỉ dựa vào hái lượm quả cây cũng không sống nổi, thế là học cách cày xới đất, học cách trồng trọt.",
-     ["过不了日子 là không sống được, không qua ngày được. 动词 cộng 不了 nghĩa là không thể làm được. 只靠 và 光靠 đều là chỉ dựa vào.",
+     ["过不了日子 là không sống được, không qua ngày được; 过不了 là không thể vượt qua được. 只靠 và 光靠 đều là chỉ dựa vào.",
       "翻地 là cày xới đất. 种植 là trồng trọt, chữ đầu đọc thanh bốn. Bài hát cổ kể lại quá trình con người chuyển từ săn bắn, hái lượm sang trồng trọt."]),
     ("他们发现种子和水最亲近，喝过水的种子就是金闪闪的稻谷，从此他们再也离不开梯田和水。",
      "Họ phát hiện hạt giống và nước gần gũi nhau nhất, hạt giống được uống nước sẽ thành những hạt lúa vàng óng, từ đó họ không bao giờ rời xa ruộng bậc thang và nước nữa.",
@@ -655,6 +655,7 @@ lesson = {
                     "远处": "远触",            # yuǎnchù
                     "为哈尼族": "位哈尼族",    # wèi (vì)
                     "为背景": "维背景",        # yǐ…wéi bèijǐng
+                    "为主要目的": "维主要目的",  # yǐ…wéi zhǔyào mùdì
                     "过不了": "过不蓼",        # guòbuliǎo
                     "阻拦不了": "阻拦不蓼",    # zǔlán bu liǎo
                     "庄稼长得": "庄稼涨得",    # zhǎng

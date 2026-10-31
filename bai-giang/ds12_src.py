@@ -22,10 +22,10 @@ def F(i, t, **kw):
 add("title", chapter="Mở đầu",
     top="顶石中文 – Đỉnh cao tiếng Trung",
     zh="学区房情结怎么破？", py="Xuéqūfáng qíngjié zěnme pò?",
-    vi="Bài 1.2: Làm sao gỡ nỗi ám ảnh nhà gần trường tốt?",
+    vi="Bài 1.2: Phá bỏ nỗi ám ảnh “nhà gần trường” thế nào?",
     sub="Bài giảng chi tiết bằng tiếng Việt",
     say=["Xin chào các bạn! Chào mừng các bạn đến với bài giảng giáo trình 顶石中文, Đỉnh cao tiếng Trung.",
-         "Hôm nay chúng ta học bài một chấm hai, bài thứ hai của Đơn vị một, 教育篇, chủ đề Giáo dục: 学区房情结怎么破？ Nghĩa là: Làm sao gỡ bỏ nỗi ám ảnh nhà gần trường tốt?",
+         "Hôm nay chúng ta học bài một chấm hai, bài thứ hai của Đơn vị một, 教育篇, chủ đề Giáo dục: 学区房情结怎么破？ Nghĩa là: Phá bỏ nỗi ám ảnh nhà gần trường thế nào?",
          "学区房 là nhà nằm trong khu tuyển sinh của một trường tốt. Ở Trung Quốc, trẻ em thường học trường thuộc khu vực nơi gia đình có nhà và hộ khẩu, nên phụ huynh sẵn sàng bỏ ra rất nhiều tiền, có khi mua cả một căn nhà cũ nát, chỉ để con được vào trường tốt. 情结 là nỗi ám ảnh, tâm lý khó dứt bỏ; 破 là phá bỏ, gỡ bỏ.",
          "Bài khóa được cải biên từ video 唯一的世界大同：学区房 của kênh Candice talk. Tác giả so sánh nhà gần trường ở Trung Quốc và ở nước ngoài, và chỉ ra một điểm khác biệt rất thú vị về quan hệ nhân quả giữa trường tốt và giá nhà cao."])
 
@@ -570,24 +570,26 @@ add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 1: Chọn
          F(5, "Câu sáu: 由于一线城市房价飙升，周边二线城市的商品房价格也跟着什么。 Do giá nhà ở các thành phố hạng nhất tăng vọt, giá nhà thương mại ở các thành phố hạng hai lân cận cũng theo đó…."),
          F(6, "Đáp án: 水涨船高. 跟着水涨船高, tăng theo. 飙升 là tăng vọt.")])
 
-add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 2: Chọn đáp án đúng", reveal=True, size=32,
+add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 2: Chọn đáp án đúng (1)", reveal=True, size=34,
     items=["(1) 小敏的病已经完全康复了，人也稍稍胖了一点，与生病以前（ ）。\nA.相差无几  B.天差地别  C.一模一样  D.天壤之别",
            "Đáp án: A – 相差无几 (chỉ hơi béo lên nên không thể 一模一样)",
            "(2) 导师对学生的批评是严厉了些，但（ ），他的论文中确实有许多错误，批评也是为了帮助他进步。\nA.说来话长  B.二话不说  C.话又说回来  D.换句话说",
-           "Đáp án: C – 话又说回来",
-           "(3) 中亚地区是古文明（ ）地之一，对世界文明发展影响巨大。\nA.源头  B.发源  C.源于  D.来源",
-           "Đáp án: B – 发源地",
-           "(4) 他最近没有时间，你（ ）派别人去出差。\nA.何  B.何必  C.不妨  D.未免",
-           "Đáp án: C – 不妨"],
+           "Đáp án: C – 话又说回来"],
     say=["Bài tập hai: chọn một đáp án đúng.",
          F(0, "Câu một: 小敏的病已经完全康复了，人也稍稍胖了一点，与生病以前什么。 Tiểu Mẫn đã khỏi bệnh hoàn toàn, người cũng hơi béo lên một chút, so với trước khi ốm thì…. Lựa chọn: 相差无几，天差地别，一模一样，天壤之别."),
          F(1, "Đáp án: A, 相差无几, chẳng khác bao nhiêu. Vì cô ấy hơi béo lên một chút nên không thể nói 一模一样, giống hệt; còn 天差地别 và 天壤之别 là khác nhau một trời một vực, ngược nghĩa."),
          F(2, "Câu hai: 导师对学生的批评是严厉了些，但什么，他的论文中确实有许多错误，批评也是为了帮助他进步。 Thầy hướng dẫn phê bình sinh viên hơi nghiêm khắc, nhưng…, luận văn của cậu ấy đúng là có nhiều lỗi, phê bình cũng là để giúp cậu ấy tiến bộ. Lựa chọn: 说来话长，二话不说，话又说回来，换句话说."),
-         F(3, "Đáp án: C, 话又说回来, nói đi cũng phải nói lại. 说来话长 là chuyện dài lắm; 二话不说 là không nói hai lời; 换句话说 là nói cách khác."),
-         F(4, "Câu ba: 中亚地区是古文明什么地之一，对世界文明发展影响巨大。 Khu vực Trung Á là một trong những… của văn minh cổ đại, có ảnh hưởng to lớn đến sự phát triển của văn minh thế giới. Lựa chọn: 源头，发源，源于，来源."),
-         F(5, "Đáp án: B, 发源, ghép với chữ 地 thành 发源地, nơi khởi nguồn."),
-         F(6, "Câu bốn: 他最近没有时间，你什么派别人去出差。 Lựa chọn: 何，何必，不妨，未免."),
-         F(7, "Đáp án: C, 不妨, đúng như chúng ta vừa phân biệt: 你不妨派别人去出差, cậu cứ cử người khác đi công tác.")])
+         F(3, "Đáp án: C, 话又说回来, nói đi cũng phải nói lại. 说来话长 là chuyện dài lắm; 二话不说 là không nói hai lời; 换句话说 là nói cách khác.")])
+
+add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 2: Chọn đáp án đúng (2)", reveal=True, size=34,
+    items=["(3) 中亚地区是古文明（ ）地之一，对世界文明发展影响巨大。\nA.源头  B.发源  C.源于  D.来源",
+           "Đáp án: B – 发源地",
+           "(4) 他最近没有时间，你（ ）派别人去出差。\nA.何  B.何必  C.不妨  D.未免",
+           "Đáp án: C – 不妨"],
+    say=[F(0, "Câu ba: 中亚地区是古文明什么地之一，对世界文明发展影响巨大。 Khu vực Trung Á là một trong những… của văn minh cổ đại, có ảnh hưởng to lớn đến sự phát triển của văn minh thế giới. Lựa chọn: 源头，发源，源于，来源."),
+         F(1, "Đáp án: B, 发源, ghép với chữ 地 thành 发源地, nơi khởi nguồn."),
+         F(2, "Câu bốn: 他最近没有时间，你什么派别人去出差。 Lựa chọn: 何，何必，不妨，未免."),
+         F(3, "Đáp án: C, 不妨, đúng như chúng ta vừa phân biệt: 你不妨派别人去出差, cậu cứ cử người khác đi công tác.")])
 
 add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 3: Dùng từ cho sẵn trả lời câu hỏi (1)", reveal=True, size=33,
     items=["(1) 中国的学区房是怎么涨价的？（……如此一来）",
@@ -621,7 +623,8 @@ add("bullets", section="Luyện tập 趁热打铁", title="Bài tập 4: Chọn
     say=["Bài tập bốn: chọn từ cho sẵn điền vào đoạn văn. Có bảy từ nhưng chỉ có sáu chỗ trống.",
          F(0, "Bảy từ là: 就读，越发，区分，如此一来，周边，享有，所属."),
          F(1, "Đoạn văn như sau: 面对什么严峻的学区房问题，部分地区政府及时出手，将对学区房进行大调整。首先是学生改为就近入学，在以往，有的小区距离学校仅有一路之隔，但因为不在学区而不能入学，新政策实行后，将以学校为单位，什么多个小区的学生，都可以在此读书，什么，学生就无须到更远的学校读书。二是尝试不再什么户籍，租房与买房居民什么同等的权利，租房人子女也可以什么于区域内的公立学校，享受高质量的教育资源。 Các bạn tạm dừng và điền thử nhé."),
-         F(2, "Đáp án: 面对越发严峻的学区房问题；周边多个小区的学生；如此一来，学生就无须到更远的学校读书；不再区分户籍；享有同等的权利；就读于区域内的公立学校. Từ 所属 là từ thừa. Cả đoạn nghĩa là: Trước vấn đề nhà khu trường tốt ngày càng gay gắt, chính quyền một số nơi đã kịp thời ra tay điều chỉnh lớn. Thứ nhất, học sinh chuyển sang học trường gần nhà: trước đây có khu dân cư chỉ cách trường một con đường mà không được vào học vì không thuộc khu tuyển sinh; nay lấy trường làm đơn vị, học sinh của nhiều khu dân cư xung quanh đều được học ở đó. Thứ hai, thử không phân biệt hộ tịch nữa, người thuê nhà và người mua nhà được hưởng quyền như nhau, con em người thuê nhà cũng được học ở trường công lập trong khu vực.")])
+         F(2, "Đáp án: 面对越发严峻的学区房问题；周边多个小区的学生；如此一来，学生就无须到更远的学校读书；不再区分户籍；享有同等的权利；就读于区域内的公立学校. Từ 所属 là từ thừa."),
+         F(2, "Cả đoạn nghĩa là: Trước vấn đề nhà khu trường tốt ngày càng gay gắt, chính quyền một số nơi đã kịp thời ra tay điều chỉnh lớn. Thứ nhất, học sinh chuyển sang học trường gần nhà: trước đây có khu dân cư chỉ cách trường một con đường mà không được vào học vì không thuộc khu tuyển sinh; nay lấy trường làm đơn vị, học sinh của nhiều khu dân cư xung quanh đều được học ở đó. Thứ hai, thử không phân biệt hộ tịch nữa, người thuê nhà và người mua nhà được hưởng quyền như nhau, con em người thuê nhà cũng được học ở trường công lập trong khu vực.")])
 
 # ======================= THẢO LUẬN =======================
 add("bullets", chapter="Thảo luận", section="Thảo luận 讨论", title="Liên hệ Việt Nam: nhà gần trường điểm, học “trái tuyến”", size=36,
@@ -663,7 +666,7 @@ add("bullets", chapter="Tổng kết & bài tập về nhà", section="Tổng k�
          "Cảm ơn các bạn đã theo dõi bài giảng. Bài sau, bài một chấm ba, là bài cuối cùng của Đơn vị một: “高考移民”动了谁的奶酪？ Di cư thi đại học đã động đến miếng pho mát của ai? Chúng ta sẽ tìm hiểu vì sao có những thí sinh chuyển hộ khẩu sang tỉnh khác để thi đại học, và vì sao điều đó bị coi là không công bằng. Sau bài đó còn có phần ôn tập cả đơn vị. Hẹn gặp lại các bạn. Chúc các bạn học tốt!"])
 
 lesson = {
-    "title": "顶石中文 – Bài 1.2: 学区房情结怎么破？ (Làm sao gỡ nỗi ám ảnh nhà gần trường tốt?)",
+    "title": "顶石中文 – Bài 1.2: 学区房情结怎么破？ (Phá bỏ nỗi ám ảnh nhà gần trường thế nào?)",
     "tag": TAG,
     "vi_voice": "Linh", "zh_voice": "Tingting", "vi_rate": 175, "zh_rate": 145,
     # sửa âm đọc của giọng máy cho các chữ đa âm (thay bằng chữ cùng âm, cùng thanh)
@@ -676,9 +679,7 @@ lesson = {
                     "为好": "维好",            # wéihǎo
                     "干劲": "赣劲",            # gànjìn
                     "供孩子": "公孩子",        # gōng
-                    "出差": "出拆",            # chūchāi
-                    "差地别": "岔地别",        # tiānchà-dìbié
-                    "一模一样": "一谋一样"},   # yīmú-yīyàng
+                    "出差": "出拆"},           # chūchāi
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds12.json")

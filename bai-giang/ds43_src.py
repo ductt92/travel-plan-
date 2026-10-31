@@ -80,7 +80,7 @@ V = [
     ("结局", "jiéjú", "kết cục", "danh từ", "kết cục, kết thúc", "这部电影的结局出人意料。", "Đoạn kết của bộ phim này nằm ngoài dự đoán.",
      "Danh từ, nghĩa là kết quả cuối cùng, cục diện sau cùng. Âm Hán Việt kết cục giống tiếng Việt. Hay gặp 圆满的结局, kết cục viên mãn; 悲惨的结局, kết cục bi thảm."),
     ("介入", "jièrù", "giới nhập", "động từ", "can thiệp, nhúng tay vào, vào cuộc", "警方已经介入调查。", "Cảnh sát đã vào cuộc điều tra.",
-     "Động từ, nghĩa là xen vào để can thiệp. Trong bài, AI的介入便应运而生 là sự can thiệp của trí tuệ nhân tạo xuất hiện đúng lúc."),
+     "Động từ, nghĩa là xen vào để can thiệp. Trong bài, 人工智能的介入便应运而生 là sự can thiệp của trí tuệ nhân tạo xuất hiện đúng lúc."),
     ("时日", "shírì", "thời nhật", "danh từ", "thời gian, ngày giờ", "这项工程还需要一些时日。", "Công trình này còn cần thêm một thời gian.",
      "Danh từ, nghĩa là thời gian và ngày tháng, thường chỉ một khoảng thời gian khá dài. Trong bài, 出现已有时日 là đã xuất hiện được một thời gian."),
     ("相容性", "xiāngróngxìng", "tương dung tính", "danh từ", "tính tương hợp", "器官移植要考虑组织相容性。", "Ghép tạng phải tính đến tính tương hợp mô.",
@@ -88,7 +88,7 @@ V = [
     ("抗原", "kàngyuán", "kháng nguyên", "danh từ", "kháng nguyên", "抗原进入人体后会刺激产生抗体。", "Kháng nguyên vào cơ thể sẽ kích thích sinh ra kháng thể.",
      "Danh từ, thuật ngữ y học, âm Hán Việt kháng nguyên giống hệt tiếng Việt. Hồi dịch Covid, các bạn hẳn đã nghe 抗原检测, xét nghiệm kháng nguyên, test nhanh."),
     ("匹配", "pǐpèi", "thất phối", "động từ", "phù hợp, ghép đôi, xứng đôi", "系统会自动为你匹配合适的对象。", "Hệ thống sẽ tự động ghép cho bạn đối tượng phù hợp.",
-     "Động từ, nghĩa là phối hợp, ăn khớp với nhau; cũng chỉ hai người xứng đôi làm vợ chồng. Trong bài có 匹配度, mức độ phù hợp, và AI匹配相亲, xem mắt ghép đôi bằng trí tuệ nhân tạo."),
+     "Động từ, nghĩa là phối hợp, ăn khớp với nhau; cũng chỉ hai người xứng đôi làm vợ chồng. Trong bài có 匹配度, mức độ phù hợp, và 人工智能匹配相亲, xem mắt ghép đôi bằng trí tuệ nhân tạo."),
     ("眼缘", "yǎnyuán", "nhãn duyên", "danh từ", "sự hợp mắt, ấn tượng đầu tiên", "我们第一次见面就很有眼缘。", "Lần đầu gặp nhau chúng tôi đã thấy rất hợp mắt.",
      "Danh từ, nghĩa là duyên qua ánh mắt: lần đầu gặp đã bị vẻ ngoài, khí chất của người kia thu hút. Thường nói 有眼缘, hợp mắt, có cảm tình ngay từ đầu."),
     ("反之", "fǎnzhī", "phản chi", "liên từ", "ngược lại", "努力就会进步，反之就会落后。", "Nỗ lực thì sẽ tiến bộ, ngược lại thì sẽ tụt hậu.",
@@ -255,7 +255,7 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
            "Sau đó: bản dịch tiếng Việt + giải thích từ ngữ, cấu trúc",
            "Bài nghị luận chính – phản: chú ý câu hỏi chuyển ý ở giữa bài",
            "Mẹo: tạm dừng, đọc to đoạn văn trước khi nghe giảng"],
-    say=["Tiếp theo là phần hai: bài khóa. Bài được cải biên từ bài viết 基因相亲，AI让男女一见钟情 của tác giả 张田勘, đăng trên trang mạng của 中国新闻周刊 ngày bảy tháng tám năm hai nghìn không trăm mười chín.",
+    say=["Tiếp theo là phần hai: bài khóa. Bài được cải biên từ một bài viết của tác giả 张田勘, nhan đề nghĩa là: Xem mắt bằng gen, trí tuệ nhân tạo giúp nam nữ yêu nhau từ cái nhìn đầu tiên. Bài viết đăng trên trang mạng của 中国新闻周刊 ngày bảy tháng tám năm hai nghìn không trăm mười chín.",
          F(0, f"Thầy chia bài thành {len(P)} đoạn ngắn. Với mỗi đoạn, các bạn nghe đọc tiếng Trung trước, cố gắng hiểu bằng các từ mới vừa học."),
          F(1, "Sau đó bản dịch tiếng Việt sẽ hiện ra, và thầy giải thích các từ ngữ, cấu trúc quan trọng."),
          F(2, "Đây là một bài nghị luận phân tích hai mặt: nửa đầu nói về lợi ích của xem mắt bằng trí tuệ nhân tạo, nửa sau nói về giới hạn của nó. Các bạn hãy chú ý câu hỏi chuyển ý ở giữa bài."),
@@ -268,7 +268,7 @@ for i, item in enumerate(P, 1):
     zsize = 54 if len(zh) <= 100 else 50
     add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
         say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
-             F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", ""), cap="")] + [F(1, n) for n in notes])
+             F(1, "Dịch nghĩa: " + vi.replace("“", "").replace("”", "").replace("AI, tức trí tuệ nhân tạo", "trí tuệ nhân tạo").replace("AI", "trí tuệ nhân tạo"), cap="")] + [F(1, n) for n in notes])
 
 add("bullets", chapter="Đọc hiểu & bố cục", section="Bài khóa 课文", title="Kiểm tra đọc hiểu: đúng hay sai?", reveal=True, size=34,
     items=["(1) 作者认为，偶遇和刻意安排对于奔着婚姻去的人来说有些盲目。",
@@ -386,7 +386,7 @@ add("bullets", chapter="Mẫu câu: 基于 · 即便……也", section="Mẫu c
     items=["## 基于: giới từ, văn viết; căn cứ vào, trên cơ sở của …",
            "(1) 基于数据分析的“门当户对”真的可以成就一段美满的姻缘吗？",
            "(2) 基于这些现状，我们制定了新的对策。",
-           "(3) 基于以上理由，我无法赞成你的决định。",
+           "(3) 基于以上理由，我无法赞成你的决定。",
            "## 即便……也……: câu nhượng bộ giả thiết (= 即使……也……)",
            "(1) 即便现代男女自由恋爱的过程中长时间考察了对方，但也有可能不太了解对方的心灵深处……",
            "(2) 别说中学生了，即便是生物老师，也说不出这种植物的名字。",
@@ -620,7 +620,7 @@ add("bullets", chapter="Thảo luận: liên hệ Việt Nam", section="Thảo l
 # ======================= ÔN TẬP ĐƠN VỊ =======================
 add("bullets", chapter="Ôn tập Đơn vị 4", section="Ôn tập 单元练习", title="Ôn tập Đơn vị 4: 学以致用 – học để vận dụng", size=33,
     items=["## 一、新闻报告 – Báo cáo tin tức",
-           "Rò rỉ dữ liệu (滴滴、华住、顺丰……) · AI thay thế việc làm: 下一个失业的会是我们吗？",
+           "Rò rỉ dữ liệu (滴滴、华住、顺丰……) · AI thay thế việc làm: 下一个失业的可能会是我们所在的行业吗？",
            "## 二、明察暗访 – Khảo sát, phỏng vấn",
            "App lấy dữ liệu cá nhân · Tuyên truyền bảo vệ quyền riêng tư · 你对靠AI“找对象”怎么看？",
            "## 三、众说纷纭 – Mỗi người một ý",
@@ -643,7 +643,7 @@ add("bullets", section="Ôn tập 单元练习", title="Thảo luận & tranh bi
            "(2) 海底捞给顾客“打标签”：有个性化备注才有个性化服务。你怎么看？",
            "Đáp án gợi ý: 服务确实更贴心了，但应该提前告知顾客，并得到同意，否则无异于窥探隐私。",
            "(3) 辩论：普通人重视隐私权限是小题大做吗？",
-           "Đáp án gợi ý (反方): 不是。隐私一旦泄露，任何人都可能遭到骚扰和诈骗，普通人更没有能力保护自己。",
+           "Đáp án gợi ý: （反方）不是。隐私一旦泄露，任何人都可能遭到骚扰和诈骗，普通人更没有能力保护自己。",
            "(4) 辩论：人工智能对人类来说，是利大于弊还是弊大于利？",
            "Đáp án gợi ý: 利大于弊。人工智能能造福于人类，比如帮医生诊疗；但需要制度的约束。"],
     say=["Đây là một số câu hỏi thảo luận và đề tranh biện trong phần ôn tập. Các bạn hãy thử trả lời trước, rồi nghe đáp án gợi ý, cố gắng dùng từ ngữ của cả ba bài.",
@@ -664,7 +664,7 @@ add("bullets", section="Ôn tập 单元练习", title="Viết bài nghị luậ
            "Bước 4 – mặt phản: 没有知识积累就无法思考；网络信息泥沙俱下，需要自己判断……",
            "Kết luận: 机器可以帮我们记，但基础知识仍然要记在自己的脑子里"],
     say=["Phần 妙笔生花 có đề viết số hai, yêu cầu vận dụng đúng bố cục chính, phản mà chúng ta vừa phân tích trong bài khóa.",
-         F(0, "Đề bài: AI时代，人类还需要记忆大量的知识吗？ Thời đại trí tuệ nhân tạo, con người có còn cần ghi nhớ một lượng lớn kiến thức không? Bài viết không dưới tám trăm chữ. Thầy gợi ý dàn ý theo bốn bước."),
+         F(0, "Đề bài: 人工智能时代，人类还需要记忆大量的知识吗？ Thời đại trí tuệ nhân tạo, con người có còn cần ghi nhớ một lượng lớn kiến thức không? Bài viết không dưới tám trăm chữ. Thầy gợi ý dàn ý theo bốn bước."),
          F(1, "Bước một, bối cảnh: 搜索引擎和网络百科可以快速提供事实性信息. Công cụ tìm kiếm và bách khoa toàn thư trên mạng có thể nhanh chóng cung cấp thông tin sự kiện, như tổng thống đầu tiên của Mỹ là ai."),
          F(2, "Bước hai, mặt chính: 有人认为没有必要记了：查资料只需几秒钟，记忆的时间可以用来思考和创造。 Có người cho rằng không cần nhớ nữa: tra tài liệu chỉ mất vài giây, thời gian ghi nhớ có thể dùng để suy nghĩ và sáng tạo."),
          F(3, "Bước ba, câu hỏi chuyển ý: 然而，人类真的可以把记忆完全交给机器吗？ Thế nhưng, con người có thật sự giao hết trí nhớ cho máy móc được không?"),
@@ -699,7 +699,7 @@ add("bullets", chapter="Tổng kết", section="Tổng kết", title="Tổng k�
          F(1, "Về mẫu câu: 日趋 là ngày càng; 奔着 là nhắm tới; 多多少少 là ít nhiều; 起初 là lúc đầu; 反之 là ngược lại; 抑或 là hay là; 基于 là dựa trên; 即便也 là cho dù cũng; 何况 là huống hồ; và 看似 là trông có vẻ."),
          F(2, "Về thành ngữ: 应运而生，门当户对，毋庸讳言，栩栩如生，入木三分，素不相识，事半功倍，茫茫人海, cùng câu tục ngữ 师傅领进门，修行靠个人."),
          F(3, "Về cách viết: bài nghị luận chính, phản đi theo trình tự bối cảnh, mặt chính, câu hỏi chuyển ý, mặt phản, và kết luận."),
-         F(5, "Bài tập về nhà: hãy viết một bài ít nhất tám trăm chữ với đề AI时代，人类还需要记忆大量的知识吗？ theo đúng bố cục chính, phản. Các bạn có thể viết ngắn hơn trước, rồi nâng dần độ dài."),
+         F(5, "Bài tập về nhà: hãy viết một bài ít nhất tám trăm chữ với đề 人工智能时代，人类还需要记忆大量的知识吗？ theo đúng bố cục chính, phản. Các bạn có thể viết ngắn hơn trước, rồi nâng dần độ dài."),
          "Cảm ơn các bạn đã theo dõi bài giảng. Với bài này, chúng ta đã hoàn thành Đơn vị bốn, 科技篇, Khoa học công nghệ: quyền riêng tư, bác sĩ robot và xem mắt bằng thuật toán. Ở bài sau, chúng ta bước sang Đơn vị năm, 家庭篇, Gia đình, với một chủ đề rất nghiêm túc. Hẹn gặp lại các bạn ở bài năm chấm một: 对家暴必须零容忍, Phải không khoan nhượng với bạo lực gia đình. Chúc các bạn học tốt!"])
 
 lesson = {
@@ -717,14 +717,10 @@ lesson = {
                     "看似": "看四",            # kànsì
                     "形似": "形四",            # xíngsì
                     "神似": "神四",            # shénsì
-                    "一番": "一翻",            # yì fān
                     "毋庸": "无庸",            # wúyōng
-                    "差异": "插异",            # chāyì
-                    "合得来": "合德来",        # hé de lái
-                    "慢热": "慢热"},
+                    "差异": "插异"},           # chāyì
     "slides": slides,
 }
-lesson["tts_replace"].pop("慢热")
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ds43.json")
 json.dump(lesson, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"{out}: {len(slides)} slide, {sum(len(s['say']) for s in slides)} câu giảng")

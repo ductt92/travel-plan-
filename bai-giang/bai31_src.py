@@ -54,7 +54,7 @@ add("bullets", chapter="Khởi động", section="Khởi động 热身", title=
          F(3, "Sách gợi ý chia thành bốn phương diện: 身体，精神，心理，其他。 Tức là: thể chất, tinh thần, tâm lý, và những mặt khác."),
          "Các bạn hãy tạm dừng video, thử nói bằng tiếng Trung, ví dụ: 身体方面，要多运动，吃得健康；心理方面，要学会减轻压力。 Sau đó hãy xem tiếp nhé."])
 
-add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 会 và 首", size=38,
+add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 会 và 首", size=36,
     items=["## 会 (hội): hội, tổ chức, đoàn thể",
            "协会 hiệp hội · 工会 công đoàn · 商会 thương hội · 农会 nông hội · 学会 hội học thuật · 学生会 hội sinh viên",
            "总会 tổng hội · 分会 chi hội · 国会 quốc hội · 议会 nghị viện · 会长 hội trưởng · 会员 hội viên · 会费 hội phí",
@@ -69,7 +69,7 @@ add("bullets", section="Khởi động 热身", title="Học từ theo yếu t�
          F(4, "首要，首都，首府，首批，首任。 Tức là: quan trọng hàng đầu, thủ đô, thủ phủ, đợt đầu tiên, và người nhậm chức đầu tiên. Từ 首要 có trong bài khóa: 首要问题, vấn đề hàng đầu."),
          F(5, "首位，首届，首富，首功，首席。 Tức là: vị trí số một, khóa hay kỳ đầu tiên, người giàu nhất, công đầu, và ghế đầu, ví dụ 首席代表 là trưởng đại diện.")])
 
-add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 生 và 射", size=38,
+add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 生 và 射", size=36,
     items=["## 生 (sinh): sinh ra, nảy ra, phát sinh",
            "生锈 bị gỉ · 生病 bị ốm · 生财 sinh lời · 生产 sản xuất · 生效 có hiệu lực · 生疑 sinh nghi",
            "产生 sản sinh · 发生 xảy ra · 新生 mới ra đời · 再生 tái sinh · 急中生智 gấp quá nảy ra kế hay · 节外生枝 nảy thêm rắc rối",
@@ -81,7 +81,7 @@ add("bullets", section="Khởi động 热身", title="Học từ theo yếu t�
          F(2, "产生，发生，新生，再生，急中生智，节外生枝。 Tức là: sản sinh, xảy ra, mới ra đời, tái sinh. Còn 急中生智 là trong lúc nguy cấp bỗng nảy ra kế hay, và 节外生枝 là nghĩa đen mắt cây lại mọc thêm cành, nghĩa bóng là nảy sinh thêm rắc rối ngoài dự kiến."),
          F(3, "Nhóm cuối cùng có chữ 射, Hán Việt là xạ, như trong xạ thủ, phóng xạ, nghĩa là phóng ra, bắn ra, chiếu ra."),
          F(4, "放射，反射，照射，直射，折射，辐射。 Tức là: phóng ra hay tỏa ra, phản xạ, chiếu rọi, chiếu thẳng, khúc xạ, và bức xạ. Bài khóa có hai từ 放射 và 反射."),
-         F(5, "散射，投射，透射，斜射，映射，射线。 Tức là: tán xạ, chiếu vào, xuyên qua, chiếu xiên, phản chiếu, và tia, ví dụ X射线 là tia X."),
+         F(5, "散射，投射，透射，斜射，映射，射线。 Tức là: tán xạ, chiếu vào, xuyên qua, chiếu xiên, phản chiếu, và tia, tức xạ tuyến, ví dụ 紫外线 là tia tử ngoại, một từ mới của bài."),
          "Các bạn thấy không, chỉ cần nắm nghĩa của một chữ gốc, ta có thể đoán được nghĩa của cả một nhóm từ. Hãy áp dụng cách này khi học từ mới nhé."])
 
 # ======================= TỪ MỚI =======================
@@ -158,9 +158,9 @@ V = [
     ("胡乱", "húluàn", "hồ loạn", "phó từ", "bừa bãi, qua loa, tùy tiện", "他胡乱吃了几口就走了。", "Anh ấy ăn qua loa vài miếng rồi đi.",
      "Phó từ, nghĩa là bừa bãi, qua loa, không nghiêm túc. Lát nữa chúng ta sẽ phân biệt kỹ 胡乱 với 随便."),
     ("间接", "jiànjiē", "gián tiếp", "tính từ", "gián tiếp", "这件事我是间接听说的。", "Việc này tôi nghe gián tiếp qua người khác.",
-     "Tính từ, nghĩa là gián tiếp, ngược nghĩa với 直接, trực tiếp. Chú ý chữ 间 ở đây đọc là jiàn, thanh bốn."),
+     "Tính từ, nghĩa là gián tiếp, ngược nghĩa với 直接, trực tiếp. Chú ý: trong từ 间接, chữ đầu đọc là jiàn, thanh bốn, chứ không phải jiān."),
     ("品行", "pǐnxíng", "phẩm hạnh", "danh từ", "phẩm hạnh, đạo đức và hành vi", "这个孩子品行端正。", "Đứa trẻ này có phẩm hạnh đoan chính.",
-     "Danh từ, nghĩa là phẩm hạnh, tức đạo đức và cách cư xử của một người. Chú ý chữ 行 ở đây đọc là xíng. Cụm hay gặp là 品行端正, đúng với chữ 端正 vừa học."),
+     "Danh từ, nghĩa là phẩm hạnh, tức đạo đức và cách cư xử của một người. Chú ý: trong từ 品行, chữ sau đọc là xíng, chứ không phải háng. Cụm hay gặp là 品行端正, đúng với chữ 端正 vừa học."),
     ("紫外线", "zǐwàixiàn", "tử ngoại tuyến", "danh từ", "tia tử ngoại, tia cực tím (tia UV)", "夏天紫外线很强，出门要注意防晒。", "Mùa hè tia cực tím rất mạnh, ra ngoài phải chú ý chống nắng.",
      "Danh từ, gồm 紫 là màu tím, 外 là ngoài, 线 là tia, tức tia tử ngoại, hay tia cực tím."),
     ("消毒", "xiāo dú", "tiêu độc", "động từ", "khử trùng, tiêu độc", "医生用酒精给伤口消毒。", "Bác sĩ dùng cồn khử trùng vết thương.",
@@ -188,7 +188,7 @@ V = [
     ("维生素", "wéishēngsù", "duy sinh tố", "danh từ", "vitamin", "水果里有很多维生素。", "Trong hoa quả có rất nhiều vitamin.",
      "Danh từ, nghĩa là vitamin. Trước đây tiếng Việt cũng gọi vitamin là sinh tố."),
     ("不愧", "búkuì", "bất quý", "phó từ", "không hổ là, xứng đáng là", "您真不愧是这方面的专家。", "Thầy thật xứng đáng là chuyên gia trong lĩnh vực này.",
-     "Phó từ, nghĩa là không hổ thẹn với danh hiệu, tức là xứng đáng là. Thường dùng theo mẫu 不愧是 hoặc 不愧为. Chú ý chữ 不 ở đây đọc thanh hai vì đứng trước thanh bốn."),
+     "Phó từ, nghĩa là không hổ thẹn với danh hiệu, tức là xứng đáng là. Thường dùng theo mẫu 不愧是 cộng danh từ. Chú ý: trong 不愧, chữ đầu đọc thanh hai vì đứng trước một chữ thanh bốn."),
     ("定期", "dìngqī", "định kỳ", "tính từ", "định kỳ", "我们应该定期检查身体。", "Chúng ta nên khám sức khỏe định kỳ.",
      "Tính từ, nghĩa là định kỳ, theo một khoảng thời gian cố định. Âm Hán Việt giống hệt tiếng Việt."),
     ("联络", "liánluò", "liên lạc", "động từ", "liên lạc", "毕业以后我们一直保持联络。", "Sau khi tốt nghiệp chúng tôi vẫn luôn giữ liên lạc.",
@@ -231,7 +231,7 @@ P = [
      ["是……还是……呢？ là câu hỏi lựa chọn: là… hay là…? 那儿 đặt sau danh từ chỉ nơi chốn: 走廊那儿, chỗ hành lang.",
       "哦 ở đây biểu thị muốn đính chính lại: không phải đồ đệ đâu. 爱好者 là người yêu thích, người đam mê."]),
     ("记者：你们的气功不是那种力量一爆发，能瞬间把好几块砖就给劈开的啊？\n王老师：那只是气功的一种。气功还是中国独特的健身方法之一，可以增强体质，促进慢性病康复，还可以辅助治疗某些疾病。",
-     "Phóng viên: Khí công của các thầy chẳng phải là loại sức mạnh vừa bộc phát là trong nháy mắt chẻ đôi được mấy viên gạch sao?\nThầy Vương: Đó chỉ là một loại thôi. Khí công còn là một trong những phương pháp rèn luyện sức khỏe độc đáo của Trung Quốc, có thể tăng cường thể chất, giúp bệnh mãn tính hồi phục, còn hỗ trợ điều trị một số bệnh.",
+     "Phóng viên: Khí công của các thầy chẳng phải loại vừa bộc phát sức mạnh là chẻ đôi mấy viên gạch sao?\nThầy Vương: Đó chỉ là một loại thôi. Khí công còn là một trong những phương pháp rèn luyện sức khỏe độc đáo của Trung Quốc, có thể tăng cường thể chất, giúp bệnh mãn tính hồi phục, còn hỗ trợ điều trị một số bệnh.",
      ["不是……啊？ là câu hỏi phản vấn: chẳng phải là… sao? 瞬间 là trong nháy mắt. Trong 把好几块砖就给劈开, chữ 给 đứng trước động từ để nhấn mạnh, rất khẩu ngữ.",
       "之一 là một trong những. 增强体质 là tăng cường thể chất, 慢性病 là bệnh mãn tính, 辅助治疗 là hỗ trợ điều trị."]),
     ("记者：看来我是误解气功了。最近有个调查，广大群众的健身意识在逐年提升。对于健康，您能对我们说点儿什么吗？",
@@ -276,7 +276,7 @@ P = [
       "对……有……作用 là có tác dụng… đối với…, và 促进对钙的吸收 là thúc đẩy hấp thụ canxi. Câu này rất dài, dùng dấu chấm phẩy để liệt kê lần lượt các lợi ích của tập luyện mùa đông."]),
     ("冬天空气中二氧化碳浓度比夏天低，所以冬天运动对身体更为有利；运动还可以使人心情舒畅。许多保健食品都宣扬能够促进健康，其实运动才是维护健康最好的方法。",
      "nồng độ khí cacbonic trong không khí mùa đông thấp hơn mùa hè, vì vậy vận động vào mùa đông càng có lợi cho cơ thể; vận động còn khiến tâm trạng con người thư thái. Rất nhiều thực phẩm chức năng đều quảng cáo là có thể tăng cường sức khỏe, thật ra vận động mới là cách tốt nhất để giữ gìn sức khỏe.",
-     ["浓度 là nồng độ. 更为有利 là càng có lợi hơn, 更为 là cách nói văn viết của 更. 使人心情舒畅 là khiến tâm trạng con người thư thái.",
+     ["浓度 là nồng độ. 更为有利 là càng có lợi hơn, 更为 là cách nói văn viết, nghĩa như 更加. 使人心情舒畅 là khiến tâm trạng con người thư thái.",
       "保健食品 là thực phẩm chức năng. 宣扬 ở đây là quảng cáo rùm beng. 其实……才是…… là thật ra… mới là…, nhấn mạnh vận động mới là cách tốt nhất."]),
     ("记者：运动对皮肤是不是也有好处？\n王老师：运动能令全身排汗，毛孔内的垃圾及多余油脂会被排走，皮肤自然会更好。",
      "Phóng viên: Vận động có phải cũng có lợi cho làn da không?\nThầy Vương: Vận động có thể khiến toàn thân đổ mồ hôi, chất bẩn và dầu thừa trong lỗ chân lông sẽ được đẩy ra ngoài, da tự nhiên sẽ đẹp hơn.",
@@ -310,7 +310,7 @@ add("bullets", chapter="Bài khóa", section="Bài khóa 课文", title="Phần 
 for i, item in enumerate(P, 1):
     zh, vi, notes = item[:3]
     spoken = item[3] if len(item) > 3 else zh.replace("“", "").replace("”", "").replace("\n", "")
-    zsize = 54 if len(zh) <= 100 else 50
+    zsize = 54 if len(zh) <= 80 else 50
     add("passage", section="Bài khóa 课文", title=f"Bài khóa – đoạn {i}/{len(P)}", zh=zh, vi=vi, zsize=zsize,
         say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
              F(1, "Dịch nghĩa: " + vi.replace("\n", " "), cap="")] + [F(1, n) for n in notes])

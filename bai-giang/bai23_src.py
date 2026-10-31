@@ -52,7 +52,7 @@ add("bullets", chapter="Khởi động", section="Khởi động 热身", title=
          F(1, "日常生活中，处处都有数据记录。 Trong đời sống hằng ngày, đâu đâu cũng có ghi chép dữ liệu. 处处 nghĩa là khắp nơi, đâu đâu cũng."),
          F(2, "比如：吃饭、运动、心跳、血压、购物等。 Ví dụ như ăn uống, vận động, nhịp tim, huyết áp, mua sắm. Chiếc điện thoại hay đồng hồ thông minh của các bạn đang ghi lại rất nhiều dữ liệu như vậy mỗi ngày."),
          F(3, "除了上述几方面，请想一想，还有哪些数据与我们的生活关系密切？ Ngoài mấy phương diện kể trên, hãy nghĩ xem còn những dữ liệu nào gắn bó mật thiết với cuộc sống của chúng ta? 上述 là kể trên, 密切 là mật thiết."),
-         "Các bạn hãy tạm dừng video, thử trả lời câu hỏi này bằng tiếng Trung, ví dụ: 睡眠时间，上网时间，走路的步数，然后再看tiếp nhé."])
+         "Các bạn hãy tạm dừng video, thử trả lời câu hỏi này bằng tiếng Trung, ví dụ: 睡眠时间，上网时间，走路的步数。 Sau đó hãy xem tiếp nhé."])
 
 add("bullets", section="Khởi động 热身", title="Học từ theo yếu tố cấu tạo: 盲 và 航", size=38,
     items=["## 盲 (manh): mù, không biết gì về…",
@@ -349,7 +349,7 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: dùng 加以 
          F(4, "Câu ba: 现在人们的读书生活更加多元化，大家都根据自身不同的需求……，使读书进入真正的理性时代。 Ngày nay việc đọc sách của mọi người đa dạng hơn, mọi người đều căn cứ vào nhu cầu khác nhau của bản thân để làm gì đó, khiến việc đọc sách bước vào thời đại lý tính thực sự."),
          F(5, "Đáp án gợi ý: 对书籍加以选择。 Lựa chọn sách. Các bạn để ý mẫu 对 cộng đối tượng cộng 加以 cộng động từ nhé.")])
 
-add("bullets", chapter="Ngữ pháp: 大大 – 远远", section="Ngữ pháp 注释", title="2. 大大 dàdà、远远 yuǎnyuǎn – rất nhiều, xa",
+add("bullets", chapter="Ngữ pháp: 大大 – 远远", section="Ngữ pháp 注释", title="2. 大大 dàdà、远远 yuǎnyuǎn – rất nhiều, xa", size=38,
     items=["Phó từ: dạng lặp của tính từ đơn âm tiết 大 và 远 · sau đều có thể thêm 地",
            "大大: mức độ rất sâu, số lượng rất lớn · bổ nghĩa cho động từ/cụm động từ hai âm tiết · văn viết",
            "远远: nghĩa cơ bản của 远 không đổi – cách xa, hơn/kém rất xa",
@@ -380,7 +380,7 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: dùng 大大 
 
 # ======================= PHÂN BIỆT TỪ =======================
 add("compare", chapter="Phân biệt 万分 – 十分", section="Phân biệt từ 词语辨析", title="Phân biệt 万分 và 十分",
-    common="Giống nhau: đều chỉ mức độ sâu, nghĩa là “rất”, “非常”. Ví dụ: 听到这个消息，大家感到万分/十分惊讶。",
+    common="Giống nhau: đều chỉ mức độ sâu, nghĩa là rất (非常). Ví dụ: 听到这个消息，大家感到万分/十分惊讶。",
     cols=[{"head": "万分",
            "lines": ["(1) Chỉ bổ nghĩa cho tính từ, động từ chỉ trạng thái tâm lý",
                      "Đúng: 心情万分悲痛。",

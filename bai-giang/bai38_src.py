@@ -77,7 +77,7 @@ add("bullets", section="Khởi động 热身", title="Học từ theo yếu t�
            "## 添 (thiêm): thêm vào",
            "添加 thêm vào · 添补 bổ sung · 添丁 thêm con · 添仓 bổ sung kho · 添设 lập thêm · 添置 sắm thêm · 增添 tăng thêm",
            "添油加醋 thêm mắm thêm muối · 添枝加叶 thêm thắt · 画蛇添足 vẽ rắn thêm chân"],
-    say=[F(0, "Nhóm thứ ba có chữ 单, Hán Việt là đơn, nghĩa là một, đơn độc."),
+    say=[F(0, "Nhóm thứ ba là các từ có chung chữ đầu của 单一, Hán Việt là đơn, nghĩa là một, đơn độc."),
          F(1, "单一，单独，单个，单传，单线。 Tức là: đơn nhất, riêng lẻ, từng cái một, mấy đời chỉ có một con trai nối dõi, và một tuyến. Bài khóa có câu 劳特的产品口味单一, sản phẩm của Lotte chỉ có một hương vị."),
          F(2, "单身，单音，单用，单字，孤单。 Tức là: độc thân, đơn âm, dùng riêng, chữ đơn, và cô đơn."),
          F(3, "Nhóm cuối cùng có chữ 添, Hán Việt là thiêm, nghĩa là thêm vào."),
@@ -130,7 +130,7 @@ V = [
      "Động từ, nghĩa là độc quyền, lũng đoạn, chiếm hết thị trường. Âm Hán Việt giống hệt tiếng Việt."),
     ("扩充", "kuòchōng", "khuếch sung", "động từ", "mở rộng, bổ sung thêm", "扩充业务", "mở rộng nghiệp vụ",
      "Động từ, nghĩa là mở rộng, bổ sung thêm cho đầy đủ hơn, như 扩充设备，扩充人员."),
-    ("掏", "tāo", "đào", "động từ", "móc ra, lấy ra", "买时得掏硬币。", "Khi mua phải móc tiền xu ra.",
+    ("掏", "tāo", "đào", "động từ", "móc ra, lấy ra", "他从口袋里掏出一枚硬币。", "Anh ấy móc từ trong túi ra một đồng xu.",
      "Động từ, nghĩa là thò tay vào lấy ra, móc ra. 掏钱 là móc tiền ra, tức trả tiền; 掏出手机 là rút điện thoại ra."),
     ("布局", "bùjú", "bố cục", "động từ", "bố trí, sắp đặt (chiến lược)", "江崎公司大胆布局。", "Công ty Ezaki mạnh dạn bố trí chiến lược.",
      "Cẩn thận bẫy Hán Việt: bố cục trong tiếng Việt thường chỉ cách sắp xếp một bài văn. Còn trong bài, 布局 là động từ, nghĩa là bố trí, sắp đặt kế hoạch, chiến lược kinh doanh."),
@@ -243,8 +243,8 @@ P = [
       "无处不在 là không đâu không có, tức có ở khắp nơi. 易被忽视 là dễ bị bỏ qua, 易 là cách nói văn viết của 容易."]),
     ("譬如，在新产品博览会上，王先生看到了一台叫作“电池分析修复仪”的小机器，它是用来修复手机电池的。",
      "Ví dụ, tại một hội chợ triển lãm sản phẩm mới, ông Vương nhìn thấy một chiếc máy nhỏ tên là máy phân tích và phục hồi pin, nó được dùng để phục hồi pin điện thoại.",
-     ["譬如 nghĩa là ví dụ như, giống 比如 nhưng trang trọng hơn. 台 là lượng từ cho máy móc.",
-      "仪 là thiết bị, máy đo, như 仪器. 是用来……的 là được dùng để…."]),
+     ["譬如 nghĩa là ví dụ như, giống 比如 nhưng trang trọng hơn. 一台 là một chiếc, dùng cho máy móc.",
+      "仪 là thiết bị, máy đo, như 仪器. 是用来修复手机电池的 nghĩa là được dùng để phục hồi pin điện thoại."]),
     ("手机电池的正常寿命是5至6年，事实上大家的电池却没有那么耐用，往往用一年就坏了，换新电池又很贵。",
      "Tuổi thọ bình thường của pin điện thoại là năm đến sáu năm, nhưng trên thực tế pin của mọi người không bền như vậy, thường dùng một năm là hỏng, mà thay pin mới thì lại rất đắt.",
      ["寿命 là tuổi thọ, dùng cho cả người và đồ vật. 至 là đến, 五至六年 là từ năm đến sáu năm.",
@@ -256,7 +256,7 @@ P = [
       "将其 là văn viết, bằng 把它: 将其还原成初始状态, khôi phục nó về trạng thái ban đầu. 还原 là khôi phục nguyên trạng."]),
     ("王先生花4万元买下了这台能够像变魔术一样修好电池的机器。之后，在商场租了柜台，修一块电池收费50～70元，扣掉场地租金和税金，月收入上万，不到两个季度就轻松收回了本钱。",
      "Ông Vương bỏ ra bốn mươi nghìn tệ mua chiếc máy có thể sửa pin như làm ảo thuật này. Sau đó, ông thuê một quầy hàng trong trung tâm thương mại, sửa một cục pin lấy năm mươi đến bảy mươi tệ; trừ tiền thuê mặt bằng và tiền thuế, mỗi tháng thu nhập hơn mười nghìn tệ, chưa tới hai quý đã dễ dàng thu hồi vốn.",
-     ["花……买下 là bỏ tiền ra mua. 像变魔术一样 là giống như làm ảo thuật. 柜台 là quầy hàng. 一块电池 dùng lượng từ 块 cho pin.",
+     ["花四万元买下 là bỏ ra bốn vạn tệ để mua. 像变魔术一样 là giống như làm ảo thuật. 柜台 là quầy hàng. 一块电池 dùng lượng từ 块 cho pin.",
       "上万 là lên tới hàng vạn, tức hơn mười nghìn. Chú ý 扣掉 là trừ đi, và 收回本钱 là thu hồi vốn, hai từ mới vừa học."],
      "王先生花四万元买下了这台能够像变魔术一样修好电池的机器。之后，在商场租了柜台，修一块电池收费五十到七十元，扣掉场地租金和税金，月收入上万，不到两个季度就轻松收回了本钱。"),
     ("类似这样的生意，即使碰上通货膨胀，也不会对他产生丝毫影响。可是，如果你没有眼光，就看不到商机；如果你思维平庸，就发现不了商机；只要你勤劳，市场就捏在你的手里。",
@@ -266,7 +266,7 @@ P = [
     ("从竞争对手的产品缺陷中捕捉商机\n研究竞争对手，从中找出其产品的弱点及营销的薄弱环节，是捕捉商机的有效方法之一。",
      "Phần hai: Nắm bắt cơ hội kinh doanh từ khuyết điểm trong sản phẩm của đối thủ. Nghiên cứu đối thủ cạnh tranh, tìm ra điểm yếu trong sản phẩm của họ và những khâu yếu trong tiếp thị, là một trong những cách hiệu quả để nắm bắt cơ hội kinh doanh.",
      ["Đây là tiêu đề nhỏ thứ hai. 缺陷 là khuyết điểm, khiếm khuyết.",
-      "从中 là từ trong đó. 其 là của nó, của họ. 薄弱 là yếu, mỏng manh, 薄弱环节 là khâu yếu. ……之一 là một trong những…."]),
+      "从中 là từ trong đó. 其产品 là sản phẩm của họ. 薄弱 là yếu, mỏng manh, 薄弱环节 là khâu yếu. ……之一 là một trong những…."]),
     ("当年，日渐兴旺的日本泡泡糖市场大部分被劳特垄断，江崎公司想扩充这方面的业务，于是专门成立了团队，研究劳特的产品，以寻找市场缝隙。",
      "Năm ấy, thị trường kẹo cao su ngày càng phát đạt của Nhật Bản phần lớn bị Lotte độc quyền. Công ty Ezaki muốn mở rộng mảng kinh doanh này, bèn thành lập riêng một nhóm để nghiên cứu sản phẩm của Lotte, nhằm tìm ra khe hở của thị trường.",
      ["泡泡糖 là kẹo cao su thổi bong bóng. 劳特 là hãng Lotte, 江崎 là hãng Ezaki Glico.",
@@ -276,8 +276,8 @@ P = [
      ["不足 ở đây là danh từ, nghĩa là chỗ thiếu sót. Bốn điểm được đánh số 一，二，三，四 và ngăn cách bằng dấu chấm phẩy.",
       "仍 là vẫn, văn viết. 日益 là ngày càng, cũng là văn viết. 而 ở đây là trong khi đó, biểu thị sự đối lập."]),
     ("三，劳特泡泡糖外观老旧，缺乏新式样；四，劳特产品售价110日元，买时得掏10日元硬币，不方便购买者。",
-     "ba là, kẹo cao su Lotte có bề ngoài cũ kỹ, thiếu kiểu dáng mới; bốn là, sản phẩm Lotte bán giá một trăm mười yên, khi mua phải móc thêm đồng xu mười yên, gây bất tiện cho người mua.",
-     ["式样 là kiểu dáng. 售价 là giá bán. Chữ 得 trong 得掏 đọc là děi, nghĩa là phải.",
+     "Ba là, kẹo cao su Lotte có bề ngoài cũ kỹ, thiếu kiểu dáng mới; bốn là, sản phẩm Lotte bán giá một trăm mười yên, khi mua phải móc thêm đồng xu mười yên, gây bất tiện cho người mua.",
+     ["式样 là kiểu dáng. 售价 là giá bán. Cụm 得掏 nghĩa là phải móc ra, ở đây đọc là děi.",
       "不方便购买者: ở đây 方便 là động từ, nghĩa là tạo thuận tiện cho; 不方便购买者 là không tạo thuận tiện cho người mua."],
      "三，劳特泡泡糖外观老旧，缺乏新式样；四，劳特产品售价一百一十日元，买时得掏十日元硬币，不方便购买者。"),
     ("于是江崎公司大胆布局，以成年人的消费需求为依据设计产品，又拟定了相应的市场营销策略，不久，推出四种功能型泡泡糖：",
@@ -286,7 +286,7 @@ P = [
       "推出 là tung ra, cho ra mắt sản phẩm. 功能型 là loại có công dụng đặc biệt."]),
     ("1.司机用泡泡糖，以强烈的刺激消除司机的困倦。\n2.交际用泡泡糖，咀嚼后，可清洁口腔，消除口腔异味。",
      "Một, kẹo cao su dành cho tài xế, dùng vị kích thích mạnh để xua tan cơn buồn ngủ của tài xế. Hai, kẹo cao su dùng khi giao tiếp, sau khi nhai có thể làm sạch khoang miệng, khử mùi hôi trong miệng.",
-     ["Mẫu 名词 cộng 用 cộng danh từ: 司机用泡泡糖 là kẹo cao su dùng cho tài xế. 困倦 là buồn ngủ, mệt mỏi.",
+     ["Mẫu danh từ cộng 用 cộng danh từ: 司机用泡泡糖 là kẹo cao su dùng cho tài xế. 困倦 là buồn ngủ, mệt mỏi.",
       "交际 là giao tiếp, xã giao. 口腔 là khoang miệng, 异味 là mùi lạ, mùi khó chịu."],
      "一，司机用泡泡糖，以强烈的刺激消除司机的困倦。二，交际用泡泡糖，咀嚼后，可清洁口腔，消除口腔异味。"),
     ("3.体育用泡泡糖，内含多种维生素，有利于消除疲劳。\n4.轻松型泡泡糖，通过添加叶绿素，改变人的不良情绪。",
@@ -303,21 +303,29 @@ P = [
      "Không cần dựa vào quảng cáo tâng bốc, sau khi nếm thử, người tiêu dùng hăng hái mua hàng, nhu cầu thị trường bùng nổ ồ ạt, thu nhập tài chính cũng tăng vọt.",
      ["呈 là thể hiện ra, hiện ra, văn viết, thường đi với 趋势 hoặc ……式: 呈井喷式爆发, bùng nổ như giếng phun.",
       "Cụm 呈井喷式 lặp lại hai lần trong một câu, tạo hiệu quả nhấn mạnh."]),
-    ("这就是市场，只要你细心研究市场，细心研究消费者的需求，细心研究市场产品的优劣，对产品的不足做些局部改进，就有可能得到消费者的认可；你愈是为消费者考虑得周全，消费者愈是会慷慨地关照你。",
-     "Đó chính là thị trường: chỉ cần bạn chăm chú nghiên cứu thị trường, chăm chú nghiên cứu nhu cầu của người tiêu dùng, chăm chú nghiên cứu ưu nhược điểm của sản phẩm trên thị trường, rồi cải tiến một phần những chỗ còn thiếu sót, thì có thể được người tiêu dùng chấp nhận; bạn càng suy nghĩ chu đáo cho người tiêu dùng, người tiêu dùng càng hào phóng ủng hộ bạn.",
+    ("这就是市场，只要你细心研究市场，细心研究消费者的需求，细心研究市场产品的优劣，对产品的不足做些局部改进，就有可能得到消费者的认可；",
+     "Đó chính là thị trường: chỉ cần bạn chăm chú nghiên cứu thị trường, chăm chú nghiên cứu nhu cầu của người tiêu dùng, chăm chú nghiên cứu ưu nhược điểm của sản phẩm trên thị trường, rồi cải tiến một phần những chỗ còn thiếu sót, thì có thể được người tiêu dùng chấp nhận;",
      ["Các bạn để ý cụm 细心研究 lặp lại ba lần liền. Đây chính là phép điệp 反复 mà ta học ở cuối bài.",
-      "优劣 là tốt và xấu, ưu và nhược. 愈是……愈是…… giống 越……越……, càng… càng…, nhưng mang sắc thái văn viết. 慷慨 là hào phóng."]),
-    ("从市场的潜在需求中寻找商机\n在台湾某游览观光区，一台流动彩印车吸引了大家的目光，游客可以在这儿就近冲印照片，可以把喜欢的图案、肖像印在纪念品和纺织品上，作为独一无二的旅游留念。",
-     "Phần ba: Tìm cơ hội kinh doanh từ nhu cầu tiềm ẩn của thị trường. Ở một khu du lịch tham quan tại Đài Loan, một chiếc xe in ảnh màu lưu động đã thu hút ánh nhìn của mọi người. Du khách có thể rửa ảnh ngay tại đây, có thể in hình ảnh, chân dung mình thích lên quà lưu niệm và hàng dệt, làm kỷ niệm du lịch độc nhất vô nhị.",
-     ["Đây là tiêu đề nhỏ thứ ba. 流动 là lưu động, 彩印 là in màu. 冲印 là rửa và in ảnh.",
-      "就近 ở đây là phó từ, đứng trước động từ 冲印: rửa ảnh ngay gần đó, không phải đi xa. 独一无二 là độc nhất vô nhị."]),
+      "优劣 là tốt và xấu, ưu và nhược. 局部改进 là cải tiến một phần. 认可 là công nhận, chấp nhận."]),
+    ("你愈是为消费者考虑得周全，消费者愈是会慷慨地关照你。",
+     "Bạn càng suy nghĩ chu đáo cho người tiêu dùng, người tiêu dùng càng hào phóng ủng hộ bạn.",
+     ["愈是……愈是…… giống 越……越……, càng… càng…, nhưng mang sắc thái văn viết. 周全 là chu đáo, toàn diện.",
+      "慷慨 là hào phóng, rộng rãi. 关照你 ở đây là ủng hộ bạn, mua hàng của bạn."]),
+    ("从市场的潜在需求中寻找商机\n在台湾某游览观光区，一台流动彩印车吸引了大家的目光，",
+     "Phần ba: Tìm cơ hội kinh doanh từ nhu cầu tiềm ẩn của thị trường. Ở một khu du lịch tham quan tại Đài Loan, một chiếc xe in ảnh màu lưu động đã thu hút ánh nhìn của mọi người,",
+     ["Đây là tiêu đề nhỏ thứ ba. 潜在需求 là nhu cầu tiềm ẩn, chưa ai nhận ra.",
+      "某 là nào đó, 台湾某游览观光区 là một khu du lịch nào đó ở Đài Loan. 流动 là lưu động, 彩印 là in màu."]),
+    ("游客可以在这儿就近冲印照片，可以把喜欢的图案、肖像印在纪念品和纺织品上，作为独一无二的旅游留念。",
+     "Du khách có thể rửa ảnh ngay tại đây, có thể in hình ảnh, chân dung mình thích lên quà lưu niệm và hàng dệt, làm kỷ niệm du lịch độc nhất vô nhị.",
+     ["就近 ở đây là phó từ, đứng trước động từ 冲印: rửa và in ảnh ngay gần đó, không phải đi xa.",
+      "把喜欢的图案印在纪念品上 là in hình mình thích lên quà lưu niệm. 作为 là làm, coi như. 独一无二 là độc nhất vô nhị."]),
     ("流动彩印车的发明者是周家两兄弟，哥哥是汽车维修工，弟弟是摄影发烧友。台湾经济转型，旅游业成了台湾经济的支柱产业。",
      "Người phát minh ra xe in ảnh màu lưu động là hai anh em nhà họ Chu: người anh là thợ sửa ô tô, người em là dân mê nhiếp ảnh. Kinh tế Đài Loan chuyển đổi, du lịch trở thành ngành trụ cột của kinh tế Đài Loan.",
      ["维修工 là thợ sửa chữa. 发烧友 là người cực kỳ say mê một thú vui nào đó, giống như từ fan cuồng.",
       "转型 là chuyển đổi mô hình. 支柱产业 là ngành công nghiệp trụ cột, 支柱 là cây cột chống."]),
     ("兄弟俩发现，对照观光客的需求，传统彩色冲印做法太过陈旧，哪个游客能为冲洗照片等好几天？",
      "Hai anh em nhận thấy: đối chiếu với nhu cầu của khách du lịch, cách rửa ảnh màu truyền thống đã quá lỗi thời. Có du khách nào lại chịu chờ mấy ngày liền chỉ để rửa ảnh?",
-     ["兄弟俩 là hai anh em, 俩 là hai người. 太过 là quá, 陈旧 là cũ kỹ, lỗi thời.",
+     ["兄弟俩 là hai anh em. 太过 là quá, 陈旧 là cũ kỹ, lỗi thời.",
       "哪个游客能……？ là câu hỏi tu từ, ý là chẳng có du khách nào chịu chờ cả. 等好几天 là chờ mấy ngày liền."]),
     ("于是兄弟俩齐心协力，发挥各自的专长，以50万台币做资本，发明了这辆相当于一个小型专业冲印部的流动彩印车。",
      "Thế là hai anh em đồng lòng hợp sức, phát huy sở trường của mỗi người, lấy năm trăm nghìn Đài tệ làm vốn, phát minh ra chiếc xe in ảnh màu lưu động tương đương với một cửa hàng rửa ảnh chuyên nghiệp cỡ nhỏ.",
@@ -330,7 +338,7 @@ P = [
       "快捷 là nhanh gọn. 不像以往 là không như trước đây, dùng từ mới 以往."]),
     ("旅游淡季，彩印车还可以为学生的制服、不同规格的运动服印制高品质的图案。彩印车很快就有了知名度，收益也呈递增趋势，很短的周期就收回了成本。",
      "Vào mùa du lịch vắng khách, xe in ảnh còn có thể in những hình ảnh chất lượng cao lên đồng phục học sinh và quần áo thể thao đủ các kích cỡ. Chiếc xe in ảnh nhanh chóng có tiếng tăm, lợi nhuận cũng có xu hướng tăng dần, chỉ trong thời gian rất ngắn đã thu hồi được vốn.",
-     ["为……印制 là in cho…. 知名度 là độ nổi tiếng. 收益 là lợi nhuận.",
+     ["为学生的制服印制图案 là in hình lên đồng phục học sinh. 知名度 là độ nổi tiếng. 收益 là lợi nhuận.",
       "呈递增趋势 là có xu hướng tăng dần, mẫu 呈 cộng 趋势 rất hay gặp trong văn viết. 成本 là chi phí, giá thành."]),
     ("可见，创业不是赌博，创业不能靠空想，能够准确预测市场的潜在需求，具有超前意识，是经营者必备的素质。",
      "Có thể thấy, khởi nghiệp không phải là đánh bạc, khởi nghiệp không thể dựa vào nghĩ suông. Có khả năng dự đoán chính xác nhu cầu tiềm ẩn của thị trường, có ý thức đi trước thời đại, là tố chất mà người kinh doanh nhất định phải có.",
@@ -356,7 +364,7 @@ for i, item in enumerate(P, 1):
         say=[F(0, spoken, cap="(Nghe đọc đoạn văn tiếng Trung)", zr=150),
              F(1, "Dịch nghĩa: " + vi, cap="")] + [F(1, n) for n in notes])
 
-add("bullets", chapter="Tóm tắt nội dung", section="Bài khóa 课文", title="Bố cục bài khóa (theo bài tập 5)", size=34,
+add("bullets", chapter="Tóm tắt nội dung", section="Bài khóa 课文", title="Bố cục bài khóa (theo bài tập 5)", size=33,
     items=["## Mở bài: 创业有什么窍门？– 不可盲目，依据市场规则",
            "Ví dụ: 刮胡刀 · 方便面 · 罐装八宝粥 → 依据市场需求是永恒的真理",
            "## 1. 独具慧眼，寻找机遇 – ông Vương sửa pin",
@@ -379,7 +387,7 @@ add("bullets", chapter="Tóm tắt nội dung", section="Bài khóa 课文", tit
 
 # ======================= NGỮ PHÁP =======================
 add("bullets", chapter="Ngữ pháp: 屡次", section="Ngữ pháp 注释", title="1. 屡次 lǚcì – nhiều lần, hết lần này đến lần khác", size=38,
-    items=["Phó từ: hành động lặp đi lặp lại nhiều lần; nghĩa là “一次一次地”",
+    items=["Phó từ: hành động lặp đi lặp lại nhiều lần, tức là 一次一次地",
            "Cấu trúc: 屡次 + động từ (đứng trước động từ, làm trạng ngữ)",
            "(1) 屡次创业，却屡次惨遭失败的人总想知道，创业有窍门吗？",
            "(2) 这些年，这里的水果种植业发展很快，无论是产量，还是品质都屡次在全国评比中名列前茅。",
@@ -437,33 +445,33 @@ add("bullets", section="Ngữ pháp 注释", title="Luyện tập: đặt 依据
          F(1, "Đáp án: A. 我们要依据不同的场合、不同的交际对象，变换我们的交际方式。 Chúng ta phải căn cứ vào những hoàn cảnh khác nhau, những đối tượng giao tiếp khác nhau, để thay đổi cách giao tiếp. Ở đây 依据 là giới từ, động từ chính là 变换."),
          F(2, "Câu hai: 白鹤梁水文题刻奉献给我们的是一份珍贵的历代长江枯水水文统计表，为后来的水利工程建设，提供了确切可靠的科学, chỗ trống, 其科学价值和应用价值不可估量。 Các vị trí A, B, C, D lần lượt ở trước 珍贵, trước 后来, sau 科学, và trước 科学价值."),
          F(3, "Đáp án: C. 提供了确切可靠的科学依据, cung cấp căn cứ khoa học chính xác, đáng tin cậy. Ở đây 依据 là danh từ, làm tân ngữ của 提供. Bạch Hạc Lương là một khối đá ở Trùng Khánh, khắc ghi mực nước sông Trường Giang qua nhiều đời."),
-         F(4, "Câu ba: 汉语不难学，不仅因为汉语的词在构造上有着词不离字的特点，而且有些汉字的字义也可以, chỗ trống, 字形推知一二，词义也可以从其所组成的字的意义来推断。 Các vị trí lần lượt ở trước 着, trước 汉字, trước 字形, và trước 来推断."),
+         F(4, "Câu ba: 汉语不难学，不仅因为汉语的词在构造上有着词不离字的特点，而且有些汉字的字义也可以, chỗ trống, 字形推知一二，词义也可以从其所组成的字的意义来推断。 Vị trí A xen giữa cụm 有着, còn B, C, D lần lượt ở trước 汉字, trước 字形, và trước 来推断."),
          F(5, "Đáp án: C. 有些汉字的字义也可以依据字形推知一二。 Nghĩa của một số chữ Hán cũng có thể dựa vào hình chữ mà đoán ra phần nào. Đây là giới từ, động từ chính là 推知. 推知一二 là suy ra được đôi chút.")])
 
 # ======================= PHÂN BIỆT TỪ =======================
 add("compare", chapter="Phân biệt 就近 – 附近", section="Phân biệt từ 词语辨析", title="Phân biệt 就近 và 附近",
     common="Giống nhau: đều có nghĩa là gần một nơi nào đó. Ví dụ: 蔬菜、肉类等副食品就近/附近都能买到。",
     cols=[{"head": "就近",
-           "lines": ["(1) Phó từ: ở chỗ gần, không phải đi xa; đứng trước cụm động từ, tả hành động",
+           "lines": ["(1) Phó từ: ở chỗ gần, không phải đi xa; đứng trước động từ, tả hành động",
                      "Đúng: 我这车快没油了，咱们就近找个加油站加油吧。",
-                     "Không làm chủ ngữ, không làm tân ngữ của giới từ",
+                     "Không làm chủ ngữ, tân ngữ giới từ",
                      "(2) Không bổ nghĩa cho danh từ",
                      "Sai: 就近的居民对此表示不满。"]},
           {"head": "附近",
-           "lines": ["(1) Danh từ: vùng gần đó; làm chủ ngữ, tân ngữ của giới từ; tả trạng thái",
+           "lines": ["(1) Danh từ: vùng gần đó; làm chủ ngữ, tân ngữ giới từ; tả trạng thái",
                      "Đúng: 他家就在附近，几分钟就到了。",
                      "Đúng: 附近有很多家超市。",
-                     "(2) Tính từ: gần nơi nào đó, bổ nghĩa cho danh từ",
-                     "Đúng: 附近的居民对此表示不满。"]}],
+                     "(2) Tính từ: bổ nghĩa cho danh từ",
+                     "Đúng: 有饭馆在路边乱倒垃圾，附近的居民对此表示不满。"]}],
     say=["Tiếp theo là phần phân biệt từ: 就近 và 附近. Hai từ này đều có chữ 近, đều liên quan đến gần, nên rất dễ dùng nhầm.",
          "Điểm giống nhau: đều có nghĩa là gần một nơi nào đó. Ví dụ: 蔬菜、肉类等副食品就近都能买到, hoặc 附近都能买到, đều đúng. Rau và thịt đều có thể mua ở gần đây. 副食品 là thực phẩm phụ, tức rau, thịt, trứng, cá.",
          F(0, "Điểm khác thứ nhất. 就近 là phó từ, nghĩa là ở chỗ gần, không cần đi xa. Nó đứng trước cụm động từ, dùng để miêu tả hành động."),
          F(0, "Ví dụ: 我这车快没油了，咱们就近找个加油站加油吧。 Xe tôi sắp hết xăng rồi, chúng ta tìm cây xăng nào gần đây đổ xăng đi. 就近 bổ nghĩa cho động từ 找. Vì là phó từ, nên 就近 không làm chủ ngữ, cũng không đứng sau giới từ như 在."),
          F(1, "Còn 附近 là danh từ, nghĩa là vùng gần đó. Nó làm được chủ ngữ, làm được tân ngữ của giới từ, dùng để miêu tả một tình trạng."),
          F(1, "Ví dụ: 他家就在附近，几分钟就到了。 Nhà anh ấy ngay gần đây, vài phút là tới. Ở đây 附近 đứng sau giới từ 在. Và: 附近有很多家超市。 Gần đây có nhiều siêu thị. Ở đây 附近 làm chủ ngữ."),
-         F(1, "Điểm khác thứ hai. 附近 còn là tính từ, nghĩa là gần nơi nào đó, có thể bổ nghĩa cho danh từ: 附近的居民对此表示不满。 Cư dân quanh đó tỏ ra bất mãn về việc này."),
+         F(1, "Điểm khác thứ hai. 附近 còn là tính từ, nghĩa là gần nơi nào đó, có thể bổ nghĩa cho danh từ: 有饭馆在路边乱倒垃圾，附近的居民对此表示不满。 Có quán ăn đổ rác bừa bãi bên đường, cư dân quanh đó tỏ ra bất mãn về việc này."),
          F(0, "Còn 就近 không bổ nghĩa cho danh từ, nên không thể nói 就近的居民."),
-         "Mẹo nhớ: 就近 đi với động từ, trả lời câu hỏi làm ở đâu cho tiện; 附近 là một nơi chốn, dùng như danh từ, hoặc đứng trước chữ 的 để bổ nghĩa cho danh từ."])
+         "Mẹo nhớ: 就近 đi với động từ, trả lời câu hỏi làm ở đâu cho tiện; 附近 là một nơi chốn, dùng như danh từ, hoặc làm tính từ bổ nghĩa cho danh từ."])
 
 add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: chọn 就近 hay 附近?", reveal=True, size=38,
     items=["(1) 车在半路突然出现故障，幸好修理厂就在___，及时排除了故障。",
@@ -479,7 +487,7 @@ add("bullets", section="Phân biệt từ 词语辨析", title="Làm thử: ch�
          F(2, "Câu hai: 天气寒冷，大超市离得又远，她, chỗ trống, 在路边买了点儿菜回来。 Trời lạnh, siêu thị lớn lại xa, cô ấy mua tạm ít rau ở ven đường mang về."),
          F(3, "Đáp án: 就近. 她就近在路边买了点儿菜回来, cô ấy mua rau ngay gần đó. Từ cần điền đứng trước cụm động từ, nên dùng phó từ 就近."),
          F(4, "Câu ba: 我习惯了每天去小区, chỗ trống, 的公园散步，一天不去就浑身不舒服。 Tôi quen mỗi ngày đi dạo ở công viên gần khu nhà, một ngày không đi là cả người khó chịu."),
-         F(5, "Đáp án: 附近. 小区附近的公园, công viên gần khu nhà. Sau chỗ trống có chữ 的 và danh từ 公园, nên dùng 附近."),
+         F(5, "Đáp án: 附近. 小区附近的公园, công viên gần khu nhà. Sau chỗ trống là 的公园, cần một từ bổ nghĩa cho danh từ, nên dùng 附近."),
          F(6, "Câu bốn: 为了方便接送，他们, chỗ trống, 给孩子找了一所私立学校。 Để tiện đưa đón, họ tìm cho con một trường tư thục ở gần."),
          F(7, "Đáp án: 就近. 他们就近给孩子找了一所私立学校。 Từ cần điền đứng trước cụm động từ 给孩子找, nên dùng phó từ 就近.")])
 
@@ -574,7 +582,7 @@ add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ 
            "对创业者来说，创业不能靠___，要___市场需求。不管你最初有多少___，只要勤奋努力，善于发现商机，不但能快速收回本钱，还能获得___可观的财富。这是一条___的真理。",
            "Đáp án: 空想 · 依据 · 资本 · 数额 · 永恒"],
     say=[F(0, "Bài tập ba: chọn từ thích hợp điền vào chỗ trống. Đoạn một có năm từ: 数额，空想，永恒，资本，依据."),
-         F(1, "对创业者来说，创业不能靠, chỗ trống, 要, chỗ trống, 市场需求。不管你最初有多少, chỗ trống, 只要勤奋努力，善于发现商机，不但能快速收回本钱，还能获得, chỗ trống, 可观的财富。这是一条, chỗ trống, 的真理。 Các bạn tạm dừng và điền thử nhé."),
+         F(1, "对创业者来说，创业不能靠什么，要什么市场需求。不管你最初有多少, chỗ trống, 只要勤奋努力，善于发现商机，不但能快速收回本钱，还能获得, chỗ trống, 可观的财富。这是一条, chỗ trống, 的真理。 Các bạn tạm dừng và điền thử nhé."),
          F(2, "Đáp án: 创业不能靠空想，要依据市场需求。不管你最初有多少资本，只要勤奋努力，善于发现商机，不但能快速收回本钱，还能获得数额可观的财富。这是一条永恒的真理。 Với người khởi nghiệp, không thể dựa vào nghĩ suông, phải dựa vào nhu cầu thị trường. Dù ban đầu có bao nhiêu vốn, chỉ cần chăm chỉ và giỏi phát hiện cơ hội, không những thu hồi vốn nhanh mà còn có được khối tài sản đáng kể. Đây là một chân lý vĩnh hằng.")])
 
 add("bullets", section="Luyện tập 练习", title="Bài tập 3: Chọn từ điền vào chỗ trống (2)", reveal=True, size=36,
@@ -590,22 +598,25 @@ add("bullets", section="Luyện tập 练习", title="Mở rộng 扩展 (1): t�
            "(1) 经过___大便，医生终于找到了他腹泻的原因。 (2) 最近他常常腰疼，大夫给他___以后，他感觉舒服多了。",
            "Đáp án: (1) 化验 · (2) 按摩",
            "(3) 由于这种疾病传染性很强，所以需要把病人___开来。 (4) 全社会都要关爱___人，在各方面多给他们提供方便。",
-           "Đáp án: (3) 隔离 · (4) 残疾",
-           "(5) 那头大象死后，动物园的工作人员对它进行了___，发现它的胃里有很多塑料制品。 (6) 你刚刚剧烈运动过，___很快，所以休息一会再来测量吧。",
-           "Đáp án: (5) 解剖 · (6) 脉搏",
-           "(7) 在大的手术前都需要___，这不但可以减轻病人痛苦，也方便大夫手术。 (8) 在车祸中，他腰部受到重伤，两腿失去知觉，从此___在床了。",
-           "Đáp án: (7) 麻醉 · (8) 瘫痪"],
+           "Đáp án: (3) 隔离 · (4) 残疾"],
     say=["Phần mở rộng của sách có hai nội dung. Thứ nhất là tám từ ngữ về y học: 残疾，化验，解剖，麻醉，脉搏，瘫痪，按摩，隔离. Tức là: tàn tật, xét nghiệm, giải phẫu, gây mê, mạch đập, bại liệt, xoa bóp, và cách ly.",
          F(1, "Câu một: 经过, chỗ trống, 大便，医生终于找到了他腹泻的原因。 Câu hai: 最近他常常腰疼，大夫给他, chỗ trống, 以后，他感觉舒服多了。 Các bạn tạm dừng và điền thử nhé."),
          F(2, "Đáp án: câu một là 化验, xét nghiệm phân mới tìm ra nguyên nhân tiêu chảy; câu hai là 按摩, được bác sĩ xoa bóp xong thì thấy dễ chịu hơn nhiều."),
          F(3, "Câu ba: 由于这种疾病传染性很强，所以需要把病人, chỗ trống, 开来。 Câu bốn: 全社会都要关爱, chỗ trống, 人，在各方面多给他们提供方便。"),
-         F(4, "Đáp án: câu ba là 隔离, bệnh lây mạnh nên phải cách ly người bệnh; câu bốn là 残疾, toàn xã hội phải quan tâm người khuyết tật."),
-         F(5, "Câu năm: 那头大象死后，动物园的工作人员对它进行了, chỗ trống, 发现它的胃里有很多塑料制品。 Câu sáu: 你刚刚剧烈运动过, chỗ trống, 很快，所以休息一会再来测量吧。"),
-         F(6, "Đáp án: câu năm là 解剖, giải phẫu con voi thì thấy trong dạ dày có nhiều đồ nhựa; câu sáu là 脉搏, vừa vận động mạnh nên mạch đập nhanh."),
-         F(7, "Câu bảy: 在大的手术前都需要, chỗ trống, 这不但可以减轻病人痛苦，也方便大夫手术。 Câu tám: 在车祸中，他腰部受到重伤，两腿失去知觉，从此, chỗ trống, 在床了。"),
-         F(8, "Đáp án: câu bảy là 麻醉, trước ca mổ lớn phải gây mê; câu tám là 瘫痪, bị thương nặng ở lưng nên liệt nằm trên giường. Chú ý: 瘫痪 là bại liệt, khác với 残疾 là tàn tật nói chung.")])
+         F(4, "Đáp án: câu ba là 隔离, bệnh lây mạnh nên phải cách ly người bệnh; câu bốn là 残疾, toàn xã hội phải quan tâm người khuyết tật.")])
 
-add("bullets", section="Luyện tập 练习", title="Mở rộng 扩展 (2): từ ngữ tài chính", size=36,
+add("bullets", section="Luyện tập 练习", title="Mở rộng 扩展 (2): từ ngữ y học (tiếp)", reveal=True, size=32,
+    items=["## Từ cho sẵn: 残疾 · 化验 · 解剖 · 麻醉 · 脉搏 · 瘫痪 · 按摩 · 隔离",
+           "(5) 那头大象死后，动物园的工作人员对它进行了___，发现它的胃里有很多塑料制品。 (6) 你刚刚剧烈运动过，___很快，所以休息一会再来测量吧。",
+           "Đáp án: (5) 解剖 · (6) 脉搏",
+           "(7) 在大的手术前都需要___，这不但可以减轻病人痛苦，也方便大夫手术。 (8) 在车祸中，他腰部受到重伤，两腿失去知觉，从此___在床了。",
+           "Đáp án: (7) 麻醉 · (8) 瘫痪"],
+    say=[F(1, "Câu năm: 那头大象死后，动物园的工作人员对它进行了, chỗ trống, 发现它的胃里有很多塑料制品。 Câu sáu: 你刚刚剧烈运动过, chỗ trống, 很快，所以休息一会再来测量吧。"),
+         F(2, "Đáp án: câu năm là 解剖, giải phẫu con voi thì thấy trong dạ dày có nhiều đồ nhựa; câu sáu là 脉搏, vừa vận động mạnh nên mạch đập nhanh."),
+         F(3, "Câu bảy: 在大的手术前都需要, chỗ trống, 这不但可以减轻病人痛苦，也方便大夫手术。 Câu tám: 在车祸中，他腰部受到重伤，两腿失去知觉，从此, chỗ trống, 在床了。"),
+         F(4, "Đáp án: câu bảy là 麻醉, trước ca mổ lớn phải gây mê; câu tám là 瘫痪, bị thương nặng ở lưng nên liệt nằm trên giường. Chú ý: 瘫痪 là bại liệt, khác với 残疾 là tàn tật nói chung.")])
+
+add("bullets", section="Luyện tập 练习", title="Mở rộng 扩展 (3): từ ngữ tài chính", size=36,
     items=["在投资债券、基金等金融产品时，要注意统筹兼顾，分散风险。有的投资者追求高利润，总想在利润最高点卖出，这容易导致错过最佳成交时机，增加损失。有的投资者只关注年终分红，平时不怎么交易，这也会造成利润减少。",
            "债券 trái phiếu · 基金 quỹ đầu tư · 统筹兼顾 tính toán tổng thể, chiếu cố mọi mặt",
            "成交 giao dịch thành công, khớp lệnh · 分红 chia cổ tức, chia lợi nhuận"],
@@ -646,12 +657,11 @@ lesson = {
                     "相应": "相映",            # xiāngyìng, tránh đọc yīng
                     "更替": "耕替",            # gēngtì, tránh đọc gèng
                     "绝种": "绝肿",            # juézhǒng, tránh đọc zhòng
-                    "播种": "播肿",            # bōzhǒng
                     "干劲": "赣劲",            # gànjìn, tránh đọc gān
                     "朝阳": "招阳",            # zhāoyáng (vầng dương buổi sáng)
                     "为冲洗": "未冲洗",        # wèi (vì), tránh đọc wéi
-                    "倒垃圾": "到垃圾",        # dào lājī, tránh đọc dǎo
-                    "处于": "楚于"},          # chǔyú
+                    "为学生": "未学生",        # wèi (cho), tránh đọc wéi
+                    "倒垃圾": "到垃圾"},       # dào lājī, tránh đọc dǎo
     "slides": slides,
 }
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bai38.json")
