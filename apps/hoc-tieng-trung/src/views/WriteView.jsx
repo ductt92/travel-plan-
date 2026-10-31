@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import HanziWriter from 'hanzi-writer';
 import { Button, Card, Field, PageHeader, Row, Stack, useToast } from '@trang/ui';
+import { Input } from 'react-liquis-glass';
 import { LESSONS, WORDS } from '../core/data.js';
 import { syls, toneOf } from '../core/pinyin.js';
 import { useStore, activity, lessonDoneCount, nextLesson } from '../core/store.js';
@@ -127,9 +128,9 @@ export function WriteView() {
           </Card>
           <Field id="wr-in" label="Nhập một chữ Hán bất kỳ">
             <Row gap={8} wrap={false}>
-              <input id="wr-in" className="ui-input ui-hz" maxLength={2} value={inp} onChange={e => setInp(e.target.value)}
+              <Input id="wr-in" size="lg" variant="outline" className="ui-hz wr-in" maxLength={2} value={inp} onChange={e => setInp(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter' && !e.nativeEvent.isComposing) submit(); }}
-                style={{ fontSize: 22, textAlign: 'center', maxWidth: 120 }} />
+                style={{ maxWidth: 120 }} />
               <Button variant="primary" onClick={submit}>Tập viết</Button>
             </Row>
           </Field>

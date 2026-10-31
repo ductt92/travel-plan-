@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Chip, Icon, LinkButton, PageHeader, Pill, Row, Stack, Tag, Card, useToast } from '@trang/ui';
+import { Input } from 'react-liquis-glass';
 import { WORDS, WMAP, byHz, CONTENT_LEVELS } from '../core/data.js';
 import { syls, pyText, toneOf, fold, plainHz } from '../core/pinyin.js';
 import { say } from '../core/speech.js';
@@ -53,11 +54,8 @@ export function DictView() {
       <PageHeader eyebrow="Tra từ 词典" title="Tra từ" extra={<Button as={Link} to="/pinyin" icon="grid">Bảng pinyin</Button>} />
       <Stack gap={12}>
         <label htmlFor="dq" style={{ fontSize: 14, color: 'var(--ink-2)' }}>Gõ chữ Hán, pinyin (có hoặc không dấu), âm Hán Việt hoặc nghĩa tiếng Việt</label>
-        <div className="search">
-          <Icon name="search" size={22} style={{ color: 'var(--muted)', flex: 'none' }} />
-          <input id="dq" type="search" autoComplete="off" value={q} onChange={e => setQ(e.target.value)} placeholder="ví dụ: màu, yanse, 颜色, nhan sắc" />
-          <span className="ui-muted ui-num" style={{ fontSize: 13, whiteSpace: 'nowrap' }}>{r.length} kết quả</span>
-        </div>
+        <Input id="dq" type="search" size="lg" className="search" autoComplete="off" value={q} onChange={e => setQ(e.target.value)} placeholder="ví dụ: màu, yanse, 颜色, nhan sắc"
+          prefix={<Icon name="search" size={22} />} suffix={<span className="ui-muted ui-num" style={{ fontSize: 13, whiteSpace: 'nowrap' }}>{r.length} kết quả</span>} />
         <Row gap={8} role="group" aria-label="Lọc">
           {FILTERS.map(([v, t]) => <Chip key={v} active={lv === v} onClick={() => setLv(v)}>{t}</Chip>)}
         </Row>
@@ -80,7 +78,7 @@ export function DictView() {
             </div>
           )}
         </Card>
-        <article ref={detail} className="ui-card ui-card--pad ui-stack" style={{ flex: '1 1 360px', minWidth: 0, gap: 16 }} aria-live="polite">
+        <article ref={detail} className="ui-card ui-card--pad lg-glass ui-stack" style={{ flex: '1 1 360px', minWidth: 0, gap: 16 }} aria-live="polite">
           {w ? <Detail w={w} S={S} askAi={askAi} add={() => { addCards([w]); activity(); toast('Đã thêm vào ôn tập'); }} /> : <p className="ui-muted">Chọn một từ để xem chi tiết.</p>}
         </article>
       </Row>
@@ -122,7 +120,7 @@ function Detail({ w, S, askAi, add }) {
           ? <Pill tone="jade">Đang ôn · lần tới sau {fmtWait(Math.max(0, card.due - Date.now()))}</Pill>
           : <Button variant="soft" icon="plus" onClick={add}>Thêm vào ôn tập</Button>}
         <Row gap={4}>
-          <Link className="ui-link" to={`/lesson/${w.lesson}`}>Xem trong bài</Link>
+          <LinkButton href={`#/lesson/${w.lesson}`}>Xem trong bài</LinkButton>
           <LinkButton icon="ai" onClick={() => askAi(`Giải thích chi tiết từ ${w.hz} (${pyText(w)}): cách dùng, từ gần nghĩa, 3 câu ví dụ có pinyin và nghĩa tiếng Việt.`)}>Hỏi AI</LinkButton>
         </Row>
       </Row>

@@ -38,14 +38,12 @@
 .pyf__write{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
 
 /* Tab nhóm vần */
-.pk-tabs{display:flex;gap:6px;padding:4px;border-radius:16px;background:var(--surface-2);overflow-x:auto;scrollbar-width:none}
+.pk-tabs{overflow-x:auto;scrollbar-width:none}
 .pk-tabs::-webkit-scrollbar{display:none}
-.pk-tabs button{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;min-height:48px;padding:6px 14px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:inherit;cursor:pointer;transition:background .15s,color .15s}
+.pk-tabs .lg-segmented{min-width:max-content}
+.pk-tab{display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 6px;line-height:1.2}
 .pk-tabs b{font:600 17px/1.2 var(--f-py);color:var(--ink)}
 .pk-tabs small{font-size:11.5px}
-.pk-tabs button:hover{background:rgba(255,255,255,.5)}
-.pk-tabs button.is-on{background:var(--surface);box-shadow:0 4px 12px -6px rgba(0,0,0,.25);color:var(--jade)}
-.pk-tabs button.is-on b{color:var(--jade)}
 
 /* Bảng: ô bo tròn như phím bấm, tiêu đề cột và cột vần dính khi cuộn */
 .pk-table{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
@@ -77,7 +75,6 @@
   .pyf__tones{grid-column:1/-1;order:3}
   .pyf__tone{flex:1;min-width:0}
   .pyf__write{grid-column:3;grid-row:1;padding:0 12px}
-  .pk-tabs button{flex:0 0 auto;padding:6px 12px}
 }
 
 /* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
@@ -86,5 +83,4 @@
 :where(:root:not([data-glass="off"])) .pyf{background:linear-gradient(135deg,color-mix(in srgb,var(--jade-soft) 80%,transparent),var(--gl-fill));-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
 :where(:root:not([data-glass="off"])) :is(.pyf__tone,.pyf__write){background:var(--gl-fill-strong)}
 :where(:root:not([data-glass="off"])) .pyf__write{border-color:var(--glass-border)}
-:where(:root:not([data-glass="off"])) .pk-tabs{background:var(--gl-fill-soft);box-shadow:var(--gl-shadow-flat)}
-:where(:root:not([data-glass="off"])) .pk-tabs button.is-on{background:var(--gl-sheen),var(--gl-fill-strong);box-shadow:var(--gl-shadow-flat),0 4px 12px -6px rgba(0,0,0,.25)}
+.pk-tabs .lg-segmented-item{height:auto;min-height:48px}

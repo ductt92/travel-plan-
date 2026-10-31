@@ -2,6 +2,7 @@
 // Bản thân lớp học là trang tĩnh riêng ở lop-hoc/ trong repo, chạy qua Ably — ở đây chỉ chọn phòng rồi mở sang đó.
 import { useState } from 'react';
 import { Button, Card, Field, Icon, PageHeader, Stack } from '@trang/ui';
+import { Input } from 'react-liquis-glass';
 import './ClassView.css';
 
 const FEATURES = [
@@ -30,7 +31,7 @@ export function ClassView() {
       <Card as="form" onSubmit={join} style={{ maxWidth: 520 }}>
         <Stack gap={14}>
           <Field id="room" label="Mã phòng (giáo viên gửi cho bạn)">
-            <input id="room" className="ui-input" value={room} onChange={e => setRoom(e.target.value)}
+            <Input id="room" size="lg" variant="outline" value={room} onChange={e => setRoom(e.target.value)}
               autoComplete="off" autoCapitalize="none" maxLength={40} placeholder="ví dụ: hsk" />
           </Field>
           <Button variant="primary" type="submit" disabled={!code} style={{ alignSelf: 'flex-start' }}>

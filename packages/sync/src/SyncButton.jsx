@@ -57,11 +57,11 @@ export function SyncButton({ className = '' }) {
   const on = st.state !== 'off';
   return (
     <div className={`sync${end ? ' sync--end' : ''} ${className}`} ref={box}>
-      <button type="button" className={`sync__btn is-${st.state}`} aria-expanded={open} onClick={() => { setEnd(box.current.getBoundingClientRect().left + 316 > window.innerWidth); setOpen(o => !o); }}>
+      <Button size="sm" className={`sync__btn is-${st.state}`} aria-expanded={open} onClick={() => { setEnd(box.current.getBoundingClientRect().left + 316 > window.innerWidth); setOpen(o => !o); }}>
         <span className="sync__dot" aria-hidden="true" />
         {LABEL[st.state]}
         {on && <span className="sync__tag">{st.backend === 'go' ? 'Go' : 'Node'}</span>}
-      </button>
+      </Button>
       {open && (
         <div className="sync__pop" role="dialog" aria-label="Đồng bộ dữ liệu">
           {on ? (

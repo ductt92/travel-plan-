@@ -4,6 +4,7 @@
 // slide (kèm renderMode): hiện trọn một trang, đủ nội dung, không phụ đề (bảng của lớp học trực tiếp).
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Chip, Icon, IconButton, ProgressBar, useToast } from '@trang/ui';
+import { Segmented } from 'react-liquis-glass';
 import { LEVELS } from '../core/data.js';
 import { plainHz } from '../core/pinyin.js';
 import { buildLecture, stepParts } from '../core/lecture.js';
@@ -157,7 +158,7 @@ export function LecturePlayer({ lesson, renderMode = false, startStep = 0, slide
       {!renderMode && (
         <div className="lec-bar">
           <IconButton icon="back" label="Phần trước" onClick={prev} />
-          <IconButton icon={playing ? 'pause' : 'play'} label={playing ? 'Tạm dừng' : 'Phát'} className="lec-main" size={52} onClick={toggle} />
+          <IconButton icon={playing ? 'pause' : 'play'} label={playing ? 'Tạm dừng' : 'Phát'} variant="solid" className="lec-main" size={52} onClick={toggle} />
           <IconButton icon="chev" label="Phần sau" onClick={next} />
           <div className="lec-prog">
             <ProgressBar value={Math.min(1, i / N)} label="Tiến độ bài giảng" />
@@ -167,10 +168,9 @@ export function LecturePlayer({ lesson, renderMode = false, startStep = 0, slide
             {chapters.map(([c, k]) => <Chip key={k} active={cur && cur[1] === k} onClick={() => seekSlide(k)}>{c}</Chip>)}
           </div>
           <div className="ui-row" style={{ gap: 6, marginLeft: 'auto' }}>
-            <label className="ui-sr" htmlFor="lec-rate">Tốc độ</label>
-            <select id="lec-rate" className="ui-chip lec-rate" value={rate} onChange={e => setRate(+e.target.value)}>
-              {RATES.map(v => <option key={v} value={v}>{v}×</option>)}
-            </select>
+            <div role="group" aria-label="Tốc độ">
+              <Segmented size="sm" value={rate} onChange={setRate} options={RATES.map(v => ({ value: v, label: `${v}×` }))} />
+            </div>
             <Chip active={subs} onClick={() => setSubs(v => !v)}>Phụ đề</Chip>
             <IconButton icon="full" label="Toàn màn hình" onClick={full} />
           </div>

@@ -37,7 +37,7 @@ export function WordCard({ w }) {
       <Example zh={plainHz(w.ex)} py={w.exPy} vi={w.exVi} />
       <div className="word__act">
         <LinkButton icon="play" onClick={() => say(plainHz(w.ex))}>Nghe câu</LinkButton>
-        <Link className="ui-link" to={`/write/${encodeURIComponent([...w.hz][0])}`}><Icon name="brush" size={15} />Tập viết</Link>
+        <LinkButton icon="brush" href={`#/write/${encodeURIComponent([...w.hz][0])}`}>Tập viết</LinkButton>
         {S.cards[w.id] && <Pill tone="jade" style={{ marginLeft: 'auto', alignSelf: 'center' }}>Đang ôn</Pill>}
       </div>
     </article>

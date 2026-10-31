@@ -5,7 +5,7 @@
 // Mốc thời gian từng bước đọc lấy từ src/data/video-timing.json (tools/make_video.py ghi ra).
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Breadcrumbs, Button, Row, Stack } from '@trang/ui';
+import { Breadcrumbs, Button, Chip, Row, Stack } from '@trang/ui';
 import { LESSONS, LEVELS } from '../core/data.js';
 import { buildLecture } from '../core/lecture.js';
 import YT_IDS from '../data/youtube.json';
@@ -123,14 +123,14 @@ function Player({ lesson, yt, src, autoplay, onEnded }) {
             <Button className={loop ? 'is-on' : ''} aria-pressed={!!loop} disabled={!ready} onClick={toggleLoop}>Lặp câu</Button>
           </>}
           <span className="vd-rates" role="group" aria-label="Tốc độ">
-            {RATES.map(r => <button key={r} type="button" className={`vd-chip${r === rate ? ' is-on' : ''}`} aria-pressed={r === rate} onClick={() => pickRate(r)}>{r}×</button>)}
+            {RATES.map(r => <Chip key={r} active={r === rate} onClick={() => pickRate(r)}>{r}×</Chip>)}
           </span>
           <span className="vd-time ui-num">{fmt(t)}{dur ? ` / ${fmt(dur)}` : ''}</span>
         </Row>
         {timed && <>
           <div className="vd-secs" role="group" aria-label="Phần của bài">
             {sections.map((x, i) => (
-              <button key={x.from} type="button" className={`vd-chip${i === sec ? ' is-on' : ''}`} onClick={() => go(slideAt[x.from])}>{x.name}</button>
+              <Chip key={x.from} active={i === sec} onClick={() => go(slideAt[x.from])}>{x.name}</Chip>
             ))}
           </div>
           <div className="vd-slides" role="group" aria-label="Slide trong phần này">

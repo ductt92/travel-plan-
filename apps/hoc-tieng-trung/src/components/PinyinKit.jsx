@@ -1,6 +1,7 @@
 // Các mảnh dùng chung cho bảng pinyin: trang Pinyin (views/PinyinView) và khung nổi (PinyinFab).
 import { Link } from 'react-router-dom';
 import { Icon } from '@trang/ui';
+import { Segmented } from 'react-liquis-glass';
 import { PINYIN } from '../core/data.js';
 import { toneOf, markSyl } from '../core/pinyin.js';
 import { say } from '../core/speech.js';
@@ -107,12 +108,10 @@ export const GROUP_TABS = [
 
 export function GroupTabs({ value, onChange }) {
   return (
-    <div className="pk-tabs" role="tablist" aria-label="Nhóm vần">
-      {GROUP_TABS.map(t => (
-        <button key={String(t.id)} type="button" role="tab" aria-selected={value === t.id} className={value === t.id ? 'is-on' : ''} onClick={() => onChange(t.id)}>
-          <b>{t.label}</b><small>{t.sub}</small>
-        </button>
-      ))}
+    <div className="pk-tabs" role="group" aria-label="Nhóm vần">
+      {/* Segmented của react-liquis-glass chỉ nhận string/number, nên "Tất cả" (id null) đổi thành 'all' */}
+      <Segmented block value={value ?? 'all'} onChange={v => onChange(v === 'all' ? null : v)}
+        options={GROUP_TABS.map(t => ({ value: t.id ?? 'all', label: <span className="pk-tab"><b>{t.label}</b><small>{t.sub}</small></span> }))} />
     </div>
   );
 }

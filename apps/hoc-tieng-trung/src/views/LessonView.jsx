@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Breadcrumbs, Button, Card, EmptyState, Icon, IconButton, Row, Stack, Tabs, Toggle, useToast } from '@trang/ui';
+import { TextArea } from 'react-liquis-glass';
 import { LESSONS, LEVELS, lessonById } from '../core/data.js';
 import { useStore, update, markPart, activity, addCards, lessonDone } from '../core/store.js';
 import { say, sayQueue, stopQueue, hasAudioPack, audioReady, onVoices, viVoice } from '../core/speech.js';
@@ -50,7 +51,7 @@ function ScriptBox({ l }) {
     <Card as="section"><Stack gap={12}>
       <Row between><b>Kịch bản bài giảng</b><Row gap={8}><Button onClick={copy}>Sao chép</Button><Button onClick={download}>Tải file .txt</Button></Row></Row>
       <p className="ui-muted" style={{ fontSize: 13 }}>Dùng kịch bản này để dựng video với công cụ người dẫn ảo AI (HeyGen, Synthesia, CapCut…) nếu bạn muốn có giảng viên ảo.</p>
-      <textarea ref={ta} className="ui-input" style={{ minHeight: 280, padding: 12, font: '14px/1.6 var(--f-ui)' }} readOnly value={txt} aria-label="Kịch bản bài giảng" />
+      <TextArea ref={ta} rows={12} style={{ font: '14px/1.6 var(--f-ui)' }} readOnly value={txt} aria-label="Kịch bản bài giảng" />
     </Stack></Card>
   );
 }

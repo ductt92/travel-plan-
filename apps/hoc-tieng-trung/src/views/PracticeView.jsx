@@ -1,7 +1,7 @@
 // Luyện tập: chọn phạm vi, làm bài 5 dạng câu hỏi, xem kết quả
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, EmptyState, Icon, IconButton, Row, Stack, PageHeader } from '@trang/ui';
+import { Button, Chip, EmptyState, Icon, IconButton, Row, Stack, PageHeader } from '@trang/ui';
 import { LEVELS, LESSONS, WORDS, lessonById, CONTENT_LEVELS } from '../core/data.js';
 import { syls, pyText, toneOf, bareSyl, markSyl, plainHz, shuffle, pickOne } from '../core/pinyin.js';
 import { say } from '../core/speech.js';
@@ -82,7 +82,7 @@ function PracticeHome() {
       </div>
       <Stack as="section">
         <h2 style={{ fontSize: 18 }}>Theo từng bài</h2>
-        <Row gap={8}>{LESSONS.map(l => <Link key={l.id} className="ui-chip" to={`/practice/lesson/${l.id}`}>{l.lv}.{l.no} {l.title}</Link>)}</Row>
+        <Row gap={8}>{LESSONS.map(l => <Chip key={l.id} to={`/practice/lesson/${l.id}`}>{l.lv}.{l.no} {l.title}</Chip>)}</Row>
       </Stack>
     </>
   );

@@ -6,9 +6,9 @@
 .vd-ctrls{display:flex;flex-direction:column;gap:10px}
 .vd-ctrls .is-on{background:var(--jade-soft);border-color:var(--jade)}
 .vd-rates{display:inline-flex;gap:4px}
-.vd-chip,.vd-slide{font:inherit;font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
-.vd-chip:hover,.vd-slide:hover{border-color:var(--jade)}
-.vd-chip.is-on,.vd-slide.is-on{background:var(--jade);border-color:var(--jade);color:#fff}
+.vd-slide{font:inherit;font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.vd-slide:hover{border-color:var(--jade)}
+.vd-slide.is-on{background:var(--jade);border-color:var(--jade);color:#fff}
 .vd-time{margin-left:auto;color:var(--muted);font-size:13px}
 .vd-secs,.vd-slides{display:flex;flex-wrap:wrap;gap:6px}
 .vd-slides{padding-top:10px;border-top:1px dashed var(--line)}
@@ -28,3 +28,4 @@
 /* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
 :where(:root:not([data-glass="off"])) .vd-item{background:var(--gl-sheen),var(--gl-fill);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border-color:var(--glass-border);box-shadow:var(--gl-shadow)}
 :where(:root:not([data-glass="off"])) .vd-empty{background:var(--gl-fill-soft);box-shadow:var(--gl-shadow-flat)}
+.vd-rates .ui-chip,.vd-secs .ui-chip{height:32px;padding:0 12px;font-size:13px}

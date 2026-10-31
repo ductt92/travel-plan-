@@ -11,3 +11,6 @@
 /* Giao diện kính: chỉ khi kính bật, tắt kính giữ nguyên kiểu ở trên (xem cuối packages/ui/src/ui.css) */
 :where(:root:not([data-glass="off"])) .tzg{background:var(--gl-fill-strong);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);box-shadow:var(--glass-shadow)}
 :where(:root:not([data-glass="off"])) .sugg button{background:var(--gl-fill-strong);border-color:var(--glass-border)}
+
+/* ô nhập chữ Hán (Input của react-liquis-glass): chữ to, canh giữa */
+.wr-in .lg-input-el{font-size:22px;text-align:center}

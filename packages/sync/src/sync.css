@@ -1,7 +1,7 @@
 /* Dùng token màu của app chứa nó (--surface, --ink, --muted, --line, --jade), có màu dự phòng */
 .sync{position:relative;display:inline-block;font-size:13px}
-.sync__btn{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line,#E4DED4);background:var(--surface,#FFF);color:var(--ink,#1C1A17);font:inherit;font-weight:600;cursor:pointer}
-.sync__btn:focus-visible{outline:2px solid var(--ink,#1C1A17);outline-offset:2px}
+/* nút là Button kính của react-liquis-glass; chấm và nhãn nằm trong .lg-btn-label */
+.sync__btn .lg-btn-label{display:inline-flex;align-items:center;gap:8px;font-weight:600}
 .sync__dot{width:8px;height:8px;border-radius:50%;background:var(--muted,#8A847A)}
 .sync__btn.is-ok .sync__dot{background:#2F9E6A}
 .sync__btn.is-syncing .sync__dot,.sync__btn.is-idle .sync__dot{background:#E0A43A;animation:sync-blink 1s infinite}
@@ -22,8 +22,7 @@
 .sync__seg label:has(input:focus-visible){outline:2px solid var(--ink,#1C1A17);outline-offset:1px}
 .sync__small{font-size:12px}
 
-/* Giao diện kính (html không có data-glass="off"): nút và khung là kính. Biến --gl-* do
+/* Giao diện kính (html không có data-glass="off"): khung là kính. Biến --gl-* do
    @trang/ui đặt; app không có thì rơi về mặt đặc như trên */
-:where(:root:not([data-glass="off"])) .sync__btn{background:var(--gl-sheen,none),var(--gl-fill,var(--surface,#FFF));-webkit-backdrop-filter:var(--gl-blur,none);backdrop-filter:var(--gl-blur,none);border-color:var(--glass-border,var(--line,#E4DED4));box-shadow:var(--gl-shadow-flat,none),0 4px 14px -8px rgba(0,0,0,.25)}
 :where(:root:not([data-glass="off"])) .sync__pop{background:var(--gl-sheen,none),var(--gl-fill-strong,var(--surface,#FFF));-webkit-backdrop-filter:var(--gl-blur,none);backdrop-filter:var(--gl-blur,none);border-color:var(--glass-border,var(--line,#E4DED4));box-shadow:var(--gl-shadow-flat,0 0 #0000),0 18px 40px -18px rgba(0,0,0,.35)}
 :where(:root:not([data-glass="off"])) .sync__seg{border-color:var(--glass-border,var(--line,#E4DED4))}

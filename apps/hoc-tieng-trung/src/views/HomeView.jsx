@@ -1,7 +1,7 @@
 // Màn hình Lộ trình: lời chào, học tiếp, ôn tập đến hạn, lộ trình 3 giai đoạn và tiến độ.
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Icon, Pill, ProgressBar, Row, Stack, StatTile, useToast } from '@trang/ui';
+import { Button, Card, Icon, LinkButton, Pill, ProgressBar, Row, Stack, StatTile, useToast } from '@trang/ui';
 import { LEVELS, STAGES, LESSONS, WMAP, NPARTS, prevOf, hasContent } from '../core/data.js';
 import { fmtN } from '../core/pinyin.js';
 import { SyncButton } from '@trang/sync';
@@ -162,7 +162,7 @@ export function HomeView() {
         </div>
         <Row gap={10}>
           <span className="ui-muted" style={{ fontSize: 13 }}>Tiến độ lưu trên trình duyệt này.</span>
-          <button type="button" className="ui-link" style={{ color: 'var(--seal)' }} onClick={() => setAsk(true)}>Xóa tiến độ</button>
+          <LinkButton color="danger" onClick={() => setAsk(true)}>Xóa tiến độ</LinkButton>
           {ask && (
             <Row gap={8}>
               <span style={{ fontSize: 13 }}>Xóa toàn bộ tiến độ và thẻ ôn tập?</span>

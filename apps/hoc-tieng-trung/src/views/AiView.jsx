@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button, Card, Chip, Field, PageHeader, Row, Stack, useToast } from '@trang/ui';
-import { Password } from 'react-liquis-glass';
+import { Input, Password } from 'react-liquis-glass';
 import { apiFetch, SyncButton, useSyncStatus } from '@trang/sync';
 import { useStore, getState, update, activity, DEF } from '../core/store.js';
 import './AiView.css';
@@ -97,7 +97,7 @@ export function AiView() {
         </div>
         <form className="ui-row" style={{ gap: 8, flexWrap: 'nowrap' }} onSubmit={e => { e.preventDefault(); send(input); }}>
           <label htmlFor="ai-in" className="ui-sr">Câu hỏi</label>
-          <input id="ai-in" className="ui-input" autoComplete="off" value={input} onChange={e => setInput(e.target.value)}
+          <Input id="ai-in" size="lg" variant="outline" wrapperClassName="ui-grow" autoComplete="off" value={input} onChange={e => setInput(e.target.value)}
             placeholder={hasKey ? 'Hỏi ngữ pháp, dịch câu hoặc đặt câu…' : 'Nhập khóa API bên dưới để bắt đầu'} />
           <Button variant="primary" type="submit" icon="send" disabled={busy}>Gửi</Button>
         </form>
@@ -106,7 +106,7 @@ export function AiView() {
           {QUICK.map(t => <Chip key={t} onClick={() => send(t)}>{t}</Chip>)}
         </Row>
       </Card>
-      <details className="ui-card ui-card--pad set" open={open} onToggle={e => setOpen(e.currentTarget.open)}>
+      <details className="ui-card ui-card--pad lg-glass set" open={open} onToggle={e => setOpen(e.currentTarget.open)}>
         <summary>Cài đặt khóa API</summary>
         <form className="ui-stack" style={{ gap: 12, paddingTop: 8 }} onSubmit={save}>
           <p className="ui-muted" style={{ fontSize: 14 }}>Tạo khóa miễn phí tại <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">aistudio.google.com/apikey</a> rồi dán vào đây. Khóa chỉ lưu trong trình duyệt này và chỉ gửi tới máy chủ của Google.</p>
@@ -114,7 +114,7 @@ export function AiView() {
             <Password id="ai-key" ref={keyRef} size="lg" variant="outline" autoComplete="off" value={keyIn} onChange={e => setKeyIn(e.target.value)} />
           </Field>
           <Field id="ai-model" label="Mô hình">
-            <input id="ai-model" className="ui-input" autoComplete="off" value={modelIn} onChange={e => setModelIn(e.target.value)} />
+            <Input id="ai-model" size="lg" variant="outline" autoComplete="off" value={modelIn} onChange={e => setModelIn(e.target.value)} />
           </Field>
           <Row>
             <Button variant="primary" type="submit">Lưu</Button>

@@ -2,7 +2,7 @@
 // Khung chia theo nhóm vần cho gọn, có chú thích 4 thanh và thẻ chi tiết âm tiết đang chọn.
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Icon } from '@trang/ui';
+import { Icon, IconButton } from '@trang/ui';
 import { PINYIN } from '../core/data.js';
 import { say } from '../core/speech.js';
 import { GroupTabs, PinyinTable, SyllableCard, ToneLegend } from './PinyinKit.jsx';
@@ -42,7 +42,7 @@ export function PinyinFab() {
             <span className="pysheet__eyebrow">Bảng chữ cái tiếng Trung</span>
             <h2 id="pysheet-t">Bảng pinyin</h2>
           </div>
-          <button type="button" className="pysheet__x" onClick={() => setOpen(false)} aria-label="Đóng bảng pinyin"><Icon name="x" /></button>
+          <IconButton icon="x" label="Đóng bảng pinyin" className="pysheet__x" onClick={() => setOpen(false)} />
         </header>
 
         <div className="pysheet__body">

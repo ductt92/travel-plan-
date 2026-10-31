@@ -1,7 +1,15 @@
-import { createContext, useCallback, useContext, useRef, useState } from 'react';
+import {
+  Breadcrumb, Button as GlassButton, Checkbox, IconButton as GlassIconButton, Progress, Switch as GlassSwitch,
+  Tabs as GlassTabs, Tag as GlassTag, message
+} from 'react-liquis-glass';
 import { Icon } from './Icon.jsx';
 
 const cx = (...a) => a.filter(Boolean).join(' ');
+
+// Nút, nhãn, tab, công tắc, thanh tiến độ, thông báo là component của react-liquis-glass; ở đây chỉ giữ
+// props cũ của @trang/ui để các view không phải sửa. Đường dẫn: app dùng HashRouter nên `as={Link} to="/x"`
+// thành href="#/x" của nút thư viện, bấm vẫn chuyển trang không tải lại.
+const hrefOf = (to, href) => (to != null ? `#${to}` : href);
 
 /* Bố cục */
 export function Stack({ gap = 12, as: Tag = 'div', className, style, ...rest }) {
@@ -11,45 +19,61 @@ export function Row({ gap = 16, between, align, wrap = true, as: Tag = 'div', cl
   return <Tag className={cx('ui-row', className)} style={{ gap, justifyContent: between ? 'space-between' : undefined, alignItems: align, flexWrap: wrap ? 'wrap' : 'nowrap', ...style }} {...rest} />;
 }
 
-/* Nút: variant = primary | secondary | soft | light | danger | ghost; `as` để dùng với Link của router */
-export function Button({ variant = 'secondary', size, icon, as: Tag = 'button', className, children, ...rest }) {
-  const extra = Tag === 'button' && !rest.type ? { type: 'button' } : {};
+/* Nút: variant = primary | secondary | soft | light | danger | ghost; as={Link} to="/…" để chuyển trang */
+const BUTTON = {
+  primary: { variant: 'filled', color: 'primary' },
+  secondary: { variant: 'glass' },
+  soft: { variant: 'tinted', color: 'primary' },
+  light: { variant: 'filled', className: 'ui-btn--light' },
+  danger: { variant: 'filled', color: 'danger' },
+  ghost: { variant: 'text' }
+};
+export function Button({ variant = 'secondary', size, icon, as, to, href, className, ...rest }) {
+  const v = BUTTON[variant] || BUTTON.secondary;
+  // cỡ mặc định của thư viện (38px) nhỏ hơn vùng chạm 44px của app, nên cỡ thường dùng lg, cỡ sm dùng md
   return (
-    <Tag className={cx('ui-btn', `ui-btn--${variant}`, size === 'sm' && 'ui-btn--sm', className)} {...extra} {...rest}>
-      {icon && <Icon name={icon} size={18} />}{children}
-    </Tag>
+    <GlassButton variant={v.variant} color={v.color} size={size === 'sm' ? 'md' : 'lg'} href={hrefOf(to, href)}
+      icon={icon && <Icon name={icon} size={18} />} className={cx('ui-btn', v.className, className)} {...rest} />
   );
 }
-export function IconButton({ icon, label, variant, size = 44, className, as: Tag = 'button', ...rest }) {
-  const extra = Tag === 'button' && !rest.type ? { type: 'button' } : {};
+const ICON_BUTTON = { plain: 'text', solid: 'filled', ondark: 'outline' };
+export function IconButton({ icon, label, variant, size = 44, as, to, href, className, style, ...rest }) {
   return (
-    <Tag className={cx('ui-iconbtn', variant && `ui-iconbtn--${variant}`, className)} aria-label={label} title={label} style={{ width: size, height: size }} {...extra} {...rest}>
-      <Icon name={icon} size={Math.round(size * 0.42)} />
-    </Tag>
+    <GlassIconButton variant={ICON_BUTTON[variant] || 'glass'} color={variant === 'solid' ? 'primary' : undefined}
+      href={hrefOf(to, href)} icon={<Icon name={icon} size={Math.round(size * 0.42)} />} aria-label={label} title={label}
+      className={cx('ui-iconbtn', variant && `ui-iconbtn--${variant}`, className)} style={{ width: size, height: size, ...style }} {...rest} />
   );
 }
-export function LinkButton({ icon, className, children, ...rest }) {
-  return <button type="button" className={cx('ui-link', className)} {...rest}>{icon && <Icon name={icon} size={15} />}{children}</button>;
+export function LinkButton({ icon, className, ...rest }) {
+  return <GlassButton variant="link" color="primary" size="sm" icon={icon && <Icon name={icon} size={15} />} className={cx('ui-link', className)} {...rest} />;
 }
 
-/* Bề mặt */
+/* Bề mặt: mặt kính lg-glass của thư viện. Không dùng Card của thư viện vì nó bọc nội dung trong
+   .lg-card-body và không đổi được thẻ (as), trong khi nhiều chỗ đặt bố cục ui-stack/ui-row thẳng lên thẻ.
+   tone = dark | muted | accent */
 export function Card({ tone, pad = true, as: Tag = 'div', className, ...rest }) {
-  return <Tag className={cx('ui-card', tone && `ui-card--${tone}`, pad && 'ui-card--pad', className)} {...rest} />;
+  const glass = !tone || tone === 'accent';
+  return <Tag className={cx('ui-card', glass && 'lg-glass', tone && `ui-card--${tone}`, pad && 'ui-card--pad', className)} {...rest} />;
 }
-export function Pill({ tone = 'grey', className, ...rest }) {
-  return <span className={cx('ui-pill', `ui-pill--${tone}`, className)} {...rest} />;
+const PILL = { jade: 'primary', seal: 'var(--seal)', grey: 'default' };
+export function Pill({ tone = 'grey', ...rest }) {
+  return tone === 'solid'
+    ? <GlassTag variant="filled" color="primary" size="sm" {...rest} />
+    : <GlassTag color={PILL[tone] || 'default'} size="sm" {...rest} />;
 }
-export function Chip({ active, className, ...rest }) {
-  return <button type="button" className={cx('ui-chip', active && 'is-on', className)} aria-pressed={active} {...rest} />;
+/* Chip là nút bấm được (lọc, chọn), nên dùng nút tròn của thư viện; đang chọn thì tô màu */
+export function Chip({ active, to, href, className, ...rest }) {
+  return <GlassButton shape="round" size="md" variant={active ? 'filled' : 'glass'} color={active ? 'primary' : undefined}
+    href={hrefOf(to, href)} aria-pressed={active} className={cx('ui-chip', className)} {...rest} />;
 }
-export function Tag({ className, ...rest }) { return <span className={cx('ui-tag', className)} {...rest} />; }
+export function Tag(props) { return <GlassTag size="sm" {...props} />; }
 export function Kbd(props) { return <kbd className="ui-kbd" {...props} />; }
 
-/* Tiến độ: value từ 0 đến 1 */
+/* Tiến độ: value từ 0 đến 1. Progress của thư viện không nhận aria-label nên nhãn đặt ở khung bọc */
 export function ProgressBar({ value = 0, height = 6, label, className }) {
   return (
-    <div className={cx('ui-bar', className)} style={{ height }} role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(value * 100)}>
-      <i style={{ width: `${Math.min(100, Math.max(0, value * 100))}%` }} />
+    <div className={cx('ui-bar', className)} role="group" aria-label={label}>
+      <Progress percent={Math.min(100, Math.max(0, value * 100))} size={height} showInfo={false} status="normal" />
     </div>
   );
 }
@@ -58,21 +82,18 @@ export function ProgressBar({ value = 0, height = 6, label, className }) {
 export function Tabs({ items, value, onChange, label }) {
   return (
     <nav className="ui-tabs" aria-label={label}>
-      {items.map((t, i) => (
-        <button key={t.id} type="button" className={value === t.id ? 'is-on' : ''} aria-current={value === t.id ? 'true' : undefined} onClick={() => onChange(t.id)}>
-          {t.label}{t.done && <Icon name="check" size={16} className="ui-tabs__ok" strokeWidth="2.4" />}
-        </button>
-      ))}
+      <GlassTabs activeKey={value} onChange={onChange}
+        items={items.map(t => ({ key: t.id, label: <>{t.label}{t.done && <Icon name="check" size={16} className="ui-tabs__ok" strokeWidth="2.4" />}</> }))} />
     </nav>
   );
 }
 
 /* Ô tích có nhãn và công tắc */
 export function Toggle({ id, checked, onChange, children }) {
-  return <label className="ui-toggle" htmlFor={id}><input id={id} type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} />{children}</label>;
+  return <Checkbox id={id} checked={checked} onChange={v => onChange(v)} className="ui-toggle">{children}</Checkbox>;
 }
 export function Switch({ checked, onChange, label, disabled }) {
-  return <label className="ui-switch"><input type="checkbox" checked={checked} disabled={disabled} aria-label={label} onChange={e => onChange(e.target.checked)} /><span /></label>;
+  return <GlassSwitch checked={checked} disabled={disabled} aria-label={label} onChange={onChange} />;
 }
 export function Field({ id, label, children }) {
   return <div className="ui-field"><label htmlFor={id}>{label}</label>{children}</div>;
@@ -91,20 +112,11 @@ export function PageHeader({ eyebrow, title, sub, extra, size = 30 }) {
     </header>
   );
 }
-export function Breadcrumbs({ items, LinkComponent = 'a' }) {
-  return (
-    <nav className="ui-crumbs" aria-label="Vị trí">
-      {items.map((it, i) => (
-        <span key={i} className="ui-crumbs__i">
-          {i > 0 && <span aria-hidden="true">/</span>}
-          {it.to ? <LinkComponent to={it.to} href={it.to}>{it.label}</LinkComponent> : <span style={{ color: i === items.length - 1 ? 'var(--ink)' : undefined }}>{it.label}</span>}
-        </span>
-      ))}
-    </nav>
-  );
+export function Breadcrumbs({ items }) {
+  return <Breadcrumb className="ui-crumbs" items={items.map(it => ({ title: it.label, href: it.to != null ? `#${it.to}` : undefined }))} />;
 }
 export function StatTile({ label, value, sub }) {
-  return <div className="ui-tile"><span className="ui-muted" style={{ fontSize: 13 }}>{label}</span><b className="ui-num">{value}{sub && <small className="ui-muted"> {sub}</small>}</b></div>;
+  return <div className="ui-tile lg-glass"><span className="ui-muted" style={{ fontSize: 13 }}>{label}</span><b className="ui-num">{value}{sub && <small className="ui-muted"> {sub}</small>}</b></div>;
 }
 export function EmptyState({ glyph, title, children, actions, glyphColor }) {
   return (
@@ -117,15 +129,10 @@ export function EmptyState({ glyph, title, children, actions, glyphColor }) {
   );
 }
 
-/* Thông báo nhanh: bọc app trong <ToastProvider>, gọi useToast()('Đã lưu') */
-const ToastCtx = createContext(() => {});
-export function ToastProvider({ children }) {
-  const [msg, setMsg] = useState('');
-  const t = useRef();
-  const show = useCallback(m => { setMsg(m); clearTimeout(t.current); t.current = setTimeout(() => setMsg(''), 2200); }, []);
-  return <ToastCtx.Provider value={show}>{children}<div className="ui-toast" role="status" hidden={!msg}>{msg}</div></ToastCtx.Provider>;
-}
-export const useToast = () => useContext(ToastCtx);
+/* Thông báo nhanh: message của thư viện. Giữ <ToastProvider> và useToast()('Đã lưu') cho code cũ */
+const toast = m => message.info(m, 2.2);
+export function ToastProvider({ children }) { return children; }
+export const useToast = () => toast;
 
 /* Khung app: thanh bên trên desktop, thanh tab dưới trên điện thoại.
    nav = [{ to, label, short, icon, badge, active }], LinkComponent = Link của router.

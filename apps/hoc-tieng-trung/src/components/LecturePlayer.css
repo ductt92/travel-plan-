@@ -46,14 +46,11 @@
 @keyframes lecFadeUp{from{opacity:0;transform:translateY(1cqw)}to{opacity:1;transform:none}}
 
 .lec-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;border-top:1px solid var(--line)}
-.lec-main{background:var(--jade);color:var(--on-jade);border-color:var(--jade)}
-.lec-main:hover{background:var(--jade-ink)}
 .lec-prog{display:flex;align-items:center;gap:10px;flex:1 1 180px;min-width:150px}
-select.lec-rate{appearance:auto;padding:0 10px}
 .lec:fullscreen{background:#000;display:grid;place-items:center;align-content:center;border-radius:0;border:0}
 .lec:fullscreen .stage{width:min(100vw,177.78vh)}
 .lec:fullscreen .lec-bar{width:min(100vw,177.78vh);background:var(--surface)}
-@media (max-width:600px){.s-sub{font-size:3cqw}.s-sub.zh{font-size:3.6cqw}.lec-bar .ui-chip{min-height:34px;padding:0 10px;font-size:13px}}
+@media (max-width:600px){.s-sub{font-size:3cqw}.s-sub.zh{font-size:3.6cqw}.lec-bar .ui-chip{height:32px;padding:0 10px;font-size:13px}}
 @media (prefers-reduced-motion:reduce){.fade{animation:none}}
 
 /* Chế độ dựng video: chiếm toàn khung nhìn, không animation */
