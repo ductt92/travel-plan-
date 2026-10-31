@@ -1,7 +1,7 @@
 import { Icon } from '@trang/ui';
 import { Tag } from 'react-liquis-glass';
 import { GlassToggle } from '@trang/ui/glass';
-import { MapArt, ZhArt, Hsk6Art } from './Art.jsx';
+import { MapArt, ZhArt, Hsk6Art, AdminArt } from './Art.jsx';
 
 // Các lối vào của site. Thêm app mới: thêm một phần tử vào đây và một tranh trong Art.jsx.
 const CHOICES = [
@@ -19,6 +19,11 @@ const CHOICES = [
     id: 'hsk6', href: 'hsk6/', tag: 'Ngọc · HSK 6', title: 'Ngọc học tiếng Trung', cta: 'Vào học',
     text: 'Bài giảng video theo Giáo trình chuẩn HSK 6, slide chạy theo lời giảng, từ vựng có đọc mẫu, bài khóa và luyện tập.',
     chips: ['Bài 21 · 未来商店', '54 từ', '51 phút video'], Art: Hsk6Art
+  },
+  {
+    id: 'admin', href: 'quan-ly/', tag: 'Học liệu', title: 'Quản lý học liệu', cta: 'Mở trang quản lý',
+    text: 'Giáo trình, bài học và tài liệu đi kèm của Hán Lộ, HSK 6 và 顶石中文: dung lượng repo, Neon, R2 và link video YouTube.',
+    chips: ['6 giáo trình', '118 bài', '30 video YouTube'], Art: AdminArt
   }
 ];
 

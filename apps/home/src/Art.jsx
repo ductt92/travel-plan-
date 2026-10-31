@@ -70,6 +70,44 @@ export function ZhArt() {
   );
 }
 
+export function AdminArt() {
+  // chồng thẻ giáo trình (gáy đỏ Hán Lộ, tím HSK 6, ngọc 顶石中文), ống cơ sở dữ liệu và nút phát video, nền xanh ngọc nhạt
+  return (
+    <>
+      <svg className="choice__art" viewBox="0 0 600 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="ad-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#F4F7F1" /><stop offset=".55" stopColor="#D8EBE2" /><stop offset="1" stopColor="#A9D2C2" /></linearGradient>
+          <linearGradient id="ad-db" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#2F6F5E" /><stop offset="1" stopColor="#4C9480" /></linearGradient>
+        </defs>
+        <rect width="600" height="460" fill="url(#ad-bg)" />
+        <g className="far" fill="#2F6F5E" opacity=".08"><circle cx="510" cy="90" r="80" /><circle cx="70" cy="400" r="120" /></g>
+        <g className="mid" transform="rotate(-4 220 200)">
+          {[['#5B2A6E', 0], ['#2F6F5E', 1], ['#C8281E', 2]].map(([c, i]) => (
+            <g key={c} transform={`translate(${60 + i * 22} ${36 + i * 30})`}>
+              <rect width="290" height="170" rx="14" fill="#FFFFFF" opacity={i === 2 ? 1 : 0.88} />
+              <rect width="12" height="170" rx="6" fill={c} />
+              <rect x="32" y="26" width="120" height="12" rx="6" fill={c} opacity=".85" />
+              <g fill="#1F2A26" opacity=".2"><rect x="32" y="56" width="220" height="8" rx="4" /><rect x="32" y="76" width="180" height="8" rx="4" /><rect x="32" y="96" width="200" height="8" rx="4" /></g>
+            </g>
+          ))}
+        </g>
+        <g className="near">
+          <g transform="translate(410 120)">
+            <path d="M0 18 V96 C0 110 120 110 120 96 V18Z" fill="url(#ad-db)" />
+            <path d="M0 57 C0 71 120 71 120 57" fill="none" stroke="#FFFFFF" strokeWidth="2" opacity=".35" />
+            <ellipse cx="60" cy="18" rx="60" ry="16" fill="#7FBFA9" />
+          </g>
+          <g transform="translate(372 196)">
+            <rect x="-30" y="-21" width="60" height="42" rx="12" fill="#C8281E" />
+            <path d="M-8 -11 L13 0 L-8 11Z" fill="#FFFFFF" />
+          </g>
+        </g>
+      </svg>
+      <span className="choice__stamp choice__stamp--admin" aria-hidden="true">学</span>
+    </>
+  );
+}
+
 export function Hsk6Art() {
   // một tấm slide bài giảng (thanh tím, gạch cam như slide trong video) với nút phát, trên nền kem – tím nhạt
   return (
