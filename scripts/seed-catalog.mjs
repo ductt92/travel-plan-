@@ -9,6 +9,8 @@
 //   hsk1–3       apps/hoc-tieng-trung/src/data/lessons.json (Hán Lộ); video public/video/bai-giang-cap<lv>-bai<NN>.mp4,
 //                giọng đọc public/audio/<khóa>.mp3 (khóa băm của câu, mỗi file tính cho bài đầu tiên dùng câu đó)
 //   hsk6-thuong  bài 1–20, hsk6-ha bài 21–40: hsk6/baiNN/{vid/*.mp4, slides/*.jpg, audio/*.mp3}, gộp mỗi loại một dòng
+//   dingshi      顶石中文: hsk6/ds<chủ đề><bài>/ (cùng cấu trúc), số bài = chủ đề×10 + bài (ds21 → 21) để chạy lại không lệch
+// Sau khi nhập: gắn link YouTube của video Hán Lộ (apps/hoc-tieng-trung/src/data/youtube.json), bài đã có link đó thì bỏ qua.
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { register } from 'node:module';
 import { join } from 'node:path';
@@ -89,29 +91,38 @@ function hanLo() {
 
 // ---- HSK 6 ----
 
+/** Một bài HSK 6 / 顶石中文 trong hsk6/<dir>/: tên lấy từ slides/titles.json, mỗi loại file gộp một dòng */
+function folder(dirName, num, known) {
+  const dir = join(root, 'hsk6', dirName);
+  const t = readJson(join(dir, 'slides', 'titles.json'));
+  const m = (t?.title || '').match(/^Bài\s*[\d.]+\s*[:：]\s*(.+)$/);
+  const title = m?.[1]?.trim() || known?.vi || `Bài ${num}`;
+  const zh = t?.zh || known?.zh || '';
+  const assets = [];
+  for (const [kind, sub, ext, label] of [['video', 'vid', '.mp4', 'đoạn video'], ['slides', 'slides', '.jpg', 'ảnh slide'], ['audio', 'audio', '.mp3', 'file âm thanh']]) {
+    const list = files(join(dir, sub), ext);
+    if (list.length) assets.push({ kind, name: `${list.length} ${label}`, size: list.reduce((s, f) => s + size(join(dir, sub, f)), 0), url: `/hsk6/${dirName}/` });
+  }
+  return { num, title, zh, assets };
+}
+
 function hsk6() {
   const catalog = readJson(join(HSK, 'BaiGiang', 'web', 'catalog.json'));
   if (!catalog) console.warn(`(không đọc được ${join(HSK, 'BaiGiang', 'web', 'catalog.json')}, bài chưa có titles.json sẽ chỉ có số bài)`);
   const known = new Map();
   for (const b of catalog?.books || []) for (const u of b.units || []) for (const l of u.lessons || []) known.set(l.n, l);
 
-  const lesson = n => {
-    const dir = join(root, 'hsk6', `bai${pad2(n)}`);
-    const t = readJson(join(dir, 'slides', 'titles.json'));
-    const m = (t?.title || '').match(/^Bài\s*\d+\s*[:：]\s*(.+)$/);
-    const title = m?.[1]?.trim() || known.get(n)?.vi || `Bài ${n}`;
-    const zh = t?.zh || known.get(n)?.zh || '';
-    const assets = [];
-    for (const [kind, sub, ext, label] of [['video', 'vid', '.mp4', 'đoạn video'], ['slides', 'slides', '.jpg', 'ảnh slide'], ['audio', 'audio', '.mp3', 'file âm thanh']]) {
-      const list = files(join(dir, sub), ext);
-      if (list.length) assets.push({ kind, name: `${list.length} ${label}`, size: list.reduce((s, f) => s + size(join(dir, sub, f)), 0), url: `/hsk6/bai${pad2(n)}/` });
-    }
-    return { num: n, title, zh, assets };
-  };
+  const lesson = n => folder(`bai${pad2(n)}`, n, known.get(n));
   const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => lesson(a + i));
+  // 顶石中文: thư mục ds11, ds12, ds21…, tên bài dạng "Bài 1.1: …" thì giữ "1.1 · …"
+  const ds = files(join(root, 'hsk6'), '').filter(d => /^ds\d{2}$/.test(d)).map(d => {
+    const l = folder(d, Number(d.slice(2)));
+    return { ...l, title: `${d[2]}.${d[3]} · ${l.title}` };
+  });
   return [
     { slug: 'hsk6-thuong', title: 'HSK 6 · Quyển Thượng', sort: 60, lessons: range(1, 20) },
     { slug: 'hsk6-ha', title: 'HSK 6 · Quyển Hạ', sort: 61, lessons: range(21, 40) },
+    ...(ds.length ? [{ slug: 'dingshi', title: '顶石中文', sort: 62, lessons: ds }] : []),
   ];
 }
 
@@ -149,3 +160,21 @@ const res = await fetch(`${URL_}${URL_.includes('?') ? '&' : '?'}import`, {
 const out = await res.json().catch(() => ({}));
 if (!res.ok) { console.error(`Lỗi ${res.status}: ${out.error || 'không rõ'}`); process.exit(1); }
 console.log(`Đã ghi (${res.headers.get('x-backend')}): ${out.courses} khóa, ${out.lessons} bài, ${out.assets} file`);
+
+// ---- link YouTube của video Hán Lộ ----
+
+const yt = readJson(join(root, 'apps', 'hoc-tieng-trung', 'src', 'data', 'youtube.json')) || {};
+const headers = { 'Content-Type': 'application/json', 'X-App-Secret': secret };
+const cat = await fetch(URL_, { headers }).then(r => r.json());
+let added = 0;
+for (const [file, id] of Object.entries(yt)) {
+  const [, lv, no] = file.match(/cap(\d+)-bai(\d+)/) || [];
+  const l = cat.courses?.find(c => c.slug === `hsk${lv}`)?.lessons.find(x => x.num === Number(no));
+  const link = `https://www.youtube.com/watch?v=${id}`;
+  if (!l || l.assets.some(a => a.storage === 'youtube' && a.url === link)) continue;
+  const r = await fetch(`${URL_}${URL_.includes('?') ? '&' : '?'}asset`, {
+    method: 'POST', headers, body: JSON.stringify({ lessonId: l.id, kind: 'video', name: 'Video bài giảng (YouTube)', size: 0, storage: 'youtube', url: link }),
+  });
+  if (r.ok) added++; else console.error(`Lỗi gắn YouTube ${file}: ${r.status}`);
+}
+console.log(`Link YouTube: thêm ${added}, tổng ${Object.keys(yt).length} video Hán Lộ`);
