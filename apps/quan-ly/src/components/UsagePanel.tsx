@@ -89,9 +89,9 @@ export default function UsagePanel({ data }: { data: Catalog }) {
               <span className="usage__icon" aria-hidden="true"><CloudIcon /></span>
               <h3>Cloudflare Pages</h3>
             </div>
-            <Statistic value={fmtBytes(usage.pagesBytes ?? 0)} suffix={<span className="usage__limit">trên ngoc-hsk6.pages.dev</span>} />
+            <Statistic value={fmtBytes(usage.pagesBytes ?? 0)} suffix={<span className="usage__limit">miễn phí</span>} />
             <div className="usage__note">
-              Video, slide, âm thanh HSK 6. Gói miễn phí: tối đa 20.000 file, mỗi file ≤ 25 MB, không giới hạn băng thông.
+              Video, slide, âm thanh HSK 6 ở ngoc-hsk6.pages.dev. Tối đa 20.000 file, mỗi file ≤ 25 MB, không giới hạn băng thông.
             </div>
           </Card>
         )}
