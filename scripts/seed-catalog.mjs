@@ -9,6 +9,8 @@
 //                giọng đọc public/audio/<khóa>.mp3 (khóa băm của câu, mỗi file tính cho bài đầu tiên dùng câu đó)
 //   hsk6-thuong  bài 1–20, hsk6-ha bài 21–40: hsk6/baiNN/{vid/*.mp4, slides/*.jpg, audio/*.mp3}, gộp mỗi loại một dòng
 //   dingshi      顶石中文: hsk6/ds<chủ đề><bài>/ (cùng cấu trúc), số bài = chủ đề×10 + bài (ds21 → 21) để chạy lại không lệch
+//                Video, slide, âm thanh HSK 6 nằm trên Cloudflare Pages: số file, dung lượng lấy ở hsk6/media.json
+//                (bai-giang/tools/deploy_media.sh ghi), storage 'pages'; bài chưa có trong đó thì đếm file trong repo
 // Sau khi nhập: gắn link YouTube của video Hán Lộ (apps/hoc-tieng-trung/src/data/youtube.json), bài đã có link đó thì bỏ qua.
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { register } from 'node:module';
@@ -89,6 +91,8 @@ function hanLo() {
 
 // ---- HSK 6 ----
 
+const MEDIA = readJson(join(root, 'hsk6', 'media.json'));
+
 /** Một bài HSK 6 / 顶石中文 trong hsk6/<dir>/: tên lấy từ slides/titles.json, mỗi loại file gộp một dòng */
 function folder(dirName, num, known) {
   const dir = join(root, 'hsk6', dirName);
@@ -97,7 +101,13 @@ function folder(dirName, num, known) {
   const title = m?.[1]?.trim() || known?.vi || `Bài ${num}`;
   const zh = t?.zh || known?.zh || '';
   const assets = [];
+  const onPages = MEDIA?.lessons?.[dirName];
   for (const [kind, sub, ext, label] of [['video', 'vid', '.mp4', 'đoạn video'], ['slides', 'slides', '.jpg', 'ảnh slide'], ['audio', 'audio', '.mp3', 'file âm thanh']]) {
+    if (onPages) {
+      const [n, bytes] = onPages[kind] || [0, 0];
+      if (n) assets.push({ kind, name: `${n} ${label}`, size: bytes, url: `${MEDIA.base}${dirName}/`, storage: 'pages' });
+      continue;
+    }
     const list = files(join(dir, sub), ext);
     if (list.length) assets.push({ kind, name: `${list.length} ${label}`, size: list.reduce((s, f) => s + size(join(dir, sub, f)), 0), url: `/hsk6/${dirName}/` });
   }

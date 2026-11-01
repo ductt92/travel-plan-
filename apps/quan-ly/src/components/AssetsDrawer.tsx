@@ -41,7 +41,7 @@ interface Item {
 }
 
 let seed = 0;
-const storageColor = { repo: 'warning', r2: 'success', youtube: 'danger' } as const;
+const storageColor = { repo: 'warning', r2: 'success', youtube: 'danger', pages: 'success' } as const;
 
 function Body({ lesson, r2Configured, onChanged, onAddYoutube }: Omit<Props, 'onClose' | 'lesson'> & { lesson: Lesson }) {
   const [queue, setQueue] = useState<Item[]>([]);
@@ -204,6 +204,7 @@ function Body({ lesson, r2Configured, onChanged, onAddYoutube }: Omit<Props, 'on
                       description={
                         a.storage === 'r2' ? 'File trên Cloudflare R2 cũng bị xoá luôn, không hoàn tác được.'
                         : a.storage === 'youtube' ? 'Chỉ gỡ link khỏi bài. Video vẫn còn trên YouTube.'
+                        : a.storage === 'pages' ? 'Chỉ xoá mục trong danh mục. File vẫn nằm trên Cloudflare Pages (ngoc-hsk6.pages.dev).'
                         : 'Chỉ xoá mục trong danh mục. File vẫn nằm trong repo, muốn giảm dung lượng phải xoá trong git.'
                       }
                       okText="Xoá" okDanger placement="left" onConfirm={() => remove(a)}

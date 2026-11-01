@@ -973,7 +973,10 @@ for (const k of ["watched", "pos", "known", "best"]) S[k] = S[k] || {};
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 
 let L = LESSONS.find(l => l.id === S.lesson) || LESSONS[0];
-const url = f => L.id + "/" + f;
+// video, slide, âm thanh nằm trên Cloudflare Pages (tools/deploy_media.sh), không nằm trong repo Vercel;
+// chạy thử trên máy (localhost) thì đọc thẳng từ site/
+const MEDIA = /^(localhost|127\.)/.test(location.hostname) ? "" : "https://ngoc-hsk6.pages.dev/";
+const url = f => MEDIA + L.id + "/" + f;
 const watched = () => (S.watched[L.id] = S.watched[L.id] || {});
 const known = () => new Set(S.known[L.id] || []);
 const setKnown = (i, on) => { const k = known(); on ? k.add(i) : k.delete(i); S.known[L.id] = [...k]; save(); renderStats(); };
@@ -2040,13 +2043,13 @@ async function verToggle(n, active) {
 
 /* ---------- Lọc thuật ngữ từ biên bản bài giảng (.docx, .txt) ----------
    Lớp 1, ngay trên trang: dò các thuật ngữ đã có trong danh sách xuất hiện ở biên bản (sẽ ghi thêm buổi học).
-   Lớp 2, AI qua /api/<node|go>/ai (Gemini, hết lượt thì máy chủ tự chuyển sang Groq, OpenRouter, Mistral):
+   Lớp 2, AI qua /api/<node|go>/ai (Gemini, hết lượt thì máy chủ tự chuyển sang NVIDIA NIM, Cerebras, GLM, Groq, Mistral, OpenRouter):
    cắt biên bản thành đoạn ~2.000 chữ (API nhận tối đa 8.000 ký tự mỗi lượt),
    mỗi đoạn hỏi AI các thuật ngữ chuyên ngành kèm pinyin, nghĩa, nhóm; bỏ những từ đã có.
    Xem lại, chọn rồi tạo file Excel (docToPreview) và mở bản xem trước chung với nhập Excel:
    người dùng chọn "thêm vào" (gộp, termMerge) hay "ghi đè", mỗi lần ghi máy chủ giữ một phiên bản. */
 const DOC_CHUNK = 2000, DOC_MAX_CHUNKS = 60, DOC_WORKERS = 3;
-const AI_NAME = { gemini: "Gemini", groq: "Groq", openrouter: "OpenRouter", mistral: "Mistral" };
+const AI_NAME = { gemini: "Gemini", nvidia: "NVIDIA NIM", cerebras: "Cerebras", glm: "GLM", groq: "Groq", mistral: "Mistral", openrouter: "OpenRouter" };
 // mỗi ô chỉ nhận đúng loại của nó, thả nhầm thì chỉ sang ô kia chứ không tự đổi việc
 async function termDropFile(kind, f) {
   if (kind === "doc") {

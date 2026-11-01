@@ -80,8 +80,21 @@ export default function UsagePanel({ data }: { data: Catalog }) {
           icon={<FolderIcon />} title="File trong repo"
           used={usage.repoBytes} limit={REPO_SOFT_LIMIT} limitLabel="~1 GB nên có"
         >
-          Repo git nên giữ dưới ~1 GB. Các file này nên chuyển dần sang R2 (hoặc video lên YouTube) rồi xoá khỏi repo.
+          Repo git nên giữ dưới ~1 GB. Các file này nên chuyển dần sang Cloudflare Pages/R2 (hoặc video lên YouTube) rồi xoá khỏi repo.
         </Meter>
+
+        {(usage.pagesBytes ?? 0) > 0 && (
+          <Card className="usage" size="sm">
+            <div className="usage__head">
+              <span className="usage__icon" aria-hidden="true"><CloudIcon /></span>
+              <h3>Cloudflare Pages</h3>
+            </div>
+            <Statistic value={fmtBytes(usage.pagesBytes ?? 0)} suffix={<span className="usage__limit">trên ngoc-hsk6.pages.dev</span>} />
+            <div className="usage__note">
+              Video, slide, âm thanh HSK 6. Gói miễn phí: tối đa 20.000 file, mỗi file ≤ 25 MB, không giới hạn băng thông.
+            </div>
+          </Card>
+        )}
 
         <Card className="usage usage--yt" size="sm">
           <div className="usage__head">

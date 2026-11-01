@@ -1,7 +1,8 @@
 // Danh mục khóa học cho trang quản lý (apps/quan-ly). Bản Go: backend/go/catalog.go, cùng hợp đồng.
 //
 // Cơ sở dữ liệu chỉ giữ danh mục (khóa → bài → file); file thật nằm trong repo (storage 'repo'),
-// trên Cloudflare R2 ('r2', trình duyệt tải thẳng lên bằng URL ký sẵn) hoặc là link YouTube ('youtube').
+// trên Cloudflare R2 ('r2', trình duyệt tải thẳng lên bằng URL ký sẵn), là link YouTube ('youtube'), hoặc trên
+// Cloudflare Pages ('pages': video/slide/âm thanh HSK 6 ở ngoc-hsk6.pages.dev, chỉ ghi qua ?import).
 //
 // GET    /api/<node|go>/quan-ly            → { courses, usage, r2 }
 // GET    …?check                           → kiểm mật khẩu, không đụng cơ sở dữ liệu
@@ -41,17 +42,17 @@ CREATE TABLE IF NOT EXISTS catalog_assets (
   name       text NOT NULL,
   size       bigint NOT NULL DEFAULT 0,
   url        text NOT NULL DEFAULT '',
-  storage    text NOT NULL CONSTRAINT catalog_assets_storage_check CHECK (storage IN ('repo', 'r2', 'youtube')),
+  storage    text NOT NULL CONSTRAINT catalog_assets_storage_check CHECK (storage IN ('repo', 'r2', 'youtube', 'pages')),
   key        text NOT NULL DEFAULT '',
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS catalog_assets_lesson_idx ON catalog_assets (lesson_id);
 DO $$ BEGIN
-  -- bảng tạo trước khi có 'youtube' thì nới ràng buộc, chỉ một lần
+  -- bảng tạo trước khi có 'youtube', 'pages' thì nới ràng buộc, chỉ một lần
   IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'catalog_assets'::regclass
-                 AND conname = 'catalog_assets_storage_check' AND pg_get_constraintdef(oid) LIKE '%youtube%') THEN
+                 AND conname = 'catalog_assets_storage_check' AND pg_get_constraintdef(oid) LIKE '%pages%') THEN
     ALTER TABLE catalog_assets DROP CONSTRAINT IF EXISTS catalog_assets_storage_check;
-    ALTER TABLE catalog_assets ADD CONSTRAINT catalog_assets_storage_check CHECK (storage IN ('repo', 'r2', 'youtube'));
+    ALTER TABLE catalog_assets ADD CONSTRAINT catalog_assets_storage_check CHECK (storage IN ('repo', 'r2', 'youtube', 'pages'));
   END IF;
 END $$;
 `;
@@ -173,6 +174,7 @@ async function readAll(p) {
     p.query('SELECT pg_database_size(current_database())::bigint AS n'),
     p.query(`SELECT coalesce(sum(size) FILTER (WHERE storage = 'r2'), 0)::bigint   AS r2,
                     coalesce(sum(size) FILTER (WHERE storage = 'repo'), 0)::bigint AS repo,
+                    coalesce(sum(size) FILTER (WHERE storage = 'pages'), 0)::bigint AS pages,
                     count(*) FILTER (WHERE storage = 'youtube')::bigint            AS yt
              FROM catalog_assets`),
   ]);
@@ -190,7 +192,7 @@ async function readAll(p) {
     usage: {
       dbBytes: Number(size.rows[0].n), dbLimitBytes: DB_LIMIT,
       r2Bytes: Number(sums.rows[0].r2), r2LimitBytes: R2_LIMIT,
-      repoBytes: Number(sums.rows[0].repo), youtubeCount: Number(sums.rows[0].yt),
+      repoBytes: Number(sums.rows[0].repo), youtubeCount: Number(sums.rows[0].yt), pagesBytes: Number(sums.rows[0].pages),
     },
     r2: { configured: r2ready(e), publicUrl: e.publicUrl },
   };
@@ -255,7 +257,7 @@ function checkImport(body) {
         if (size === undefined) return { error: `${atL}: dung lượng không hợp lệ` };
         const url = text(a.url, MAX_URL);
         if (!validUrl(url)) return { error: `${atL}: đường dẫn không hợp lệ` };
-        files.push({ kind: a.kind, name, size, url });
+        files.push({ kind: a.kind, name, size, url, storage: a.storage === 'pages' ? 'pages' : 'repo' });
       }
       lessons.push({ num, title: ltitle, zh: text(l.zh, MAX_TITLE), assets: files });
     }
@@ -276,7 +278,7 @@ async function runImport(p, courses) {
         [course.slug, course.title, course.sort]);
       n.courses++;
       if (!course.lessons.length) continue;
-      // mỗi khóa ba câu lệnh: ghi gộp bài, xoá file 'repo' cũ của các bài đó, ghi file mới (r2, youtube giữ nguyên)
+      // mỗi khóa ba câu lệnh: ghi gộp bài, xoá file 'repo'/'pages' cũ của các bài đó, ghi file mới (r2, youtube giữ nguyên)
       const ls = course.lessons;
       const { rows: ids } = await c.query(
         `INSERT INTO catalog_lessons (course_id, num, title, zh)
@@ -285,13 +287,14 @@ async function runImport(p, courses) {
         [row.id, ls.map(l => l.num), ls.map(l => l.title), ls.map(l => l.zh)]);
       n.lessons += ids.length;
       const idOf = new Map(ids.map(r => [r.num, r.id]));
-      await c.query(`DELETE FROM catalog_assets WHERE storage = 'repo' AND lesson_id = ANY($1::int[])`, [ids.map(r => r.id)]);
+      await c.query(`DELETE FROM catalog_assets WHERE storage IN ('repo', 'pages') AND lesson_id = ANY($1::int[])`, [ids.map(r => r.id)]);
       const files = ls.flatMap(l => l.assets.map(a => ({ ...a, lesson: idOf.get(l.num) })));
       if (files.length) {
         await c.query(
           `INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage)
-           SELECT l, k, nm, s, u, 'repo' FROM unnest($1::int[], $2::text[], $3::text[], $4::bigint[], $5::text[]) AS t(l, k, nm, s, u)`,
-          [files.map(f => f.lesson), files.map(f => f.kind), files.map(f => f.name), files.map(f => String(f.size)), files.map(f => f.url)]);
+           SELECT * FROM unnest($1::int[], $2::text[], $3::text[], $4::bigint[], $5::text[], $6::text[])`,
+          [files.map(f => f.lesson), files.map(f => f.kind), files.map(f => f.name), files.map(f => String(f.size)), files.map(f => f.url),
+            files.map(f => f.storage)]);
         n.assets += files.length;
       }
     }

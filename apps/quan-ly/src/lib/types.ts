@@ -1,5 +1,5 @@
 export type AssetKind = 'video' | 'slides' | 'audio' | 'pdf' | 'other';
-export type Storage = 'repo' | 'r2' | 'youtube';
+export type Storage = 'repo' | 'r2' | 'youtube' | 'pages';
 
 export interface Asset {
   id: number;
@@ -38,6 +38,8 @@ export interface Usage {
   repoBytes: number;
   /** Số video gắn link YouTube (không tốn chỗ của mình). */
   youtubeCount?: number;
+  /** Video, slide, âm thanh HSK 6 trên Cloudflare Pages (ngoc-hsk6.pages.dev). */
+  pagesBytes?: number;
 }
 
 export interface Catalog {

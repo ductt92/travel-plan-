@@ -51,17 +51,17 @@ var catalogTables = []string{
 		name       text NOT NULL,
 		size       bigint NOT NULL DEFAULT 0,
 		url        text NOT NULL DEFAULT '',
-		storage    text NOT NULL CONSTRAINT catalog_assets_storage_check CHECK (storage IN ('repo', 'r2', 'youtube')),
+		storage    text NOT NULL CONSTRAINT catalog_assets_storage_check CHECK (storage IN ('repo', 'r2', 'youtube', 'pages')),
 		key        text NOT NULL DEFAULT '',
 		created_at timestamptz NOT NULL DEFAULT now()
 	)`,
 	`CREATE INDEX IF NOT EXISTS catalog_assets_lesson_idx ON catalog_assets (lesson_id)`,
-	// bảng tạo trước khi có 'youtube' thì nới ràng buộc, chỉ một lần
+	// bảng tạo trước khi có 'youtube', 'pages' thì nới ràng buộc, chỉ một lần
 	`DO $$ BEGIN
 		IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'catalog_assets'::regclass
-		               AND conname = 'catalog_assets_storage_check' AND pg_get_constraintdef(oid) LIKE '%youtube%') THEN
+		               AND conname = 'catalog_assets_storage_check' AND pg_get_constraintdef(oid) LIKE '%pages%') THEN
 			ALTER TABLE catalog_assets DROP CONSTRAINT IF EXISTS catalog_assets_storage_check;
-			ALTER TABLE catalog_assets ADD CONSTRAINT catalog_assets_storage_check CHECK (storage IN ('repo', 'r2', 'youtube'));
+			ALTER TABLE catalog_assets ADD CONSTRAINT catalog_assets_storage_check CHECK (storage IN ('repo', 'r2', 'youtube', 'pages'));
 		END IF;
 	END $$`,
 }
@@ -362,6 +362,7 @@ type catAll struct {
 		R2LimitBytes int64 `json:"r2LimitBytes"`
 		RepoBytes    int64 `json:"repoBytes"`
 		YoutubeCount int64 `json:"youtubeCount"`
+		PagesBytes   int64 `json:"pagesBytes"`
 	} `json:"usage"`
 	R2 struct {
 		Configured bool   `json:"configured"`
@@ -436,19 +437,20 @@ func catReadAll(ctx context.Context, p *pgxpool.Pool) (*catAll, error) {
 	}
 	rows.Close()
 
-	var dbBytes, r2Bytes, repoBytes, ytCount int64
+	var dbBytes, r2Bytes, repoBytes, pagesBytes, ytCount int64
 	if err := p.QueryRow(ctx, `SELECT pg_database_size(current_database())::bigint`).Scan(&dbBytes); err != nil {
 		return nil, err
 	}
 	if err := p.QueryRow(ctx, `SELECT coalesce(sum(size) FILTER (WHERE storage = 'r2'), 0)::bigint,
 	                                  coalesce(sum(size) FILTER (WHERE storage = 'repo'), 0)::bigint,
+	                                  coalesce(sum(size) FILTER (WHERE storage = 'pages'), 0)::bigint,
 	                                  count(*) FILTER (WHERE storage = 'youtube')::bigint
-	                           FROM catalog_assets`).Scan(&r2Bytes, &repoBytes, &ytCount); err != nil {
+	                           FROM catalog_assets`).Scan(&r2Bytes, &repoBytes, &pagesBytes, &ytCount); err != nil {
 		return nil, err
 	}
 	out := &catAll{Courses: courses}
 	out.Usage.DBBytes, out.Usage.DBLimitBytes, out.Usage.R2Bytes, out.Usage.R2LimitBytes = dbBytes, catDBLimit, r2Bytes, catR2Limit
-	out.Usage.RepoBytes, out.Usage.YoutubeCount = repoBytes, ytCount
+	out.Usage.RepoBytes, out.Usage.YoutubeCount, out.Usage.PagesBytes = repoBytes, ytCount, pagesBytes
 	e := r2FromEnv()
 	out.R2.Configured, out.R2.PublicURL = e.ready(), e.publicURL
 	return out, nil
@@ -491,8 +493,8 @@ func catRemoveWithFiles(w http.ResponseWriter, ctx context.Context, p *pgxpool.P
 }
 
 type catImportAsset struct {
-	kind, name, url string
-	size            int64
+	kind, name, url, storage string // storage: 'repo' hoặc 'pages'
+	size                     int64
 }
 type catImportLesson struct {
 	num       int64
@@ -589,7 +591,11 @@ func catCheckImport(body map[string]any) ([]catImportCourse, string) {
 				if !catValidURL(u) {
 					return nil, atL + ": đường dẫn không hợp lệ"
 				}
-				lesson.assets = append(lesson.assets, catImportAsset{kind: a["kind"].(string), name: name, url: u, size: size})
+				storage := "repo"
+				if a["storage"] == "pages" {
+					storage = "pages"
+				}
+				lesson.assets = append(lesson.assets, catImportAsset{kind: a["kind"].(string), name: name, url: u, size: size, storage: storage})
 			}
 			course.lessons = append(course.lessons, lesson)
 		}
@@ -646,21 +652,22 @@ func catRunImport(ctx context.Context, p *pgxpool.Pool, courses []catImportCours
 			return nil, err
 		}
 		nl += len(ids)
-		if _, err := tx.Exec(ctx, `DELETE FROM catalog_assets WHERE storage = 'repo' AND lesson_id = ANY($1::int[])`, ids); err != nil {
+		if _, err := tx.Exec(ctx, `DELETE FROM catalog_assets WHERE storage IN ('repo', 'pages') AND lesson_id = ANY($1::int[])`, ids); err != nil {
 			return nil, err
 		}
 		var lids, sizes []int64
-		var kinds, names, urls []string
+		var kinds, names, urls, storages []string
 		for _, l := range c.lessons {
 			for _, a := range l.assets {
 				lids, kinds, names, sizes, urls = append(lids, idOf[l.num]), append(kinds, a.kind), append(names, a.name), append(sizes, a.size), append(urls, a.url)
+				storages = append(storages, a.storage)
 			}
 		}
 		if len(lids) > 0 {
 			if _, err := tx.Exec(ctx,
 				`INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage)
-				 SELECT l, k, nm, s, u, 'repo' FROM unnest($1::int[], $2::text[], $3::text[], $4::bigint[], $5::text[]) AS t(l, k, nm, s, u)`,
-				lids, kinds, names, sizes, urls); err != nil {
+				 SELECT * FROM unnest($1::int[], $2::text[], $3::text[], $4::bigint[], $5::text[], $6::text[])`,
+				lids, kinds, names, sizes, urls, storages); err != nil {
 				return nil, err
 			}
 			na += len(lids)

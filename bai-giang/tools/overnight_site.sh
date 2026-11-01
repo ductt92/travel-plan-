@@ -32,7 +32,10 @@ build() {
 # dựng rồi push, giữ khóa suốt hai bước để không ai đổi site/ giữa chừng
 round() { lock; build && push; local r=$?; unlock; return $r; }
 push() {
-  rsync -a --delete site/ "$REPO/hsk6/" || return 1
+  # video, slide, âm thanh lên Cloudflare Pages (tools/deploy_media.sh), repo chỉ nhận trang và dữ liệu nhẹ
+  tools/deploy_media.sh >> "$LOG" 2>&1 || return 1
+  rsync -a --delete --exclude='/*/vid/' --exclude='/*/audio/' --exclude='/*/slides/*.jpg' --exclude='/media.json' \
+    site/ "$REPO/hsk6/" || return 1
   cd "$REPO" || return 1
   git add hsk6 && git commit -q -m "feat(hsk6): thêm các bài 顶石中文 vừa render xong
 

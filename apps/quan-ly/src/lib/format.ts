@@ -36,5 +36,5 @@ export function guessKind(file: { name: string; type: string }): AssetKind {
 // video YouTube nằm trên YouTube, không tính vào dung lượng của mình
 export const lessonBytes = (l: Lesson) => l.assets.reduce((s, a) => s + (a.storage === 'youtube' ? 0 : a.size), 0);
 export const hasYoutube = (l: Lesson) => l.assets.some(a => a.storage === 'youtube');
-export const STORAGE_LABEL = { repo: 'Repo', r2: 'R2', youtube: 'YouTube' } as const;
+export const STORAGE_LABEL = { repo: 'Repo', r2: 'R2', youtube: 'YouTube', pages: 'Pages' } as const;
 export const lessonsBytes = (ls: Lesson[]) => ls.reduce((s, l) => s + lessonBytes(l), 0);
