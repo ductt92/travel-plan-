@@ -49,6 +49,26 @@ function useMapChips() {
   return chips;
 }
 
+// Ngọc về Việt Nam (ngày dự kiến, đổi ở đây khi chốt vé)
+const NGOC_VE = new Date(2027, 0, 10);
+
+/** "Còn N ngày nữa Ngọc về", đếm theo ngày lịch ở giờ máy; qua ngày đó thì thôi hiện */
+function NgocCountdown({ now }) {
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.round((NGOC_VE - today) / 86400000);
+  if (days < 0) return null;
+  const when = NGOC_VE.toLocaleDateString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric' });
+  return (
+    <p className="home__cd" role="status">
+      <span aria-hidden="true">💗</span>
+      {days === 0
+        ? <span><b>Hôm nay Ngọc về</b></span>
+        : <span>Còn <b className="home__cd-n">{days.toLocaleString('vi-VN')}</b> ngày nữa Ngọc về</span>}
+      <span className="home__cd-when">khoảng {when}</span>
+    </p>
+  );
+}
+
 function greeting(h) { return h < 11 ? 'Chào buổi sáng' : h < 18 ? 'Chào buổi chiều' : 'Chào buổi tối'; }
 
 function ChoiceCard({ c, chips = c.chips }) {
@@ -79,6 +99,7 @@ export function App() {
             <GlassToggle />
           </div>
           <h1>{greeting(d.getHours())}, hôm nay mở <em>trang nào</em>?</h1>
+          <NgocCountdown now={d} />
         </header>
         <div className="home__choices">{CHOICES.map(c => <ChoiceCard key={c.id} c={c} chips={c.id === 'map' ? mapChips ?? c.chips : c.chips} />)}</div>
       </main>

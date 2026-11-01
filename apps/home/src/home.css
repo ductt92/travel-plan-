@@ -13,6 +13,12 @@ body::after{width:560px;height:560px;right:-180px;bottom:-200px;background:radia
 .home__top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .home__hello h1{font:600 clamp(28px,4.4vw,44px)/1.15 var(--f-serif)}
 .home__hello em{font-style:italic;background:linear-gradient(90deg,#E0702F,#C2335B 55%,#2F7D5B);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* đếm ngày Ngọc về, ngay dưới lời chào */
+.home__cd{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px 10px;align-self:flex-start;margin:2px 0 0;padding:7px 14px;border-radius:16px;
+  font-size:14px;color:var(--ink);background:color-mix(in srgb,#C2335B 9%,transparent);border:1px solid color-mix(in srgb,#C2335B 22%,transparent)}
+.home__cd-n{font:700 18px/1 var(--f-serif);color:#C2335B}
+.home__cd-when{font-size:12.5px;color:var(--muted)}
+:root:not([data-glass="off"]) .home__cd{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .home__choices{display:grid;grid-template-columns:1fr;gap:24px}
 @media (min-width:720px){.home__choices{grid-template-columns:repeat(2,1fr)}} /* 4 thẻ xếp 2×2 cho cân */
 .home__foot{position:relative;z-index:1;text-align:center;font-size:13px;color:var(--muted);padding:0 16px 32px}
