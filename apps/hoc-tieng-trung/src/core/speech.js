@@ -50,13 +50,25 @@ export function playClip(lang, text, rate = 1, done = () => {}) {
     a.play().catch(() => tts(lang, text, rate, fin));
   } else tts(lang, text, rate, fin);
 }
-/** Đọc một câu tiếng Trung (dừng câu đang đọc) */
-export function say(text, rate = 1) { stopVoice(); playClip('zh', text, rate); }
+/** Đọc một câu tiếng Trung (dừng câu hay loạt câu đang đọc) */
+export function say(text, rate = 1) { stopQueue(); playClip('zh', text, rate); }
 let qTok = 0;
-/** Đọc lần lượt nhiều câu tiếng Trung */
-export function sayQueue(list) {
+// tên loạt câu đang đọc (vd "words-1-1"), để nút của loạt đó đổi thành "Dừng"; null là không đọc gì
+let qName = null;
+const qSubs = new Set();
+const setQueue = n => { qName = n; qSubs.forEach(f => f()); };
+/** Đăng ký nghe đổi loạt đang đọc (dùng với useSyncExternalStore), trả về hàm huỷ */
+export const onQueue = f => { qSubs.add(f); return () => { qSubs.delete(f); }; };
+export const queueName = () => qName;
+/** Đọc lần lượt nhiều câu tiếng Trung; `name` để biết loạt nào đang đọc */
+export function sayQueue(list, name = 'queue') {
   stopVoice(); const tok = ++qTok;
-  const next = i => { if (i < list.length && tok === qTok) playClip('zh', list[i], 1, () => setTimeout(() => next(i + 1), 450)); };
+  setQueue(name);
+  const next = i => {
+    if (tok !== qTok) return;
+    if (i >= list.length) { setQueue(null); return; }
+    playClip('zh', list[i], 1, () => setTimeout(() => next(i + 1), 450));
+  };
   next(0);
 }
-export function stopQueue() { qTok++; stopVoice(); }
+export function stopQueue() { qTok++; stopVoice(); if (qName) setQueue(null); }

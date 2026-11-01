@@ -5,9 +5,9 @@ import { Breadcrumbs, Button, Card, EmptyState, Icon, IconButton, Row, Stack, Ta
 import { TextArea } from 'react-liquis-glass';
 import { LESSONS, LEVELS, lessonById } from '../core/data.js';
 import { useStore, update, markPart, activity, addCards, lessonDone } from '../core/store.js';
-import { say, sayQueue, stopQueue, hasAudioPack, audioReady, onVoices, viVoice } from '../core/speech.js';
+import { say, stopQueue, hasAudioPack, audioReady, onVoices, viVoice } from '../core/speech.js';
 import { buildLecture, lectureScript } from '../core/lecture.js';
-import { Hz, WordCard } from '../components/Hanzi.jsx';
+import { Hz, QueueButton, WordCard } from '../components/Hanzi.jsx';
 import { LecturePlayer, whoTone } from '../components/LecturePlayer.jsx';
 import './LessonView.css';
 
@@ -94,7 +94,7 @@ export function LessonView() {
     <>
       <Row between>
         <h2 style={{ fontSize: 18 }}>{l.words.length} từ mới</h2>
-        <Row gap={10}><span className="ui-muted" style={{ fontSize: 13 }}>Màu pinyin = thanh điệu</span><Button variant="soft" icon="play" onClick={() => sayQueue(l.words.map(w => w.hz))}>Nghe tất cả</Button></Row>
+        <Row gap={10}><span className="ui-muted" style={{ fontSize: 13 }}>Màu pinyin = thanh điệu</span><QueueButton list={l.words.map(w => w.hz)} name={`words-${l.id}`}>Nghe tất cả</QueueButton></Row>
       </Row>
       <div className="words">{l.words.map(w => <WordCard key={w.id} w={w} />)}</div>
       <Card><Row between>
@@ -137,7 +137,7 @@ export function LessonView() {
         <Card key={di} as="section"><Stack gap={20}>
           <Row between>
             <Stack gap={2}><span className="ui-eyebrow">Hội thoại {di + 1}</span><h2 style={{ fontSize: 18 }}>{d.title}</h2></Stack>
-            <Button variant="soft" icon="play" onClick={() => sayQueue(d.lines.map(x => x[1]))}>Nghe cả đoạn</Button>
+            <QueueButton list={d.lines.map(x => x[1])} name={`dialog-${l.id}-${di}`}>Nghe cả đoạn</QueueButton>
           </Row>
           <Stack gap={18} style={{ maxWidth: 780 }}>
             {d.lines.map((x, k) => (

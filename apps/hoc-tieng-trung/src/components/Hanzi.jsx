@@ -1,8 +1,9 @@
 // Component riêng của app học: hiển thị chữ Hán, pinyin tô màu theo thanh, thẻ từ.
+import { useSyncExternalStore } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, IconButton, LinkButton, Pill } from '@trang/ui';
+import { Button, Icon, IconButton, LinkButton, Pill } from '@trang/ui';
 import { syls, toneOf, plainHz } from '../core/pinyin.js';
-import { say } from '../core/speech.js';
+import { onQueue, queueName, say, sayQueue, stopQueue } from '../core/speech.js';
 import { useStore } from '../core/store.js';
 
 /** Chữ Hán với font Noto Serif SC */
@@ -19,6 +20,17 @@ export function Hv({ children, style }) { return <span className="hv" style={sty
 /** Nút loa đọc một câu tiếng Trung */
 export function SayButton({ text, label, size = 44, variant }) {
   return <IconButton icon="sound" label={label || `Nghe ${text}`} size={size} variant={variant} onClick={() => say(text)} />;
+}
+
+/** Nút đọc liên tục cả loạt câu (Nghe tất cả, Nghe cả đoạn); đang đọc thì thành nút Dừng */
+export function QueueButton({ list, name, children }) {
+  const playing = useSyncExternalStore(onQueue, queueName) === name;
+  return (
+    <Button variant="soft" icon={playing ? 'pause' : 'play'} aria-pressed={playing}
+      onClick={() => (playing ? stopQueue() : sayQueue(list, name))}>
+      {playing ? 'Dừng' : children}
+    </Button>
+  );
 }
 
 /** Thẻ từ mới: chữ, pinyin, Hán Việt, nghĩa, câu ví dụ, nút nghe và tập viết */
