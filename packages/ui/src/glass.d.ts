@@ -14,3 +14,9 @@ export interface GlassToggleProps extends Omit<ButtonProps, 'onClick' | 'childre
   compact?: boolean;
 }
 export declare function GlassToggle(props: GlassToggleProps): JSX.Element;
+
+export type ThemeMode = 'auto' | 'light' | 'dark';
+export declare function getThemeMode(): ThemeMode;
+export declare function setThemeMode(mode: ThemeMode): void;
+export declare function useThemeMode(): ThemeMode;
+export declare function ThemeToggle(props: GlassToggleProps): JSX.Element;

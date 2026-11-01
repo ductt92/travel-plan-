@@ -8,7 +8,7 @@ import { Segmented } from 'react-liquis-glass';
 import { LEVELS } from '../core/data.js';
 import { plainHz } from '../core/pinyin.js';
 import { buildLecture, stepParts } from '../core/lecture.js';
-import { playClip, stopVoice } from '../core/speech.js';
+import { holdVoice, playClip, stopQueue, stopVoice } from '../core/speech.js';
 import { markPart, activity } from '../core/store.js';
 import { Py } from './Hanzi.jsx';
 import './LecturePlayer.css';
@@ -108,7 +108,9 @@ export function LecturePlayer({ lesson, renderMode = false, startStep = 0, slide
   useEffect(() => {
     if (!playing || renderMode || i >= N) return;
     const t = ++tok.current;
-    stopVoice();
+    stopQueue();
+    // bấm nghe câu khác giữa chừng thì bài giảng tự tạm dừng, không đọc chồng
+    const release = holdVoice(() => setPlaying(false));
     const parts = stepParts(steps[i]);
     const next = k => {
       if (t !== tok.current) return;
@@ -121,7 +123,8 @@ export function LecturePlayer({ lesson, renderMode = false, startStep = 0, slide
       playClip(p.lang, p.text, rate, () => setTimeout(() => next(k + 1), (p.lang === 'zh' ? 450 : 250) / rate));
     };
     const start = setTimeout(() => next(0), 90);
-    return () => { clearTimeout(start); tok.current++; stopVoice(); };
+    // bị câu khác chen vào thì loa đã thuộc câu đó: không tắt giọng của nó
+    return () => { clearTimeout(start); tok.current++; if (release()) stopVoice(); };
   }, [playing, i, rate, nonce, renderMode, N, steps, lesson.id, toast]);
 
   if (!N) return null;

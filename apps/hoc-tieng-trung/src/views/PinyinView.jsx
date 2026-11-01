@@ -34,7 +34,7 @@ function Initials() {
               const r = spell(i, g.fin);
               const v = r && PINYIN[r[1]];
               return (
-                <button key={i} type="button" className="pv-key" onClick={() => v && say(v[0])} disabled={!v} aria-label={v ? `${i}: nghe ${r[0]} (${v[0]})` : i}>
+                <button key={i} type="button" className={`pv-key${v ? ' has-sound' : ''}`} onClick={() => v && say(v[0])} disabled={!v} aria-label={v ? `${i}: nghe ${r[0]} (${v[0]})` : i}>
                   <b>{i}</b>{r && <small>{r[0]}</small>}
                 </button>
               );
@@ -90,7 +90,7 @@ export function PinyinView() {
       </section>
 
       <section className="pv-sec" aria-labelledby="pv-table">
-        <div className="pv-sec__head"><span className="pv-num">3</span><div><h2 id="pv-table">Bảng ghép âm tiết</h2><p>Hàng là vần, cột là phụ âm đầu. Chọn nhóm vần rồi bấm một ô.</p></div></div>
+        <div className="pv-sec__head"><span className="pv-num">3</span><div><h2 id="pv-table">Bảng ghép âm tiết</h2><p>Hàng là vần, cột là phụ âm đầu. Chọn nhóm vần rồi bấm một ô để nghe đọc.</p></div></div>
         <div className="pv-play">
           <SyllableCard sel={sel} />
           <GroupTabs value={tab} onChange={setTab} />

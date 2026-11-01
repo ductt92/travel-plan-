@@ -59,6 +59,11 @@
 .pyc{width:100%;min-width:48px;min-height:38px;border:0;border-radius:10px;background:transparent;font:500 14px var(--f-py);color:var(--ink);cursor:pointer;transition:background .12s,transform .12s}
 .pyc:hover{background:var(--jade-soft);transform:translateY(-1px)}
 .pyc.is-on{background:var(--jade);color:var(--on-jade);box-shadow:0 6px 14px -8px var(--jade)}
+/* ô nhỏ: loa chỉ hiện khi rê chuột / đang đọc, khỏi rối bảng; bấm thì lún */
+.pyc.has-sound::after{opacity:0;top:3px;right:3px;width:9px;height:9px}
+.pyc.has-sound:hover::after,.pyc[data-speaking]::after{opacity:1}
+.pyc.is-on.has-sound::after{background:var(--on-jade)}
+.pyc:active{transform:scale(.94)}
 
 @media (max-width:900px){
   .pk-legend{gap:6px}

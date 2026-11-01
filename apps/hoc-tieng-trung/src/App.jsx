@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AppShell, Brand, ProgressBar, Icon, ToastProvider } from '@trang/ui';
-import { GlassToggle } from '@trang/ui/glass';
+import { GlassToggle, ThemeToggle } from '@trang/ui/glass';
 import { useStore, dueCards, todayN, streak, GOAL } from './core/store.js';
 import { stopQueue } from './core/speech.js';
 import { HomeView } from './views/HomeView.jsx';
@@ -40,6 +40,7 @@ function Goal() {
       <div className="side-links">
         <a className="side-home" href="../"><Icon name="home" size={18} />Trang chủ</a>
         <GlassToggle />
+        <ThemeToggle />
       </div>
       <div className="side-goal__box">
         <span className="ui-eyebrow">Mục tiêu hôm nay</span>
@@ -66,7 +67,7 @@ function Shell({ children }) {
       footer={<Goal />}
       mobileBar={<>
         <Brand LinkComponent={Link} href="/" mark="汉路" title="Hán Lộ" sub="Tiếng Trung theo HSK 3.0" />
-        <GlassToggle />
+        <span className="mobile-tools"><ThemeToggle compact /><GlassToggle /></span>
       </>}>
       {children}
       <PinyinFab />

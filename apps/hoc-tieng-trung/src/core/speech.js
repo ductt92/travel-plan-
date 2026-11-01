@@ -24,10 +24,25 @@ export function audioKey(lang, text) {
   return h1.toString(16).padStart(8, '0') + h2.toString(16).padStart(8, '0');
 }
 
+// Nút vừa bấm để nghe sáng lên (data-speaking, CSS trong app.css) cho tới khi đọc xong:
+// không phải sửa từng nút, chỉ cần nhớ phần tử vừa được bấm/nhấn phím ngay trước khi say() chạy
+let pressed = null, pressedAt = 0, lit = null;
+if (typeof document !== 'undefined') {
+  const remember = el => { pressed = el; pressedAt = performance.now(); };
+  document.addEventListener('pointerdown', e => remember(e.target.closest?.('button, a, [role="button"]')), true);
+  document.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') remember(document.activeElement); }, true);
+}
+function light(on) {
+  if (lit) lit.removeAttribute('data-speaking');
+  lit = null;
+  if (on && pressed?.isConnected && performance.now() - pressedAt < 1500) { lit = pressed; lit.setAttribute('data-speaking', ''); }
+}
+
 let curAudio = null;
 export function stopVoice() {
   if (curAudio) { curAudio.onended = curAudio.onerror = null; curAudio.pause(); curAudio = null; }
   if ('speechSynthesis' in window) speechSynthesis.cancel();
+  light(false);
 }
 function tts(lang, text, rate, done) {
   const voice = lang === 'zh' ? zhVoice : viVoice;
@@ -50,8 +65,24 @@ export function playClip(lang, text, rate = 1, done = () => {}) {
     a.play().catch(() => tts(lang, text, rate, fin));
   } else tts(lang, text, rate, fin);
 }
-/** Đọc một câu tiếng Trung (dừng câu hay loạt câu đang đọc) */
-export function say(text, rate = 1) { stopQueue(); playClip('zh', text, rate); }
+// Trình phát đang giữ loa (bài giảng): đọc câu hay loạt câu khác thì gọi hàm dừng của nó,
+// để không bao giờ có hai giọng đọc chồng lên nhau
+let owner = null;
+function interrupt() { const stop = owner; owner = null; stop?.(); }
+/** Giữ loa: phát cái khác thì `stop` được gọi. Trả về hàm nhả loa, true nếu lúc đó còn đang giữ. */
+export function holdVoice(stop) {
+  interrupt();
+  owner = stop;
+  return () => { if (owner !== stop) return false; owner = null; return true; };
+}
+
+/** Đọc một câu tiếng Trung (dừng câu, loạt câu hay bài giảng đang đọc) */
+export function say(text, rate = 1) {
+  stopQueue(); interrupt();
+  light(true);
+  const me = lit;
+  playClip('zh', text, rate, () => { if (lit === me) light(false); });
+}
 let qTok = 0;
 // tên loạt câu đang đọc (vd "words-1-1"), để nút của loạt đó đổi thành "Dừng"; null là không đọc gì
 let qName = null;
@@ -62,7 +93,7 @@ export const onQueue = f => { qSubs.add(f); return () => { qSubs.delete(f); }; }
 export const queueName = () => qName;
 /** Đọc lần lượt nhiều câu tiếng Trung; `name` để biết loạt nào đang đọc */
 export function sayQueue(list, name = 'queue') {
-  stopVoice(); const tok = ++qTok;
+  stopVoice(); interrupt(); const tok = ++qTok;
   setQueue(name);
   const next = i => {
     if (tok !== qTok) return;

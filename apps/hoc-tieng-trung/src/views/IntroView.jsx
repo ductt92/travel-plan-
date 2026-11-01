@@ -89,7 +89,7 @@ export function IntroView() {
         <h2 id="h-tone" style={{ fontSize: 20 }}>Bốn thanh điệu và thanh nhẹ</h2>
         <div className="l0-tones">
           {TONES.map(t => (
-            <button key={t.t} type="button" className="l0-tone" onClick={() => say(t.ex)}>
+            <button key={t.t} type="button" className="l0-tone has-sound" onClick={() => say(t.ex)}>
               <Contour t={t} />
               <b className={`t${t.t}`}>{t.name}</b>
               <span className="ui-muted" style={{ fontSize: 13 }}>{t.how}</span>
@@ -133,7 +133,7 @@ export function IntroView() {
               <b>{g.g}</b>
               <div className="l0-keys">
                 {g.k.map(([p, h]) => (
-                  <button key={p} type="button" aria-label={`Nghe ${p}`} onClick={() => say(h)}><b>{p}</b><span>{h}</span></button>
+                  <button key={p} type="button" className="has-sound" aria-label={`Nghe ${p}`} onClick={() => say(h)}><b>{p}</b><span>{h}</span></button>
                 ))}
               </div>
               <p className="ui-muted" style={{ fontSize: 13 }}>{g.note}</p>

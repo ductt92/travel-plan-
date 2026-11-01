@@ -37,3 +37,6 @@
 :where(:root:not([data-glass="off"])) .l0-opt{background:var(--gl-sheen),var(--gl-fill-strong);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur)}
 :where(:root:not([data-glass="off"])) .l0-keys button{background:var(--gl-fill-strong)}
 :where(:root:not([data-glass="off"])) .l0-finals span{background:var(--gl-fill)}
+
+/* biểu tượng loa ở góc thẻ thanh điệu (bấm để nghe) */
+.l0-tone.has-sound::after{top:14px;right:14px;width:16px;height:16px}

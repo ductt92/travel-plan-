@@ -6,12 +6,13 @@
 // (Đóng, Hủy, hiện mật khẩu…) bằng tiếng Việt.
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { Button, ConfigProvider, viVN } from 'react-liquis-glass';
-import { SparklesIcon } from 'react-liquis-glass/icons';
+import { MoonIcon, SparklesIcon, SunIcon } from 'react-liquis-glass/icons';
 import 'react-liquis-glass/styles.css';
 import './glass.css';
 import { getGlass, setGlass, subscribe } from './glass-mode.js';
+import { getThemeMode, setThemeMode, subscribeTheme } from './theme-mode.js';
 
-export { getGlass, setGlass };
+export { getGlass, setGlass, getThemeMode, setThemeMode };
 
 const dark = matchMedia('(prefers-color-scheme: dark)');
 
@@ -63,6 +64,32 @@ export function GlassToggle({ compact = false, className = '', ...rest }) {
       onClick={() => setGlass(!on)}
     >
       {!compact && <>Liquis glass: {on ? 'on' : 'off'} <span className="glass-toggle__dot" aria-hidden="true" /></>}
+    </Button>
+  );
+}
+
+const THEME_NEXT = { auto: 'light', light: 'dark', dark: 'auto' };
+const THEME_LABEL = { auto: 'Theo máy', light: 'Sáng', dark: 'Tối' };
+
+/** 'auto' | 'light' | 'dark' — lựa chọn sáng/tối dùng chung cả site */
+export function useThemeMode() {
+  return useSyncExternalStore(subscribeTheme, getThemeMode);
+}
+
+/** Nút đổi giao diện: Theo máy → Sáng → Tối → Theo máy. Biểu tượng theo giao diện đang hiện. */
+export function ThemeToggle({ compact = false, className = '', ...rest }) {
+  const mode = useThemeMode();
+  const shown = useTheme();
+  const label = `Giao diện: ${THEME_LABEL[mode]} (bấm để đổi sang ${THEME_LABEL[THEME_NEXT[mode]]})`;
+  return (
+    <Button
+      variant="glass" size="sm" {...rest}
+      className={`theme-toggle ${className}`.trim()}
+      icon={shown === 'dark' ? <MoonIcon /> : <SunIcon />}
+      aria-label={compact ? label : undefined} title={label}
+      onClick={() => setThemeMode(THEME_NEXT[mode])}
+    >
+      {!compact && <>Giao diện: {THEME_LABEL[mode]}</>}
     </Button>
   );
 }

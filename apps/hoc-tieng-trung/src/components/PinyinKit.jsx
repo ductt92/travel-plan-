@@ -143,7 +143,7 @@ export function PinyinTable({ group = null, sel, onPick }) {
                     const on = sel && sel[1] === r[1];
                     return (
                       <td key={i || '0'}>
-                        <button type="button" className={`pyc${on ? ' is-on' : ''}`} aria-pressed={on} onClick={() => onPick(r)}>{r[0]}</button>
+                        <button type="button" className={`pyc has-sound${on ? ' is-on' : ''}`} aria-pressed={on} onClick={() => onPick(r)}>{r[0]}</button>
                       </td>
                     );
                   })}
