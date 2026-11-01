@@ -18,6 +18,14 @@
     {
       "source": "/api/go/grammar",
       "destination": "/api/go/terms?_api=grammar"
+    },
+    {
+      "source": "/api/node/tai-khoan",
+      "destination": "/api/node/quan-ly?_api=tai-khoan"
+    },
+    {
+      "source": "/api/go/tai-khoan",
+      "destination": "/api/go/quan-ly?_api=tai-khoan"
     }
   ]
 }
