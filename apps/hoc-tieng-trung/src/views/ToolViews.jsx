@@ -1,7 +1,8 @@
 // Các route không có khung app, dùng cho script dựng video và tạo giọng đọc
 import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { LESSONS, TONES, TONE_GAME, INITIALS, PINYIN, lessonById } from '../core/data.js';
+import { LESSONS, TONES, TONE_GAME, INITIALS, PINYIN, lessonById, lvOf } from '../core/data.js';
+import { useLevels } from '../core/store.js';
 import { plainHz } from '../core/pinyin.js';
 import { buildLecture, stepParts } from '../core/lecture.js';
 import { audioKey } from '../core/speech.js';
@@ -10,6 +11,7 @@ import { LecturePlayer } from '../components/LecturePlayer.jsx';
 /** /render/:id/:i — một khung hình của bài giảng ở bước i, toàn khung nhìn */
 export function RenderView() {
   const { id, i } = useParams();
+  useLevels([lvOf(id)]);
   const l = lessonById(id);
   useEffect(() => {
     const b = document.body.style, h = document.documentElement.style;
@@ -24,6 +26,7 @@ export function RenderView() {
 /** /slide/:id/:s — trọn trang s của bài giảng (đủ nội dung, không phụ đề), lớp học trực tiếp nhúng làm slide */
 export function SlideView() {
   const { id, s } = useParams();
+  useLevels([lvOf(id)]);
   const l = lessonById(id);
   useEffect(() => {
     const b = document.body.style, h = document.documentElement.style;
@@ -38,18 +41,24 @@ export function SlideView() {
 /** /steps/:id — danh sách bước đọc của bài giảng dạng JSON */
 export function StepsView() {
   const { id } = useParams();
+  const { ready } = useLevels([lvOf(id)]);
   const l = lessonById(id);
   const json = useMemo(() => (l ? JSON.stringify(buildLecture(l).steps.map(st => ({ s: st.s, lang: st.lang, text: st.text, parts: stepParts(st) }))) : '[]'), [l]);
-  return <pre id="steps">{json}</pre>;
+  return ready ? <pre id="steps">{json}</pre> : null;
 }
 
-/** /alltexts — mọi câu cần giọng đọc (không trùng) kèm khóa file âm thanh */
+/** /alltexts — mọi câu cần giọng đọc (không trùng) kèm khóa file âm thanh.
+ *  Mặc định là các bài có sẵn trong gói (Cấp 1–3); /alltexts/4 là Cấp 4 (tải riêng) */
 export function AllTextsView() {
+  const { lv } = useParams();
+  const { ready } = useLevels(lv ? [+lv] : []);
   const json = useMemo(() => {
+    if (!ready) return '';
+    const list = lv ? LESSONS.filter(l => l.lv === +lv) : LESSONS.filter(l => l.lv <= 3);
     const seen = new Map();
     const add = (lang, text) => { text = (text || '').trim(); if (text) seen.set(lang + '|' + text, { lang, text, key: audioKey(lang, text) }); };
-    LESSONS.forEach(l => buildLecture(l).steps.forEach(st => stepParts(st).forEach(p => add(p.lang, p.text))));
-    LESSONS.forEach(l => {
+    list.forEach(l => buildLecture(l).steps.forEach(st => stepParts(st).forEach(p => add(p.lang, p.text))));
+    list.forEach(l => {
       l.words.forEach(w => { add('zh', w.hz); add('zh', plainHz(w.ex)); });
       l.grammar.forEach(g => g.ex.forEach(e => add('zh', e[0])));
       l.dialogs.forEach(d => d.lines.forEach(x => add('zh', x[1])));
@@ -60,6 +69,6 @@ export function AllTextsView() {
     ['你好', '不是', '一个', '一天'].forEach(t => add('zh', t));
     Object.values(PINYIN || {}).forEach(v => add('zh', v[0]));
     return JSON.stringify([...seen.values()]);
-  }, []);
-  return <pre id="steps">{json}</pre>;
+  }, [lv, ready]);
+  return json ? <pre id="steps">{json}</pre> : null;
 }

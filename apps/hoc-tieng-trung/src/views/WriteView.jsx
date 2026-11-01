@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import HanziWriter from 'hanzi-writer';
 import { Button, Card, Field, PageHeader, Row, Stack, useToast } from '@trang/ui';
 import { Input } from 'react-liquis-glass';
-import { LESSONS, WORDS } from '../core/data.js';
+import { LESSONS, WORDS, lessonById } from '../core/data.js';
 import { syls, toneOf } from '../core/pinyin.js';
 import { useStore, activity, lessonDoneCount, nextLesson } from '../core/store.js';
 import { Hz, Hv, SayButton } from '../components/Hanzi.jsx';
@@ -17,7 +17,7 @@ const isHan = c => /\p{Script=Han}/u.test(c);
 /** Bài đang học: bài kế tiếp chưa xong, không có thì bài gần nhất đã mở */
 function currentLesson() {
   const nl = nextLesson();
-  return (nl?.kind === 'lesson' && nl.l) || LESSONS.filter(l => lessonDoneCount(l.id) > 0).slice(-1)[0] || LESSONS[0];
+  return (nl?.kind === 'lesson' && lessonById(nl.l.id)) || LESSONS.filter(l => lessonDoneCount(l.id) > 0).slice(-1)[0] || LESSONS[0];
 }
 
 export function WriteView() {

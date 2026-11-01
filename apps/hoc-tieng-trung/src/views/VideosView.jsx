@@ -14,9 +14,11 @@ import { Hz } from '../components/Hanzi.jsx';
 import './VideosView.css';
 
 const BASE = import.meta.env.BASE_URL;
-const LIST = LESSONS.slice().sort((a, b) => a.lv - b.lv || a.no - b.no);
-const LVS = [...new Set(LIST.map(l => l.lv))];
 const file = l => `bai-giang-cap${l.lv}-bai${String(l.no).padStart(2, '0')}.mp4`;
+// Video mới có cho Cấp 1–3 (Cấp 4 trở lên chưa dựng); bài khác chỉ hiện khi đã có mã YouTube
+export const hasVideo = l => l.lv <= 3 || !!YT_IDS[file(l)];
+const LIST = LESSONS.filter(hasVideo);
+const LVS = [...new Set(LIST.map(l => l.lv))];
 const RATES = [0.75, 1, 1.25, 1.5];
 const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 

@@ -1,8 +1,8 @@
 // Tiến độ học lưu trong localStorage (khóa hanlo-v2, giống bản HTML cũ nên không mất tiến độ).
 // Đọc trong component: const S = useStore(); ghi: update(s => { ... }).
-import { useSyncExternalStore } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { changed, track } from '@trang/sync';
-import { LESSONS, LEVELS, WMAP, NPARTS, lessonsOf, hasContent } from './data.js';
+import { INDEX, LEVELS, WMAP, NPARTS, lessonsOf, hasContent, isLoaded, loadLevels, lvOf, onLevelLoad } from './data.js';
 
 const KEY = 'hanlo-v2';
 export const DEF = { cards: {}, lessons: {}, l0: false, passed: {}, days: [], today: { date: '', n: 0 }, stats: { ans: 0, ok: 0 }, showPy: true, showVi: true, ai: { key: '', model: 'gemini-2.5-flash' } };
@@ -17,7 +17,12 @@ let S = (() => {
 })();
 const subs = new Set();
 let version = 0;
-function emit() { version++; subs.forEach(f => f()); }
+function emit() { version++; loadUsed(); subs.forEach(f => f()); }
+// Cấp có bài đang học hay có thẻ ôn tập thì tải nội dung ngay (ôn tập, tra từ cần chữ, nghĩa của từ)
+const usedLevels = () => [...new Set([...Object.keys(S.cards), ...Object.keys(S.lessons)].map(lvOf))].filter(n => n > 0);
+function loadUsed() { const ns = usedLevels().filter(n => !isLoaded(n)); if (ns.length) loadLevels(ns).catch(() => { /* thử lại ở lần đổi sau */ }); }
+onLevelLoad(() => { version++; subs.forEach(f => f()); });
+loadUsed();
 function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* bỏ qua */ } changed(KEY); }
 
 // Đồng bộ tiến độ giữa các máy (khi đã nhập mã). Khóa API Gemini riêng không đưa lên server.
@@ -39,6 +44,14 @@ export function useStore() {
   useSyncExternalStore(f => { subs.add(f); return () => subs.delete(f); }, () => version);
   return S;
 }
+/** Hook: tải nội dung các cấp ns (Cấp 4 trở lên tải khi cần). Trả về { ready, error } */
+export function useLevels(ns) {
+  useStore();
+  const key = ns.join(','), [error, setError] = useState(false);
+  useEffect(() => { setError(false); loadLevels(ns).catch(() => setError(true)); }, [key]); // eslint-disable-line react-hooks/exhaustive-deps
+  return { ready: ns.every(isLoaded), error };
+}
+export const useUsedLevels = () => useLevels(usedLevels());
 
 /* Ngày học, chuỗi ngày, mục tiêu ngày */
 export const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -74,10 +87,10 @@ export function levelStats(n) {
   const ls = lessonsOf(n);
   return { done: ls.filter(l => lessonDone(l.id)).length, content: ls.length, total: ls.length };
 }
-/** Bài nên học tiếp: Nhập môn trước, sau đó bài đầu tiên chưa xong */
+/** Bài nên học tiếp: Nhập môn trước, sau đó bài đầu tiên chưa xong (bản tóm tắt trong INDEX) */
 export function nextLesson() {
   if (!S.l0) return { kind: 'l0' };
-  const l = LESSONS.find(x => !lessonDone(x.id));
+  const l = INDEX.find(x => !lessonDone(x.id));
   return l ? { kind: 'lesson', l } : null;
 }
 /** Trạng thái thẻ cấp: soon | done | active | test | open */

@@ -86,6 +86,7 @@ export function App() {
           <Route path="/slide/:id/:s" element={<SlideView />} />
           <Route path="/steps/:id" element={<StepsView />} />
           <Route path="/alltexts" element={<AllTextsView />} />
+          <Route path="/alltexts/:lv" element={<AllTextsView />} />
           <Route path="*" element={
             <Shell>
               <Routes>

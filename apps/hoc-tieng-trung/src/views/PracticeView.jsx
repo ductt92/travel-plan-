@@ -2,11 +2,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Chip, EmptyState, Icon, IconButton, Row, Stack, PageHeader } from '@trang/ui';
-import { LEVELS, LESSONS, WORDS, lessonById, CONTENT_LEVELS } from '../core/data.js';
+import { LEVELS, INDEX, WORDS, lessonById, lessonsOf, lvOf, CONTENT_LEVELS } from '../core/data.js';
 import { syls, pyText, toneOf, bareSyl, markSyl, plainHz, shuffle, pickOne } from '../core/pinyin.js';
 import { say } from '../core/speech.js';
-import { useStore, getState, update, lessonDoneCount, setLessonScore, recordAnswer } from '../core/store.js';
-import { Hz, Py, Hv, SayButton } from '../components/Hanzi.jsx';
+import { useStore, useLevels, useUsedLevels, getState, update, lessonDoneCount, setLessonScore, recordAnswer } from '../core/store.js';
+import { Hz, Loading, Py, Hv, SayButton } from '../components/Hanzi.jsx';
 import './PracticeView.css';
 
 /* Từ trong phạm vi luyện tập */
@@ -53,21 +53,29 @@ const startQuiz = (scope, id) => {
 export function PracticeView() {
   const { scope, id } = useParams();
   if (!scope) return <PracticeHome />;
-  return <Quiz key={`${scope}/${id ?? ''}`} scope={scope} id={id ?? ''} />;
+  return <QuizLoader key={`${scope}/${id ?? ''}`} scope={scope} id={id ?? ''} />;
+}
+/** Tải nội dung cấp cần dùng rồi mới tạo câu hỏi */
+function QuizLoader({ scope, id }) {
+  const lv = scope === 'lesson' ? [lvOf(id)] : scope === 'level' ? [+id] : null;
+  const one = useLevels(lv || []), used = useUsedLevels();
+  const st = lv ? one : used;
+  if (!st.ready) return <Loading error={st.error} />;
+  return <Quiz scope={scope} id={id} />;
 }
 
 function PracticeHome() {
   const S = useStore();
   const learned = WORDS.filter(w => S.cards[w.id]).length;
-  if (!LESSONS.length) return <EmptyState title="Chưa tải được dữ liệu bài học"><p className="ui-muted">Kiểm tra dữ liệu bài học rồi tải lại trang.</p></EmptyState>;
-  const recent = LESSONS.filter(l => lessonDoneCount(l.id) > 0).slice(-1)[0] || LESSONS[0];
+  if (!INDEX.length) return <EmptyState title="Chưa tải được dữ liệu bài học"><p className="ui-muted">Kiểm tra dữ liệu bài học rồi tải lại trang.</p></EmptyState>;
+  const recent = INDEX.filter(l => lessonDoneCount(l.id) > 0).slice(-1)[0] || INDEX[0];
   return (
     <>
       <PageHeader eyebrow="Luyện tập" title="Chọn phạm vi luyện tập" sub="Mỗi lượt trộn các dạng: chọn nghĩa, chọn pinyin đúng thanh, nghe rồi chọn chữ, chọn chữ theo nghĩa, sắp xếp câu." />
       <div className="choices">
         <Link className="choice" to={`/practice/lesson/${recent.id}`}>
           <span className="ui-eyebrow">Bài gần nhất</span><b style={{ fontSize: 17 }}>{LEVELS[recent.lv].name} · {recent.title}</b>
-          <span className="ui-muted" style={{ fontSize: 14 }}>10 câu · {recent.words.length} từ</span>
+          <span className="ui-muted" style={{ fontSize: 14 }}>10 câu · {recent.nw} từ</span>
         </Link>
         <Link className="choice" to="/practice/learned" aria-disabled={learned ? undefined : 'true'} tabIndex={learned ? undefined : -1}>
           <span className="ui-eyebrow">Từ đã học</span><b style={{ fontSize: 17 }}>Tất cả từ trong bộ ôn tập</b>
@@ -82,7 +90,12 @@ function PracticeHome() {
       </div>
       <Stack as="section">
         <h2 style={{ fontSize: 18 }}>Theo từng bài</h2>
-        <Row gap={8}>{LESSONS.map(l => <Chip key={l.id} as={Link} to={`/practice/lesson/${l.id}`}>{l.lv}.{l.no} {l.title}</Chip>)}</Row>
+        {CONTENT_LEVELS.map(n => (
+          <details key={n} className="pr-lv" open={n === recent.lv}>
+            <summary>{LEVELS[n].name} <span className="ui-muted ui-num">· {lessonsOf(n).length} bài</span></summary>
+            <Row gap={8}>{lessonsOf(n).map(l => <Chip key={l.id} as={Link} to={`/practice/lesson/${l.id}`}>{l.no}. {l.title}</Chip>)}</Row>
+          </details>
+        ))}
       </Stack>
     </>
   );

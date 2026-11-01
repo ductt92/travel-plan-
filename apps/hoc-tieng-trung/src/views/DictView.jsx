@@ -3,14 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Chip, Icon, LinkButton, PageHeader, Pill, Row, Stack, Tag, Card, useToast } from '@trang/ui';
 import { Input } from 'react-liquis-glass';
-import { WORDS, WMAP, byHz, CONTENT_LEVELS } from '../core/data.js';
+import { LEVELS, WORDS, WMAP, byHz, CONTENT_LEVELS } from '../core/data.js';
 import { syls, pyText, toneOf, fold, plainHz } from '../core/pinyin.js';
 import { say } from '../core/speech.js';
-import { useStore, getState, addCards, activity, fmtWait } from '../core/store.js';
+import { useStore, useLevels, getState, addCards, activity, fmtWait } from '../core/store.js';
 import { Hz, Py, Hv, SayButton } from '../components/Hanzi.jsx';
 import './DictView.css';
 
-const FILTERS = [[0, 'Tất cả'], ...CONTENT_LEVELS.map(n => [n, `Cấp ${n}`]), [-1, 'Từ đã học']];
+const FILTERS = [[0, 'Tất cả'], ...CONTENT_LEVELS.map(n => [n, LEVELS[n].name]), [-1, 'Từ đã học']];
 const memo = { q: '', lv: 0, sel: null }; // giữ ô tìm và bộ lọc khi rời trang
 
 function searchWords(query, lv) {
@@ -30,6 +30,7 @@ const pickSel = s => (s ? (WMAP[s] ? s : byHz(s)?.id || null) : null);
 
 export function DictView() {
   const S = useStore();
+  const all = useLevels(CONTENT_LEVELS); // tra từ cần đủ mọi cấp
   const { sel: param } = useParams();
   const nav = useNavigate();
   const toast = useToast();
@@ -55,7 +56,7 @@ export function DictView() {
       <Stack gap={12}>
         <label htmlFor="dq" style={{ fontSize: 14, color: 'var(--ink-2)' }}>Gõ chữ Hán, pinyin (có hoặc không dấu), âm Hán Việt hoặc nghĩa tiếng Việt</label>
         <Input id="dq" type="search" size="lg" className="search" autoComplete="off" value={q} onChange={e => setQ(e.target.value)} placeholder="ví dụ: màu, yanse, 颜色, nhan sắc"
-          prefix={<Icon name="search" size={22} />} suffix={<span className="ui-muted ui-num" style={{ fontSize: 13, whiteSpace: 'nowrap' }}>{r.length} kết quả</span>} />
+          prefix={<Icon name="search" size={22} />} suffix={<span className="ui-muted ui-num" style={{ fontSize: 13, whiteSpace: 'nowrap' }}>{r.length} kết quả{all.ready ? '' : ' · đang tải'}</span>} />
         <Row gap={8} role="group" aria-label="Lọc">
           {FILTERS.map(([v, t]) => <Chip key={v} active={lv === v} onClick={() => setLv(v)}>{t}</Chip>)}
         </Row>

@@ -27,7 +27,7 @@ export function LevelView() {
             {L.book
               ? `Bám theo khung chủ đề, từ vựng và ngữ pháp của giáo trình ${L.book}. Hoàn thành cấp này bạn nắm được khoảng ${fmtN(L.words)} từ.`
               : L.std
-              ? `Bám theo danh sách ${fmtN(L.newWords)} từ và ${L.gram} điểm ngữ pháp của ${L.name} trong chuẩn HSK 3.0 bản 2021, chia thành ${L.plan} bài theo chủ đề đời sống. Theo chuẩn, hết cấp này bạn tích lũy khoảng ${fmtN(L.words)} từ.`
+              ? `Bám theo danh sách ${fmtN(L.newWords)} từ và ${L.gram} điểm ngữ pháp của ${L.name} trong chuẩn HSK 3.0 bản 2021, chia thành ${L.plan} bài theo chủ đề. Theo chuẩn, hết cấp này bạn tích lũy khoảng ${fmtN(L.words)} từ.`
               : `Theo chuẩn HSK 3.0 bản 2021, cấp này tích lũy khoảng ${fmtN(L.words)} từ và ${fmtN(L.chars)} chữ Hán.`}
           </p>
         </Stack>
@@ -66,7 +66,7 @@ export function LevelView() {
                   <span className="lv-row__t">
                     <b>Bài {l.no} · {l.title} <span className="ui-hz ui-muted" style={{ fontWeight: 500 }}>{l.zh}</span></b>
                     <span style={{ fontSize: 13 }} className={cur ? '' : 'ui-muted'}>
-                      {done ? `Hoàn thành${score != null ? ` · luyện tập ${score}%` : ''}` : d ? `Đang học · ${d}/${NPARTS} phần` : `${l.words.length} từ mới`}
+                      {done ? `Hoàn thành${score != null ? ` · luyện tập ${score}%` : ''}` : d ? `Đang học · ${d}/${NPARTS} phần` : `${l.nw} từ mới`}
                     </span>
                   </span>
                   {l.tag && <Tag className="lv-row__tag">{l.tag}</Tag>}

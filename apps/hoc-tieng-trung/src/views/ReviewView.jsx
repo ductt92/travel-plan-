@@ -5,14 +5,20 @@ import { Button, EmptyState, Kbd, Pill, ProgressBar, Row, Stack } from '@trang/u
 import { LEVELS, WMAP } from '../core/data.js';
 import { plainHz, shuffle } from '../core/pinyin.js';
 import { say } from '../core/speech.js';
-import { useStore, update, activity, dueCards, schedule, fmtWait, nextLesson } from '../core/store.js';
-import { Hz, Py, Hv } from '../components/Hanzi.jsx';
+import { useStore, useUsedLevels, update, activity, dueCards, schedule, fmtWait, nextLesson } from '../core/store.js';
+import { Hz, Loading, Py, Hv } from '../components/Hanzi.jsx';
 import './ReviewView.css';
 
 const RATES = [[1, 'Quên'], [2, 'Khó'], [3, 'Nhớ'], [4, 'Dễ']];
 const fresh = (S, extra) => ({ queue: extra ? shuffle(Object.keys(S.cards)).slice(0, 20) : dueCards(), flipped: false, done: 0, extra });
 
+/** Thẻ của Cấp 4 trở lên cần tải nội dung cấp đó trước khi lập hàng ôn */
 export function ReviewView() {
+  const st = useUsedLevels();
+  return st.ready ? <Review /> : <Loading error={st.error} />;
+}
+
+function Review() {
   const S = useStore();
   const [RV, setRV] = useState(() => fresh(S, false));
   const total = Object.keys(S.cards).length;

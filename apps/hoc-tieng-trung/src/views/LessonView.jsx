@@ -3,11 +3,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Breadcrumbs, Button, Card, EmptyState, Icon, IconButton, Row, Stack, Tabs, Toggle, useToast } from '@trang/ui';
 import { TextArea } from 'react-liquis-glass';
-import { LESSONS, LEVELS, lessonById } from '../core/data.js';
-import { useStore, update, markPart, activity, addCards, lessonDone } from '../core/store.js';
+import { LEVELS, lessonById, lvOf, nextOf } from '../core/data.js';
+import { useStore, useLevels, update, markPart, activity, addCards, lessonDone } from '../core/store.js';
 import { say, stopQueue, hasAudioPack, audioReady, onVoices, viVoice } from '../core/speech.js';
 import { buildLecture, lectureScript } from '../core/lecture.js';
-import { Hz, QueueButton, WordCard } from '../components/Hanzi.jsx';
+import { Hz, Loading, QueueButton, WordCard } from '../components/Hanzi.jsx';
+import { hasVideo } from './VideosView.jsx';
 import { LecturePlayer, whoTone } from '../components/LecturePlayer.jsx';
 import './LessonView.css';
 
@@ -64,12 +65,14 @@ export function LessonView() {
   const [tab, setTab] = useState(0);
   const [script, setScript] = useState(false);
   useEffect(() => { setTab(0); setScript(false); }, [id]);
+  const lvl = useLevels([lvOf(id)]);
 
   const l = lessonById(id);
+  if (!l && !lvl.ready) return <Loading error={lvl.error} />;
   if (!l) return <EmptyState title="Không tìm thấy bài học" actions={<Button variant="primary" as={Link} to="/">Về lộ trình</Button>} />;
   const L = LEVELS[l.lv];
   const p = S.lessons[l.id] || { parts: [], score: null };
-  const nxt = LESSONS[LESSONS.indexOf(l) + 1];
+  const nxt = nextOf(l.id);
   const go = i => { stopQueue(); setTab(i); window.scrollTo(0, 0); };
   const partNext = i => { markPart(l.id, i); activity(); go(i + 1); };
 
@@ -84,7 +87,7 @@ export function LessonView() {
       </Stack></Card>
       <Row>
         <Button variant="primary" onClick={() => { markPart(l.id, 0); activity(); go(1); }}>{p.parts[0] ? 'Sang từ mới' : 'Đã xem xong · sang từ mới'}</Button>
-        <Button as={Link} to={`/videos/${l.id}`}>Xem bản video MP4</Button>
+        {hasVideo(l) && <Button as={Link} to={`/videos/${l.id}`}>Xem bản video MP4</Button>}
         <Button onClick={() => setScript(v => !v)}>Xem kịch bản bài giảng</Button>
       </Row>
       {script && <ScriptBox l={l} />}

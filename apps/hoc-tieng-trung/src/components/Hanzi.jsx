@@ -6,6 +6,10 @@ import { syls, toneOf, plainHz } from '../core/pinyin.js';
 import { onQueue, queueName, say, sayQueue, stopQueue } from '../core/speech.js';
 import { useStore } from '../core/store.js';
 
+/** Chờ tải nội dung một cấp (Cấp 4 trở lên tải khi cần) */
+export function Loading({ error }) {
+  return <p className="ui-muted" role="status">{error ? 'Không tải được bài học. Kiểm tra mạng rồi tải lại trang.' : 'Đang tải bài học…'}</p>;
+}
 /** Chữ Hán với font Noto Serif SC */
 export function Hz({ children, size, className = '', style, ...rest }) {
   return <span className={`ui-hz ${className}`} style={{ fontSize: size, ...style }} {...rest}>{children}</span>;

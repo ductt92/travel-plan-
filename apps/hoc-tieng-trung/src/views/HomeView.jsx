@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Icon, LinkButton, Pill, ProgressBar, Row, Stack, StatTile, useToast } from '@trang/ui';
-import { LEVELS, STAGES, LESSONS, WMAP, NPARTS, prevOf, hasContent } from '../core/data.js';
+import { LEVELS, STAGES, INDEX, WMAP, NPARTS, prevOf, hasContent } from '../core/data.js';
 import { fmtN } from '../core/pinyin.js';
 import { SyncButton } from '@trang/sync';
 import { useStore, nextLesson, dueCards, lessonDoneCount, lessonDone, levelStats, levelStatus, streak, resetAll } from '../core/store.js';
@@ -40,7 +40,7 @@ function NextCard({ nl }) {
       <Stack gap={8} style={{ flex: '1 1 260px', minWidth: 0 }}>
         <span className="ui-eyebrow">{d ? 'Học tiếp' : 'Bài tiếp theo'} · Cấp {l.lv} · Bài {l.no}</span>
         <h2 style={{ fontSize: 24 }}>{l.title} <span className="ui-hz ui-muted" style={{ fontSize: 20 }}>{l.zh}</span></h2>
-        <p className="ui-muted">Bài giảng · {l.words.length} từ mới · {l.grammar.length} điểm ngữ pháp · 2 hội thoại</p>
+        <p className="ui-muted">Bài giảng · {l.nw} từ mới · {l.ng} điểm ngữ pháp · 2 hội thoại</p>
         <Row gap={10}>
           <ProgressBar value={d / NPARTS} label="Tiến độ bài" />
           <span className="ui-muted ui-num" style={{ fontSize: 13 }}>{d}/{NPARTS} phần</span>
@@ -158,7 +158,7 @@ export function HomeView() {
           <StatTile label="Từ đã học" value={total} sub="/ 11.092" />
           <StatTile label="Chữ Hán đã gặp" value={charSet.size} sub="/ 3.000" />
           <StatTile label="Độ chính xác luyện tập" value={acc} />
-          <StatTile label="Bài đã hoàn thành" value={LESSONS.filter(l => lessonDone(l.id)).length} sub={`/ ${LESSONS.length} bài đã soạn`} />
+          <StatTile label="Bài đã hoàn thành" value={INDEX.filter(l => lessonDone(l.id)).length} sub={`/ ${INDEX.length} bài đã soạn`} />
         </div>
         <Row gap={10}>
           <span className="ui-muted" style={{ fontSize: 13 }}>Tiến độ lưu trên trình duyệt này.</span>
