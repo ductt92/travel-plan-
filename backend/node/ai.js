@@ -16,13 +16,18 @@ const list = (v, d) => (v || d).split(',').map(s => s.trim()).filter(Boolean);
 const cut = s => [...String(s ?? '')].slice(0, MAX_CHARS).join('');
 
 // Gemini: mỗi model có hạn mức miễn phí riêng nên thử lần lượt từng model. Còn lại theo chuẩn chat/completions của OpenAI.
+// Xếp theo hạn mức miễn phí từ rộng tới hẹp: NVIDIA NIM ~10.000 lượt/ngày mỗi model, Cerebras ~1 triệu token/ngày,
+// GLM (Z.ai) miễn phí nhưng chỉ cho 1 lượt chạy cùng lúc (bị 429 thì nghỉ một phút rồi xuống Groq), OpenRouter chỉ 50 lượt/ngày nên ở cuối.
 const PROVIDERS = {
   gemini: { name: 'Gemini', key: 'GEMINI_API_KEY', base: 'https://generativelanguage.googleapis.com/v1beta', models: () => list(process.env.GEMINI_MODELS, 'gemini-3.8-flash,gemini-3.5-flash-lite') },
+  nvidia: { name: 'NVIDIA NIM', key: 'NVIDIA_API_KEY', base: 'https://integrate.api.nvidia.com/v1', models: () => list(process.env.NVIDIA_MODELS, 'qwen/qwen3-next-80b-a3b-instruct,meta/llama-3.3-70b-instruct') },
+  cerebras: { name: 'Cerebras', key: 'CEREBRAS_API_KEY', base: 'https://api.cerebras.ai/v1', models: () => list(process.env.CEREBRAS_MODELS, 'zai-glm-4.7,gpt-oss-120b') },
+  glm: { name: 'GLM', key: 'GLM_API_KEY', base: 'https://api.z.ai/api/paas/v4', models: () => list(process.env.GLM_MODELS, 'glm-4.7-flash') },
   groq: { name: 'Groq', key: 'GROQ_API_KEY', base: 'https://api.groq.com/openai/v1', models: () => list(process.env.GROQ_MODELS, 'llama-3.3-70b-versatile') },
-  openrouter: { name: 'OpenRouter', key: 'OPENROUTER_API_KEY', base: 'https://openrouter.ai/api/v1', models: () => list(process.env.OPENROUTER_MODELS, 'meta-llama/llama-3.3-70b-instruct:free') },
   mistral: { name: 'Mistral', key: 'MISTRAL_API_KEY', base: 'https://api.mistral.ai/v1', models: () => list(process.env.MISTRAL_MODELS, 'mistral-small-latest') },
+  openrouter: { name: 'OpenRouter', key: 'OPENROUTER_API_KEY', base: 'https://openrouter.ai/api/v1', models: () => list(process.env.OPENROUTER_MODELS, 'meta-llama/llama-3.3-70b-instruct:free') },
 };
-const ORDER = 'gemini,groq,openrouter,mistral';
+const ORDER = 'gemini,nvidia,cerebras,glm,groq,mistral,openrouter';
 const cooldown = new Map();
 const baseOf = id => process.env[`${id.toUpperCase()}_BASE_URL`] || PROVIDERS[id].base;
 

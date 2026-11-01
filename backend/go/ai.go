@@ -32,7 +32,7 @@ const (
 	aiTimeout  = 20 * time.Second // mỗi lần gọi một model
 	aiBudget   = 50 * time.Second // cả chuỗi, dưới maxDuration 60 s trong vercel.json
 	aiCooldown = time.Minute      // model hết lượt thì bỏ qua một phút (chỉ trong function đang "ấm")
-	aiOrder    = "gemini,groq,openrouter,mistral"
+	aiOrder    = "gemini,nvidia,cerebras,glm,groq,mistral,openrouter"
 )
 
 type part struct {
@@ -48,11 +48,16 @@ type aiProvider struct {
 }
 
 // Gemini: mỗi model có hạn mức miễn phí riêng nên thử lần lượt từng model. Còn lại theo chuẩn chat/completions của OpenAI.
+// Xếp theo hạn mức miễn phí từ rộng tới hẹp: NVIDIA NIM ~10.000 lượt/ngày mỗi model, Cerebras ~1 triệu token/ngày,
+// GLM (Z.ai) miễn phí nhưng chỉ cho 1 lượt chạy cùng lúc (bị 429 thì nghỉ một phút rồi xuống Groq), OpenRouter chỉ 50 lượt/ngày nên ở cuối.
 var aiProviders = map[string]aiProvider{
 	"gemini":     {"Gemini", "GEMINI_API_KEY", "https://generativelanguage.googleapis.com/v1beta", "gemini-3.8-flash,gemini-3.5-flash-lite"},
+	"nvidia":     {"NVIDIA NIM", "NVIDIA_API_KEY", "https://integrate.api.nvidia.com/v1", "qwen/qwen3-next-80b-a3b-instruct,meta/llama-3.3-70b-instruct"},
+	"cerebras":   {"Cerebras", "CEREBRAS_API_KEY", "https://api.cerebras.ai/v1", "zai-glm-4.7,gpt-oss-120b"},
+	"glm":        {"GLM", "GLM_API_KEY", "https://api.z.ai/api/paas/v4", "glm-4.7-flash"},
 	"groq":       {"Groq", "GROQ_API_KEY", "https://api.groq.com/openai/v1", "llama-3.3-70b-versatile"},
-	"openrouter": {"OpenRouter", "OPENROUTER_API_KEY", "https://openrouter.ai/api/v1", "meta-llama/llama-3.3-70b-instruct:free"},
 	"mistral":    {"Mistral", "MISTRAL_API_KEY", "https://api.mistral.ai/v1", "mistral-small-latest"},
+	"openrouter": {"OpenRouter", "OPENROUTER_API_KEY", "https://openrouter.ai/api/v1", "meta-llama/llama-3.3-70b-instruct:free"},
 }
 
 var (

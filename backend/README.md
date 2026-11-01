@@ -39,8 +39,9 @@ gọi đầu. Ngày đọc ra bằng `from_date::text` cho khỏi trôi theo mú
 
 **`POST /api/<go|node>/ai`** với `{model?, provider?, system?, contents: [{role, parts: [{text}]}]}` → `200 {text, provider, model}`.
 Server chỉ nhận đúng dạng hội thoại, tối đa 16 lượt, mỗi đoạn 8000 ký tự. Gọi lần lượt các AI có khóa
-(`GEMINI_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `MISTRAL_API_KEY`, thứ tự theo `AI_ORDER`, mặc định
-gemini → groq → openrouter → mistral); với Gemini thử lần lượt các model trong `GEMINI_MODELS`
+(`GEMINI_API_KEY`, `NVIDIA_API_KEY`, `CEREBRAS_API_KEY`, `GLM_API_KEY`, `GROQ_API_KEY`, `MISTRAL_API_KEY`,
+`OPENROUTER_API_KEY`, thứ tự theo `AI_ORDER`, mặc định gemini → nvidia → cerebras → glm → groq → mistral →
+openrouter, xếp theo hạn mức miễn phí từ rộng tới hẹp); với Gemini thử lần lượt các model trong `GEMINI_MODELS`
 (mặc định `gemini-3.8-flash,gemini-3.5-flash-lite`, mỗi model một hạn mức miễn phí riêng; Google ngừng model cũ thì đổi ở đây hoặc đặt `GEMINI_MODELS`). AI nào hết lượt (429),
 lỗi hay quá 20 s thì chuyển sang cái kế tiếp; model vừa hết lượt được bỏ qua một phút. `model` (`gemini-*`) đặt model
 Gemini thử đầu tiên, `provider` chỉ dùng một nhà cung cấp (để thử khóa). Tất cả đều hết lượt thì `429`, lỗi khác `502`,
