@@ -10,6 +10,8 @@ export interface Asset {
   storage: Storage;
   key: string;
   createdAt: string;
+  /** Tên người thêm (tài khoản đăng nhập lúc đó, "Hệ thống" nếu do script); dòng cũ để trống. */
+  createdBy?: string;
 }
 
 export interface Lesson {
@@ -19,6 +21,8 @@ export interface Lesson {
   zh: string;
   visible: boolean;
   sort: number;
+  createdBy?: string;
+  updatedBy?: string;
   assets: Asset[];
 }
 
@@ -27,6 +31,8 @@ export interface Course {
   slug: string;
   title: string;
   sort: number;
+  createdBy?: string;
+  updatedBy?: string;
   lessons: Lesson[];
 }
 

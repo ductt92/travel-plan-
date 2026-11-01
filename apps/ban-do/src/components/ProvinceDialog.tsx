@@ -215,6 +215,11 @@ function TripCard({ trip, canEdit, onEdit, onRemove }: {
       )}
 
       {trip.note && <p className="trip-note">{trip.note}</p>}
+      {trip.by && (
+        <p className="trip-by">
+          {trip.by} ghi{trip.editedBy && trip.editedBy !== trip.by ? ` · ${trip.editedBy} sửa` : ''}
+        </p>
+      )}
 
       {canEdit && (
         <div className="trip-acts">

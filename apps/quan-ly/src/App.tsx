@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Alert, Button, Card, Empty, Spin, message } from 'react-liquis-glass';
+import { Alert, Button, Spin, message } from 'react-liquis-glass';
 import { HomeIcon, LogInIcon, LogOutIcon, RefreshIcon } from 'react-liquis-glass/icons';
 import { GlassToggle } from '@trang/ui/glass';
+import { getSession, onSessionChange, refreshSession, signIn, signOut } from '@trang/ui/auth';
 import * as api from '@/lib/api';
 import type { Catalog, Course, CourseDraft, Lesson, LessonDraft } from '@/lib/types';
 import AssetsDrawer from './components/AssetsDrawer';
@@ -15,18 +16,14 @@ import YoutubeDialog from './components/YoutubeDialog';
 type CourseEdit = { course: Course | null } | null;
 type LessonEdit = { course: Course; lesson: Lesson | null } | null;
 
-// TẠM BỎ mật khẩu (người dùng yêu cầu 31/10): không hỏi đăng nhập, API cũng tạm không kiểm tra.
-// Bật lại: đổi OPEN thành false ở đây, trong backend/node/catalog.js và backend/go/catalog.go.
-const OPEN = true;
-
 /**
- * Danh mục cần mật khẩu ngay từ lúc đọc. Có mật khẩu nhớ sẵn thì nạp luôn; server
- * báo 401 (đổi mật khẩu) thì mở lại hộp đăng nhập kèm câu "Sai mật khẩu".
+ * Danh mục ai cũng xem được; thêm/sửa/xoá cần đăng nhập bằng tài khoản (Đức, Ngọc…), phiên dùng chung
+ * với trang bản đồ (@trang/ui/auth). Server báo 401 (chưa đăng nhập, phiên hết hạn) thì mở hộp đăng nhập.
  * Sửa gì xong cũng nạp lại cả danh mục: nhỏ, và dung lượng luôn khớp với server.
  */
 export default function App() {
-  const [pass, setPassState] = useState(api.savedPass);
-  const [login, setLogin] = useState<{ error: string | null } | null>(pass || OPEN ? null : { error: null });
+  const [session, setSession] = useState(getSession);
+  const [login, setLogin] = useState<{ error: string | null } | null>(null);
   const [data, setData] = useState<Catalog | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<number | null>(null);
@@ -49,35 +46,22 @@ export default function App() {
 
   useEffect(() => {
     api.handleUnauthorized(() => {
-      api.rememberPass('');
-      api.setPass('');
-      setPassState('');
-      setLogin({ error: 'Sai mật khẩu.' });
+      const had = !!getSession();
+      signOut();
+      setLogin({ error: had ? 'Phiên đăng nhập đã hết, đăng nhập lại nhé.' : 'Đăng nhập để thêm, sửa hay xoá.' });
     });
   }, []);
 
-  useEffect(() => { if (pass || OPEN) void reload(); }, [pass, reload]);
-
-  const signIn = useCallback(async (raw: string) => {
-    const typed = raw.trim();
-    const err = await api.checkPass(typed);
-    if (err) return err;
-    api.rememberPass(typed);
-    api.setPass(typed);
-    setPassState(typed);
-    return null;
-  }, []);
-
-  const signOut = () => {
-    api.rememberPass('');
-    api.setPass('');
-    setPassState('');
-    setData(null);
-    setLogin({ error: null });
-  };
+  // đăng nhập/đăng xuất ở trang bản đồ (tab khác) cũng cập nhật ở đây
+  useEffect(() => onSessionChange(setSession), []);
+  useEffect(() => { void refreshSession(); void reload(); }, [reload]);
 
   // chạy một thao tác: báo thành công/thất bại bằng toast rồi nạp lại; ném tiếp lỗi để hộp thoại giữ nguyên
   const run = useCallback(async (job: () => Promise<unknown>, ok: string) => {
+    if (!getSession()) {
+      setLogin({ error: 'Đăng nhập để thêm, sửa hay xoá.' });
+      throw new api.ApiError('cần đăng nhập', 401);
+    }
     try {
       await job();
       message.success(ok);
@@ -136,20 +120,14 @@ export default function App() {
         <nav className="top__tools" aria-label="Công cụ">
           <Button variant="glass" size="sm" href="/" icon={<HomeIcon />}>Trang chủ</Button>
           <GlassToggle />
-          {OPEN ? null : pass
-            ? <Button variant="glass" size="sm" icon={<LogOutIcon />} onClick={signOut}>Thoát</Button>
+          {session
+            ? <Button variant="glass" size="sm" icon={<LogOutIcon />} onClick={signOut} title={`Đang đăng nhập: ${session.user.name}`}>{session.user.name} · Đăng xuất</Button>
             : <Button variant="filled" color="primary" size="sm" icon={<LogInIcon />} onClick={() => setLogin({ error: null })}>Đăng nhập</Button>}
         </nav>
       </header>
 
       <main>
-        {!pass && !OPEN ? (
-          <Card className="gate">
-            <Empty description="Đăng nhập để xem và sửa danh mục học liệu.">
-              <Button variant="filled" color="primary" icon={<LogInIcon />} onClick={() => setLogin({ error: null })}>Đăng nhập</Button>
-            </Empty>
-          </Card>
-        ) : !data ? (
+        {!data ? (
           loadError ? (
             <Alert
               type="error" showIcon title="Không đọc được danh mục" description={loadError}
@@ -164,6 +142,13 @@ export default function App() {
               <Alert
                 type="warning" showIcon closable title="Chưa nạp lại được" description={loadError}
                 onClose={() => setLoadError(null)} className="reload-alert"
+              />
+            )}
+            {!session && (
+              <Alert
+                type="info" showIcon className="view-note" title="Đang xem thôi"
+                description="Đăng nhập bằng tài khoản của mình thì mới thêm, sửa, xoá được; mọi thay đổi ghi tên người làm."
+                action={<Button size="sm" variant="filled" color="primary" icon={<LogInIcon />} onClick={() => setLogin({ error: null })}>Đăng nhập</Button>}
               />
             )}
             <UsagePanel data={data} />

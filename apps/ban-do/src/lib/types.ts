@@ -36,6 +36,9 @@ export interface Trip {
   rate: number;
   places: string[];
   note: string;
+  /** Tên người thêm / sửa lần cuối (server ghi theo tài khoản đăng nhập); chuyến cũ để trống. */
+  by?: string;
+  editedBy?: string;
 }
 
 export interface ProvinceEntry {

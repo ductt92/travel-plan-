@@ -1,19 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from 'react-liquis-glass';
+import { getSession, onSessionChange, refreshSession, signIn, signOut } from '@trang/ui/auth';
 import TravelMap from './components/TravelMap';
-import { checkPass, loadEntries, rememberPass, savedPass } from './lib/api';
+import { loadEntries } from './lib/api';
 import { mapData } from './lib/map-data';
 import type { Entries } from './lib/types';
 
 /**
- * Nạp nhật ký từ API rồi mới dựng bản đồ. Mật khẩu giữ trong localStorage; mỗi lần
- * mở trang hỏi lại server xem còn đúng không, đổi mật khẩu bên server là lần sau
- * vào sẽ tự rơi về chế độ chỉ xem.
+ * Nạp nhật ký từ API rồi mới dựng bản đồ. Đăng nhập bằng tài khoản (Đức, Ngọc…) qua @trang/ui/auth,
+ * dùng chung phiên với trang quản lý; mỗi lần mở trang hỏi lại server xem phiên còn dùng được không,
+ * đổi mật khẩu bên server là lần sau vào sẽ tự rơi về chế độ chỉ xem.
  */
 export default function App() {
   const [entries, setEntries] = useState<Entries | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [pass, setPass] = useState(savedPass);
+  const [session, setSession] = useState(getSession);
 
   const load = useCallback(() => {
     setLoadError(null);
@@ -22,28 +23,9 @@ export default function App() {
 
   useEffect(load, [load]);
 
-  useEffect(() => {
-    if (!pass) return;
-    checkPass(pass).then(err => {
-      if (!err) return;
-      rememberPass('');
-      setPass('');
-    });
-  }, [pass]);
-
-  const signIn = useCallback(async (raw: string) => {
-    const typed = raw.trim();
-    const err = await checkPass(typed);
-    if (err) return err;
-    rememberPass(typed);
-    setPass(typed);
-    return null;
-  }, []);
-
-  const signOut = useCallback(() => {
-    rememberPass('');
-    setPass('');
-  }, []);
+  // đăng nhập/đăng xuất ở trang quản lý (tab khác) cũng cập nhật ở đây
+  useEffect(() => onSessionChange(setSession), []);
+  useEffect(() => { void refreshSession(); }, []);
 
   if (!entries) {
     return (
@@ -66,7 +48,8 @@ export default function App() {
       width={mapData.W}
       height={mapData.H}
       initial={entries}
-      pass={pass}
+      token={session?.token ?? ''}
+      userName={session?.user.name ?? ''}
       onSignIn={signIn}
       onSignOut={signOut}
     />

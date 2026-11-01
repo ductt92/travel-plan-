@@ -52,7 +52,6 @@ html[data-glass="off"] body::before{opacity:.35}
 .section__bar .section__title{margin-bottom:2px}
 .section__sub{color:var(--muted);font-size:13.5px}
 .loading{display:grid;place-items:center;min-height:320px}
-.gate{max-width:520px;margin:40px auto}
 .reload-alert{margin-bottom:16px}
 
 /* ---------- dung lượng ---------- */
@@ -138,6 +137,12 @@ html[data-glass="off"] body::before{opacity:.35}
 .login__meta{margin:9px 0 20px;font-size:13px;line-height:1.6;color:var(--muted)}
 .login__msg{min-height:19px;margin:11px 0 13px;font-size:12.5px;color:var(--muted)}
 .login__msg.bad{color:var(--lg-danger);font-weight:600}
+/* chọn nhanh tài khoản (Đức, Ngọc) phía trên ô tên */
+.login__who{display:flex;justify-content:center;gap:8px;margin:0 0 12px}
+.login__form .login__pass{margin-top:10px}
+/* người sửa bài lần cuối, cạnh tên bài */
+.lesson-by{font-size:12px;color:var(--muted)}
+.view-note{margin-bottom:16px}
 
 @media (max-width:640px){
   .wrap{padding-top:18px}

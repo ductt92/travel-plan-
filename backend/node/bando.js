@@ -1,15 +1,16 @@
 // Nhật ký chuyến đi của trang bản đồ (apps/ban-do). Bản Go: backend/go/bando.go, cùng hợp đồng.
 //
 // GET    /api/<node|go>/ban-do               → { entries: { "<mã tỉnh>": { status, trips: [...] } } }
-// GET    /api/<node|go>/ban-do?check         → kiểm mật khẩu, không đụng cơ sở dữ liệu
+// GET    /api/<node|go>/ban-do?check         → { ok, user } nếu phiên đăng nhập còn dùng được
 // PUT    …?province=<mã>        {status}     → đặt trạng thái tỉnh
 // POST   …?province=<mã>        {chuyến}     → thêm chuyến, trả về chuyến vừa tạo (có id thật)
 // PATCH  …?province=<mã>&id=<n> {chuyến}     → sửa chuyến, trả về chuyến sau khi sửa
 // DELETE …?province=<mã>&id=<n>              → xoá chuyến
 //
-// GET ai đọc cũng được (trang này nối công khai từ trang chủ); mọi thao tác ghi cần mật khẩu
-// APP_SECRET hoặc HSK6_PASS gửi qua header X-App-Secret, giống /terms.
-import { authorizedHsk6, db, fail, readJson, send } from './common.js';
+// GET ai đọc cũng được (trang này nối công khai từ trang chủ); mọi thao tác ghi cần đăng nhập bằng tài khoản
+// (accounts.js: Bearer token, hoặc mã chung APP_SECRET cho script). Mỗi chuyến ghi lại ai thêm, ai sửa lần cuối.
+import { can, currentUser } from './accounts.js';
+import { db, fail, readJson, send } from './common.js';
 
 const TABLES = `
 DO $$ BEGIN
@@ -35,6 +36,10 @@ CREATE TABLE IF NOT EXISTS trips (
 );
 CREATE INDEX IF NOT EXISTS trips_province_idx ON trips (province_code);
 CREATE INDEX IF NOT EXISTS trips_from_idx     ON trips (from_date);
+-- tên người thêm/sửa (bảng tạo trước khi có tài khoản thì thêm cột, dòng cũ để trống)
+ALTER TABLE provinces ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT '';
+ALTER TABLE trips ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT '';
+ALTER TABLE trips ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT '';
 `;
 
 let ready = null;
@@ -84,7 +89,7 @@ function checkTrip(body) {
 // from_date/to_date ép sang text ngay trong câu lệnh: để pg tự dịch kiểu date thành
 // Date của JavaScript là ngày trôi mất một hôm theo múi giờ máy chủ
 const TRIP_COLS = `id, province_code, from_date::text AS from_date, to_date::text AS to_date,
-                   companions, rate, places, note`;
+                   companions, rate, places, note, created_by, updated_by`;
 
 const toTrip = r => ({
   id: r.id,
@@ -94,6 +99,8 @@ const toTrip = r => ({
   rate: r.rate,
   places: r.places,
   note: r.note,
+  by: r.created_by,
+  editedBy: r.updated_by,
 });
 
 async function readAll(p) {
@@ -116,14 +123,20 @@ export default async function banDo(req, res) {
     return fail(res, 405, 'chỉ hỗ trợ GET, PUT, POST, PATCH và DELETE');
   }
 
-  // trang bấm Đăng nhập thì hỏi đúng câu này, chưa cần tới cơ sở dữ liệu
-  if (method === 'GET' && url.searchParams.has('check'))
-    return authorizedHsk6(req) ? send(res, 200, { ok: true }) : fail(res, 401, 'sai mật khẩu');
-
-  if (method !== 'GET' && !authorizedHsk6(req)) return fail(res, 401, 'sai mật khẩu');
-
   let p;
   try { p = await pool(); } catch { return fail(res, 503, 'không kết nối được cơ sở dữ liệu'); }
+
+  let user = null;
+  if (method !== 'GET' || url.searchParams.has('check')) {
+    try { user = await currentUser(req); } catch { return fail(res, 500, 'lỗi đọc dữ liệu'); }
+  }
+  // hỏi xem phiên đăng nhập còn dùng được không
+  if (method === 'GET' && url.searchParams.has('check'))
+    return user ? send(res, 200, { ok: true, user }) : fail(res, 401, 'chưa đăng nhập');
+  if (method !== 'GET') {
+    if (!user) return fail(res, 401, 'cần đăng nhập');
+    if (!can(user, method === 'DELETE' ? 'delete' : 'write')) return fail(res, 403, 'tài khoản này không có quyền sửa');
+  }
 
   if (method === 'GET') {
     try { return send(res, 200, { entries: await readAll(p) }); }
@@ -151,9 +164,9 @@ export default async function banDo(req, res) {
     if (!STATUSES.includes(status)) return fail(res, 400, 'trạng thái không hợp lệ');
     try {
       await p.query(
-        `INSERT INTO provinces (code, status) VALUES ($1, $2)
-         ON CONFLICT (code) DO UPDATE SET status = EXCLUDED.status, updated_at = now()`,
-        [code, status],
+        `INSERT INTO provinces (code, status, updated_by) VALUES ($1, $2, $3)
+         ON CONFLICT (code) DO UPDATE SET status = EXCLUDED.status, updated_by = EXCLUDED.updated_by, updated_at = now()`,
+        [code, status, user.name],
       );
       return send(res, 200, { ok: true });
     } catch { return fail(res, 500, 'lỗi ghi dữ liệu'); }
@@ -173,9 +186,9 @@ export default async function banDo(req, res) {
         [code],
       );
       const r = await client.query(
-        `INSERT INTO trips (province_code, from_date, to_date, companions, rate, places, note)
-         VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7) RETURNING ${TRIP_COLS}`,
-        [code, trip.from, trip.to, trip.with, trip.rate, JSON.stringify(trip.places), trip.note],
+        `INSERT INTO trips (province_code, from_date, to_date, companions, rate, places, note, created_by, updated_by)
+         VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7, $8, $8) RETURNING ${TRIP_COLS}`,
+        [code, trip.from, trip.to, trip.with, trip.rate, JSON.stringify(trip.places), trip.note, user.name],
       );
       await client.query('COMMIT');
       return send(res, 200, { trip: toTrip(r.rows[0]) });
@@ -192,9 +205,9 @@ export default async function banDo(req, res) {
   try {
     const r = await p.query(
       `UPDATE trips SET from_date = $3, to_date = $4, companions = $5, rate = $6,
-                        places = $7::jsonb, note = $8, updated_at = now()
+                        places = $7::jsonb, note = $8, updated_by = $9, updated_at = now()
        WHERE id = $1 AND province_code = $2 RETURNING ${TRIP_COLS}`,
-      [id, code, trip.from, trip.to, trip.with, trip.rate, JSON.stringify(trip.places), trip.note],
+      [id, code, trip.from, trip.to, trip.with, trip.rate, JSON.stringify(trip.places), trip.note, user.name],
     );
     return r.rowCount ? send(res, 200, { trip: toTrip(r.rows[0]) }) : fail(res, 404, 'không còn chuyến này nữa');
   } catch { return fail(res, 500, 'lỗi ghi dữ liệu'); }

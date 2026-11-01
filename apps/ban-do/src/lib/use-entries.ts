@@ -5,7 +5,7 @@ import type { Entries, ProvinceEntry, Status, Trip, TripDraft } from './types';
 const BLANK: ProvinceEntry = { status: 'none', trips: [] };
 
 function message(err: unknown) {
-  if (err instanceof ApiError && err.status === 401) return 'Mật khẩu không còn đúng. Đăng nhập lại nhé.';
+  if (err instanceof ApiError && err.status === 401) return 'Phiên đăng nhập đã hết. Đăng nhập lại nhé.';
   return err instanceof Error ? err.message : 'Không lưu được, thử lại nhé.';
 }
 
@@ -13,10 +13,10 @@ function message(err: unknown) {
  * Nhật ký chuyến đi và bốn cách sửa nó.
  *
  * Sửa hiện ra ngay rồi mới gửi lên API; server báo hỏng thì trả màn hình về đúng
- * như trước và hiện một dòng lỗi. Chưa đăng nhập (`pass` rỗng) thì không gửi gì cả —
+ * như trước và hiện một dòng lỗi. Chưa đăng nhập (`token` rỗng) thì không gửi gì cả —
  * nút sửa cũng đã ẩn, đây chỉ là chốt cuối cho chắc.
  */
-export function useEntries(initial: Entries, pass: string, onExpired: () => void) {
+export function useEntries(initial: Entries, token: string, onExpired: () => void) {
   const [entries, setEntries] = useState<Entries>(initial);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(0);
@@ -32,7 +32,7 @@ export function useEntries(initial: Entries, pass: string, onExpired: () => void
 
   const commit = useCallback(
     <T,>(before: Entries, send: () => Promise<T>, done?: (value: T) => void) => {
-      if (!pass) return;
+      if (!token) return;
       setSaving(n => n + 1);
       send().then(
         value => {
@@ -46,14 +46,14 @@ export function useEntries(initial: Entries, pass: string, onExpired: () => void
         },
       ).finally(() => setSaving(n => n - 1));
     },
-    [pass, write, onExpired],
+    [token, write, onExpired],
   );
 
   const setStatus = useCallback((code: string, status: Status) => {
     const before = latest.current;
     write({ ...before, [code]: { ...(before[code] ?? BLANK), status } });
-    commit(before, () => putStatus(pass, code, status));
-  }, [commit, pass, write]);
+    commit(before, () => putStatus(token, code, status));
+  }, [commit, token, write]);
 
   const addTrip = useCallback((code: string, data: TripDraft) => {
     const before = latest.current;
@@ -65,29 +65,33 @@ export function useEntries(initial: Entries, pass: string, onExpired: () => void
       [code]: { status: 'visited', trips: [...entry.trips, { ...data, id: tempId }] },
     });
 
-    commit(before, () => postTrip(pass, code, data), saved => {
+    commit(before, () => postTrip(token, code, data), saved => {
       const now = latest.current[code] ?? BLANK;
       write({
         ...latest.current,
         [code]: { ...now, trips: now.trips.map(t => (t.id === tempId ? saved : t)) },
       });
     });
-  }, [commit, pass, write]);
+  }, [commit, token, write]);
 
   const updateTrip = useCallback((code: string, id: number, data: TripDraft) => {
     const before = latest.current;
     const entry = before[code] ?? BLANK;
     const patch = (t: Trip) => (t.id === id ? { ...t, ...data } : t);
     write({ ...before, [code]: { ...entry, trips: entry.trips.map(patch) } });
-    commit(before, () => patchTrip(pass, code, id, data));
-  }, [commit, pass, write]);
+    // server trả lại chuyến kèm tên người sửa: thay vào để hiện "… sửa"
+    commit(before, () => patchTrip(token, code, id, data), saved => {
+      const now = latest.current[code] ?? BLANK;
+      write({ ...latest.current, [code]: { ...now, trips: now.trips.map(t => (t.id === id ? saved : t)) } });
+    });
+  }, [commit, token, write]);
 
   const removeTrip = useCallback((code: string, id: number) => {
     const before = latest.current;
     const entry = before[code] ?? BLANK;
     write({ ...before, [code]: { ...entry, trips: entry.trips.filter(t => t.id !== id) } });
-    commit(before, () => deleteTrip(pass, code, id));
-  }, [commit, pass, write]);
+    commit(before, () => deleteTrip(token, code, id));
+  }, [commit, token, write]);
 
   return {
     entries, entryOf, setStatus, addTrip, updateTrip, removeTrip,

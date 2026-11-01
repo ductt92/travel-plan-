@@ -196,6 +196,7 @@ function Body({ lesson, r2Configured, onChanged, onAddYoutube }: Omit<Props, 'on
                       <Tag size="sm" variant="outline" color={storageColor[a.storage]}>{STORAGE_LABEL[a.storage]}</Tag>
                       <span>{a.storage === 'youtube' ? '—' : fmtBytes(a.size)}</span>
                       {a.createdAt && <span>{new Date(a.createdAt).toLocaleDateString('vi-VN')}</span>}
+                      {a.createdBy && <span>{a.createdBy} thêm</span>}
                     </span>
                   }
                   extra={

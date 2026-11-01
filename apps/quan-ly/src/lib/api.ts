@@ -1,15 +1,11 @@
+import { authHeaders } from '@trang/ui/auth';
 import type { Asset, AssetKind, Catalog, Course, CourseDraft, Lesson, LessonDraft } from './types';
 
-/** Gọi /api/node/quan-ly. Mật khẩu nhớ trong localStorage như trang bản đồ. */
+/**
+ * Gọi /api/node/quan-ly. Xem thì ai cũng được; thêm/sửa/xoá kèm token của tài khoản đang đăng nhập
+ * (@trang/ui/auth, dùng chung phiên với trang bản đồ), server ghi lại tên người làm.
+ */
 const BASE = '/api/node/quan-ly';
-const PASS_KEY = 'quan-ly-pass';
-
-export const savedPass = () => {
-  try { return localStorage.getItem(PASS_KEY) || ''; } catch { return ''; }
-};
-export const rememberPass = (v: string) => {
-  try { v ? localStorage.setItem(PASS_KEY, v) : localStorage.removeItem(PASS_KEY); } catch { /* chặn lưu thì thôi */ }
-};
 
 /** Giữ lại mã HTTP để phân biệt "sai mật khẩu" (401), "chưa cấu hình R2" (503) với lỗi khác. */
 export class ApiError extends Error {
@@ -18,24 +14,19 @@ export class ApiError extends Error {
   }
 }
 
-// mật khẩu đang dùng; App đặt sau khi đăng nhập, mọi lệnh gọi tự kèm theo
-let pass = savedPass();
-export const setPass = (v: string) => { pass = v; };
-
-/** Server báo 401 giữa chừng (đổi mật khẩu bên server): App nghe để mở lại hộp đăng nhập. */
+/** Server báo 401 (chưa đăng nhập hoặc phiên hết hạn): App nghe để mở hộp đăng nhập. */
 let onUnauthorized: () => void = () => {};
 export const handleUnauthorized = (fn: () => void) => { onUnauthorized = fn; };
 
-async function call<T>(query: string, init?: RequestInit & { pass?: string }): Promise<T> {
-  const { pass: own, ...rest } = init ?? {};
-  const secret = own ?? pass;
+async function call<T>(query: string, init?: RequestInit): Promise<T> {
+  const rest = init ?? {};
   let res: Response;
   try {
     res = await fetch(BASE + query, {
       ...rest,
       cache: 'no-store',
       headers: {
-        ...(secret ? { 'X-App-Secret': secret } : {}),
+        ...authHeaders(),
         ...(rest.body ? { 'Content-Type': 'application/json' } : {}),
       },
     });
@@ -44,23 +35,13 @@ async function call<T>(query: string, init?: RequestInit & { pass?: string }): P
   }
   const body = await res.json().catch(() => null);
   if (!res.ok) {
-    if (res.status === 401 && own === undefined) onUnauthorized();
+    if (res.status === 401) onUnauthorized();
     throw new ApiError(body?.error || `Server lỗi (${res.status}).`, res.status);
   }
   return body as T;
 }
 
 const json = (method: string, data: unknown): RequestInit => ({ method, body: JSON.stringify(data) });
-
-/** null nếu mật khẩu đúng, còn lại là câu để hiện ra. Cắt khoảng trắng: dán hay dính dấu cách. */
-export async function checkPass(typed: string) {
-  try {
-    await call('?check', { pass: typed.trim() });
-    return null;
-  } catch (err) {
-    return err instanceof ApiError && err.status === 401 ? 'Sai mật khẩu.' : (err as Error).message;
-  }
-}
 
 export const loadCatalog = () => call<Catalog>('');
 

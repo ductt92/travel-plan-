@@ -54,6 +54,9 @@ export default function LessonTable({ lessons, onToggle, onEdit, onDelete, onFil
         <div className={`lesson-name${l.visible ? '' : ' is-hidden'}`}>
           <span>{l.title}</span>
           {l.zh && <span className="hz" lang="zh">{l.zh}</span>}
+          {l.updatedBy && l.updatedBy !== 'Hệ thống' && (
+            <span className="lesson-by">{l.updatedBy === l.createdBy ? `${l.createdBy} thêm` : `${l.updatedBy} sửa`}</span>
+          )}
         </div>
       ),
     },

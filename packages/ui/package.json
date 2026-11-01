@@ -10,6 +10,10 @@
     "./glass": {
       "types": "./src/glass.d.ts",
       "default": "./src/glass.jsx"
+    },
+    "./auth": {
+      "types": "./src/auth.d.ts",
+      "default": "./src/auth.js"
     }
   },
   "dependencies": {

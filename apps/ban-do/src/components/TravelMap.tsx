@@ -20,18 +20,20 @@ const TOTAL = provinces.length;
 const BLANK = { status: 'none' as const, trips: [] };
 
 export default function TravelMap({
-  width, height, initial, pass, onSignIn, onSignOut,
+  width, height, initial, token, userName, onSignIn, onSignOut,
 }: {
   width: number; height: number; initial: Entries;
-  /** Mật khẩu đang giữ; rỗng là chưa đăng nhập, chỉ xem được. */
-  pass: string;
-  onSignIn: (pass: string) => Promise<string | null>;
+  /** Token của tài khoản đang đăng nhập; rỗng là chưa đăng nhập, chỉ xem được. */
+  token: string;
+  /** Tên người đang đăng nhập (Đức, Ngọc…) */
+  userName: string;
+  onSignIn: (username: string, password: string) => Promise<string | null>;
   onSignOut: () => void;
 }) {
-  const canEdit = Boolean(pass);
+  const canEdit = Boolean(token);
   const {
     entries, entryOf, setStatus, addTrip, updateTrip, removeTrip, saving, error, clearError,
-  } = useEntries(initial, pass, onSignOut);
+  } = useEntries(initial, token, onSignOut);
 
   const [period, setPeriod] = useState<Period>({ year: null, month: null });
   const [selected, setSelected] = useState<string | null>(null);
@@ -115,7 +117,7 @@ export default function TravelMap({
   return (
     <>
       <div className="wrap">
-        <NoteBar canEdit={canEdit} onLogin={() => setLoginOpen(true)} />
+        <NoteBar canEdit={canEdit} userName={userName} onLogin={() => setLoginOpen(true)} />
 
         <header className="top">
           {/* về hẳn trang chủ của site để chọn web khác */}
@@ -167,8 +169,9 @@ export default function TravelMap({
                 Nhật ký <span className="count">{rows.length}</span>
               </Button>
               {canEdit ? (
-                <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon open />} onClick={onSignOut}>
-                  Thoát
+                <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon open />} onClick={onSignOut}
+                  title={`Đang đăng nhập: ${userName}. Bấm để thoát`}>
+                  {userName} · Thoát
                 </Button>
               ) : (
                 <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon />} onClick={() => { setHovered(null); setLoginOpen(true); }}>
@@ -288,13 +291,13 @@ export default function TravelMap({
   );
 }
 
-function NoteBar({ canEdit, onLogin }: { canEdit: boolean; onLogin: () => void }) {
+function NoteBar({ canEdit, userName, onLogin }: { canEdit: boolean; userName: string; onLogin: () => void }) {
   if (!canEdit) return (
     <p className="note-bar"><span>👀</span>
       <span>
         <b>Đang xem thôi.</b>{' '}
         <button type="button" className="link" onClick={onLogin}>Đăng nhập</button>{' '}
-        bằng mật khẩu chung thì mới ghi, sửa và xoá chuyến được.
+        bằng tài khoản của mình thì mới ghi, sửa và xoá chuyến được.
       </span>
     </p>
   );
@@ -302,7 +305,7 @@ function NoteBar({ canEdit, onLogin }: { canEdit: boolean; onLogin: () => void }
   return (
     <p className="note-bar"><span>💾</span>
       <span>
-        <b>Đang đăng nhập.</b> Mọi thay đổi lưu thẳng xuống database.
+        <b>{userName} đang đăng nhập.</b> Chuyến nào thêm hay sửa đều ghi tên {userName}.
       </span>
     </p>
   );

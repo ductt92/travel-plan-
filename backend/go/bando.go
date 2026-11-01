@@ -41,6 +41,10 @@ var banDoTables = []string{
 	)`,
 	`CREATE INDEX IF NOT EXISTS trips_province_idx ON trips (province_code)`,
 	`CREATE INDEX IF NOT EXISTS trips_from_idx     ON trips (from_date)`,
+	// tên người thêm/sửa (bảng tạo trước khi có tài khoản thì thêm cột, dòng cũ để trống)
+	`ALTER TABLE provinces ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT ''`,
+	`ALTER TABLE trips ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT ''`,
+	`ALTER TABLE trips ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT ''`,
 }
 
 var (
@@ -71,6 +75,8 @@ type banDoTrip struct {
 	Rate   int      `json:"rate"`
 	Places []string `json:"places"`
 	Note   string   `json:"note"`
+	By     string   `json:"by"`
+	Edited string   `json:"editedBy"`
 }
 
 type banDoEntry struct {
@@ -88,7 +94,7 @@ const (
 var banDoCode = regexp.MustCompile(`^[a-z][a-z0-9-]{1,39}$`)
 
 // from_date/to_date ép sang text ngay trong câu lệnh, để ngày không trôi theo múi giờ
-const banDoCols = `id, province_code, from_date::text, to_date::text, companions, rate, places, note`
+const banDoCols = `id, province_code, from_date::text, to_date::text, companions, rate, places, note, created_by, updated_by`
 
 // cắt theo ký tự chứ không theo byte, để không xén đôi chữ tiếng Việt
 func clip(s string, limit int) string {
@@ -151,7 +157,7 @@ func scanBanDoTrip(rows pgx.Rows) (string, banDoTrip, error) {
 	var t banDoTrip
 	var code string
 	var from, to *string
-	err := rows.Scan(&t.ID, &code, &from, &to, &t.With, &t.Rate, &t.Places, &t.Note)
+	err := rows.Scan(&t.ID, &code, &from, &to, &t.With, &t.Rate, &t.Places, &t.Note, &t.By, &t.Edited)
 	if from != nil {
 		t.From = *from
 	}
@@ -177,24 +183,41 @@ func BanDo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// trang bấm Đăng nhập thì hỏi đúng câu này, chưa cần tới cơ sở dữ liệu
-	if r.Method == http.MethodGet && q.Has("check") {
-		if authorizedHsk6(r) {
-			writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
-		} else {
-			fail(w, http.StatusUnauthorized, "sai mật khẩu")
-		}
-		return
-	}
-	if r.Method != http.MethodGet && !authorizedHsk6(r) {
-		fail(w, http.StatusUnauthorized, "sai mật khẩu")
-		return
-	}
-
 	p, err := banDoPool(ctx)
 	if err != nil {
 		fail(w, http.StatusServiceUnavailable, "không kết nối được cơ sở dữ liệu")
 		return
+	}
+
+	var user *AppUser
+	if r.Method != http.MethodGet || q.Has("check") {
+		if user, err = currentUser(ctx, r); err != nil {
+			fail(w, http.StatusInternalServerError, "lỗi đọc dữ liệu")
+			return
+		}
+	}
+	// hỏi xem phiên đăng nhập còn dùng được không
+	if r.Method == http.MethodGet && q.Has("check") {
+		if user != nil {
+			writeJSON(w, http.StatusOK, map[string]any{"ok": true, "user": user})
+		} else {
+			fail(w, http.StatusUnauthorized, "chưa đăng nhập")
+		}
+		return
+	}
+	if r.Method != http.MethodGet {
+		right := "write"
+		if r.Method == http.MethodDelete {
+			right = "delete"
+		}
+		if user == nil {
+			fail(w, http.StatusUnauthorized, "cần đăng nhập")
+			return
+		}
+		if !can(user, right) {
+			fail(w, http.StatusForbidden, "tài khoản này không có quyền sửa")
+			return
+		}
 	}
 
 	if r.Method == http.MethodGet {
@@ -274,8 +297,9 @@ func BanDo(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		_, err := p.Exec(ctx,
-			`INSERT INTO provinces (code, status) VALUES ($1, $2)
-			 ON CONFLICT (code) DO UPDATE SET status = EXCLUDED.status, updated_at = now()`, code, body.Status)
+			`INSERT INTO provinces (code, status, updated_by) VALUES ($1, $2, $3)
+			 ON CONFLICT (code) DO UPDATE SET status = EXCLUDED.status, updated_by = EXCLUDED.updated_by, updated_at = now()`,
+			code, body.Status, user.Name)
 		if err != nil {
 			fail(w, http.StatusInternalServerError, "lỗi ghi dữ liệu")
 			return
@@ -306,9 +330,9 @@ func BanDo(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		rows, err := tx.Query(ctx,
-			`INSERT INTO trips (province_code, from_date, to_date, companions, rate, places, note)
-			 VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING `+banDoCols,
-			code, from, to, with, body.Rate, places, note)
+			`INSERT INTO trips (province_code, from_date, to_date, companions, rate, places, note, created_by, updated_by)
+			 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $8) RETURNING `+banDoCols,
+			code, from, to, with, body.Rate, places, note, user.Name)
 		if err != nil {
 			fail(w, http.StatusInternalServerError, "lỗi ghi dữ liệu")
 			return
@@ -335,9 +359,9 @@ func BanDo(w http.ResponseWriter, r *http.Request) {
 	}
 	rows, err := p.Query(ctx,
 		`UPDATE trips SET from_date = $3, to_date = $4, companions = $5, rate = $6,
-		                  places = $7, note = $8, updated_at = now()
+		                  places = $7, note = $8, updated_by = $9, updated_at = now()
 		 WHERE id = $1 AND province_code = $2 RETURNING `+banDoCols,
-		id, code, from, to, with, body.Rate, places, note)
+		id, code, from, to, with, body.Rate, places, note, user.Name)
 	if err != nil {
 		fail(w, http.StatusInternalServerError, "lỗi ghi dữ liệu")
 		return

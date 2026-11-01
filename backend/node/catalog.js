@@ -5,17 +5,19 @@
 // Cloudflare Pages ('pages': video/slide/âm thanh HSK 6 ở ngoc-hsk6.pages.dev, chỉ ghi qua ?import).
 //
 // GET    /api/<node|go>/quan-ly            → { courses, usage, r2 }
-// GET    …?check                           → kiểm mật khẩu, không đụng cơ sở dữ liệu
+// GET    …?check                           → { ok, user } nếu phiên đăng nhập còn dùng được
 // POST   …?course  | PATCH/DELETE …?course=<id>
 // POST   …?lesson  | PATCH/DELETE …?lesson=<id>
 // POST   …?upload  {lessonId,name,kind,size,type} → URL PUT ký sẵn lên R2 (15 phút)
 // POST   …?asset   | DELETE …?asset=<id>   (file R2 thì xoá trên R2 trước)
 // POST   …?import  {courses:[…]}           → ghi gộp cả danh mục (scripts/seed-catalog.mjs)
 //
-// Mọi request cần APP_SECRET qua header X-App-Secret (không nhận HSK6_PASS).
+// Xem (GET) ai cũng được; thêm/sửa/xoá cần đăng nhập bằng tài khoản (accounts.js: Bearer token, hoặc mã chung
+// APP_SECRET cho script như seed-catalog). Khóa, bài, file ghi lại ai tạo và ai sửa lần cuối (createdBy/updatedBy).
 // Biến môi trường R2: R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET, R2_PUBLIC_URL.
 import { createHash, createHmac } from 'node:crypto';
-import { authorized, db, fail, readJson, send } from './common.js';
+import { can, currentUser } from './accounts.js';
+import { db, fail, readJson, send } from './common.js';
 
 const TABLES = `
 CREATE TABLE IF NOT EXISTS catalog_courses (
@@ -47,6 +49,12 @@ CREATE TABLE IF NOT EXISTS catalog_assets (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS catalog_assets_lesson_idx ON catalog_assets (lesson_id);
+-- tên người tạo/sửa (bảng tạo trước khi có tài khoản thì thêm cột, dòng cũ để trống)
+ALTER TABLE catalog_courses ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT '';
+ALTER TABLE catalog_courses ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT '';
+ALTER TABLE catalog_lessons ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT '';
+ALTER TABLE catalog_lessons ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT '';
+ALTER TABLE catalog_assets ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT '';
 DO $$ BEGIN
   -- bảng tạo trước khi có 'youtube', 'pages' thì nới ràng buộc, chỉ một lần
   IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'catalog_assets'::regclass
@@ -154,16 +162,19 @@ async function r2delete(e, keys) {
 
 // ---- đọc / ghi ----
 
-const COURSE_COLS = 'id, slug, title, sort';
-const LESSON_COLS = 'id, course_id, num, title, zh, visible, sort';
-const ASSET_COLS = `id, lesson_id, kind, name, size, url, storage, key,
+const COURSE_COLS = 'id, slug, title, sort, created_by, updated_by';
+const LESSON_COLS = 'id, course_id, num, title, zh, visible, sort, created_by, updated_by';
+const ASSET_COLS = `id, lesson_id, kind, name, size, url, storage, key, created_by,
   to_char(created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS created_at`;
 
-const toCourse = r => ({ id: r.id, slug: r.slug, title: r.title, sort: r.sort });
-const toLesson = r => ({ id: r.id, num: r.num, title: r.title, zh: r.zh, visible: r.visible, sort: r.sort });
+const toCourse = r => ({ id: r.id, slug: r.slug, title: r.title, sort: r.sort, createdBy: r.created_by, updatedBy: r.updated_by });
+const toLesson = r => ({
+  id: r.id, num: r.num, title: r.title, zh: r.zh, visible: r.visible, sort: r.sort, createdBy: r.created_by, updatedBy: r.updated_by,
+});
 // pg trả bigint dạng chuỗi; dung lượng luôn dưới 2^53 nên đổi sang số được
 const toAsset = r => ({
   id: r.id, kind: r.kind, name: r.name, size: Number(r.size), url: r.url, storage: r.storage, key: r.key, createdAt: r.created_at,
+  createdBy: r.created_by,
 });
 
 async function readAll(p) {
@@ -266,35 +277,35 @@ function checkImport(body) {
   return { courses: out };
 }
 
-async function runImport(p, courses) {
+async function runImport(p, courses, by) {
   const c = await p.connect();
   const n = { courses: 0, lessons: 0, assets: 0 };
   try {
     await c.query('BEGIN');
     for (const course of courses) {
       const { rows: [row] } = await c.query(
-        `INSERT INTO catalog_courses (slug, title, sort) VALUES ($1, $2, $3)
-         ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, sort = EXCLUDED.sort RETURNING id`,
-        [course.slug, course.title, course.sort]);
+        `INSERT INTO catalog_courses (slug, title, sort, created_by, updated_by) VALUES ($1, $2, $3, $4, $4)
+         ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, sort = EXCLUDED.sort, updated_by = EXCLUDED.updated_by RETURNING id`,
+        [course.slug, course.title, course.sort, by]);
       n.courses++;
       if (!course.lessons.length) continue;
       // mỗi khóa ba câu lệnh: ghi gộp bài, xoá file 'repo'/'pages' cũ của các bài đó, ghi file mới (r2, youtube giữ nguyên)
       const ls = course.lessons;
       const { rows: ids } = await c.query(
-        `INSERT INTO catalog_lessons (course_id, num, title, zh)
-         SELECT $1, * FROM unnest($2::int[], $3::text[], $4::text[])
-         ON CONFLICT (course_id, num) DO UPDATE SET title = EXCLUDED.title, zh = EXCLUDED.zh RETURNING id, num`,
-        [row.id, ls.map(l => l.num), ls.map(l => l.title), ls.map(l => l.zh)]);
+        `INSERT INTO catalog_lessons (course_id, num, title, zh, created_by, updated_by)
+         SELECT $1, n, t, z, $5::text, $5::text FROM unnest($2::int[], $3::text[], $4::text[]) AS u(n, t, z)
+         ON CONFLICT (course_id, num) DO UPDATE SET title = EXCLUDED.title, zh = EXCLUDED.zh, updated_by = EXCLUDED.updated_by RETURNING id, num`,
+        [row.id, ls.map(l => l.num), ls.map(l => l.title), ls.map(l => l.zh), by]);
       n.lessons += ids.length;
       const idOf = new Map(ids.map(r => [r.num, r.id]));
       await c.query(`DELETE FROM catalog_assets WHERE storage IN ('repo', 'pages') AND lesson_id = ANY($1::int[])`, [ids.map(r => r.id)]);
       const files = ls.flatMap(l => l.assets.map(a => ({ ...a, lesson: idOf.get(l.num) })));
       if (files.length) {
         await c.query(
-          `INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage)
-           SELECT * FROM unnest($1::int[], $2::text[], $3::text[], $4::bigint[], $5::text[], $6::text[])`,
+          `INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage, created_by)
+           SELECT *, $7::text FROM unnest($1::int[], $2::text[], $3::text[], $4::bigint[], $5::text[], $6::text[])`,
           [files.map(f => f.lesson), files.map(f => f.kind), files.map(f => f.name), files.map(f => String(f.size)), files.map(f => f.url),
-            files.map(f => f.storage)]);
+            files.map(f => f.storage), by]);
         n.assets += files.length;
       }
     }
@@ -309,9 +320,6 @@ async function runImport(p, courses) {
 }
 
 const ACTIONS = ['course', 'lesson', 'asset', 'upload', 'import'];
-// TẠM BỎ mật khẩu (người dùng yêu cầu 31/10): ai có link cũng xem và sửa được.
-// Bật lại: đổi OPEN thành false ở đây, catOpen trong backend/go/catalog.go và OPEN trong apps/quan-ly/src/App.tsx.
-const OPEN = true;
 
 export default async function catalog(req, res) {
   const url = new URL(req.url, 'http://localhost');
@@ -321,8 +329,6 @@ export default async function catalog(req, res) {
     res.setHeader('Allow', 'GET, POST, PATCH, DELETE');
     return fail(res, 405, 'chỉ hỗ trợ GET, POST, PATCH và DELETE');
   }
-  if (!OPEN && !authorized(req)) return fail(res, 401, 'sai mật khẩu');
-  if (method === 'GET' && url.searchParams.has('check')) return send(res, 200, { ok: true });
 
   const action = ACTIONS.find(a => url.searchParams.has(a));
   const allowed = { GET: [undefined], POST: ACTIONS, PATCH: ['course', 'lesson'], DELETE: ['course', 'lesson', 'asset'] }[method];
@@ -333,9 +339,19 @@ export default async function catalog(req, res) {
   let p;
   try { p = await pool(); } catch { return fail(res, 503, 'không kết nối được cơ sở dữ liệu'); }
 
+  let user = null;
+  if (method !== 'GET' || url.searchParams.has('check')) {
+    try { user = await currentUser(req); } catch { return fail(res, 500, 'lỗi đọc dữ liệu'); }
+  }
+  // hỏi xem phiên đăng nhập còn dùng được không
+  if (method === 'GET' && url.searchParams.has('check'))
+    return user ? send(res, 200, { ok: true, user }) : fail(res, 401, 'chưa đăng nhập');
   if (method === 'GET') {
     try { return send(res, 200, await readAll(p)); } catch { return fail(res, 500, 'lỗi đọc dữ liệu'); }
   }
+  if (!user) return fail(res, 401, 'cần đăng nhập');
+  if (!can(user, method === 'DELETE' ? 'delete' : 'write')) return fail(res, 403, 'tài khoản này không có quyền sửa');
+  const by = user.name;
 
   if (method === 'DELETE') {
     const id = idParam(url, action);
@@ -371,14 +387,15 @@ export default async function catalog(req, res) {
         const slug = typeof body.slug === 'string' ? body.slug.trim() : '';
         if (!SLUG_RE.test(slug)) return fail(res, 400, 'mã khóa học chỉ gồm chữ thường, số và dấu gạch ngang (tối đa 40 ký tự)');
         if (!title) return fail(res, 400, 'cần tên khóa học');
-        const r = await p.query(`INSERT INTO catalog_courses (slug, title, sort) VALUES ($1, $2, $3) RETURNING ${COURSE_COLS}`,
-          [slug, title, sort ?? 0]);
+        const r = await p.query(
+          `INSERT INTO catalog_courses (slug, title, sort, created_by, updated_by) VALUES ($1, $2, $3, $4, $4) RETURNING ${COURSE_COLS}`,
+          [slug, title, sort ?? 0, by]);
         return send(res, 201, { course: toCourse(r.rows[0]) });
       }
       if (!absent(body.title) && !title) return fail(res, 400, 'cần tên khóa học');
       const r = await p.query(
-        `UPDATE catalog_courses SET title = coalesce($2, title), sort = coalesce($3, sort) WHERE id = $1 RETURNING ${COURSE_COLS}`,
-        [id, title || null, sort]);
+        `UPDATE catalog_courses SET title = coalesce($2, title), sort = coalesce($3, sort), updated_by = $4 WHERE id = $1 RETURNING ${COURSE_COLS}`,
+        [id, title || null, sort, by]);
       return r.rowCount ? send(res, 200, { course: toCourse(r.rows[0]) }) : fail(res, 404, 'không có khóa học này');
     }
 
@@ -399,14 +416,15 @@ export default async function catalog(req, res) {
         if (num === null) return fail(res, 400, 'số bài không hợp lệ');
         if (!title) return fail(res, 400, 'cần tên bài');
         const r = await p.query(
-          `INSERT INTO catalog_lessons (course_id, num, title, zh, visible, sort) VALUES ($1, $2, $3, $4, $5, $6) RETURNING ${LESSON_COLS}`,
-          [courseId, num, title, zh ?? '', visible ?? true, sort ?? 0]);
+          `INSERT INTO catalog_lessons (course_id, num, title, zh, visible, sort, created_by, updated_by)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $7) RETURNING ${LESSON_COLS}`,
+          [courseId, num, title, zh ?? '', visible ?? true, sort ?? 0, by]);
         return send(res, 201, { lesson: { ...toLesson(r.rows[0]), courseId: r.rows[0].course_id } });
       }
       const r = await p.query(
         `UPDATE catalog_lessons SET num = coalesce($2, num), title = coalesce($3, title), zh = coalesce($4, zh),
-                visible = coalesce($5, visible), sort = coalesce($6, sort) WHERE id = $1 RETURNING ${LESSON_COLS}`,
-        [id, num, title || null, zh, visible, sort]);
+                visible = coalesce($5, visible), sort = coalesce($6, sort), updated_by = $7 WHERE id = $1 RETURNING ${LESSON_COLS}`,
+        [id, num, title || null, zh, visible, sort, by]);
       return r.rowCount ? send(res, 200, { lesson: { ...toLesson(r.rows[0]), courseId: r.rows[0].course_id } }) : fail(res, 404, 'không có bài này');
     }
 
@@ -455,15 +473,16 @@ export default async function catalog(req, res) {
       }
 
       const r = await p.query(
-        `INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage, key) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING ${ASSET_COLS}`,
-        [lessonId, body.kind, name, String(size), link, storage, key]);
+        `INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage, key, created_by)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING ${ASSET_COLS}`,
+        [lessonId, body.kind, name, String(size), link, storage, key, by]);
       return send(res, 201, { asset: { ...toAsset(r.rows[0]), lessonId } });
     }
 
     // import
     const { courses, error } = checkImport(body);
     if (error) return fail(res, 400, error);
-    const n = await runImport(p, courses);
+    const n = await runImport(p, courses, by);
     return send(res, 200, { ok: true, ...n });
   } catch (e) {
     if (e?.code === '23505') return fail(res, 409, action === 'course' ? 'mã khóa học đã có' : 'số bài này đã có trong khóa học');

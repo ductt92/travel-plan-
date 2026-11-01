@@ -56,6 +56,12 @@ var catalogTables = []string{
 		created_at timestamptz NOT NULL DEFAULT now()
 	)`,
 	`CREATE INDEX IF NOT EXISTS catalog_assets_lesson_idx ON catalog_assets (lesson_id)`,
+	// tên người tạo/sửa (bảng tạo trước khi có tài khoản thì thêm cột, dòng cũ để trống)
+	`ALTER TABLE catalog_courses ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT ''`,
+	`ALTER TABLE catalog_courses ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT ''`,
+	`ALTER TABLE catalog_lessons ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT ''`,
+	`ALTER TABLE catalog_lessons ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT ''`,
+	`ALTER TABLE catalog_assets ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT ''`,
 	// bảng tạo trước khi có 'youtube', 'pages' thì nới ràng buộc, chỉ một lần
 	`DO $$ BEGIN
 		IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'catalog_assets'::regclass
@@ -305,6 +311,7 @@ type catAsset struct {
 	Storage   string `json:"storage"`
 	Key       string `json:"key"`
 	CreatedAt string `json:"createdAt"`
+	CreatedBy string `json:"createdBy"`
 	LessonID  int    `json:"lessonId,omitempty"`
 }
 
@@ -315,6 +322,8 @@ type catLesson struct {
 	Zh       string      `json:"zh"`
 	Visible  bool        `json:"visible"`
 	Sort     int         `json:"sort"`
+	Created  string      `json:"createdBy"`
+	Updated  string      `json:"updatedBy"`
 	Assets   *[]catAsset `json:"assets,omitempty"`
 	CourseID int         `json:"courseId,omitempty"`
 }
@@ -324,31 +333,33 @@ type catCourse struct {
 	Slug    string        `json:"slug"`
 	Title   string        `json:"title"`
 	Sort    int           `json:"sort"`
+	Created string        `json:"createdBy"`
+	Updated string        `json:"updatedBy"`
 	Lessons *[]*catLesson `json:"lessons,omitempty"`
 }
 
 const (
-	catCourseCols = `id, slug, title, sort`
-	catLessonCols = `id, course_id, num, title, zh, visible, sort`
-	catAssetCols  = `id, lesson_id, kind, name, size, url, storage, key,
+	catCourseCols = `id, slug, title, sort, created_by, updated_by`
+	catLessonCols = `id, course_id, num, title, zh, visible, sort, created_by, updated_by`
+	catAssetCols  = `id, lesson_id, kind, name, size, url, storage, key, created_by,
 		to_char(created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"')`
 )
 
 func scanCourse(row pgx.Row) (catCourse, error) {
 	var c catCourse
-	err := row.Scan(&c.ID, &c.Slug, &c.Title, &c.Sort)
+	err := row.Scan(&c.ID, &c.Slug, &c.Title, &c.Sort, &c.Created, &c.Updated)
 	return c, err
 }
 
 func scanLesson(row pgx.Row) (catLesson, error) {
 	var l catLesson
-	err := row.Scan(&l.ID, &l.CourseID, &l.Num, &l.Title, &l.Zh, &l.Visible, &l.Sort)
+	err := row.Scan(&l.ID, &l.CourseID, &l.Num, &l.Title, &l.Zh, &l.Visible, &l.Sort, &l.Created, &l.Updated)
 	return l, err
 }
 
 func scanAsset(row pgx.Row) (catAsset, error) {
 	var a catAsset
-	err := row.Scan(&a.ID, &a.LessonID, &a.Kind, &a.Name, &a.Size, &a.URL, &a.Storage, &a.Key, &a.CreatedAt)
+	err := row.Scan(&a.ID, &a.LessonID, &a.Kind, &a.Name, &a.Size, &a.URL, &a.Storage, &a.Key, &a.CreatedBy, &a.CreatedAt)
 	return a, err
 }
 
@@ -604,7 +615,7 @@ func catCheckImport(body map[string]any) ([]catImportCourse, string) {
 	return out, ""
 }
 
-func catRunImport(ctx context.Context, p *pgxpool.Pool, courses []catImportCourse) (*catImportResult, error) {
+func catRunImport(ctx context.Context, p *pgxpool.Pool, courses []catImportCourse, by string) (*catImportResult, error) {
 	tx, err := p.Begin(ctx)
 	if err != nil {
 		return nil, err
@@ -614,9 +625,9 @@ func catRunImport(ctx context.Context, p *pgxpool.Pool, courses []catImportCours
 	for _, c := range courses {
 		var courseID int
 		if err := tx.QueryRow(ctx,
-			`INSERT INTO catalog_courses (slug, title, sort) VALUES ($1, $2, $3)
-			 ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, sort = EXCLUDED.sort RETURNING id`,
-			c.slug, c.title, c.sort).Scan(&courseID); err != nil {
+			`INSERT INTO catalog_courses (slug, title, sort, created_by, updated_by) VALUES ($1, $2, $3, $4, $4)
+			 ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, sort = EXCLUDED.sort, updated_by = EXCLUDED.updated_by RETURNING id`,
+			c.slug, c.title, c.sort, by).Scan(&courseID); err != nil {
 			return nil, err
 		}
 		nc++
@@ -629,10 +640,10 @@ func catRunImport(ctx context.Context, p *pgxpool.Pool, courses []catImportCours
 			nums, titles, zhs = append(nums, l.num), append(titles, l.title), append(zhs, l.zh)
 		}
 		rows, err := tx.Query(ctx,
-			`INSERT INTO catalog_lessons (course_id, num, title, zh)
-			 SELECT $1, * FROM unnest($2::int[], $3::text[], $4::text[])
-			 ON CONFLICT (course_id, num) DO UPDATE SET title = EXCLUDED.title, zh = EXCLUDED.zh RETURNING id, num`,
-			courseID, nums, titles, zhs)
+			`INSERT INTO catalog_lessons (course_id, num, title, zh, created_by, updated_by)
+			 SELECT $1, n, t, z, $5::text, $5::text FROM unnest($2::int[], $3::text[], $4::text[]) AS u(n, t, z)
+			 ON CONFLICT (course_id, num) DO UPDATE SET title = EXCLUDED.title, zh = EXCLUDED.zh, updated_by = EXCLUDED.updated_by RETURNING id, num`,
+			courseID, nums, titles, zhs, by)
 		if err != nil {
 			return nil, err
 		}
@@ -665,9 +676,9 @@ func catRunImport(ctx context.Context, p *pgxpool.Pool, courses []catImportCours
 		}
 		if len(lids) > 0 {
 			if _, err := tx.Exec(ctx,
-				`INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage)
-				 SELECT * FROM unnest($1::int[], $2::text[], $3::text[], $4::bigint[], $5::text[], $6::text[])`,
-				lids, kinds, names, sizes, urls, storages); err != nil {
+				`INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage, created_by)
+				 SELECT *, $7::text FROM unnest($1::int[], $2::text[], $3::text[], $4::bigint[], $5::text[], $6::text[])`,
+				lids, kinds, names, sizes, urls, storages, by); err != nil {
 				return nil, err
 			}
 			na += len(lids)
@@ -680,10 +691,6 @@ func catRunImport(ctx context.Context, p *pgxpool.Pool, courses []catImportCours
 }
 
 var catActions = []string{"course", "lesson", "asset", "upload", "import"}
-
-// TẠM BỎ mật khẩu (người dùng yêu cầu 31/10): ai có link cũng xem và sửa được.
-// Bật lại: đổi catOpen thành false ở đây, OPEN trong backend/node/catalog.js và apps/quan-ly/src/App.tsx.
-const catOpen = true
 
 // Catalog xử lý /api/go/quan-ly.
 func Catalog(w http.ResponseWriter, r *http.Request) {
@@ -702,14 +709,6 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 	default:
 		w.Header().Set("Allow", "GET, POST, PATCH, DELETE")
 		fail(w, http.StatusMethodNotAllowed, "chỉ hỗ trợ GET, POST, PATCH và DELETE")
-		return
-	}
-	if !catOpen && !authorized(r) {
-		fail(w, http.StatusUnauthorized, "sai mật khẩu")
-		return
-	}
-	if r.Method == http.MethodGet && q.Has("check") {
-		writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 		return
 	}
 
@@ -733,6 +732,37 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fail(w, http.StatusServiceUnavailable, "không kết nối được cơ sở dữ liệu")
 		return
+	}
+
+	// xem ai cũng được; thêm/sửa/xoá cần đăng nhập (accounts.go), ghi lại tên người làm
+	var user *AppUser
+	if r.Method != http.MethodGet || q.Has("check") {
+		if user, err = currentUser(ctx, r); err != nil {
+			fail(w, http.StatusInternalServerError, "lỗi đọc dữ liệu")
+			return
+		}
+	}
+	if r.Method == http.MethodGet && q.Has("check") {
+		if user != nil {
+			writeJSON(w, http.StatusOK, map[string]any{"ok": true, "user": user})
+		} else {
+			fail(w, http.StatusUnauthorized, "chưa đăng nhập")
+		}
+		return
+	}
+	if r.Method != http.MethodGet {
+		right := "write"
+		if r.Method == http.MethodDelete {
+			right = "delete"
+		}
+		if user == nil {
+			fail(w, http.StatusUnauthorized, "cần đăng nhập")
+			return
+		}
+		if !can(user, right) {
+			fail(w, http.StatusForbidden, "tài khoản này không có quyền sửa")
+			return
+		}
 	}
 
 	if r.Method == http.MethodGet {
@@ -848,7 +878,8 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			c, err := scanCourse(p.QueryRow(ctx,
-				`INSERT INTO catalog_courses (slug, title, sort) VALUES ($1, $2, $3) RETURNING `+catCourseCols, slug, title, sortN))
+				`INSERT INTO catalog_courses (slug, title, sort, created_by, updated_by) VALUES ($1, $2, $3, $4, $4) RETURNING `+catCourseCols,
+				slug, title, sortN, user.Name))
 			if err != nil {
 				dbFail(err)
 				return
@@ -861,8 +892,8 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		c, err := scanCourse(p.QueryRow(ctx,
-			`UPDATE catalog_courses SET title = coalesce($2, title), sort = coalesce($3, sort) WHERE id = $1 RETURNING `+catCourseCols,
-			id, catOptStr(title), catOptInt(sortN, hasSort)))
+			`UPDATE catalog_courses SET title = coalesce($2, title), sort = coalesce($3, sort), updated_by = $4 WHERE id = $1 RETURNING `+catCourseCols,
+			id, catOptStr(title), catOptInt(sortN, hasSort), user.Name))
 		if errors.Is(err, pgx.ErrNoRows) {
 			fail(w, http.StatusNotFound, "không có khóa học này")
 			return
@@ -932,8 +963,9 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 				visV = *visible
 			}
 			l, err = scanLesson(p.QueryRow(ctx,
-				`INSERT INTO catalog_lessons (course_id, num, title, zh, visible, sort) VALUES ($1, $2, $3, $4, $5, $6) RETURNING `+catLessonCols,
-				courseID, num, title, zhV, visV, sortN))
+				`INSERT INTO catalog_lessons (course_id, num, title, zh, visible, sort, created_by, updated_by)
+				 VALUES ($1, $2, $3, $4, $5, $6, $7, $7) RETURNING `+catLessonCols,
+				courseID, num, title, zhV, visV, sortN, user.Name))
 			if err != nil {
 				dbFail(err)
 				return
@@ -943,8 +975,8 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 		}
 		l, err = scanLesson(p.QueryRow(ctx,
 			`UPDATE catalog_lessons SET num = coalesce($2, num), title = coalesce($3, title), zh = coalesce($4, zh),
-			        visible = coalesce($5, visible), sort = coalesce($6, sort) WHERE id = $1 RETURNING `+catLessonCols,
-			id, catOptInt(num, hasNum), catOptStr(title), zh, visible, catOptInt(sortN, hasSort)))
+			        visible = coalesce($5, visible), sort = coalesce($6, sort), updated_by = $7 WHERE id = $1 RETURNING `+catLessonCols,
+			id, catOptInt(num, hasNum), catOptStr(title), zh, visible, catOptInt(sortN, hasSort), user.Name))
 		if errors.Is(err, pgx.ErrNoRows) {
 			fail(w, http.StatusNotFound, "không có bài này")
 			return
@@ -1051,8 +1083,9 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 		}
 
 		a, err := scanAsset(p.QueryRow(ctx,
-			`INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage, key) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING `+catAssetCols,
-			lessonID, kind, name, size, link, storage, key))
+			`INSERT INTO catalog_assets (lesson_id, kind, name, size, url, storage, key, created_by)
+			 VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING `+catAssetCols,
+			lessonID, kind, name, size, link, storage, key, user.Name))
 		if err != nil {
 			dbFail(err)
 			return
@@ -1065,7 +1098,7 @@ func Catalog(w http.ResponseWriter, r *http.Request) {
 			fail(w, http.StatusBadRequest, msg)
 			return
 		}
-		out, err := catRunImport(ctx, p, courses)
+		out, err := catRunImport(ctx, p, courses, user.Name)
 		if err != nil {
 			dbFail(err)
 			return
