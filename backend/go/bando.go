@@ -3,9 +3,12 @@
 package gobackend
 
 import (
+	"bytes"
 	"context"
+	"crypto/subtle"
 	"encoding/json"
 	"net/http"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -45,6 +48,12 @@ var banDoTables = []string{
 	`ALTER TABLE provinces ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT ''`,
 	`ALTER TABLE trips ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT ''`,
 	`ALTER TABLE trips ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT ''`,
+	`CREATE TABLE IF NOT EXISTS love_notes (
+		id         serial PRIMARY KEY,
+		body       text NOT NULL,
+		created_by text NOT NULL DEFAULT '',
+		created_at timestamptz NOT NULL DEFAULT now()
+	)`,
 }
 
 var (
@@ -170,6 +179,181 @@ func scanBanDoTrip(rows pgx.Rows) (string, banDoTrip, error) {
 	return code, t, err
 }
 
+const maxLove = 2000
+
+// Báo qua Telegram khi có lời nhắn mới của người trong TELEGRAM_NOTIFY_FROM (mặc định "Ngọc").
+// Cần TELEGRAM_BOT_TOKEN và TELEGRAM_CHAT_ID; thiếu thì thôi. Lỗi gửi không làm hỏng việc lưu lời nhắn.
+func notifyLove(ctx context.Context, n loveNote) {
+	token, chat := os.Getenv("TELEGRAM_BOT_TOKEN"), os.Getenv("TELEGRAM_CHAT_ID")
+	from := os.Getenv("TELEGRAM_NOTIFY_FROM")
+	if from == "" {
+		from = "Ngọc"
+	}
+	match := false
+	for _, f := range strings.Split(from, ",") {
+		if strings.TrimSpace(f) == n.By {
+			match = true
+		}
+	}
+	if token == "" || chat == "" || !match {
+		return
+	}
+	body, _ := json.Marshal(map[string]string{"chat_id": chat, "text": "💌 " + n.By + " vừa để lại lời nhắn:\n\n" + n.Text})
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://api.telegram.org/bot"+token+"/sendMessage", bytes.NewReader(body))
+	if err != nil {
+		return
+	}
+	req.Header.Set("Content-Type", "application/json")
+	if res, err := http.DefaultClient.Do(req); err == nil {
+		res.Body.Close()
+	}
+}
+
+type loveNote struct {
+	ID   int    `json:"id"`
+	Text string `json:"text"`
+	By   string `json:"by"`
+	At   string `json:"at"`
+}
+
+// Note tình yêu: lời nhắn riêng của hai người, ?notes trên cùng endpoint (xem chú thích bên Node).
+func banDoNotes(w http.ResponseWriter, r *http.Request, p *pgxpool.Pool, user *AppUser) {
+	ctx := r.Context()
+	if user == nil {
+		fail(w, http.StatusUnauthorized, "cần đăng nhập")
+		return
+	}
+	right := "write"
+	if r.Method == http.MethodGet {
+		right = "read"
+	}
+	if !can(user, right) {
+		fail(w, http.StatusForbidden, "tài khoản này không có quyền")
+		return
+	}
+	scan := func(row pgx.Row) (loveNote, error) {
+		var n loveNote
+		var at time.Time
+		err := row.Scan(&n.ID, &n.Text, &n.By, &at)
+		n.At = at.UTC().Format("2006-01-02T15:04:05.000Z")
+		return n, err
+	}
+	switch r.Method {
+	case http.MethodGet:
+		rows, err := p.Query(ctx, `SELECT id, body, created_by, created_at FROM love_notes ORDER BY created_at DESC, id DESC LIMIT 300`)
+		if err != nil {
+			fail(w, http.StatusInternalServerError, "lỗi đọc ghi dữ liệu")
+			return
+		}
+		defer rows.Close()
+		list := []loveNote{}
+		for rows.Next() {
+			n, err := scan(rows)
+			if err != nil {
+				fail(w, http.StatusInternalServerError, "lỗi đọc ghi dữ liệu")
+				return
+			}
+			list = append(list, n)
+		}
+		writeJSON(w, http.StatusOK, map[string]any{"notes": list})
+	case http.MethodPost:
+		var body struct {
+			Text string `json:"text"`
+		}
+		if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<16)).Decode(&body); err != nil {
+			fail(w, http.StatusBadRequest, "dữ liệu không hợp lệ hoặc quá lớn")
+			return
+		}
+		t := clip(body.Text, maxLove)
+		if t == "" {
+			fail(w, http.StatusBadRequest, "lời nhắn đang trống")
+			return
+		}
+		n, err := scan(p.QueryRow(ctx,
+			`INSERT INTO love_notes (body, created_by) VALUES ($1, $2) RETURNING id, body, created_by, created_at`, t, user.Name))
+		if err != nil {
+			fail(w, http.StatusInternalServerError, "lỗi đọc ghi dữ liệu")
+			return
+		}
+		notifyLove(ctx, n) // chờ gửi xong: trên Vercel trả lời rồi là function có thể bị dừng
+		writeJSON(w, http.StatusOK, map[string]any{"note": n})
+	case http.MethodDelete:
+		id, err := strconv.Atoi(r.URL.Query().Get("id"))
+		if err != nil || id <= 0 {
+			fail(w, http.StatusBadRequest, "cần ?id=<số>")
+			return
+		}
+		var q string
+		args := []any{id}
+		if can(user, "delete") {
+			q = `DELETE FROM love_notes WHERE id = $1`
+		} else {
+			q = `DELETE FROM love_notes WHERE id = $1 AND created_by = $2`
+			args = append(args, user.Name)
+		}
+		tag, err := p.Exec(ctx, q, args...)
+		if err != nil {
+			fail(w, http.StatusInternalServerError, "lỗi đọc ghi dữ liệu")
+			return
+		}
+		if tag.RowsAffected() == 0 {
+			fail(w, http.StatusNotFound, "không còn lời nhắn này nữa")
+			return
+		}
+		writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
+	default:
+		fail(w, http.StatusMethodNotAllowed, "lời nhắn chỉ hỗ trợ GET, POST và DELETE")
+	}
+}
+
+// Webhook Telegram: bạn trả lời bot thì tin đó lên Note tình yêu (xem chú thích bên Node).
+func banDoTelegram(w http.ResponseWriter, r *http.Request, p *pgxpool.Pool) {
+	ctx := r.Context()
+	secret := os.Getenv("TELEGRAM_WEBHOOK_SECRET")
+	got := r.Header.Get("X-Telegram-Bot-Api-Secret-Token")
+	if secret == "" || subtle.ConstantTimeCompare([]byte(got), []byte(secret)) != 1 {
+		fail(w, http.StatusUnauthorized, "sai mã webhook")
+		return
+	}
+	var update struct {
+		Message *struct {
+			Text string `json:"text"`
+			Chat struct {
+				ID int64 `json:"id"`
+			} `json:"chat"`
+		} `json:"message"`
+	}
+	ok := map[string]bool{"ok": true}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<20)).Decode(&update); err != nil || update.Message == nil {
+		writeJSON(w, http.StatusOK, ok)
+		return
+	}
+	msg := update.Message
+	t := clip(msg.Text, maxLove)
+	if strconv.FormatInt(msg.Chat.ID, 10) != os.Getenv("TELEGRAM_CHAT_ID") || t == "" {
+		writeJSON(w, http.StatusOK, ok)
+		return
+	}
+	reply := func(text string) {
+		writeJSON(w, http.StatusOK, map[string]any{"method": "sendMessage", "chat_id": msg.Chat.ID, "text": text})
+	}
+	if strings.HasPrefix(t, "/") {
+		reply("Nhắn gì cho bot là lời đó lên Note tình yêu 💌")
+		return
+	}
+	as := os.Getenv("TELEGRAM_REPLY_AS")
+	if as == "" {
+		as = "Đức"
+	}
+	if _, err := p.Exec(ctx, `INSERT INTO love_notes (body, created_by) VALUES ($1, $2)`, t, as); err != nil {
+		reply("⚠️ Chưa lưu được, nhắn lại sau nhé")
+		return
+	}
+	reply("✅ Đã đăng lên Note tình yêu")
+}
+
 // BanDo xử lý /api/go/ban-do.
 func BanDo(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
@@ -189,12 +373,21 @@ func BanDo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if r.Method == http.MethodPost && q.Has("telegram") {
+		banDoTelegram(w, r, p)
+		return
+	}
+
 	var user *AppUser
-	if r.Method != http.MethodGet || q.Has("check") {
+	if r.Method != http.MethodGet || q.Has("check") || q.Has("notes") {
 		if user, err = currentUser(ctx, r); err != nil {
 			fail(w, http.StatusInternalServerError, "lỗi đọc dữ liệu")
 			return
 		}
+	}
+	if q.Has("notes") {
+		banDoNotes(w, r, p, user)
+		return
 	}
 	// hỏi xem phiên đăng nhập còn dùng được không
 	if r.Method == http.MethodGet && q.Has("check") {

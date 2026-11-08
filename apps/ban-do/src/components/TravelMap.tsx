@@ -5,15 +5,17 @@ import { GlassToggle } from '@trang/ui/glass';
 import FindDialog from './FindDialog';
 import LoginDialog from './LoginDialog';
 import LogDialog, { type FeedRow } from './LogDialog';
+import NotesDialog from './NotesDialog';
 import ProvinceDialog from './ProvinceDialog';
 import VietnamMap from './VietnamMap';
 import WhenButton from './WhenButton';
 import WhenDialog from './WhenDialog';
-import { BookIcon, LockIcon, SearchIcon } from './icons';
+import { BookIcon, HeartIcon, LockIcon, SearchIcon } from './icons';
 import { byCode, provinces } from '@/lib/map-data';
 import { inPeriod, scopeLabel, scopeShort } from '@/lib/period';
 import { useEntries } from '@/lib/use-entries';
 import { useMedia } from '@/lib/use-media';
+import { useNotes } from '@/lib/use-notes';
 import type { Entries, Level, Period } from '@/lib/types';
 
 const TOTAL = provinces.length;
@@ -44,6 +46,24 @@ export default function TravelMap({
   const [whenOpen, setWhenOpen] = useState(false);
   const [logOpen, setLogOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [notesOpen, setNotesOpen] = useState(false);
+  /** Bấm "Note tình yêu" lúc chưa đăng nhập: đăng nhập xong thì mở luôn hộp lời nhắn. */
+  const [notesAfterLogin, setNotesAfterLogin] = useState(false);
+  const love = useNotes(token, userName, onSignOut);
+
+  const openNotes = () => {
+    setHovered(null);
+    if (canEdit) setNotesOpen(true);
+    else { setNotesAfterLogin(true); setLoginOpen(true); }
+  };
+
+  useEffect(() => {
+    if (canEdit && notesAfterLogin) { setNotesAfterLogin(false); setNotesOpen(true); }
+  }, [canEdit, notesAfterLogin]);
+  // đóng popup đăng nhập mà vẫn chưa vào được thì thôi, không mở hộp lời nhắn nữa
+  useEffect(() => {
+    if (!loginOpen && !canEdit) setNotesAfterLogin(false);
+  }, [loginOpen, canEdit]);
 
   // màn rộng mở bảng bên phải, màn hẹp mở popup giữa màn
   const wide = useMedia('(min-width:861px)');
@@ -77,13 +97,13 @@ export default function TravelMap({
 
   // bảng bên phải không phải modal nên phải tự nghe Esc, và nhường popup đang chồng lên
   useEffect(() => {
-    if (!panel || findOpen || whenOpen || logOpen || loginOpen) return;
+    if (!panel || findOpen || whenOpen || logOpen || loginOpen || notesOpen) return;
     const onKey = (ev: KeyboardEvent) => {
       if (ev.key === 'Escape') setSelected(null);
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [panel, findOpen, whenOpen, logOpen, loginOpen]);
+  }, [panel, findOpen, whenOpen, logOpen, loginOpen, notesOpen]);
 
   const scope = scopeLabel(period);
 
@@ -168,6 +188,11 @@ export default function TravelMap({
               <Button className="tool tool-key" icon={<BookIcon />} onClick={() => { setHovered(null); setLogOpen(true); }}>
                 Nhật ký <span className="count">{rows.length}</span>
               </Button>
+              <Button className="tool tool-key tool-love" icon={<HeartIcon />} onClick={openNotes}
+                title={love.unread ? `${love.unread} lời nhắn mới` : 'Để lại một lời nhắn'}>
+                Note tình yêu
+                {love.unread > 0 && <span className="count love-badge">{love.unread}</span>}
+              </Button>
               {canEdit ? (
                 <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon open />} onClick={onSignOut}
                   title={`Đang đăng nhập: ${userName}. Bấm để thoát`}>
@@ -236,6 +261,18 @@ export default function TravelMap({
         open={loginOpen}
         onClose={() => setLoginOpen(false)}
         onSubmit={onSignIn}
+      />
+
+      <NotesDialog
+        open={notesOpen && canEdit && !loginOpen}
+        userName={userName}
+        notes={love.notes}
+        error={love.error}
+        seen={love.seen}
+        onClose={() => { love.markSeen(); setNotesOpen(false); }}
+        onAdd={love.add}
+        onRemove={id => void love.remove(id)}
+        onRetry={love.reload}
       />
 
       <ProvinceDialog

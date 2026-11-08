@@ -38,6 +38,26 @@ mỗi lần mở trang hỏi lại server `?check`, đổi mật khẩu bên ser
 Chốt thật nằm ở server: `GET` cho qua, mọi method khác đòi mật khẩu rồi mới chạm database.
 Ẩn nút trên màn hình chỉ để đỡ rối mắt.
 
+## Note tình yêu
+
+Nút "Note tình yêu" cạnh "Tìm tỉnh": lời nhắn riêng của hai người, bảng `love_notes`, đi qua
+`/api/<node|go>/ban-do?notes` (GET, POST `{text}`, DELETE `&id=`). Cả đọc cũng cần đăng nhập.
+Nút hiện số lời nhắn mới của người kia mà mình chưa đọc (mốc đã đọc ở localStorage `ban-do-notes-seen:<tên>`).
+
+Ngọc gửi lời nhắn thì server báo qua Telegram nếu có `TELEGRAM_BOT_TOKEN` và `TELEGRAM_CHAT_ID`
+(đổi người được báo bằng `TELEGRAM_NOTIFY_FROM`, nhiều tên cách nhau dấu phẩy). Gửi Telegram hỏng
+thì lời nhắn vẫn lưu bình thường.
+
+Chiều ngược lại: nhắn cho bot thì tin đó lên Note tình yêu dưới tên `TELEGRAM_REPLY_AS` (mặc định "Đức").
+Telegram gọi `POST /api/node/ban-do?telegram`; chỉ nhận tin từ đúng `TELEGRAM_CHAT_ID`, và chỉ khi header
+`X-Telegram-Bot-Api-Secret-Token` khớp `TELEGRAM_WEBHOOK_SECRET`. Đăng ký một lần sau khi deploy (lấy chat id bằng `getUpdates` trước, vì có webhook rồi thì `getUpdates` thôi chạy):
+
+```bash
+curl "https://api.telegram.org/bot<MÃ_BOT>/setWebhook?url=https://<tên-miền>/api/node/ban-do%3Ftelegram&secret_token=<TELEGRAM_WEBHOOK_SECRET>"
+```
+
+Lệnh bắt đầu bằng `/` (như `/start`) không thành lời nhắn, bot chỉ trả lời cách dùng.
+
 ## Nhập dữ liệu đang có
 
 ```bash

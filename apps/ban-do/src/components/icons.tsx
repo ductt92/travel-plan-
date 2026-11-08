@@ -48,3 +48,9 @@ export const LockIcon = ({ open = false, size = 15, width = 2 }: { open?: boolea
       : <path d="M8 10V7a4 4 0 0 1 8 0v3" />}
   </svg>
 );
+
+export const HeartIcon = ({ size = 15, width = 2 }: { size?: number; width?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} {...line} strokeWidth={width} strokeLinejoin="round">
+    <path d="M12 20s-7.5-4.6-9.2-9.4C1.6 7.2 3.8 4 7.1 4c2 0 3.6 1.1 4.9 2.9C13.3 5.1 14.9 4 16.9 4c3.3 0 5.5 3.2 4.3 6.6C19.5 15.4 12 20 12 20Z" />
+  </svg>
+);

@@ -7,9 +7,19 @@
 // PATCH  …?province=<mã>&id=<n> {chuyến}     → sửa chuyến, trả về chuyến sau khi sửa
 // DELETE …?province=<mã>&id=<n>              → xoá chuyến
 //
+// Note tình yêu (lời nhắn riêng của hai người, cùng function để giữ đúng 12 function của gói Hobby):
+// GET    …?notes                              → { notes: [{ id, text, by, at }] } mới nhất trước
+// POST   …?notes                {text}       → thêm lời nhắn, trả về { note }
+// DELETE …?notes&id=<n>                      → xoá lời nhắn (người viết, hoặc tài khoản có quyền xoá)
+// Lời nhắn là chuyện riêng nên cả đọc cũng cần đăng nhập.
+// POST   …?telegram                           → webhook của bot Telegram: tin nhắn từ TELEGRAM_CHAT_ID
+//                                               thành lời nhắn của TELEGRAM_REPLY_AS (mặc định "Đức").
+//                                               Chốt bằng header X-Telegram-Bot-Api-Secret-Token = TELEGRAM_WEBHOOK_SECRET.
+//
 // GET ai đọc cũng được (trang này nối công khai từ trang chủ); mọi thao tác ghi cần đăng nhập bằng tài khoản
 // (accounts.js: Bearer token, hoặc mã chung APP_SECRET cho script). Mỗi chuyến ghi lại ai thêm, ai sửa lần cuối.
 import { can, currentUser } from './accounts.js';
+import { timingSafeEqual } from 'node:crypto';
 import { db, fail, readJson, send } from './common.js';
 
 const TABLES = `
@@ -40,6 +50,12 @@ CREATE INDEX IF NOT EXISTS trips_from_idx     ON trips (from_date);
 ALTER TABLE provinces ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT '';
 ALTER TABLE trips ADD COLUMN IF NOT EXISTS created_by text NOT NULL DEFAULT '';
 ALTER TABLE trips ADD COLUMN IF NOT EXISTS updated_by text NOT NULL DEFAULT '';
+CREATE TABLE IF NOT EXISTS love_notes (
+  id         serial PRIMARY KEY,
+  body       text NOT NULL,
+  created_by text NOT NULL DEFAULT '',
+  created_at timestamptz NOT NULL DEFAULT now()
+);
 `;
 
 let ready = null;
@@ -103,6 +119,84 @@ const toTrip = r => ({
   editedBy: r.updated_by,
 });
 
+const MAX_LOVE = 2000;
+
+/**
+ * Báo qua Telegram khi có lời nhắn mới của người trong TELEGRAM_NOTIFY_FROM (mặc định "Ngọc").
+ * Cần TELEGRAM_BOT_TOKEN và TELEGRAM_CHAT_ID; thiếu thì thôi. Lỗi gửi không làm hỏng việc lưu lời nhắn.
+ */
+async function notifyLove(note) {
+  const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
+  const from = (process.env.TELEGRAM_NOTIFY_FROM || 'Ngọc').split(',').map(s => s.trim());
+  if (!token || !chat || !from.includes(note.by)) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chat, text: `💌 ${note.by} vừa để lại lời nhắn:\n\n${note.text}` }),
+      signal: AbortSignal.timeout(5000),
+    });
+  } catch { /* gửi không được thì thôi, lời nhắn vẫn đã lưu */ }
+}
+const toNote = r => ({ id: r.id, text: r.body, by: r.created_by, at: new Date(r.created_at).toISOString() });
+
+/**
+ * Webhook Telegram: bạn trả lời bot thì tin đó lên Note tình yêu. Luôn trả 200 cho tin hợp lệ về chữ ký,
+ * vì Telegram gửi lại mãi những tin bị trả lỗi. Trả lời ngay trong body để bot báo "đã đăng".
+ */
+async function telegramHook(req, res, p) {
+  const secret = process.env.TELEGRAM_WEBHOOK_SECRET || '';
+  const got = String(req.headers['x-telegram-bot-api-secret-token'] || '');
+  if (!secret || got.length !== secret.length || !timingSafeEqual(Buffer.from(got), Buffer.from(secret)))
+    return fail(res, 401, 'sai mã webhook');
+  let update;
+  try { update = await readJson(req, 1 << 20); } catch { return send(res, 200, { ok: true }); }
+  const msg = update?.message;
+  const chat = String(msg?.chat?.id ?? '');
+  const t = text(msg?.text, MAX_LOVE);
+  if (!msg || chat !== String(process.env.TELEGRAM_CHAT_ID || '') || !t) return send(res, 200, { ok: true });
+  const reply = body => send(res, 200, { method: 'sendMessage', chat_id: msg.chat.id, text: body });
+  if (t.startsWith('/')) return reply('Nhắn gì cho bot là lời đó lên Note tình yêu 💌');
+  try {
+    await p.query('INSERT INTO love_notes (body, created_by) VALUES ($1, $2)', [t, process.env.TELEGRAM_REPLY_AS || 'Đức']);
+    return reply('✅ Đã đăng lên Note tình yêu');
+  } catch { return reply('⚠️ Chưa lưu được, nhắn lại sau nhé'); }
+}
+
+async function notes(req, res, p, user, url) {
+  const method = req.method;
+  if (!user) return fail(res, 401, 'cần đăng nhập');
+  if (!can(user, method === 'GET' ? 'read' : 'write')) return fail(res, 403, 'tài khoản này không có quyền');
+  try {
+    if (method === 'GET') {
+      const r = await p.query('SELECT id, body, created_by, created_at FROM love_notes ORDER BY created_at DESC, id DESC LIMIT 300');
+      return send(res, 200, { notes: r.rows.map(toNote) });
+    }
+    if (method === 'POST') {
+      let body;
+      try { body = await readJson(req, 1 << 16); } catch { return fail(res, 400, 'dữ liệu không hợp lệ hoặc quá lớn'); }
+      const t = text(body?.text, MAX_LOVE);
+      if (!t) return fail(res, 400, 'lời nhắn đang trống');
+      const r = await p.query(
+        'INSERT INTO love_notes (body, created_by) VALUES ($1, $2) RETURNING id, body, created_by, created_at',
+        [t, user.name],
+      );
+      const note = toNote(r.rows[0]);
+      await notifyLove(note); // chờ gửi xong: trên Vercel trả lời rồi là function có thể bị dừng
+      return send(res, 200, { note });
+    }
+    if (method === 'DELETE') {
+      const id = Number(url.searchParams.get('id'));
+      if (!Number.isInteger(id) || id <= 0) return fail(res, 400, 'cần ?id=<số>');
+      const r = can(user, 'delete')
+        ? await p.query('DELETE FROM love_notes WHERE id = $1', [id])
+        : await p.query('DELETE FROM love_notes WHERE id = $1 AND created_by = $2', [id, user.name]);
+      return r.rowCount ? send(res, 200, { ok: true }) : fail(res, 404, 'không còn lời nhắn này nữa');
+    }
+    return fail(res, 405, 'lời nhắn chỉ hỗ trợ GET, POST và DELETE');
+  } catch { return fail(res, 500, 'lỗi đọc ghi dữ liệu'); }
+}
+
 async function readAll(p) {
   const [provinces, trips] = await Promise.all([
     p.query('SELECT code, status FROM provinces'),
@@ -126,10 +220,14 @@ export default async function banDo(req, res) {
   let p;
   try { p = await pool(); } catch { return fail(res, 503, 'không kết nối được cơ sở dữ liệu'); }
 
+  if (method === 'POST' && url.searchParams.has('telegram')) return telegramHook(req, res, p);
+
   let user = null;
-  if (method !== 'GET' || url.searchParams.has('check')) {
+  const isNotes = url.searchParams.has('notes');
+  if (method !== 'GET' || url.searchParams.has('check') || isNotes) {
     try { user = await currentUser(req); } catch { return fail(res, 500, 'lỗi đọc dữ liệu'); }
   }
+  if (isNotes) return notes(req, res, p, user, url);
   // hỏi xem phiên đăng nhập còn dùng được không
   if (method === 'GET' && url.searchParams.has('check'))
     return user ? send(res, 200, { ok: true, user }) : fail(res, 401, 'chưa đăng nhập');

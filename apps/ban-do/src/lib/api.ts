@@ -55,3 +55,15 @@ export const patchTrip = (token: string, code: string, id: number, trip: TripDra
 
 export const deleteTrip = (token: string, code: string, id: number) =>
   call<{ ok: true }>(`${q(code)}&id=${id}`, { token, method: 'DELETE' });
+
+// Note tình yêu: lời nhắn riêng, cả đọc cũng cần đăng nhập
+export interface LoveNote { id: number; text: string; by: string; at: string }
+
+export const loadNotes = (token: string) =>
+  call<{ notes: LoveNote[] }>('?notes', { token }).then(r => r.notes);
+
+export const postNote = (token: string, text: string) =>
+  call<{ note: LoveNote }>('?notes', { token, method: 'POST', body: JSON.stringify({ text }) }).then(r => r.note);
+
+export const deleteNote = (token: string, id: number) =>
+  call<{ ok: true }>(`?notes&id=${id}`, { token, method: 'DELETE' });

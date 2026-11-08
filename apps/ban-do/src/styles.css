@@ -540,3 +540,28 @@ label{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase
 /* chọn nhanh tài khoản (Đức, Ngọc) phía trên ô tên */
 .login__who{display:flex;justify-content:center;gap:8px;margin:0 0 12px}
 .login__form .login__pass{margin-top:10px}
+
+/* ---------- Note tình yêu ---------- */
+.tool-love svg{color:var(--accent)}
+.tool .love-badge{background:var(--accent);color:#fff;font-weight:700}
+.love-form{position:relative;margin-top:14px}
+.love-in.lg-glass{background:var(--lg-fill);border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.love-in.lg-glass:focus-within{border-color:color-mix(in srgb,var(--lg-accent) 70%,transparent);box-shadow:0 0 0 4px color-mix(in srgb,var(--lg-accent) 18%,transparent)}
+.love-in textarea{min-height:84px;font:400 15.5px/1.65 var(--f-serif)}
+.love-acts{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.love-hint{font-size:11.5px;color:var(--faint)}
+.love-err{margin:0 0 12px;font-size:13px;color:var(--accent)}
+.love-empty{margin:8px 0;color:var(--muted);font:italic 400 15px/1.6 var(--f-serif)}
+.love-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.love-card{--who:var(--faint);padding:13px 16px 14px;border-radius:18px;background:var(--glass-2);
+  border:1px solid color-mix(in srgb,var(--who) 22%,transparent);border-left:3px solid var(--who)}
+.love-card.he{--who:var(--v3)}
+.love-card.she{--who:var(--accent)}
+.love-card.fresh{background:color-mix(in srgb,var(--who) 9%,var(--glass-2));box-shadow:0 0 0 3px color-mix(in srgb,var(--who) 14%,transparent)}
+.love-top{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
+.love-top b{color:var(--who);font:600 15px/1.2 var(--f-serif)}
+.love-new{font:700 10px/1 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--who);padding:3px 6px;border-radius:999px}
+.love-when{margin-left:auto;font-size:11.5px;color:var(--faint)}
+.love-del{border:none;background:none;cursor:pointer;color:var(--faint);font-size:13px;padding:0 0 0 4px;line-height:1}
+.love-del:hover{color:var(--accent)}
+.love-card p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:400 15.5px/1.65 var(--f-serif);color:var(--ink)}
