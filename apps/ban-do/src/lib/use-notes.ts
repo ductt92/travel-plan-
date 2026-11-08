@@ -10,7 +10,11 @@ const readSeen = (user: string) => {
  * Lời nhắn của hai người. Nạp ngay khi đăng nhập để nút "Note tình yêu" báo được
  * có lời nhắn mới của người kia mà mình chưa đọc (mốc đã đọc giữ trong localStorage, theo từng tài khoản).
  */
-export function useNotes(token: string, userName: string, onExpired: () => void) {
+/** Hỏi lại server bao lâu một lần: nhanh khi đang mở hộp lời nhắn, chậm khi chỉ cần cập nhật số tin mới. */
+const FAST = 5_000;
+const SLOW = 30_000;
+
+export function useNotes(token: string, userName: string, onExpired: () => void, open = false) {
   const [notes, setNotes] = useState<LoveNote[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [seen, setSeen] = useState(() => readSeen(userName));
@@ -34,11 +38,31 @@ export function useNotes(token: string, userName: string, onExpired: () => void)
     reload();
   }, [reload, userName]);
 
+  // gần như realtime: hỏi lại định kỳ, dừng khi tab bị ẩn, quay lại thì hỏi ngay
+  useEffect(() => {
+    if (!token) return;
+    const quiet = () => {
+      // lỗi mạng lúc hỏi ngầm thì im lặng, lần sau hỏi lại; chỉ phiên hết hạn mới báo
+      loadNotes(token).then(setNotes, err => { if (err instanceof ApiError && err.status === 401) fail(err); });
+    };
+    const id = setInterval(() => { if (document.visibilityState === 'visible') quiet(); }, open ? FAST : SLOW);
+    const onShow = () => { if (document.visibilityState === 'visible') quiet(); };
+    document.addEventListener('visibilitychange', onShow);
+    window.addEventListener('focus', onShow);
+    if (open) quiet();
+    return () => {
+      clearInterval(id);
+      document.removeEventListener('visibilitychange', onShow);
+      window.removeEventListener('focus', onShow);
+    };
+  }, [token, open, fail]);
+
   const add = useCallback(async (text: string) => {
     setError(null);
     try {
       const note = await postNote(token, text);
-      setNotes(list => [note, ...(list ?? [])]);
+      // lần hỏi định kỳ có thể đã mang tin này về trước khi lệnh gửi trả lời: đừng thêm hai lần
+      setNotes(list => (list ?? []).some(n => n.id === note.id) ? list : [note, ...(list ?? [])]);
       return true;
     } catch (err) { fail(err); return false; }
   }, [token, fail]);

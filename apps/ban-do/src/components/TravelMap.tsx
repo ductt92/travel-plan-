@@ -49,7 +49,7 @@ export default function TravelMap({
   const [notesOpen, setNotesOpen] = useState(false);
   /** Bấm "Note tình yêu" lúc chưa đăng nhập: đăng nhập xong thì mở luôn hộp lời nhắn. */
   const [notesAfterLogin, setNotesAfterLogin] = useState(false);
-  const love = useNotes(token, userName, onSignOut);
+  const love = useNotes(token, userName, onSignOut, notesOpen);
 
   const openNotes = () => {
     setHovered(null);
