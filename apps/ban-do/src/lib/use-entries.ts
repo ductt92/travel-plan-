@@ -86,12 +86,20 @@ export function useEntries(initial: Entries, token: string, onExpired: () => voi
     });
   }, [commit, token, write]);
 
-  const removeTrip = useCallback((code: string, id: number) => {
-    const before = latest.current;
-    const entry = before[code] ?? BLANK;
-    write({ ...before, [code]: { ...entry, trips: entry.trips.filter(t => t.id !== id) } });
-    commit(before, () => deleteTrip(token, code, id));
-  }, [commit, token, write]);
+  /** Xoá chờ server xác nhận rồi mới gỡ khỏi màn hình, để popup xác nhận quay vòng đúng lúc đang xoá. */
+  const removeTrip = useCallback(async (code: string, id: number) => {
+    if (!token) return;
+    try {
+      await deleteTrip(token, code, id);
+      const now = latest.current;
+      const entry = now[code] ?? BLANK;
+      write({ ...now, [code]: { ...entry, trips: entry.trips.filter(t => t.id !== id) } });
+      setError(null);
+    } catch (err) {
+      setError(message(err));
+      if (err instanceof ApiError && err.status === 401) onExpired();
+    }
+  }, [token, write, onExpired]);
 
   return {
     entries, entryOf, setStatus, addTrip, updateTrip, removeTrip,

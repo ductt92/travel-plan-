@@ -6,6 +6,7 @@ import FindDialog from './FindDialog';
 import LoginDialog from './LoginDialog';
 import LogDialog, { type FeedRow } from './LogDialog';
 import NotesDialog from './NotesDialog';
+import { useConfirm } from './ConfirmDialog';
 import ProvinceDialog from './ProvinceDialog';
 import VietnamMap from './VietnamMap';
 import WhenButton from './WhenButton';
@@ -50,6 +51,7 @@ export default function TravelMap({
   /** Bấm "Note tình yêu" lúc chưa đăng nhập: đăng nhập xong thì mở luôn hộp lời nhắn. */
   const [notesAfterLogin, setNotesAfterLogin] = useState(false);
   const love = useNotes(token, userName, onSignOut, notesOpen);
+  const [confirmNode, ask] = useConfirm();
 
   const openNotes = () => {
     setHovered(null);
@@ -275,7 +277,14 @@ export default function TravelMap({
         seen={love.seen}
         onClose={() => { love.markSeen(); setNotesOpen(false); }}
         onAdd={love.add}
-        onRemove={id => void love.remove(id)}
+        onRemove={id => {
+          const n = love.notes?.find(x => x.id === id);
+          ask({
+            title: 'Xoá lời nhắn này?',
+            content: n ? <>“{n.text.length > 80 ? `${n.text.slice(0, 80)}…` : n.text}” sẽ mất hẳn, không lấy lại được.</> : 'Lời nhắn sẽ mất hẳn, không lấy lại được.',
+            onOk: () => love.remove(id),
+          });
+        }}
         onRetry={love.reload}
       />
 
@@ -290,7 +299,16 @@ export default function TravelMap({
         onStatus={s => selected && setStatus(selected, s)}
         onAdd={data => selected && addTrip(selected, data)}
         onUpdate={(id, data) => selected && updateTrip(selected, id, data)}
-        onRemove={id => selected && removeTrip(selected, id)}
+        onRemove={id => {
+          if (!selected) return;
+          const t = entryOf(selected).trips.find(x => x.id === id);
+          const when = t?.from ? ` ${t.from.slice(8, 10)}/${t.from.slice(5, 7)}/${t.from.slice(0, 4)}` : '';
+          ask({
+            title: 'Xoá chuyến đi này?',
+            content: <>Chuyến {byCode[selected].name}{when} cùng các địa điểm và cảm nhận sẽ mất hẳn, không lấy lại được.</>,
+            onOk: () => removeTrip(selected, id),
+          });
+        }}
         onClearPeriod={clearPeriod}
       />
 
@@ -328,6 +346,7 @@ export default function TravelMap({
         onOpenWhen={() => setWhenOpen(true)}
         onClearPeriod={clearPeriod}
       />
+      {confirmNode}
     </>
   );
 }

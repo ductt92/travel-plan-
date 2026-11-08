@@ -138,7 +138,7 @@ function Body({ userName, notes, error, seen, onAdd, onRemove, onRetry }: Props)
                         <time dateTime={n.at} title={d.toLocaleString('vi-VN')}>{clock(d)} · {d.toLocaleDateString('vi-VN')}</time>
                         {mine && (
                           <button type="button" className="love-del" aria-label="Xoá lời nhắn này"
-                            onClick={() => { if (confirm('Xoá lời nhắn này?')) onRemove(n.id); }}>Xoá</button>
+                            onClick={() => onRemove(n.id)}>Xoá</button>
                         )}
                       </div>
                     </div>

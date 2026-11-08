@@ -170,7 +170,7 @@ function Body({
                     canEdit={canEdit}
                     onEdit={() => setEditing(t.id)}
                     onRemove={() => {
-                      if (window.confirm('Xoá chuyến này?')) onRemove(t.id);
+                      onRemove(t.id);
                     }}
                   />
                 </li>
