@@ -1,23 +1,33 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AppShell, Brand, ProgressBar, Icon, ToastProvider } from '@trang/ui';
 import { GlassToggle, ThemeToggle } from '@trang/ui/glass';
 import { useStore, dueCards, todayN, streak, GOAL } from './core/store.js';
 import { stopQueue } from './core/speech.js';
 import { HomeView } from './views/HomeView.jsx';
-import { LevelView } from './views/LevelView.jsx';
-import { IntroView } from './views/IntroView.jsx';
-import { PinyinView } from './views/PinyinView.jsx';
-import { LessonView } from './views/LessonView.jsx';
-import { ReviewView } from './views/ReviewView.jsx';
-import { PracticeView } from './views/PracticeView.jsx';
-import { WriteView } from './views/WriteView.jsx';
-import { DictView } from './views/DictView.jsx';
-import { AiView } from './views/AiView.jsx';
-import { VideosView } from './views/VideosView.jsx';
-import { ClassView } from './views/ClassView.jsx';
-import { RenderView, SlideView, StepsView, AllTextsView } from './views/ToolViews.jsx';
 import { PinyinFab } from './components/PinyinFab.jsx';
+
+// Lộ trình (trang mở đầu) nằm trong gói chính; các màn khác tải khi vào lần đầu, nên hanzi-writer,
+// mốc thời gian video… không làm nặng lần mở app.
+const view = (load, name) => lazy(() => load().then(m => ({ default: m[name] })));
+const LevelView = view(() => import('./views/LevelView.jsx'), 'LevelView');
+const IntroView = view(() => import('./views/IntroView.jsx'), 'IntroView');
+const PinyinView = view(() => import('./views/PinyinView.jsx'), 'PinyinView');
+const LessonView = view(() => import('./views/LessonView.jsx'), 'LessonView');
+const ReviewView = view(() => import('./views/ReviewView.jsx'), 'ReviewView');
+const PracticeView = view(() => import('./views/PracticeView.jsx'), 'PracticeView');
+const WriteView = view(() => import('./views/WriteView.jsx'), 'WriteView');
+const DictView = view(() => import('./views/DictView.jsx'), 'DictView');
+const AiView = view(() => import('./views/AiView.jsx'), 'AiView');
+const VideosView = view(() => import('./views/VideosView.jsx'), 'VideosView');
+const ClassView = view(() => import('./views/ClassView.jsx'), 'ClassView');
+const tools = () => import('./views/ToolViews.jsx');
+const RenderView = view(tools, 'RenderView');
+const SlideView = view(tools, 'SlideView');
+const StepsView = view(tools, 'StepsView');
+const AllTextsView = view(tools, 'AllTextsView');
+
+const Loading = () => <p className="ui-muted" role="status">Đang tải…</p>;
 
 const NAV = [
   { to: '/', label: 'Lộ trình', short: 'Lộ trình', icon: 'path', match: p => p === '/' || /^\/(level|lesson|l0)/.test(p) },
@@ -79,6 +89,7 @@ export function App() {
   return (
     <HashRouter>
       <ToastProvider>
+        <Suspense fallback={<Loading />}>
         <Routes>
           {/* Các route cho công cụ dựng video / tạo giọng: không có khung app */}
           <Route path="/render/:id/:i" element={<RenderView />} />
@@ -89,6 +100,8 @@ export function App() {
           <Route path="/alltexts/:lv" element={<AllTextsView />} />
           <Route path="*" element={
             <Shell>
+              {/* Suspense nằm trong khung app: đang tải màn mới thì thanh bên, thanh tab vẫn đứng yên */}
+              <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" element={<HomeView />} />
                 <Route path="/level/:n" element={<LevelView />} />
@@ -109,9 +122,11 @@ export function App() {
                 <Route path="/lop-hoc" element={<ClassView />} />
                 <Route path="*" element={<p>Không tìm thấy trang. <Link to="/">Về lộ trình</Link></p>} />
               </Routes>
+              </Suspense>
             </Shell>
           } />
         </Routes>
+        </Suspense>
       </ToastProvider>
     </HashRouter>
   );

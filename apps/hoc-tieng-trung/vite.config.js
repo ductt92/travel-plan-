@@ -32,4 +32,18 @@ function lessonIndex() {
 
 // App nằm ở /hoc-tieng-trung/ trên site; dùng HashRouter nên không cần cấu hình rewrite.
 // /api chuyển sang `npm run dev:api` (Node + Go) khi chạy dev.
-export default defineConfig({ plugins: [react(), lessonIndex()], base: '/hoc-tieng-trung/', server: { proxy: { '/api': 'http://127.0.0.1:3001' } } });
+// Tách gói: dữ liệu bài Cấp 1–3 và thư viện thành file riêng. Chúng vẫn tải ngay (Vite gắn modulepreload nên
+// tải song song với code app), nhưng ít đổi, nên sửa code rồi deploy thì trình duyệt giữ bản cache, không tải lại.
+function manualChunks(id) {
+  if (id.endsWith('/src/data/lessons.json')) return 'lessons-1-3';
+  if (/node_modules\/(react|react-dom|react-router|react-router-dom|scheduler|@remix-run)\//.test(id)) return 'react';
+  if (id.includes('node_modules/react-liquis-glass/')) return 'glass';
+}
+
+export default defineConfig({
+  plugins: [react(), lessonIndex()],
+  base: '/hoc-tieng-trung/',
+  server: { proxy: { '/api': 'http://127.0.0.1:3001' } },
+  // lessons-1-3 (~610 kB chưa nén, ~300 kB gzip) là dữ liệu bài, không phải code nên nâng ngưỡng cảnh báo cho vừa nó
+  build: { chunkSizeWarningLimit: 700, rollupOptions: { output: { manualChunks } } }
+});
