@@ -581,6 +581,20 @@ label{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase
   #dlg .dlg-head{padding-top:calc(20px + env(safe-area-inset-top))}
 }
 
+/* ---------- vùng bấm 44px ---------- */
+/* nút và ô của thư viện trong bảng tỉnh: cỡ thường cao 44px thay vì 38px */
+#dlg,.bd-modal{--lg-h-md:44px}
+#dlg .seg button{min-height:44px}
+/* nút nhỏ giữ nguyên hình, chỉ nới vùng bấm bằng một lớp vô hình */
+#dlg .add,#dlg .x,.trip-acts button,.more,.chips-in .place button,.rate button,.when-clear{position:relative}
+#dlg .add::after,#dlg .x::after,.trip-acts button::after,.more::after,.when-clear::after{
+  content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}
+.chips-in .place button::after{content:"";position:absolute;inset:-8px -6px}
+.trip-acts{gap:10px}
+/* sao chấm điểm: to và thưa hơn để ngón tay bấm trúng từng sao */
+.rate{gap:0}
+.rate button{min-width:44px;min-height:44px;font-size:26px;padding:0}
+
 /* ---------- chuyển động chung ---------- */
 :root{--m-in:150ms;--m-out:120ms;--m-press:90ms;--ease-ui:cubic-bezier(.2,.8,.2,1);--ease-enter:cubic-bezier(.22,1,.36,1)}
 /* nút nhích lên 1px khi rê, lún 1px khi nhấn; chỉ với chuột */
