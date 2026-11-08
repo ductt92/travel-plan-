@@ -1,6 +1,8 @@
 /* Nút nổi: trên điện thoại nằm trên thanh tab dưới đáy */
-.pyfab{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:24px;z-index:30;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 18px 0 7px;border:0;border-radius:999px;background:linear-gradient(135deg,var(--jade),var(--jade-ink));color:#FFF;font:inherit;font-weight:700;font-size:15px;box-shadow:0 14px 30px -12px rgba(23,79,63,.6),0 0 0 4px rgba(255,255,255,.6);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.pyfab{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:24px;z-index:30;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 18px 0 7px;border:0;border-radius:999px;background:linear-gradient(135deg,var(--jade),var(--jade-ink));color:#FFF;font:inherit;font-weight:700;font-size:15px;box-shadow:0 14px 30px -12px rgba(23,79,63,.6),0 0 0 4px rgba(255,255,255,.6);cursor:pointer;transition:transform .2s,box-shadow .2s,opacity .2s}
 .pyfab:hover{transform:translateY(-2px) scale(1.02)}
+/* đang che nút khác: trượt xuống, mờ đi và để chuột, ngón tay bấm xuyên qua (xem useAway trong PinyinFab.jsx) */
+.pyfab.is-away{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
 .pyfab:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .pyfab__hz{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--seal);font:600 19px/1 var(--f-hz);box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
 @media (max-width:900px){
