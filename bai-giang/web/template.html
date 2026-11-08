@@ -541,6 +541,27 @@ body.v-terms > footer { display: none; }
 .exitem textarea { width: 100%; margin-top: 8px; min-height: 44px; border-radius: 8px; border: 1px solid var(--line); background: var(--sunken); color: var(--fg); padding: 8px 10px; font: inherit; font-size: 15px; resize: vertical; }
 .exitem .ans { margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--good); background: var(--good-soft); border-radius: 0 8px 8px 0; }
 .exitem .ans .zh { font-size: 18px; }
+/* ---------- Ngữ pháp: các mục giảng ngữ pháp, phân biệt từ, tu từ, câu mẫu, thành ngữ của bài ---------- */
+.gchips { display: flex; flex-wrap: wrap; gap: 8px; margin: -4px 0 16px; }
+.gchips button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-size: 14px; }
+.gchips button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.grammar { display: grid; gap: 14px; max-width: 860px; }
+.gpoint { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); padding: 16px 20px; }
+.gpoint .gsec { font-size: 12.5px; font-weight: 700; letter-spacing: .04em; color: var(--muted); }
+.gpoint h3 { font-size: 19px; margin: 2px 0 10px; color: var(--accent); }
+.gpoint h4 { font-size: 16px; margin: 14px 0 4px; }
+.gpoint ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.gpoint li { line-height: 1.6; }
+.gpoint .zh { font-size: 18px; }
+.gpoint .gcommon { margin: 0 0 10px; padding: 8px 12px; border-radius: 8px; background: var(--accent-soft); font-size: 15px; }
+.gpoint .gcols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.gpoint .gcol { border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; }
+.gpoint .gcol h4 { margin-top: 0; font-family: var(--f-hz); font-size: 22px; color: var(--accent); }
+.gpoint .gcol .bad { color: var(--bad); }
+.gpoint .gcol .good { color: var(--good); }
+.gpoint .gquiz { margin-top: 12px; padding-top: 6px; border-top: 1px dashed var(--line); }
+.gpoint .gquiz > b { font-size: 14px; color: var(--muted); }
+.gpoint .exitem:first-of-type { border-top: 0; }
 footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size: 14px; color: var(--muted); }
 
 @media (max-width: 900px) {
@@ -650,7 +671,7 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
 :root.glass-ok:not([data-glass="off"]) body::before { background: color-mix(in srgb, var(--bg) 70%, transparent); -webkit-backdrop-filter: var(--gl-filter); backdrop-filter: var(--gl-filter); }
 
 /* mặt kính lớn: khung bài, lời giảng, từ vựng, bài khóa, luyện tập, ghi chú, thuật ngữ, cửa sổ */
-:root.glass-ok:not([data-glass="off"]) :is(.chapters, .transcript-box, .words, .term-scroll, .card, .para, .box, .note, .term-imp, .lcard, .imp-kpi, .gate-card) {
+:root.glass-ok:not([data-glass="off"]) :is(.chapters, .transcript-box, .words, .term-scroll, .card, .para, .box, .gpoint, .note, .term-imp, .lcard, .imp-kpi, .gate-card) {
   background: var(--gl-bg); -webkit-backdrop-filter: var(--gl-filter); backdrop-filter: var(--gl-filter); box-shadow: var(--gl-shadow); }
 :root.glass-ok:not([data-glass="off"]) :is(.modal-card, .sync, .pop) {
   background: var(--gl-bg-strong); -webkit-backdrop-filter: var(--gl-filter); backdrop-filter: var(--gl-filter); }
@@ -823,6 +844,7 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
     <button class="tab" role="tab" id="t-slide" data-tab="slide">Slide</button>
     <button class="tab" role="tab" id="t-tuvung" data-tab="tuvung">Từ vựng<span class="hz">生词</span></button>
     <button class="tab" role="tab" id="t-baikhoa" data-tab="baikhoa">Bài khóa<span class="hz">课文</span></button>
+    <button class="tab" role="tab" id="t-nguphap" data-tab="nguphap">Ngữ pháp<span class="hz">语法</span></button>
     <button class="tab" role="tab" id="t-luyentap" data-tab="luyentap">Luyện tập<span class="hz">练习</span></button>
   </nav>
 </div>
@@ -921,6 +943,16 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 40px; font-size:
     </div>
     <p class="muted" style="margin:-6px 0 16px;font-size:15px">Đọc to theo từng đoạn. Từ gạch chân cam là từ mới, bấm vào để xem nghĩa.</p>
     <div class="passage" id="passage"></div>
+  </section>
+
+  <!-- NGỮ PHÁP -->
+  <section id="p-nguphap" role="tabpanel" aria-labelledby="t-nguphap" hidden>
+    <div class="panel-head">
+      <h2 id="gramHead">Ngữ pháp</h2>
+    </div>
+    <p class="muted" style="margin:-6px 0 12px;font-size:15px">Phần giảng ngữ pháp trong video, viết ra để đọc lại. Câu luyện: tự nghĩ câu trả lời rồi bấm xem đáp án.</p>
+    <div class="gchips" id="gchips" role="group" aria-label="Lọc theo mục"></div>
+    <div class="grammar" id="grammar"></div>
   </section>
 
   <!-- LUYỆN TẬP -->
@@ -2333,7 +2365,7 @@ document.addEventListener("drop", e => {
 });
 
 /* ---------- Tab ---------- */
-const TABS = ["video", "slide", "tuvung", "baikhoa", "luyentap"];
+const TABS = ["video", "slide", "tuvung", "baikhoa", "nguphap", "luyentap"];
 let tab = "video";
 function activate(t) {
   if (!TABS.includes(t)) t = "video";
@@ -2956,6 +2988,50 @@ function renderExercises() {
   });
 }
 
+/* ---------- Ngữ pháp ---------- */
+let gramSec = "";   // mục đang lọc, rỗng là tất cả
+// dòng giảng: "## …" là tiêu đề nhỏ; "Sai: …"/"Đúng: …" tô màu trong bảng phân biệt
+const gLine = t => t.startsWith("## ") ? `<h4>${zhWrap(t.slice(3))}</h4>` : `<li>${zhWrap(t)}</li>`;
+function gList(items) {
+  // gom các dòng thường thành <ul>, tiêu đề nhỏ đứng ngoài danh sách
+  let html = "", open = false;
+  for (const t of items) {
+    const head = t.startsWith("## ");
+    if (head && open) { html += "</ul>"; open = false; }
+    if (!head && !open) { html += "<ul>"; open = true; }
+    html += gLine(t);
+  }
+  return html + (open ? "</ul>" : "");
+}
+const gMark = t => zhWrap(t).replace(/^(Sai:)/, '<b class="bad">$1</b>').replace(/^(Đúng:)/, '<b class="good">$1</b>');
+function gBlock(b, gi, bi) {
+  if (b.kind === "compare") return `${b.common ? `<p class="gcommon">${zhWrap(b.common)}</p>` : ""}
+    <div class="gcols">${b.cols.map(c => `<div class="gcol"><h4 lang="zh">${esc(c.head)}</h4><ul>${c.lines.map(t => `<li>${gMark(t)}</li>`).join("")}</ul></div>`).join("")}</div>`;
+  if (b.kind === "quiz") return `<div class="gquiz"><b>Luyện nhanh</b>${b.items.map((it, k) => `<div class="exitem">
+      <div class="q">${zhWrap(it.q)}</div>
+      <button class="btn small" data-show>Xem đáp án</button>
+      <div class="ans" hidden>${zhWrap(it.a)}</div></div>`).join("")}</div>`;
+  return gList(b.items);
+}
+function renderGrammar() {
+  const G = L.grammar || [];
+  const secs = [...new Set(G.map(g => g.section))];
+  if (gramSec && !secs.includes(gramSec)) gramSec = "";
+  $("#gramHead").textContent = G.length ? `Ngữ pháp · ${G.length} mục` : "Ngữ pháp";
+  $("#gchips").hidden = secs.length < 2;
+  $("#gchips").innerHTML = ["", ...secs].map(x => `<button type="button" data-sec="${esc(x)}" aria-pressed="${x === gramSec}">${x ? zhWrap(x) : "Tất cả"}</button>`).join("");
+  $("#gchips").querySelectorAll("button").forEach(b => b.onclick = () => { gramSec = b.dataset.sec; renderGrammar(); });
+  const shown = G.filter(g => !gramSec || g.section === gramSec);
+  $("#grammar").innerHTML = shown.length ? shown.map((g, gi) => `<article class="gpoint">
+      <div class="gsec">${zhWrap(g.section)}</div>
+      <h3>${zhWrap(g.title)}</h3>
+      ${g.blocks.map((b, bi) => gBlock(b, gi, bi)).join("")}
+    </article>`).join("") : `<p class="muted">Bài này chưa có phần ngữ pháp viết sẵn, xem trong video bài giảng nhé.</p>`;
+  $("#grammar").querySelectorAll("[data-show]").forEach(b => b.onclick = () => {
+    const a = b.nextElementSibling; a.hidden = !a.hidden; b.textContent = a.hidden ? "Xem đáp án" : "Ẩn đáp án";
+  });
+}
+
 /* ---------- Phím tắt ---------- */
 document.addEventListener("keydown", e => {
   if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
@@ -2973,7 +3049,7 @@ function renderAll() {
   openSync(!!S.syncOpen);
   syncIdx = -1;
   loadChapter(p ? p.ch : 0, p ? p.t : 0, false);
-  renderSlides(); renderVocab(); renderPassage(); quizIntro(); renderExercises();
+  renderSlides(); renderVocab(); renderPassage(); renderGrammar(); quizIntro(); renderExercises();
 }
 /* Mở trang: link có #video, #slide… thì vào thẳng bài đang học; còn lại hiện danh sách bài học */
 const startTab = location.hash.slice(1);

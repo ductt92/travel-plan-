@@ -2,6 +2,7 @@
 """Dựng trang web học tập (thư mục site/) từ các bài giảng đã làm.
 
 Cách dùng:  python3 build_site.py bai21 [bai22 ...]
+            python3 build_site.py --chi-trang   (chỉ dựng lại index.html từ published.json, không đụng video/slide)
 Cần có sẵn: <bai>_src.py, <bai>.json và out/<bai>.mp4, out/<bai>.srt, out/<bai>_slides.pdf
 (bài đã có trong web/published.json mà mất video gốc thì giữ bản đã lên trang; mọi bài trong đó luôn được giữ)
 Video được cắt theo chương và nén lại 720p để trang tải nhanh (mỗi file < 15 MB).
@@ -82,6 +83,40 @@ def slide_titles(lesson, zh):
                        for s in lesson["slides"]]}
 
 
+# Tab "Ngữ pháp" của trang: các mục giảng ngữ pháp trong bài giảng. HSK 6 gọi là Ngữ pháp 注释, Phân biệt từ 词语辨析,
+# Tu từ 篇章修辞; 顶石中文 gọi là Câu mẫu/Mẫu câu 重点句型, Kết hợp từ 词语搭配, Thành ngữ 成语.
+GRAMMAR = re.compile(r"Ngữ pháp|词语辨析|篇章修辞|重点句型|词语搭配|成语")
+
+
+def quiz_items(items):
+    """Câu hỏi + dòng "Đáp án" ngay sau nó (slide "reveal")"""
+    return [{"q": it, "a": re.sub(r"^Đáp án( gợi ý)?:\s*", "", items[j + 1])}
+            for j, it in enumerate(items)
+            if not it.startswith("Đáp án") and j + 1 < len(items) and items[j + 1].startswith("Đáp án")]
+
+
+def grammar_of(lesson):
+    """Mỗi điểm ngữ pháp: {section, title, blocks}. Slide không có tiêu đề nối vào điểm ngay trước nó;
+    block "list" là các dòng giảng (dòng "## …" là tiêu đề nhỏ), "compare" là bảng phân biệt hai từ,
+    "quiz" là câu luyện có đáp án."""
+    out = []
+    for s in lesson["slides"]:
+        sec = s.get("section") or ""
+        if not GRAMMAR.search(sec):
+            continue
+        if s["type"] == "compare":
+            block = {"kind": "compare", "common": s.get("common", ""), "cols": s.get("cols", [])}
+        elif s.get("reveal"):
+            block = {"kind": "quiz", "items": quiz_items(s.get("items", []))}
+        else:
+            block = {"kind": "list", "items": s.get("items", [])}
+        if s.get("title") or not out or out[-1]["section"] != sec:
+            out.append({"section": sec, "title": s.get("title") or sec, "blocks": [block]})
+        else:
+            out[-1]["blocks"].append(block)
+    return out
+
+
 def build_lesson(name, yt=None):
     src = runpy.run_path(os.path.join(HERE, f"{name}_src.py"), run_name="__src__")
     lesson = json.load(open(os.path.join(HERE, f"{name}.json"), encoding="utf-8"))
@@ -149,11 +184,7 @@ def build_lesson(name, yt=None):
     for s in lesson["slides"]:
         if not s.get("reveal"):
             continue
-        items, qs = s["items"], []
-        for j, it in enumerate(items):
-            if not it.startswith("Đáp án") and j + 1 < len(items) and items[j + 1].startswith("Đáp án"):
-                qs.append({"q": it, "a": re.sub(r"^Đáp án( gợi ý)?:\s*", "", items[j + 1])})
-        exercises.append({"title": s["title"], "items": qs})
+        exercises.append({"title": s["title"], "items": quiz_items(s["items"])})
 
     title = src.get("TAG", lesson["tag"])
     # 顶石中文 đánh số kiểu "Bài 1.1": giữ nguyên dạng chuỗi, HSK 6 vẫn là số nguyên
@@ -170,7 +201,7 @@ def build_lesson(name, yt=None):
     info = {"id": name, "num": (int(m.group(1)) if m.group(1).isdigit() else m.group(1)) if m else 0, "zh": zh,
             "py": py, "vi": first.get("vi", ""), "tag": title,
             "chapters": chaps, "slides": slides, "vocab": vocab, "passage": passage,
-            "exercises": exercises}
+            "exercises": exercises, "grammar": grammar_of(lesson)}
     if yt:
         info["yt"] = yt
     return info
@@ -182,14 +213,20 @@ PUBLISHED = os.path.join(HERE, "web", "published.json")
 
 
 def main():
-    names = sys.argv[1:] or sorted(os.path.basename(p)[:-4] for p in glob.glob(os.path.join(HERE, "out", "*.mp4")))
+    only_page = "--chi-trang" in sys.argv
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    names = [] if only_page else args or sorted(os.path.basename(p)[:-4] for p in glob.glob(os.path.join(HERE, "out", "*.mp4")))
     published = json.load(open(PUBLISHED, encoding="utf-8")) if os.path.exists(PUBLISHED) else {}
     names += [n for n in published if n not in names]
     built, yt = {}, youtube_ids()
     for n in names:
-        if not os.path.exists(os.path.join(HERE, "out", n + ".mp4")) and n in published:
+        if n in published and (only_page or not os.path.exists(os.path.join(HERE, "out", n + ".mp4"))):
             print(f"Bài {n}  (giữ bản đã lên trang)")
             built[n] = published[n]
+            # phần ngữ pháp lấy lại từ <bai>.json mỗi lần, để bài cũ cũng có (và theo kịp khi sửa bài giảng)
+            src = os.path.join(HERE, n + ".json")
+            if os.path.exists(src):
+                built[n]["grammar"] = grammar_of(json.load(open(src, encoding="utf-8")))
             continue
         print(f"Bài {n}" + (f"  (YouTube {yt[n]})" if n in yt else ""))
         built[n] = build_lesson(n, yt.get(n))
