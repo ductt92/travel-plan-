@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Button, Modal, TextArea } from 'react-liquis-glass';
+import { Modal } from 'react-liquis-glass';
 import { HeartIcon } from './icons';
 import type { LoveNote } from '@/lib/api';
 
@@ -8,7 +8,7 @@ interface Props {
   userName: string;
   notes: LoveNote[] | null;
   error: string | null;
-  /** Mốc đã đọc lúc mở popup, để tô những lời nhắn mới. */
+  /** Mốc đã đọc lúc mở popup, để đánh dấu chỗ bắt đầu lời nhắn mới. */
   seen: string;
   onClose: () => void;
   onAdd: (text: string) => Promise<boolean>;
@@ -38,7 +38,7 @@ const clock = (d: Date) => d.toLocaleTimeString('vi-VN', { hour: '2-digit', minu
 
 export default function NotesDialog(props: Props) {
   return (
-    <Modal open={props.open} onClose={props.onClose} title="Note tình yêu" footer={null} width={600} className="bd-modal bd-notes">
+    <Modal open={props.open} onClose={props.onClose} footer={null} width={560} className="bd-modal bd-notes">
       {props.open && <Body {...props} />}
     </Modal>
   );
@@ -47,21 +47,35 @@ export default function NotesDialog(props: Props) {
 function Body({ userName, notes, error, seen, onAdd, onRemove, onRetry }: Props) {
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
-  // giữ mốc đã đọc của lúc mở, để đánh dấu đã đọc rồi mà lời nhắn mới vẫn còn sáng tới khi đóng
+  // giữ mốc đã đọc của lúc mở: đóng popup mới tính là đã đọc, nên vạch "mới" đứng yên tới lúc đó
   const [since] = useState(seen);
   const scroller = useRef<HTMLDivElement>(null);
-  const input = useRef<HTMLDivElement>(null);
+  // lời nhắn có sẵn lúc mở: chỉ tin gửi thêm sau đó mới có hiệu ứng hiện ra
+  // (đang tải thì chờ tới lúc có danh sách mới chụp lại)
+  const initial = useRef<Set<number> | null>(null);
+  if (notes && !initial.current) initial.current = new Set(notes.map(n => n.id));
+  const area = useRef<HTMLTextAreaElement>(null);
 
   // cũ ở trên, mới ở dưới như một cuộc trò chuyện
   const list = notes ? [...notes].reverse() : null;
+  const firstNew = list?.find(n => n.by !== userName && n.at > since)?.id;
 
-  // mở ra và mỗi khi có lời nhắn mới thì cuộn xuống cuối
   useLayoutEffect(() => {
     const el = scroller.current;
     if (el) el.scrollTop = el.scrollHeight;
   }, [notes?.length]);
 
-  useEffect(() => { input.current?.querySelector('textarea')?.focus(); }, []);
+  useEffect(() => { area.current?.focus(); }, []);
+
+  // ô viết tự cao theo chữ, tới một mức thì cuộn
+  useLayoutEffect(() => {
+    const el = area.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight + 2, 140)}px`;
+    // chưa chạm mức cao nhất thì giấu thanh cuộn, không thì nó hiện thành một vạch thừa
+    el.style.overflowY = el.scrollHeight + 2 > 140 ? 'auto' : 'hidden';
+  }, [text]);
 
   const send = async () => {
     const t = text.trim();
@@ -69,56 +83,59 @@ function Body({ userName, notes, error, seen, onAdd, onRemove, onRetry }: Props)
     setBusy(true);
     if (await onAdd(t)) setText('');
     setBusy(false);
+    area.current?.focus();
   };
 
   let lastDay = '';
 
   return (
-    <div className="dlg">
-      <div className="dlg-head plain love-head">
-        <p className="meta">
-          <span className="love-lock">🔒</span> Chỉ hai đứa mình đọc được
-          {notes && notes.length > 0 && <> · {notes.length} lời nhắn</>}
-        </p>
-      </div>
+    <div className="love">
+      <header className="love-hd">
+        <div className="love-pair" aria-hidden="true">
+          <span className="love-ava he">Đ</span>
+          <span className="love-pair__heart"><HeartIcon size={13} width={2.4} /></span>
+          <span className="love-ava she">N</span>
+        </div>
+        <h2>Note tình yêu</h2>
+        <p>Chỉ hai đứa mình đọc được{notes && notes.length > 0 ? ` · ${notes.length} lời nhắn` : ''}</p>
+      </header>
 
-      <div className="dlg-body love-body" ref={scroller}>
+      <div className="love-body" ref={scroller}>
         {error && (
           <p className="love-err" role="alert">
             {error} {!notes && <button type="button" className="link" onClick={onRetry}>Thử lại</button>}
           </p>
         )}
         {!list ? (
-          !error && <p className="love-empty">Đang mở hộp thư…</p>
+          !error && <p className="love-wait">Đang mở hộp thư…</p>
         ) : list.length === 0 ? (
           <div className="love-start">
-            <span className="love-start__ic"><HeartIcon size={30} width={1.6} /></span>
-            <p>Chưa có lời nhắn nào.<br />Viết lời nhắn đầu tiên cho {partner(userName)} đi 💌</p>
+            <span className="love-start__ic"><HeartIcon size={28} width={1.7} /></span>
+            <p>Chưa có lời nhắn nào.</p>
+            <p className="soft">Viết lời nhắn đầu tiên cho {partner(userName)} nhé</p>
           </div>
         ) : (
           <ol className="love-thread">
-            {list.map(n => {
+            {list.map((n, i) => {
               const d = new Date(n.at);
               const key = dayKey(d);
-              const head = key !== lastDay;
+              const newDay = key !== lastDay;
               lastDay = key;
+              const next = list[i + 1];
+              // gom các tin liền nhau của cùng một người: chỉ tin cuối nhóm mới có hình đại diện
+              const endOfRun = !next || next.by !== n.by || dayKey(new Date(next.at)) !== key;
               const mine = n.by === userName;
-              const fresh = !mine && n.at > since;
               return (
                 <Fragment key={n.id}>
-                  {head && <li className="love-day"><span>{dayLabel(d)}</span></li>}
-                  <li className={`love-msg ${who(n.by)}${mine ? ' mine' : ''}${fresh ? ' fresh' : ''}`}>
-                    <span className="love-ava" aria-hidden="true">{(n.by || '?').slice(0, 1)}</span>
-                    <div className="love-bubble">
-                      <div className="love-meta">
-                        <b>{n.by || 'Ai đó'}</b>
-                        {fresh && <span className="love-new">mới</span>}
-                      </div>
-                      <p>{n.text}</p>
-                      <div className="love-foot">
-                        <time dateTime={n.at} title={d.toLocaleString('vi-VN')}>
-                          {clock(d)} · {d.toLocaleDateString('vi-VN')}
-                        </time>
+                  {newDay && <li className="love-day">{dayLabel(d)}</li>}
+                  {n.id === firstNew && <li className="love-unread"><span>Lời nhắn mới</span></li>}
+                  <li className={`love-msg ${who(n.by)}${mine ? ' mine' : ''}${endOfRun ? ' end' : ''}${initial.current && !initial.current.has(n.id) ? ' arrive' : ''}`}>
+                    <span className="love-ava" aria-hidden="true">{endOfRun ? (n.by || '?').slice(0, 1) : ''}</span>
+                    <div className="love-col">
+                      <div className="love-bubble">{n.text}</div>
+                      <div className="love-time">
+                        {!mine && <b>{n.by || 'Ai đó'}</b>}
+                        <time dateTime={n.at} title={d.toLocaleString('vi-VN')}>{clock(d)} · {d.toLocaleDateString('vi-VN')}</time>
                         {mine && (
                           <button type="button" className="love-del" aria-label="Xoá lời nhắn này"
                             onClick={() => { if (confirm('Xoá lời nhắn này?')) onRemove(n.id); }}>Xoá</button>
@@ -134,22 +151,17 @@ function Body({ userName, notes, error, seen, onAdd, onRemove, onRetry }: Props)
       </div>
 
       <form className="love-compose" onSubmit={e => { e.preventDefault(); void send(); }}>
-        <div className="love-compose__box" ref={input}>
-          <TextArea
-            className="note-in love-in" rows={2} maxLength={MAX}
-            placeholder={`${userName} muốn nhắn gì cho ${partner(userName)}…`}
-            aria-label="Viết lời nhắn"
-            value={text} onChange={e => setText(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); void send(); }
-            }}
-          />
-          <span className="love-hint">{text.length > MAX - 200 ? `${text.length}/${MAX}` : '⌘ + Enter để gửi'}</span>
-        </div>
-        <Button type="submit" variant="filled" color="primary" className="love-send" icon={<HeartIcon />}
-          loading={busy} disabled={!text.trim()}>
-          Gửi
-        </Button>
+        <textarea
+          ref={area} rows={1} maxLength={MAX} aria-label="Viết lời nhắn"
+          placeholder={`Nhắn cho ${partner(userName)}…`}
+          value={text} onChange={e => setText(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); void send(); }
+          }}
+        />
+        <button type="submit" className="love-send" disabled={!text.trim() || busy} aria-label="Gửi lời nhắn" title="Gửi (⌘ + Enter)">
+          <HeartIcon size={19} width={2.2} />
+        </button>
       </form>
     </div>
   );

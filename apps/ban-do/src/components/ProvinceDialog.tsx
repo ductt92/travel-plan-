@@ -180,7 +180,6 @@ function Body({
         )}
       </div>
 
-      <p className="dlg-foot">Bản thật: mỗi chuyến là một bản ghi trong database, kèm ảnh và vị trí.</p>
     </div>
   );
 }

@@ -137,115 +137,119 @@ export default function TravelMap({
   return (
     <>
       <div className="wrap">
-        <NoteBar canEdit={canEdit} userName={userName} onLogin={() => setLoginOpen(true)} />
+        {/* thanh trên cùng: về trang chủ bên trái, trạng thái đăng nhập bên phải, cùng một mép với phần dưới */}
+        <div className="topbar">
+          <Button href="/" variant="glass" className="home-link tool-key" icon={<HomeIcon />}>Trang chủ</Button>
+          <NoteBar canEdit={canEdit} userName={userName} />
+        </div>
 
-        <header className="top">
-          {/* về hẳn trang chủ của site để chọn web khác */}
-          <Button href="/" variant="glass" size="sm" className="home-link" icon={<HomeIcon />}>Trang chủ</Button>
-          <h1>
-            <span className="ic">🌷</span>
-            <span className="n he">Đức</span>
-            <em>&amp;</em>
-            <span className="n she">Ngọc</span>
-            <span className="ic heart">♡</span>
-          </h1>
-          <p className="tagline">Câu chuyện của chúng mình <span className="ic">✨</span></p>
-          <p className="motto">
-            <span><span className="ic">📸</span> Những chuyến đi</span>
-            <span><span className="ic">💗</span> Những kỷ niệm</span>
-            <span><span className="ic">♾️</span> Chúng mình</span>
-          </p>
+        <div className="layout">
+          <header className="intro" data-enter>
+            <p className="motto">
+              <span><span className="ic">📸</span> Những chuyến đi</span>
+              <span><span className="ic">💗</span> Những kỷ niệm</span>
+              <span><span className="ic">♾️</span> Chúng mình</span>
+            </p>
+            <h1>
+              <span className="n he">Đức</span>
+              <em>&amp;</em>
+              <span className="n she">Ngọc</span>
+              <span className="ic heart" aria-hidden="true">♡</span>
+            </h1>
+            <p className="tagline">Câu chuyện của chúng mình, kể bằng {TOTAL} tỉnh thành <span className="ic">🌷</span></p>
 
-          <div className="stats">
-            <div className="stat v">
-              <span className="n">{visited}<small>/{TOTAL}</small></span>
-              <span className="k">Tỉnh {period.year ? (period.month ? 'trong tháng' : 'trong năm') : 'đã đi'}</span>
-              <div className="bar"><i style={{ width: `${Math.round(visited / TOTAL * 100)}%` }} /></div>
-            </div>
-            <div className="stat">
-              <span className="n">{rows.length}</span>
-              <span className="k">Chuyến đi</span>
-            </div>
-            {period.year ? (
-              <div className="stat">
-                <span className={`n${period.month ? ' sm' : ''}`}>{scopeShort(period)}</span>
-                <span className="k">Đang xem</span>
+            <div className="stats">
+              <div className="stat v">
+                <span className="n">{visited}<small>/{TOTAL}</small></span>
+                <span className="k">Tỉnh {period.year ? (period.month ? 'trong tháng' : 'trong năm') : 'đã đi'}</span>
+                <div className="bar"><i style={{ width: `${Math.round(visited / TOTAL * 100)}%` }} /></div>
               </div>
-            ) : (
-              <div className="stat w">
-                <span className="n">{wish}</span>
-                <span className="k">Muốn đi</span>
+              <div className="stat">
+                <span className="n">{rows.length}</span>
+                <span className="k">Chuyến đi</span>
+              </div>
+              {period.year ? (
+                <div className="stat">
+                  <span className={`n${period.month ? ' sm' : ''}`}>{scopeShort(period)}</span>
+                  <span className="k">Đang xem</span>
+                </div>
+              ) : (
+                <div className="stat w">
+                  <span className="n">{wish}</span>
+                  <span className="k">Muốn đi</span>
+                </div>
+              )}
+            </div>
+
+            <div className="toolbar">
+              <WhenButton period={period} onOpen={() => { setHovered(null); setWhenOpen(true); }} onClear={clearPeriod} />
+              <div className="tools">
+                <Button className="tool tool-key" icon={<SearchIcon />} onClick={() => { setHovered(null); setFindOpen(true); }}>
+                  Tìm tỉnh
+                </Button>
+                <Button className="tool tool-key" icon={<BookIcon />} onClick={() => { setHovered(null); setLogOpen(true); }}>
+                  Nhật ký <span className="count">{rows.length}</span>
+                </Button>
+                <Button className="tool tool-key tool-love" icon={<HeartIcon />} onClick={openNotes}
+                  title={love.unread ? `${love.unread} lời nhắn mới` : 'Để lại một lời nhắn'}>
+                  Note tình yêu
+                  {love.unread > 0 && <span className="count love-badge">{love.unread}</span>}
+                </Button>
+                {canEdit ? (
+                  <Button variant="tinted" color="primary" className="tool tool-key tool-auth" icon={<LockIcon open />} onClick={onSignOut}
+                    title={`Đang đăng nhập: ${userName}. Bấm để thoát`}>
+                    {userName} · Thoát
+                  </Button>
+                ) : (
+                  <Button variant="tinted" color="primary" className="tool tool-key tool-auth" icon={<LockIcon />} onClick={() => { setHovered(null); setLoginOpen(true); }}>
+                    Đăng nhập
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            <div className="intro-foot">
+              <ul className="legend">
+                <li><span className="sw sw-0" />Chưa đi</li>
+                <li><span className="sw sw-1" />1 chuyến</li>
+                <li><span className="sw sw-3" />3 chuyến trở lên</li>
+                <li><span className="sw sw-w" />Muốn đi</li>
+              </ul>
+              <GlassToggle size="sm" className="tool glass-key" />
+            </div>
+          </header>
+
+          <section className="map-card" aria-label="Bản đồ 34 tỉnh thành" data-enter>
+            {spotlight.length > 0 && (
+              <div className="spot-bar">
+                <span>
+                  Đang chọn {spotlight.map((c, i) => (
+                    <span key={c}>{i > 0 && ', '}<b>{byCode[c].name}</b></span>
+                  ))}
+                </span>
+                <button onClick={() => setSpotlight([])}>Bỏ chọn</button>
               </div>
             )}
-          </div>
 
-          <div className="toolbar">
-            <WhenButton period={period} onOpen={() => { setHovered(null); setWhenOpen(true); }} onClear={clearPeriod} />
-            <div className="tools">
-              <Button className="tool tool-key" icon={<SearchIcon />} onClick={() => { setHovered(null); setFindOpen(true); }}>
-                Tìm tỉnh
-              </Button>
-              <Button className="tool tool-key" icon={<BookIcon />} onClick={() => { setHovered(null); setLogOpen(true); }}>
-                Nhật ký <span className="count">{rows.length}</span>
-              </Button>
-              <Button className="tool tool-key tool-love" icon={<HeartIcon />} onClick={openNotes}
-                title={love.unread ? `${love.unread} lời nhắn mới` : 'Để lại một lời nhắn'}>
-                Note tình yêu
-                {love.unread > 0 && <span className="count love-badge">{love.unread}</span>}
-              </Button>
-              {canEdit ? (
-                <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon open />} onClick={onSignOut}
-                  title={`Đang đăng nhập: ${userName}. Bấm để thoát`}>
-                  {userName} · Thoát
-                </Button>
-              ) : (
-                <Button variant="tinted" color="primary" className="tool-key" icon={<LockIcon />} onClick={() => { setHovered(null); setLoginOpen(true); }}>
-                  Đăng nhập
-                </Button>
-              )}
-              <GlassToggle size="md" className="tool tool-key" />
-            </div>
-          </div>
-        </header>
+            <VietnamMap
+              width={width}
+              height={height}
+              levelOf={levelOf}
+              countOf={countOf}
+              hovered={hovered}
+              selected={selected}
+              spotlight={spotlight}
+              onHover={setHovered}
+              onPick={pick}
+            />
 
-        <section className="map-card">
-          {spotlight.length > 0 && (
-            <div className="spot-bar">
-              <span>
-                Đang chọn {spotlight.map((c, i) => (
-                  <span key={c}>{i > 0 && ', '}<b>{byCode[c].name}</b></span>
-                ))}
-              </span>
-              <button onClick={() => setSpotlight([])}>Bỏ chọn</button>
-            </div>
-          )}
-
-          <VietnamMap
-            width={width}
-            height={height}
-            levelOf={levelOf}
-            countOf={countOf}
-            hovered={hovered}
-            selected={selected}
-            spotlight={spotlight}
-            onHover={setHovered}
-            onPick={pick}
-          />
-
-          <div className="map-foot">
-            <ul className="legend">
-              <li><span className="sw sw-0" />Chưa đi</li>
-              <li><span className="sw sw-1" />1 chuyến</li>
-              <li><span className="sw sw-3" />3 chuyến trở lên</li>
-              <li><span className="sw sw-w" />Muốn đi</li>
-            </ul>
-            <p className="hint">
+            <p className="hint" aria-live="polite">
               {hovered
-                ? <><b>{byCode[hovered].name}</b> — {describe(hovered)}</>
+                ? <><b>{byCode[hovered].name}</b> · {describe(hovered)}</>
                 : 'Bấm vào một tỉnh để xem và ghi chuyến đi'}
             </p>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
 
       {error ? (
@@ -328,22 +332,13 @@ export default function TravelMap({
   );
 }
 
-function NoteBar({ canEdit, userName, onLogin }: { canEdit: boolean; userName: string; onLogin: () => void }) {
-  if (!canEdit) return (
-    <p className="note-bar"><span>👀</span>
-      <span>
-        <b>Đang xem thôi.</b>{' '}
-        <button type="button" className="link" onClick={onLogin}>Đăng nhập</button>{' '}
-        bằng tài khoản của mình thì mới ghi, sửa và xoá chuyến được.
-      </span>
-    </p>
-  );
-
+/** Chưa đăng nhập thì không nói gì: nút "Đăng nhập" trên thanh công cụ đã đủ. */
+function NoteBar({ canEdit, userName }: { canEdit: boolean; userName: string }) {
+  if (!canEdit) return null;
   return (
-    <p className="note-bar"><span>💾</span>
-      <span>
-        <b>{userName} đang đăng nhập.</b> Chuyến nào thêm hay sửa đều ghi tên {userName}.
-      </span>
+    <p className="note-bar on">
+      <span aria-hidden="true">💾</span>
+      <span><b>{userName} đang đăng nhập.</b> Chuyến nào thêm hay sửa đều ghi tên {userName}.</span>
     </p>
   );
 }
