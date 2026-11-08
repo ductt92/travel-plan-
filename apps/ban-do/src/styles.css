@@ -566,7 +566,11 @@ label{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase
 
 /* điện thoại: mọi popup lớn phủ kín màn hình như một trang của app */
 @media (max-width:560px){
-  .lg-modal-root:has(> .bd-modal){padding:0}
+  /* không dùng :has() — trình duyệt trong Zalo, Messenger, Android cũ chưa hiểu, popup sẽ bị chừa lề */
+  .lg-modal-root{padding:0;align-items:stretch}
+  .lg-modal-root>.lg-modal{margin:0}
+  /* riêng ô đăng nhập vẫn là hộp nhỏ giữa màn */
+  .lg-modal-root>.login{width:calc(100% - 32px) !important;margin:auto 16px}
   .bd-modal{
     width:100% !important;height:100vh;height:100dvh;max-height:none !important;
     border:none !important;border-radius:0 !important;box-shadow:none !important

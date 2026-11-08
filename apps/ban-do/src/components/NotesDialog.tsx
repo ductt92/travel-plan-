@@ -19,7 +19,7 @@ interface Props {
 const MAX = 2000;
 
 /** Người kia của người đang viết, để lời mời viết gọi đúng tên. */
-const partner = (me: string) => (me === 'Ngọc' ? 'anh Đức' : me === 'Đức' ? 'Ngọc' : 'người thương');
+const partner = (me: string) => (me === 'Ngọc' ? 'anh yêu' : me === 'Đức' ? 'em yêu' : 'người thương');
 const who = (name: string) => (name === 'Đức' ? 'he' : name === 'Ngọc' ? 'she' : 'other');
 
 const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
@@ -153,7 +153,7 @@ function Body({ userName, notes, error, seen, onAdd, onRemove, onRetry }: Props)
       <form className="love-compose" onSubmit={e => { e.preventDefault(); void send(); }}>
         <textarea
           ref={area} rows={1} maxLength={MAX} aria-label="Viết lời nhắn"
-          placeholder={`Nhắn cho ${partner(userName)}…`}
+          placeholder={`Nhắn cho ${partner(userName)} ❤️`}
           value={text} onChange={e => setText(e.target.value)}
           onKeyDown={e => {
             if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); void send(); }
