@@ -733,6 +733,8 @@ label{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase
 
 /* điện thoại: phủ kín màn hình như một app nhắn tin */
 @media (max-width:560px){
+  /* quy tắc riêng của hộp này (bo góc, viền, bóng) đứng sau quy tắc phủ kín chung, nên phải nhắc lại ở đây */
+  .bd-notes{border:none !important;border-radius:0 !important;box-shadow:none !important}
   .bd-notes .lg-modal-header{top:calc(10px + env(safe-area-inset-top))}
   .love{height:100vh;height:100dvh}
   .love-hd{padding:calc(16px + env(safe-area-inset-top)) 56px 12px}
