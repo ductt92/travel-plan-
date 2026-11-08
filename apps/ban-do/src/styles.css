@@ -544,24 +544,79 @@ label{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase
 /* ---------- Note tình yêu ---------- */
 .tool-love svg{color:var(--accent)}
 .tool .love-badge{background:var(--accent);color:#fff;font-weight:700}
-.love-form{position:relative;margin-top:14px}
+
+.bd-notes{--he:var(--v3);--she:var(--accent)}
+.bd-notes .dlg{min-height:min(620px,calc(100dvh - 120px))}
+.love-head{padding-bottom:14px}
+.love-head .meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.love-lock{font-size:11px}
+
+/* ruột: nền giấy ấm, rải mấy trái tim mờ */
+.love-body{
+  padding:6px 22px 18px;scroll-behavior:smooth;
+  background:
+    radial-gradient(circle at 12% 18%,color-mix(in srgb,var(--she) 9%,transparent) 0 70px,transparent 71px),
+    radial-gradient(circle at 92% 78%,color-mix(in srgb,var(--he) 8%,transparent) 0 90px,transparent 91px),
+    var(--glass-sunk)
+}
+.love-err{margin:12px 0;font-size:13px;color:var(--accent)}
+.love-empty{margin:18px 0;text-align:center;color:var(--muted);font:italic 400 15px/1.6 var(--f-serif)}
+
+.love-start{display:flex;flex-direction:column;align-items:center;text-align:center;padding:56px 18px 40px}
+.love-start__ic{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;margin-bottom:14px;color:var(--she);
+  background:color-mix(in srgb,var(--she) 12%,var(--glass-2));box-shadow:0 0 0 8px color-mix(in srgb,var(--she) 6%,transparent);
+  animation:love-beat 2.4s ease-in-out infinite}
+.love-start p{margin:0;color:var(--muted);font:italic 400 15.5px/1.7 var(--f-serif)}
+@keyframes love-beat{0%,100%{transform:scale(1)}12%{transform:scale(1.08)}24%{transform:scale(1)}36%{transform:scale(1.05)}}
+
+.love-thread{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+
+/* dải ngày: chữ giữa hai vạch */
+.love-day{display:flex;align-items:center;gap:12px;margin:14px 0 2px;color:var(--faint);
+  font:600 11px/1.3 var(--f-ui);letter-spacing:.06em;text-transform:uppercase}
+.love-day::before,.love-day::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--glass-line),transparent)}
+.love-day span{padding:5px 12px;border-radius:999px;background:var(--glass-2);border:1px solid var(--glass-line);text-align:center}
+
+.love-msg{--who:var(--faint);display:flex;align-items:flex-end;gap:9px;max-width:88%}
+.love-msg.he{--who:var(--he)}
+.love-msg.she{--who:var(--she)}
+.love-msg.mine{align-self:flex-end;flex-direction:row-reverse}
+.love-ava{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:#fff;
+  font:600 14px/1 var(--f-serif);background:linear-gradient(135deg,color-mix(in srgb,var(--who) 75%,#fff),var(--who));
+  box-shadow:0 2px 8px color-mix(in srgb,var(--who) 35%,transparent)}
+
+.love-bubble{position:relative;min-width:0;padding:10px 15px 9px;border-radius:20px 20px 20px 6px;
+  background:var(--glass-2);border:1px solid color-mix(in srgb,var(--who) 20%,var(--glass-line));box-shadow:var(--sh-1)}
+.love-msg.mine .love-bubble{border-radius:20px 20px 6px 20px;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--who) 16%,var(--glass-2)),color-mix(in srgb,var(--who) 7%,var(--glass-2)))}
+.love-msg.fresh .love-bubble{box-shadow:0 0 0 3px color-mix(in srgb,var(--who) 18%,transparent),var(--sh-1)}
+.love-meta{display:flex;align-items:center;gap:7px;margin-bottom:2px}
+.love-meta b{color:var(--who);font:600 13px/1.3 var(--f-ui)}
+.love-msg.mine .love-meta{justify-content:flex-end}
+.love-new{font:700 9.5px/1 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--who);padding:3px 6px;border-radius:999px}
+.love-bubble p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:400 15.5px/1.6 var(--f-serif);color:var(--ink)}
+.love-foot{display:flex;align-items:center;gap:10px;margin-top:5px;font-size:11px;color:var(--faint)}
+.love-msg.mine .love-foot{justify-content:flex-end}
+.love-foot time{font-variant-numeric:tabular-nums}
+.love-del{border:none;background:none;cursor:pointer;color:var(--faint);font:600 11px var(--f-ui);padding:0;opacity:0;transition:opacity .15s,color .15s}
+.love-msg:hover .love-del,.love-del:focus-visible{opacity:1}
+.love-del:hover{color:var(--accent)}
+@media (hover:none){.love-del{opacity:1}}
+
+/* ô viết ở chân popup */
+.love-compose{flex:none;display:flex;align-items:flex-end;gap:10px;padding:12px 18px 16px;border-top:1px solid var(--glass-line)}
+.love-compose__box{flex:1;min-width:0}
 .love-in.lg-glass{background:var(--lg-fill);border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 .love-in.lg-glass:focus-within{border-color:color-mix(in srgb,var(--lg-accent) 70%,transparent);box-shadow:0 0 0 4px color-mix(in srgb,var(--lg-accent) 18%,transparent)}
-.love-in textarea{min-height:84px;font:400 15.5px/1.65 var(--f-serif)}
-.love-acts{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
-.love-hint{font-size:11.5px;color:var(--faint)}
-.love-err{margin:0 0 12px;font-size:13px;color:var(--accent)}
-.love-empty{margin:8px 0;color:var(--muted);font:italic 400 15px/1.6 var(--f-serif)}
-.love-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.love-card{--who:var(--faint);padding:13px 16px 14px;border-radius:18px;background:var(--glass-2);
-  border:1px solid color-mix(in srgb,var(--who) 22%,transparent);border-left:3px solid var(--who)}
-.love-card.he{--who:var(--v3)}
-.love-card.she{--who:var(--accent)}
-.love-card.fresh{background:color-mix(in srgb,var(--who) 9%,var(--glass-2));box-shadow:0 0 0 3px color-mix(in srgb,var(--who) 14%,transparent)}
-.love-top{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
-.love-top b{color:var(--who);font:600 15px/1.2 var(--f-serif)}
-.love-new{font:700 10px/1 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--who);padding:3px 6px;border-radius:999px}
-.love-when{margin-left:auto;font-size:11.5px;color:var(--faint)}
-.love-del{border:none;background:none;cursor:pointer;color:var(--faint);font-size:13px;padding:0 0 0 4px;line-height:1}
-.love-del:hover{color:var(--accent)}
-.love-card p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:400 15.5px/1.65 var(--f-serif);color:var(--ink)}
+.love-in textarea{min-height:52px;max-height:160px;font:400 15.5px/1.55 var(--f-serif)}
+.love-hint{display:block;margin:5px 4px 0;font-size:11px;color:var(--faint)}
+.love-send{flex:none;margin-bottom:22px}
+
+@media (max-width:560px){
+  .love-body{padding:4px 14px 14px}
+  .love-msg{max-width:94%}
+  .love-compose{padding:10px 12px 12px}
+  .love-hint{display:none}
+  .love-send{margin-bottom:0}
+}
+@media (prefers-reduced-motion:reduce){.love-start__ic{animation:none}.love-body{scroll-behavior:auto}}
