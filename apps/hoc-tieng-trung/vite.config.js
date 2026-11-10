@@ -44,6 +44,7 @@ export default defineConfig({
   plugins: [react(), lessonIndex()],
   base: '/hoc-tieng-trung/',
   server: { proxy: { '/api': 'http://127.0.0.1:3001' } },
-  // lessons-1-3 (~610 kB chưa nén, ~300 kB gzip) là dữ liệu bài, không phải code nên nâng ngưỡng cảnh báo cho vừa nó
-  build: { chunkSizeWarningLimit: 700, rollupOptions: { output: { manualChunks } } }
+  // lessons-1-3 (~610 kB chưa nén) và lessons-6 (~700 kB chưa nén, ~380 kB gzip, chỉ tải khi mở Cấp 6) là dữ liệu bài,
+  // không phải code, nên nâng ngưỡng cảnh báo cho vừa chúng
+  build: { chunkSizeWarningLimit: 750, rollupOptions: { output: { manualChunks } } }
 });
