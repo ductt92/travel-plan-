@@ -3,7 +3,7 @@ Chạy (từ thư mục app):
   python3 tools/check_level.py 4                 kiểm tra kế hoạch cap4-ke-hoach.txt và các bài trong src/data/lessons-4.json
   python3 tools/check_level.py 4 nhap/4-1.json   kiểm tra bài nháp (mỗi file một bài hoặc một mảng bài)
   python3 tools/check_level.py 4 --show 3        in từ (pinyin, từ loại theo chuẩn) và điểm ngữ pháp của bài 3 trong kế hoạch
-Cấp 7–9 dùng số 7 (id bài 7-1, 7-2...)."""
+Cấp 7–9 dùng số 7 (id bài 7-1, 7-2...); bài của cấp này chia phần lessons-7-p1.json (bài 1–25), lessons-7-p2.json (26–50)…"""
 import csv, json, re, sys, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 H = os.path.join(ROOT, 'src', 'data', 'hsk30')
@@ -66,8 +66,10 @@ if args[1:]:
     for f in args[1:]:
         d = json.load(open(f)); LESSONS += [(f'{f}#{x["id"]}', x) for x in (d if isinstance(d, list) else [d])]
 else:
-    p = os.path.join(ROOT, 'src', 'data', f'lessons-{LV}.json')
-    LESSONS = [(l['id'], l) for l in json.load(open(p))] if os.path.exists(p) else []
+    # một cấp là lessons-N.json hoặc chia phần lessons-N-p1.json, lessons-N-p2.json… (Cấp 7–9)
+    D = os.path.join(ROOT, 'src', 'data')
+    files = sorted(f for f in os.listdir(D) if re.fullmatch(f'lessons-{LV}(-p\\d+)?\\.json', f))
+    LESSONS = [(l['id'], l) for f in files for l in json.load(open(os.path.join(D, f)))]
 for f, l in LESSONS:
     no = l.get('no')
     if no not in PLAN: err(f, f'bài {no} không có trong kế hoạch'); continue

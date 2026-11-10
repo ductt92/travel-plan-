@@ -1,5 +1,5 @@
 // Dữ liệu chương trình: cấp độ HSK 3.0, bài học và phần Nhập môn.
-// Bài Cấp 1–3 (src/data/lessons.json) có sẵn trong gói. Bài Cấp 4 trở lên (src/data/lessons-N.json) tải khi cần bằng loadLevel(n);
+// Bài Cấp 1–3 (src/data/lessons.json) có sẵn trong gói. Bài Cấp 4 trở lên (src/data/lessons-N.json hoặc lessons-N-pK.json) tải khi cần bằng loadLevel(n);
 // trước khi tải, INDEX vẫn có tóm tắt mọi bài (module ảo trong vite.config.js) cho lộ trình, trang cấp, bài tiếp theo.
 import RAW from '../data/lessons.json';
 import IDX from 'virtual:lesson-index';
@@ -70,16 +70,18 @@ export const lvOf = id => parseInt(id, 10);
 export const CONTENT_LEVELS = [...new Set(INDEX.map(l => l.lv))].sort((a, b) => a - b);
 export const hasContent = n => n === 0 || lessonsOf(n).length > 0;
 
-/* Tải nội dung các cấp để riêng */
+/* Tải nội dung các cấp để riêng. Một cấp là lessons-N.json, hoặc chia nhiều phần lessons-N-p1.json, lessons-N-p2.json…
+   (Cấp 7–9 có 150 bài nên chia phần cho mỗi file vừa phải); các phần của một cấp tải song song. */
 const LAZY = import.meta.glob('../data/lessons-*.json', { import: 'default' });
+const filesOf = n => Object.keys(LAZY).filter(f => new RegExp(`/lessons-${n}(-p\\d+)?\\.json$`).test(f));
 const loaded = new Set(RAW.map(l => l.lv)), pending = {}, loadSubs = new Set();
-export const isLoaded = n => loaded.has(n) || !LAZY[`../data/lessons-${n}.json`];
+export const isLoaded = n => loaded.has(n) || !filesOf(n).length;
 /** Báo khi một cấp vừa tải xong (store.js dùng để vẽ lại giao diện) */
 export const onLevelLoad = f => { loadSubs.add(f); return () => loadSubs.delete(f); };
 export function loadLevel(n) {
   if (isLoaded(n)) return Promise.resolve();
-  return pending[n] || (pending[n] = LAZY[`../data/lessons-${n}.json`]().then(list => {
-    addLessons(list); loaded.add(n); loadSubs.forEach(f => f());
+  return pending[n] || (pending[n] = Promise.all(filesOf(n).map(f => LAZY[f]())).then(parts => {
+    addLessons(parts.flat()); loaded.add(n); loadSubs.forEach(f => f());
   }, e => { delete pending[n]; throw e; }));
 }
 export const loadLevels = ns => Promise.all(ns.map(loadLevel));

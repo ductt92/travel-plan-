@@ -1,7 +1,9 @@
 # Dữ liệu bài học
 
 - `lessons.json`: bài Cấp 1–3, có sẵn trong gói app. `lv` là cấp, `no` là số bài.
-- `lessons-4.json`, `lessons-5.json`, `lessons-6.json`, `lessons-7.json`: bài Cấp 4, 5, 6 và Cấp 7–9 (`lv` 7), mỗi bài một dòng.
+- `lessons-4.json`, `lessons-5.json`, `lessons-6.json`: bài Cấp 4, 5, 6, mỗi bài một dòng.
+- `lessons-7-p1.json` … `lessons-7-p6.json`: bài Cấp 7–9 (`lv` 7), chia mỗi file 25 bài (p1 là bài 1–25, p2 là 26–50…) cho file vừa phải;
+  mở Cấp 7–9 thì các phần tải song song.
   App chỉ tải file của một cấp khi cần (`loadLevel` trong `src/core/data.js`); tóm tắt các bài lấy qua module ảo `virtual:lesson-index` (`vite.config.js`). Mỗi từ là mảng
   `[chữ Hán, pinyin theo âm tiết, Hán Việt, nghĩa, ví dụ (tách từ bằng |), pinyin ví dụ, nghĩa ví dụ]`.
 - `pinyin.json`: bảng âm tiết pinyin.

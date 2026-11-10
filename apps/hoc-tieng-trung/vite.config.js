@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// Bài Cấp 4 trở lên nằm ở src/data/lessons-N.json, tải khi cần. Module ảo này chỉ giữ phần tóm tắt từng bài
+// Bài Cấp 4 trở lên nằm ở src/data/lessons-N.json (Cấp 7–9 chia phần: lessons-7-p1.json, lessons-7-p2.json…), tải khi cần. Module ảo này chỉ giữ phần tóm tắt từng bài
 // (tên, số từ, số điểm ngữ pháp) để lộ trình, trang cấp, bài tiếp theo hiện được mà không phải tải cả nội dung.
 const DATA = fileURLToPath(new URL('./src/data/', import.meta.url));
 function lessonIndex() {
@@ -14,7 +14,7 @@ function lessonIndex() {
     load(id) {
       if (id !== RID) return null;
       const out = [];
-      for (const f of readdirSync(DATA).filter(f => /^lessons-\d+\.json$/.test(f)).sort()) {
+      for (const f of readdirSync(DATA).filter(f => /^lessons-\d+(-p\d+)?\.json$/.test(f)).sort()) {
         this.addWatchFile(DATA + f);
         for (const l of JSON.parse(readFileSync(DATA + f, 'utf8'))) {
           out.push({ id: l.id, lv: l.lv, no: l.no, title: l.title, zh: l.zh, tag: l.grammar[0]?.title || '', nw: l.words.length, ng: l.grammar.length });
@@ -23,7 +23,7 @@ function lessonIndex() {
       return `export default ${JSON.stringify(out)};`;
     },
     handleHotUpdate({ file, server }) {
-      if (!/lessons-\d+\.json$/.test(file)) return;
+      if (!/lessons-\d+(-p\d+)?\.json$/.test(file)) return;
       const m = server.moduleGraph.getModuleById(RID);
       if (m) server.moduleGraph.invalidateModule(m);
     }

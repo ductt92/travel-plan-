@@ -1,9 +1,11 @@
 """Tạo kho giọng đọc cho mọi câu app cần đọc.
   - Tiếng Việt: giọng Linh có sẵn trên macOS (nữ miền Bắc), tạo bằng lệnh `say` rồi chuyển sang mp3 bằng ffmpeg.
   - Tiếng Trung: giọng neural Xiaoxiao của Microsoft (gói edge-tts), không cần khóa.
-Chạy trên macOS: <python có edge-tts> apps/hoc-tieng-trung/tools/gen_audio.py [--lang vi|zh] [--force]
-  --lang   chỉ tạo một ngôn ngữ (mặc định cả hai)
-  --force  xóa file cũ của ngôn ngữ đó rồi tạo lại (dùng khi đổi giọng)
+Chạy trên macOS: <python có edge-tts> apps/hoc-tieng-trung/tools/gen_audio.py [--lang vi|zh] [--lv N] [--force] [--no-index]
+  --lang      chỉ tạo một ngôn ngữ (mặc định cả hai)
+  --lv        lấy câu của Cấp N (4, 5, 6, 7) qua route #/alltexts/N; mặc định #/alltexts là Cấp 1–3
+  --force     xóa file cũ của ngôn ngữ đó rồi tạo lại (dùng khi đổi giọng)
+  --no-index  không ghi lại audio/index.json (khi chỉ cần giọng để dựng video, chưa đưa file lên web)
 Cần site đã build đang chạy (npm run build && npm run preview, cổng 4173) để lấy danh sách câu từ route #/alltexts.
 Mỗi câu lưu thành public/audio/<khóa>.mp3, khóa = băm FNV-1a + djb2 của "ngôn ngữ|câu" (giống audioKey trong src/core/speech.js)."""
 import asyncio, html, json, os, re, subprocess, sys
@@ -30,8 +32,10 @@ def key(lang, text):
         h2 = (h2 * 33 + x) & 0xffffffff
     return f'{h1:08x}{h2:08x}'
 
-dom = subprocess.run([CHROME, '--headless=new', '--disable-gpu', f'--user-data-dir={PROF}', '--virtual-time-budget=5000',
-                      '--dump-dom', BASE + '#/alltexts'], capture_output=True, text=True).stdout
+LV = arg('--lv')
+# Cấp 4 trở lên tải dữ liệu khi mở trang nên chờ lâu hơn
+dom = subprocess.run([CHROME, '--headless=new', '--disable-gpu', f'--user-data-dir={PROF}', f'--virtual-time-budget={15000 if LV else 5000}',
+                      '--dump-dom', BASE + '#/alltexts' + (f'/{LV}' if LV else '')], capture_output=True, text=True).stdout
 items = json.loads(html.unescape(re.search(r'<pre id="steps">(.*?)</pre>', dom, re.S).group(1)))
 for it in items:
     assert key(it['lang'], it['text']) == it['key'], it  # khóa Python phải khớp khóa trong app
@@ -77,5 +81,6 @@ async def main():
 
 asyncio.run(main())
 keys = sorted(f[:-4] for f in os.listdir(AUD) if f.endswith('.mp3'))
-open(os.path.join(AUD, 'index.json'), 'w').write(json.dumps(keys))
+if '--no-index' not in sys.argv:
+    open(os.path.join(AUD, 'index.json'), 'w').write(json.dumps(keys))
 print(f'xong: {len(keys)} file âm thanh', flush=True)
