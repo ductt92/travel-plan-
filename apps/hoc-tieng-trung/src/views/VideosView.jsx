@@ -8,6 +8,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Breadcrumbs, Button, Chip, Row, Stack } from '@trang/ui';
 import { LESSONS, LEVELS } from '../core/data.js';
 import { buildLecture } from '../core/lecture.js';
+import { useLevels } from '../core/store.js';
 import YT_IDS from '../data/youtube.json';
 import TIMING from '../data/video-timing.json';
 import { Hz } from '../components/Hanzi.jsx';
@@ -15,10 +16,10 @@ import './VideosView.css';
 
 const BASE = import.meta.env.BASE_URL;
 const file = l => `bai-giang-cap${l.lv}-bai${String(l.no).padStart(2, '0')}.mp4`;
-// Video mới có cho Cấp 1–3 (Cấp 4 trở lên chưa dựng); bài khác chỉ hiện khi đã có mã YouTube
+// Cấp 1–3 có video cho mọi bài; Cấp 4 trở lên chỉ hiện bài đã có mã YouTube
 export const hasVideo = l => l.lv <= 3 || !!YT_IDS[file(l)];
-const LIST = LESSONS.filter(hasVideo);
-const LVS = [...new Set(LIST.map(l => l.lv))];
+// Các cấp ≥ 4 có video: bài của các cấp này tải khi cần (useLevels), nên danh sách tính lại sau khi tải
+const YT_LEVELS = [...new Set(Object.keys(YT_IDS).map(f => +(f.match(/cap(\d+)/) || [])[1]).filter(n => n >= 4))].sort((a, b) => a - b);
 const RATES = [0.75, 1, 1.25, 1.5];
 const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 
@@ -153,6 +154,9 @@ export function VideosView() {
   const navigate = useNavigate();
   const [have, setHave] = useState(null); // null = đang tải danh sách
   const autoplay = useRef(false);
+  const { ready } = useLevels(YT_LEVELS);
+  const LIST = useMemo(() => LESSONS.filter(hasVideo), [ready]);
+  const LVS = useMemo(() => [...new Set(LIST.map(x => x.lv))], [LIST]);
 
   useEffect(() => {
     let on = true;
@@ -171,7 +175,7 @@ export function VideosView() {
     autoplay.current = true;
     navigate(`/videos/${LIST[i].id}`, { replace: true });
     if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [navigate]);
+  }, [navigate, LIST]);
   const next = useCallback(() => { if (cur < LIST.length - 1) show(cur + 1); }, [cur, show]);
   useEffect(() => { autoplay.current = false; }, [cur]);
 
