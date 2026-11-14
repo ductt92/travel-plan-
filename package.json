@@ -19,6 +19,7 @@
     "dev:admin": "npm -w apps/quan-ly run dev"
   },
   "dependencies": {
+    "express": "5.1.0",
     "pg": "8.13.1"
   }
 }

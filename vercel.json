@@ -26,6 +26,18 @@
     {
       "source": "/api/go/tai-khoan",
       "destination": "/api/go/quan-ly?_api=tai-khoan"
+    },
+    {
+      "source": "/api/node/ban-hang/:path*",
+      "destination": "/api/node/quan-ly?_api=ban-hang&_path=:path*"
+    },
+    {
+      "source": "/ban-hang/quan-tri",
+      "destination": "/ban-hang/quan-tri/index.html"
+    },
+    {
+      "source": "/ban-hang/:path*",
+      "destination": "/ban-hang/index.html"
     }
   ]
 }

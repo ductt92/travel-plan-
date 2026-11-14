@@ -1,5 +1,5 @@
 // Chạy cả hai bản API ở máy giống trên Vercel: npm run dev:api
-//   /api/node/{sync,ai,terms,lop-hoc,ban-do,quan-ly,grammar,tai-khoan} → backend/node (chạy ngay trong tiến trình này)
+//   /api/node/{sync,ai,terms,lop-hoc,ban-do,quan-ly,grammar,tai-khoan,ban-hang/*} → backend/node (chạy ngay trong tiến trình này)
 //   /api/go/{sync,ai,terms,lop-hoc,ban-do,quan-ly,grammar,tai-khoan}   → backend/go qua `go run ./cmd/dev-api`
 // Biến môi trường đọc từ .env.local ở gốc repo (không đưa lên git, mẫu ở .env.example).
 import http from 'node:http';
@@ -24,6 +24,7 @@ const { default: nodeGrammar } = await import('../backend/node/grammar.js');
 const { default: nodeBanDo } = await import('../backend/node/bando.js');
 const { default: nodeCatalog } = await import('../backend/node/catalog.js');
 const { default: nodeAccounts } = await import('../backend/node/accounts.js');
+const { default: nodeBanHang } = await import('../backend/node/banhang/index.js');
 
 const PORT = Number(process.env.API_PORT || 3001);
 const GO_PORT = String(PORT + 1);
@@ -39,6 +40,7 @@ const NODE_ROUTES = {
 http.createServer((req, res) => {
   const path = req.url.split('?')[0];
   if (NODE_ROUTES[path]) return NODE_ROUTES[path](req, res);
+  if (path.startsWith('/api/node/ban-hang/')) return nodeBanHang(req, res);
   if (!path.startsWith('/api/go/')) { res.statusCode = 404; return res.end('không có route này'); }
   const up = http.request({ host: '127.0.0.1', port: GO_PORT, path: req.url, method: req.method, headers: req.headers }, r => {
     res.writeHead(r.statusCode, r.headers);

@@ -7,6 +7,7 @@
 //   dist/hsk6/             ← hsk6/ (trang tĩnh "Ngọc học tiếng Trung", dựng sẵn bằng bai-giang/build_site.py)
 //   dist/glass/            ← CSS của react-liquis-glass + nút bật/tắt kính cho các trang tĩnh ở trên
 //   dist/lop-hoc/          ← lop-hoc/index.html + lessons.json (lớp học trực tiếp, slide từ Hán Lộ và /hsk6/)
+//   dist/ban-hang/         ← ban-hang/ (web bán đồ tập FITGEAR + trang quản trị /ban-hang/quan-tri/, API ở /api/node/ban-hang)
 import { execSync } from 'node:child_process';
 import { cpSync, rmSync, mkdirSync, writeFileSync } from 'node:fs';
 import { lessons } from '../lop-hoc/lessons.mjs';
@@ -24,6 +25,7 @@ cpSync('apps/ban-do/dist', 'dist/ban-do', { recursive: true });
 cpSync('apps/quan-ly/dist', 'dist/quan-ly', { recursive: true });
 cpSync('travel', 'dist/travel', { recursive: true, filter: src => !src.endsWith('README.md') });
 cpSync('hsk6', 'dist/hsk6', { recursive: true });
+cpSync('ban-hang', 'dist/ban-hang', { recursive: true, filter: src => !src.endsWith('README.md') });
 // trang tĩnh không qua Vite nên lấy CSS kính và nút bật/tắt từ /glass/
 mkdirSync('dist/glass', { recursive: true });
 cpSync('node_modules/react-liquis-glass/dist/styles.css', 'dist/glass/react-liquis-glass.css');
